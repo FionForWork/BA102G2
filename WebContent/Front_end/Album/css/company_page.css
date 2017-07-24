@@ -1,0 +1,72 @@
+.com_head {
+    position: relative;
+    margin-top:-100px;
+    z-index:2;
+}
+.com_logo {
+    width:200px;
+}
+
+#service, #album {
+    margin-bottom: 30px;
+}
+
+.service_box, .album_box {
+    padding-left: 0px;
+    text-align: center;
+}
+.album_image {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+}
+.album_name {
+    margin-bottom: 10px;
+}
+
+li {
+    list-style:none;
+}
+.sercive_image {
+    width: 80%;
+    height: 80%;
+    margin-bottom: 50px;
+}
+.cost {
+    border-bottom: 1px solid #e2e2e2;
+    margin-bottom: 12px;
+}
+.check_service {
+    margin-bottom: 10px;
+}
+.check_service a {
+    color: #5ca1f5;
+}
+
+.catalog ul {
+    letter-spacing: 10px;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.catalog a {
+    color: #000;
+    text-decoration: none;
+
+}
+.clearfix {
+    display: block;
+}
+.text {
+    margin-bottom: 10px;
+}
+.com_intro {
+    background-color: #e5edef
+}
+.table th {
+    min-width: 78px;
+}
+.table td {
+    word-break: break-all;
+}

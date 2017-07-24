@@ -1,0 +1,89 @@
+﻿/* On small screens, set height to 'auto' for sidenav and grid */
+
+@media screen and (max-width: 767px) {
+   
+    .row.content {
+        height: auto;
+    }
+}
+
+.margin-top {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.img-thumbnail {
+    margin-bottom: 10px;
+}
+
+.gallary.img-responsive {
+    opacity: 0.5;
+    margin-bottom: 20px;
+}
+
+.gallary.img-responsive:hover {
+    opacity: 1;
+}
+
+
+.panel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    border-radius: 0 !important;
+    -webkit-box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.75);
+}
+
+.panel-default {
+    border-color: #ebedef !important;
+}
+
+.panel .panel-body {
+    position: relative;
+    padding: 0 !important;
+    overflow: hidden;
+    height: 140px;
+}
+
+.panel .panel-body a {
+    overflow: hidden;
+}
+
+.panel .panel-body a img {
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+   
+}
+.createAlbum {
+    margin-bottom: 10px;
+}
+
+
+
+
+		
+		#tempList {
+		    border-collapse: collapse; /* Collapse borders */
+		    width: 100%; /* Full-width */
+		    border: 1px solid #ddd; /* Add a grey border */
+		    font-size: 16px; /* Increase font-size */
+		}
+
+		#tempList th, #tempList td {
+		    text-align: left; /* Left-align text */
+		    padding: 12px; /* Add padding */
+		}
+
+		#tempList tr {
+		    /* Add a bottom border to all table rows */
+		    border-bottom: 1px solid #ddd; 
+		}
+ #tempList tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+}
+
