@@ -1,4 +1,4 @@
-package com.content.controller;
+package com.tempcont.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,61 +9,47 @@ import java.util.Collection;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.album.model.AlbumService;
-import com.album.model.AlbumVO;
-import com.content.model.ContentService;
-import com.content.model.ContentVO;
+import com.temp.model.TempService;
+import com.tempcont.model.TempContService;
 
-@MultipartConfig(fileSizeThreshold = 10 * 1024 * 1024, maxFileSize = 5 * 10 * 1021 * 1024, maxRequestSize = 5 * 5 * 10
-* 1024 * 1024)
-public class ContentServlet extends HttpServlet {
+public class TempContServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
+		
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		ContentService contSvc = new ContentService();
-		AlbumService albSvc = new AlbumService();
+		TempService tempSvc = new TempService();
+		TempContService tcontSvc = new TempContService();
+		System.out.println("000000000000000000");
 		
-		/*********   刪除相簿內容       *********/
-		if("delete_Content".equals(action)){
-			String cont_no = request.getParameter("cont_no");
-			contSvc.deleteContent(cont_no);
-			System.out.println("cont_no====="+cont_no);
-			String alb_no = request.getParameter("alb_no");
-			request.setAttribute("alb_no", alb_no);
-			String url = "/Front_end/Album/ListAllContents.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
-			return;
-		}
-		/*********   變更相簿封面       *********/
-		if("setCover".equals(action)){
-			String alb_no = request.getParameter("alb_no");
-			String cont_no = request.getParameter("cont_no");
-			AlbumVO alb = albSvc.getOneAlbum(alb_no);
-			ContentVO cont = contSvc.getOneContent(cont_no);
-			albSvc.updateAlbum(alb_no, alb.getMem_no(), alb.getName(), cont.getImg(), alb.getCreate_date());
-			request.setAttribute("alb_no", alb_no);
-			String url = "/Front_end/Album/ListAllContents.jsp";
+		/*********   刪除成品內容       *********/
+		if("delete_TempCont".equals(action)){
+			String tcont_no = request.getParameter("tcont_no");
+			tcontSvc.deleteTempCont(tcont_no);
+			System.out.println("tcont_no====="+tcont_no);
+			String temp_no = request.getParameter("temp_no");
+			request.setAttribute("temp_no", temp_no);
+			String url = "/Front_end/Temp/ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 		
-		
-		/*********   新增相簿內容       *********/
-		if("insert_Content".equals(action)){
-			String alb_no = request.getParameter("alb_no");
+		/*********   新增成品內容       *********/
+		if("insert_TempCont".equals(action)){
+			System.out.println("111111111111111111111111");
+			String temp_no = request.getParameter("temp_no");
+			System.out.println("temp_no========"+temp_no);
 			ServletContext context = request.getServletContext();
 			Collection<Part> parts = request.getParts();
 			System.out.println("partsize::::"+parts.size());
@@ -74,19 +60,19 @@ public class ContentServlet extends HttpServlet {
 					byte[] file = toByteArray(part.getInputStream());
 					
 					if (isImgFile(context.getMimeType(filename))) {
-						contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()), file, null);
+						tcontSvc.addTempCont(temp_no, new Timestamp(System.currentTimeMillis()), file, null);
 					} else {
-						contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()), null, file);
+						tcontSvc.addTempCont(temp_no, new Timestamp(System.currentTimeMillis()), null, file);
 					}
 				}
 			}
-			request.setAttribute("alb_no", alb_no);
-			String url = "/Front_end/Album/ListAllContents.jsp";
+			request.setAttribute("temp_no", temp_no);
+			String url = "/Front_end/Temp/ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
+		
 	}
-	
 	private String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 		System.out.println("header: " + header);

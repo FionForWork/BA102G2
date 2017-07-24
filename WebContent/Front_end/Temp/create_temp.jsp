@@ -139,7 +139,8 @@ $("document").ready(function(){
 			<label for="upload">選擇作品上傳 <span class='errorMsgs'> ${errorMsgs.get("file")}</span></label>
 			<input type="file" class="form-control" name="uploadTempCont" id="upload"
 								onchange="preview_images()" multiple>
-			<input type="submit" value="建立">		
+			<input type="submit" value="建立">
+			<input type ="submit" onclick="history.back()" value="取消"></input>		
 			<div id="showPanel" class="img-group flex-container padding">
 			
 			</div>
@@ -147,6 +148,7 @@ $("document").ready(function(){
 			
 			
 		</form>
+		
 	</div>
 
 

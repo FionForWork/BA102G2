@@ -69,7 +69,7 @@ public class ComService {
 	}
 	
 	
-	public  ComVO getOneEmp(String com_no){
+	public  ComVO getOneCom(String com_no){
 		return dao.findByPrimaryKey(com_no);
 	}
 	

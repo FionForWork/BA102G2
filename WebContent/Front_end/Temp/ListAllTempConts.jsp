@@ -20,10 +20,10 @@
 	<!-- Photo Start Here -->
 	<div class="jumbotron text-center">
 		<div class="text-right">
-			<button type="submit" class="btn btn-default" id="uploadbtn">新增相片</button>
+			<button type="submit" class="btn btn-default" id="uploadbtn">新增成品</button>
 		</div>
 		<!-- Modal addContent -->
-		<form action="<%=request.getContextPath()%>/content/content.do"
+		<form action="<%=request.getContextPath()%>/tempcont/tempcont.do"
 			method="post" enctype="multipart/form-data">
 			<div class="modal fade" id="uploadModal" role="dialog">
 				<div class="modal-dialog">
@@ -52,8 +52,8 @@
 								data-dismiss="modal">
 								<span class="glyphicon glyphicon-remove"></span> Cancel
 							</button>
-							<input type='hidden' name='action' value='insert_Content'>
-							<input type='hidden' name='alb_no' value='<%=temp_no%>'>
+							<input type='hidden' name='action' value='insert_TempCont'>
+							<input type='hidden' name='temp_no' value='<%=temp_no%>'>
 						</div>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 		<!--  End Modal Delete Content -->
-		<h2>${TempSvc.getOneTemp(temp_no).name}</h2>
+		<h2>${tempSvc.getOneTemp(temp_no).name}</h2>
 	</div>
 	
 	<c:forEach var="tempContVO" items="${tempContSvc.getAllByTempNo(temp_no)}" varStatus="s">
@@ -109,10 +109,10 @@
 					</button>
 					<div class='dropdownContent' id='dropdownContent${s.count}'>
 					
-						<form id="delete${s.count}" action="<%=request.getContextPath()%>/content/content.do" method="post">
-						<input type='hidden' name='cont_no' value='${tempContVO.tcont_no}'>
-						<input type='hidden' name='action' value='delete_Content'>
-						<input type='hidden' name='alb_no' value='<%=temp_no%>'>
+						<form id="delete${s.count}" action="<%=request.getContextPath()%>/tempcont/tempcont.do" method="post">
+						<input type='hidden' name='tcont_no' value='${tempContVO.tcont_no}'>
+						<input type='hidden' name='action' value='delete_TempCont'>
+						<input type='hidden' name='temp_no' value='<%=temp_no%>'>
 						<a href='#' onclick="document.getElementById('delete${s.count}').submit();" >刪除相片</a>
 <!-- 						<a href='#' data-toggle="modal" data-target="#deleteModal">刪除相片</a> -->
 						</form>

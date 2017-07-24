@@ -10,4 +10,5 @@ public interface TempContDAO_Interface {
 	public TempContVO findTempContByPK(String tcont_no);
 	public List<TempContVO> findTempContsByTempNo(String temp_no);
 	public List<TempContVO> findAll();
+	public int countTempContsInSingleTemp(String temp_no);
 }

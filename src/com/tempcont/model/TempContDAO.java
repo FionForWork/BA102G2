@@ -21,6 +21,7 @@ public class TempContDAO implements TempContDAO_Interface {
 	private static final String FIND_BY_PK = "select * from tempcont where tcont_no = ?";
 	private static final String FIND_ALL_BY_TEMP_NO = "select * from tempcont where temp_no = ?";
 	private static final String FIND_ALL = "select * from tempcont";
+	private static final String COUNT_SQL = "select count(*) from tempcont where temp_no = ? ";
 
 	private static DataSource ds = null;
 
@@ -291,5 +292,38 @@ public class TempContDAO implements TempContDAO_Interface {
 			}
 		}
 		return tempcontList;
+	}
+
+	@Override
+	public int countTempContsInSingleTemp(String temp_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int numberOfCont = 0;
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(COUNT_SQL);
+			pstmt.setString(1, temp_no);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				numberOfCont = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return numberOfCont;
 	}
 }

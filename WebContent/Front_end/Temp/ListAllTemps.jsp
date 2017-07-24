@@ -38,11 +38,16 @@
 	background-color: #f1f1f1;
 }
 </style>
+<script type="text/javascript">
+	
+
+</script>
 </head>
 
 <body>
 
 <jsp:useBean id="tempSvc" scope="page" class="com.temp.model.TempService"/>
+<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
 <% 
 	//String com_no = (String)session.getAttribute("com_no");  
 	String com_no = "2001";
@@ -55,6 +60,7 @@
 			<div class="col-xs-12 col-sm-9">
 				<table class="table table-hover table-responsive" id="tempList">
 					<caption>成品挑選清單</caption>
+					
 					<thead>
 						<tr>
 							<th>#</th>
@@ -63,9 +69,8 @@
 							<th>可挑選張數</th>
 							<th>拍攝時間</th>
 							<th>狀態</th>
-							<th></th>
-							<th></th>
-							<th></th>
+							<th colspan="3" align="center"><button class="btn btn-warning" name='createTemp' onclick="javascript:location.href='<%= request.getContextPath()%>/Front_end/Temp/create_temp.jsp'" >新增成品</button></th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -74,13 +79,24 @@
 					
 							<td>${s.count}</td>
 							<td>${tempVO.name }</td>
-							<td>超完美婚攝公司</td>
+							<td>${comSvc.getOneCom(com_no).name}</td>
 							<td>${tempVO.available}</td>
-							<td>${tempVO.create_date}</td>
+							<td>${tempVO.create_date.toString().substring(0,10)}</td>
 							<td>${tempVO.status}</td>
-							<td><input type='submit' value='查看' name='displayTemp'></td>
-							<td><input type='submit' value='修改' name='updateTemp'></td>
-							<td><input type='submit' value='刪除' name='deleteTemp'></td>
+							<form action="<%=request.getContextPath() %>/temp/temp.do" method="post">
+							<input type='hidden' name='action' value='getOne_For_Display'>
+							<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
+							<td><button class="btn btn-default" type='submit' id='displayTemp' name='displayTemp'>查看</button></td>
+							</form>
+							<form action="<%=request.getContextPath() %>/Front_end/Temp/UpdateTemp.jsp" method="post">
+							<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
+							<td><button class="btn btn-default" type='submit' name='updateTemp'>修改</button></td>
+							</form>
+							<form action="<%=request.getContextPath() %>/temp/temp.do" method="post">
+							<input type='hidden' name='action' value='delete_Temp'>
+							<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
+							<td><button class="btn btn-default" type='submit'  name='deleteTemp'>刪除</button></td>
+							</form>
 						</tr>
 					</c:forEach>	
 											
