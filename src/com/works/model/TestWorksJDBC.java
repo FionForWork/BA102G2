@@ -1,12 +1,9 @@
-package test;
+package com.works.model;
 
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-
-import com.works.model.WorksDAO;
-import com.works.model.WorksVO;
 
 
 

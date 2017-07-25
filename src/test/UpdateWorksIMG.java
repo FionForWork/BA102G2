@@ -27,13 +27,13 @@ public class UpdateWorksIMG {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("WebContent/Front_end/com_page/img/2000-" + (i-1) + ".jpg"));
+				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\project_picture\\" + i + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
 				pstmt.setBytes(1, pic);
-				pstmt.setString(2, String.valueOf(3041 + i));
-				System.out.println(String.valueOf(3041 + i));
+				pstmt.setString(2, String.valueOf(3009 + i));
+				System.out.println(String.valueOf(3009 + i));
 				pstmt.executeUpdate();
 			}
 			System.out.println("done");

@@ -8,11 +8,11 @@
 
 <%
 	ComService comSvc = new ComService();
-	ComVO comVO = comSvc.getOneCom("2005");
+	ComVO comVO = comSvc.getOneCom("2001");
 	pageContext.setAttribute("comVO", comVO);
 
 	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAllByComNo("2005");
+	List<WorksVO> worksList = worksSvc.getAllByComNo("2001");
 	pageContext.setAttribute("worksList", worksList);
 %>
 
@@ -115,7 +115,7 @@
 		<div class="row">
 		
 		
-		<c:forEach var="worksVO" items="${worksList}" begin="1" end="3">
+		<c:forEach var="worksVO" items="${worksList}" begin="1" end="9">
 			<div class="col-xs-12 col-sm-4">
 				<ul class="album_box">
 					<li class="list-unstyled"><a href="album.html"
@@ -155,6 +155,8 @@
 	</div>
 	<div class="container">
 		<div class="row">
+		
+		<c:forEach var="worksVO" items="${worksList}" begin="9" end="12">
 			<div class="col-xs-12 col-sm-3">
 				<ul class="service_box">
 					<li class="service_title">方案名稱</li>
@@ -164,49 +166,12 @@
 						officia deserunt mollit anim id est laborum.</li>
 					<li class="check_service"><a href="#">查看方案</a></li>
 					<li class="photo"><a href="#"> <img class="sercive_image"
-							src="img/wedding6.jpg">
+							src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 					</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-sm-3">
-				<ul class="service_box">
-					<li class="service_title">方案名稱</li>
-					<li class="cost"><span>$NT</span> 81000</li>
-					<li class="text">cillum dolore eu fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-						officia deserunt mollit anim id est laborum.</li>
-					<li class="check_service"><a href="#">查看方案</a></li>
-					<li class="photo"><a href="#"> <img class="sercive_image"
-							src="img/wedding6.jpg">
-					</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-3">
-				<ul class="service_box">
-					<li class="service_title">方案名稱</li>
-					<li class="cost"><span>$NT</span> 81000</li>
-					<li class="text">cillum dolore eu fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-						officia deserunt mollit anim id est laborum.</li>
-					<li class="check_service"><a href="#">查看方案</a></li>
-					<li class="photo"><a href="#"> <img class="sercive_image"
-							src="img/wedding6.jpg">
-					</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-3">
-				<ul class="service_box">
-					<li class="service_title">方案名稱</li>
-					<li class="cost"><span>$NT</span> 81000</li>
-					<li class="text">cillum dolore eu fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-						officia deserunt mollit anim id est laborum.</li>
-					<li class="check_service"><a href="#">查看方案</a></li>
-					<li class="photo"><a href="#"> <img class="sercive_image"
-							src="img/wedding6.jpg">
-					</a></li>
-				</ul>
-			</div>
+		</c:forEach>
+			
 		</div>
 	</div>
 

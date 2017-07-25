@@ -23,7 +23,7 @@ public class UpdateComLOGO {
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
 				InputStream in = new FileInputStream(
-						new File("WebContent/Front_end/com_page/img/" + i + ".jpg"));
+						new File("C:\\Users\\cuser\\Desktop\\LOGO\\" + i + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
