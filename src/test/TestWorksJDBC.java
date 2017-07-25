@@ -1,14 +1,14 @@
-package com.works.model;
+package test;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import com.works.model.WorksDAO;
+import com.works.model.WorksVO;
+
+
 
 public class TestWorksJDBC {
 	public static void main(String[] args) {
@@ -17,29 +17,26 @@ public class TestWorksJDBC {
 		
 		// insert
 		
-//		try {
-//			works = new WorksVO();
-//			BufferedInputStream bis = new BufferedInputStream(new FileInputStream("C:\\Users\\cuser\\Downloads\\Liam Payne - Strip That Down.mp4"));
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			int i = 0;
-//			byte[] bytes = new byte[1024];
-//			while((i = bis.read(bytes)) != -1){
-//				baos.write(bytes, 0, i);
-//			}
-//			works.setWtype_no("0001");
-//			works.setVdo(baos.toByteArray());
-//			works.setName("third");
-//			works.setCom_no("2001");
-//			works.setWorks_desc("Strip That Down");
-//			System.out.println("cccccccccccccccccccccccc");
-//			dao.uploadWorksVdo(works);
-//			baos.close();
-//			bis.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			works = new WorksVO();
+			works.setCom_no("2005");
+			works.setName("2005大圖");
+			works.setWorks_desc("2005廠商大圖");
+			InputStream in = new BufferedInputStream(new FileInputStream("WebContent/Front_end/com_page/img/banner3.jpg"));
+			byte[] bytes = new byte[in.available()];
+			in.read(bytes);
+			in.close();
+			works.setImg(bytes);
+			works.setVdo(null);
+			System.out.println("cccccccccccccccccccccccc");
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			works.setUpload_date(ts);
+			dao.insertWorks(works);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 		//update
@@ -100,7 +97,7 @@ public class TestWorksJDBC {
 		
 		// delete
 		
-		dao.deleteWorks("3002");
+//		dao.deleteWorks("3002");
 		
 	}
 }
