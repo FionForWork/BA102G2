@@ -1,12 +1,10 @@
-package test;
+package wang.test;
 
-import java.io.*;
 import java.sql.*;
+import java.io.*;
 
-
-public class UpdateComLOGO {
-
-	private static final String UPDATE = "update company set logo=? where com_no = ?";
+public class UpdateAdsIMG {
+	private static final String UPDATE = "update advertising set img=? where com_no = ?";
 
 	public static void main(String[] args) {
 
@@ -22,8 +20,7 @@ public class UpdateComLOGO {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(
-						new File("C:\\Users\\cuser\\Desktop\\LOGO\\" + i + ".jpg"));
+				InputStream in = new FileInputStream(new File("WebContent/Front_end/Temp/img/ab/" + i + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
@@ -58,5 +55,4 @@ public class UpdateComLOGO {
 		}
 
 	}
-
 }

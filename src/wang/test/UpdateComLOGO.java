@@ -1,17 +1,11 @@
-package test;
+package wang.test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 
-public class UpdateWorksIMG {
+public class UpdateComLOGO {
 
-	private static final String UPDATE = "update works set img=? where works_no = ?";
+	private static final String UPDATE = "update company set logo=? where com_no = ?";
 
 	public static void main(String[] args) {
 
@@ -27,13 +21,14 @@ public class UpdateWorksIMG {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\project_picture\\" + i + ".jpg"));
+				InputStream in = new FileInputStream(
+						new File("C:\\Users\\WANG\\Desktop\\LOGO\\" + String.valueOf(2000 + i) + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
 				pstmt.setBytes(1, pic);
-				pstmt.setString(2, String.valueOf(3009 + i));
-				System.out.println(String.valueOf(3009 + i));
+				pstmt.setString(2, String.valueOf(2000 + i));
+				System.out.println(String.valueOf(2000 + i));
 				pstmt.executeUpdate();
 			}
 			System.out.println("done");

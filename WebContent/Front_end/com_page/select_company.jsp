@@ -33,7 +33,7 @@
 				<c:forEach var="worksVO" items="${worksList}">
 					<div class="col-xs-12 col-sm-3">
 						<ul class="album_box">
-							<li class="list-unstyled"><a href="#"
+							<li class="list-unstyled"><a href="company_page.jsp?com_no=${worksVO.com_no}"
 								class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
 									<img class="album_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 							</a></li>
