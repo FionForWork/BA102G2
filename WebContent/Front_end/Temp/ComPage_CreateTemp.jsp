@@ -111,7 +111,6 @@ $("document").ready(function(){
 
 
 <% 
-	session.setAttribute("com_no" , "2001");
 	Map<String,String> errorMsgs = (Map)request.getAttribute("errorMsgs");
 	TempVO temp = (TempVO)request.getAttribute("temp");
 %>

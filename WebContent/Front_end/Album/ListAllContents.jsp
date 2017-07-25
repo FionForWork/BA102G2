@@ -18,10 +18,7 @@
 
 <div class="col-xs-12 col-sm-9 ">
 	<!-- Photo Start Here -->
-	<div class="jumbotron text-center">
-		<div class="text-right">
-			<button type="submit" class="btn btn-default" id="uploadbtn">新增相片</button>
-		</div>
+	
 		<!-- Modal addContent -->
 		<form action="<%=request.getContextPath()%>/content/content.do"
 			method="post" enctype="multipart/form-data">
@@ -60,8 +57,24 @@
 			</div>
 		</form>
 		<!-- End Modal addContent -->
+		<div class="jumbotron">
+		<div class="row">
+		<button type="submit" class="btn btn-info" id="uploadbtn" style="float: right;margin-button:0;">新增相片</button>
+			<div class="col-xs-12 col-sm-12">
+				<div class="text-center">
+					<h2>${albSvc.getOneAlbum(alb_no).name}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
+		varStatus="s">
+		<c:if test="${(s.count % 4) == 1}">
+			<div class="row">
+		</c:if>
 		<!-- Modal delete Content -->
-		<div class="modal fade" id="deleteModal" role="dialog">
+		<div class="modal fade" id="deleteModal${s.count}" role="dialog">
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
@@ -75,31 +88,22 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						
-						<button type="button" class="btn btn-danger" data-dismiss="modal" id='deletebtn'>刪除</button>
-						
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							id='deletebtn' onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+
 					</div>
 				</div>
 
 			</div>
 		</div>
 		<!--  End Modal Delete Content -->
-		<h2>${albSvc.getOneAlbum(alb_no).name}</h2>
-	</div>
-	
-	<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
-		varStatus="s">
-		<c:if test="${(s.count % 4) == 1}">
-			<div class="row">
-		</c:if>
-
 		<div class="col-md-3 col-sm-3 col-xs-6">
 			<div class="image">
 
 				<a
 					href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
-					data-caption="Image caption" target="_blank"> 
-					<img
+					data-caption="Image caption" target="_blank"> <img
 					class="img-responsive img-thumbnail"
 					src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
 				</a>
@@ -109,18 +113,22 @@
 						<i class="fa fa-cog" aria-hidden="true"></i>
 					</button>
 					<div class='dropdownContent' id='dropdownContent${s.count}'>
-					<form id="update${s.count}" action="<%=request.getContextPath()%>/content/content.do" method="post">
-						<input type='hidden' name='action' value='setCover'>
-						<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
-						<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-						<a href='#' id='setCover' onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
-					</form>	
-						<form id="delete${s.count}" action="<%=request.getContextPath()%>/content/content.do" method="post">
-						<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
-						<input type='hidden' name='action' value='delete_Content'>
-						<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-						<a href='#' onclick="document.getElementById('delete${s.count}').submit();" >刪除相片</a>
-<!-- 						<a href='#' data-toggle="modal" data-target="#deleteModal">刪除相片</a> -->
+						<form id="update${s.count}"
+							action="<%=request.getContextPath()%>/content/content.do"
+							method="post">
+							<input type='hidden' name='action' value='setCover'> <input
+								type='hidden' name='cont_no' value='${contVO.cont_no}'>
+							<input type='hidden' name='alb_no' value='<%=alb_no%>'> <a
+								href='#' id='setCover'
+								onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
+						</form>
+						<form id="delete${s.count}"
+							action="<%=request.getContextPath()%>/content/content.do"
+							method="post">
+							<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
+							<input type='hidden' name='action' value='delete_Content'>
+							<input type='hidden' name='alb_no' value='<%=alb_no%>'>
+							<a href='#' data-toggle="modal" data-target="#deleteModal${s.count}">刪除相片</a>
 						</form>
 					</div>
 				</div>

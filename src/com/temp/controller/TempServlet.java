@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.album.model.AlbumService;
-import com.album.model.AlbumVO;
-import com.content.model.ContentService;
-import com.content.model.ContentVO;
 import com.temp.model.TempService;
 import com.temp.model.TempVO;
 import com.tempcont.model.TempContService;
@@ -54,14 +49,22 @@ public class TempServlet extends HttpServlet {
 
 		/********* 查詢單本成品內容 *********/
 		if ("getOne_For_Display".equals(action)) {
-			System.out.println("!!!!!!!!1");
+			
 			String temp_no = request.getParameter("temp_no");
-
-			System.out.println(temp_no);
 			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ListAllTempConts.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
-			return;
+			
+			if(session.getAttribute("com_no") != null){
+				
+				String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
+				request.getRequestDispatcher(url).forward(request, response);
+				return;
+			}
+			if(session.getAttribute("mem_no") != null){
+				
+				String url = "/Front_end/Temp/MemPage_ListAllTempConts.jsp";
+				request.getRequestDispatcher(url).forward(request, response);
+				return;
+			}
 		}
 
 		/********* 刪除成品與成品內容 *********/
@@ -76,8 +79,8 @@ public class TempServlet extends HttpServlet {
 			tempSvc.deleteTemp(temp_no);
 
 			/********* 回到成品列表 *********/
-			String url = request.getRequestURI();
-			// String url = "/Front_end/Temp/ListAllTemps.jsp";
+			//String url = request.getRequestURI();
+			String url = "/Front_end/Temp/ComPage_ListAllTemps.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
@@ -95,29 +98,32 @@ public class TempServlet extends HttpServlet {
 			// ===== 檢查作品名稱 ===== //
 			String name = request.getParameter("name").trim();
 			if (name.length() == 0) {
+				System.out.println("name error");
 				errorMsgs.put("name", "(請輸入作品名稱)");
 			}
 
 			// ===== 檢查可挑選張數 ===== //
 			Integer available = null;
 			try {
-
+				
 				available = new Integer(request.getParameter("available").trim());
 				if (available > tcontSvc.countTempContsInSingleTemp(temp_no)) {
 					errorMsgs.put("available_number", "(請重新輸入可挑選數量)");
 				}
 
 			} catch (NumberFormatException e) {
+				System.out.println("available error");
 				errorMsgs.put("available_empty", "(請輸入可挑選數量)");
 			} catch (NullPointerException e) {
+				System.out.println("available error");
 				errorMsgs.put("available_empty", "(請輸入可挑選張數)");
 			}
-
 			// ===== 檢查拍攝日期是否為空值 ===== //
 			Timestamp create_date = null;
 			try {
 				create_date = covertToTimestamp(request.getParameter("create_date"));
 			} catch (NullPointerException e) {
+				System.out.println("date error");
 				errorMsgs.put("create_date", "(請輸入拍攝日期)");
 			}
 
@@ -126,20 +132,17 @@ public class TempServlet extends HttpServlet {
 			temp.setStatus(status);
 			temp.setCreate_date(create_date);
 			temp.setName(name);
-
 			if (!errorMsgs.isEmpty()) {
+				System.out.println("errorMsgs size "+errorMsgs.size());
 				request.setAttribute("temp", temp);
-				String url = request.getRequestURI();
-				RequestDispatcher failureView = request.getRequestDispatcher(url);
-				// RequestDispatcher failureView = request
-				// .getRequestDispatcher("/Front_end/Temp/create_temp.jsp");
+				request.setAttribute("temp_no", temp_no);
+				 RequestDispatcher failureView = request.getRequestDispatcher("/Front_end/Temp/ComPage_UpdateTemp.jsp");
 				failureView.forward(request, response);
 				return;
 			}
-			
 			tempSvc.updateTemp(temp_no, com_no, mem_no, name, create_date, available, status);
 			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
@@ -204,7 +207,7 @@ public class TempServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				request.setAttribute("temp", temp);
-				RequestDispatcher failureView = request.getRequestDispatcher("/Front_end/Temp/create_temp.jsp");
+				RequestDispatcher failureView = request.getRequestDispatcher("/Front_end/Temp/ComPage_CreateTemp.jsp");
 				failureView.forward(request, response);
 				return;
 			}
@@ -216,7 +219,6 @@ public class TempServlet extends HttpServlet {
 			/********* 新增成品內容 *********/
 
 			TempContService tempcontSvc = new TempContService();
-			TempContVO tempcont = null;
 			System.out.println("partsize::::" + parts.size());
 			for (Part part : parts) {
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
@@ -233,7 +235,7 @@ public class TempServlet extends HttpServlet {
 
 			/********* 導到成品內容 *********/
 			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}

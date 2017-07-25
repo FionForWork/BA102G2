@@ -40,7 +40,7 @@ public class TempContServlet extends HttpServlet {
 			System.out.println("tcont_no====="+tcont_no);
 			String temp_no = request.getParameter("temp_no");
 			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
@@ -67,7 +67,7 @@ public class TempContServlet extends HttpServlet {
 				}
 			}
 			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}

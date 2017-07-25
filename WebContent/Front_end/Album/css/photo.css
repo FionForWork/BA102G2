@@ -17,7 +17,7 @@
 }
 
 div button {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .jumbotron {
     padding-top: 5px
@@ -37,19 +37,14 @@ div button {
 }
 
 .overlap{
-	background:rgba(0,0,0,0.6);
+	opacity:0;
 	position:absolute;
-	width:12% ;
-	height:0%;
-	top:-8%;
-	right:0%;
-	opacity:0;	
-	transform:translate(-50%,-50%);
-	-ms-transform: translate(-50%,-50%);
+	top:0px;
+	right:20px;
 }
 .image:hover .overlap{
 	opacity:1;
-	background:rgba(0,0,0,0.6);
+	
 }
 
 
@@ -76,3 +71,25 @@ div button {
 .dropdown:hover .dropdownContent {
     display: block;
 }
+.errorMsgs {
+	color:red;
+	
+}
+#tempList {
+	border-collapse: collapse; /* Collapse borders */
+	width: 100%; /* Full-width */
+	border: 1px solid #ddd; /* Add a grey border */
+	font-size: 16px; /* Increase font-size */
+}
+
+#tempList th, #tempList td {
+	text-align: left; /* Left-align text */
+	padding: 12px; /* Add padding */
+}
+
+#tempList tr {
+	/* Add a bottom border to all table rows */
+	border-bottom: 1px solid #ddd;
+}
+
+

@@ -24,7 +24,7 @@
 			value="submit">新增相簿</button>
 	</div>
  
-	<!-- Modal -->
+	<!--start Modal create album-->
 	<form action="<%=request.getContextPath()%>/album/album.do" method="post"
 				enctype="multipart/form-data">
 	<div class="modal fade" id="albumModal" role="dialog">
@@ -68,13 +68,35 @@
 		</div>
 	</div>
 	</form>
-	<!-- Modal -->
+	<!--end Modal create album -->
 	
 	
 	<c:forEach var="albVO" items="${albSvc.getAllByMemNo(mem_no)}" varStatus="s">
 		<c:if test="${(s.count % 4) == 1}">
 			<div class="row">
 		</c:if>
+		<!-- Modal delete alb -->
+		<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">刪除相簿</h4>
+					</div>
+					<div class="modal-body">
+						<p>你確定想刪除嗎？在這本相簿中的相片也會被刪除。</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" id='deletebtn' onclick="document.getElementById('delete${s.count}').submit();" >刪除</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!--  End Modal Delete Alb -->
 		<div class="col-xs-12 col-sm-4 col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">${albVO.name}</div>
@@ -103,8 +125,8 @@
 						<form id="delete${s.count}" action="<%=request.getContextPath()%>/album/album.do" method="post">
 						<input type="hidden" name="alb_no" value="${albVO.alb_no }">
 						<input type="hidden" name="action" value="delete_Album">
-<%-- 						<a href="#" id="alb${s.count}" data-toggle="modal" data-target="#deleteModal"> --%>
-						<a href="#" onclick="document.getElementById('delete${s.count}').submit();">
+						<a href="#" id="alb${s.count}" data-toggle="modal" data-target="#deleteModal${s.count}">
+						
 						<span class='fa fa-trash' style='font-size: 20px;'></span>
 						</a>
 						
@@ -118,26 +140,5 @@
 			</div>
 		</c:if>
 	</c:forEach>
-<!-- Modal delete Content -->
-		<div class="modal fade" id="deleteModal" role="dialog">
-			<div class="modal-dialog">
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">刪除相簿</h4>
-					</div>
-					<div class="modal-body">
-						<p>你確定想刪除嗎？在這本相簿中的相片也會被刪除。</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal" id='deletebtn' onclick="document.getElementById('delete${s.count}').submit();" >刪除</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<!--  End Modal Delete Alb -->
 	<%@ include file="page/album_footer.file"%>

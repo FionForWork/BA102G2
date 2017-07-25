@@ -1,27 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page import="com.temp.model.*" %>
 
 <jsp:useBean id="tempContSvc" scope="page"
 	class="com.tempcont.model.TempContService"></jsp:useBean>
-<jsp:useBean id="tempSvc" scope="page"
-	class="com.temp.model.TempService"></jsp:useBean>
+<%-- <jsp:useBean id="tempSvc" scope="page" --%>
+<%-- 	class="com.temp.model.TempService"></jsp:useBean> --%>
 
 <%
 	String temp_no = (String) request.getAttribute("temp_no");
 	// 	String temp_no = "0001";
 	// 	session.setAttribute("temp_no","0001");
+	TempService tempSvc = new TempService();
+	TempVO temp = tempSvc.getOneTemp(temp_no);
+	request.setAttribute("temp", temp);
 %>
 
 <%@ include file="page/photo_header.file"%>
 
 <div class="col-xs-12 col-sm-9 ">
 	<!-- Photo Start Here -->
-	<div class="jumbotron text-center">
-		<div class="text-right">
-			<button type="submit" class="btn btn-default" id="uploadbtn">新增成品</button>
-		</div>
+	
 		<!-- Modal addContent -->
 		<form action="<%=request.getContextPath()%>/tempcont/tempcont.do"
 			method="post" enctype="multipart/form-data">
@@ -60,8 +60,29 @@
 			</div>
 		</form>
 		<!-- End Modal addContent -->
+
+	<div class="jumbotron">
+		<div class="row">
+		<button type="submit" class="btn btn-info" id="uploadbtn" style="float: right;margin-button:0;">新增成品</button>
+			<div class="col-xs-12 col-sm-12">
+				<div class="text-center">
+					<h2>${temp.name}</h2>
+					<br>
+					<h4>建立日期 : ${temp.create_date.toString().substring(0,10)}</h4>
+					<h4>可挑選數量 : ${temp.available}</h4>
+					<h4>目前狀態 : ${temp.status}</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<c:forEach var="tempContVO" items="${tempContSvc.getAllByTempNo(temp_no)}" varStatus="s">
+		<c:if test="${(s.count % 4) == 1}">
+			<div class="row">
+		</c:if>
+		
 		<!-- Modal delete Content -->
-		<div class="modal fade" id="deleteModal" role="dialog">
+		<div class="modal fade" id="deleteModal${s.count}" role="dialog">
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
@@ -76,7 +97,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 						
-						<button type="button" class="btn btn-danger" data-dismiss="modal" id='deletebtn'>刪除</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
 						
 					</div>
 				</div>
@@ -84,14 +105,7 @@
 			</div>
 		</div>
 		<!--  End Modal Delete Content -->
-		<h2>${tempSvc.getOneTemp(temp_no).name}</h2>
-	</div>
-	
-	<c:forEach var="tempContVO" items="${tempContSvc.getAllByTempNo(temp_no)}" varStatus="s">
-		<c:if test="${(s.count % 4) == 1}">
-			<div class="row">
-		</c:if>
-
+		
 		<div class="col-md-3 col-sm-3 col-xs-6">
 			<div class="image">
 
@@ -113,7 +127,7 @@
 						<input type='hidden' name='tcont_no' value='${tempContVO.tcont_no}'>
 						<input type='hidden' name='action' value='delete_TempCont'>
 						<input type='hidden' name='temp_no' value='<%=temp_no%>'>
-						<a href='#' onclick="document.getElementById('delete${s.count}').submit();" >刪除相片</a>
+						<a href='#' data-toggle='modal' data-target='#deleteModal${s.count}' >刪除相片</a>
 <!-- 						<a href='#' data-toggle="modal" data-target="#deleteModal">刪除相片</a> -->
 						</form>
 					</div>
