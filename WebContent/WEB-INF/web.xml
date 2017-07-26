@@ -93,7 +93,7 @@
   
   <servlet>
     <servlet-name>AdvertisingServlet</servlet-name>
-    <servlet-class>com.content.controller.AdvertisingServlet</servlet-class>
+    <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdvertisingServlet</servlet-name>

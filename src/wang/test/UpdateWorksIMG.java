@@ -25,9 +25,9 @@ public class UpdateWorksIMG {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			for (int i = 1; i < 21; i++) {
+			for (int i = 21; i < 88; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("C:\\Users\\WANG\\Desktop\\拍婚紗工作和服務\\2000-" + (i-1) + ".jpg"));
+				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\Pictures\\" + i + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();

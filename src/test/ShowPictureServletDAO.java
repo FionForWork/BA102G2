@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.advertising.model.AdvertisingService;
+import com.advertising.model.AdvertisingVO;
 import com.album.model.AlbumService;
 import com.album.model.AlbumVO;
 import com.com.model.*;
@@ -91,8 +93,18 @@ public class ShowPictureServletDAO extends HttpServlet {
 			ComService comSvc = new ComService();
 			ComVO comVO = comSvc.getOneCom(pk);
 			comcont = comVO.getLogo();
-
 			out.write(comcont);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("adv_no")){
+			pk = request.getParameter("adv_no");
+			byte[] advcont =null;
+			System.out.println(pk);
+			AdvertisingService advertisingSvc = new AdvertisingService();
+			AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(pk);
+			advcont = advertisingVO.getImg();
+			out.write(advcont);
 			out.close(); 
 			return;
 		}

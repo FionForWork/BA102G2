@@ -13,11 +13,11 @@ public class AdvertisingService {
 		return dao.getAll();
 	}
 
-	public AdvertisingVO getOneDept(String adv_no) {
+	public AdvertisingVO getOneAdvertising(String adv_no) {
 		return dao.findByPrimaryKey(adv_no);
 	}
 
-	public void deleteDept(String adv_no) {
+	public void deleteAdvertising(String adv_no) {
 		dao.delete(adv_no);
 	}
 }

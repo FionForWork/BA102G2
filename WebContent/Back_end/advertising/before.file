@@ -100,7 +100,7 @@
                     <li>
                         <a href="#"><i class="en-users"> </i>管理者設定 </a>
                     </li>
-                    <li><a href="#"> 廣告刊登管理 <i class="im-table2"></i></a>
+                    <li><a href="listAllAdvertising.jsp"> 廣告刊登管理 <i class="im-table2"></i></a>
                     </li>
                     <li><a href="#"> 景點管理 <i class="br-location"></i></a>
                     </li>

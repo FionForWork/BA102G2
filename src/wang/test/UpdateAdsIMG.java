@@ -20,7 +20,7 @@ public class UpdateAdsIMG {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("WebContent/Front_end/Temp/img/ab/" + i + ".jpg"));
+				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\works_picture\\2000-" + (i-1) + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
