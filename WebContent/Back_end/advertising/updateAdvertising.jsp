@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="com.advertising.model.*"%>
 <%@ page import="java.util.*"%>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,10 +17,21 @@
 <title>Update AD</title>
 <%
 	AdvertisingVO advertisingVO = (AdvertisingVO) request.getAttribute("advertisingVO");
+	System.out.print("UPDATE:advertisingVO is null?");
+	System.out.println(advertisingVO == null);
 %>
+<script>
+	$(function() {
+		$("#startday").datepicker();
+		$("#endday").datepicker();
+	});
+</script>
+
 </head>
 <body>
-	<a href="select_page.jsp">回首頁</a>
+
+
+	<a href="listAllAdvertising.jsp">回上一頁</a>
 	<h3>資料修改:</h3>
 
 	<%-- 錯誤表列 --%>
@@ -29,16 +45,23 @@
 		</font>
 	</c:if>
 
-
-	<FORM METHOD="post" ACTION="advertising.do">
+	<form METHOD="post"
+		ACTION="<%=request.getContextPath()%>/advertising/advertising.do">
 		<table border="0">
+
 			<tr>
-				<td>廣告編號:<font color=red><b>*</b></font></td>
+				<td><img
+					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>"></td>
+			</tr>
+
+
+			<tr>
+				<td>廣告編號:</td>
 				<td><%=advertisingVO.getAdv_no()%></td>
 			</tr>
 			<tr>
 				<td>廠商編號:</td>
-				<td><%=advertisingVO.getCom_no()%>"</td>
+				<td><%=advertisingVO.getCom_no()%></td>
 			</tr>
 			<tr>
 				<td>廣告內容:</td>
@@ -47,29 +70,13 @@
 			</tr>
 			<tr>
 				<td>廣告起始日期:</td>
-				<td bgcolor="#CCCCFF"><input class="cal-TextBox"
-					onFocus="this.blur()" size="9" readonly type="text" name="startDay"
-					value="<%=advertisingVO.getStartDay()%>"> <a class="so-BtnLink"
-					href="javascript:calClick();return false;"
-					onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);"
-					onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);"
-					onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','hiredate','BTN_date');return false;">
-						<img align="middle" border="0" name="BTN_date"
-						src="images/btn_date_up.gif" width="22" height="17" alt="開始日期">
-				</a></td>
+				<td><input type="text" id="startday" name="startday"
+					value="<%=advertisingVO.getStartDay()%>"></td>
 			</tr>
 			<tr>
 				<td>廣告結束日期:</td>
-				<td bgcolor="#CCCCFF"><input class="cal-TextBox"
-					onFocus="this.blur()" size="9" readonly type="text" name="endDay"
-					value="<%=advertisingVO.getEndDay()%>"> <a class="so-BtnLink"
-					href="javascript:calClick();return false;"
-					onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);"
-					onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);"
-					onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','hiredate','BTN_date');return false;">
-						<img align="middle" border="0" name="BTN_date"
-						src="images/btn_date_up.gif" width="22" height="17" alt="結束日期">
-				</a></td>
+				<td><input type="text" id="endday" name="endday"
+					value="<%=advertisingVO.getEndDay()%>"></td>
 			</tr>
 			<tr>
 				<td>價格:</td>
@@ -78,23 +85,17 @@
 			</tr>
 			<tr>
 				<td>狀態:</td>
-				<td><input type="TEXT" name="status" size="45"
-					value="<%=advertisingVO.getStatus()%>" /></td>
+				<td><select size="1" name="status">
+						<option value="0">未審核</option>
+						<option value="1">已審核</option>
+				</select></td>
 			</tr>
 
-			<jsp:useBean id="deptSvc" scope="page"
-				class="com.advertising.model.AdvertisingService" />
-
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="empno" value="<%=advertisingVO.getAdv_no()%>"> <input
-			type="submit" value="送出修改">
-	</FORM>
-
-
-
-
-
-
+		<br><input type="hidden" name="action" value="update"> 
+			<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
+			<input type="hidden" name="com_no" value="<%=advertisingVO.getCom_no()%>">
+			<input type="submit" value="送出修改">
+	</form>
 </body>
 </html>

@@ -12,6 +12,11 @@
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAll();
 	pageContext.setAttribute("worksList", worksList);
+	
+	//ComService comSvc = new ComService();
+	//List<ComVO> comList = comSvc.getAll();
+	//pageContext.setAttribute("comList", comList);
+	List<String> comno = new ArrayList<String>();
 %>
 </head>
 <body>
@@ -29,9 +34,11 @@
 			</div>
 			<!--圖===========================================================================-->
 			<div class="col-xs-12 col-md-10">
-
+			
 				<c:forEach var="worksVO" items="${worksList}">
-					<div class="col-xs-12 col-sm-3">
+				<c:if test='!<%=comno.contains("${worksVO.com_no}")%>'>
+				
+				<div class="col-xs-12 col-sm-3">
 						<ul class="album_box">
 							<li class="list-unstyled"><a href="company_page.jsp?com_no=${worksVO.com_no}"
 								class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
@@ -39,7 +46,10 @@
 							</a></li>
 						</ul>
 					</div>
-				</c:forEach>
+				${comno.add(worksVO.com_no)}
+				</c:if>
+				
+				</c:forEach>	
 
 			</div>
 			<!--圖===========================================================================-->

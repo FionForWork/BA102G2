@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
+<%@ page import="com.serv.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
@@ -14,6 +15,10 @@
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
 	pageContext.setAttribute("worksList", worksList);
+	
+	ServService servSvc = new ServService();
+	List<ServVO> servList = servSvc.getAll();
+	pageContext.setAttribute("servList", servList);
 %>
 
 <html>
@@ -25,16 +30,18 @@
 
 	<%@ include file="before.file"%>
 
+	<c:forEach var="worksVO" items="${worksList}" begin="1" end="1">
 	<div class="fade-carousel">
 		<div class="home-banner fade-carousel" style="overflow: hidden;">
 			<div class="item slides">
 				<div></div>
 				<div class="slide-1 bg-cover lazy"
-					style="background-image: url('img/banner3.jpg');"></div>
+					style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
 				<!--banner圖放這裡-->
 			</div>
 		</div>
 	</div>
+	</c:forEach>
 
 	<!--店家大頭照-->
 	<div class="com_head container">
@@ -90,7 +97,7 @@
 
 						<tr>
 							<th>Line ID</th>
-							<td>@wth7964p</td>
+							<td>@ba102</td>
 						</tr>
 					</tbody>
 				</table>
@@ -116,19 +123,20 @@
 		<div class="row">
 
 
-			<c:forEach var="worksVO" items="${worksList}" begin="1" end="9">
+			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="album_box">
-						<li class="list-unstyled"><a href="album.html"
+						<li class="list-unstyled"><a href="#"
 							class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
 								<img class="album_image img-thumbnail"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
-						</a></li>
+						</a>
+						</li>
 					</ul>
 				</div>
 			</c:forEach>
-
-
+			
+			
 		</div>
 	</div>
 
@@ -157,18 +165,22 @@
 	<div class="container">
 		<div class="row">
 
-			<c:forEach var="worksVO" items="${worksList}" begin="9" end="12">
+			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
 				<div class="col-xs-12 col-sm-3">
 					<ul class="service_box">
-						<li class="service_title">方案名稱</li>
-						<li class="cost"><span>$NT</span> 81000</li>
-						<li class="text">cillum dolore eu fugiat nulla pariatur.
-							Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-							officia deserunt mollit anim id est laborum.</li>
+						<li class="service_title">${servVO.title}</li>
+						<li class="cost"><span>$NT</span>${servVO.price}</li>
+						<li class="text">${servVO.content}</li>
 						<li class="check_service"><a href="#">查看方案</a></li>
-						<li class="photo"><a href="#"> <img class="sercive_image"
+						
+						<c:forEach var="worksVO" items="${worksList}">
+						<c:if test="${servVO.com_no}==${worksVO.com_no}">
+						<li class="photo"><a href="#">
+						<img class="sercive_image"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 						</a></li>
+						</c:if>
+						</c:forEach>
 					</ul>
 				</div>
 			</c:forEach>

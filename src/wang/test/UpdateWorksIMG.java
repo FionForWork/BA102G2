@@ -25,15 +25,15 @@ public class UpdateWorksIMG {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			for (int i = 21; i < 88; i++) {
+			for (int i = 0; i < 20; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\Pictures\\" + i + ".jpg"));
+				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\works_picture\\2008-" + i + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
 				pstmt.setBytes(1, pic);
-				pstmt.setString(2, String.valueOf(3000 + i));
-				System.out.println(String.valueOf(3000 + i));
+				pstmt.setString(2, String.valueOf(3173 + i));
+				System.out.println(String.valueOf(3173 + i));
 				pstmt.executeUpdate();
 			}
 			System.out.println("done");

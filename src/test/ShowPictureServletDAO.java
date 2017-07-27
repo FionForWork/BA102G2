@@ -105,7 +105,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(pk);
 			advcont = advertisingVO.getImg();
 			out.write(advcont);
-			out.close(); 
+			out.close();
 			return;
 		}
 	}
