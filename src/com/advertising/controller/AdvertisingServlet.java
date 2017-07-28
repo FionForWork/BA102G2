@@ -1,10 +1,13 @@
 package com.advertising.controller;
 
 import java.io.*;
+import java.sql.*;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,8 @@ import javax.servlet.http.Part;
 
 import com.advertising.model.*;
 
+@MultipartConfig(fileSizeThreshold = 10 * 1024 * 1024, maxFileSize = 5 * 10 * 1021 * 1024, maxRequestSize = 5 * 5 * 10
+		* 1024 * 1024)
 public class AdvertisingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +32,7 @@ public class AdvertisingServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println("action=" + action);
 		if ("getOne_For_Update".equals(action)) {
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -59,26 +64,26 @@ public class AdvertisingServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("333333333333333333333333333333333333");
 			try {
 				/******************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
+				System.out.println(req.getParameter("startday"));
+				System.out.println(req.getParameter("endday"));
+				String adv_no = new String(req.getParameter("adv_no"));
 
-				String adv_no = new String(req.getParameter("adv_no").trim());
-
-				java.sql.Timestamp startDay = null;
+				Timestamp startday = null;
 				try {
-					startDay = java.sql.Timestamp.valueOf(req.getParameter("startday").trim());
+					startday = Timestamp.valueOf(req.getParameter("startday") + " 00:00:00");
 				} catch (IllegalArgumentException e) {
-					startDay = new java.sql.Timestamp(System.currentTimeMillis());
+					startday = new Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入廣告開始日期!");
 				}
-				java.sql.Timestamp endDay = null;
+				Timestamp endday = null;
 				try {
-					endDay = java.sql.Timestamp.valueOf(req.getParameter("endday").trim());
+					endday = Timestamp.valueOf(req.getParameter("endday") + " 00:00:00");
 				} catch (IllegalArgumentException e) {
-					endDay = new java.sql.Timestamp(System.currentTimeMillis());
+					endday = new Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入廣告結束日期!");
 				}
 				Integer price = null;
@@ -93,12 +98,16 @@ public class AdvertisingServlet extends HttpServlet {
 				String status = new String(req.getParameter("status"));
 
 				AdvertisingVO advertisingVO = new AdvertisingVO();
-				advertisingVO.setStartDay(startDay);
-				advertisingVO.setEndDay(endDay);
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
+				advertisingVO.setAdv_no(oldAdvertisingVO.getAdv_no());
+				advertisingVO.setCom_no(oldAdvertisingVO.getCom_no());
+				advertisingVO.setStartDay(startday);
+				advertisingVO.setEndDay(endday);
 				advertisingVO.setPrice(price);
 				advertisingVO.setText(text);
 				advertisingVO.setStatus(status);
-
+				advertisingVO.setImg(oldAdvertisingVO.getImg());
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("advertisingVO", advertisingVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -108,9 +117,7 @@ public class AdvertisingServlet extends HttpServlet {
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				AdvertisingService advertisingSvc = new AdvertisingService();
-				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
-				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(), startDay, endDay,
+				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(), startday, endday,
 						price, text, oldAdvertisingVO.getImg(), oldAdvertisingVO.getVdo(), status);
 				System.out.print("CONTROLLER update:");
 				System.out.println(advertisingVO == null);
@@ -156,5 +163,121 @@ public class AdvertisingServlet extends HttpServlet {
 			}
 		}
 
+		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***********************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 *************************/
+				String com_no = req.getParameter("com_no").trim();
+
+				String text = null;
+				try {
+					text = new String(req.getParameter("text").trim());
+				} catch (NumberFormatException e) {
+					text = "";
+					errorMsgs.add("請輸入內容");
+				}
+
+				Timestamp startday = null;
+				try {
+					startday = Timestamp.valueOf(req.getParameter("startday") + " 00:00:00");
+				} catch (IllegalArgumentException e) {
+					startday = new Timestamp(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
+
+				Timestamp endday = null;
+				try {
+					endday = Timestamp.valueOf(req.getParameter("endday") + " 00:00:00");
+				} catch (IllegalArgumentException e) {
+					endday = new Timestamp(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
+
+				Integer price = null;
+				try {
+					price = new Integer(req.getParameter("price").trim());
+				} catch (NumberFormatException e) {
+					price = 0;
+					errorMsgs.add("價格請填數字.");
+				}
+
+				String status = new String(req.getParameter("status").trim());
+
+				AdvertisingVO advertisingVO = null;
+				advertisingVO = new AdvertisingVO();
+				advertisingVO.setCom_no(com_no);
+				advertisingVO.setText(text);
+				advertisingVO.setStartDay(startday);
+				advertisingVO.setEndDay(endday);
+				advertisingVO.setPrice(price);
+				advertisingVO.setStatus(status);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("advertisingVO", advertisingVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Back_end/advertising/addAdvertising.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 2.開始新增資料 ***************************************/
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				ServletContext context = getServletContext();
+				Collection<Part> parts = req.getParts();
+				for (Part part : parts) {
+					String filename = getFileNameFromPart(part);
+					System.out.println("ContentType=" + part.getContentType());
+					byte[] file = null;
+					InputStream in = part.getInputStream();
+					file = new byte[in.available()];
+					in.read(file);
+					in.close();
+					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+						if (isImgFile(context.getMimeType(filename))) {
+							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, file,
+									null, status);
+						} else {
+							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, null,
+									file, status);
+						}
+					}
+				}
+
+				/***************************
+				 * 3.新增完成,準備轉交(Send the Success view)
+				 ***********/
+				String url = "/Back_end/advertising/listAllAdvertising.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/addAdvertising.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+	}
+
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+		System.out.println("header=" + header); // 測試用
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+		System.out.println("filename=" + filename); // 測試用
+		if (filename.length() == 0) {
+			return null;
+		}
+		return filename;
+	}
+
+	private boolean isImgFile(String mimetype) {
+		return mimetype != null && mimetype.startsWith("image");
 	}
 }

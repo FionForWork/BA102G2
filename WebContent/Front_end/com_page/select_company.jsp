@@ -9,13 +9,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
-	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAll();
-	pageContext.setAttribute("worksList", worksList);
+// 	WorksService worksSvc = new WorksService();
+// 	List<WorksVO> worksList = worksSvc.getAll();
+// 	session.setAttribute("worksList", worksList);
 	
-	//ComService comSvc = new ComService();
-	//List<ComVO> comList = comSvc.getAll();
-	//pageContext.setAttribute("comList", comList);
+	ComService comSvc = new ComService();
+	List<ComVO> comList = comSvc.getAll();
+	session.setAttribute("comList", comList);
 	List<String> comno = new ArrayList<String>();
 %>
 </head>
@@ -35,20 +35,16 @@
 			<!--圖===========================================================================-->
 			<div class="col-xs-12 col-md-10">
 			
-				<c:forEach var="worksVO" items="${worksList}">
-				<c:if test='!<%=comno.contains("${worksVO.com_no}")%>'>
-				
+				<c:forEach var="comVO" items="${comList}">
 				<div class="col-xs-12 col-sm-3">
 						<ul class="album_box">
-							<li class="list-unstyled"><a href="company_page.jsp?com_no=${worksVO.com_no}"
+							<li class="list-unstyled"><a href="company_page.jsp?com_no=${comVO.com_no}"
 								class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
-									<img class="album_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+									<img class="album_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
+									<h3>${comVO.name}</h3>
 							</a></li>
 						</ul>
-					</div>
-				${comno.add(worksVO.com_no)}
-				</c:if>
-				
+					</div>			
 				</c:forEach>	
 
 			</div>

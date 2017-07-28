@@ -22,8 +22,8 @@
 %>
 <script>
 	$(function() {
-		$("#startday").datepicker();
-		$("#endday").datepicker();
+		$("#startday").datepicker({dateFormat: 'yy-mm-dd'});
+		$("#endday").datepicker({dateFormat: 'yy-mm-dd'});
 	});
 </script>
 

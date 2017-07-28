@@ -10,15 +10,15 @@
 <%
 	ComService comSvc = new ComService();
 	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
-	pageContext.setAttribute("comVO", comVO);
+	session.setAttribute("comVO", comVO);
 	
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
-	pageContext.setAttribute("worksList", worksList);
+	session.setAttribute("worksList", worksList);
 	
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
-	pageContext.setAttribute("servList", servList);
+	session.setAttribute("servList", servList);
 %>
 
 <html>
@@ -172,15 +172,6 @@
 						<li class="cost"><span>$NT</span>${servVO.price}</li>
 						<li class="text">${servVO.content}</li>
 						<li class="check_service"><a href="#">查看方案</a></li>
-						
-						<c:forEach var="worksVO" items="${worksList}">
-						<c:if test="${servVO.com_no}==${worksVO.com_no}">
-						<li class="photo"><a href="#">
-						<img class="sercive_image"
-								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
-						</a></li>
-						</c:if>
-						</c:forEach>
 					</ul>
 				</div>
 			</c:forEach>

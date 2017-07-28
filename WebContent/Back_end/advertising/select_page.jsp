@@ -18,6 +18,8 @@
 				<!-- Start .bredcrumb -->
 				<ul id="crumb" class="breadcrumb">
 				</ul>
+	<jsp:useBean id="advertisingSvc" scope="page" class="com.advertising.model.AdvertisingService" />				
+				<li><a href='addAdvertising.jsp'>Add</a> a new AD</li>
 				
 				
 				
