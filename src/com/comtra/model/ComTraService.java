@@ -1,5 +1,6 @@
 package com.comtra.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class ComTraService {
@@ -10,20 +11,22 @@ public class ComTraService {
 		dao = new ComTraDAO();
 	}
 	
-	public ComTraVO addComTra(String com_no, String mem_no){
+	public ComTraVO addComTra(String com_no, String mem_no,Timestamp tracking_date){
 		ComTraVO comTra = new ComTraVO();
 		comTra.setCom_no(com_no);
 		comTra.setMem_no(mem_no);
+		comTra.setTracking_date(tracking_date);
 		String comtra_no = dao.insertComTra(comTra);
 		comTra.setComtra_no(comtra_no);
 		return comTra;
 	}
 	
-	public ComTraVO updateComTra(String comtra_no, String com_no, String mem_no){
+	public ComTraVO updateComTra(String comtra_no, String com_no, String mem_no,Timestamp tracking_date){
 		ComTraVO comTra = new ComTraVO();
 		comTra.setComtra_no(comtra_no);
 		comTra.setCom_no(com_no);
 		comTra.setMem_no(mem_no);
+		comTra.setTracking_date(tracking_date);
 		dao.updateComTra(comTra);
 		return comTra;
 	}

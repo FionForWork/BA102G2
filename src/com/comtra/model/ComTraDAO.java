@@ -16,11 +16,11 @@ import javax.sql.DataSource;
 public class ComTraDAO implements ComTraDAO_Interface {
 
 	
-	private static final String INSERT_SQL = "insert into comtra(comtra_no,com_no,mem_no) values(ltrim(To_char(comtra_sq.nextval,'0009')),?,?)";
+	private static final String INSERT_SQL = "insert into comtra(comtra_no,com_no,mem_no,tracking_date) values(ltrim(To_char(comtra_sq.nextval,'0009')),?,?,?)";
 	private static final String DELETE_SQL = "delete from comtra where comtra_no = ?";
-	private static final String UPDATE_SQL = "update comtra set com_no=?,mem_no=? where comtra_no = ?";
+	private static final String UPDATE_SQL = "update comtra set com_no=?,mem_no=?,tracking_date=? where comtra_no = ?";
 	private static final String FIND_BY_PK = "select * from comtra where comtra_no = ?";
-	private static final String FIND_BY_MEM_NO = "select * from comtra where mem_no=?";
+	private static final String FIND_BY_MEM_NO = "select * from comtra where mem_no=? order by tracking_date desc";
 	private static final String FIND_ALL = "select * from comtra";
 
 	private static DataSource ds = null;
@@ -49,6 +49,7 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			pstmt = conn.prepareStatement(INSERT_SQL, cols);
 			pstmt.setString(1, comTra.getCom_no());
 			pstmt.setString(2, comTra.getMem_no());
+			pstmt.setTimestamp(3, comTra.getTracking_date());
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
@@ -123,7 +124,8 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			pstmt = conn.prepareStatement(UPDATE_SQL);
 			pstmt.setString(1, comTra.getCom_no());
 			pstmt.setString(2, comTra.getMem_no());
-			pstmt.setString(3, comTra.getComtra_no());
+			pstmt.setTimestamp(3, comTra.getTracking_date());
+			pstmt.setString(4, comTra.getComtra_no());
 			pstmt.executeUpdate();
 			conn.commit();
 		} catch (Exception e) {
@@ -159,7 +161,7 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			pstmt.setString(1, comtra_no);
 			rs = pstmt.executeQuery();
 			rs.next();
-			comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
+			comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -201,7 +203,7 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			pstmt.setString(1, mem_no);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
+				comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4));
 				comTraList.add(comTra);
 			}
 		} catch (Exception e) {
@@ -244,7 +246,7 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(FIND_ALL);
 			while (rs.next()) {
-				comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
+				comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4));
 				comTraList.add(comTra);
 			}
 		} catch (Exception e) {

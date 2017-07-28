@@ -3,24 +3,8 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="com.temp.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html lang="">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Title Page</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<!--[if lt IE 9]>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		
-		<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<%@ include file="page/temp_com_header.file"%>
 <style type="text/css">
 input[type=date], input[type=number],input[type=file] {
 	width: 100%;
@@ -57,7 +41,7 @@ input[type=submit]:hover {
 	background-color: #45a049;
 }
 
-.container {
+.formStyle {
 	border-radius: 5px;
 	background-color: #f2f2f2;
 	padding: 20px;
@@ -67,10 +51,10 @@ input[type=submit]:hover {
 	margin:auto;
 }
 
-img{
+img .preview{
 	width:100%;
 	height:auto;
-	
+	margin-bottom:20px;
 }
 
 .padding .img-container{
@@ -106,9 +90,6 @@ $("document").ready(function(){
 
 
 </script>
-</head>
-<body>
-
 
 <% 
 	Map<String,String> errorMsgs = (Map)request.getAttribute("errorMsgs");
@@ -116,7 +97,45 @@ $("document").ready(function(){
 %>
 	
 
-	<div class="container">
+	
+
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+<div class="container">
+    <div class="col-md-offset-1">
+        <ul class="breadcrumb">
+            <li><a href="#">首頁</a></li>
+            <li><a href="#">廠商專區</a></li>
+            <li><a href="#">作品挑選管理</a></li>
+            <li class="active">建立挑選作品</li>        
+        </ul>
+    </div>
+</div>
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+   
+    <div class="container">
+        <div class="row">
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+            <div class="col-md-offset-1 col-md-2">
+                 <ul class="list-group">
+                    <a href="#" class="list-group-item menua">編輯廠商資料</a><br>
+                    <a href="#" class="list-group-item menua">修改密碼</a><br>
+                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
+                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
+                    <a href="#" class="list-group-item menua active">作品挑選管理</a><br>
+                    <a href="#" class="list-group-item menua">行事曆</a><br>
+                    <a href="#" class="list-group-item menua">作品管理</a><br>
+                </ul>
+
+
+                <a href="#" class="btn btn-block btn-default">查看廠商資料</a>
+            </div>
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+
+<!--這裡開始===========================================================================-->
+
+            <div class="col-md-8 col-offset-1">
+
+<div class='formStyle'>
 		<form action="<%=request.getContextPath()%>/temp/temp.do" method="post"
 				enctype="multipart/form-data">
 			<h3>建立待挑選成品</h3>
@@ -139,7 +158,8 @@ $("document").ready(function(){
 			<input type="file" class="form-control" name="uploadTempCont" id="upload"
 								onchange="preview_images()" multiple>
 			<input type="submit" value="建立">
-			<input type ="submit" onclick="history.back()" value="取消"></input>		
+			<input type ="submit" onclick="history.back()" value="取消"></input>
+			<br>		
 			<div id="showPanel" class="img-group flex-container padding">
 			
 			</div>
@@ -147,11 +167,9 @@ $("document").ready(function(){
 			
 			
 		</form>
-		
+	</div>	
 	</div>
 
 
 
-	
-</body>
-</html>
+<%@ include file="page/temp_footer.file"%>

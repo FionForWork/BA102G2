@@ -47,6 +47,7 @@
     <servlet-name>MemServlet</servlet-name>
     <url-pattern>/mem/mem.do</url-pattern>
   </servlet-mapping>
+  <!-- 相簿  -->
   <servlet>
     <servlet-name>AlbServlet</servlet-name>
     <servlet-class>com.album.controller.AlbServlet</servlet-class>
@@ -55,6 +56,7 @@
     <servlet-name>AlbServlet</servlet-name>
     <url-pattern>/album/album.do</url-pattern>
   </servlet-mapping>
+  <!-- 作品挑選管理  -->
   <servlet>
     <servlet-name>TempServlet</servlet-name>
     <servlet-class>com.temp.controller.TempServlet</servlet-class>
@@ -63,6 +65,7 @@
     <servlet-name>TempServlet</servlet-name>
     <url-pattern>/temp/temp.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>TempContServlet</servlet-name>
     <servlet-class>com.tempcont.controller.TempContServlet</servlet-class>
@@ -71,6 +74,7 @@
     <servlet-name>TempContServlet</servlet-name>
     <url-pattern>/tempcont/tempcont.do</url-pattern>
   </servlet-mapping>
+  <!-- 相簿內容  -->
   <servlet>
     <servlet-name>ContentServlet</servlet-name>
     <servlet-class>com.content.controller.ContentServlet</servlet-class>
@@ -78,6 +82,23 @@
   <servlet-mapping>
     <servlet-name>ContentServlet</servlet-name>
     <url-pattern>/content/content.do</url-pattern>
+  </servlet-mapping>
+    <!-- 廠商追蹤  -->
+  <servlet>
+  	<servlet-name>ComTraServlet</servlet-name>
+  	<servlet-class>com.comtra.controller.ComTraServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ComTraServlet</servlet-name>
+  	<url-pattern>/comtra/comtra.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>WorksServlet</servlet-name>
+  	<servlet-class>com.works.controller.WorksServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>WorksServlet</servlet-name>
+  	<url-pattern>/works/works.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ShowPictureServletDAO</servlet-name>
@@ -87,12 +108,5 @@
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>UploadPhotoToDBDAO</servlet-name>
-    <servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UploadPhotoToDBDAO</servlet-name>
-    <url-pattern>/UploadPhotoToDBDAO</url-pattern>
-  </servlet-mapping>
+  
 </web-app>

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
@@ -24,6 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.album.model.AlbumService;
+import com.album.model.AlbumVO;
+import com.content.model.ContentService;
+import com.content.model.ContentVO;
 import com.temp.model.TempService;
 import com.temp.model.TempVO;
 import com.tempcont.model.TempContService;
@@ -47,25 +52,6 @@ public class TempServlet extends HttpServlet {
 		TempContService tcontSvc = new TempContService();
 		HttpSession session = request.getSession();
 
-		/********* 查詢單本成品內容 *********/
-		if ("getOne_For_Display".equals(action)) {
-			
-			String temp_no = request.getParameter("temp_no");
-			request.setAttribute("temp_no", temp_no);
-			
-			if(session.getAttribute("com_no") != null){
-				
-				String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
-			}
-			if(session.getAttribute("mem_no") != null){
-				
-				String url = "/Front_end/Temp/MemPage_ListAllTempConts.jsp";
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
-			}
-		}
 
 		/********* 刪除成品與成品內容 *********/
 		if ("delete_Temp".equals(action)) {
@@ -141,8 +127,7 @@ public class TempServlet extends HttpServlet {
 				return;
 			}
 			tempSvc.updateTemp(temp_no, com_no, mem_no, name, create_date, available, status);
-			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no="+temp_no;
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
@@ -234,12 +219,45 @@ public class TempServlet extends HttpServlet {
 			}
 
 			/********* 導到成品內容 *********/
-			request.setAttribute("temp_no", temp_no);
-			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp";
+			String url = "/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no="+temp_no;
 			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
-
+		
+		
+		/********* 將成品與成品內容匯入到會員相簿 *********/
+		if ("Transfer_Temp".equals(action)) {
+			String temp_no = request.getParameter("temp_no");
+			System.out.println("temp_no" + temp_no);
+			List<TempContVO> tempConts = tcontSvc.getAllByTempNo(temp_no);
+			TempVO temp = tempSvc.getOneTemp(temp_no);
+			
+			AlbumService albSvc = new AlbumService();
+			ContentService contentSvc = new ContentService();
+			AlbumVO alb = null;
+			ContentVO content = null;
+			
+			alb = albSvc.addAlbum(temp.getMem_no(), temp.getName(), null, temp.getCreate_date());
+			String alb_no = alb.getAlb_no();
+			
+			for(TempContVO tempcont : tempConts){
+				
+				if(tempcont.getImg() != null){
+					content = contentSvc.addContent(alb_no, tempcont.getUpload_date(), tempcont.getImg(), null);
+				}else if(tempcont.getVdo() != null){
+					contentSvc.addContent(alb_no, tempcont.getUpload_date(), null , tempcont.getVdo());
+				}
+				//===========  修改相簿封面  ===========//
+				albSvc.updateAlbum(alb_no, temp.getMem_no(), temp.getName(), content.getImg(), temp.getCreate_date());
+				tcontSvc.deleteTempCont(tempcont.getTcont_no());
+			}
+			tempSvc.deleteTemp(temp_no);
+			
+			/********* 回到成品列表 *********/
+			String url = "/Front_end/Temp/ComPage_ListAllTemps.jsp";
+			request.getRequestDispatcher(url).forward(request, response);
+			return;
+		}
 	}
 
 	private String getFileNameFromPart(Part part) {

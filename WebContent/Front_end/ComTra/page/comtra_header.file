@@ -16,12 +16,12 @@
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/pnotify.custom.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/index.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/Front_end/Album/css/album.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/Front_end/ComTra/css/comtra.css" rel="stylesheet">
     
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
- <script src="<%=request.getContextPath()%>/Front_end/Album/js/album.js" type="text/javascript"></script>
+ <script src="<%=request.getContextPath()%>/Front_end/ComTra/js/comtra.js" type="text/javascript"></script>
 
 </head>
 
