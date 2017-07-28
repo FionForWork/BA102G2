@@ -3,28 +3,18 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.adm.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-
+   
 <%
-
     AdmService admSvc = new AdmService();
     List<AdmVO> list = admSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 
-<html>
-<head>
-<title>所有管理員資料 - listAlladm.jsp</title>
-</head>
-<body bgcolor='white'>
-<b><font color=red>此頁練習採用 EL 的寫法取值:</font></b>
-<table border='1' cellpadding='5' cellspacing='0' width='800'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>所有管理員資料 - ListAllEmp.jsp</h3>
-		</td>
-	</tr>
-</table>
-
+<%@ include file="page/adm_page" %>
+<title>員工資料</title>
+<br><br><br>
+<div id="content">
+<h3>全員工資料:</h3>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:
@@ -36,7 +26,7 @@
 	</font>
 </c:if>
 
-<table border='1' bordercolor='#CCCCFF' width='800'>
+<table class="table table-striped">
 	<tr>
 		<th>管理員編號</th>
 		<th>管理員帳號</th>
@@ -73,6 +63,6 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+</div>
 </body>
 </html>

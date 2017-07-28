@@ -28,7 +28,7 @@ public class MemDAO implements MemDAO_Interface{
 	}
 	
 		private static final String INSERT_STMT = 
-			"INSERT INTO member (mem_no,id,pwd,name,sex,bday,phone,email,account,picture,report,status) VALUES ('1'||ltrim(TO_CHAR(MEMID_SQ.NEXTVAL,'009')), ?, ?, ?, ?, ?, ?, ?, ?, null, 0,'停權')";
+			"INSERT INTO member (mem_no,id,pwd,name,sex,bday,phone,email,account,picture,report,status) VALUES ('1'||ltrim(TO_CHAR(MEMID_SQ.NEXTVAL,'009')), ?, ?, ?, ?, ?, ?, ?, ?, ?, 0,'停權')";
 
 		private static final String GET_ALL_STMT = 
 			"SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status FROM member order by mem_no";
@@ -37,14 +37,15 @@ public class MemDAO implements MemDAO_Interface{
 		private static final String DELETE = 
 			"DELETE FROM member where mem_no = ?";
 		private static final String UPDATE = 
-			"UPDATE member set id=?, pwd=?, name=?, sex=?, bday=?, phone=? ,email=?,account=? where mem_no = ?";
+			"UPDATE member set id=?,  name=?, sex=?, bday=?, phone=? ,email=?,account=?, where mem_no = ?";
 		private static final String UPDATEPIC = 
-				"UPDATE member set picture=? where mem_no = ?";
+			"UPDATE member set picture=? where mem_no = ?";
 		
 	
 	
 	@Override
 	public void insert(MemVO memVO) {
+		// TODO Auto-generated method stub
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -60,6 +61,7 @@ public class MemDAO implements MemDAO_Interface{
 			pstmt.setString(6, memVO.getPhone());
 			pstmt.setString(7, memVO.getEmail());
 			pstmt.setString(8, memVO.getAccount());
+			pstmt.setBytes(9, memVO.getPicture());
 
 			pstmt.executeUpdate();
 		}catch(SQLException se){
@@ -84,7 +86,42 @@ public class MemDAO implements MemDAO_Interface{
 			}
 		}
 	}
-
+	@Override
+	public void updatePic(MemVO memVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEPIC);
+			pstmt.setBytes(1, memVO.getPicture());
+			pstmt.setString(2, memVO.getMem_no());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
+	}
 	@Override
 	public void update(MemVO memVO) {
 		// TODO Auto-generated method stub
@@ -95,14 +132,15 @@ public class MemDAO implements MemDAO_Interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, memVO.getId());
-			pstmt.setString(2, memVO.getPwd());
-			pstmt.setString(3, memVO.getName());
-			pstmt.setString(4, memVO.getSex());
-			pstmt.setDate(5, memVO.getBday());
-			pstmt.setString(6, memVO.getPhone());
-			pstmt.setString(7, memVO.getEmail());
-			pstmt.setString(8, memVO.getAccount());
-			pstmt.setString(9, memVO.getMem_no());
+
+			pstmt.setString(2, memVO.getName());
+			pstmt.setString(3, memVO.getSex());
+			pstmt.setDate(4, memVO.getBday());
+			pstmt.setString(5, memVO.getPhone());
+			pstmt.setString(6, memVO.getEmail());
+			pstmt.setString(7, memVO.getAccount());
+	
+			pstmt.setString(8, memVO.getMem_no());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -288,42 +326,7 @@ public class MemDAO implements MemDAO_Interface{
 		return list;
 	}
 
-	@Override
-	public void updatePic(MemVO memVO) {
-		// TODO Auto-generated method stub
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
-		try{
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setBytes(1, memVO.getPicture());
-			pstmt.setString(2, memVO.getMem_no());
-			pstmt.executeUpdate();
-			
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		
-		
-	}
+	
 
 	
 

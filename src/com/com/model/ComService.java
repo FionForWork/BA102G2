@@ -27,7 +27,7 @@ public class ComService {
 		comVO.setAccount(account);
 		comVO.setLogo(logo);
 		comVO.setStatus(status);
-	
+		dao.insert(comVO);
 		return comVO;
 	}
 	//預留給 Struts 2 用的

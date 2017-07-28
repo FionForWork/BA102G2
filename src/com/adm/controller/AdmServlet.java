@@ -62,7 +62,7 @@ public class AdmServlet extends HttpServlet {
 				admVO = admSvc.addAdm(id, pwd, name, job, status);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/adm/listAllAdm.jsp";
+				String url = "/Back_end/adm/listAllAdm.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -70,7 +70,7 @@ public class AdmServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/adm/addAdm.jsp");
+						.getRequestDispatcher("/Back_end/adm/addAdm.jsp");
 				failureView.forward(req, res);
 			}
 		
@@ -101,7 +101,7 @@ public class AdmServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/adm/listAllAdm.jsp");
+						.getRequestDispatcher("/Back_end/adm/listAllAdm.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -139,7 +139,7 @@ public class AdmServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("admVO", admVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/adm/update_adm_input.jsp");
+							.getRequestDispatcher("/Back_end/adm/updateadminput.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -150,7 +150,7 @@ public class AdmServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("admVO", admVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/adm/listOneAdm.jsp";
+				String url = "/Back_end/adm/listOneAdm.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -158,7 +158,7 @@ public class AdmServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/adm/update_adm_input.jsp");
+						.getRequestDispatcher("/Back_end/adm/updateadminput.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -179,7 +179,7 @@ public class AdmServlet extends HttpServlet {
 				AdmVO admVO = admSvc.getOneAdm(adm_no);
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("admVO", admVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/adm/update_adm_input.jsp";
+				String url = "/Back_end/adm/updateadminput.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_adm_input.jsp
 				successView.forward(req, res);
 
@@ -187,7 +187,7 @@ public class AdmServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 			RequestDispatcher failureView = req
-					.getRequestDispatcher("/adm/listAllAdm.jsp");
+					.getRequestDispatcher("/Back_end/adm/listAllAdm.jsp");
 				failureView.forward(req, res);
 			}
 		}

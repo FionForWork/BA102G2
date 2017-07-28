@@ -15,6 +15,7 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+  
   <servlet>
     <servlet-name>ComServlet</servlet-name>
     <servlet-class>com.com.controller.ComServlet</servlet-class>
@@ -23,6 +24,17 @@
     <servlet-name>ComServlet</servlet-name>
     <url-pattern>/com/com.do</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ServServlet</servlet-name>
+    <servlet-class>com.serv.controller.ServServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServServlet</servlet-name>
+    <url-pattern>/serv/serv.do</url-pattern>
+  </servlet-mapping>
+  
+  
   <servlet>
     <servlet-name>AdmServlet</servlet-name>
     <servlet-class>com.adm.controller.AdmServlet</servlet-class>

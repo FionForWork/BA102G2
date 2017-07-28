@@ -8,7 +8,7 @@
 %>
 <html>
 <head>
-<title>管理員資料修改 - update_adm_input.jsp</title></head>
+<title>管理員資料修改 - updateadminput.jsp</title></head>
 
 <div id="popupcalendar" class="text"></div>
 
@@ -34,11 +34,11 @@
 	</font>
 </c:if>
 
-<FORM METHOD="post" ACTION="adm.do" name="form1">
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">
 <table border="0">
 	<tr>
 		<td>管理員編號:<font color=red><b>*</b></font></td>
-		<td><%=admVO.getAdm_no()%></td>
+		<td>${admVO.adm_no}</td>
 	</tr>
 	<tr>
 		<td>管理員帳號:</td>

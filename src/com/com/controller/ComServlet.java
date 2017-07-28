@@ -16,7 +16,7 @@ import com.com.model.ComVO;
 @WebServlet("/com/ComServlet.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 15 * 1024 * 1024, maxRequestSize = 5 * 15 * 1024 * 1024)
 public class ComServlet extends HttpServlet {
-
+	private static final long serialVersionUID = 1L;
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
@@ -77,15 +77,15 @@ public class ComServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("comVO", comVO);  // 新增成功後轉交listAllEmp.jsp
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/com/addCom.jsp");
+							.getRequestDispatcher("/Front_end/com/addCom.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/***************************2.開始新增資料***************************************/
 				ComService comSvc = new ComService();
-				comVO = comSvc.addCom(id, pwd, name, loc,lon,lat, com_desc,account, phone,logo,status);
+				comVO = comSvc.addCom(id, pwd, name, loc,lon,lat,com_desc,phone,account,logo,status);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/com/listAllCom.jsp";
+				String url = "/Front_end/com/listAllCom.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -94,7 +94,7 @@ public class ComServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/com/addCom.jsp");
+						.getRequestDispatcher("/Front_end/com/addCom.jsp");
 				failureView.forward(req, res);
 			}
 		}

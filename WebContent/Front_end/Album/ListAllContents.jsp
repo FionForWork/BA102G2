@@ -103,7 +103,8 @@
 
 				<a
 					href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
-					data-caption="Image caption" target="_blank"> <img
+					data-caption="Image caption" target="_blank"> 
+					<img
 					class="img-responsive img-thumbnail"
 					src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
 				</a>

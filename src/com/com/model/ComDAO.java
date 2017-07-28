@@ -28,7 +28,7 @@ public class ComDAO implements ComDAO_Interface {
 	
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')), ?, ?, ?, ?, ?, ?,?,?,?,?,?)";
+			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')),?,?, ?, ?, ?, ?,?,?,?,?,?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status FROM company order by com_no";
 		private static final String GET_ONE_STMT = 
