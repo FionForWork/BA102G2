@@ -125,7 +125,7 @@
 						<c:when test="<%= nowPage < 5 %>">
 							
 							<c:forEach var="page" begin="1" end="5">
-								<li><a href='<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}' class="btn btn-info">${page}</a></li>
+								<li><a href='<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}' class="btn btn-info ${nowPage.equals(page)?'active':'' }">${page}</a></li>
 							</c:forEach>
 							<c:if test="<%=pageNumber > 5 %>">
 								<li><a class='disabled'>...</a></li>
@@ -138,7 +138,7 @@
 							<li><a class='disabled'>...</a></li>
 							<c:forEach var="page" begin="<%= pageNumber -4 %>"
 								end="<%=pageNumber%>">
-								<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}" class="btn btn-info">${page}</a></li>
+								<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}" class="btn btn-info ${nowPage.equals(page)?'active':'' }">${page}</">${page}</a></li>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
@@ -146,7 +146,7 @@
 							<li><a class='disabled'>...</a></li>
 							<c:forEach var="page" begin="<%=nowPage-2 %>"
 								end="<%=nowPage+2 %>">
-								<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}" class="btn btn-info">${page}</a></li>
+								<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}" class="btn btn-info ${nowPage.equals(page)?'active':'' }">${page}</">${page}</a></li>
 							</c:forEach>
 							<li><a class='disabled'>...</a></li>
 							<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=<%=pageNumber%>"><%=pageNumber %></a></li>
