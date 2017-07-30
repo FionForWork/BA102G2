@@ -20,18 +20,6 @@
 <body>
 
 
-	<%@ include file="before.file"%>
-
-
-	<div id="content">
-		<!-- Start .content-wrapper -->
-		<div class="content-wrapper">
-			<div class="row">
-				<!-- Start .row -->
-				<!-- Start .bredcrumb -->
-				<ul id="crumb" class="breadcrumb">
-				</ul>
-				
 				<c:if test="${not empty errorMsgs}">
 					<font color='red'>請修正以下錯誤:
 						<ul>
@@ -47,13 +35,12 @@
 					<div class="col-xs-12 col-sm-3">
 						<ul>
 							<li class="list-unstyled"><h3>
-								<span>廣告編號:${advertisingVO.adv_no}</span>
-								</h3>
-								<br> <img
+									<span>廣告編號:${advertisingVO.adv_no}</span>
+								</h3> <br> <img
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}"><br>
 								<span>廠商編號:${advertisingVO.com_no}</span><br> <span>廣告文字資料:${advertisingVO.text}</span><br>
 								<span>刊登日期:${advertisingVO.startDay}</span><br> <span>結束日期:${advertisingVO.endDay}</span><br>
-								<span>價格:${advertisingVO.price}</span><br> <span>狀態:${advertisingVO.status}</span><br>
+								<span>價格:${advertisingVO.price}</span><br> <span>狀態:${(advertisingVO.status==1)?"已審核":"未審核"}</span><br>
 								<form method="post"
 									action="<%=request.getContextPath()%>/advertising/advertising.do">
 									<input type="submit" value="修改"> <input type="hidden"
@@ -70,17 +57,7 @@
 					</div>
 
 				</c:forEach>
+				
 
-				<!-- End .breadcrumb -->
-			</div>
-			<!-- End .page-header -->
-		</div>
-		<!-- End .row -->
-	</div>
-	<!-- End .content-wrapper -->
-	<div class="clearfix"></div>
-
-
-	<%@ include file="after.file"%>
 </body>
-</html>	
+</html>

@@ -7,34 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="before.file"%>
 
-
-	<div id="content">
-		<!-- Start .content-wrapper -->
-		<div class="content-wrapper">
-			<div class="row">
-				<!-- Start .row -->
-				<!-- Start .bredcrumb -->
-				<ul id="crumb" class="breadcrumb">
-				</ul>
-	<jsp:useBean id="advertisingSvc" scope="page" class="com.advertising.model.AdvertisingService" />				
-				<li><a href='addAdvertising.jsp'>Add</a> a new AD</li>
-				
-				
-				
-				<!-- End .breadcrumb -->
-			</div>
-			<!-- End .page-header -->
-		</div>
-		<!-- End .row -->
+	<div class="mobile-main-choice visible-xs">
+		<a href="ad.jsp">所有廣告</a>
+		<a href="select_ad.jsp?status=0">未審核廣告</a>
+		<a href="select_ad.jsp?status=1">已審核廣告</a>
 	</div>
-	<!-- End .content-wrapper -->
-	<div class="clearfix"></div>
 
 
-
-
-	<%@ include file="after.file"%>
 </body>
 </html>

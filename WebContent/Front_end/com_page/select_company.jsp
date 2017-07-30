@@ -4,6 +4,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>	
+<%@ page import="com.service_type.model.*"%>
+<%@ page import="com.serv.model.*"%>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +18,14 @@
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	session.setAttribute("comList", comList);
-	List<String> comno = new ArrayList<String>();
+	
+	Service_TypeService service_TypeSvc = new Service_TypeService();
+	Service_TypeVO service_TypeVO = service_TypeSvc.getOneServiceType("0001");
+	session.setAttribute("service_TypeVO", service_TypeVO);
+	
+	ServService servServiceSvc = new ServService();
+	List<ServVO> servServiceList = servServiceSvc.getAll();
+	session.setAttribute("servServiceList", servServiceList);
 %>
 </head>
 <body>
@@ -34,7 +43,6 @@
 			</div>
 			<!--圖===========================================================================-->
 			<div class="col-xs-12 col-md-10">
-			
 				<c:forEach var="comVO" items="${comList}">
 				<div class="col-xs-12 col-sm-3">
 						<ul class="album_box">
@@ -44,9 +52,8 @@
 									<h3>${comVO.name}</h3>
 							</a></li>
 						</ul>
-					</div>			
-				</c:forEach>	
-
+					</div>	
+				</c:forEach>
 			</div>
 			<!--圖===========================================================================-->
 		</div>

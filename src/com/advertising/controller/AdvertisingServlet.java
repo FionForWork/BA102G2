@@ -30,7 +30,7 @@ public class AdvertisingServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("action=" + action);
+		System.out.println("ACTION=" + action);
 		if ("getOne_For_Update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -49,14 +49,14 @@ public class AdvertisingServlet extends HttpServlet {
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
 				req.setAttribute("advertisingVO", advertisingVO); // 資料庫取出的物件,存入req
-				String url = "/Back_end/advertising/updateAdvertising.jsp";
+				String url = "/Back_end/advertising/updateAdvertisingTest.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Back_end/advertising/listAllAdvertising.jsp");
+						.getRequestDispatcher("/Back_end/advertising/listAllAdvertisingTest.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -68,8 +68,6 @@ public class AdvertisingServlet extends HttpServlet {
 				/******************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				System.out.println(req.getParameter("startday"));
-				System.out.println(req.getParameter("endday"));
 				String adv_no = new String(req.getParameter("adv_no"));
 
 				Timestamp startday = null;
@@ -112,7 +110,7 @@ public class AdvertisingServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("advertisingVO", advertisingVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Back_end/advertising/updateAdvertising.jsp");
+							.getRequestDispatcher("/Back_end/advertising/updateAdvertisingTest.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -125,40 +123,14 @@ public class AdvertisingServlet extends HttpServlet {
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
 				req.setAttribute("advertisingVO", advertisingVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/Back_end/advertising/listOneAdvertising.jsp";
+				String url = "/Back_end/advertising/listOneAdvertisingTest.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/updateAdvertising.jsp");
-				failureView.forward(req, res);
-			}
-		}
-
-		if ("delete".equals(action)) {
-
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 ***************************************/
-				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO=" + adv_no);
-				/*************************** 2.開始刪除資料 ***************************************/
-				AdvertisingService advertisingSvc = new AdvertisingService();
-				advertisingSvc.deleteAdvertising(adv_no);
-				/***************************
-				 * 3.刪除完成,準備轉交(Send the Success view)
-				 ***********/
-				String url = "/Back_end/advertising/listAllAdvertising.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-				successView.forward(req, res);
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Back_end/advertising/listAllAdvertising.jsp");
+						.getRequestDispatcher("/Back_end/advertising/updateAdvertisingTest.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -200,7 +172,7 @@ public class AdvertisingServlet extends HttpServlet {
 
 				Integer price = null;
 				try {
-					price = new Integer(req.getParameter("price").trim());
+					price = new Integer((int) (endday.getTime() - startday.getTime()) / (100 * 60 * 60 * 24) * 1000);
 				} catch (NumberFormatException e) {
 					price = 0;
 					errorMsgs.add("價格請填數字.");
@@ -221,7 +193,7 @@ public class AdvertisingServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("advertisingVO", advertisingVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Back_end/advertising/addAdvertising.jsp");
+							.getRequestDispatcher("/Back_end/advertising/addAdvertisingTest.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -252,18 +224,96 @@ public class AdvertisingServlet extends HttpServlet {
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)
 				 ***********/
-				String url = "/Back_end/advertising/listAllAdvertising.jsp";
+				String url = "/Back_end/advertising/listAllAdvertisingTest.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/addAdvertising.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Back_end/advertising/addAdvertisingTest.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
+		if ("getOne_For_Display".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			try {
+				String adv_no = new String(req.getParameter("adv_no"));
+				System.out.println("ADV_NO:" + adv_no);
+				
+				String status = req.getParameter("status");
+				req.setAttribute("status", status);
+				String whichPage = req.getParameter("whichPage");
+				req.setAttribute("whichPage", whichPage);
+
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(adv_no);
+
+				req.setAttribute("listOneAdContent", advertisingVO);
+				String url = requestURL;
+				req.getRequestDispatcher(url).forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要展示的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("delete".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			try {
+				String whichPage = req.getParameter("whichPage");
+				
+				String adv_no = new String(req.getParameter("adv_no"));
+				System.out.println("ADV_NO=" + adv_no);
+
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				advertisingSvc.deleteAdvertising(adv_no);
+
+				String url = requestURL+"?whichPage="+whichPage;
+				req.getRequestDispatcher(url).forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("approved".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			try {
+				String whichPage = req.getParameter("whichPage");
+				
+				String adv_no = new String(req.getParameter("adv_no"));
+				System.out.println("ADV_NO:" + adv_no);
+				
+				AdvertisingVO advertisingVO = new AdvertisingVO();
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
+
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
+						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
+						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
+						oldAdvertisingVO.getVdo(), "1");
+
+				req.setAttribute("advertisingVO", advertisingVO);
+				String url = requestURL+"?whichPage="+whichPage+"&adv_no="+adv_no;
+				req.getRequestDispatcher(url).forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 	public String getFileNameFromPart(Part part) {

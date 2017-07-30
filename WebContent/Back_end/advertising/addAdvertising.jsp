@@ -77,11 +77,11 @@
 				<td><input type="text" id="endday" name="endday"
 					value="<%=(advertisingVO == null) ? "" : advertisingVO.getEndDay()%>"></td>
 			</tr>
-			<tr>
-				<td>價格:</td>
-				<td><input type="TEXT" name="price" size="45"
-					value="<%=(advertisingVO == null) ? "" : advertisingVO.getPrice()%>" /></td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td>價格:</td> -->
+<!-- 				<td><input type="TEXT" name="price" size="45" -->
+<%-- 					value="<%=(advertisingVO == null) ? "" : advertisingVO.getPrice()%>" /></td> --%>
+<!-- 			</tr> -->
 
 		</table>
 		<br> <input type="hidden" name="status" value="0"> <input
