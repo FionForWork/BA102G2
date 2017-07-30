@@ -28,7 +28,7 @@ public class ProblemJNDIDAO implements Problem_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO PROBLEM (prob_no,type,title,content,reply) VALUES (PROB_NO_sq.NEXTVAL, ?, ?, ?, ?)";
+			"INSERT INTO PROBLEM (prob_no,problem_type_no,content,reply) VALUES (lpad(PROB_NO_sq.NEXTVAL,4,'0'), ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM PROBLEM order by prob_no";
 		private static final String GET_ONE_STMT = 
@@ -36,7 +36,7 @@ public class ProblemJNDIDAO implements Problem_interface{
 		private static final String DELETE = 
 			"DELETE FROM PROBLEM where prob_no = ?";
 		private static final String UPDATE = 
-				"UPDATE PROBLEM set type=?, title=?,content=?,reply=? where prob_no=?";
+			"UPDATE PROBLEM set problem_type_no=?,content=?,reply=? where prob_no=?";
 			
 		
 		
@@ -51,10 +51,10 @@ public class ProblemJNDIDAO implements Problem_interface{
 
 				
 				
-				pstmt.setInt(1, problemVO.getType());
-				pstmt.setString(2, problemVO.getTitle());
-				pstmt.setString(3, problemVO.getContent());
-				pstmt.setString(4, problemVO.getReply());
+				pstmt.setInt(1, problemVO.getProblem_type_no());
+				
+				pstmt.setString(2, problemVO.getContent());
+				pstmt.setString(3, problemVO.getReply());
 				
 				pstmt.executeUpdate();
 
@@ -90,11 +90,12 @@ public class ProblemJNDIDAO implements Problem_interface{
 				pstmt = con.prepareStatement(UPDATE);
 
 				
-				pstmt.setInt(1, problemVO.getType());
-				pstmt.setString(2, problemVO.getTitle());
-				pstmt.setString(3, problemVO.getContent());
-				pstmt.setString(4, problemVO.getReply());
-				pstmt.setInt(5, problemVO.getProb_no());
+				
+				pstmt.setInt(1, problemVO.getProblem_type_no());
+				
+				pstmt.setString(2, problemVO.getContent());
+				pstmt.setString(3, problemVO.getReply());
+				pstmt.setInt(4, problemVO.getProb_no());
 				
 				pstmt.executeUpdate();
 
@@ -179,8 +180,8 @@ public class ProblemJNDIDAO implements Problem_interface{
 					
 					problemVO = new ProblemVO();
 					problemVO.setProb_no(rs.getInt("prob_no"));
-					problemVO.setType(rs.getInt("type"));
-					problemVO.setTitle(rs.getString("title"));
+					problemVO.setProblem_type_no(rs.getInt("problem_type_no"));
+					
 					problemVO.setContent(rs.getString("content"));
 					problemVO.setReply(rs.getString("reply"));
 					
@@ -233,8 +234,8 @@ public class ProblemJNDIDAO implements Problem_interface{
 				while (rs.next()) {
 					problemVO = new ProblemVO();
 					problemVO.setProb_no(rs.getInt("prob_no"));
-					problemVO.setType(rs.getInt("type"));
-					problemVO.setTitle(rs.getString("title"));
+					problemVO.setProblem_type_no(rs.getInt("problem_type_no"));
+					
 					problemVO.setContent(rs.getString("content"));
 					problemVO.setReply(rs.getString("reply"));
 					

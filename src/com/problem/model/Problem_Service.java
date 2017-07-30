@@ -9,10 +9,10 @@ public class Problem_Service {
 	public Problem_Service(){
 		dao=new ProblemJNDIDAO();
 	}
-	public ProblemVO addProblem(Integer type,String title,String content,String reply){
+	public ProblemVO addProblem(Integer problem_type_no,String content,String reply){
 		ProblemVO problemVO = new ProblemVO();
-		problemVO.setType(type);
-		problemVO.setTitle(title);
+		problemVO.setProblem_type_no(problem_type_no);
+		
 		problemVO.setContent(content);
 		problemVO.setReply(reply);
 		dao.insert(problemVO);;
@@ -20,11 +20,11 @@ public class Problem_Service {
 		
 	}
 	
-	public ProblemVO updataProblem(Integer prob_no,Integer type,String title,String content,String reply){
+	public ProblemVO updataProblem(Integer prob_no,Integer problem_type_no,String content,String reply){
 		ProblemVO problemVO = new ProblemVO();
 		problemVO.setProb_no(prob_no);
-		problemVO.setType(type);
-		problemVO.setTitle(title);
+		problemVO.setProblem_type_no(problem_type_no);
+		
 		problemVO.setContent(content);
 		problemVO.setReply(reply);
 		dao.update(problemVO);
@@ -35,11 +35,11 @@ public class Problem_Service {
 		return dao.getAll();
 	}
 
-	public ProblemVO getOneDept(Integer prob_no) {
+	public ProblemVO getOneProblem(Integer prob_no) {
 		return dao.findByPrimaryKey(prob_no);
 	}
 
-	public void deleteDept(Integer prob_no) {
+	public void deleteproblem(Integer prob_no) {
 		dao.delete(prob_no);
 	}
 

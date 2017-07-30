@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <!-- Mobile specific metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Force IE9 to render in normal mode -->
+    <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- <link rel='stylesheet' type='text/css' <!--[if lt IE 9]> -->
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <![endif]-->
+        <!-- Css files -->
+        <!-- Icons -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/icons.css" rel="stylesheet" />
+        <!-- jQueryUI -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
+        <!-- Bootstrap stylesheets (included template modifications) -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- Plugins stylesheets (all plugin custom css) -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/plugins.css" rel="stylesheet" />
+        <!-- Main stylesheets (template main css file) -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/main.css" rel="stylesheet" />
+        <!-- Custom stylesheets ( Put your own changes here ) -->
+        <link href="<%=request.getContextPath()%>/Back_end/problem/assets/css/custom.css" rel="stylesheet" />
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%=request.getContextPath()%>/Back_end/problem/assets/img/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%=request.getContextPath()%>/Back_end/problem/assets/img/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%=request.getContextPath()%>/Back_end/problem/assets/img/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="<%=request.getContextPath()%>/Back_end/problem/assets/img/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="icon" href="<%=request.getContextPath()%>/Back_end/problem/assets/img/ico/favicon.ico" type="image/png">
+        <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+        <meta name="msapplication-TileColor" content="#3399cc" />
+    </head>
+    <body>
+        <!-- Start #header -->
+        <div id="header">
+            <div class="container-fluid">
+                <div class="navbar">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">
+                            <span class="text-logo"> SHE SAYS YES!</span>
+                        </a>
+                    </div>
+                    <nav class="top-nav" role="navigation">
+                        <ul class="nav navbar-nav pull-right">
+                           
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
+                                <ul class="dropdown-menu notification-menu right" role="menu">
+                                    <li class="clearfix">
+                                        <i class="ec-chat"></i> 
+                                        <a href="#" class="notification-user"> Ric Jones </a> 
+                                        <span class="notification-action"> replied to your </span> 
+                                        <a href="#" class="notification-link"> comment</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown">
+                                    <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">SuggeElson</a>
+                                <ul class="dropdown-menu right" role="menu">
+                                    <li><a href="profile.html"><i class="st-user"></i> Profile</a>
+                                    </li>
+                                    <li><a href="file.html"><i class="st-cloud"></i> Files</a>
+                                    </li>
+                                    <li><a href="#"><i class="st-settings"></i> Settings</a>
+                                    </li>
+                                    <li><a href="login.html"><i class="im-exit"></i> Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Start .header-inner -->
+        </div>
+        <!-- End #header -->
+        <!-- Start #sidebar -->
+        <div id="sidebar">
+            <!-- Start .sidebar-inner -->
+            <div class="sidebar-inner">
+                <!-- Start #sideNav -->
+                <ul id="sideNav" class="nav nav-pills nav-stacked">
+                    <li class="top-search">
+                        <form>
+                            <input type="text" name="search" placeholder="Search ...">
+                            <button type="submit"><i class="ec-search s20"></i>
+                            </button>
+                        </form>
+                    </li>
+                    <li><a href="#"><i class="en-users"></i>一般會員管理 </a>
+                        
+                    </li>
+                    <li><a href="#"><i class="en-users"></i>廠商管理 </a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="en-users"> </i>管理者設定 </a>
+                    </li>
+                    <li><a href="#"> 廣告刊登管理 <i class="im-table2"></i></a>
+                    </li>
+                    <li><a href="#"> 景點管理 <i class="br-location"></i></a>
+                    </li>
+                    <li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a>
+                    </li>
+                    <li><a href="#"><i class="fa-shopping-cart"></i> 商城管理</a>
+                    </li>
+                    <li><a href="#"><i class="im-list2"></i> 參數管理</a>
+                    </li>
+                    <li><a href="#"><i class="ec-mail"></i> 聯絡我們管理 </a>
+                    </li>
+                    <li><a href="#"><i class="im-question"></i>常見問題管理</a>
+                    </li>
+                    <li><a href="#">檢舉管理 <i class="br-warning"></i></a>
+                    </li>
+                </ul>
+                <!-- End #sideNav -->
+            </div>
+            <!-- End .sidebar-inner -->
+        </div>
+        <!-- End #sidebar -->
+        <!-- Start #content -->
+        <div id="content">
+            <!-- Start .content-wrapper -->
+            <div class="content-wrapper">
+                <div class="row">
+                <ul id="crumb" class="breadcrumb">
+                        <div><h3>常見問題管理</h3></div>
+                        </ul>
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Q&A管理
+                        <div class="text-center" style="float:right" >
+                        
+                            <button class="btn btn-info"  data-toggle="modal" data-target="#Modal"><a href='<%=request.getContextPath()%>/Back_end/problem/add_problem.jsp'>新增Q&A</a></button>
+                        </div>
+                        </h4>
+                    </div>
+<!-- ===================================================================================================== -->
+
+
+
+<!-- =================================================================================================== -->
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="10%">Q&A編號</th>
+                                    <th width="10%">Q&A類別</th>
+                                    <th width="30%">Q&A問題</th>
+                                    <th width="30%">Q&A回答</th>
+                                    <th width="10%">Q&A修改</th>
+                                    <th width="10%">Q&A移除</th>
+                                </tr>
+                            </thead>

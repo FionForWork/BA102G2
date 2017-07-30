@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="BIG5"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>BA102G2</display-name>
   <welcome-file-list>
@@ -16,41 +16,38 @@
     <res-auth>Container</res-auth>
   </resource-ref>
   <servlet>
-		<servlet-name>ComServlet</servlet-name>
-		<servlet-class>com.com.controller.ComServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ComServlet</servlet-name>
-		<url-pattern>/com/com.do</url-pattern>
-	</servlet-mapping>
-	
+    <servlet-name>ComServlet</servlet-name>
+    <servlet-class>com.com.controller.ComServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ComServlet</servlet-name>
+    <url-pattern>/com/com.do</url-pattern>
+  </servlet-mapping>
   <servlet>
-		<servlet-name>AdmServlet</servlet-name>
-		<servlet-class>com.adm.controller.AdmServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdmServlet</servlet-name>
-		<url-pattern>/adm/adm.do</url-pattern>
-	</servlet-mapping>
-  
-    <servlet>
-		<servlet-name>AutServlet</servlet-name>
-		<servlet-class>com.aut.controller.AutServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AutServlet</servlet-name>
-		<url-pattern>/aut/aut.do</url-pattern>
-	</servlet-mapping>
-
- 	<servlet>
-		<servlet-name>MemServlet</servlet-name>
-		<servlet-class>com.mem.controller.MemServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MemServlet</servlet-name>
-		<url-pattern>/mem/mem.do</url-pattern>
-	</servlet-mapping>
-	<servlet>
+    <servlet-name>AdmServlet</servlet-name>
+    <servlet-class>com.adm.controller.AdmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdmServlet</servlet-name>
+    <url-pattern>/adm/adm.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AutServlet</servlet-name>
+    <servlet-class>com.aut.controller.AutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AutServlet</servlet-name>
+    <url-pattern>/aut/aut.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MemServlet</servlet-name>
+    <servlet-class>com.mem.controller.MemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemServlet</servlet-name>
+    <url-pattern>/mem/mem.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>AlbServlet</servlet-name>
     <servlet-class>com.album.controller.AlbServlet</servlet-class>
   </servlet>
@@ -90,4 +87,13 @@
     <servlet-name>UploadPhotoToDBDAO</servlet-name>
     <url-pattern>/UploadPhotoToDBDAO</url-pattern>
   </servlet-mapping>
+  <servlet>
+		<servlet-name>ProblemServlet</servlet-name>
+		<servlet-class>com.problem.controller.ProblemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProblemServlet</servlet-name>
+		<url-pattern>/Problem/Problem.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

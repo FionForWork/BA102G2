@@ -1,0 +1,12 @@
+.thead{
+   
+      font-size: 1.5em;
+     box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+ 
+};
+.subjects{
+	font-size: 1.2em;
+};
+.subjects-text{
+	display:block;
+}
