@@ -19,7 +19,7 @@ public class TempContDAO implements TempContDAO_Interface {
 	private static final String DELETE_SQL = "delete from tempcont where tcont_no = ?";
 	private static final String UPDATE_SQL = "update tempcont set temp_no=?,upload_date=?,img=?,vdo=? where tcont_no = ?";
 	private static final String FIND_BY_PK = "select * from tempcont where tcont_no = ?";
-	private static final String FIND_ALL_BY_TEMP_NO = "select * from tempcont where temp_no = ?";
+	private static final String FIND_ALL_BY_TEMP_NO = "select * from tempcont where temp_no = ? order by upload_date desc";
 	private static final String FIND_ALL = "select * from tempcont";
 	private static final String COUNT_SQL = "select count(*) from tempcont where temp_no = ? ";
 

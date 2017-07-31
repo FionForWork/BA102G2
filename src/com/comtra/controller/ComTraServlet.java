@@ -27,13 +27,16 @@ public class ComTraServlet extends HttpServlet {
 		
 		/********* 刪除我的最愛 *********/
 		if("delete_ComTra".equals(action)){
+			
 			try{
 				String comtra_no = request.getParameter("comtra_no");
+				String nowPage = request.getParameter("nowPage");
 				System.out.println("comtra_no   " +comtra_no);
 				comtraSvc.deleteComTra(comtra_no);
-				String url = "/Front_end/ComTra/ListAllComTra.jsp";
+				String url = "/Front_end/ComTra/ListAllComTra.jsp?nowPage="+nowPage;
 				request.getRequestDispatcher(url).forward(request, response);
 				System.out.println("success");
+				
 				
 			}catch(Exception e){
 				System.out.println("error");

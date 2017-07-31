@@ -58,12 +58,25 @@
 <!--這裡開始===========================================================================-->
 
             <div class="col-md-8 col-offset-1">
-			<table class="table table-hover table-responsive" id="tempList">
-				<caption>待挑選成品清單</caption>
+            
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+				<li class="active"><a data-toggle="tab" href="#unselect">未挑選</a></li>
+				<li><a data-toggle="tab" href="#selected">已挑選</a></li>
 
+			</ul>
+
+			<br>
+
+
+			<div class="tab-content">
+				<div id="unselect" class="tab-pane fade in active">
+            
+            
+            
+			<table class="table table-hover table-responsive" id="tempList">
 				<thead>
 					<tr>
-						<th>#</th>
+						
 						<th>待挑選作品</th>
 						<th>廠商名稱</th>
 						<th>可挑選數量</th>
@@ -75,18 +88,53 @@
 				<tbody>
 					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(mem_no)}"
 						varStatus="s">
-						<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
-							<td>${s.count}</td>
+						<c:if test='${tempVO.status.equals("未挑選")}'>
+						<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
+							
 							<td>${tempVO.name }</td>
 							<td>${comSvc.getOneCom(tempVO.com_no).name}</td>
 							<td>${tempVO.available}</td>
 							<td>${tempVO.create_date.toString().substring(0,10)}</td>
 							<td>${tempVO.status}</td>
 						</tr>
-						</form>
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</table>
+			</div>
+			
+			<div id="selected" class="tab-pane fade">
+			<table class="table table-hover table-responsive" id="tempList">
+				<thead>
+					<tr>
+						<th>待挑選作品</th>
+						<th>廠商名稱</th>
+						<th>可挑選數量</th>
+						<th>拍攝時間</th>
+						<th>狀態</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(mem_no)}"
+						varStatus="s">
+						<c:if test='${tempVO.status.equals("已挑選")}'>
+						<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
+							
+							<td>${tempVO.name }</td>
+							<td>${comSvc.getOneCom(tempVO.com_no).name}</td>
+							<td>${tempVO.available}</td>
+							<td>${tempVO.create_date.toString().substring(0,10)}</td>
+							<td>${tempVO.status}</td>
+						</tr>
+						</c:if>
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
+			
+			
+			</div>
 		</div>
 	</div>
 </div>

@@ -150,7 +150,7 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
 
-					<div class="image">
+					<div class="image-container">
 						<c:if test="${tempContVO.vdo != null}">
 							<a
 								href="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"

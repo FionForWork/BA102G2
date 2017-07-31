@@ -19,6 +19,8 @@ import com.mem.model.MemService;
 import com.mem.model.MemVO;
 import com.tempcont.model.TempContService;
 import com.tempcont.model.TempContVO;
+import com.works.model.WorksService;
+import com.works.model.WorksVO;
 
 public class ShowPictureServletDAO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -77,6 +79,21 @@ public class ShowPictureServletDAO extends HttpServlet {
 			MemVO memVO = memSvc.getOneMem(pk);
 			picture = memVO.getPicture();
 			out.write(picture);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("works_no")){
+			pk = request.getParameter("works_no");
+			byte[] work =null;
+			System.out.println(pk);
+			WorksService worksSvc = new WorksService();
+			WorksVO worksVO = worksSvc.getOneWork(pk);
+			if(worksVO.getImg() == null){
+				work = worksVO.getVdo();
+			}else{
+				work = worksVO.getImg();
+			}
+			out.write(work);
 			out.close(); 
 			return;
 		}

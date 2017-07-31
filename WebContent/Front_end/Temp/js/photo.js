@@ -34,6 +34,17 @@ $(document).ready(function(){
     	$("#selectModal").modal();
     });   
     
+    
+    $("#inputFile").fileinput({
+        maxFileCount: 50,
+        allowedFileTypes: ["image", "video"],
+        language: 'zh-TW', //设置语言
+        dropZoneEnabled: true,//是否显示拖拽区域
+        showUpload: false,
+        theme: "fa",
+        
+    });  
+    
 //	$(".transferConfirm").click(function(){
 //		
 //		$("#snackbar").addClass("show");

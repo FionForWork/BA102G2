@@ -155,12 +155,11 @@ $("document").ready(function(){
 			</select> 
 			<br>
 			<label for="upload">選擇作品上傳 <span class='errorMsgs'> ${errorMsgs.get("file")}</span></label>
-			<input type="file" class="form-control" name="uploadTempCont" id="upload"
-								onchange="preview_images()" multiple>
+			<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading"> <br>
 			<input type="submit" value="建立">
 			<input type ="submit" onclick="history.back()" value="取消"></input>
 			<br>		
-			<div id="showPanel" class="img-group flex-container padding">
+			
 			
 			</div>
 			<input type='hidden' name='action' value='create_Temp'>

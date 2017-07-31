@@ -19,7 +19,7 @@ public class ContentDAO implements ContentDAO_Interface {
 	private static final String DELETE_SQL = "delete from content where cont_no = ?";
 	private static final String UPDATE_SQL = "update content set alb_no=?,upload_date=?,img=?,vdo=? where cont_no = ?";
 	private static final String FIND_BY_PK = "select * from content where cont_no = ?";
-	private static final String FIND_ALL_BY_ALB_NO = "select * from content where alb_no = ?";
+	private static final String FIND_ALL_BY_ALB_NO = "select * from content where alb_no = ? order by upload_date desc";
 	private static final String FIND_ALL = "select * from content";
 	private static final String COUNT_SQL = "select count(*) from content where alb_no = ? ";
 	private static DataSource ds = null;

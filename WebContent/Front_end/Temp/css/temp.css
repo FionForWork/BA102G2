@@ -18,19 +18,16 @@ h2{
         
 }
 
-div button {
-    margin-top: 10px;
-}
 .jumbotron {
     padding-top: 5px
 
 }
-.image{
+.image-container{
 	position: relative;
 	width:100%;
 	
 }
-.image img {
+.image-container img {
 	
 	padding:0px;
 	width:100%;
@@ -51,7 +48,7 @@ div button {
 	background: rgba(0,0,0,0.6);
 	
 }
-.image:hover .overlay{
+.image-container:hover .overlay{
 	opacity:1;
 	
 }
@@ -130,7 +127,7 @@ div button {
 }
 
 #tempList th, #tempList td {
-	text-align: left;
+	text-align: center;
 	/* Left-align text */
 	padding: 5px;
 	/* Add padding */

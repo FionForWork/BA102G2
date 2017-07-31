@@ -58,6 +58,10 @@
     height: 100%;
    
 }
+.panel .panel-footer div{
+	display:inline;
+	float:right;
+}
 .createAlbum {
     margin-bottom: 10px;
 }

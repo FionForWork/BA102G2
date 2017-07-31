@@ -69,11 +69,11 @@
 			<form action="<%=request.getContextPath()%>/content/content.do"
 				method="post" enctype="multipart/form-data">
 				<div class="modal fade" id="uploadModal" role="dialog">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-lg">
 
 						<!-- Modal content-->
 						<div class="modal-content">
-							<div class="modal-header" style="padding: 35px 50px;">
+							<div class="modal-header" style="padding: 20px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
 									<span class="glyphicon glyphicon-picture"></span> 上傳照片
@@ -81,12 +81,10 @@
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
 								<div class="form-group">
-									<label for="upload"> 選擇照片</label> <input type="file"
-										class="form-control" name="uploadPic" id="upload"
-										onchange="preview_images()" multiple>
-								</div>
+<!-- 									<label for="inputFile"> 選擇照片</label> 									 -->
+									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
 
-								<div id="showPanel"></div>
+								</div>
 
 								<input type='submit' class="btn btn-info btn-block" value="新增">
 							</div>
@@ -148,7 +146,7 @@
 				</div>
 				<!--  End Modal Delete Content -->
 				<div class="col-md-3 col-sm-3 col-xs-6">
-					<div class="image">
+					<div class="image-container gallery">
 						<c:if test="${contVO.vdo != null}">
 							<a
 								href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
@@ -162,7 +160,7 @@
 							</a>
 						</c:if>
 						<c:if test="${contVO.img != null}">
-							<a class='trigger' href="#" data-caption="Image caption"> <img
+							<a class='trigger' href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" data-caption="Image caption"> <img
 								class="img-responsive img-thumbnail original"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
 							</a>

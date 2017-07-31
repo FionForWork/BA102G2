@@ -10,15 +10,15 @@
 
 <%
 	//String alb_no = (String) request.getParameter("alb_no");
-	String alb_no = "0001";
+	String alb_no = "0003";
 	pageContext.setAttribute("alb_no", alb_no);
 %>
 <%
 	int contNum = contSvc.countContentsInSingleAlbum(alb_no);
-	int row = 3; 
+	int row = 4;
 	int rowOfCount = 0;
 	int nowRow = 1;
-	if (contNum % 3 != 0) {
+	if (contNum % row != 0) {
 		rowOfCount = contNum / row + 1;
 	} else {
 		rowOfCount = contNum / row;
@@ -27,7 +27,7 @@
 	pageContext.setAttribute("nowRow", nowRow);
 	pageContext.setAttribute("rowOfCount", rowOfCount);
 %>
-<%@ include file="page/photo_header.file"%>
+<%@ include file="page/photo_header_v2.file"%>
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 <div class="container">
@@ -127,7 +127,8 @@
 					</div>
 				</div>
 			</div>
-			<div class='dowebok'>
+			
+			<div class='row dowebok'>
 				<div class="list">
 					<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
 						varStatus="s">
@@ -158,62 +159,53 @@
 							</div>
 						</div>
 						<!--  End Modal Delete Content -->
-
+					
 						<c:if test="${contVO.img != null}">
-							<%
-								System.out.println(nowRow + "!!!!!!!!");
-								System.out.println(nowRow * rowOfCount - rowOfCount + "@@@@@@");
-							%>
 							<c:if test='${s.index == (nowRow * rowOfCount - rowOfCount)}'>
 								<ul>
 							</c:if>
 
-							<li>${s.index}<a class='trigger' href="#" data-caption="Image caption"> 
-								<img
-									class="img-responsive img-thumbnail original"
+							<li class='image'><a class='trigger' href="#" data-caption="Image caption">
+									<img class="img-responsive img-thumbnail original"
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
 							</a></li>
 
 							<c:if test='${s.index == (nowRow * rowOfCount-1)}'>
 								</ul>
 								<%
-									System.out.println("XXXXXXXXXXXX");
 									nowRow = nowRow + 1;
+									pageContext.setAttribute("nowRow", nowRow);
 								%>
 							</c:if>
 
-							<!-- 							<a class='trigger' href="#" data-caption="Image caption"> <img -->
-							<!-- 								class="img-responsive img-thumbnail original" -->
-							<%-- 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" /> --%>
-							<!-- 							</a> -->
 						</c:if>
 
-						<!-- 						<div class="overlap dropdown"> -->
-						<!-- 							<button class="btn btn-default btn-xs" type="submit" -->
-						<!-- 								class='dropbtn'> -->
-						<!-- 								<i class="fa fa-cog" aria-hidden="true"></i> -->
-						<!-- 							</button> -->
-						<%-- 							<div class='dropdownContent' id='dropdownContent${s.count}'> --%>
-						<%-- 								<form id="update${s.count}" --%>
-						<%-- 									action="<%=request.getContextPath()%>/content/content.do" --%>
-						<!-- 									method="post"> -->
-						<!-- 									<input type='hidden' name='action' value='setCover'> <input -->
-						<%-- 										type='hidden' name='cont_no' value='${contVO.cont_no}'> --%>
-						<%-- 									<input type='hidden' name='alb_no' value='<%=alb_no%>'> --%>
-						<!-- 									<a href='#' id='setCover' -->
-						<%-- 										onclick="document.getElementById('update${s.count}').submit();">設成封面</a> --%>
-						<!-- 								</form> -->
-						<%-- 								<form id="delete${s.count}" --%>
-						<%-- 									action="<%=request.getContextPath()%>/content/content.do" --%>
-						<!-- 									method="post"> -->
-						<%-- 									<input type='hidden' name='cont_no' value='${contVO.cont_no}'> --%>
-						<!-- 									<input type='hidden' name='action' value='delete_Content'> -->
-						<%-- 									<input type='hidden' name='alb_no' value='<%=alb_no%>'> --%>
-						<!-- 									<a href='#' data-toggle="modal" -->
-						<%-- 										data-target="#deleteModal${s.count}">刪除相片</a> --%>
-						<!-- 								</form> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
+						<div class="overlap dropdown">
+							<button class="btn btn-default btn-xs" type="submit"
+								class='dropbtn'>
+								<i class="fa fa-cog" aria-hidden="true"></i>
+							</button>
+							<div class='dropdownContent' id='dropdownContent${s.count}'>
+								<form id="update${s.count}"
+									action="<%=request.getContextPath()%>/content/content.do"
+									method="post">
+									<input type='hidden' name='action' value='setCover'> <input
+										type='hidden' name='cont_no' value='${contVO.cont_no}'>
+									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
+									<a href='#' id='setCover'
+										onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
+								</form>
+								<form id="delete${s.count}"
+									action="<%=request.getContextPath()%>/content/content.do"
+									method="post">
+									<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
+									<input type='hidden' name='action' value='delete_Content'>
+									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
+									<a href='#' data-toggle="modal"
+										data-target="#deleteModal${s.count}">刪除相片</a>
+								</form>
+							</div>
+						</div>
 
 					</c:forEach>
 					<br>

@@ -34,7 +34,16 @@ $(document).ready(function(){
     	$("#selectModal").modal();
     });   
     
-    
+    $("#inputFile").fileinput({
+        maxFileCount: 50,
+        allowedFileTypes: ["image", "video"],
+        language: 'zh-TW', //设置语言
+        showUpload: false,
+        theme: "fa",
+       
+        
+    });  
+    baguetteBox.run('.baguetteBoxOne');
 
 });
 function preview_images() {
@@ -49,6 +58,8 @@ function preview_images() {
       
      }
 }
+
+
 
 
 
