@@ -10,15 +10,15 @@
 <%
 	ComService comSvc = new ComService();
 	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
-	session.setAttribute("comVO", comVO);
-	
+	pageContext.setAttribute("comVO", comVO);
+
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
-	session.setAttribute("worksList", worksList);
-	
+	pageContext.setAttribute("worksList", worksList);
+
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
-	session.setAttribute("servList", servList);
+	pageContext.setAttribute("servList", servList);
 %>
 
 <html>
@@ -31,16 +31,16 @@
 	<%@ include file="before.file"%>
 
 	<c:forEach var="worksVO" items="${worksList}" begin="1" end="1">
-	<div class="fade-carousel">
-		<div class="home-banner fade-carousel" style="overflow: hidden;">
-			<div class="item slides">
-				<div></div>
-				<div class="slide-1 bg-cover lazy"
-					style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
-				<!--banner圖放這裡-->
+		<div class="fade-carousel">
+			<div class="home-banner fade-carousel" style="overflow: hidden;">
+				<div class="item slides">
+					<div></div>
+					<div class="slide-1 bg-cover lazy"
+						style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
+					<!--banner圖放這裡-->
+				</div>
 			</div>
 		</div>
-	</div>
 	</c:forEach>
 
 	<!--店家大頭照-->
@@ -60,7 +60,7 @@
 			<li><a href="#info" title="聯絡資訊"> 聯絡資訊 </a></li>
 			<li><a href="#album" title="作品"> 作品 </a></li>
 			<li><a href="#service" title="方案"> 方案 </a></li>
-			<li><a href="#about" title="關於我"> 關於我 </a></li>
+			<li><a href="#introduction" title="關於我"> 關於我 </a></li>
 		</ul>
 	</div>
 
@@ -71,18 +71,13 @@
 				<table class="table table-condensed">
 					<tbody>
 						<tr>
-							<th>營業時間</th>
-							<td>13:00 ~ 22:00</td>
-						</tr>
-
-						<tr>
 							<th>店休日</th>
-							<td>每個星期三固定公休</td>
+							<td>每周休六日</td>
 						</tr>
 
 						<tr>
 							<th>電話</th>
-							<td><a href="">${comVO.phone}</a></td>
+							<td>${comVO.phone}</td>
 						</tr>
 
 						<tr>
@@ -93,11 +88,6 @@
 						<tr>
 							<th>信箱</th>
 							<td><a href="">${comVO.id}</a></td>
-						</tr>
-
-						<tr>
-							<th>Line ID</th>
-							<td>@ba102</td>
 						</tr>
 					</tbody>
 				</table>
@@ -126,17 +116,20 @@
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="album_box">
-						<li class="list-unstyled"><a href="#"
-							class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
+						<li class="list-unstyled">
+						<a href="#"
+							class="img_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
 								<img class="album_image img-thumbnail"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
-						</a>
-						</li>
+								<div class="overlay">
+								<div class="img_text">${worksVO.works_desc}</div>
+								</div>
+						</a></li>
 					</ul>
 				</div>
 			</c:forEach>
-			
-			
+
+
 		</div>
 	</div>
 
@@ -145,10 +138,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#">
-					<div class="panel panel-default">
-						<div class="panel-body">查看所有內容</div>
-					</div>
+				<a href="#"> 
+					<a class="btn btn-default btn-lg" href="#"> 看更多
+					<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				</a>
 				</a>
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
@@ -211,7 +204,9 @@
 				<div class="col-xs-12 col-sm-8">基本介紹： ${comVO.com_desc}</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
+			
 				<div class="col-xs-12 col-sm-4">提供服務： 自助婚紗 婚紗包套</div>
+				
 				<div class="col-xs-12 col-sm-8"></div>
 			</div>
 		</div>

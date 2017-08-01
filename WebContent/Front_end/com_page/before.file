@@ -62,7 +62,7 @@
 		<div class="container">
 			<ul class="nav navbar-nav" class="collapse navbar-collapse">
 				<li class="wd-drop-wrapper">
-					<a itemprop="url" href="select_company.jsp">
+					<a itemprop="url" href="select_company.jsp?stype_no=0001">
 						<h3>
 							拍婚紗
 						</h3>
@@ -90,7 +90,7 @@
 				</li>
 
 				<li class="wd-drop-wrapper">
-					<a href="#">
+					<a href="select_company.jsp?stype_no=0002">
 						<h3>新秘</h3>
 					</a>
 					<!--RWD-->
@@ -116,7 +116,7 @@
 					</ol>
 				</li>
 				<li class="wd-drop-wrapper">
-					<a href="#">
+					<a href="select_company.jsp?stype_no=0003">
 						<h3>婚攝/婚錄</h3>
 					</a>
 					<!--RWD-->
