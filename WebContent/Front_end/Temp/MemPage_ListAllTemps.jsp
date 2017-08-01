@@ -59,6 +59,27 @@
 
             <div class="col-md-8 col-offset-1">
             
+            
+            	<!-- The lightbox Modal (img)-->
+			<div id="lightboxImgModal" class="modal">
+				<span class="closeImg">&times;</span> <img
+					class="lightbox-modal-content" id="lightboxImg">
+			</div>
+			<!-- The lightbox Modal (img)-->
+
+			<!-- The lightbox Modal (vdo)-->
+			<div id="lightboxVdoModal" class="modal">
+				<span class="closeVdo">&times;</span>
+				<video controls class="lightbox-modal-content" id="lightboxVdo" >
+					<source type="video/mp4">
+					您的瀏覽器不支援此撥放程式
+				</video>
+
+			</div>
+			<!-- The lightbox Modal (vdo)-->
+            
+            
+            
             <ul class="nav nav-tabs nav-justified" role="tablist">
 				<li class="active"><a data-toggle="tab" href="#unselect">未挑選</a></li>
 				<li><a data-toggle="tab" href="#selected">已挑選</a></li>

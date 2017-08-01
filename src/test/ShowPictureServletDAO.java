@@ -27,7 +27,7 @@ public class ShowPictureServletDAO extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		response.setContentType("image/jpeg");
+		//response.setContentType("image/jpeg");
 		ServletOutputStream out = response.getOutputStream();
 		String file = request.getQueryString();
 		String pk = null;

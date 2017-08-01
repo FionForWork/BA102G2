@@ -9,9 +9,9 @@
 	class="com.album.model.AlbumService"></jsp:useBean>
 
 <%
-	String alb_no = (String) request.getParameter("alb_no");
-	// 	String alb_no = "0001";
-	pageContext.setAttribute("alb_no",alb_no);
+	//String alb_no = (String) request.getParameter("alb_no");
+	String alb_no = "0001";
+	pageContext.setAttribute("alb_no", alb_no);
 %>
 
 <%@ include file="page/photo_header.file"%>
@@ -81,8 +81,9 @@
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
 								<div class="form-group">
-<!-- 									<label for="inputFile"> 選擇照片</label> 									 -->
-									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
+									<!-- 									<label for="inputFile"> 選擇照片</label> 									 -->
+									<input id="inputFile" name="inputFile[]" type="file" multiple
+										class="file-loading">
 
 								</div>
 
@@ -112,6 +113,32 @@
 					</div>
 				</div>
 			</div>
+
+
+
+
+			<!-- The lightbox Modal (img)-->
+			<div id="lightboxImgModal" class="modal">
+				<span class="closeImg">&times;</span> <img
+					class="lightbox-modal-content" id="lightboxImg">
+			</div>
+			<!-- The lightbox Modal (img)-->
+
+			<!-- The lightbox Modal (vdo)-->
+			<div id="lightboxVdoModal" class="modal">
+				<span class="closeVdo">&times;</span>
+				<video controls class="lightbox-modal-content" >
+					<source type="video/mp4" id="lightboxVdo" >
+					您的瀏覽器不支援此撥放程式
+				</video>
+
+			</div>
+			<!-- The lightbox Modal (vdo)-->
+
+
+
+
+
 
 			<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
 				varStatus="s">
@@ -146,24 +173,23 @@
 				</div>
 				<!--  End Modal Delete Content -->
 				<div class="col-md-3 col-sm-3 col-xs-6">
-					<div class="image-container gallery">
+					<div class="image-container">
 						<c:if test="${contVO.vdo != null}">
-							<a
-								href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
-								data-caption="Image caption" target="_blank"> <video
-									width="400" controls class="img-responsive img-thumbnail">
-									<source
-										src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
-										type="video/mp4">
-									您的瀏覽器不支援此撥放程式
-								</video>
-							</a>
+							<video width="400" controls class="img-responsive img-thumbnail bb">
+								<source
+									src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
+									type="video/mp4">
+								您的瀏覽器不支援此撥放程式
+							</video>
+
 						</c:if>
 						<c:if test="${contVO.img != null}">
-							<a class='trigger' href="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" data-caption="Image caption"> <img
-								class="img-responsive img-thumbnail original"
+
+							<img class="img-responsive img-thumbnail original aa"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
-							</a>
+
+
+
 						</c:if>
 
 						<div class="overlap dropdown">

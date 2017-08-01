@@ -107,6 +107,26 @@
 				</div>
 			</div>
 
+<!-- The lightbox Modal (img)-->
+			<div id="lightboxImgModal" class="modal">
+				<span class="closeImg">&times;</span> <img
+					class="lightbox-modal-content" id="lightboxImg">
+			</div>
+			<!-- The lightbox Modal (img)-->
+
+			<!-- The lightbox Modal (vdo)-->
+			<div id="lightboxVdoModal" class="modal">
+				<span class="closeVdo">&times;</span>
+				<video controls class="lightbox-modal-content" id="lightboxVdo" >
+					<source type="video/mp4">
+					您的瀏覽器不支援此撥放程式
+				</video>
+
+			</div>
+			<!-- The lightbox Modal (vdo)-->
+
+
+
 			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(com_no)}"
 				varStatus="s">
 				
@@ -155,17 +175,15 @@
 						<c:if test="${worksVO.vdo != null}">
 
 							<div class="polaroid">
-								<a
-									href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
-									data-caption="Image caption" target="_blank"> <video
-										width="400" controls class="img-responsive"
+								 <video
+										width="400" controls class="img-responsive bb"
 										style="width: 100%">
 										<source
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
 											type="video/mp4">
 										您的瀏覽器不支援此撥放程式
 									</video>
-								</a>
+								
 								<div class="caption">
 									<div class='form-group'>
 										<label for='name'>作品名稱</label> <input type='text' id='name'
@@ -189,12 +207,10 @@
 						</c:if>
 						<c:if test="${worksVO.img != null}">
 							<div class="polaroid">
-								<a
-									href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
-									data-caption="Image caption" target="_blank"> <img
-									class="img-responsive" style="width: 100%"
+								<img
+									class="img-responsive aa" style="width: 100%"
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}" />
-								</a>
+							
 								<div class="caption">
 									<div class='form-group'>
 										<label for='name'>作品名稱</label> <input type='text' id='name'

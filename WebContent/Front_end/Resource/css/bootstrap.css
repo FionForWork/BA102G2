@@ -5349,8 +5349,6 @@ button.list-group-item {
     color: inherit; }
   .list-group-item.disabled .list-group-item-text, .list-group-item.disabled:hover .list-group-item-text, .list-group-item.disabled:focus .list-group-item-text {
     color: #818181; }
-.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus { 
-  z-index: 2;
 /*
   color: #fff;
   background-color: #0779b3;

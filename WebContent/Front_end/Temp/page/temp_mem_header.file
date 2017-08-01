@@ -22,7 +22,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
- <script src="<%=request.getContextPath()%>/Front_end/Temp/js/photo.js" type="text/javascript"></script>
+ <script src="<%=request.getContextPath()%>/Front_end/Temp/js/mem_temp.js" type="text/javascript"></script>
 
 </head>
 

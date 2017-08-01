@@ -35,8 +35,6 @@
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
 
-<link href="<%=request.getContextPath()%>/Front_end/Album/dist/baguetteBox.min.css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/Front_end/Album/dist/baguetteBox.min.js"></script>
 
 
 

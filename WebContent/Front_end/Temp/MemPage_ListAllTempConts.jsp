@@ -21,7 +21,23 @@
 
 <%@ include file="page/temp_mem_header.file"%>
 
+<!-- The lightbox Modal (img)-->
+			<div id="lightboxImgModal" class="modal">
+				<span class="closeImg">&times;</span> <img
+					class="lightbox-modal-content" id="lightboxImg">
+			</div>
+			<!-- The lightbox Modal (img)-->
 
+			<!-- The lightbox Modal (vdo)-->
+			<div id="lightboxVdoModal" class="modal">
+				<span class="closeVdo">&times;</span>
+				<video controls class="lightbox-modal-content" id="lightboxVdo" >
+					<source type="video/mp4">
+					您的瀏覽器不支援此撥放程式
+				</video>
+
+			</div>
+			<!-- The lightbox Modal (vdo)-->
 
 <%///////// 顯示未挑選頁面 ///////// %>
 <c:if test='${temp.status.equals("未挑選")}'>
@@ -140,6 +156,12 @@
 				</div>
 			</div>
 		</div>
+		
+		
+			
+		
+		
+		
 		<form action="<%=request.getContextPath()%>/tempcont/tempcont.do"
 			method="post" id='selectTempCont'>
 			<c:forEach var="tempContVO"
@@ -152,24 +174,20 @@
 
 					<div class="image-container">
 						<c:if test="${tempContVO.vdo != null}">
-							<a
-								href="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
-								data-caption="Image caption" target="_blank"> <video
-									width="400" controls class="img-responsive img-thumbnail">
+							 <video
+									width="400" controls class="img-responsive img-thumbnail bb">
 									<source
 										src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
 										type="video/mp4">
 									您的瀏覽器不支援此撥放程式
 								</video>
-							</a>
+							
 						</c:if>
 						<c:if test="${tempContVO.img != null}">
-							<a
-								href="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
-								data-caption="Image caption" target="_blank"> <img
-								class="img-responsive img-thumbnail"
+							 <img
+								class="img-responsive img-thumbnail aa"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }" />
-							</a>
+							
 
 						</c:if>
 
@@ -257,26 +275,22 @@
 
 			<div class="col-md-3 col-sm-3 col-xs-6">
 
-				<div class="image">
+				<div class="image-container">
 					<c:if test="${tempContVO.vdo != null}">
-						<a
-							href="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
-							data-caption="Image caption" target="_blank"> <video
-								width="400" controls class="img-responsive img-thumbnail">
+						<video
+								width="400" controls class="img-responsive img-thumbnail bb">
 								<source
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
 									type="video/mp4">
 								您的瀏覽器不支援此撥放程式
 							</video>
-						</a>
+					
 					</c:if>
 					<c:if test="${tempContVO.img != null}">
-						<a
-							href="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
-							data-caption="Image caption" target="_blank"> <img
-							class="img-responsive img-thumbnail"
+						 <img
+							class="img-responsive img-thumbnail aa"
 							src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }" />
-						</a>
+						
 					</c:if>
 				</div>
 			</div>
