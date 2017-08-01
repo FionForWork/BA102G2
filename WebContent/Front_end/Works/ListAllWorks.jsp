@@ -68,7 +68,7 @@
 							<div class="modal-header" style="padding: 35px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
-									<span class="glyphicon glyphicon-picture"></span> 上傳照片或影片
+									<span class="glyphicon glyphicon-picture"></span> 上傳作品
 								</h4>
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
@@ -94,7 +94,10 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
 				<div class='text-right'>
+				<div class='btn-group'>
 				<button type="submit" class="btn btn-info text-right" id="uploadbtn" >新增作品</button>
+				<button class="btn btn-info text-right" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${com_no}'" >編輯作品</button>
+				</div>
 				</div>
 						
 					<div class="text-center">

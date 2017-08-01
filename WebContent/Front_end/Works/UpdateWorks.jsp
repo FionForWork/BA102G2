@@ -69,7 +69,7 @@
 							<div class="modal-header" style="padding: 35px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
-									<span class="glyphicon glyphicon-picture"></span> 上傳照片或影片
+									<span class="glyphicon glyphicon-picture"></span> 上傳作品
 								</h4>
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
@@ -96,8 +96,8 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class='text-right'>
 						<div class="btn-group text-right">
-							<button type="submit" class="btn btn-info" id="updateWorks">儲存修改</button>
-							<button type="submit" class="btn btn-info" id="uploadbtn">新增作品</button>
+							<button type="submit" class="btn btn-info" id="updateWorks"> 儲存修改 </button>
+							<button type="submit" class="btn btn-info" id="uploadbtn"> 新增作品 </button>
 						</div>
 					</div>
 
@@ -217,11 +217,6 @@
 						</form>
 						
 						
-						
-						
-						
-						
-						
 						<div class="overlap dropdown">
 							<button class="btn btn-default btn-xs" type="submit"
 								class='dropbtn'>
@@ -264,7 +259,7 @@ $("document").ready(function(){
 	    uploadAsync: true,
 	    browseOnZoneClick: true ,
 	    uploadExtraData: {
-	        com_no: "2001",
+	        com_no: "<%=com_no%>",
 	        action: "upload_Works",
 	    }
 	});
@@ -273,9 +268,16 @@ $("document").ready(function(){
         top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp";
 	});
 	
-	$("updateWorks").click(function(){
-		$(".updateForms").each().submit();
+	$("#updateWorks").click(function(){
+		$("[name~='updateForms']").each(function(){
+			$(this).ajaxSubmit();
+		});
+		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=<%=com_no%>";
 	});
+	
+		
+	
+	
 });
 	</script>
 	<%@ include file="page/works_footer.file"%>

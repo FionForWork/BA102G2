@@ -3,48 +3,7 @@ $(document).ready(function(){
         $("#uploadModal").modal();
     });
     
-    $(".overlay").on("click",function(){
-    	$(this).toggleClass("checked");
-    	$(this).find("i").toggleClass("fa-4x");
-    	$(this).find("span").toggle();
-    	
-    	var checkbox = $(this).parent().next("input[type=checkbox]");
-    	var selectedLength = $('input[type=checkbox]:checked').length; 
-    	if(checkbox.is(':checked')){
-    		
-    		$("#numberOfSelected").text(selectedLength - 1);
-    		console.log("checked");
-    	}else{
-    		console.log("uncheck");
-    		$("#numberOfSelected").text(selectedLength + 1);
-    	}
-    	
-    });
-    
-    $("#selectConfirm").click(function(){
-    	var selectedLength = $('input[type=checkbox]:checked').length;
-    	var availableNum = $("#availableNum").text();
-    	if( selectedLength === 0){
-    		$("#unselectedModal").modal();
-    		return;
-    	}else if(selectedLength > availableNum){
-    		$("#outOfAvailableModal").modal();
-    		return;
-    	}
-    	$("#selectModal").modal();
-    });   
-    
-    
-      
-    
-//	$(".transferConfirm").click(function(){
-//		
-//		$("#snackbar").addClass("show");
-//			console.log("XXXXXXX");
-//			setTimeout('$("#snackbar").removeClass("show")',5000);
-//			console.log("@@@@@@@@@@");
-//	});
-
+ 
 });
 function preview_images() {
 	

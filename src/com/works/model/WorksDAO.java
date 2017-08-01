@@ -3,6 +3,7 @@ package com.works.model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.Clob;
 
 public class WorksDAO implements WorksDAO_Interface {
 
@@ -134,7 +134,7 @@ public class WorksDAO implements WorksDAO_Interface {
 			pstmt = conn.prepareStatement(UPDATE_SQL);
 			pstmt.setString(1, works.getCom_no());
 			pstmt.setString(2, works.getName());
-			Clob clob = (Clob) conn.createClob();
+			Clob clob = conn.createClob();
 			clob.setString(1, works.getWorks_desc());
 			pstmt.setClob(3, clob);
 			pstmt.setBytes(4, works.getImg());
@@ -180,7 +180,7 @@ public class WorksDAO implements WorksDAO_Interface {
 			works.setWorks_no(rs.getString("WORKS_NO"));
 			works.setCom_no(rs.getString("COM_NO"));
 			works.setName(rs.getString("NAME"));
-			works.setUpload_date(rs.getTimestamp("UPDATE_DATE"));
+			works.setUpload_date(rs.getTimestamp("UPLOAD_DATE"));
 			works.setImg(rs.getBytes("IMG"));
 			works.setVdo(rs.getBytes("VDO"));
 			works.setWorks_desc(readString(rs.getCharacterStream("WORKS_DESC")));
@@ -230,7 +230,7 @@ public class WorksDAO implements WorksDAO_Interface {
 				works.setWorks_no(rs.getString("WORKS_NO"));
 				works.setCom_no(rs.getString("COM_NO"));
 				works.setName(rs.getString("NAME"));
-				works.setUpload_date(rs.getTimestamp("UPDATE_DATE"));
+				works.setUpload_date(rs.getTimestamp("UPLOAD_DATE"));
 				works.setImg(rs.getBytes("IMG"));
 				works.setVdo(rs.getBytes("VDO"));
 				works.setWorks_desc(readString(rs.getCharacterStream("WORKS_DESC")));
@@ -280,7 +280,7 @@ public class WorksDAO implements WorksDAO_Interface {
 				works.setWorks_no(rs.getString("WORKS_NO"));
 				works.setCom_no(rs.getString("COM_NO"));
 				works.setName(rs.getString("NAME"));
-				works.setUpload_date(rs.getTimestamp("UPDATE_DATE"));
+				works.setUpload_date(rs.getTimestamp("UPLOAD_DATE"));
 				works.setImg(rs.getBytes("IMG"));
 				works.setVdo(rs.getBytes("VDO"));
 				works.setWorks_desc(readString(rs.getCharacterStream("WORKS_DESC")));
@@ -348,15 +348,20 @@ public class WorksDAO implements WorksDAO_Interface {
 		
 	}
 	private static String readString(Reader reader) throws IOException{
-		StringBuilder sb = new StringBuilder();
-		BufferedReader br = new BufferedReader(reader);
-		String str;
-		while((str = br.readLine()) != null){
-			sb.append(str);
-			sb.append("/n");
+		if(reader != null){
+			StringBuilder sb = new StringBuilder();
+			BufferedReader br = new BufferedReader(reader);
+			String str;
+			while((str = br.readLine()) != null){
+				sb.append(str);
+				sb.append("\n");
+			}
+			br.close();
+			return sb.toString();
+		}else{
+			return null;
 		}
-		br.close();
-		return sb.toString();
+		
 	}
 		
 }

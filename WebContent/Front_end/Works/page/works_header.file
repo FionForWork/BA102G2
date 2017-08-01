@@ -36,6 +36,10 @@
 <script src="<%=request.getContextPath()%>/Front_end/Works/themes/explorer/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Works/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Works/js/zh-TW.js"></script>
+
+<script src="<%=request.getContextPath()%>/Front_end/Works/js/jquery-form.js"></script>
+
+
 </head>
 
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">

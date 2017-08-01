@@ -58,11 +58,15 @@ public class WorksServlet extends HttpServlet {
 		/********** 修改作品 **********/
 
 		if ("update_Works".equals(action)) {
+			System.out.println("update");
 			String works_no = request.getParameter("works_no");
+			System.out.println("works_no============"+works_no);
 			String com_no = request.getParameter("com_no");
+			System.out.println("com_no============"+com_no);
 			int totalOfWorks = worksSvc.CountWorksInOneComNo(com_no);
 			WorksVO works = worksSvc.getOneWork(works_no);
 			String name = request.getParameter("name");
+			System.out.println("name============"+name);
 			
 			// ===== 檢查日期是否為空值 ===== //
 			Timestamp upload_date = null;
@@ -73,9 +77,6 @@ public class WorksServlet extends HttpServlet {
 			}
 			String works_desc = request.getParameter("works_desc");
 			worksSvc.updateWorks(works_no, com_no, name, works_desc,works.getImg(),works.getVdo(), upload_date);
-			
-			String url ="/Front_end/Works/ListAllWorks.jsp?com_no="+com_no ;
-			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 
