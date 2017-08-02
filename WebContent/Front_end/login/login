@@ -1,0 +1,89 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+</div>	
+		 <div class="modal fade" id="mem" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
+        </div> 
+        <div class="modal-body" style="padding:40px 50px;">
+          <form action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+>
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>記住我</label>
+            </div>
+              <input type="hidden" name="action" value="login">
+              <button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>不是會員嗎? <a href="#">馬上註冊</a></p>
+          <p>忘記 <a href="#">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+  
+  
+  </div>	
+		 <div class="modal fade" id="com" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 廠商登入</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form action="<%= request.getContextPath() %>/com/com.do" method="post">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>記住我</label>
+            </div>
+            <input type="hidden" name="action" value="login">
+              <button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>還沒註冊成為廠商嗎? <a href="#">馬上註冊</a></p>
+          <p>忘記 <a href="#">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+	<script>
+$(document).ready(function(){
+    $("#loginmem").click(function(){
+        $("#mem").modal();
+    });
+});
+
+$(document).ready(function(){
+    $("#logincom").click(function(){
+        $("#com").modal();
+    });
+});
+</script>

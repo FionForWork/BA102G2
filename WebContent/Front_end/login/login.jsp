@@ -1,16 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ include file="/Front_end/mem/page/register_header.file"%>
-		
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <%@ include file="/Front_end/login/login"%>
+  
+  	
 		<div class="container">
 	<div class="row">
 	
-		<<div class="col-xs-12 col-sm-2"></div>
-		<div class="col-xs-12 col-sm-3" ><br><h3>·|­ûµn¤J</h3></div >
-		<div class="col-xs-12 col-sm-3"><br><h3>¼t°Óµn¤J</h3></div>
 		<div class="col-xs-12 col-sm-4"></div>
+		<div class="col-xs-12 col-sm-3" ><br><br><br><br><br><button type="button" class="btn btn-default btn-lg" id="loginmem">æœƒå“¡ç™»å…¥</button></div >
+		<div class="col-xs-12 col-sm-3"><br><br><br><br><br><button type="button" class="btn btn-default btn-lg" id="logincom">å» å•†ç™»å…¥</button></div>
+		<div class="col-xs-12 col-sm-2"></div>
 	</div>
+	<br><br><br><br><br><br><br><br><br>
 </div>
-		
-		
+
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

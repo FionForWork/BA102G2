@@ -268,7 +268,7 @@
         <div class="banner_hero text-center">
             <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
                 <b class="hello_word">
-           歡迎加入,成功加入後就可以使用所有功能!
+           歡迎加入,成為廠商就可以使用所有功能!
             </b>
             </h1>
             <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
@@ -294,23 +294,22 @@
     </div>
 </div>
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-  
+   
     <div class="container">
         <div class="row">
 <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2 col-xs-0">
-             <br><br><br> 
+            <div class="col-md-offset-1 col-md-2">
                 <ul class="list-group">
-                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua ">編輯廠商資料</a><br>
                     <a href="#" class="list-group-item menua">密碼修改</a><br>
                     <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
+                    <a href="#" class="list-group-item menua">行事曆</a><br>
+                    <a href="#" class="list-group-item menua">作品管理</a><br>
+                  
                 </ul>
 
-																				
-                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default">查看個人資料</a>
+				
+                <a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" name="action" value="insert" class="btn btn-block btn-default">查看廠商資料</a>
             </div>

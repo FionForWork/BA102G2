@@ -3,9 +3,9 @@
 
 <%
 
-Object memVO = session.getAttribute("memVO");     
+Object comVO = session.getAttribute("comVO");     
 %>
-<%@ include file="page/member_header.file"%>
+<%@ include file="page/company_header.file"%>
 <style type="text/css">
 			#big{
 				font-size:19px;
@@ -19,65 +19,63 @@ Object memVO = session.getAttribute("memVO");
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
 		<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">個人資料</h1>
 			<div class="form-group">
-				<span  >大頭貼 :</span><br>
-				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" />
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do"><input type="button" class="btn btn-info " value="修改頭貼">
+				<span  >logo :</span><br>
+				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" />
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do"><input type="button" class="btn btn-info " value="修改logo">
 			 	
 				</FORM>
 			</div>
 		
 		<div class="form-group">
 				<span>會員編號 :*</span>
-				${memVO.mem_no}
+				${comVO.com_no}
 		</div>
 
 		<div class="form-group">
 				<span>帳號 :</span>
-				${memVO.id}
+				${comVO.id}
 		</div>
 		<div class="form-group">
-				<span>姓名 :</span>
-				${memVO.name}
+				<span>廠商名稱 :</span>
+				${comVO.name}
 		</div>
 		<div class="form-group">
-				<span>性別 :</span>
-				${memVO.sex}
+				<span>廠商地址 :</span>
+				${comVO.loc}
 		</div>
 		<div class="form-group">
-				<span>帳號 :</span>
-				${memVO.name}
+				<span>廠商經度:</span>
+				${comVO.loc}
 		</div>
 		<div class="form-group">
-				<span>生日 :</span>
-				${memVO.bday}
+				<span>廠商緯度:</span>
+				${comVO.lat}
+		</div>
+		<div class="form-group">
+				<span>廠商介紹:</span>
+				${comVO.com_desc}
 		</div>
 		<div class="form-group">
 				<span>電話 :</span>
-				${memVO.phone}
+				${comVO.phone}
 		</div>
-		<div class="form-group">
-				<span>電子郵件 :</span>
-				${memVO.email}
-		</div>
+	
 		
 <div class="form-group">
 				<span>銀行帳戶 :</span>
-				${memVO.account}
+				${comVO.account}
 		</div>
 		
-		<div class="form-group">
-				<span>被檢舉次數 :</span>
-				${memVO.report}
-		</div>
+		
 		<div class="form-group">
 				<span>狀態 :</span>
-				${memVO.status}
+				${comVO.status}
 		</div>
 		
 
-		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
+		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
 			 <input type="submit" class="btn btn-info " value="修改">
-			 <input type="hidden" name="mem_no"value="${memVO.mem_no}" >
+			 <input type="hidden" name="com_no"value="${comVO.com_no}" >
 			 <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 	
 		
@@ -86,4 +84,4 @@ Object memVO = session.getAttribute("memVO");
 </div>
 
 
-<%@ include file="page/register_footer.file"%>
+<%@ include file="/Front_end/mem/page/register_footer.file"%>

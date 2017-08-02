@@ -69,10 +69,24 @@ public class MemService {
 		dao.delete(mem_no);
 	}
 
+	public MemVO getOneMemById(String id) {
+		return dao.findById(id);
+	}
+	
 	public MemVO getOneMem(String mem_no) {
 		return dao.findByPrimaryKey(mem_no);
 	}
 
+public List<MemVO> loginpwd(){
+		
+		return dao.loginpwd();
+	}
+	
+	public List<MemVO> loginid(){
+		
+		return dao.loginid();
+	}
+	
 	public List<MemVO> getAll() {
 		return dao.getAll();
 	}
