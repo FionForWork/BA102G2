@@ -14,7 +14,7 @@ public class MemService {
 	}
 	
 	public MemVO  addMem(String id,String pwd,String name,String sex,Date bday,String phone,
-			String email,String account,byte[] picture){
+			String email,String account,byte[] img){
 		
 		MemVO memVO = new MemVO();
 		
@@ -26,7 +26,7 @@ public class MemService {
 		memVO.setPhone(phone);
 		memVO.setEmail(email);
 		memVO.setAccount(account);
-		memVO.setPicture(picture);
+		memVO.setImg(img);
 
 		dao.insert(memVO);
 		return memVO;
@@ -35,7 +35,7 @@ public class MemService {
 	
 	
 	public MemVO updateMem(String mem_no,String id,String pwd,String name,String sex,Date bday,String phone,
-			String email,String account,byte[] picture){
+			String email,String account,byte[] img){
 		
 		MemVO memVO = new MemVO();
 		memVO.setMem_no(mem_no);
@@ -47,7 +47,7 @@ public class MemService {
 		memVO.setPhone(phone);
 		memVO.setEmail(email);
 		memVO.setAccount(account);
-		memVO.setPicture(picture);
+		memVO.setImg(img);
 
 		dao.update(memVO);
 		return memVO;

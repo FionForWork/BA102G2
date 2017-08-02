@@ -1,62 +1,75 @@
 package com.place.model;
 
-public class PlaceVO implements java.io.Serializable {
-	private String pla_no;
-	private String name;
-	private byte[] img;
-	private Double lat;
-	private Double lng;
-	private String addr;
+import java.io.Serializable;
 
-	public PlaceVO() {
-	}
+public class PlaceVO implements Serializable {
+    private String pla_no;
+    private String name;
+    private byte[] img;
+    private String lng;
+    private String lat;
+    private String addr;
 
-	public String getPla_no() {
-		return pla_no;
-	}
+    public PlaceVO() {
+        super();
+    }
 
-	public void setPla_no(String pla_no) {
-		this.pla_no = pla_no;
-	}
+    public PlaceVO(String pla_no, String name, byte[] img, String lng, String lat, String addr) {
+        super();
+        this.pla_no = pla_no;
+        this.name = name;
+        this.img = img;
+        this.lng = lng;
+        this.lat = lat;
+        this.addr = addr;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getPla_no() {
+        return pla_no;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPla_no(String pla_no) {
+        this.pla_no = pla_no;
+    }
 
-	public byte[] getImg() {
-		return img;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setImg(byte[] img) {
-		this.img = img;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Double getLat() {
-		return lat;
-	}
+    public byte[] getImg() {
+        return img;
+    }
 
-	public void setLat(Double lat) {
-		this.lat = lat;
-	}
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
 
-	public Double getLng() {
-		return lng;
-	}
+    public String getLng() {
+        return lng;
+    }
 
-	public void setLng(Double lng) {
-		this.lng = lng;
-	}
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
-	public String getAddr() {
-		return addr;
-	}
+    public String getLat() {
+        return lat;
+    }
 
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-	
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
 }

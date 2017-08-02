@@ -28,12 +28,12 @@ public class MemDAO implements MemDAO_Interface{
 	}
 	
 		private static final String INSERT_STMT = 
-			"INSERT INTO member (mem_no,id,pwd,name,sex,bday,phone,email,account,picture,report,status) VALUES ('1'||ltrim(TO_CHAR(MEMID_SQ.NEXTVAL,'009')), ?, ?, ?, ?, ?, ?, ?, ?, null, 0,'停權')";
+			"INSERT INTO member (mem_no,id,pwd,name,sex,bday,phone,email,account,img,report,status) VALUES ('1'||ltrim(TO_CHAR(MEMID_SQ.NEXTVAL,'009')), ?, ?, ?, ?, ?, ?, ?, ?, null, 0,'停權')";
 
 		private static final String GET_ALL_STMT = 
-			"SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status FROM member order by mem_no";
+			"SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,img,report,status FROM member order by mem_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status  FROM member where mem_no = ?";
+			"SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,img,report,status  FROM member where mem_no = ?";
 		private static final String DELETE = 
 			"DELETE FROM member where mem_no = ?";
 		private static final String UPDATE = 
@@ -189,7 +189,7 @@ public class MemDAO implements MemDAO_Interface{
 			memVO.setPhone(rs.getString("phone"));
 			memVO.setEmail(rs.getString("email"));
 			memVO.setAccount(rs.getString("account"));
-			memVO.setPicture(rs.getBytes("picture"));
+			memVO.setImg(rs.getBytes("img"));
 			memVO.setReport(rs.getInt("report"));
 			memVO.setStatus(rs.getString("status"));
 		}
@@ -253,7 +253,7 @@ public class MemDAO implements MemDAO_Interface{
 				memVO.setPhone(rs.getString("phone"));
 				memVO.setEmail(rs.getString("email"));
 				memVO.setAccount(rs.getString("account"));
-				memVO.setPicture(rs.getBytes("picture"));
+				memVO.setImg(rs.getBytes("img"));
 				memVO.setReport(rs.getInt("report"));
 				memVO.setStatus(rs.getString("status"));
 				list.add(memVO); 
@@ -297,7 +297,7 @@ public class MemDAO implements MemDAO_Interface{
 		try{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setBytes(1, memVO.getPicture());
+			pstmt.setBytes(1, memVO.getImg());
 			pstmt.setString(2, memVO.getMem_no());
 			pstmt.executeUpdate();
 			

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div class="col-md-2">
+        <div class="list-group">
+            <div class="list-group-item">
+                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp" class="list-group-item active">
+                    <h3 class="list-group-item-heading ">商城專區</h3>
+                </a>
+            </div>
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">我是買家</h4>
+            </div>
+            <div class="list-group-item">
+                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp?role=0">
+                    <h5 class="list-group-item-heading">訂單管理</h5>
+                </a>
+            </div>
+            <div class="list-group-item">
+                <a href="<%=request.getContextPath()%>/front_end/mall/protracking_list.jsp">
+                    <h5 class="list-group-item-heading">追蹤商品</h5>
+                </a>
+            </div>
+
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">我是賣家</h4>
+            </div>
+            <div class="list-group-item">
+                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp?role=1">
+                    <h5 class="list-group-item-heading">訂單管理</h5>
+                </a>
+            </div>
+            <div class="list-group-item">
+                <a href="<%=request.getContextPath()%>/front_end/mall/productManage.jsp">
+                    <h5 class="list-group-item-heading">商品資料管理</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="<%=request.getContextPath()%>/back_end/res/css/bootstrap.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/company.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/custom.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/custom-landing.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/icons.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/landing.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/main.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/plugins.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/back_end/res/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
+    
+    <script src="<%=request.getContextPath()%>/back_end/res/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/back_end/res/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/back_end/res/js/top.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/back_end/res/js/jquery.flexisel.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/back_end/res/js/jquery.flexslider.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/back_end/res/js/memenu.js" type="text/javascript"></script>
+    <meta name="msapplication-TileColor" content="#3399cc" />
+</head>
+<body>
+    <div id="header">
+        <div class="container-fluid">
+            <div class="navbar">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="backIndex.jsp">
+                        <span class="text-logo"> SHE SAID YES!</span>
+                    </a>
+                </div>
+                <nav class="top-nav" role="navigation">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
+                            <ul class="dropdown-menu notification-menu right" role="menu">
+                                <li class="clearfix">
+                                    <i class="ec-chat"></i>
+                                    <a href="#" class="notification-user"> Ric Jones </a>
+                                    <span class="notification-action"> replied to your </span>
+                                    <a href="#" class="notification-link"> comment</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown"><!--${administratorVO.name}--!>管理者</a>
+                            <ul class="dropdown-menu right" role="menu">
+                                <li><a href="profile.html"><i class="st-user"></i> Profile</a></li>
+                                <li><a href="file.html"><i class="st-cloud"></i> Files</a></li>
+                                <li><a href="#"><i class="st-settings"></i> Settings</a></li>
+                                <li><a href="login.html"><i class="im-exit"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="sidebar">
+        <div class="sidebar-inner">
+            <ul id="sideNav" class="nav nav-pills nav-stacked">
+                <li class="top-search">
+                    <form>
+                        <input type="text" name="search" placeholder="Search ...">
+                        <button type="submit"><i class="ec-search s20"></i></button>
+                    </form>
+                </li>
+                <li><a href="#"><i class="en-users"></i>一般會員管理</a></li>
+                <li><a href="#"><i class="en-users"></i>廠商管理</a></li>
+                <li><a href="#"><i class="en-users"></i>管理者設定</a></li>
+                <li><a href="#"><i class="im-table2"></i>廣告刊登管理</a></li>
+                <li><a href="#"><i class="br-location"></i>景點管理</a></li>
+                <li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
+                <li><a href="<%=request.getContextPath()%>/back_end/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
+                <li><a href="#"><i class="im-list2"></i>參數管理</a></li>
+                <li><a href="#"><i class="ec-mail"></i>聯絡我們管理</a></li>
+                <li><a href="#"><i class="im-question"></i>常見問題管理</a></li>
+                <li><a href="#"><i class="br-warning"></i>檢舉管理 </a></li>
+            </ul>
+        </div>
+    </div>
