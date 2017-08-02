@@ -46,8 +46,10 @@
 							<th>狀態</th>
 						</tr>
 					</thead>
+					<%@ include file="page1.file"%>
 					<tbody>
-						<c:forEach var="advertisingVO" items="${advertisingList}">
+						<c:forEach var="advertisingVO" items="${advertisingList}"
+							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<c:if test="${advertisingVO.status==param.status}">
 								<tr>
 									<c:forEach var="comVO" items="${comList}">
@@ -65,9 +67,7 @@
 												value="${advertisingVO.adv_no}"> <input
 												type="hidden" name="action" value="getOne_For_Display">
 											<input type="hidden" name="requestURL"
-												value="<%=request.getServletPath()%>"> <input
-												type="hidden" name="status"
-												value="<%=request.getParameter("status")%>">
+												value="<%=request.getServletPath()%>"> 
 											<c:choose>
 												<c:when test="${advertisingVO.status==1}">
 													<input type="submit" class="btn btn-info" value="審核廣告"
@@ -83,6 +83,7 @@
 							</c:if>
 						</c:forEach>
 					</tbody>
+					<%@ include file="page2.file"%>
 				</table>
 
 			</div>
@@ -100,6 +101,7 @@
 	<%=request.getServletPath()%><br>
 	<font color=blue>status:</font> ${param.status}
 	<br>
+	<font color=blue>request.getParameter("whichPage"):</font> <%= request.getParameter("whichPage")%>
 
 </body>
 </html>

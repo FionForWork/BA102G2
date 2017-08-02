@@ -16,7 +16,7 @@
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
 %>
-<meta http-equiv="Content-Type" content="text/html; charset=BIG5">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -64,10 +64,12 @@
 											value="${advertisingVO.adv_no}"> <input type="hidden"
 											name="action" value="getOne_For_Display"> <input
 											type="hidden" name="whichPage" value="<%=whichPage%>">
-										<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
+										<input type="hidden" name="requestURL"
+											value="<%=request.getServletPath()%>">
 										<c:choose>
 											<c:when test="${advertisingVO.status==1}">
-										<input type="submit" class="btn btn-info" value="審核廣告" disabled="true">
+												<input type="submit" class="btn btn-info" value="審核廣告"
+													disabled="true">
 											</c:when>
 											<c:otherwise>
 												<input type="submit" class="btn btn-info" value="審核廣告">
@@ -92,8 +94,10 @@
 	<%
 		}
 	%>
-<font color=blue>request.getServletPath():</font> <%= request.getServletPath()%><br>	
-<font color=blue>request.getParameter("whichPage"):</font> <%= request.getParameter("whichPage")%><br>
+	<font color=blue>request.getServletPath():</font>
+	<%=request.getServletPath()%><br>
+	<font color=blue>request.getParameter("whichPage"):</font>
+	<%=request.getParameter("whichPage")%><br>
 
 </body>
 </html>

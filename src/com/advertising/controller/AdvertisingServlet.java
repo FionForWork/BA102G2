@@ -247,6 +247,7 @@ public class AdvertisingServlet extends HttpServlet {
 				
 				String status = req.getParameter("status");
 				req.setAttribute("status", status);
+				
 				String whichPage = req.getParameter("whichPage");
 				req.setAttribute("whichPage", whichPage);
 
