@@ -13,7 +13,7 @@ public class MemVO implements java.io.Serializable{
 	private String phone;
 	private String email;
 	private String account;
-	private byte[] img;
+	private byte[] picture;
 	private Integer report;
 	private String status;
 
@@ -71,11 +71,11 @@ public class MemVO implements java.io.Serializable{
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public byte[] getImg() {
-		return img;
+	public byte[] getPicture() {
+		return picture;
 	}
-	public void setImg(byte[] picture) {
-		this.img = picture;
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
 	}
 	public Integer getReport() {
 		return report;

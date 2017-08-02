@@ -1,8 +1,8 @@
+<%@page import="com.mem.model.MemService"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
 <%@page import="com.order_detail.model.Order_detailVO"%>
 <%@page import="com.order_detail.model.Order_detailService"%>
-<%@page import="com.member.model.MemberService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ord.model.OrdVO"%>
 <%@page import="java.util.List"%>
@@ -12,8 +12,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     String mem_no = "1010";
-    MemberService memberService = new MemberService();
-    String mem_name = memberService.getOneMem(mem_no).getName();
+    MemService memService = new MemService();
+    String mem_name = memService.getOneMem(mem_no).getName();
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
@@ -30,8 +30,8 @@
     List<String> seller_accountList = new ArrayList<String>();
     List<String> cust_nameList = new ArrayList<String>();
     for (int i = 0; i < ordList.size(); i++) {
-        seller_accountList.add(memberService.getOneMem(ordList.get(i).getSeller_no()).getAccount());
-        cust_nameList.add(memberService.getOneMem(ordList.get(i).getCust_no()).getName());
+        seller_accountList.add(memService.getOneMem(ordList.get(i).getSeller_no()).getAccount());
+        cust_nameList.add(memService.getOneMem(ordList.get(i).getCust_no()).getName());
     }
     Order_detailService order_detailService = new Order_detailService();
     ProductService productService = new ProductService();
@@ -40,7 +40,7 @@
     List<ProductVO> productList = new ArrayList<ProductVO>();
     session.setAttribute("mem_name", mem_name);
     session.setAttribute("productList", productList);
-    session.setAttribute("memberService", memberService);
+    session.setAttribute("memService", memService);
 
     pageContext.setAttribute("productService", productService);
     pageContext.setAttribute("order_detailService", order_detailService);

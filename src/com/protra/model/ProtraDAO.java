@@ -1,4 +1,4 @@
-package com.protracking_list.model;
+package com.protra.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,19 +15,19 @@ import javax.sql.DataSource;
 
 import com.product.model.ProductVO;
 
-public class Protracking_listDAO implements Protracking_listDAO_Interface {
-    private static final String INSERT = "insert into PROTRACKING_LIST (PROTRA_NO, PRO_NO,MEM_NO)" + "values(PROTRA_NO_SEQ.NEXTVAL, ?,?)";
-    private static final String DELETE_BY_NO = "delete from PROTRACKING_LIST where PRO_NO = ?";
-    private static final String FIND_BY_PK = "select * from PROTRACKING_LIST where PROTRA_NO = ?";
-    private static final String FIND_BY_MEM = "select * from PROTRACKING_LIST where MEM_NO = ?";
-    private static final String GET_ALL_ORDER_BY_ASC = "select * from PROTRACKING_LIST order by PROTRA_NO asc";
-    private static final String GET_ALL_ORDER_BY_DESC = "select * from PROTRACKING_LIST order by PROTRA_NO desc";
-    private static final String GET_ALL_ROW_BY_MEM = "select count(rownum) from PROTRACKING_LIST where MEM_NO = ?";
-    private static final String GET_SOME_ROW = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PROTRACKING_LIST a where MEM_NO = ? order by PRO_NO asc) b) where bRn between ? and ?";
+public class ProtraDAO implements ProtraDAO_Interface {
+    private static final String INSERT                = "insert into PROTRA (PROTRA_NO, PRO_NO,MEM_NO)" + "values(PROTRA_NO_SEQ.NEXTVAL, ?,?)";
+    private static final String DELETE_BY_NO          = "delete from PROTRA where PRO_NO = ?";
+    private static final String FIND_BY_PK            = "select * from PROTRA where PROTRA_NO = ?";
+    private static final String FIND_BY_MEM           = "select * from PROTRA where MEM_NO = ?";
+    private static final String GET_ALL_ORDER_BY_ASC  = "select * from PROTRA order by PROTRA_NO asc";
+    private static final String GET_ALL_ORDER_BY_DESC = "select * from PROTRA order by PROTRA_NO desc";
+    private static final String GET_ALL_ROW_BY_MEM    = "select count(rownum) from PROTRA where MEM_NO = ?";
+    private static final String GET_SOME_ROW          = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PROTRA a where MEM_NO = ? order by PRO_NO asc) b) where bRn between ? and ?";
 
-    private Connection connection;
+    private Connection        connection;
     private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    private ResultSet         resultSet;
 
     private Connection JNDIinit() throws NamingException, SQLException {
         Context context = new javax.naming.InitialContext();
@@ -63,7 +63,7 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
     }
 
     @Override
-    public void add(Protracking_listVO protracking_listVO) {
+    public void add(ProtraVO protracking_listVO) {
         try {
             connection = JNDIinit();
             connection.setAutoCommit(false);
@@ -117,17 +117,17 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
     }
 
     @Override
-    public void update(Protracking_listVO protracking_listVO) {
+    public void update(ProtraVO protracking_listVO) {
     }
 
     @Override
-    public Protracking_listVO getOneByPK(String protra_no) {
+    public ProtraVO getOneByPK(String protra_no) {
         try {
             connection = JNDIinit();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, protra_no);
             resultSet = preparedStatement.executeQuery();
-            Protracking_listVO protracking_listVO = new Protracking_listVO();
+            ProtraVO protracking_listVO = new ProtraVO();
             while (resultSet.next()) {
                 protracking_listVO.setProtra_no(resultSet.getString(1));
                 protracking_listVO.setPro_no(resultSet.getString(2));
@@ -156,14 +156,14 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
     }
 
     @Override
-    public List<Protracking_listVO> getAll() {
+    public List<ProtraVO> getAll() {
         try {
             connection = JNDIinit();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
-            List<Protracking_listVO> list = new ArrayList<>();
+            List<ProtraVO> list = new ArrayList<>();
             while (resultSet.next()) {
-                Protracking_listVO protracking_listVO = new Protracking_listVO();
+                ProtraVO protracking_listVO = new ProtraVO();
                 protracking_listVO.setPro_no(resultSet.getString(1));
                 protracking_listVO.setPro_no(resultSet.getString(2));
                 protracking_listVO.setMem_no(resultSet.getString(3));
@@ -192,15 +192,15 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
     }
 
     @Override
-    public List<Protracking_listVO> getAllByMem(String mem_no) {
+    public List<ProtraVO> getAllByMem(String mem_no) {
         try {
             connection = JNDIinit();
             preparedStatement = connection.prepareStatement(FIND_BY_MEM);
             preparedStatement.setString(1, mem_no);
             resultSet = preparedStatement.executeQuery();
-            List<Protracking_listVO> list = new ArrayList<Protracking_listVO>();
+            List<ProtraVO> list = new ArrayList<ProtraVO>();
             while (resultSet.next()) {
-                Protracking_listVO protracking_listVO = new Protracking_listVO();
+                ProtraVO protracking_listVO = new ProtraVO();
                 protracking_listVO.setProtra_no(resultSet.getString(1));
                 protracking_listVO.setPro_no(resultSet.getString(2));
                 protracking_listVO.setMem_no(resultSet.getString(3));
@@ -256,7 +256,7 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
     }
 
     @Override
-    public List<Protracking_listVO> getSome(String mem_no, int nowPage, int count) {
+    public List<ProtraVO> getSome(String mem_no, int nowPage, int count) {
         try {
             connection = JNDIinit();
             int start = (nowPage - 1) * count + 1;
@@ -265,10 +265,10 @@ public class Protracking_listDAO implements Protracking_listDAO_Interface {
             preparedStatement.setString(1, mem_no);
             preparedStatement.setInt(2, start);
             preparedStatement.setInt(3, end);
-            List<Protracking_listVO> list = new ArrayList<Protracking_listVO>();
+            List<ProtraVO> list = new ArrayList<ProtraVO>();
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Protracking_listVO protracking_listVO = new Protracking_listVO();
+                ProtraVO protracking_listVO = new ProtraVO();
                 protracking_listVO.setProtra_no(resultSet.getString(3));
                 protracking_listVO.setPro_no(resultSet.getString(4));
                 protracking_listVO.setMem_no(resultSet.getString(5));

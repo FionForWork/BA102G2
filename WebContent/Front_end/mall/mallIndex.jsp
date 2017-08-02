@@ -1,4 +1,4 @@
-<%@page import="com.member.model.MemberService"%>
+<%@page import="com.mem.model.MemService"%>
 <%@page import="com.product_type.model.Product_typeVO"%>
 <%@page import="com.product_type.model.Product_typeService"%>
 <%@page import="java.util.List"%>
@@ -13,8 +13,8 @@
     response.setDateHeader("Expires", 0);
     String mem_no="1010";
 //     String mem_no=String.valueOf(session.getAttribute("mem_no"));
-    MemberService memberService=new MemberService();
-    String mem_name=memberService.getOneMem(mem_no).getName();
+    MemService memService=new MemService();
+    String mem_name=memService.getOneMem(mem_no).getName();
     int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
     String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": request.getParameter("now_Pro_Type");
     String now_Order_Type = (request.getParameter("now_Order_Type") == null)? "0": (request.getParameter("now_Order_Type"));

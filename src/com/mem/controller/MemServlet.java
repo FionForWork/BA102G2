@@ -61,8 +61,8 @@ public class MemServlet extends HttpServlet{
 
 				Part part = req.getPart("picture");
 				InputStream in = part.getInputStream();
-				byte[] img = new byte[in.available()];
-				in.read(img);
+				byte[] picture = new byte[in.available()];
+				in.read(picture);
 				
 
 				
@@ -77,7 +77,7 @@ public class MemServlet extends HttpServlet{
 				memVO.setPhone(phone);
 				memVO.setEmail(email);
 				memVO.setAccount(account);
-				memVO.setImg(img);
+				memVO.setPicture(picture);
 
 				
 
@@ -92,7 +92,7 @@ public class MemServlet extends HttpServlet{
 				
 				/***************************2.開始新增資料***************************************/
 				MemService memSvc = new MemService();
-				memVO = memSvc.addMem(id, pwd, name, sex, bday, phone,email,account,img);
+				memVO = memSvc.addMem(id, pwd, name, sex, bday, phone,email,account,picture);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/mem/listAllMem.jsp";

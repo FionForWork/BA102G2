@@ -1,9 +1,8 @@
+<%@page import="com.protra.model.ProtraService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
 <%@page import="java.util.List"%>
-<%@page import="com.protracking_list.model.Protracking_listVO"%>
-<%@page import="com.protracking_list.model.Protracking_listService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="pages/mallIndexHeader.file"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,13 +11,13 @@
     String mem_no = "1010";
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.parseInt((request.getParameter("nowPage")));
     int itemsCount = 5;
-    Protracking_listService protracking_listService = new Protracking_listService();
-    int allCount = protracking_listService.getRowCount(mem_no);
+    ProtraService protraService = new ProtraService();
+    int allCount = protraService.getRowCount(mem_no);
     int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
     ProductService productService = new ProductService();
     List<ProductVO> productList = new ArrayList<ProductVO>();
 
-    List<String> protracking_list = protracking_listService.getSome(mem_no, nowPage, itemsCount);
+    List<String> protracking_list = protraService.getSome(mem_no, nowPage, itemsCount);
     String preLocation = request.getContextPath() + "/front_end/mall";
 
     for (int i = 0; i < protracking_list.size(); i++) {

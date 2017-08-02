@@ -14,16 +14,16 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class Product_typeDAO implements Product_typeDAO_Interface {
-    private static final String INSERT = "insert into PRODUCT_TYPE (PROTYPE_NO, TYPE_NAME)" + "values(PROTYPE_NO_SEQ.NEXTVAL, ?)";
-    private static final String DELETE_BY_NO = "delete from PRODUCT_TYPE where PROTYPE_NO = ?";
-    private static final String UPDATE = "update PRODUCT_TYPE set TYPE_NAME = ? where PROTYPE_NO = ?";
-    private static final String FIND_BY_PK = "select * from PRODUCT_TYPE where PROTYPE_NO = ?";
-    private static final String GET_ALL_ORDER_BY_ASC = "select * from PRODUCT_TYPE order by PROTYPE_NO asc";
+    private static final String INSERT                = "insert into PRODUCT_TYPE (PROTYPE_NO, TYPE_NAME)" + "values(PROTYPE_NO_SEQ.NEXTVAL, ?)";
+    private static final String DELETE_BY_NO          = "delete from PRODUCT_TYPE where PROTYPE_NO = ?";
+    private static final String UPDATE                = "update PRODUCT_TYPE set TYPE_NAME = ? where PROTYPE_NO = ?";
+    private static final String FIND_BY_PK            = "select * from PRODUCT_TYPE where PROTYPE_NO = ?";
+    private static final String GET_ALL_ORDER_BY_ASC  = "select * from PRODUCT_TYPE order by PROTYPE_NO asc";
     private static final String GET_ALL_ORDER_BY_DESC = "select * from PRODUCT_TYPE order by PROTYPE_NO desc";
 
-    private Connection connection;
+    private Connection        connection;
     private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    private ResultSet         resultSet;
 
     private Connection JNDIinit() throws NamingException, SQLException {
         Context context = new javax.naming.InitialContext();

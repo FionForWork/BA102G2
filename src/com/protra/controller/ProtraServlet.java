@@ -1,4 +1,4 @@
-package com.protracking_list.controller;
+package com.protra.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.product.model.ProductVO;
-import com.protracking_list.model.Protracking_listService;
-import com.protracking_list.model.Protracking_listVO;
+import com.protra.model.ProtraService;
+import com.protra.model.ProtraVO;
 
 /**
  * Servlet implementation class protracking_listServlet
  */
 @WebServlet("/protracking_list/Protracking_listServlet")
-public class Protracking_listServlet extends HttpServlet {
+public class ProtraServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,10 +28,10 @@ public class Protracking_listServlet extends HttpServlet {
         String mem_no = String.valueOf(session.getAttribute("mem_no"));
         ProductVO productVO=(ProductVO)session.getAttribute("productVO");
         String pro_no = productVO.getPro_no();
-        Protracking_listService protracking_listService = new Protracking_listService();
+        ProtraService protracking_listService = new ProtraService();
 
         if ("ADD".equals(action)) {
-            Protracking_listVO protracking_listVO = new Protracking_listVO();
+            ProtraVO protracking_listVO = new ProtraVO();
             protracking_listVO.setPro_no(pro_no);
             protracking_listVO.setMem_no(mem_no);
             protracking_listService.addProtracking_list(protracking_listVO);
@@ -44,7 +44,7 @@ public class Protracking_listServlet extends HttpServlet {
         else if("ADD_AJAX".equals(action)){
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter=response.getWriter();
-            Protracking_listVO protracking_listVO = new Protracking_listVO();
+            ProtraVO protracking_listVO = new ProtraVO();
             protracking_listVO.setPro_no(pro_no);
             protracking_listVO.setMem_no(mem_no);
             protracking_listService.addProtracking_list(protracking_listVO);

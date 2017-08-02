@@ -16,17 +16,17 @@ import javax.sql.DataSource;
 import com.product.model.ProductVO;
 
 public class Order_detailDAO implements Order_detailDAO_Interface {
-    private static final String INSERT = "insert into ORDER_DETAIL (ORD_NO, PRO_NO, PRICE, QTY,ITEMTOT,SCORE,STATUS)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE_BY_NO = "delete from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
-    private static final String UPDATE = "update ORDER_DETAIL set PRICE = ?, QTY = ?, ITEMTOT = ?, SCORE = ?, STATUS = ? where ORD_NO = ? and PRO_NO = ?";
-    private static final String FIND_BY_PK = "select * from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
-    private static final String GET_ALL_ORDER_BY_ASC = "select * from ORDER_DETAIL order by ORD_NO asc";
+    private static final String INSERT                = "insert into ORDER_DETAIL (ORD_NO, PRO_NO, PRICE, QTY,ITEMTOT,SCORE,STATUS)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String DELETE_BY_NO          = "delete from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
+    private static final String UPDATE                = "update ORDER_DETAIL set PRICE = ?, QTY = ?, ITEMTOT = ?, SCORE = ?, STATUS = ? where ORD_NO = ? and PRO_NO = ?";
+    private static final String FIND_BY_PK            = "select * from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
+    private static final String GET_ALL_ORDER_BY_ASC  = "select * from ORDER_DETAIL order by ORD_NO asc";
     private static final String GET_ALL_ORDER_BY_DESC = "select * from ORDER_DETAIL order by ORD_NO desc";
-    private static final String GET_ALL_BY_ORD_NO = "select * from ORDER_DETAIL where ORD_NO = ? order by ORD_NO desc";
+    private static final String GET_ALL_BY_ORD_NO     = "select * from ORDER_DETAIL where ORD_NO = ? order by ORD_NO desc";
 
-    private Connection connection;
+    private Connection        connection;
     private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    private ResultSet         resultSet;
 
     private Connection JNDIinit() throws NamingException, SQLException {
         Context context = new javax.naming.InitialContext();

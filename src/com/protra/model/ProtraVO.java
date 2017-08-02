@@ -1,17 +1,17 @@
-package com.protracking_list.model;
+package com.protra.model;
 
 import java.io.Serializable;
 
-public class Protracking_listVO implements Serializable {
+public class ProtraVO implements Serializable {
     private String protra_no;
     private String pro_no;
     private String mem_no;
 
-    public Protracking_listVO() {
+    public ProtraVO() {
         super();
     }
 
-    public Protracking_listVO(String protra_no, String pro_no, String mem_no) {
+    public ProtraVO(String protra_no, String pro_no, String mem_no) {
         super();
         this.protra_no = protra_no;
         this.pro_no = pro_no;

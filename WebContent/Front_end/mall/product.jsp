@@ -1,5 +1,5 @@
+<%@page import="com.protra.model.ProtraService"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.protracking_list.model.Protracking_listService"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.product_type.model.Product_typeVO"%>
@@ -12,8 +12,8 @@
     String mem_no = String.valueOf(session.getAttribute("mem_no"));
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
-    Protracking_listService protracking_listService = new Protracking_listService();
-    List<String> protrackingProNolist = (session.getAttribute("mem_no") == null) ? new ArrayList<String>() : protracking_listService.getAllByMem(String.valueOf(session.getAttribute("mem_no")));
+    ProtraService protraService = new ProtraService();
+    List<String> protrackingProNolist = (session.getAttribute("mem_no") == null) ? new ArrayList<String>() : protraService.getAllByMem(String.valueOf(session.getAttribute("mem_no")));
     String[] productStatus = { "審核中", "上架中", "已下架" };
     String pro_no;
     int mine = 0;
