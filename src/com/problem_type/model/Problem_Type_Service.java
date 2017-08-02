@@ -28,11 +28,11 @@ public class Problem_Type_Service {
 		return dao.getAll();
 	}
 
-	public Problem_TypeVO getOneDept(Integer problem_type_no) {
+	public Problem_TypeVO getOneProblem_Type(Integer problem_type_no) {
 		return dao.findByPrimaryKey(problem_type_no);
 	}
 
-	public void deleteDept(Integer problem_type_no) {
+	public void deleteProblem_Type(Integer problem_type_no) {
 		dao.delete(problem_type_no);
 	}
 

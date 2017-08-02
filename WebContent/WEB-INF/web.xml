@@ -95,5 +95,13 @@
 		<servlet-name>ProblemServlet</servlet-name>
 		<url-pattern>/Problem/Problem.do</url-pattern>
 	</servlet-mapping>
+	 <servlet>
+		<servlet-name>TraditionServlet</servlet-name>
+		<servlet-class>com.tradition.controller.TraditionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TraditionServlet</servlet-name>
+		<url-pattern>/Tradition/Tradition.do</url-pattern>
+	</servlet-mapping>
 	
 </web-app>
