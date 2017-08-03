@@ -28,17 +28,29 @@ li {
 	list-style: none;
 }
 
-.sercive_image {
-	width: 80%;
-	height: 80%;
-	margin-bottom: 50px;
-}
-
 .cost {
 	border-top: 1px solid #e2e2e2;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	
+	margin: 10px;
+	font-size: 16px;
+}
+
+.cost div {
+	margin:10px;
+}
+
+.cost span {
+	 color: #ef8b87;
+}
+
+.service_title {
+	text-align: center;
+	margin: 20px;
+	border-bottom: 1px solid #e2e2e2;
+	font-size: 16px;
+}
+
+.service_title div {
+	margin: 10px;
 }
 
 .check_service {
@@ -70,10 +82,17 @@ li {
 .text {
 	margin-bottom: 10px;
 	padding: 50px;
+	line-height: 50px;
+	height: 300px;
+	font-size: 16px;
 }
 
 .com_intro {
-	background-color: #e5edef
+	border: 1px solid #ddd;
+	line-height: 24px;
+	text-align: center;
+	font-size: 16px;
+	margin: 20px;
 }
 
 .table th {
@@ -116,11 +135,4 @@ li {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-}
-
-.service_title {
-	text-align: center;
-	margin-bottom: 10px;
-	margin-top: 10px;
-	border-bottom: 1px solid #e2e2e2;
 }
