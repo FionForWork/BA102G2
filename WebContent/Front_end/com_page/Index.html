@@ -4,6 +4,7 @@
 <head>
     <title>She Said Yes!</title>
     <meta charset="UTF-8">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
@@ -45,7 +46,18 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
+                    
                     <li>
+                        <a class="hidden" href="" role="login">
+                            廠商專區
+                        </a>
+                    </li>
+                    <li>
+                        <a class="hidden" href="" role="login">
+                            登出
+                        </a>
+                    </li>
+                     <li >
                         <a class="" href="" role="login">
                             登入
                         </a>
@@ -62,12 +74,10 @@
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="select_company.jsp?stype_no=0001">
-                        <h3>
-                            拍婚紗
-                        </h3>
-                    </a>
-                    <!--RWD-->
+                    <a itemprop="url"
+					href="select_company.jsp?stype_no=0001">
+						<h3>拍婚紗</h3>
+				</a> <!--RWD-->
                     <div class="mobile-main-choice visible-xs">
                         <a class="" href="#">婚紗手機1</a>
                     </div>
@@ -185,20 +195,6 @@
                         <a href="#">手機1</a><span>
                 </div>
                 <!--RWD-->
-                <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
-                    <li>
-                        <a href="#">
-                            <b>標題</b> <small></small>
-                            <br>
-                            <small class="hidden-xs">內文</small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <b>婚禮習俗2</b>
-                        </a>
-                    </li>
-                </ol>
             </li>
             <li class="wd-drop-wrapper">
                 <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
@@ -218,13 +214,6 @@
                         <a href="#">手機1</a>
                     </div>
                     <!--RWD-->
-                    <ol class="wd-drop_submenu list-unstyled text-center  hidden-xs">
-                        <li>
-                            <a href="#">
-                                <b>討論版1</b>
-                            </a>
-                        </li>
-                    </ol>
                 </li>
 
 
@@ -249,7 +238,7 @@
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
                 <div class="slide-1 bg-cover lazy" style="background-image:url('img/banner1.jpg');"></div>
-                <!--banner圖放這裡-->
+                <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
             </div>
         </div>
 
@@ -277,6 +266,7 @@
 
     <br>
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+<div class="container">
     <div class="col-md-offset-1">
         <ul class="breadcrumb">
             <li><a href="#">Home</a></li>
@@ -285,88 +275,20 @@
             <li class="active">Vacation</li>        
         </ul>
     </div>
+</div>
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
    
     <div class="container">
         <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯個人資料</a>
-                    <a href="#" class="list-group-item menua">相片及影片</a>
-                    <a href="#" class="list-group-item menua">信任及驗證</a>
-                    <a href="#" class="list-group-item menua">評價</a>
-                    <a href="#" class="list-group-item menua">推薦</a>
-                </ul>
 
-
-                <a href="#" class="btn btn-block btn-default">查看個人資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 
 <!--這裡開始===========================================================================-->
 
-            <div class="col-md-8 col-offset-1">
-<!--有要排序請用這個 有要排序請用這個 有要排序請用這個 有要排序請用這個 有要排序請用這個 -->
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="active"><a href="#" class="menua">價格：低到高</a></li>
-                    <li><a href="#" class="menua">價格：高到低</a></li>
-                    <li><a href="#" class="menua">日期：近到遠</a></li>
-                    <li><a href="#" class="menua">日期：遠到近</a></li>
-                    <br><br>
-                </ul>
-<!--有要排序請用這個 有要排序請用這個 有要排序請用這個 有要排序請用這個 有要排序請用這個 -->
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-<!--table table table table table table table table table -->
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                        </tr>
-                    </tbody>
-                </table>
-<!--table table table table table table table table table -->
-               
-<!--form form form form form form form form form form form -->
-                <div class="form-group">
-                    <label for="usr">Name:</label>
-                    <input type="text" class="form-control" id="usr">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd">
-                </div>
-<!--form form form form form form form form form form form -->    
             
-<!-- 三種按鈕 三種按鈕 三種按鈕 三種按鈕 三種按鈕 三種按鈕-->
-                <button class="btn btn-info">btn-info</button>
-                <button class="btn btn-danger">btn-danger</button>
-                <button class="btn btn-default">btn-default</button>
-            </div>
+               
+   
+            
 
-            <!--上面放東西===========================================================================-->
-        </div>
-    </div>
 
     <br>
     <br>

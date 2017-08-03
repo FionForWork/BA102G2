@@ -23,7 +23,7 @@
 %>
 </head>
 <body>
-	<%@ include file="before.file"%>
+	<%@ include file="page/before.file"%>
 
 
 
@@ -44,11 +44,11 @@
 							<c:forEach var="com_noList" items="${com_noList}">
 
 								<div class="col-xs-12 col-sm-3">
-									<ul class="album_box">
+									<ul class="works_box">
 										<li class="list-unstyled"><a
 											href="company_page.jsp?com_no=${com_noList}"
 											class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
-												<img class="album_image img-thumbnail"
+												<img class="works_image img-thumbnail"
 												src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${com_noList}">
 												<c:forEach var="comVO" items="${comList}">
 												<c:if test="${comVO.com_no==com_noList}">
@@ -65,6 +65,6 @@
 		</div>
 	</div>
 
-	<%@ include file="after.file"%>
+	<%@ include file="page/after.file"%>
 </body>
 </html>

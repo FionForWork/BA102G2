@@ -28,20 +28,23 @@
 <body>
 
 
-	<%@ include file="before.file"%>
+	<%@ include file="page/before.file"%>
 
+
+	<!--banner -->
 	<c:forEach var="worksVO" items="${worksList}" begin="1" end="1">
 		<div class="fade-carousel">
 			<div class="home-banner fade-carousel" style="overflow: hidden;">
 				<div class="item slides">
-					<div></div>
 					<div class="slide-1 bg-cover lazy"
-						style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
-					<!--banner圖放這裡-->
+						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
+
 				</div>
 			</div>
 		</div>
+		<br>
 	</c:forEach>
+	<!--banner -->
 
 	<!--店家大頭照-->
 	<div class="com_head container">
@@ -58,7 +61,7 @@
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">
 			<li><a href="#info" title="聯絡資訊"> 聯絡資訊 </a></li>
-			<li><a href="#album" title="作品"> 作品 </a></li>
+			<li><a href="#works" title="作品"> 作品 </a></li>
 			<li><a href="#service" title="方案"> 方案 </a></li>
 			<li><a href="#introduction" title="關於我"> 關於我 </a></li>
 		</ul>
@@ -66,7 +69,7 @@
 
 	<!--店家資料-->
 	<div class="container" id="info">
-		<div class="col-sm-9">
+		<div class="col-sm-10">
 			<div class="hidden-xs">
 				<table class="table table-condensed">
 					<tbody>
@@ -95,7 +98,7 @@
 		</div>
 		<!--////////////////////////////-->
 		<!--預約按鈕-->
-		<div class="col-sm-3">
+		<div class="col-sm-2">
 			<p class="text-center">
 				<a class="btn btn-reservation btn-lg" href=""> 線上預約 </a>
 			</p>
@@ -104,7 +107,7 @@
 	<!--店家資料-->
 
 	<!--店家相簿-->
-	<div class="text-center" id="album">
+	<div class="text-center" id="works">
 		<span>
 			<h1>廠商作品</h1>
 		</span>
@@ -115,14 +118,13 @@
 
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
-					<ul class="album_box">
-						<li class="list-unstyled">
-						<a href="#"
-							class="img_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="album_image img-thumbnail"
+					<ul class="works_box">
+						<li class="list-unstyled"><a href="#"
+							class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
+								<img class="works_image img-thumbnail"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								<div class="overlay">
-								<div class="img_text">${worksVO.works_desc}</div>
+									<div class="works_text">${worksVO.works_desc}</div>
 								</div>
 						</a></li>
 					</ul>
@@ -138,9 +140,8 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#"> 
-					<a class="btn btn-default btn-lg" href="#"> 看更多
-					<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
+						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
 				</a>
 			</div>
@@ -161,10 +162,10 @@
 			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
 				<div class="col-xs-12 col-sm-3">
 					<ul class="service_box">
-						<li class="service_title">${servVO.title}</li>
-						<li class="cost"><span>$NT</span>${servVO.price}</li>
+						<li class="service_title">${servVO.title}</li><br>
 						<li class="text">${servVO.content}</li>
-						<li class="check_service"><a href="#">查看方案</a></li>
+						<li class="cost"><span>$NT</span>
+						<span style="color: #ef8b87;">${servVO.price}</span></li>
 					</ul>
 				</div>
 			</c:forEach>
@@ -177,14 +178,14 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#">
-					<div class="panel panel-default">
-						<div class="panel-body">查看所有內容</div>
-					</div>
+				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
+						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				</a>
 				</a>
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
+	</div>
 	</div>
 	<!--店家方案-->
 
@@ -204,9 +205,9 @@
 				<div class="col-xs-12 col-sm-8">基本介紹： ${comVO.com_desc}</div>
 			</div>
 			<div class="col-xs-12 col-sm-6">
-			
-				<div class="col-xs-12 col-sm-4">提供服務： 自助婚紗 婚紗包套</div>
-				
+
+				<div class="col-xs-12 col-sm-4"></div>
+
 				<div class="col-xs-12 col-sm-8"></div>
 			</div>
 		</div>
@@ -215,7 +216,7 @@
 	<!--店家自介-->
 
 
-	<%@ include file="after.file"%>
+	<%@ include file="page/after.file"%>
 
 
 </body>
