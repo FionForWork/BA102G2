@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
@@ -20,38 +21,23 @@ public class ShowImage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("image/gif");
-        HttpSession session = request.getSession();
-        ProductService productService = new ProductService();
-
+        byte[] buf=null;
+        ServletOutputStream servletOutputStream = response.getOutputStream();
         if (request.getParameter("pro_no") != null) {
+            ProductService productService = new ProductService();
             String pro_no = request.getParameter("pro_no");
-//            ArrayList<ProductVO> productList = (ArrayList<ProductVO>) session.getAttribute("productList");
-//            ProductVO productVO=productService.getOneByPK(pro_no);
-//            ServletOutputStream servletOutputStream = response.getOutputStream();
-//            for (int i = 0; i < productList.size(); i++) {
-//                if (productList.get(i).getPro_no().equals(pro_no)) {
-//                    byte[] buf = productList.get(i).getImg();
-//                    servletOutputStream.write(buf);
-//                    return;
-//                }
-//            }
-//            byte[] buf=productVO.getImg();
-//            servletOutputStream.write(buf);
-//            servletOutputStream.close();
+            ProductVO productVO=productService.getOneByPK(pro_no);
+            buf=productVO.getImg();
+            
         }
         else if (request.getParameter("pla_no") != null) {
+            PlaceService placeService = new PlaceService();
             String pla_no = request.getParameter("pla_no");
-            ArrayList<PlaceVO> placeList = (ArrayList<PlaceVO>) session.getAttribute("placeList");
-            ServletOutputStream servletOutputStream = response.getOutputStream();
-            for (int i = 0; i < placeList.size(); i++) {
-                if (placeList.get(i).getPla_no().equals(pla_no)) {
-                    byte[] buf = placeList.get(i).getImg();
-                    servletOutputStream.write(buf);
-                    return;
-                }
-            }
-            servletOutputStream.close();
+            PlaceVO placeVO=placeService.getOnePlace(pla_no);
+            buf=placeVO.getImg();
         }
+        servletOutputStream.write(buf);
+        servletOutputStream.close();
         
     }
 

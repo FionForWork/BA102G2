@@ -14,13 +14,13 @@
     int allCount = productService.getAllCountUnPreivew();
     int totalPages = allCount / itemCount + 1;
     List<ProductVO> productList = productService.getSomeUnPreview(nowPage, itemCount);
-    String preLocation = request.getContextPath() + "/back_end";
+    String preLocation = request.getContextPath() + "/Back_end";
     Product_typeService product_typeService=new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     
     pageContext.setAttribute("typeList", typeList);
     pageContext.setAttribute("preLocation", preLocation);
-    session.setAttribute("productList", productList);
+    pageContext.setAttribute("productList", productList);
     pageContext.setAttribute("nowPage", nowPage);
     pageContext.setAttribute("totalPages", totalPages);
 %>
@@ -58,9 +58,9 @@
                         <td>
                             <img style="height: 80px;width: 80px;"src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}">
                         </td>
-                        <td>
-                            <a class="btn btn-success" href="<%=request.getContextPath()%>/product/ProductServlet?action=ABLE&&pro_no=${productVO.pro_no}">審核通過</a>
-                            <a class="btn btn-danger" href="<%=request.getContextPath()%>/product/ProductServlet?action=DISABLE&&pro_no=${productVO.pro_no}">審核不通過</a>
+                        <td style="width: 80px;">
+                            <a style="width: 100%;" class="btn btn-success" href="<%=request.getContextPath()%>/product/ProductServlet?action=ABLE&&pro_no=${productVO.pro_no}">審核通過</a>
+                            <a style="width: 100%;" class="btn btn-danger" href="<%=request.getContextPath()%>/product/ProductServlet?action=DISABLE&&pro_no=${productVO.pro_no}">審核不通過</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -73,31 +73,31 @@
                     <c:choose>
                         <c:when test="${totalPages<=5}">
                             <c:forEach var="i" begin="1" end="${totalPages}">
-                                <li class=""><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
+                                <li class=""><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
                             </c:forEach>
                         </c:when>
                         <c:when test="${nowPage<5}">
                             <c:forEach var="i" begin="1" end="5">
-                                <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
+                                <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
                             </c:forEach>
                             <li><a class="disabled">...</a></li>
-                            <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages}</a></li>
+                            <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages}</a></li>
                         </c:when>
                         <c:when test="${totalPages-nowPage<5}">
-                            <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a></li>
+                            <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a></li>
                             <li><a class="disabled">...</a></li>
                             <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
+                                <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a></li>
+                            <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a></li>
                             <li><a class="disabled">...</a></li>
                             <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
+                                <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a></li>
                             </c:forEach>
                             <li><a class="disabled">...</a></li>
-                            <li><a class="btn btn-primary" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages }</a></li>
+                            <li><a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages }</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>

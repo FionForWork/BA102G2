@@ -1,3 +1,5 @@
+<%@page import="com.protra.model.ProtraVO"%>
+<%@page import="com.product.model.ProductService"%>
 <%@page import="com.protra.model.ProtraService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
@@ -13,7 +15,12 @@
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     ProtraService protraService = new ProtraService();
-    List<String> protrackingProNolist = (session.getAttribute("mem_no") == null) ? new ArrayList<String>() : protraService.getAllByMem(String.valueOf(session.getAttribute("mem_no")));
+    List<String> protrackingProNolist=new ArrayList<String>();;
+    List<ProtraVO>protraList=protraService.getAllByMem(mem_no);
+    System.out.println(protraList.size());
+    for(int i=0;i<protraList.size();i++){
+        protrackingProNolist.add(protraList.get(i).getPro_no());
+    }
     String[] productStatus = { "審核中", "上架中", "已下架" };
     String pro_no;
     int mine = 0;
@@ -24,16 +31,13 @@
     }
     else {
         pro_no = request.getParameter("pro_no");
-        List<ProductVO> productList = (List<ProductVO>) session.getAttribute("productList");
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList.get(i).getPro_no().equals(pro_no)) {
-                session.setAttribute("productVO", productList.get(i));
-                mine = (productList.get(i).getSeller_no().equals(mem_no)) ? 1 : 0;
-                break;
-            }
-        }
+        ProductService productService=new ProductService();
+        ProductVO productVO=productService.getOneByPKNoImg(pro_no);
+        mine = (productVO.getSeller_no().equals(mem_no)) ? 1 : 0;
+        session.setAttribute("productVO", productVO);
+     
     }
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("pro_no", pro_no);

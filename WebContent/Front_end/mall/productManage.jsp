@@ -11,6 +11,9 @@
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
     session.setAttribute("mem_no", "1010");
     String mem_no = String.valueOf(session.getAttribute("mem_no"));
     ProductService productService = new ProductService();
@@ -19,10 +22,25 @@
     List<Product_typeVO> typeList = product_typeService.getAll();
     pageContext.setAttribute("typeList", typeList);
 
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     pageContext.setAttribute("preLocation", preLocation);
     session.setAttribute("productList", productList);
 %>
+<style>
+<!--
+    .addImg,.updateImg{
+        width:200px;
+        height: 200px;
+        border-color: black;
+        border: 1px; 
+        border: solid;
+    }
+     img { 
+         width:100%; 
+         height:100%; 
+     } 
+-->
+</style>
 <div class="text-center" style="height: 50px; margin-top: 50px">
     <h2>商品資料管理</h2>
 </div>
@@ -70,25 +88,29 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>商品名稱</td>
-                                                                        <td><input name="pro_name" class="form-control" type="text" placeholder="${productVO.pro_name}"></td>
+                                                                        <td><input id="updateName${s.index}" name="pro_name" class="form-control " type="text" placeholder="${productVO.pro_name}"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>商品描述</td>
-                                                                        <td><textarea name="pro_desc" class="form-control" style="width: 300px; height: 100px;" placeholder="${productVO.pro_desc}"></textarea></td>
+                                                                        <td><textarea id="updateDesc${s.index}" name="pro_desc" class="form-control " style="width: 300px; height: 100px;" placeholder="${productVO.pro_desc}"></textarea></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>價格</td>
-                                                                        <td><input name="price" class="form-control" type="number" placeholder="${productVO.price}" min="1"></td>
+                                                                        <td><input id="updatePrice${s.index}" name="price" class="form-control " type="number" placeholder="${productVO.price}" min="1"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>庫存</td>
-                                                                        <td><input name="amount" class="form-control" type="number" placeholder="${productVO.amount}" min="1"></td>
+                                                                        <td><input id="updateAmount${s.index}" name="amount" class="form-control " type="number" placeholder="${productVO.amount}" min="1"></td>
                                                                     </tr>
-                                                                    <td><input name="img" type="file" class="form-control"></td>
+                                                                    <tr>
+                                                                        <td>修改圖片(若以拖拉上傳圖片，將自動修改商品資料，請填寫詳細，大小上限為3MB)</td>
+                                                                        <td><div id="${s.index}" class="updateImg"><img class="updatePreview${s.index}"></div>
+                                                                            <input type="file" class="update" id="${s.index}" name="img">
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                            <input type="hidden" name="index" value="${s.index}">
+                                                            <input type="hidden"  id="updateNo${s.index}" name="pro_no" value="${productVO.pro_no}">
                                                             <input type="hidden" name="action" value="UPDATE">
                                                             <input type="submit" class="btn btn-success" value="確認修改">
                                                         </form>
@@ -105,10 +127,10 @@
                                             <td>商品審核中</td>
                                         </c:when>
                                         <c:when test="${productVO.status=='1'}">
-                                            <td><a class="btn btn-danger" href="<%=request.getContextPath() %>/product/ProductServlet?action=OFF&&pro_no=${productVO.pro_no}">商品下架</a></td>
+                                        <td><div id="status${productVO.pro_no}"><a class="btn btn-danger" href="javascript:onOrOff(${productVO.pro_no})">商品下架</a></div></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td><a class="btn btn-success" href="<%=request.getContextPath() %>/product/ProductServlet?action=ON&&pro_no=${productVO.pro_no}">商品上架</a></td>
+                                        <td><div id="status${productVO.pro_no}"><a class="btn btn-success" href="javascript:onOrOff(${productVO.pro_no})">商品上架</a></div></td>
                                         </c:otherwise>
                                     </c:choose>
                                 </tr>
@@ -126,36 +148,40 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="<%=request.getContextPath()%>/product/ProductServlet" method="post" enctype="multipart/form-data">
-                                        <table class="table" >
+                                        <table class="table">
                                             <tbody>
                                                 <tr>
                                                     <td>商品名稱</td>
-                                                    <td><input name="pro_name" class="form-control" type="text" placeholder="必須輸入商品名稱"></td>
+                                                    <td><input id="addName${s.index}" name="pro_name" type="text" placeholder="必須輸入商品名稱"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>商品描述</td>
-                                                    <td><textarea name="pro_desc" class="form-control" style="width: 300px; height: 100px;"></textarea></td>
+                                                    <td><textarea id="addDesc${s.index}" name="pro_desc" class="form-control" style="width: 300px; height: 100px;"></textarea></td>
                                                 </tr>
                                                 <tr>
                                                     <td>價格</td>
-                                                    <td><input name="price" class="form-control" type="number" min="1" placeholder="1"></td>
+                                                    <td><input id="addPrice${s.index}" name="price" type="number" min="1" placeholder="1"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>庫存</td>
-                                                    <td><input name="amount" class="form-control" type="number" min="1" placeholder="1"></td>
+                                                    <td><input id="addAmount${s.index}" name="amount" type="number" min="1" placeholder="1"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>商品種類</td>
-                                                    <td><select name="protype_no">
+                                                    <td><select id="addType${s.index}" name="protype_no">
                                                             <c:forEach var="proType" items="${typeList}">
                                                                 <option value="${proType.protype_no}">${proType.type_name}</option>
                                                             </c:forEach>
-                                                        </select></td>
+                                                        </select>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                <td><input name="img" type="file"></td>
+                                                    <td>商品圖片(若拖拉上傳圖片，將自動申請上架，商品資料請填寫詳細，大小上限為3MB)</td>
+                                                    <td><div id="${s.index}" class="addImg" ><img class="addPreview"></div>
+                                                        <input type="file" id="add" name="img">
+                                                    </td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody>    
                                         </table>
                                         <input type="hidden" name="action" value="ADD">
                                         <input type="submit" class="btn btn-success" value="確認申請">
@@ -171,4 +197,137 @@
             </div>
         </div>
     </div>
+<script>
+
+$(".updateImg").on("dragover",function(e){
+    e.preventDefault();
+});
+
+$(".updateImg").on("drop",function(e){
+    e.preventDefault();
+    var count=$(this).attr("id");
+    var files  = event.dataTransfer.files ; 
+    var xhr=new XMLHttpRequest();
+    var url="/BA102G2/product/ProductServlet";
+    xhr.open('POST', url) ;
+    var form=new FormData();
+    if(!files[0].type.match("image")){
+        var name=files[0].name;
+        alert(name+"請上傳圖片!!!!");
+    }
+    else{
+        form.append("img",files[0]);
+    }
+    form.append("action","UPDATE_AJAX");
+    form.append("pro_no",$("#updateNo"+count).val());
+    form.append("pro_name",$("#updateName"+count).val());
+    form.append("pro_desc",$("#updateDesc"+count).val());
+    form.append("price",$("#updatePrice"+count).val());
+    form.append("amount",$("#updateAmount"+count).val());
+    xhr.send(form);
+    xhr.onreadystatechange = function() {
+        if(xhr.responseText=="OK"){
+            alert("已更新資料");
+            var reader=new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onload=function(e){
+                $(".updatePreview"+count).attr("src",e.target.result);
+            }
+        }
+    }
+});
+
+$(".addImg").on("dragover",function(e){
+    e.preventDefault();
+});
+
+$(".addImg").on("drop",function(e){
+    console.log("add");
+    e.preventDefault();
+    var count=$(this).attr("id");
+    var files  = event.dataTransfer.files ; 
+    var xhr=new XMLHttpRequest();
+    var url="/BA102G2/product/ProductServlet?action=ADD_AJAX";
+    xhr.open('POST', url) ;
+    var form=new FormData();
+    if(!files[0].type.match("image")){
+        var name=files[0].name;
+        alert(name+"請上傳圖片!!!!");
+    }
+    else{
+        form.append("img",files[0]);
+    }
+    form.append("pro_name",$("#addName"+count).val());
+    form.append("pro_desc",$("#addDesc"+count).val());
+    form.append("price",$("#addPrice"+count).val());
+    form.append("protype_no",$("#addType"+count).val());
+    form.append("amount",$("#addAmount"+count).val());
+    xhr.send(form);
+    xhr.onreadystatechange = function() {
+        if(xhr.responseText=="OK"){
+            alert("已申請，請耐心等待審核");
+            var reader=new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onload=function(e){
+                $(".addPreview").attr("src",e.target.result);
+            }
+        }
+    }
+});
+
+$(".update").on("change",function(){
+    if(this.files[0]){
+        var count=$(this).attr("id");
+        console.log(count);
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function (e) {
+        $(".updatePreview"+count).attr('src', e.target.result);
+        }
+    }
+});
+$("#add").on("change",function(){
+    if(this.files[0]){
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function (e) {
+        $(".addPreview").attr('src', e.target.result);
+        }
+    }
+});
+
+// function preview(input){
+//     if(input.files[0]){
+//         var reader = new FileReader();
+//         reader.readAsDataURL(input.files[0]);
+//         reader.onload = function (e) {
+//         $(".updatePreview").attr('src', e.target.result);
+//         }
+//     }
+// }
+
+function onOrOff(pro_no){
+    $.ajax({
+        url:"/BA102G2/product/ProductServlet",
+        type : "post",
+        data : {
+        action : "onOrOff",
+        pro_no : pro_no
+        },
+        error : function(xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        },
+        success : function(response) {
+            if(response==1){
+                $("#status"+pro_no).html("<a class='btn btn-danger' href='javascript:onOrOff("+pro_no+")'>商品下架</a>");
+            }
+            else if(response==2){
+                $("#status"+pro_no).html("<a class='btn btn-success' href='javascript:onOrOff("+pro_no+")'>商品上架</a>");
+            }
+        }
+    });
+}
+
+</script>
     <%@include file="pages/mallIndexFooter.file"%>

@@ -11,7 +11,7 @@
         totalPrice += carList.get(i).getPrice() * countList.get(i);
     }
     int count = 0;
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     pageContext.setAttribute("preLocation", preLocation);
 %>
 <%@include file="pages/mallIndexHeader.file"%>

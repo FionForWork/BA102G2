@@ -16,18 +16,16 @@ public class ProductDAO implements ProductDAO_Interface {
     private static final String INSERT                         = "insert into PRODUCT (PRO_NO, PRO_NAME, SELLER_NO,PRO_DESC,PRICE,AMOUNT,IMG,PRO_DATE,PROTYPE_NO,STATUS,TIMES,SCORE)" + "values('4'||lpad(PRO_NO_SEQ.NEXTVAL,3,'0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String DELETE_BY_NO                   = "delete from PRODUCT where PRO_NO = ?";
     private static final String UPDATE                         = "update PRODUCT set PRO_NAME = ? ,PRO_DESC = ?, PRICE= ? ,AMOUNT = ? ,IMG = ?,PROTYPE_NO = ? ,STATUS = ? ,TIMES = ? , SCORE = ? where PRO_NO = ?";
-    private static final String FIND_BY_PK                     = "select * from PRODUCT";
+    private static final String FIND_BY_PK                     = "select * from PRODUCT where PRO_NO = ?";
+    private static final String FIND_BY_PK_NO_IMG              = "select PRO_NO, PRO_NAME, SELLER_NO, PRO_DESC ,PRICE,AMOUNT,PRO_DATE,PROTYPE_NO,STATUS,TIMES,SCORE from PRODUCT where PRO_NO = ?";
     private static final String FIND_BY_SELLER                 = "select * from PRODUCT where SELLER_NO = ?";
-    private static final String GET_ALL_NO_IMG                 = "select PRO_NO, PRO_NAME, SELLER_NO,PRO_DESC,PRICE,AMOUNT,PRO_DATE,PROTYPE_NO,TIMES,SCORE from PRODUCT where STATUS = 1";
+    private static final String GET_ALL_NO_DESC_AND_IMG        = "select PRO_NO, PRO_NAME, SELLER_NO,PRICE,AMOUNT,PRO_DATE,PROTYPE_NO,TIMES,SCORE from PRODUCT where STATUS = 1";
     private static final String GET_ALL_ORDER_BY_ASC           = "select * from PRODUCT where STATUS = 1 order by PRO_NO asc";
     private static final String GET_ALL__BY_PROTYPE            = "select * from PRODUCT where STATUS = 1 and PROTYPE_NO = ? ";
-    private static final String GET_ALL_UNPREIVEW_ORDER_BY_ASC = "select * from PRODUCT where STATUS = 0 order by PRO_NO asc";
-    private static final String GET_ALL_ORDER_BY_DESC          = "select * from PRODUCT where STATUS = 1 order by PRO_NO asc";
     private static final String GET_ALL_ROW                    = "select count(rownum) from PRODUCT where STATUS = 1";
     private static final String GET_ALL_ROW_UNPREVIEW          = "select count(rownum) from PRODUCT where STATUS = 0";
     private static final String GET_TYPE_ALL_ROW               = "select count(rownum) from PRODUCT where PROTYPE_NO = ? and STATUS = 1";
     private static final String GET_SOME_ROW                   = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 1 order by a.pro_no) b) where bRn between ? and ?";
-    private static final String GET_SOME_ROW_OF_TYPE           = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where PROTYPE_NO = ? and STATUS = 1 order by a.PRO_NO ) b) where bRn between ? and ?";
     private static final String GET_SOME_ROW_OF_UNPREVIEW      = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 0 order by a.PRO_DATE ) b) where bRn between ? and ?";
 
     private Connection        connection;
@@ -626,14 +624,53 @@ public class ProductDAO implements ProductDAO_Interface {
     }
 
     @Override
-    public List<ProductVO> getAllNoImg() {
+    public List<ProductVO> getAllNoDescAndImg() {
         try {
             connection = JNDIinit();
             Statement statement = connection.createStatement();
-            resultSet = statement.executeQuery(GET_ALL_NO_IMG);
+            resultSet = statement.executeQuery(GET_ALL_NO_DESC_AND_IMG);
             List<ProductVO> list = new ArrayList<>();
             while (resultSet.next()) {
                 ProductVO productVO = new ProductVO();
+                productVO.setPro_no(resultSet.getString(1));
+                productVO.setPro_name(resultSet.getString(2));
+                productVO.setSeller_no(resultSet.getString(3));
+                productVO.setPrice(resultSet.getInt(4));
+                productVO.setAmount(resultSet.getInt(5));
+                productVO.setPro_date(resultSet.getTimestamp(6));
+                productVO.setProtype_no(resultSet.getString(7));
+                productVO.setTimes(resultSet.getInt(8));
+                productVO.setScore(resultSet.getInt(9));
+                list.add(productVO);
+            }
+            return list;
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public ProductVO getOneByPKNoImg(String pro_no) {
+        try {
+            connection = JNDIinit();
+            preparedStatement = connection.prepareStatement(FIND_BY_PK_NO_IMG);
+            preparedStatement.setString(1, pro_no);
+            resultSet = preparedStatement.executeQuery();
+            ProductVO productVO = new ProductVO();
+            while (resultSet.next()) {
                 productVO.setPro_no(resultSet.getString(1));
                 productVO.setPro_name(resultSet.getString(2));
                 productVO.setSeller_no(resultSet.getString(3));
@@ -642,11 +679,11 @@ public class ProductDAO implements ProductDAO_Interface {
                 productVO.setAmount(resultSet.getInt(6));
                 productVO.setPro_date(resultSet.getTimestamp(7));
                 productVO.setProtype_no(resultSet.getString(8));
-                productVO.setTimes(resultSet.getInt(9));
-                productVO.setScore(resultSet.getInt(10));
-                list.add(productVO);
+                productVO.setStatus(resultSet.getString(9));
+                productVO.setTimes(resultSet.getInt(10));
+                productVO.setScore(resultSet.getInt(11));
             }
-            return list;
+            return productVO;
         }
         catch (NamingException e) {
             e.printStackTrace();

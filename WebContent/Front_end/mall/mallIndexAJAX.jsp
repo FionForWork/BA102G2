@@ -9,44 +9,41 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     response.setHeader("Pragma", "no-cache");
-			response.setHeader("Cache-Control", "no-cache");
-			response.setDateHeader("Expires", 0);
-			String mem_no = "1010";
-			//     String mem_no=String.valueOf(session.getAttribute("mem_no"));
-			MemService memService = new MemService();
-			String mem_name = memService.getOneMem(mem_no).getName();
-			int nowPage = 1;
-			String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)
-					? "0"
-					: String.valueOf(request.getParameter("now_Pro_Type"));
-			String now_Order_Type = "0";
-			ProductService productService = new ProductService();
-			int allCount = productService.getTypeAllCount(now_Pro_Type);
-			int itemsCount = 8;
-			int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-			int carTotal = (session.getAttribute("carTotal") == null) ? 0 : (Integer) session.getAttribute("carTotal");
-			List<ProductVO> productList = productService.getSome(nowPage, itemsCount, now_Pro_Type, now_Order_Type);
-			Product_typeService product_typeService = new Product_typeService();
-			List<Product_typeVO> typeList = product_typeService.getAll();
-			String[] orderTypeList = {"預設", "依商品名稱", "依上架日期(舊>>新)", "依上架日期(新>>舊)", "依價格(低>>高)", "依價格(高>>低)", "依賣家"};
-			String preLocation = request.getContextPath() + "/front_end/mall";
-			String location = "/front_end/mall/mallIndexAJAX.jsp?nowPage=" + nowPage + "&&now_Pro_Type=" + now_Pro_Type
-					+ "&&now_Order_Type=" + now_Order_Type;
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+    String mem_no = "1010";
+    //String mem_no=String.valueOf(session.getAttribute("mem_no"));
+    MemService memService = new MemService();
+    String mem_name = memService.getOneMem(mem_no).getName();
+    int nowPage = 1;
+    String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": String.valueOf(request.getParameter("now_Pro_Type"));
+    String now_Order_Type = "0";
+    ProductService productService = new ProductService();
+    int allCount = productService.getTypeAllCount(now_Pro_Type);
+    int itemsCount = 8;
+    int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    int carTotal = (session.getAttribute("carTotal") == null) ? 0 : (Integer) session.getAttribute("carTotal");
+    List<ProductVO> productList = productService.getSome(nowPage, itemsCount, now_Pro_Type, now_Order_Type);
+    Product_typeService product_typeService = new Product_typeService();
+    List<Product_typeVO> typeList = product_typeService.getAll();
+    String[] orderTypeList = {"預設", "依商品名稱", "依上架日期(舊>>新)", "依上架日期(新>>舊)", "依價格(低>>高)", "依價格(高>>低)", "依賣家"};
+    String preLocation = request.getContextPath() + "/Front_end/mall";
+    String location = "/Front_end/mall/mallIndexAJAX.jsp?nowPage=" + nowPage + "&&now_Pro_Type=" + now_Pro_Type + "&&now_Order_Type=" + now_Order_Type;
 
-			session.setAttribute("carTotal", new Integer(carTotal));
-			session.setAttribute("location", location);
-			session.setAttribute("productList", productList);
-			session.setAttribute("mem_no", mem_no);
+    session.setAttribute("carTotal", new Integer(carTotal));
+    session.setAttribute("location", location);
+    session.setAttribute("mem_no", mem_no);
 
-			pageContext.setAttribute("itemsCount", itemsCount);
-			pageContext.setAttribute("mem_name", mem_name);
-			pageContext.setAttribute("nowPage", nowPage);
-			pageContext.setAttribute("totalPages", totalPages);
-			pageContext.setAttribute("preLocation", preLocation);
-			pageContext.setAttribute("typeList", typeList);
-			pageContext.setAttribute("orderTypeList", orderTypeList);
-			pageContext.setAttribute("now_Pro_Type", now_Pro_Type);
-			pageContext.setAttribute("now_Order_Type", now_Order_Type);
+    pageContext.setAttribute("productList", productList);
+    pageContext.setAttribute("itemsCount", itemsCount);
+    pageContext.setAttribute("mem_name", mem_name);
+    pageContext.setAttribute("nowPage", nowPage);
+    pageContext.setAttribute("totalPages", totalPages);
+    pageContext.setAttribute("preLocation", preLocation);
+    pageContext.setAttribute("typeList", typeList);
+    pageContext.setAttribute("orderTypeList", orderTypeList);
+    pageContext.setAttribute("now_Pro_Type", now_Pro_Type);
+    pageContext.setAttribute("now_Order_Type", now_Order_Type);
 %>
 <%@include file="pages/mallIndexHeader.file"%>
 
@@ -86,7 +83,7 @@
                                 <a class="thumbnail thumbnail-service mod-shadow img-label" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">
                                     <div class="caption">
                                         <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}">
-                                        <h5 class="small " style="height: 5px;">${productVO.pro_name}</h5>
+                                        <h5 style="height: 5px;">${productVO.pro_name}</h5>
                                         <span class="text-pink price">NT </span>
                                         <b class="text-pink price " style="font-size: 2em;">${productVO.price}</b>
                                     </div>
@@ -155,7 +152,6 @@
         url : "/BA102G2/product/ProductServlet",
         type : "post",
         data : {
-//         action : "CHANGE_AJAX",
         action : "CHANGE_LAMBDA",
         nowPage : nowPage,
         itemsCount : itemsCount,
@@ -168,27 +164,68 @@
         },
         success : function(response) {
             var orderTypeList = [ "預設", "依商品名稱", "依上架日期(舊>>新)", "依上架日期(新>>舊)", "依價格(低>>高)", "依價格(高>>低)", "依賣家" ];
-            var pronoList = JSON.parse(response).pronoList;
-            var pronameList = JSON.parse(response).pronameList;
-            var priceList = JSON.parse(response).priceList;
-            var proTypeList = JSON.parse(response).proTypeList;
-            var totalPages = JSON.parse(response).totalPages;
+            var productList=JSON.parse(response).productList;
+            var proTypeList=JSON.parse(response).product_typeList;
+            var pronoList =[];
+            var pronameList = [];
+            var priceList = [];
+            var proTypeNameList = [];
+            var totalPages=JSON.parse(response).totalPages;
+            for(var i=0;i<productList.length;i++){
+                pronoList.push(productList[i].pro_no);
+                pronameList.push(productList[i].pro_name);
+                priceList.push(productList[i].price);
+            }
+            for(var i=0;i<proTypeList.length;i++){
+                proTypeNameList.push(proTypeList[i].type_name)
+            }
             imageChange(pronoList, pronameList, priceList);
             pageChange(itemsCount, now_Pro_Type, now_Order_Type, totalPages, nowPage);
-            proTypeChange(now_Pro_Type, itemsCount, proTypeList);
+            proTypeChange(now_Pro_Type, itemsCount, proTypeNameList);
             orderChange(orderTypeList, itemsCount, now_Pro_Type, now_Order_Type);
             $("#type").text(orderTypeList[now_Order_Type]);
         }
         });
     }
 
+//     function change(nowPage, itemsCount, now_Pro_Type, now_Order_Type) {
+//         $.ajax({
+//         url : "/BA102G2/product/ProductServlet",
+//         type : "post",
+//         data : {
+//         action : "CHANGE_AJAX",
+//         nowPage : nowPage,
+//         itemsCount : itemsCount,
+//         now_Pro_Type : now_Pro_Type,
+//         now_Order_Type : now_Order_Type
+//         },
+//         error : function(xhr, ajaxOptions, thrownError) {
+//             console.log(xhr.status);
+//             console.log(thrownError);
+//         },
+//         success : function(response) {
+//             var orderTypeList = [ "預設", "依商品名稱", "依上架日期(舊>>新)", "依上架日期(新>>舊)", "依價格(低>>高)", "依價格(高>>低)", "依賣家" ];
+//             var pronoList = JSON.parse(response).pronoList;
+//             var pronameList = JSON.parse(response).pronameList;
+//             var priceList = JSON.parse(response).priceList;
+//             var proTypeNameList = JSON.parse(response).proTypeList;
+//             var totalPages = JSON.parse(response).totalPages;
+//             imageChange(pronoList, pronameList, priceList);
+//             pageChange(itemsCount, now_Pro_Type, now_Order_Type, totalPages, nowPage);
+//             proTypeChange(now_Pro_Type, itemsCount, proTypeNameList);
+//             orderChange(orderTypeList, itemsCount, now_Pro_Type, now_Order_Type);
+//             $("#type").text(orderTypeList[now_Order_Type]);
+//         }
+//         });
+//     }
+
     function imageChange(pronoList, pronameList, priceList) {
         var imgDiv = "";
         for (var i = 0; i < pronoList.length; i++) {
             var caption = "<div class='col-xs-3 col-md-3 btn-like-wrapper'>";
-            var a = "<a class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/front_end/mall/product.jsp?pro_no=" + pronoList[i] + "'>";
+            var a = "<a class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/Front_end/mall/product.jsp?pro_no=" + pronoList[i] + "'>";
             var img = "<img style='width: 100%; height: 200px;' src='/BA102G2/image/ShowImage?pro_no=" + pronoList[i] + "'>"
-            var h5 = "<h5 class='small' style='height: 5px;'>" + pronameList[i] + "</h5>";
+            var h5 = "<h5  style='height: 5px;'>" + pronameList[i] + "</h5>";
             var b = "<span class='text-pink price'>NT </span><b class='text-pink price' style='font-size: 2em;''>" + priceList[i] + "</b>"
             imgDiv = imgDiv + caption + a + "<div class='caption'>" + img + h5 + b + "</div></a></div>"
 
@@ -255,19 +292,19 @@
         $("ul.pagination-lg").html(page);
     }
 
-    function proTypeChange(now_Pro_Type, itemsCount, proTypeList) {
+    function proTypeChange(now_Pro_Type, itemsCount, proTypeNameList) {
         var li = "";
         var active = "";
         if (now_Pro_Type == 0) {
             active = "active";
         }
         li = li + "<a class='list-group-item menua " + active + "'href='javascript:change(1," + itemsCount + ",0,0)'><h4>全部類型</h4></a>";
-        for (var i = 0; i < proTypeList.length; i++) {
+        for (var i = 0; i < proTypeNameList.length; i++) {
             active = "";
             if (now_Pro_Type == i + 1) {
                 active = "active";
             }
-            li = li + "<a class='list-group-item menua " + active + "'href='javascript:change(1," + itemsCount + "," + (i + 1) + ",0)'><h4>" + proTypeList[i] + "</h4></a>";
+            li = li + "<a class='list-group-item menua " + active + "'href='javascript:change(1," + itemsCount + "," + (i + 1) + ",0)'><h4>" + proTypeNameList[i] + "</h4></a>";
         }
         $(".list-group").html(li);
     }

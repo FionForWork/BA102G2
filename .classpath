@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/MyLib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/MyLib/ojdbc6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -13,7 +13,7 @@
     ProductService productService = new ProductService();
     List<ProductVO> productList = productService.getAllBySeller(mem_no);
 
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     pageContext.setAttribute("preLocation", preLocation);
     session.setAttribute("productList", productList);
 %>

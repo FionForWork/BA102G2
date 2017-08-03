@@ -61,7 +61,7 @@
         stringBuffer.append("已取消訂單");
     }
 
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     List<ProductVO> productList = new ArrayList<ProductVO>();
     session.setAttribute("mem_name", mem_name);
     session.setAttribute("productList", productList);
@@ -159,10 +159,10 @@
                                                                     <input type="hidden" name="ord_no" value="${ordVO.ord_no}">
                                                                     <c:forEach var="order_detailVO" items="${order_detailService.getAllByOrdNo(ordVO.ord_no)}">
                                                                         <tr>
-                                                                            <c:if test="${!productList.contains(productService.getOneByPK(order_detailVO.pro_no))}">
-                                                                                <!--${productList.add(productService.getOneByPK(order_detailVO.pro_no))}-->
+                                                                            <c:if test="${!productList.contains(productService.getOneByPKNoImg(order_detailVO.pro_no))}">
+                                                                                <!--${productList.add(productService.getOneByPKNoImg(order_detailVO.pro_no))}-->
                                                                             </c:if>
-                                                                            <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${order_detailVO.pro_no}">${productService.getOneByPK(order_detailVO.pro_no).pro_name}</a></td>
+                                                                            <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${order_detailVO.pro_no}">${productService.getOneByPKNoImg(order_detailVO.pro_no).pro_name}</a></td>
                                                                             <td><c:choose>
                                                                                     <c:when test="${order_detailVO.status=='0'}">
                                                                                         <input type="hidden" name="pro_no" value="${order_detailVO.pro_no}">
@@ -229,7 +229,7 @@
             <div class="col-md-2">
                 <div class="btn-group">
                     <button id="type" class="btn btn-default">排序方式</button>
-                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                    <button data-toggle="dropdown" class="btn btn-default ">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">

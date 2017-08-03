@@ -9,14 +9,22 @@
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/front_end/res/css/bootstrap.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/front_end/res/css/pnotify.custom.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/front_end/res/css/index.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/front_end/res/css/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/res/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/res/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/res/css/index.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/res/css/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>
     
-    <script src="<%=request.getContextPath()%>/front_end/res/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/front_end/res/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/front_end/res/js/top.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/js/top.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/themes/explorer/theme.js" type="text/javascript"></script>
 
 </head>
 
@@ -34,7 +42,7 @@
                 <!--RWD-->
                 <a class="navbar-brand" href="#">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/front_end/res/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/res/img/ring_64.ico">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -238,7 +246,7 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/front_end/res/img/banner1.jpg');"></div>
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/res/img/banner1.jpg');"></div>
                 <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
             </div>
         </div>

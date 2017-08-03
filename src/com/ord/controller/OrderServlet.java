@@ -84,7 +84,7 @@ public class OrderServlet extends HttpServlet {
                         }
                     }
                 }
-                request.getRequestDispatcher("/front_end/mall/mallIndex.jsp").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/mallIAJAXndex.jsp").forward(request, response);
             }
         }
         else if ("CHECK_GET_ITEM".equals(action)) {

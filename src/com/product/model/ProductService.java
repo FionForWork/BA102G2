@@ -123,7 +123,11 @@ public class ProductService {
         return dao.getAllByType(protype_no);
     }
     
-    public List<ProductVO> getAllNoImg() {
-        return dao.getAllNoImg();
+    public List<ProductVO> getAllNoDescAndImg() {
+        return dao.getAllNoDescAndImg();
+    }
+    
+    public ProductVO getOneByPKNoImg(String pro_no) {
+        return dao.getOneByPKNoImg(pro_no);
     }
 }

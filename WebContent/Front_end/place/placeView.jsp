@@ -156,7 +156,7 @@
             }
                 var imgDiv = "";
                 for (var i = 0; i < planoList.length; i++) {
-                    var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/front_end/place/onePlace.jsp?pla_no=" + planoList[i] + "'>";
+                    var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/Front_end/place/onePlace.jsp?pla_no=" + planoList[i] + "'>";
                     var img = "<img style='width:100%;' src='/BA102G2/image/ShowImage?pla_no=" + planoList[i] + "'>"
                     var h5 = "<h5 class='small' style='height: 5px;'>" + planameList[i] + "</h5>";
                     var caption = "<div class='col-xs-3 col-md-6 btn-like-wrapper'><div class='caption'>" + a + img + h5 + "</a></div></div>"

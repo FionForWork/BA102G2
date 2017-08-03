@@ -92,7 +92,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="im-bars"></i>
-                            檢舉清單
+                           <div>檢舉清單</div> 
                         </h4>
                     </div>
                     <div class="panel-body">

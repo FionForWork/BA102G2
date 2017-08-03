@@ -11,9 +11,11 @@ public interface ProductDAO_Interface {
 
     ProductVO getOneByPK(String pro_no);
 
+    ProductVO getOneByPKNoImg(String pro_no);
+
     List<ProductVO> getAll();
 
-    List<ProductVO> getAllNoImg();
+    List<ProductVO> getAllNoDescAndImg();
     
     List<ProductVO> getAllByType(String protype_no);
 

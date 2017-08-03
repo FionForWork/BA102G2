@@ -36,13 +36,8 @@ public class ProtraService {
         return dao.getAll();
     }
 
-    public List<String> getAllByMem(String mem_no) {
-        List<String> list = new ArrayList<String>();
-        List<ProtraVO> protracking_list = dao.getAllByMem(mem_no);
-        for (int i = 0; i < protracking_list.size(); i++) {
-            list.add(protracking_list.get(i).getPro_no());
-        }
-        return list;
+    public List<ProtraVO> getAllByMem(String mem_no) {
+        return dao.getAllByMem(mem_no);
     }
 
     public int getRowCount(String mem_no) {

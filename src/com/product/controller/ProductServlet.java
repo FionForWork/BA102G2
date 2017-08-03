@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -28,7 +30,7 @@ import com.product_type.model.Product_typeVO;
 import static java.util.Comparator.comparing;
 
 @WebServlet("/product/ProductServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 3 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -153,7 +155,69 @@ public class ProductServlet extends HttpServlet {
                 ProductService productService = new ProductService();
                 productService.addProduct(productVO);
                 System.out.println("ADD SUCESS");
-                request.getRequestDispatcher("/front_end/mall/productManage.jsp").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/productManage.jsp").forward(request, response);
+            }
+        }
+        else if ("ADD_AJAX".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            List<String> error = new ArrayList<String>();
+            ProductVO productVO = new ProductVO();
+
+            String seller_no = String.valueOf(session.getAttribute("mem_no"));
+            String pro_desc = request.getParameter("pro_desc");
+            String price = request.getParameter("price");
+            String amount = request.getParameter("amount");
+            String protype_no = request.getParameter("protype_no");
+            String pro_name = request.getParameter("pro_name").trim();
+            byte[] data = null;
+            if (pro_name.equals("")) {
+                error.add("請輸入商品名稱");
+            }
+            if (price.equals("")) {
+                error.add("請輸入價格");
+            }
+            if (price.equals("")) {
+                error.add("請輸入庫存數量");
+            }
+            if (protype_no == null) {
+                error.add("請選擇商品種類");
+            }
+            Part part = request.getPart("img");
+            if (part == null) {
+                error.add("請上傳商品影像");
+            }
+            else {
+                InputStream inputStream = part.getInputStream();
+                data = new byte[inputStream.available()];
+                inputStream.read(data);
+            }
+
+            if (!error.isEmpty()) {
+                for (String msg : error) {
+                    System.out.println(msg);
+                }
+                request.getRequestDispatcher("/Front_end/mall/productManage.jsp").forward(request, response);
+            }
+            else {
+                productVO.setPro_name(pro_name);
+                productVO.setSeller_no(seller_no);
+                productVO.setPro_desc(pro_desc);
+                productVO.setPrice(Integer.valueOf(price));
+                productVO.setAmount(Integer.valueOf(amount));
+                Date date = new Date();
+                Timestamp timestamp = new Timestamp(date.getTime());
+                productVO.setPro_date(timestamp);
+                productVO.setProtype_no(protype_no);
+                productVO.setImg(data);
+                productVO.setStatus("0");
+                productVO.setTimes(0);
+                productVO.setScore(0);
+                ProductService productService = new ProductService();
+                productService.addProduct(productVO);
+                
+                PrintWriter printWriter=response.getWriter();
+                printWriter.println("OK");
+                printWriter.close();
             }
         }
         ///////////////////////////////////////////////////// 下架商品/////////////////////////////////////////////////////////////////
@@ -166,7 +230,7 @@ public class ProductServlet extends HttpServlet {
                 if (productVO.getPro_no().equals(pro_no)) {
                     productVO.setStatus("2");
                     productService.updateProduct(productVO);
-                    request.getRequestDispatcher("/front_end/mall/productManage.jsp").forward(request, response);
+                    request.getRequestDispatcher("/Front_end/mall/productManage.jsp").forward(request, response);
                 }
             }
         }
@@ -186,10 +250,9 @@ public class ProductServlet extends HttpServlet {
         }
         else if ("UPDATE".equals(action)) {
             response.setCharacterEncoding("text/html; charset=utf-8");
-            List<ProductVO> productList = (List<ProductVO>) session.getAttribute("productList");
-            ProductVO productVO = productList.get(Integer.valueOf(request.getParameter("index")));
-            ProductService productService = new ProductService();
-            System.out.println(productVO.getPro_no());
+            ProductService productService=new ProductService();
+            String pro_no=request.getParameter("pro_no");
+            ProductVO productVO = productService.getOneByPK(pro_no);
             if (!request.getParameter("pro_name").equals("")) {
                 productVO.setPro_name(request.getParameter("pro_name"));
             }
@@ -213,6 +276,36 @@ public class ProductServlet extends HttpServlet {
             productService.updateProduct(productVO);
             request.getRequestDispatcher("/front_end/mall/productManage.jsp").forward(request, response);
         }
+        else if ("UPDATE_AJAX".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            ProductService productService=new ProductService();
+            String pro_no=request.getParameter("pro_no");
+            ProductVO productVO = productService.getOneByPK(pro_no);
+            if (!request.getParameter("pro_name").equals("")) {
+                productVO.setPro_name(request.getParameter("pro_name"));
+            }
+            if (!request.getParameter("pro_desc").equals("")) {
+                productVO.setPro_desc(request.getParameter("pro_desc"));
+            }
+            if (!request.getParameter("price").equals("")) {
+                productVO.setPrice(Integer.valueOf(request.getParameter("price")));
+            }
+            if (!request.getParameter("amount").equals("")) {
+                productVO.setAmount(Integer.valueOf(request.getParameter("amount")));
+            }
+
+            if (request.getPart("img") != null && (request.getPart("img").getContentType().indexOf("image") != -1)) {
+                Part part = request.getPart("img");
+                InputStream inputStream = part.getInputStream();
+                byte[] data = new byte[inputStream.available()];
+                inputStream.read(data);
+                productVO.setImg(data);
+            }
+            productService.updateProduct(productVO);
+            PrintWriter printWriter=response.getWriter();
+            printWriter.print("OK");
+            printWriter.close();
+        }
         ///////////////////////////////////////////////////// 審核商品/////////////////////////////////////////////////////////////////
         else if ("ABLE".equals(action)) {
             response.setCharacterEncoding("text/html; charset=utf-8");
@@ -230,6 +323,7 @@ public class ProductServlet extends HttpServlet {
             productService.updateProduct(productVO);
             request.getRequestDispatcher("/back_end/productPreview.jsp").forward(request, response);
         }
+        ////////////////////////////////////////AJAX版換頁/////////////////////////////////////////////////////////////
         else if ("CHANGE_AJAX".equals(action)) {
             response.setContentType("text/html; charset=utf-8");
             int nowPage = Integer.valueOf(request.getParameter("nowPage"));
@@ -304,54 +398,82 @@ public class ProductServlet extends HttpServlet {
         else if ("CHANGE_LAMBDA".equals(action)) {
             response.setContentType("text/html; charset=utf-8");
             ProductService productService = new ProductService();
-            List<ProductVO> productList = productService.getAllNoImg();
+            List<ProductVO> orignList = productService.getAllNoDescAndImg();
             int nowPage = Integer.valueOf(request.getParameter("nowPage"));
             int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
             String now_Pro_Type = request.getParameter("now_Pro_Type");
             String now_Order_Type = request.getParameter("now_Order_Type");
-            long allCount; 
-            if("now_Pro_Type".equals("0")){
-                allCount=productList.size();
+            int allCount; 
+            Comparator<ProductVO> byMethod = comparing(ProductVO::getPro_no);
+            if(now_Pro_Type.equals("0")){
+                allCount=orignList.size();
             }
             else{
-                allCount=productList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
+                allCount=(int) orignList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
+                orignList=orignList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).collect(Collectors.toList());
             }
-            System.out.println(now_Pro_Type);
-            System.out.println(allCount);
-//            if (now_Order_Type.equals("0")) {
-//                Comparator<ProductVO> byPro_No = comparing(ProductVO::getPro_no);
-//                productList.sort(byPro_No);
-//            }
-//            else if (now_Order_Type.equals("1")) {
-//                Comparator<ProductVO> byPro_Name = comparing(ProductVO::getPro_name);
-//                productList.sort(byPro_Name);
-//            }
-//            else if (now_Order_Type.equals("2")) {
-//                Comparator<ProductVO> byPro_Date = comparing(ProductVO::getPro_date);
-//                productList.sort(byPro_Date);
-//            }
-//            else if (now_Order_Type.equals("3")) {
-//                Comparator<ProductVO> byPro_Date = comparing(ProductVO::getPro_date);
-//                productList.sort(byPro_Date.reversed());
-//            }
-//            else if (now_Order_Type.equals("4")) {
-//                Comparator<ProductVO> byPro_Price = comparing(ProductVO::getPrice);
-//                productList.sort(byPro_Price);
-//            }
-//            else if (now_Order_Type.equals("5")) {
-//                Comparator<ProductVO> byPro_Price = comparing(ProductVO::getPrice);
-//                productList.sort(byPro_Price.reversed());
-//            }
-//            else if (now_Order_Type.equals("6")) {
-//                Comparator<ProductVO> byPro_No = comparing(ProductVO::getSeller_no);
-//                productList.sort(byPro_No);
-//            }
-
+            
+            if (now_Order_Type.equals("1")) {
+                byMethod = comparing(ProductVO::getPro_name);
+            }
+            else if (now_Order_Type.equals("2")) {
+                byMethod = comparing(ProductVO::getPro_date);
+            }
+            else if (now_Order_Type.equals("3")) {
+                byMethod = comparing(ProductVO::getPro_date).reversed();
+            }
+            else if (now_Order_Type.equals("4")) {
+                byMethod = comparing(ProductVO::getPrice);
+            }
+            else if (now_Order_Type.equals("5")) {
+                byMethod = comparing(ProductVO::getPrice).reversed();
+            }
+            else if (now_Order_Type.equals("6")) {
+                byMethod = comparing(ProductVO::getSeller_no);
+            }
+            int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+            orignList=orignList.stream().sorted(byMethod).collect(Collectors.toList());
+            List<ProductVO>productList=new ArrayList<ProductVO>();
+            int start=(nowPage-1)*itemsCount;
+            int end=(nowPage*itemsCount>orignList.size())?orignList.size():nowPage*itemsCount;
+            for(int i=start;i<end;i++){
+                productList.add(orignList.get(i));
+            }
+            Product_typeService product_typeService = new Product_typeService();
+            List<Product_typeVO> product_typeList = product_typeService.getAll();
+            PrintWriter printWriter=response.getWriter();
+            Gson gson=new Gson();
+            JsonObject jsonObject=new JsonObject();
+            jsonObject.add("productList", gson.toJsonTree(productList));
+            jsonObject.add("totalPages", gson.toJsonTree(totalPages));
+            jsonObject.add("product_typeList", gson.toJsonTree(product_typeList));
+            printWriter.print(gson.toJson(jsonObject));
+            printWriter.close();
         }
-
+        else if ("onOrOff".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            String pro_no=request.getParameter("pro_no");
+            ProductService productService =new ProductService();
+            ProductVO productVO=productService.getOneByPK(pro_no);
+            if(productVO.getStatus().equals("2")){
+                productVO.setStatus("1");
+            }
+            else if(productVO.getStatus().equals("1")){
+                productVO.setStatus("2");
+            }
+            productService.updateProduct(productVO);
+            PrintWriter printWriter =response.getWriter();
+            printWriter.println(productVO.getStatus());
+            System.out.println(productVO.getStatus());
+            printWriter.close();
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
+    }
+    
+    protected List<ProductVO> filterAndOrder(List<ProductVO> orginList,String protype,String ordertype) {
+        return null;
     }
 }

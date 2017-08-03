@@ -27,7 +27,7 @@
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     String[] orderTypeList = {"預設", "依商品名稱", "依上架日期(新>>舊)", "依上架日期(舊>>新)", "依價格(低>>高)", "依價格(高>>低)", "依賣家"};
-    String preLocation = request.getContextPath() + "/front_end/mall";
+    String preLocation = request.getContextPath() + "/Front_end/mall";
     String location = "/front_end/mall/mallIndex.jsp?nowPage=" + nowPage + "&&now_Pro_Type=" + now_Pro_Type+ "&&now_Order_Type=" + now_Order_Type;
 
     session.setAttribute("carTotal", new Integer(carTotal));
