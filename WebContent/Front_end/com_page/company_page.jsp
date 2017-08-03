@@ -56,7 +56,9 @@
 
 	<div class="text-center">
 		<h1>${comVO.name}</h1>
+		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
 	</div>
+	
 
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">
@@ -101,7 +103,9 @@
 		<!--預約按鈕-->
 		<div class="col-sm-3">
 			<p class="text-center">
-				<a class="btn btn-reservation btn-lg" href=""> 線上預約 </a>
+				<a class="btn btn-reservation btn-lg" href="">連絡我們 <i class="fa fa-comment"></i></a>
+				<br><br>
+				<a class="btn btn-reservation btn-lg" href="">預約 </a>
 			</p>
 		</div>
 	</div>
@@ -110,7 +114,7 @@
 	<!--店家相簿-->
 	<div class="text-center" id="works">
 		<span>
-			<h1>廠商作品</h1>
+			<h1>作品</h1>
 		</span>
 	</div>
 	<div class="container">
@@ -141,7 +145,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-info btn-lg" href="#"> 看更多
+				<a href="#"> <a class="btn btn-info btn-lg" href="#"> 看更多作品
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
 				</a>
@@ -154,7 +158,7 @@
 	<!--店家方案-->
 	<div class="text-center" id="service">
 		<span>
-			<h1>廠商方案</h1>
+			<h1>方案</h1>
 		</span>
 	</div>
 	<div class="container">
@@ -179,10 +183,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-info btn-lg" href="#"> 看更多
+				<a class="btn btn-info btn-lg" href="#"> 看更多方案
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
-				</a>
+				
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
@@ -196,14 +200,14 @@
 	<!--店家自介-->
 	<div class="text-center" id="introduction">
 		<span>
-			<h1>廠商介紹</h1>
+			<h1>介紹</h1>
 		</span>
 	</div>
 	<div class="container">
 		<div class="row com_intro">
 
 			<div class="col-xs-12 col-sm-4"></div>
-			<div class="col-xs-12 col-sm-4">基本介紹： ${comVO.com_desc}</div>
+			<div class="col-xs-12 col-sm-4">${comVO.com_desc}</div>
 			<div class="col-xs-12 col-sm-4"></div>
 		</div>
 	</div>
