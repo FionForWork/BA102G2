@@ -121,10 +121,10 @@ public class MemServlet extends HttpServlet{
 						      session.setAttribute("memVO", memVO);
 ;
 						      try {
-						    	  String location = (String) session.getAttribute("location");
-						          if (location != null) {
-						            session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-						            res.sendRedirect(location);            
+						    	  String memlocation = (String) session.getAttribute("memlocation");
+						          if (memlocation != null) {
+						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						            res.sendRedirect(memlocation);            
 						            return;
 						          }
 						      }catch(Exception ignored){}

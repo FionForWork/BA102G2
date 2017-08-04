@@ -51,7 +51,7 @@
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/com/index.jsp" >
-                            廠商專區
+                            ${comVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />
                         </a>
                     </li>
                     
@@ -59,7 +59,7 @@
                     <li>
                    
                         <a href="javascript:document.form1.submit();">
-                            登出
+                     <h4>登出</h4>
                         </a> 
                     </li>
                   
