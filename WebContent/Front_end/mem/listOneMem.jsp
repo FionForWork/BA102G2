@@ -21,9 +21,10 @@ Object memVO = session.getAttribute("memVO");
 			<div class="form-group">
 				<span  >大頭貼 :</span><br>
 				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" />
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do"><input type="button" class="btn btn-info " value="修改頭貼">
+
+				<input type="button" class="btn btn-info " id="addpic" value="修改頭貼">
 			 	
-				</FORM>
+				
 			</div>
 		
 		<div class="form-group">
@@ -84,6 +85,6 @@ Object memVO = session.getAttribute("memVO");
 		</div>
 	</div>
 </div>
-
+<%@ include file="/Front_end/mem/page/addpic.file"%>
 
 <%@ include file="page/register_footer.file"%>

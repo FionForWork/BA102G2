@@ -6,6 +6,7 @@
 Object comVO = session.getAttribute("comVO");     
 %>
 <%@ include file="page/company_header.file"%>
+
 <style type="text/css">
 			#big{
 				font-size:19px;
@@ -13,21 +14,21 @@ Object comVO = session.getAttribute("comVO");
 			}
 			h1{font-weight:600;}
 		</style>
-<title>會員資料</title>
+<title>廠商資料</title>
 <div class="container" id="big">
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
-		<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">個人資料</h1>
+		<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">廠商資料</h1>
 			<div class="form-group">
 				<span  >logo :</span><br>
+				
 				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" />
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do"><input type="button" class="btn btn-info " value="修改logo">
+				<input type="button" class="btn btn-info " id="addpic" value="修改logo">
 			 	
-				</FORM>
 			</div>
 		
 		<div class="form-group">
-				<span>會員編號 :*</span>
+				<span>廠商編號 :*</span>
 				${comVO.com_no}
 		</div>
 
@@ -45,7 +46,7 @@ Object comVO = session.getAttribute("comVO");
 		</div>
 		<div class="form-group">
 				<span>廠商經度:</span>
-				${comVO.loc}
+				${comVO.lon}
 		</div>
 		<div class="form-group">
 				<span>廠商緯度:</span>
@@ -82,6 +83,6 @@ Object comVO = session.getAttribute("comVO");
 		</div>
 	</div>
 </div>
-
+<%@ include file="/Front_end/com/page/addpic.file"%>
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

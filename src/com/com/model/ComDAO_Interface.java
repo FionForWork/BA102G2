@@ -18,4 +18,6 @@ public interface ComDAO_Interface {
     public List<ComVO> loginpwd();
     public ComVO findById(String id);
     public void updatePic(ComVO comVO);
+    public void updatePwd(ComVO comVO);
+    public ComVO oldPwd(String com_no);
 }

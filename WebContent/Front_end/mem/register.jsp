@@ -6,6 +6,7 @@
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <%@ include file="page/register_header.file"%>
+
 <title>會員註冊</title>
 
 
@@ -28,7 +29,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</c:if>
 	
 	<div class="mation">
-	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data">
+	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
 
 
 	<div class="form-group">
@@ -40,7 +41,10 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
                     <label for="pwd">密碼:</label>
                     <input type="password" name="pwd" required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (memVO==null)? "asdqqw" : memVO.getPwd()%>">
     </div>
-	
+	<div class="form-group">
+                    <label for="pwd">確認密碼:</label>
+                    <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (memVO==null)? "asdqqw" : memVO.getPwd()%>">
+    </div>
 	<div class="form-group">
            <label for="usr">姓名:</label>
            <input type="text" class="form-control" id="usr" name="name" value="<%= (memVO==null)? "肉肉" : memVO.getName()%> ">
@@ -81,9 +85,6 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 			value="<%= (memVO==null)? "" : memVO.getPicture()%>" />
 	</div>
 	
-	
-	
-
 		<input type="hidden" name="mem_no" value="${memVO.mem_no}">
 		<input type="hidden" name="action" value="insert">
 		<input type="submit" value="送出新增">
@@ -94,3 +95,14 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 
 <%@ include file="page/register_footer.file"%>
+
+<script language="javascript"> 
+	function check() 
+	{ 
+	if ((document.form1.elements[1].value)!=(document.form1.elements[2].value)){ 
+	alert("確認密碼不一致"); 
+	return false; 
+	} 
+	return true; 
+	} 
+</script> 

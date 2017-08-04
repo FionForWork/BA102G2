@@ -2,6 +2,10 @@ package com.mem.model;
 
 import java.util.List;
 
+import com.com.model.ComVO;
+
+
+
 
 
 public interface MemDAO_Interface {
@@ -15,4 +19,6 @@ public interface MemDAO_Interface {
      public List<MemVO> loginid();
      public List<MemVO> loginpwd();
      public MemVO findById(String id);
+     public void updatePwd(MemVO memVO);
+     public MemVO oldPwd(String mem_no);
 }

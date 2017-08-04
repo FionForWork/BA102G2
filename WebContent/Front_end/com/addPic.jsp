@@ -9,7 +9,7 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body>
 
@@ -30,7 +30,7 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
         <tr>
 		<td>帳號:</td>
 		<td><input type="TEXT" name="com_no" size="45" 
-			value="<%= (comVO==null)? "1001" : comVO.getCom_no()%>" /></td>
+			value="<%= (comVO==null)? "2001" : comVO.getCom_no()%>" /></td>
 	</tr>
         <input type="file" name="logo" value="<%= (comVO==null)? "" : comVO.getLogo()%>">
         <br>

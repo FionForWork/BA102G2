@@ -15,6 +15,17 @@ public class ComService {
 
 	}
 	
+	public  ComVO oldPwd(String com_no){
+		return dao.oldPwd(com_no);
+	}
+	public ComVO updatePwd(String com_no,String pwd){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		comVO.setPwd(pwd);
+		dao.updatePwd(comVO);
+		
+		return comVO;
+	}
 	
 	public ComVO updatePic(String com_no,byte[] logo){
 		ComVO comVO = new ComVO();
@@ -97,6 +108,7 @@ public List<ComVO> loginpwd(){
 	public  ComVO getOneCom(String com_no){
 		return dao.findByPrimaryKey(com_no);
 	}
+	
 	
 	public List<ComVO> getAll(){
 		return dao.getAll();

@@ -1,0 +1,33 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ page contentType="text/html; charset=UTF-8"%>
+<div class="modal fade" id="mem" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header" style="padding:150px 100px;">
+    <FORM ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post name="form1" enctype="multipart/form-data">
+        
+        <tr>
+		<td>會員編號:</td>
+		<td>${memVO.mem_no}</td><br><br><br>
+		<td></td>
+	</tr>
+        <input type="file"  name="picture" value="${memVO.picture}"><br>
+        <br>
+         <input type="hidden" name="mem_no" value="${memVO.mem_no}">
+        <input type="hidden" name="action" value="updatePic">
+        <br><br><br>
+        <input type="submit" class="btn btn-info " value="上傳">
+  </FORM>
+      
+      
+    </div>
+  </div> 
+  </div>
+    </div>
+  <script>
+  $(document).ready(function(){
+    $("#addpic").click(function(){
+        $("#mem").modal();
+    });
+});
+</script>

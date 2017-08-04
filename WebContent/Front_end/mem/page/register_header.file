@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--還沒登入前-->
 <head>
     
      <meta charset="UTF-8">
@@ -58,12 +58,12 @@
                         </a>
                     </li>
                     <li>
-                        <a class="" href="member_page.html" role="login">
+                        <a class="" href="<%= request.getContextPath() %>/Front_end/login/login.jsp" role="login">
                             登入
                         </a>
                     </li>
                     <li>
-                        <a href="Index_sample.html" role="join" title="註冊會員">註冊會員</a>
+                        <a href="#">註冊</a>
                     </li>
                 </ul>
             </div>

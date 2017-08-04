@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
-
+import com.com.model.ComService;
+import com.com.model.ComVO;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
@@ -41,6 +41,57 @@ public class MemServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
+		
+		
+		//修改密碼
+		if ("updatePwd".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+		
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				MemVO memVO = new MemVO();
+				String	mem_no = req.getParameter("mem_no").trim();
+				String oldpwd = req.getParameter("oldpwd").trim();
+				String pwd = req.getParameter("pwd").trim();
+				
+				 MemService memSvc = new MemService();
+				 MemVO a=memSvc.oldPwd(mem_no);		 
+				 if(!oldpwd.equals(a.getPwd())){
+
+					 String url = "/Front_end/mem/updatePwd.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+						successView.forward(req, res);	
+				}else{
+					memVO =memSvc.updatePwd(mem_no, pwd);
+				}
+				
+				
+	
+
+			/***************************3.新增完成,準備轉交(Send the Success view)***********/
+		
+				String url = "/Front_end/mem/listOneMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+
+		}
+		
+		
+		
+		if ("logout".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			
+			out.println("<HTML><HEAD><TITLE>登出</TITLE></HEAD>");
+		      out.println("<BODY><h1>你的帳號已登出!<BR>");
+		      out.println(" <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>返回</h1></A>");
+		      out.println("</BODY></HTML>");
+		}
+		
 		
 		
 		if ("login".equals(action)) {
@@ -375,7 +426,7 @@ public class MemServlet extends HttpServlet{
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Front_end/mem/addMem.jsp");
+							.getRequestDispatcher("/Front_end/mem/listOneMem.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -385,7 +436,7 @@ public class MemServlet extends HttpServlet{
 				memVO = memSvc.updatePic(mem_no,picture);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 
-				String url = "/Front_end/mem/listAllMem.jsp";
+				String url = "/Front_end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/
@@ -393,7 +444,7 @@ public class MemServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/mem/addMem.jsp");
+						.getRequestDispatcher("/Front_end/mem/listOneMem.jsp");
 				failureView.forward(req, res);
 				
 				

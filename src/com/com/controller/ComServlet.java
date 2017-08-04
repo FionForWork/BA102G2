@@ -32,6 +32,57 @@ public class ComServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
+		
+		//修改密碼
+				if ("updatePwd".equals(action)) {
+					List<String> errorMsgs = new LinkedList<String>();
+					// Store this set in the request scope, in case we need to
+					// send the ErrorPage view.
+					req.setAttribute("errorMsgs", errorMsgs);
+				
+				
+						/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+						ComVO comVO = new ComVO();
+						String com_no = req.getParameter("com_no").trim();
+						String oldpwd = req.getParameter("oldpwd").trim();
+						String pwd = req.getParameter("pwd").trim();
+						
+						 ComService comSvc = new ComService();
+						 ComVO a=comSvc.oldPwd(com_no);		 
+						 if(!oldpwd.equals(a.getPwd())){
+ 
+							 String url = "/Front_end/com/updatePwd.jsp";
+								RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+								successView.forward(req, res);	
+						}else{
+							comVO =comSvc.updatePwd(com_no, pwd);
+						}
+						
+						
+			
+	
+					/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				
+						String url = "/Front_end/com/listOneCom.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+						successView.forward(req, res);	
+						/***************************其他可能的錯誤處理**********************************/
+	
+				}
+		
+		
+		
+		
+		if ("logout".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			
+			out.println("<HTML><HEAD><TITLE>登出</TITLE></HEAD>");
+		      out.println("<BODY><h1>你的帳號已登出!<BR>");
+		      out.println(" <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>返回</h1></A>");
+		      out.println("</BODY></HTML>");
+		}
+		
 		if ("login".equals(action)) {
 		    // 【取得使用者 帳號(account) 密碼(password)】
 			 String id = req.getParameter("id");//使用者輸入
@@ -59,10 +110,10 @@ public class ComServlet extends HttpServlet {
 						      session.setAttribute("comVO", comVO);
 						      
 						      try {
-						    	  String location = (String) session.getAttribute("location");
-						          if (location != null) {
-						            session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-						            res.sendRedirect(location);            
+						    	  String comlocation = (String) session.getAttribute("comlocation");
+						          if (comlocation != null) {
+						            session.removeAttribute("comlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						            res.sendRedirect(comlocation);            
 						            return;
 						          }
 						      }catch(Exception ignored){}
@@ -170,7 +221,7 @@ public class ComServlet extends HttpServlet {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("comVO", comVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/Front_end/mem/updatemember.jsp";
+				String url = "/Front_end/com/updatecompany.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -178,7 +229,7 @@ public class ComServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/mem/listAllCom.jsp");
+						.getRequestDispatcher("/Front_end/com/listAllCom.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -352,6 +403,8 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 		}
 
         
+		
+		
         
 	}
 }

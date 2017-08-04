@@ -41,12 +41,109 @@ public class ComDAO implements ComDAO_Interface {
 			"UPDATE company set id=?,pwd=?,name=?,loc=?,lon=?,lat=?,com_desc=?,phone=?,account=?,logo=?,status=? where com_no = ?";
 		private static final String LOGINPWD ="SELECT pwd FROM company";
 		private static final String LOGINID ="SELECT id FROM company";
-		private static final String PERSONAL_PAGE = "SELECT com_no from company where id= ?";
+		
 		private static final String findById = "SELECT com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status from company where id= ?";
 		private static final String UPDATEPIC = 
 				"UPDATE company set logo=? where com_no = ?";
+		private static final String UPDATEPWD = 
+				"UPDATE company set pwd=? where com_no = ?";
+		private static final String OLDPWD = 
+				"SELECT pwd from company where com_no = ?";
+		
+		@Override
+		public void updatePwd(ComVO comVO) {
+			// TODO Auto-generated method stub
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATEPWD);
+				pstmt.setString(1, comVO.getPwd());
+				pstmt.setString(2, comVO.getCom_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		}
 		
 		
+		@Override
+		public ComVO oldPwd(String com_no) {
+			ComVO comVO =null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(OLDPWD);
+
+				pstmt.setString(1,com_no);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+				
+					comVO = new ComVO();
+					comVO.setPwd(rs.getString("pwd"));
+				
+					
+				}
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return comVO;
+		}
 		
 		@Override
 		public void updatePic(ComVO comVO) {

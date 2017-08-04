@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--以登入 且 會員頁面-->
 <head>
     
      <meta charset="UTF-8">
@@ -21,7 +21,9 @@
     <script src="<%=request.getContextPath()%>/Front_end/mem/js/top.js" type="text/javascript"></script>
 
 </head>
-
+<form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
         <div class="container" style="position: relative;">
@@ -48,23 +50,17 @@
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li>
-                        <a class="hidden" href="" role="login">
-                            廠商專區
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/index.jsp">
+                            會員專區
                         </a>
                     </li>
                     <li>
-                        <a class="hidden" href="" role="login">
+                   
+                        <a href="javascript:document.logout.submit();">
                             登出
-                        </a>
+                        </a> 
                     </li>
-                    <li>
-                        <a  role="login" id="myBtn">
-                            登入
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Index_sample.html" role="join" title="註冊會員">註冊會員</a>
-                    </li>
+                    
                 </ul>
             </div>
         </div>

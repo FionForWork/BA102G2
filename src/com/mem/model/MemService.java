@@ -3,6 +3,8 @@ package com.mem.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.com.model.ComVO;
+
 
 
 public class MemService {
@@ -11,6 +13,18 @@ public class MemService {
 	public MemService() {
 		dao = new MemDAO();
 
+	}
+	
+	public  MemVO oldPwd(String mem_no){
+		return dao.oldPwd(mem_no);
+	}
+	public MemVO updatePwd(String mem_no,String pwd){
+		MemVO memVO = new MemVO();
+		memVO.setMem_no(mem_no);
+		memVO.setPwd(pwd);
+		dao.updatePwd(memVO);
+		
+		return memVO;
 	}
 	
 	public MemVO  addMem(String id,String pwd,String name,String sex,Date bday,String phone,

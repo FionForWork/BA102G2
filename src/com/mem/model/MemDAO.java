@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.com.model.ComVO;
+
 
 
 public class MemDAO implements MemDAO_Interface{
@@ -43,7 +45,107 @@ public class MemDAO implements MemDAO_Interface{
 		private static final String LOGINID ="SELECT id FROM member";
 		private static final String LOGINPWD ="SELECT pwd FROM member";
 		private static final String findById = "SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status from member where id= ?";
-	
+		private static final String OLDPWD = 
+				"SELECT pwd from member where mem_no = ?";
+		private static final String UPDATEPWD = 
+				"UPDATE member set pwd=? where mem_no = ?";
+		
+		
+		@Override
+		public void updatePwd(MemVO memVO) {
+			// TODO Auto-generated method stub
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATEPWD);
+				pstmt.setString(1, memVO.getPwd());
+				pstmt.setString(2, memVO.getMem_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		}
+		
+		
+		@Override
+		public MemVO oldPwd(String mem_no) {
+			MemVO memVO =null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(OLDPWD);
+
+				pstmt.setString(1,mem_no);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+				
+					memVO = new MemVO();
+					memVO.setPwd(rs.getString("pwd"));
+				
+					
+				}
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return memVO;
+		}
+		
 		
 		
 		@Override

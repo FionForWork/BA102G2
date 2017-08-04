@@ -71,7 +71,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <input type="hidden" name="status" value="${memVO.status}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_no" value="${memVO.mem_no}">
-<input type="submit" class="btn btn-info value="送出修改"></FORM>
+<input type="submit" class="btn btn-info value="送出"></FORM>
 
 
 
