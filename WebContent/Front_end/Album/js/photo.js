@@ -51,23 +51,6 @@ $(document).ready(function(){
     		
     	});
     });
- // lightbox vdo
-    $(".bb").each(function(){
-    	$(this).click(function(){
-    		$("#lightboxVdoModal").css("display","block");
-    		var src = $(this).find("source").attr("src");
-    		console.log(src);
-    		$("#lightboxVdo").attr("src",src);
-    		
-    	});
-    });
- // close lightbox vdo
-    $(".closeVdo").each(function(){
-    	$(this).click(function(){
-        	$("#lightboxVdoModal").css("display","none");
-        	
-        });
-    });
     // close lightbox img
     $(".closeImg").each(function(){
     	$(this).click(function(){

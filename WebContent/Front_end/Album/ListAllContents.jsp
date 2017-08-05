@@ -124,18 +124,6 @@
 			</div>
 			<!-- The lightbox Modal (img)-->
 
-			<!-- The lightbox Modal (vdo)-->
-			<div id="lightboxVdoModal" class="modal">
-				<span class="closeVdo">&times;</span>
-				<video controls class="lightbox-modal-content" >
-					<source type="video/mp4" id="lightboxVdo" >
-					您的瀏覽器不支援此撥放程式
-				</video>
-
-			</div>
-			<!-- The lightbox Modal (vdo)-->
-
-
 
 
 
@@ -174,8 +162,8 @@
 				<!--  End Modal Delete Content -->
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<div class="image-container">
-						<c:if test="${contVO.vdo != null}">
-							<video width="400" controls class="img-responsive img-thumbnail bb">
+						<c:if test="${contVO.img == null}">
+							<video width="400" controls class="img-responsive img-thumbnail">
 								<source
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }"
 									type="video/mp4">

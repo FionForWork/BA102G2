@@ -301,8 +301,7 @@ private static DataSource ds = null;
 				list.add(rs.getString("com_no"));
 			}
 			
-			
-			
+
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

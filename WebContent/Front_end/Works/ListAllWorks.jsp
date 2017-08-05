@@ -115,17 +115,6 @@
 			</div>
 			<!-- The lightbox Modal (img)-->
 
-			<!-- The lightbox Modal (vdo)-->
-			<div id="lightboxVdoModal" class="modal">
-				<span class="closeVdo">&times;</span>
-				<video controls class="lightbox-modal-content" id="lightboxVdo" >
-					<source type="video/mp4">
-					您的瀏覽器不支援此撥放程式
-				</video>
-
-			</div>
-			<!-- The lightbox Modal (vdo)-->
-
 
 
 
@@ -165,11 +154,11 @@
 				<div class="col-md-4 col-sm-4 col-xs-12">
 					<div class="image-container">
 
-						<c:if test="${worksVO.vdo != null}">
+						<c:if test="${worksVO.img == null}">
 
 							<div class="polaroid">
 								 <video
-										width="400" controls class="img-responsive bb"
+										width="400" controls class="img-responsive"
 										style="width: 100%">
 										<source
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"

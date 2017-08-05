@@ -33,9 +33,6 @@
 </div>
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 
-<!-- start snackbar   -->
-<div id="snackbar">成功匯入會員相簿 !</div>
-<!-- start snackbar   -->
 
 
 <div class="container">

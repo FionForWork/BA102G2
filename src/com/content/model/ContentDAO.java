@@ -19,7 +19,7 @@ public class ContentDAO implements ContentDAO_Interface {
 	private static final String DELETE_SQL = "delete from content where cont_no = ?";
 	private static final String UPDATE_SQL = "update content set alb_no=?,upload_date=?,img=?,vdo=? where cont_no = ?";
 	private static final String FIND_BY_PK = "select * from content where cont_no = ?";
-	private static final String FIND_ALL_BY_ALB_NO = "select * from content where alb_no = ? order by upload_date desc";
+	private static final String FIND_ALL_BY_ALB_NO = "select cont_no,alb_no,upload_date,img from content where alb_no = ? order by upload_date desc";
 	private static final String FIND_ALL = "select * from content";
 	private static final String COUNT_SQL = "select count(*) from content where alb_no = ? ";
 	private static DataSource ds = null;
@@ -219,7 +219,6 @@ public class ContentDAO implements ContentDAO_Interface {
 				content.setAlb_no(rs.getString(2));
 				content.setUpload_date(rs.getTimestamp(3));
 				content.setImg(rs.getBytes(4));
-				content.setVdo(rs.getBytes(5));
 				contentList.add(content);
 			}
 		} catch (Exception e) {
