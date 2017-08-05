@@ -436,7 +436,7 @@ public class ProductServlet extends HttpServlet {
         else if ("CHANGE_LAMBDA".equals(action)) {
             response.setContentType("text/html; charset=utf-8");
             ProductService productService = new ProductService();
-            List<ProductVO> orignList = productService.getAllNoDescAndImg();
+            List<ProductVO> originList = productService.getAllNoDescAndImg();
             int nowPage = Integer.valueOf(request.getParameter("nowPage"));
             int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
             String now_Pro_Type = request.getParameter("now_Pro_Type");
@@ -444,11 +444,11 @@ public class ProductServlet extends HttpServlet {
             int allCount;
             Comparator<ProductVO> byMethod = comparing(ProductVO::getPro_no);
             if (now_Pro_Type.equals("0")) {
-                allCount = orignList.size();
+                allCount = originList.size();
             }
             else {
-                allCount = (int) orignList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
-                orignList = orignList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).collect(Collectors.toList());
+                allCount = (int) originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
+                originList = originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).collect(Collectors.toList());
             }
             switch (now_Order_Type) {
                 case "1":
@@ -475,12 +475,12 @@ public class ProductServlet extends HttpServlet {
                     break;
             }
             int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-            orignList = orignList.stream().sorted(byMethod).collect(Collectors.toList());
+            originList = originList.stream().sorted(byMethod).collect(Collectors.toList());
             List<ProductVO> productList = new ArrayList<ProductVO>();
             int start = (nowPage - 1) * itemsCount;
-            int end = (nowPage * itemsCount > orignList.size()) ? orignList.size() : nowPage * itemsCount;
+            int end = (nowPage * itemsCount > originList.size()) ? originList.size() : nowPage * itemsCount;
             for (int i = start; i < end; i++) {
-                productList.add(orignList.get(i));
+                productList.add(originList.get(i));
             }
             Product_typeService product_typeService = new Product_typeService();
             List<Product_typeVO> product_typeList = product_typeService.getAll();

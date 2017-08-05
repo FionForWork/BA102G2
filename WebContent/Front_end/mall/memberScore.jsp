@@ -43,6 +43,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="ordVO" items="${ordList}">
+                                    <tr>
                                     <td>${ordVO.ord_no}</td>
                                     <td>${ordVO.seller_no}</td>
                                     <td>${ordVO.address}</td>

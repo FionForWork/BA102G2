@@ -22,17 +22,15 @@
     session.setAttribute("mem_no", mem_no);
     String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
     String now_Status = (request.getParameter("now_Status") == null) ? "0" : request.getParameter("now_Status");
-    String orderType = (request.getParameter("now_Order_Type") == null) ? "0" : request.getParameter("now_Order_Type");
+    String orderType = (request.getParameter("orderType") == null) ? "0" : request.getParameter("orderType");
     String[] statusList = { "買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單" };
     String[] orderTypeList = { "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期近>>遠", "依成立日期遠>>近", "依訂單總價小>>大", "依訂單總價大>>小" };
     OrdService ordService = new OrdService();
-    int nowPage = 1;
-    int showCount = 5;
-    int orderCount = ordService.getAllOrderCount(role, memVO.getMem_no(), now_Status);
-
-    int totalPages;
-
-    List<OrdVO> ordList = (ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType) == null) ? new ArrayList<OrdVO>() : ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType);
+    int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
+    int allCount = ordService.getAllOrderCount(role, memVO.getMem_no(), now_Status);
+    int itemsCount = 5;
+    int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    List<OrdVO> ordList = ordService.getAllOrderByRole(nowPage,itemsCount,role, memVO.getMem_no(), now_Status, orderType);
     List<String> seller_accountList = new ArrayList<String>();
     List<String> cust_nameList = new ArrayList<String>();
     for (int i = 0; i < ordList.size(); i++) {
@@ -72,6 +70,8 @@
     session.setAttribute("productList", productList);
     session.setAttribute("memService", memService);
 
+    pageContext.setAttribute("itemsCount", itemsCount);
+    pageContext.setAttribute("totalPages", totalPages);
     pageContext.setAttribute("productService", productService);
     pageContext.setAttribute("order_detailService", order_detailService);
     pageContext.setAttribute("cust_nameList", cust_nameList);
@@ -229,7 +229,56 @@
                             </tr>
                         </c:forEach>
                     </tbody>
-                </table>
+                </table><!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
+                        <div class="text-center ">
+                            <nav aria-label="Page navigation ">
+                                <ul class="pagination pagination-lg ">
+                                    <c:choose>
+                                        <c:when test="${totalPages<=5}">
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <li class=""><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${i}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${i}">${i}</a></li>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:when test="${nowPage<5}">
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${i}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${i}">${i}</a></li>
+                                            </c:forEach>
+                                            <li><a class="disabled">...</a></li>
+                                            <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${totalPages}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${totalPages}">${totalPages}</a></li>
+                                        </c:when>
+                                        <c:when test="${totalPages-nowPage<5}">
+                                            <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=1&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="1">1</a></li>
+                                            <li><a class="disabled">...</a></li>
+                                            <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                                <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${i}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${i}">${i}</a></li>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=1" data-page="1">1</a></li>
+                                            <li><a class="disabled">...</a></li>
+                                            <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                                <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${i}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${i}">${i}</a></li>
+                                            </c:forEach>
+                                            <li><a class="disabled">...</a></li>
+                                            <li><a class="btn btn-info" href="${preLocation}/mallArea.jsp?nowPage=${totalPages}&&role=${role}&&now_Status=${now_Status}&&orderType=${orderType}" data-page="${totalPages}">${totalPages}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
+             <div class="col-md-2">
+                <div class="btn-group">
+                    <button id="type" class="btn btn-default">排序方式</button>
+                    <button data-toggle="dropdown" class="btn btn-default "><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    <c:forEach var="orderType" items="${orderTypeList}" varStatus="s">
+                        <li><a href="${preLocation}/mallArea.jsp?now_Status=${now_Status}&&role=${role}&&now_Status=${now_Status}&&orderType=${s.count}">${orderType}</a></li>
+                    </c:forEach>
+                    </ul>
+                </div>
+            </div>
             </div>
         </div>
     </div>

@@ -437,17 +437,17 @@ public class OrdDAO implements OrdDAO_Interface {
 
     @Override
     public List<OrdVO> getAllOrderByRole(String role, String role_no, String status) {
-        String GET_ALL_ROW_COUNT_BY_ROLE;
+        String GET_ALL_ROW_BY_ROLE;
         if("0".equals(role)){
-            GET_ALL_ROW_COUNT_BY_ROLE="select * from ORD where CUST_NO = ? and STATUS = ?";
+            GET_ALL_ROW_BY_ROLE="select * from ORD where CUST_NO = ? and STATUS = ?";
             
         }
         else{
-            GET_ALL_ROW_COUNT_BY_ROLE="select * from ORD where CUST_NO = ? and STATUS = ?";
+            GET_ALL_ROW_BY_ROLE="select * from ORD where SELLER_NO = ? and STATUS = ?";
         }
         try {
             connection = JNDIinit();
-            preparedStatement = connection.prepareStatement(GET_ALL_ROW_COUNT_BY_ROLE);
+            preparedStatement = connection.prepareStatement(GET_ALL_ROW_BY_ROLE);
             preparedStatement.setString(1, role_no);
             preparedStatement.setString(2, status);
             resultSet = preparedStatement.executeQuery();

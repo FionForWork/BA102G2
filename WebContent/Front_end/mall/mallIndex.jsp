@@ -22,6 +22,7 @@
     int allCount = productService.getTypeAllCount(now_Pro_Type);
     int itemsCount = 8;
     int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    
     int carTotal = (session.getAttribute("carTotal") == null) ? 0 : (Integer) session.getAttribute("carTotal");
     List<ProductVO> productList = productService.getSome(nowPage, itemsCount, now_Pro_Type, now_Order_Type);
     Product_typeService product_typeService = new Product_typeService();

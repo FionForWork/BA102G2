@@ -128,7 +128,7 @@ public class OrderServlet extends HttpServlet {
         else if ("CANCEL".equals(action)) {
             String ord_no = request.getParameter("ord_no");
             OrdVO ordVO = ordService.getOneOrd(ord_no);
-            ordVO.setStatus("3");
+            ordVO.setStatus("4");
             ordService.updateOrd(ordVO);
             request.getRequestDispatcher("/Front_end/mall/mallArea.jsp").forward(request, response);
         }
@@ -166,6 +166,7 @@ public class OrderServlet extends HttpServlet {
             ordService.updateOrd(ordVO);
             request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=1&&now_Status=3").forward(request, response);
         }
+        
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

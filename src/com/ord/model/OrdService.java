@@ -1,7 +1,14 @@
 package com.ord.model;
 
+import static java.util.Comparator.comparing;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.product.model.ProductVO;
 
 public class OrdService {
     private OrdDAO_Interface dao;
@@ -109,12 +116,52 @@ public class OrdService {
         }
         return null;
     }
-    
-    public int getAllOrderCount(String role, String role_no, String status){
+
+    public int getAllOrderCount(String role, String role_no, String status) {
         return dao.getAllOrderCount(role, role_no, status);
     }
-    
-    public List<OrdVO> getAllOrderByRole(String role, String role_no, String status) {
-        return dao.getAllOrderByRole(role, role_no, status);
+
+    public List<OrdVO> getAllOrderByRole(int nowPage, int itemsCount,String role, String role_no, String status, String orderType) {
+        List<OrdVO>originList=dao.getAllOrderByRole(role, role_no, status);
+        Comparator<OrdVO> byMethod = comparing(OrdVO::getOrd_no);
+        if ("0".equals(role)) {
+            if ("1".equals(orderType)) {
+                byMethod = comparing(OrdVO::getSeller_no);
+            }
+            else if ("2".equals(orderType)) {
+                byMethod = comparing(OrdVO::getSeller_no).reversed();
+            }
+        }
+        else if ("1".equals(role)) {
+            if ("1".equals(orderType)) {
+                byMethod = comparing(OrdVO::getCust_no);
+            }
+            else if ("2".equals(orderType)) {
+                byMethod = comparing(OrdVO::getCust_no).reversed();
+            }
+        }
+        if ("3".equals(orderType)) {
+            byMethod = comparing(OrdVO::getAddress);
+        }
+        else if ("4".equals(orderType)) {
+            byMethod = comparing(OrdVO::getOrd_date);
+        }
+        else if ("5".equals(orderType)) {
+            byMethod = comparing(OrdVO::getOrd_date).reversed();
+        }
+        else if ("6".equals(orderType)) {
+            byMethod = comparing(OrdVO::getTotal);
+        }
+        else if ("7".equals(orderType)) {
+            byMethod = comparing(OrdVO::getTotal).reversed();
+        }
+        originList=originList.stream().sorted(byMethod).collect(Collectors.toList());
+        int start = (nowPage - 1) * itemsCount;
+        int end = (nowPage * itemsCount > originList.size()) ? originList.size() : nowPage * itemsCount;
+        List<OrdVO> pageList=new ArrayList<OrdVO>();
+        for(int i=start;i<end;i++){
+            pageList.add(originList.get(i));
+        }
+        return pageList;
     }
 }
