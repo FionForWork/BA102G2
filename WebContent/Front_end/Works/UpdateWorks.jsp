@@ -114,16 +114,6 @@
 			</div>
 			<!-- The lightbox Modal (img)-->
 
-			<!-- The lightbox Modal (vdo)-->
-			<div id="lightboxVdoModal" class="modal">
-				<span class="closeVdo">&times;</span>
-				<video controls class="lightbox-modal-content" id="lightboxVdo" >
-					<source type="video/mp4">
-					您的瀏覽器不支援此撥放程式
-				</video>
-
-			</div>
-			<!-- The lightbox Modal (vdo)-->
 
 
 
@@ -172,7 +162,7 @@
 						<input type='hidden' name='action' value='update_Works'>
 						<input type='hidden' name='com_no' value='${com_no}'>
 						<input type='hidden' name='works_no' value='${worksVO.works_no}'>
-						<c:if test="${worksVO.vdo != null}">
+						<c:if test="${worksVO.img == null}">
 
 							<div class="polaroid">
 								 <video

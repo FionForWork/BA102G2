@@ -16,12 +16,12 @@
     margin-bottom: 10px;
 }
 
-.gallary.img-responsive {
-    opacity: 0.5;
+.gallery.img-responsive {
+    opacity: 0.7;
     margin-bottom: 20px;
 }
 
-.gallary.img-responsive:hover {
+.gallery.img-responsive:hover {
     opacity: 1;
 }
 

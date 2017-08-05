@@ -38,7 +38,8 @@ private static DataSource ds = null;
 			"DELETE FROM service where serv_no = ?";
 		private static final String UPDATE = 
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
-	
+		private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
+		
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -189,7 +190,7 @@ private static DataSource ds = null;
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 			}
 			
 			
@@ -250,7 +251,7 @@ private static DataSource ds = null;
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 				list.add(servVO); // Store the row in the list
 			} 
 		}catch (SQLException se) {
@@ -282,5 +283,54 @@ private static DataSource ds = null;
 		}
 		return list;
 	}
+	
+	
+	@Override
+	public List<String> findByStype_no(String stype_no) {
+		List<String> list = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_COMNO_BY_STYPENO);
+			pstmt.setString(1, stype_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				list.add(rs.getString("com_no"));
+			}
+			
+			
+			
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 
 }

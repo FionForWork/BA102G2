@@ -54,21 +54,6 @@ $(document).ready(function(){
     		
     	});
     });
- // lightbox vdo
-    $(".bb").each(function(){
-    	$(this).click(function(){
-    		$("#lightboxVdoModal").css("display","block");
-    		$("#lightboxVdo").attr("src",this.src);
-    		
-    	});
-    });
- // close lightbox vdo
-    $(".closeVdo").each(function(){
-    	$(this).click(function(){
-        	$("#lightboxVdoModal").css("display","none");
-        	
-        });
-    });
     // close lightbox img
     $(".closeImg").each(function(){
     	$(this).click(function(){

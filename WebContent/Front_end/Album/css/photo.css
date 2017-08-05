@@ -81,7 +81,7 @@
 
 
 /* The Modal (background) */
-#lightboxImgModal,#lightboxVdoModal{
+#lightboxImgModal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 999; /* Sit on top */
@@ -124,7 +124,7 @@
 }
 
 /* The Close Button */
-.closeImg, .closeVdo {
+.closeImg{
     position: absolute;
     top: 15px;
     right: 35px;
@@ -136,12 +136,6 @@
 
 .closeImg:hover,
 .closeImg:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-.closeVdo:hover,
-.closeVdo:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
