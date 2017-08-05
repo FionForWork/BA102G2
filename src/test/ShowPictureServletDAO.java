@@ -15,15 +15,19 @@ import com.album.model.AlbumService;
 import com.album.model.AlbumVO;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.tempcont.model.TempContService;
 import com.tempcont.model.TempContVO;
+import com.works.model.WorksService;
+import com.works.model.WorksVO;
 
 public class ShowPictureServletDAO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		response.setContentType("image/jpeg");
+		//response.setContentType("image/jpeg");
 		ServletOutputStream out = response.getOutputStream();
 		String file = request.getQueryString();
 		String pk = null;
@@ -64,6 +68,32 @@ public class ShowPictureServletDAO extends HttpServlet {
 				tempcont = tempcontVO.getImg();
 			}
 			out.write(tempcont);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("mem_no")){
+			pk = request.getParameter("mem_no");
+			byte[] picture =null;
+			System.out.println(pk);
+			MemService memSvc = new MemService();
+			MemVO memVO = memSvc.getOneMem(pk);
+			picture = memVO.getPicture();
+			out.write(picture);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("works_no")){
+			pk = request.getParameter("works_no");
+			byte[] work =null;
+			System.out.println(pk);
+			WorksService worksSvc = new WorksService();
+			WorksVO worksVO = worksSvc.getOneWork(pk);
+			if(worksVO.getImg() == null){
+				work = worksVO.getVdo();
+			}else{
+				work = worksVO.getImg();
+			}
+			out.write(work);
 			out.close(); 
 			return;
 		}

@@ -17,7 +17,7 @@
 	Map<String, String> errorMsgs = (Map) request.getAttribute("errorMsgs");
 %>
 
-<%@ include file="page/album_header_v2.file"%>
+<%@ include file="page/album_header.file"%>
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 <div class="container">
@@ -63,7 +63,7 @@
 
 		<div class="col-md-8 col-offset-1">
 			<div class="row text-right">
-				<button class="btn btn-info createAlbum" id="createAlb"
+				<button class="btn btn-default createAlbum" id="createAlb"
 					value="submit">新增相簿</button>
 			</div>
 
@@ -71,12 +71,12 @@
 			<form action="<%=request.getContextPath()%>/album/album.do"
 				method="post" enctype="multipart/form-data">
 				<div class="modal fade" id="albumModal" role="dialog">
-					<div class="modal-dialog modal-lg">
+					<div class="modal-dialog">
 
 						<!-- Modal content-->
 
 						<div class="modal-content">
-							<div class="modal-header" style="padding: 20px 50px;">
+							<div class="modal-header" style="padding: 35px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
 									<span class="glyphicon glyphicon-picture"></span> 建立相簿
@@ -90,14 +90,12 @@
 										type="text" name="name" class="form-control">
 								</div>
 								<br> <span class='errorMsgs'>
-									${errorMsgs.get("file")}</span> 
-									<input id="inputFile"
-									name="inputFile[]" type="file" multiple class="file-loading"> <br>
-								<!-- 								<div class="form-group"> -->
-								<!-- 									<input type="file" class="form-control" name="uploadPic" -->
-								<!-- 										id="upload" onchange="preview_images()" multiple> -->
-								<!-- 								</div> -->
-								<!-- 								<div id="showPanel"></div> -->
+									${errorMsgs.get("file")}</span>
+								<div class="form-group">
+									<input type="file" class="form-control" name="uploadPic"
+										id="upload" onchange="preview_images()" multiple>
+								</div>
+								<div id="showPanel"></div>
 								<span class="glyphicon glyphicon-off"></span> <input
 									type='submit' class="btn btn-info btn-block" value="建立">
 							</div>
@@ -150,41 +148,37 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">${albVO.name}</div>
 						<div class="panel-body">
-							<a id="displayAnc" href="#"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Album/ListAllContents.jsp?alb_no=${albVO.alb_no}'">
-								<img
-								src='<%=request.getContextPath() %>/ShowPictureServletDAO?alb_no=${albVO.alb_no }'
-								class="img-responsive gallery" class="img-responsive"
-								style="width: 100%" alt="Image">
-							</a>
+								<a id="displayAnc" href="#"
+									onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Album/ListAllContents.jsp?alb_no=${albVO.alb_no}'">
+									<img
+									src='<%=request.getContextPath() %>/ShowPictureServletDAO?alb_no=${albVO.alb_no }'
+									class="img-responsive gallery" class="img-responsive"
+									style="width: 100%" alt="Image">
+								</a>
 						</div>
 						<div class="panel-footer">
-
-
-							<form class="form-inline" id="update${s.count}"
-								action="<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp"
-								method="post">
-								<input type="hidden" name="alb_no" value="${albVO.alb_no }">
-
-							</form>
-
-							<form id="delete${s.count}"
-								action="<%=request.getContextPath()%>/album/album.do"
-								method="post">
-								<input type="hidden" name="alb_no" value="${albVO.alb_no }">
-								<input type="hidden" name="action" value="delete_Album">
-
-							</form>
+							${contSvc.countContentsInSingleAlbum(albVO.alb_no) } 張相片
 							<div class="text-right">
-								<span style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
-									張相片</span> 
+								<form class="form-inline" id="update${s.count}"
+									action="<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp"
+									method="post">
+									<input type="hidden" name="alb_no" value="${albVO.alb_no }">
 									<a href="#"
-									onclick="document.getElementById('update${s.count}').submit();">
-									<span class='fa fa-pencil' style='font-size: 20px;'></span>
-								</a> <a href="#" id="alb${s.count}" data-toggle="modal"
-									data-target="#deleteModal${s.count}"> <span
-									class='fa fa-trash' style='font-size: 20px;'></span>
-								</a>
+										onclick="document.getElementById('update${s.count}').submit();">
+										<span class='fa fa-pencil' style='font-size: 20px;'></span>
+									</a>
+								</form>
+
+								<form id="delete${s.count}"
+									action="<%=request.getContextPath()%>/album/album.do"
+									method="post">
+									<input type="hidden" name="alb_no" value="${albVO.alb_no }">
+									<input type="hidden" name="action" value="delete_Album">
+									<a href="#" id="alb${s.count}" data-toggle="modal"
+										data-target="#deleteModal${s.count}"> <span
+										class='fa fa-trash' style='font-size: 20px;'></span>
+									</a>
+								</form>
 							</div>
 						</div>
 					</div>

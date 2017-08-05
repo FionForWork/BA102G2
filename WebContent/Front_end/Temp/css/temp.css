@@ -32,7 +32,7 @@ h2{
 	padding:0px;
 	width:100%;
 	border-radius:8px;
-	
+	cursor:pointer;
 }
 
 .overlay{
@@ -55,10 +55,10 @@ h2{
 .overlap{
 	opacity:0;
 	position:absolute;
-	top:0px;
-	right:20px;
+	top:5px;
+	right:10px;
 }
-.image:hover .overlap{
+.image-container:hover .overlap{
 	opacity:1;
 	
 }
@@ -140,48 +140,75 @@ h2{
 
 
 
-#snackbar {
-    visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
-    margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #333; /* Black background color */
-    color: #fff; /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 16px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 1; /* Add a z-index if needed */
-    left: 50%; /* Center the snackbar */
-    top: 50px; /* 30px from the bottom */
+/* The Modal (background) */
+#lightboxImgModal,#lightboxVdoModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
-    visibility: visible; /* Show the snackbar */
-
-/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
-However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+/* Modal Content (image) */
+.lightbox-modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
 }
 
-/* Animations to fade the snackbar in and out */
-@-webkit-keyframes fadein {
-    from {top: 0; opacity: 0;} 
-    to {top: 50px; opacity: 1;}
+
+
+/* Add Animation */
+.lightbox-modal-content {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
 }
 
-@keyframes fadein {
-    from {top: 0; opacity: 0;}
-    to {top: 50px; opacity: 1;}
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
 }
 
-@-webkit-keyframes fadeout {
-    from {top: 50px; opacity: 1;} 
-    to {top: 0; opacity: 0;}
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
 }
 
-@keyframes fadeout {
-    from {top: 50px; opacity: 1;}
-    to {top: 0; opacity: 0;}
+/* The Close Button */
+.closeImg, .closeVdo {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.closeImg:hover,
+.closeImg:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+.closeVdo:hover,
+.closeVdo:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .lightbox-modal-content {
+        width: 100%;
+    }
 }

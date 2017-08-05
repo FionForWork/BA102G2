@@ -80,19 +80,27 @@
     <url-pattern>/content/content.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ComTraServlet</servlet-name>
+    <servlet-class>com.comtra.controller.ComTraServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ComTraServlet</servlet-name>
+    <url-pattern>/comtra/comtra.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>WorksServlet</servlet-name>
+    <servlet-class>com.works.controller.WorksServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WorksServlet</servlet-name>
+    <url-pattern>/works/works.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <servlet-class>test.ShowPictureServletDAO</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>UploadPhotoToDBDAO</servlet-name>
-    <servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UploadPhotoToDBDAO</servlet-name>
-    <url-pattern>/UploadPhotoToDBDAO</url-pattern>
   </servlet-mapping>
 </web-app>
