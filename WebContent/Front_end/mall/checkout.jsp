@@ -15,6 +15,13 @@
     pageContext.setAttribute("preLocation", preLocation);
 %>
 <%@include file="pages/mallIndexHeader.file"%>
+
+<style>
+    div .vertical-center{
+        margin-top:12px
+    }
+</style>
+
 <div class="text-center" style="height: 50px; margin-top: 50px">
     <h1>確認訂單</h1>
 </div>
@@ -22,7 +29,7 @@
     <div class="row">
         <div class="col-md-12">
             <form action="<%=request.getContextPath()%>/order/OrderServlet" method="post">
-                <table class="table table-striped table-bordered table-condensed">
+                <table class="table table-striped table-bordered table-condensed" style="vertical-align:middle;">
                     <thead>
                         <tr>
                             <th>商品名稱</th>
@@ -36,19 +43,35 @@
                     <tbody>
                         <c:forEach var="item" items="${carList}" varStatus="s">
                             <tr>
-                                <td>
-                                    <a href="${preLocation}/product.jsp?pro_no=${item.pro_no}">${item.pro_name}</a>
+                                <td><div class="text-center vertical-center">
+                                        <a href="${preLocation}/product.jsp?pro_no=${item.pro_no}">${item.pro_name}</a>
+                                    <div>
                                 </td>
-                                <td>${item.seller_no}</td>
-                                <td>${item.pro_desc}</td>
-                                <td>${item.price}</td>
+                                <td>
+                                    <div class="text-center vertical-center">
+                                        ${item.seller_no}</td>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-center vertical-center">
+                                        ${item.pro_desc}</td>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-center vertical-center">
+                                        ${item.price}
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="form-group">
                                         <label class="sr-only" for="buyCount">數量</label>
-                                        <input type="number" class="form-control" name="buyCount" placeholder="<%=countList.get(count)%>" value="<%=countList.get(count)%>" min="1" max="${item.amount}">
+<%--                                         <input type="number" class="form-control" name="buyCount" placeholder="<%=countList.get(count)%>" value="<%=countList.get(count)%>" min="1" max="${item.amount}"> --%>
+                                        <input type="number" class="form-control" name="buyCount" placeholder="${countList[s.index]}" value="${countList[s.index]}" min="1" max="${item.amount}">
                                     </div>
                                 <td>
-                                    <a class="btn btn-danger" href="<%=request.getContextPath()%>/product/ProductServlet?action=DELETE_FROM_CAR&&pro_no=${item.pro_no}">刪除</a>
+                                    <div class="text-center vertical-center">
+                                        <a class="btn btn-danger" href="<%=request.getContextPath()%>/product/ProductServlet?action=DELETE_FROM_CAR&&pro_no=${item.pro_no}">刪除</a>
+                                    </div>
                                 </td>
                             </tr>
                             <%
@@ -68,7 +91,7 @@
                                 <p>總金額:${carTotal}</p>
                                 <input type="hidden" name="action" value="BUY">
                                 <button type="submit" class="btn btn-success">確認購買</button>
-                                <a class="btn btn-primary " href="${preLocation}/mallIndex.jsp">返回</a>
+                                <a class="btn btn-primary " href="${preLocation}/mallIndexAJAX.jsp">返回</a>
                             </td>
                         </tr>
                     </tbody>

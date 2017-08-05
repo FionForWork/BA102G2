@@ -399,4 +399,88 @@ public class OrdDAO implements OrdDAO_Interface {
         return null;
     }
 
+    @Override
+    public int getAllOrderCount(String role, String role_no, String status) {
+        String GET_ALL_ROW_COUNT_BY_ROLE;
+        if("0".equals(role)){
+            GET_ALL_ROW_COUNT_BY_ROLE="select count(rownum) from ORD where CUST_NO = ? and STATUS = ?";
+            
+        }
+        else{
+            GET_ALL_ROW_COUNT_BY_ROLE="select count(rownum) from ORD where CUST_NO = ? and STATUS = ?";
+        }
+        try {
+            connection = JNDIinit();
+            preparedStatement = connection.prepareStatement(GET_ALL_ROW_COUNT_BY_ROLE);
+            preparedStatement.setString(1, role_no);
+            preparedStatement.setString(2, status);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public List<OrdVO> getAllOrderByRole(String role, String role_no, String status) {
+        String GET_ALL_ROW_COUNT_BY_ROLE;
+        if("0".equals(role)){
+            GET_ALL_ROW_COUNT_BY_ROLE="select * from ORD where CUST_NO = ? and STATUS = ?";
+            
+        }
+        else{
+            GET_ALL_ROW_COUNT_BY_ROLE="select * from ORD where CUST_NO = ? and STATUS = ?";
+        }
+        try {
+            connection = JNDIinit();
+            preparedStatement = connection.prepareStatement(GET_ALL_ROW_COUNT_BY_ROLE);
+            preparedStatement.setString(1, role_no);
+            preparedStatement.setString(2, status);
+            resultSet = preparedStatement.executeQuery();
+            List<OrdVO> list = new ArrayList<>();
+            while (resultSet.next()) {
+                OrdVO ordVO = new OrdVO();
+                ordVO.setOrd_no(resultSet.getString(1));
+                ordVO.setSeller_no(resultSet.getString(2));
+                ordVO.setCust_no(resultSet.getString(3));
+                ordVO.setAddress(resultSet.getString(4));
+                ordVO.setOrd_date(resultSet.getTimestamp(5));
+                ordVO.setTotal(resultSet.getInt(6));
+                ordVO.setScore(resultSet.getInt(7));
+                ordVO.setStatus(resultSet.getString(8));
+                list.add(ordVO);
+            }
+            return list;
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }

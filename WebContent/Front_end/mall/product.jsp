@@ -1,3 +1,5 @@
+<%@page import="com.mem.model.MemService"%>
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.protra.model.ProtraVO"%>
 <%@page import="com.product.model.ProductService"%>
 <%@page import="com.protra.model.ProtraService"%>
@@ -11,13 +13,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     int carTotal = (session.getAttribute("carTotal") == null) ? 0 : Integer.valueOf(String.valueOf((session.getAttribute("carTotal"))));
-    String mem_no = String.valueOf(session.getAttribute("mem_no"));
+    MemVO memVO=(session.getAttribute("memVO")==null)?new MemService().getOneMem("1010"):(MemVO)session.getAttribute("memVO");
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     ProtraService protraService = new ProtraService();
     List<String> protrackingProNolist=new ArrayList<String>();;
-    List<ProtraVO>protraList=protraService.getAllByMem(mem_no);
-    System.out.println(protraList.size());
+    List<ProtraVO>protraList=protraService.getAllByMem(memVO.getMem_no());
     for(int i=0;i<protraList.size();i++){
         protrackingProNolist.add(protraList.get(i).getPro_no());
     }
@@ -33,8 +34,8 @@
         pro_no = request.getParameter("pro_no");
         ProductService productService=new ProductService();
         ProductVO productVO=productService.getOneByPKNoImg(pro_no);
-        mine = (productVO.getSeller_no().equals(mem_no)) ? 1 : 0;
-        session.setAttribute("productVO", productVO);
+        mine = (productVO.getSeller_no().equals(memVO.getMem_no())) ? 1 : 0;
+        pageContext.setAttribute("productVO", productVO);
      
     }
     String preLocation = request.getContextPath() + "/Front_end/mall";
@@ -110,8 +111,8 @@
 <!--                                                     <button type="submit" class="btn btn-default ">加入購物車</button> -->
 <!--                                                 </form> -->
                                             <label>數量</label>
-                                            <input id="amount" type="number" name="product_account" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
-                                            <a href="javascript:add()" class="btn btn-primary">加入購物車</a>
+                                            <input id="productCount" type="number" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
+                                            <a href="javascript:add(${productVO.pro_no})" class="btn btn-primary">加入購物車</a>
                                             </c:if>
                                             <div id="protracking">
                                                 <c:choose>
@@ -140,8 +141,8 @@
                         <a href="checkout.jsp">
                             <h3>
                                 <div class="total">
-                                    <span class="simpleCart_total">累計金額:NT$${carTotal}</span>
-                                    <span id="simpleCart_quantity" class="simpleCart_quantity"></span>
+                                    <span class="simpleCart_total">NT$${carTotal}</span>
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
                                 </div>
                             </h3>
                         </a>
@@ -157,7 +158,7 @@
 <script>
     function protracking(todo,pro_no){
             $.ajax({
-                url:"/BA102G2/protracking_list/Protracking_listServlet",
+                url:"/BA102G2/protra/ProtracServlet",
                 type : "post",
                 data:{
                     action:todo,
@@ -168,26 +169,31 @@
                     console.log(thrownError);
                 },
                 success : function(response) {
-                    console.log(response);
                     $("#protracking").html(response);
                 }
             });
     }
     
-    function add(){
+    function add(pro_no){
             $.ajax({
                 url:"/BA102G2/product/ProductServlet",
                 type : "post",
                 data:{
                     action:"ADD_TO_CAR_AJAX",
-                    product_account:$("#amount").val()
+                    productCount:$("#productCount").val(),
+                    pro_no:pro_no
                 }, 
                 error : function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(thrownError);
                 },
                 success : function(response) {
-                    $(".simpleCart_total").text("累計金額:NT$"+response);
+                    if(response=="out of amount"){
+                        alert("超過庫存，請減少數量");
+                    }
+                    else{
+                        $(".simpleCart_total").text("NT$"+response);
+                    }
                 }
             });
     }

@@ -1,3 +1,4 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
@@ -12,22 +13,26 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     String mem_no = "1010";
-//     Mem memberService = new MemberService();
-    MemService memService =new MemService();
-    String mem_name = memService.getOneMem(mem_no).getName();
+    //     MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService = new MemService();
+    MemVO memVO = memService.getOneMem(mem_no);
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
     session.setAttribute("mem_no", mem_no);
-    String cust_no = String.valueOf(session.getAttribute("mem_no"));
     String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
     String now_Status = (request.getParameter("now_Status") == null) ? "0" : request.getParameter("now_Status");
-    String now_Order_Type = (request.getParameter("now_Order_Type") == null) ? "0" : request.getParameter("now_Order_Type");
+    String orderType = (request.getParameter("now_Order_Type") == null) ? "0" : request.getParameter("now_Order_Type");
     String[] statusList = { "買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單" };
     String[] orderTypeList = { "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期近>>遠", "依成立日期遠>>近", "依訂單總價小>>大", "依訂單總價大>>小" };
-
     OrdService ordService = new OrdService();
-    List<OrdVO> ordList = (ordService.getAllByRoleAndOrder(role, cust_no, now_Status, now_Order_Type) == null) ? new ArrayList<OrdVO>() : ordService.getAllByRoleAndOrder(role, cust_no, now_Status, now_Order_Type);
+    int nowPage = 1;
+    int showCount = 5;
+    int orderCount = ordService.getAllOrderCount(role, memVO.getMem_no(), now_Status);
+
+    int totalPages;
+
+    List<OrdVO> ordList = (ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType) == null) ? new ArrayList<OrdVO>() : ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType);
     List<String> seller_accountList = new ArrayList<String>();
     List<String> cust_nameList = new ArrayList<String>();
     for (int i = 0; i < ordList.size(); i++) {
@@ -63,7 +68,7 @@
 
     String preLocation = request.getContextPath() + "/Front_end/mall";
     List<ProductVO> productList = new ArrayList<ProductVO>();
-    session.setAttribute("mem_name", mem_name);
+    session.setAttribute("mem_name", memVO.getName());
     session.setAttribute("productList", productList);
     session.setAttribute("memService", memService);
 
@@ -76,7 +81,7 @@
     pageContext.setAttribute("statusList", statusList);
     pageContext.setAttribute("role", role);
     pageContext.setAttribute("now_Status", now_Status);
-    pageContext.setAttribute("now_Order_Type", now_Order_Type);
+    pageContext.setAttribute("orderType", orderType);
     pageContext.setAttribute("ordList", ordList);
     pageContext.setAttribute("stringBuffer", stringBuffer);
 %>
@@ -225,21 +230,6 @@
                         </c:forEach>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-md-2">
-                <div class="btn-group">
-                    <button id="type" class="btn btn-default">排序方式</button>
-                    <button data-toggle="dropdown" class="btn btn-default ">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <c:forEach var="orderType" items="${orderTypeList}" varStatus="s">
-                            <li>
-                                <a href="${preLocation}/mallArea.jsp?now_Status=${now_Status}&&role=${role}&&now_Order_Type=${s.index}">${orderType}</a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>

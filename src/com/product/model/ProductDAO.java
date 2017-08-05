@@ -25,8 +25,8 @@ public class ProductDAO implements ProductDAO_Interface {
     private static final String GET_ALL_ROW                    = "select count(rownum) from PRODUCT where STATUS = 1";
     private static final String GET_ALL_ROW_UNPREVIEW          = "select count(rownum) from PRODUCT where STATUS = 0";
     private static final String GET_TYPE_ALL_ROW               = "select count(rownum) from PRODUCT where PROTYPE_NO = ? and STATUS = 1";
-    private static final String GET_SOME_ROW                   = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 1 order by a.pro_no) b) where bRn between ? and ?";
-    private static final String GET_SOME_ROW_OF_UNPREVIEW      = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 0 order by a.PRO_DATE ) b) where bRn between ? and ?";
+    private static final String GET_SOME_ROW                   = "select PRO_NO, PRO_NAME, SELLER_NO,PRICE,AMOUNT,PRO_DATE,PROTYPE_NO,TIMES,SCORE from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 1 order by a.pro_no) b) where bRn between ? and ?";
+    private static final String GET_SOME_ROW_OF_UNPREVIEW      = "select PRO_NO, PRO_NAME, SELLER_NO, PRO_DESC ,PRICE,AMOUNT,PRO_DATE,PROTYPE_NO,STATUS,TIMES,SCORE from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where STATUS = 0 order by a.PRO_DATE ) b) where bRn between ? and ?";
 
     private Connection        connection;
     private PreparedStatement preparedStatement;
@@ -297,15 +297,13 @@ public class ProductDAO implements ProductDAO_Interface {
                 productVO.setPro_no(resultSet.getString(3));
                 productVO.setPro_name(resultSet.getString(4));
                 productVO.setSeller_no(resultSet.getString(5));
-                productVO.setPro_desc(resultSet.getString(6));
-                productVO.setPrice(resultSet.getInt(7));
-                productVO.setAmount(resultSet.getInt(8));
-                productVO.setImg(resultSet.getBytes(9));
-                productVO.setPro_date(resultSet.getTimestamp(10));
-                productVO.setProtype_no(resultSet.getString(11));
-                productVO.setStatus(resultSet.getString(12));
-                productVO.setTimes(resultSet.getInt(13));
-                productVO.setScore(resultSet.getInt(14));
+                productVO.setPrice(resultSet.getInt(6));
+                productVO.setAmount(resultSet.getInt(7));
+                productVO.setPro_date(resultSet.getTimestamp(8));
+                productVO.setProtype_no(resultSet.getString(9));
+                productVO.setStatus(resultSet.getString(10));
+                productVO.setTimes(resultSet.getInt(11));
+                productVO.setScore(resultSet.getInt(12));
                 list.add(productVO);
             }
             return list;
@@ -514,18 +512,17 @@ public class ProductDAO implements ProductDAO_Interface {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 ProductVO productVO = new ProductVO();
-                productVO.setPro_no(resultSet.getString(3));
-                productVO.setPro_name(resultSet.getString(4));
-                productVO.setSeller_no(resultSet.getString(5));
-                productVO.setPro_desc(resultSet.getString(6));
-                productVO.setPrice(resultSet.getInt(7));
-                productVO.setAmount(resultSet.getInt(8));
-                productVO.setImg(resultSet.getBytes(9));
-                productVO.setPro_date(resultSet.getTimestamp(10));
-                productVO.setProtype_no(resultSet.getString(11));
-                productVO.setStatus(resultSet.getString(12));
-                productVO.setTimes(resultSet.getInt(13));
-                productVO.setScore(resultSet.getInt(14));
+                productVO.setPro_no(resultSet.getString(1));
+                productVO.setPro_name(resultSet.getString(2));
+                productVO.setSeller_no(resultSet.getString(3));
+                productVO.setPro_desc(resultSet.getString(4));
+                productVO.setPrice(resultSet.getInt(5));
+                productVO.setAmount(resultSet.getInt(6));
+                productVO.setPro_date(resultSet.getTimestamp(7));
+                productVO.setProtype_no(resultSet.getString(8));
+                productVO.setStatus(resultSet.getString(9));
+                productVO.setTimes(resultSet.getInt(10));
+                productVO.setScore(resultSet.getInt(11));
                 list.add(productVO);
             }
             return list;

@@ -10,7 +10,7 @@
 <%
     ProductService productService = new ProductService();
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.valueOf(request.getParameter("nowPage"));
-    int itemCount = 8;
+    int itemCount = 5;
     int allCount = productService.getAllCountUnPreivew();
     int totalPages = allCount / itemCount + 1;
     List<ProductVO> productList = productService.getSomeUnPreview(nowPage, itemCount);

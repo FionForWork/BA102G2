@@ -1,3 +1,4 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@page import="com.product_type.model.Product_typeVO"%>
 <%@page import="com.product_type.model.Product_typeService"%>
@@ -11,10 +12,9 @@
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
-    String mem_no = "1010";
-    //String mem_no=String.valueOf(session.getAttribute("mem_no"));
+//     MemVO memVO=(MemVO)session.getAttribute("memVO");
     MemService memService = new MemService();
-    String mem_name = memService.getOneMem(mem_no).getName();
+    MemVO memVO=memService.getOneMem("1010");
     int nowPage = 1;
     String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": String.valueOf(request.getParameter("now_Pro_Type"));
     String now_Order_Type = "0";
@@ -32,11 +32,10 @@
 
     session.setAttribute("carTotal", new Integer(carTotal));
     session.setAttribute("location", location);
-    session.setAttribute("mem_no", mem_no);
+    session.setAttribute("memVO", memVO);
 
     pageContext.setAttribute("productList", productList);
     pageContext.setAttribute("itemsCount", itemsCount);
-    pageContext.setAttribute("mem_name", mem_name);
     pageContext.setAttribute("nowPage", nowPage);
     pageContext.setAttribute("totalPages", totalPages);
     pageContext.setAttribute("preLocation", preLocation);
@@ -46,7 +45,6 @@
     pageContext.setAttribute("now_Order_Type", now_Order_Type);
 %>
 <%@include file="pages/mallIndexHeader.file"%>
-
 <div class="text-center" style="height: 50px; margin-top: 50px"></div>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
 <div class="container">
@@ -115,8 +113,20 @@
                     </div>
                 </div>
                 <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
-                <div class="btn-group">
-                    <button id="type" class="btn btn-default">${orderTypeList[now_Order_Type]}</button>
+                <div class="col-md-2">
+                    <div class="cart box_1">
+                        <a href="${preLocation}/checkout.jsp">
+                            <h3>
+                                <div class="total">
+                                    <span class="simpleCart_total">NT$${carTotal}</span>
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </div>
+                            </h3>
+                        </a> <a href="javascript:clear()" class="btn btn-danger btn-sm">清空購物車</a>
+                    </div>
+                </div>
+                <div class="btn-group" style="margin-top: 50px;">
+                    <button id="type" class="btn btn-default" style="width: 150px;">${orderTypeList[now_Order_Type]}</button>
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
                         <span class="caret"></span>
                     </button>
@@ -128,20 +138,6 @@
                         </c:forEach>
                     </ul>
                 </div>
-
-                <div class="col-md-2">
-                    <div class="cart box_1">
-                        <a href="${preLocation}/checkout.jsp">
-                            <h3>
-                                <div class="total">
-                                    <span class="simpleCart_total">累計金額:NT${carTotal}</span>
-                                    <span id="simpleCart_quantity" class="simpleCart_quantity"></span>
-                                </div>
-                            </h3>
-                        </a> <a href="javascript:clear()" class="btn btn-danger btn-sm">清空購物車</a>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

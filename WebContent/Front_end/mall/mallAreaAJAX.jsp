@@ -1,3 +1,4 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
@@ -12,141 +13,226 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     String mem_no = "1010";
-			MemService memService = new MemService();
-			String mem_name = memService.getOneMem(mem_no).getName();
-			response.setHeader("Pragma", "no-cache");
-			response.setHeader("Cache-Control", "no-cache");
-			response.setDateHeader("Expires", 0);
-			session.setAttribute("mem_no", mem_no);
-			String cust_no = String.valueOf(session.getAttribute("mem_no"));
-			String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
-			String now_Status = (request.getParameter("now_Status") == null) ? "0" : request.getParameter("now_Status");
-			String now_Order_Type = (request.getParameter("now_Order_Type") == null)
-					? "0"
-					: request.getParameter("now_Order_Type");
-			String[] statusList = {"買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單"};
-			String[] orderTypeList = {"依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期近>>遠", "依成立日期遠>>近", "依訂單總價小>>大",
-					"依訂單總價大>>小"};
+    //     MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService = new MemService();
+    MemVO memVO = memService.getOneMem(mem_no);
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+    session.setAttribute("mem_no", mem_no);
+    String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
+    String now_Status = (request.getParameter("now_Status") == null) ? "0" : request.getParameter("now_Status");
+    String orderType = (request.getParameter("now_Order_Type") == null) ? "0" : request.getParameter("now_Order_Type");
+    String[] statusList = { "買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單" };
+    String[] orderTypeList = { "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期近>>遠", "依成立日期遠>>近", "依訂單總價小>>大", "依訂單總價大>>小" };
+    OrdService ordService = new OrdService();
+    int nowPage = 1;
+    int showCount = 5;
+    int orderCount = ordService.getAllOrderCount(role, memVO.getMem_no(), now_Status);
 
-			OrdService ordService = new OrdService();
-			List<OrdVO> ordList = (ordService.getAllByRoleAndOrder(role, cust_no, now_Status, now_Order_Type) == null)
-					? new ArrayList<OrdVO>()
-					: ordService.getAllByRoleAndOrder(role, cust_no, now_Status, now_Order_Type);
-			List<String> seller_accountList = new ArrayList<String>();
-			List<String> cust_nameList = new ArrayList<String>();
-			for (int i = 0; i < ordList.size(); i++) {
-				seller_accountList.add(memService.getOneMem(ordList.get(i).getSeller_no()).getAccount());
-				cust_nameList.add(memService.getOneMem(ordList.get(i).getCust_no()).getName());
-			}
-			Order_detailService order_detailService = new Order_detailService();
-			ProductService productService = new ProductService();
+    int totalPages;
 
-			String preLocation = request.getContextPath() + "/Front_end/mall";
-			List<ProductVO> productList = new ArrayList<ProductVO>();
-			session.setAttribute("mem_name", mem_name);
-			session.setAttribute("productList", productList);
-			session.setAttribute("memService", memService);
+    List<OrdVO> ordList = (ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType) == null) ? new ArrayList<OrdVO>() : ordService.getAllByRoleAndOrder(role, memVO.getMem_no(), now_Status, orderType);
+    List<String> seller_accountList = new ArrayList<String>();
+    List<String> cust_nameList = new ArrayList<String>();
+    for (int i = 0; i < ordList.size(); i++) {
+        seller_accountList.add(memService.getOneMem(ordList.get(i).getSeller_no()).getAccount());
+        cust_nameList.add(memService.getOneMem(ordList.get(i).getCust_no()).getName());
+    }
+    Order_detailService order_detailService = new Order_detailService();
+    ProductService productService = new ProductService();
 
-			pageContext.setAttribute("productService", productService);
-			pageContext.setAttribute("order_detailService", order_detailService);
-			pageContext.setAttribute("cust_nameList", cust_nameList);
-			pageContext.setAttribute("seller_accountList", seller_accountList);
-			pageContext.setAttribute("orderTypeList", orderTypeList);
-			pageContext.setAttribute("preLocation", preLocation);
-			pageContext.setAttribute("statusList", statusList);
-			pageContext.setAttribute("role", role);
-			pageContext.setAttribute("now_Status", now_Status);
-			pageContext.setAttribute("now_Order_Type", now_Order_Type);
-			pageContext.setAttribute("ordList", ordList);
+    StringBuffer stringBuffer = new StringBuffer();
+    if ("0".equals(role)) {
+        stringBuffer.append("買家-");
+    }
+    else {
+        stringBuffer.append("賣家-");
+    }
+
+    if ("0".equals(now_Status)) {
+        stringBuffer.append("買家未付款");
+    }
+    else if ("1".equals(now_Status)) {
+        stringBuffer.append("賣家未出貨");
+    }
+    else if ("2".equals(now_Status)) {
+        stringBuffer.append("已完成訂單");
+    }
+    else if ("3".equals(now_Status)) {
+        stringBuffer.append("賣家已評價");
+    }
+    else {
+        stringBuffer.append("已取消訂單");
+    }
+
+    String preLocation = request.getContextPath() + "/Front_end/mall";
+    List<ProductVO> productList = new ArrayList<ProductVO>();
+    session.setAttribute("mem_name", memVO.getName());
+    session.setAttribute("productList", productList);
+    session.setAttribute("memService", memService);
+
+    pageContext.setAttribute("productService", productService);
+    pageContext.setAttribute("order_detailService", order_detailService);
+    pageContext.setAttribute("cust_nameList", cust_nameList);
+    pageContext.setAttribute("seller_accountList", seller_accountList);
+    pageContext.setAttribute("orderTypeList", orderTypeList);
+    pageContext.setAttribute("preLocation", preLocation);
+    pageContext.setAttribute("statusList", statusList);
+    pageContext.setAttribute("role", role);
+    pageContext.setAttribute("now_Status", now_Status);
+    pageContext.setAttribute("orderType", orderType);
+    pageContext.setAttribute("ordList", ordList);
+    pageContext.setAttribute("stringBuffer", stringBuffer);
 %>
 <%@include file="pages/mallIndexHeader.file"%>
-<div class="text-center" style="height: 50px; margin-top: 50px"></div>
+<div class="text-center" style="height: 50px; margin-top: 50px">
+    <h2>${stringBuffer.toString()}</h2>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <%@include file="pages/mallAreaAJAXSidebar.file"%>
+            <%@include file="pages/mallAreaSidebar.file"%>
             <div class="col-md-1"></div>
             <div class="col-md-7">
-                <ul class="nav nav-tabs">
-                    <c:forEach var="status" items="${statusList}" varStatus="s">
-                        <li>
-                            <a id="status${s.index}" class="tabs" data-toggle="tab" href="#status${s.index}">${status}</a>
-                        </li>
+                <c:forEach var="status" items="${statusList}" varStatus="s">
+                    <a href="${preLocation}/mallArea.jsp?now_Status=${s.index}&&role=${role}">${status}</a>/
                     </c:forEach>
-                </ul>
-                <div class="tab-content">
-                    <c:forEach var="status" items="${statusList}" varStatus="s">
-                        <c:choose>
-                            <c:when test="${s.index==0}">
-                                <div id="status${s.index}" class="tab-pane active in">
-                            </c:when>
-                            <c:otherwise>
-                                <div id="status${s.index}" class="tab-pane fade">
-                            </c:otherwise>
-                        </c:choose>
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <c:choose>
+                                <c:when test="${role==0}">
                                     <th>賣家編號</th>
-                                    <th>寄送地址</th>
-                                    <th>訂單成立日期</th>
-                                    <th>總價</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="ordVO" items="${ordList}" varStatus="s">
-                                    <tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <th>買家編號</th>
+                                </c:otherwise>
+                            </c:choose>
+                            <th>寄送地址</th>
+                            <th>訂單成立日期</th>
+                            <th>總價</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="ordVO" items="${ordList}" varStatus="s">
+                            <tr>
+                                <c:choose>
+                                    <c:when test="${role==0}">
                                         <td>${ordVO.seller_no}</td>
-                                        <td>${ordVO.address}</td>
-                                        <td><fmt:formatDate value="${ordVO.ord_date}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                        <td>${ordVO.total}</td>
-                                        <td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>${ordVO.cust_no}</td>
+                                    </c:otherwise>
+                                </c:choose>
+                                <td>${ordVO.address}</td>
+                                <td><fmt:formatDate value="${ordVO.ord_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td>${ordVO.total}</td>
+                                <td><c:choose>
+                                        <c:when test="${role=='0' && now_Status=='0'}">
                                             <p>請盡速繳款</p>
                                             <p>賣家帳戶:${seller_accountList[s.index]}</p>
                                             <p><a href="<%=request.getContextPath()%>/order/OrderServlet?action=CANCEL&&ord_no=${ordVO.ord_no}" class="btn btn-danger">取消訂單</a></p>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                </div>
-                </c:forEach>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="btn-group">
-                <button id="type" class="btn btn-default">排序方式</button>
-                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <c:forEach var="orderType" items="${orderTypeList}" varStatus="s">
-                        <li>
-                            <a href="${preLocation}/mallArea.jsp?now_Status=${now_Status}&&role=${role}&&now_Order_Type=${s.index}">${orderType}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
+                                        </c:when>
+                                        <c:when test="${role=='0' && now_Status=='1'}">
+                                            <a href="<%=request.getContextPath()%>/order/OrderServlet?action=CHECK_GET_ITEM&&ord_no=${ordVO.ord_no}" class="btn btn-info">確認已收到貨物</a>
+                                        </c:when>
+                                        <c:when test="${role=='1' && now_Status=='0'}">
+                                            <a href="<%=request.getContextPath()%>/order/OrderServlet?action=CHECK_GET_MONEY&&ord_no=${ordVO.ord_no}" class="btn btn-info">確認已收到貨款</a>
+                                        </c:when>
+                                        <c:when test="${role=='1' && now_Status=='1'}">
+                                            <p>請盡速出貨</p>
+                                            <p>買家姓名:${cust_nameList[s.index]}</p>
+                                            <p>買家寄送地址:${ordVO.address}</p>
+                                        </c:when>
+                                        <c:when test="${role=='0' && now_Status=='2'}">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#${ordVO.ord_no}">對商品評分</button>
+                                            <div class="modal fade" id="${ordVO.ord_no}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header text-center">
+                                                            <h4 class="modal-title">評分</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="<%=request.getContextPath()%>/order/OrderServlet" method="post">
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>商品名稱</td>
+                                                                        <td>評價</td>
+                                                                    </tr>
+                                                                    <input type="hidden" name="ord_no" value="${ordVO.ord_no}">
+                                                                    <c:forEach var="order_detailVO" items="${order_detailService.getAllByOrdNo(ordVO.ord_no)}">
+                                                                        <tr>
+                                                                            <c:if test="${!productList.contains(productService.getOneByPKNoImg(order_detailVO.pro_no))}">
+                                                                                <!--${productList.add(productService.getOneByPKNoImg(order_detailVO.pro_no))}-->
+                                                                            </c:if>
+                                                                            <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${order_detailVO.pro_no}">${productService.getOneByPKNoImg(order_detailVO.pro_no).pro_name}</a></td>
+                                                                            <td><c:choose>
+                                                                                    <c:when test="${order_detailVO.status=='0'}">
+                                                                                        <input type="hidden" name="pro_no" value="${order_detailVO.pro_no}">
+                                                                                        <td><input name="score" value="0" type="number" min="0" max="5" class="form-control" placeholder="請輸入評分0-5之間"></td>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <p>您已評價過，分數為${order_detailVO.score}</p>
+                                                                                    </c:otherwise>
+                                                                                </c:choose></td>
+                                                                        </tr>
+                                                                    </c:forEach>
+                                                                </table>
+                                                                <input type="hidden" name="action" value="EVALUATION_TO_ITEM">
+                                                                <input type="submit" class="btn btn-success" value="確認">
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${role=='0' && now_Status=='3'}">
+                                            <p>賣家已對您評價:${ordVO.score}分</p>
+                                        </c:when>
+                                        <c:when test="${role=='1' && now_Status=='2'}">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#${ordVO.ord_no}">對買家評分</button>
+                                            <div class="modal fade" id="${ordVO.ord_no}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">評分</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="<%=request.getContextPath()%>/order/OrderServlet" method="post">
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>評分</td>
+                                                                        <input type="hidden" name="ord_no" value="${ordVO.ord_no}">
+                                                                        <td><input type="number" min="0" max="5" name="score" class="form-control" placeholder="請輸入評分0-5之間"></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <input type="hidden" name="action" value="EVALUATION_TO_MEM">
+                                                                <input type="submit" class="btn btn-success" value="確認">
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${role=='1' && now_Status=='3'}">
+                                            <p>賣家已對買家評價:${ordVO.score}分</p>
+                                        </c:when>
+                                    </c:choose></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".tabs").click(tabChange);
-    });
-    
-    function tabChange(){
-//         console.log(this.id);
-        $.ajax({
-            url:"/BA102G2/order/OrderServlet",
-            type:"post",
-            data:{
-                
-            }
-        });
-    }
-</script>
-
 
 <%@include file="pages/mallIndexFooter.file"%>

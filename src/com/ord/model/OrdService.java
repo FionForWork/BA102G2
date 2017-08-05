@@ -109,4 +109,12 @@ public class OrdService {
         }
         return null;
     }
+    
+    public int getAllOrderCount(String role, String role_no, String status){
+        return dao.getAllOrderCount(role, role_no, status);
+    }
+    
+    public List<OrdVO> getAllOrderByRole(String role, String role_no, String status) {
+        return dao.getAllOrderByRole(role, role_no, status);
+    }
 }

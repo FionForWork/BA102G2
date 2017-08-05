@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.email.MailService;
+import com.mem.model.MemService;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
 import com.order_detail.model.Order_detailService;
@@ -38,7 +40,7 @@ public class OrderServlet extends HttpServlet {
             if (address.equals("")) {
                 errorMsg = "請輸入地址";
                 request.setAttribute("errorMsg", errorMsg);
-                request.getRequestDispatcher("/front_end/mall/checkout.jsp").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/checkout.jsp").forward(request, response);
             }
             else {
                 List<ProductVO> carList = (List<ProductVO>) session.getAttribute("carList");
@@ -83,8 +85,16 @@ public class OrderServlet extends HttpServlet {
                             order_detailService.addOrder_detail(order_detailVO);
                         }
                     }
+                    String to = "ixlogic@pchome.com.tw";
+                    // String to = new MemService().getOneMem(productVO.getSeller_no()).getEmail();
+                    String subject = "訂單確認通知";
+                    String cust_name = new MemService().getOneMem(mem_no).getName();
+                    String seller_account = new MemService().getOneMem(ordList.get(i).getSeller_no()).getAccount();
+                    String messageText = "Hello! " + cust_name + "您的訂單已經確認，請付款,賣家帳戶 " + seller_account;
+                    MailService mailService = new MailService();
+                    mailService.sendMail(to, subject, messageText);
                 }
-                request.getRequestDispatcher("/Front_end/mall/mallIAJAXndex.jsp").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/mallIndexAJAX.jsp").forward(request, response);
             }
         }
         else if ("CHECK_GET_ITEM".equals(action)) {
@@ -92,27 +102,41 @@ public class OrderServlet extends HttpServlet {
             OrdVO ordVO = ordService.getOneOrd(ord_no);
             ordVO.setStatus("2");
             ordService.updateOrd(ordVO);
-            request.getRequestDispatcher("/front_end/mall/mallArea.jsp&&role=0").forward(request, response);
+            String to = "ixlogic@pchome.com.tw";
+            // String to = new MemService().getOneMem(mem_no).getEmail();
+            String subject = "訂單完成通知";
+            String cust_name = new MemService().getOneMem(mem_no).getName();
+            String messageText = "Hello! " + cust_name + "您的訂單已經完成，請評價 ";
+            MailService mailService = new MailService();
+            mailService.sendMail(to, subject, messageText);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp&&role=0").forward(request, response);
         }
         else if ("CHECK_GET_MONEY".equals(action)) {
             String ord_no = request.getParameter("ord_no");
             OrdVO ordVO = ordService.getOneOrd(ord_no);
             ordVO.setStatus("1");
             ordService.updateOrd(ordVO);
-            request.getRequestDispatcher("/front_end/mall/mallArea.jsp&&role=1").forward(request, response);
+            String to = "ixlogic@pchome.com.tw";
+            // String to = new MemService().getOneMem(mem_no).getEmail();
+            String subject = "訂單出貨通知";
+            String cust_name = new MemService().getOneMem(mem_no).getName();
+            String messageText = "Hello! " + cust_name + "賣家已出貨，請耐心等待領收 ";
+            MailService mailService = new MailService();
+            mailService.sendMail(to, subject, messageText);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp&&role=1").forward(request, response);
         }
         else if ("CANCEL".equals(action)) {
             String ord_no = request.getParameter("ord_no");
             OrdVO ordVO = ordService.getOneOrd(ord_no);
             ordVO.setStatus("3");
             ordService.updateOrd(ordVO);
-            request.getRequestDispatcher("/front_end/mall/mallArea.jsp").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp").forward(request, response);
         }
         else if ("EVALUATION_TO_ITEM".equals(action)) {
             String ord_no = request.getParameter("ord_no");
             String[] pro_noList = request.getParameterValues("pro_no");
             if (request.getParameterValues("pro_no") == null) {
-                request.getRequestDispatcher("/front_end/mall/mallArea.jsp?role=0&&now_Status=2").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=0&&now_Status=2").forward(request, response);
             }
             else {
                 String[] scoreList = request.getParameterValues("score");
@@ -129,7 +153,7 @@ public class OrderServlet extends HttpServlet {
                     productVO.setScore(productVO.getScore() + score);
                     productService.updateProduct(productVO);
                 }
-                request.getRequestDispatcher("/front_end/mall/mallArea.jsp?role=0&&now_Status=2").forward(request, response);
+                request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=0&&now_Status=2").forward(request, response);
             }
         }
         else if ("EVALUATION_TO_MEM".equals(action)) {
@@ -137,10 +161,10 @@ public class OrderServlet extends HttpServlet {
             int score = (request.getParameter("score") == null) ? 0 : Integer.valueOf(request.getParameter("score"));
             System.out.println(score);
             OrdVO ordVO = ordService.getOneOrd(ord_no);
-             ordVO.setScore(score);
-             ordVO.setStatus("3");
-             ordService.updateOrd(ordVO);
-            request.getRequestDispatcher("/front_end/mall/mallArea.jsp?role=1&&now_Status=3").forward(request, response);
+            ordVO.setScore(score);
+            ordVO.setStatus("3");
+            ordService.updateOrd(ordVO);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=1&&now_Status=3").forward(request, response);
         }
     }
 

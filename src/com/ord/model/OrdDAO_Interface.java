@@ -21,4 +21,7 @@ public interface OrdDAO_Interface {
 
     List<OrdVO> getAllByRoleAndOrder(String role, String role_no, String status, String orderType);
 
+    int getAllOrderCount(String role,String role_no,String status);
+ 
+    List<OrdVO> getAllOrderByRole(String role,String role_no,String status);
 }

@@ -1,45 +1,72 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <div class="col-md-2">
-        <div class="list-group">
-            <div class="list-group-item">
-                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp" class="list-group-item active">
-                    <h3 class="list-group-item-heading ">商城專區</h3>
-                </a>
-            </div>
-            <div class="list-group-item">
-                <h4 class="list-group-item-heading">我是買家</h4>
-            </div>
-            <div class="list-group-item">
-                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp?role=0">
-                    <h5 class="list-group-item-heading">訂單管理</h5>
-                </a>
-            </div>
-            <div class="list-group-item">
-                <a href="<%=request.getContextPath()%>/front_end/mall/protracking_list.jsp">
-                    <h5 class="list-group-item-heading">追蹤商品</h5>
-                </a>
-            </div>
 
-            <div class="list-group-item">
-                <h4 class="list-group-item-heading">我是賣家</h4>
-            </div>
-            <div class="list-group-item">
-                <a href="<%=request.getContextPath()%>/front_end/mall/mallArea.jsp?role=1">
-                    <h5 class="list-group-item-heading">訂單管理</h5>
-                </a>
-            </div>
-            <div class="list-group-item">
-                <a href="<%=request.getContextPath()%>/front_end/mall/productManage.jsp">
-                    <h5 class="list-group-item-heading">商品資料管理</h5>
-                </a>
-            </div>
-        </div>
-    </div>
+<head>
+    <title></title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+        var paintpoints = new Array();
+        var pointX = new Array();
+        var pointY = new Array();
+        var paintpoints_content = new Array();
+        var canvas;
+        var context;
+        var paint = false;
+        window.onload = function() {
+            canvas = document.getElementById("pCanvas");
+            context = canvas.getContext("2d");
+        };
+
+        function mousedownandler(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            context.beginPath();
+            context.lineWidth = 3;
+            context.strokeStyle = 'black';
+            context.moveTo(x, y);
+            paint = true;
+        }
+
+        function mousemoveandler(e) {
+            if (paint) {
+                var x = e.clientX;
+                var y = e.clientY;
+                context.lineTo(x, y);
+                context.stroke();
+                pointX.push(x);
+                pointY.push(y);
+            }
+        }
+
+        function mouseupHandler(e) {
+            paint = false;
+        }
+
+        function clearCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function submit() {
+            var JSONpointX = JSON.stringify(pointX);
+            var JSONpointY = JSON.stringify(pointY);
+            $("#pointX").val(JSONpointX);
+            $("#pointY").val(JSONpointY);
+            $("#pointSend").submit();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="pCanvas" width=560; height=360; onmousedown="mousedownandler(event)" onmousemove="mousemoveandler(event)" onmouseup="mouseupHandler(event)" style="cursor:pointer;background-image: url('/BA102G2/Front_end/res/img/ring_64.png');">
+</canvas>
+    <button onclick="clearCanvas()" style="width:200px;">清空</button>
+    <form id="pointSend" action="/BA102G2/product/ProductServlet">
+        <input type="hidden" id="point" name="point" value="">
+        <input type="hidden" id="pointX" name="pointX" value="">
+        <input type="hidden" id="pointY" name="pointY" value="">
+        <input type="hidden" id="pointY" name="action" value="TEST">
+    </form>
+    <button onclick="submit()" style="width:200px;">送出</button>
 </body>
+
 </html>

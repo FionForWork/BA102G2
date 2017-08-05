@@ -47,7 +47,7 @@ public class ProtraServlet extends HttpServlet {
             request.getRequestDispatcher("/front_end/mall/product.jsp?pro_no=" + pro_no).forward(request, response);
         }
         else if("ADD_AJAX".equals(action)){
-            String pro_no = productVO.getPro_no();
+            String pro_no = request.getParameter("pro_no");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter=response.getWriter();
             ProtraVO protracking_listVO = new ProtraVO();
@@ -58,7 +58,7 @@ public class ProtraServlet extends HttpServlet {
             printWriter.close();
         }
         else if("DELETE_AJAX".equals(action)){
-            String pro_no = productVO.getPro_no();
+            String pro_no = request.getParameter("pro_no");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter=response.getWriter();
             protraService.deleteProductTracking(pro_no);

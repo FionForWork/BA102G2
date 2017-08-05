@@ -1,6 +1,5 @@
 ﻿<script>
     function clear() {
-        console.log("1");
         $.ajax({
         url : '/BA102G2/product/ProductServlet',
         type : "post",
@@ -12,7 +11,7 @@
             console.log(thrownError);
         },
         success : function(response) {
-            $(".simpleCart_total").text("累計金額:NT0");
+            $(".simpleCart_total").text("NT$0");
         }
         });
     }
