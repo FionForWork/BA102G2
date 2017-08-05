@@ -1,0 +1,36 @@
+<%
+	int rowsPerPage = 10; // 每頁筆數
+	int rowNumber = 0; // 總筆數
+	int pageNumber = 0; // 總頁數
+	int nowPage = 1; // 第幾頁
+	int pageIndexArray[] = null;
+	int pageIndex = 0;
+%>
+<%
+	rowNumber = comtraList.size();
+	if (rowNumber % rowsPerPage != 0) {
+		pageNumber = rowNumber / rowsPerPage + 1;
+	} else {
+		pageNumber = rowNumber / rowsPerPage;
+	}
+
+	pageIndexArray = new int[pageNumber];
+	for (int i = 1; i <= pageIndexArray.length; i++) {
+		pageIndexArray[i - 1] = i * rowsPerPage - rowsPerPage;
+	}
+%>
+
+<%
+	try {
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		pageIndex = pageIndexArray[nowPage - 1];
+	} catch (NumberFormatException e) {
+		nowPage = 1;
+		pageIndex = 0;
+	} catch (ArrayIndexOutOfBoundsException e) {
+		if (pageNumber > 0) {
+			nowPage = pageNumber;
+			pageIndex = pageIndexArray[pageNumber - 1];
+		}
+	}
+%>

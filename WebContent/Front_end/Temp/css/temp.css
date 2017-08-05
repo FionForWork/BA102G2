@@ -1,0 +1,187 @@
+
+@media screen and (max-width: 767px) {
+    
+    .row.content {
+        height: auto;
+    }
+}
+h2{
+	padding-left:10px;
+}
+.margin-top {
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+.img-thumbnail {
+    margin-bottom: 10px;
+        
+}
+
+.jumbotron {
+    padding-top: 5px
+
+}
+.image-container{
+	position: relative;
+	width:100%;
+	
+}
+.image-container img {
+	
+	padding:0px;
+	width:100%;
+	border-radius:8px;
+	
+}
+
+.overlay{
+	opacity:0;
+	position:absolute;
+	height:25%;
+	width:99%;
+	bottom:30px;
+	left:0px;
+	border-radius:5px;
+	padding:0px;
+	cursor:pointer;
+	background: rgba(0,0,0,0.6);
+	
+}
+.image-container:hover .overlay{
+	opacity:1;
+	
+}
+.overlap{
+	opacity:0;
+	position:absolute;
+	top:0px;
+	right:20px;
+}
+.image:hover .overlap{
+	opacity:1;
+	
+}
+
+.checkbox{
+	position:absolute;
+	top:0;
+	left:0;
+	opacity:0;
+}
+
+.checked{
+	opacity:1;
+	position:absolute;
+	height:83%;
+	width:100%;
+	top:0px;
+	left:0px;
+	border-radius:5px;
+	padding:0px;
+	cursor:pointer;
+	background: rgba(0,0,0,0.4);
+	padding-top:30px;
+	}
+
+.checkMark , .textMark{
+	color:#00d7d3;
+	padding-top:16px;
+	
+}
+.dropdownContent{
+	display:none;
+	position:absolute;
+	background-color:#f9f9f9;
+	min-width:100px;
+	
+	overflow:auto;
+	box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);
+	right:0;
+	z-index:1;
+}
+.dropdownContent a {
+	color:black;
+	text-decoration:none;
+	display:block;
+	padding: 12px 16px;
+}
+.dropdown a:hover {
+	background-color:#f1f1f1;
+}
+.dropdown:hover .dropdownContent {
+    display: block;
+}
+.errorMsgs {
+	color:red;
+	
+}
+
+#tempList {
+	border-collapse: collapse;
+	/* Collapse borders */
+	width: 100%;
+	/* Full-width */
+	font-size: 14px;
+	/* Increase font-size */
+}
+
+#tempList th, #tempList td {
+	text-align: center;
+	/* Left-align text */
+	padding: 5px;
+	/* Add padding */
+}
+
+#tempList tr {
+	/* Add a bottom border to all table rows */
+	border-bottom: 1px solid #ddd;
+}
+
+
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    top: 50px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;} 
+    to {top: 50px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 50px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {top: 50px; opacity: 1;} 
+    to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {top: 50px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}
