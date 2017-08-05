@@ -54,7 +54,7 @@ public class AutServlet extends HttpServlet{
 				autVO = autSvc.addAut(adm_no,id);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/aut/listAllAut.jsp";
+				String url = "/Back_end/aut/listAllAut.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -62,7 +62,7 @@ public class AutServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/aut/addAut.jsp");
+						.getRequestDispatcher("/Back_end/aut/addAut.jsp");
 				failureView.forward(req, res);
 			}
 		
@@ -86,7 +86,7 @@ public class AutServlet extends HttpServlet{
 				autSvc.deleteAut(adm_no,id);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/aut/listAllAut.jsp";
+				String url = "/Back_end/aut/listAllAut.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -94,7 +94,7 @@ public class AutServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/aut/listAllAut.jsp");
+						.getRequestDispatcher("/Back_end/aut/listAllAut.jsp");
 				failureView.forward(req, res);
 			}
 		}

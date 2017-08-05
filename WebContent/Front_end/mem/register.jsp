@@ -6,14 +6,11 @@
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <%@ include file="page/register_header.file"%>
+
 <title>會員註冊</title>
 
 
 
-
-			
-			
-			
 				
 <div class="col-xs-12 col-sm-7">
 
@@ -32,19 +29,22 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</c:if>
 	
 	<div class="mation">
-	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data">
+	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
 
 
 	<div class="form-group">
 				<span>帳號 :</span>
-				<input type="TEXT" name="id" class="form-control"
+				<input type="email" name="id" class="form-control"
 			value="<%= (memVO==null)? "lf21@gmail.com" : memVO.getId()%>" />
 	</div>
 	<div class="form-group">
                     <label for="pwd">密碼:</label>
-                    <input type="password" name="pwd" class="form-control" id="pwd" value="<%= (memVO==null)? "asdqqw" : memVO.getPwd()%>">
+                    <input type="password" name="pwd" required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (memVO==null)? "asdqqw" : memVO.getPwd()%>">
     </div>
-	
+	<div class="form-group">
+                    <label for="pwd">確認密碼:</label>
+                    <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (memVO==null)? "asdqqw" : memVO.getPwd()%>">
+    </div>
 	<div class="form-group">
            <label for="usr">姓名:</label>
            <input type="text" class="form-control" id="usr" name="name" value="<%= (memVO==null)? "肉肉" : memVO.getName()%> ">
@@ -52,8 +52,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<br>
 	<div>
 		<span>性別 :</span>
-		<div>	<input type="radio" name="sex" size="45" value="<%= (memVO==null)? "女" : memVO.getSex()%>" />女<br></div>
-		<div>	<input type="radio" name="sex" size="45" value="<%= (memVO==null)? "男" : memVO.getSex()%>" />男</div>
+		<div>	<input type="radio" name="sex" size="45" checked="true" value="<%= (memVO==null)? "WOMAN" : memVO.getSex()%>" />女<br></div>
+		<div>	<input type="radio" name="sex" size="45" value="<%= (memVO==null)? "MALE" : memVO.getSex()%>" />男</div>
 	</div>
 	<br>
 	<div class="form-group">
@@ -65,7 +65,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	
 	<div class="form-group">
 		<span>連絡電話 :</span>
-		<input type="TEXT" class="form-control"name="phone" size="45"
+		<input type="TEXT" class="form-control"name="phone" required title="只能輸入數字至少8個以上如為市話請加上區碼" pattern="^[0-9]*$" 
 			value="<%= (memVO==null)? "0912345678" : memVO.getPhone()%>" />
 	</div>
 	<div class="form-group">
@@ -85,17 +85,24 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 			value="<%= (memVO==null)? "" : memVO.getPicture()%>" />
 	</div>
 	
-	
-	
-
 		<input type="hidden" name="mem_no" value="${memVO.mem_no}">
 		<input type="hidden" name="action" value="insert">
 		<input type="submit" value="送出新增">
 	</FORM>
 	</div>
 	</div>
-
-
+	 
 
 
 <%@ include file="page/register_footer.file"%>
+
+<script language="javascript"> 
+	function check() 
+	{ 
+	if ((document.form1.elements[1].value)!=(document.form1.elements[2].value)){ 
+	alert("確認密碼不一致"); 
+	return false; 
+	} 
+	return true; 
+	} 
+</script> 

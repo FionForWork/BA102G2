@@ -227,4 +227,5 @@
 		<br>
 	</div>
 
+
 	<%@ include file="page/album_footer.file"%>

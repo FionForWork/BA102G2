@@ -13,7 +13,7 @@ public class FunService {
 		
 	}
 	
-	public FunVO add(String fun_no,String name){
+	public FunVO addFun(String fun_no,String name){
 		FunVO funVO=new FunVO();
 		
 		funVO.setFun_no(fun_no);

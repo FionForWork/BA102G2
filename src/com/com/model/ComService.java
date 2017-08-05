@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.com.model.ComDAO;
 import com.com.model.ComDAO_Interface;
+import com.mem.model.MemVO;
+
 
 public class ComService {
 	private ComDAO_Interface dao;
@@ -12,8 +14,40 @@ public class ComService {
 		dao = new ComDAO();
 
 	}
+	
+	public  ComVO oldPwd(String com_no){
+		return dao.oldPwd(com_no);
+	}
+	public ComVO updatePwd(String com_no,String pwd){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		comVO.setPwd(pwd);
+		dao.updatePwd(comVO);
+		
+		return comVO;
+	}
+	
+	public ComVO updatePic(String com_no,byte[] logo){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		comVO.setLogo(logo);
+		dao.updatePic(comVO);
+		
+		return comVO;
+	}
+	
+public List<ComVO> loginpwd(){
+		
+		return dao.loginpwd();
+	}
+	
+	public List<ComVO> loginid(){
+		
+		return dao.loginid();
+	}
+	
 	public ComVO addCom(String id,String pwd,String name,String loc,String lon,
-			String lat,String com_desc,String phone,String account,byte[] logo,String status)
+			String lat,String com_desc,String phone,String account,byte[] logo)
 	{
 		ComVO comVO =new ComVO();
 		comVO.setId(id);
@@ -26,8 +60,8 @@ public class ComService {
 		comVO.setPhone(phone);
 		comVO.setAccount(account);
 		comVO.setLogo(logo);
-		comVO.setStatus(status);
 	
+		dao.insert(comVO);
 		return comVO;
 	}
 	//預留給 Struts 2 用的
@@ -36,12 +70,12 @@ public class ComService {
 		
 	}
 	
-	public ComVO updateCom(String com_no,String id,String pwd,String name,String loc,String lon,
-			String lat,String com_desc,String phone,String account,byte[] logo,String status)
+	public ComVO updateCom(String com_no,String id,String name,String loc,String lon,
+			String lat,String com_desc,String phone,String account,String status)
 	{
 		ComVO comVO=new ComVO();
 		comVO.setId(id);
-		comVO.setPwd(pwd);
+		
 		comVO.setName(name);
 		comVO.setLoc(loc);
 		comVO.setLon(lon);
@@ -49,7 +83,7 @@ public class ComService {
 		comVO.setCom_desc(com_desc);
 		comVO.setPhone(phone);
 		comVO.setAccount(account);
-		comVO.setLogo(logo);
+		
 		comVO.setStatus(status);
 		
 		dao.update(comVO);
@@ -67,11 +101,14 @@ public class ComService {
 		dao.delete(Com_no);
 		
 	}
-	
+	public  ComVO getOneComById(String id){
+		return dao.findById(id);
+	}
 	
 	public  ComVO getOneCom(String com_no){
 		return dao.findByPrimaryKey(com_no);
 	}
+	
 	
 	public List<ComVO> getAll(){
 		return dao.getAll();

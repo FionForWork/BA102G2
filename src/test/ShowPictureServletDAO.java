@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.album.model.AlbumService;
 import com.album.model.AlbumVO;
+import com.com.model.ComService;
+import com.com.model.ComVO;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
 import com.mem.model.MemService;
@@ -97,6 +99,36 @@ public class ShowPictureServletDAO extends HttpServlet {
 			out.close(); 
 			return;
 		}
+		
+		
+		if(file.startsWith("mem_no")){
+			pk = request.getParameter("mem_no");
+			byte[] picture =null;
+			System.out.println(pk);
+			MemService memSvc = new MemService();
+			MemVO memVO = memSvc.getOneMem(pk);
+			
+			picture = memVO.getPicture();
+			
+			out.write(picture);
+			out.close(); 
+			return;
+		}
+		
+		if(file.startsWith("com_no")){
+			pk = request.getParameter("com_no");
+			byte[] logo =null;
+			System.out.println(pk);
+			ComService comSvc = new ComService();
+			ComVO comVO = comSvc.getOneCom(pk);
+			
+			logo = comVO.getLogo();
+			
+			out.write(logo);
+			out.close(); 
+			return;
+		}
+		
 		
 	}
 }

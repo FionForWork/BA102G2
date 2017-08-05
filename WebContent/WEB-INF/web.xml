@@ -15,6 +15,26 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+  
+  <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>com.filters.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+      <url-pattern>/Front_end/com/index.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+ 
+  
+  
+  
   <servlet>
     <servlet-name>ComServlet</servlet-name>
     <servlet-class>com.com.controller.ComServlet</servlet-class>
@@ -22,6 +42,14 @@
   <servlet-mapping>
     <servlet-name>ComServlet</servlet-name>
     <url-pattern>/com/com.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ServServlet</servlet-name>
+    <servlet-class>com.serv.controller.ServServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServServlet</servlet-name>
+    <url-pattern>/serv/serv.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>AdmServlet</servlet-name>
