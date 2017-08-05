@@ -1,7 +1,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.forum_comment.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");  %>
 <%	
@@ -19,7 +19,7 @@
                        
                             <div class="text-center" style="float:right" >
                                 <a href="reply.html">
-        <button class="btn btn-info" style="font-size: 15px"  onclick="location.href='reply.html'">�^�Ф峹
+        <button class="btn btn-info" style="font-size: 15px"  onclick="location.href='reply.html'">回覆文章
                                     </button></a>
         </div> 
                             <div class="panel panel-default">

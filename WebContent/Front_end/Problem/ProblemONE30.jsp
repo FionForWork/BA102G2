@@ -1,6 +1,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.problem.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
    <%
@@ -13,7 +13,7 @@
  <div class="col-md-8">
  <div id="dashboard-content">
  <div class="container-fluid">
-  <h2>¥\¯à°ÝÃD</h2>
+  <h2>åŠŸèƒ½å•é¡Œ</h2>
   
 
 <c:forEach var="ProblemVO" items="${list}" >

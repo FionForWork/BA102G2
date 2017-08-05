@@ -1,6 +1,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tradition.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%
  Tradition_Service traSvc=new Tradition_Service();
@@ -11,7 +11,7 @@
  <div class="col-md-9">
  <div id="dashboard-content">
 <div class="container-fluid">
-  <h2>��§�B�Q�G§</h2>
+  <h2>六禮、十二禮</h2>
   <c:forEach var="TraditionVO" items="${list}" >
   <c:if test="${TraditionVO.tra_type_no=='40' }">
    <div class="panel-group" id="accordion">
