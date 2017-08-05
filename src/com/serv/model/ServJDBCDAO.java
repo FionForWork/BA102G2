@@ -367,6 +367,13 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		
 		
 	}
+
+
+	@Override
+	public List<String> findByStype_no(String stype_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

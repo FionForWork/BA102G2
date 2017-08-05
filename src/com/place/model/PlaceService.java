@@ -13,11 +13,11 @@ public class PlaceService {
 		return dao.getAll();
 	}
 
-	public PlaceVO getOneDept(String pla_no) {
+	public PlaceVO getOnePlace(String pla_no) {
 		return dao.findByPrimaryKey(pla_no);
 	}
 
-	public void deleteDept(String pla_no) {
+	public void deletePlace(String pla_no) {
 		dao.delete(pla_no);
 	}
 }
