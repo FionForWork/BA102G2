@@ -1,0 +1,99 @@
+﻿ </table>
+          <div class="text-center">
+                        <ul class="pagination">
+                          <li><a href="#">&laquo;</a></li>
+                          <li><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li class="active"><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+          <br class="clear">
+        
+        </div>
+ </center>
+            </div>
+            <!--上面放東西===========================================================================-->
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+    <!--這裡結束-->
+
+    <div class="text-right">
+        <a id="back-to-top" href="#" class="btn btn-black btn-lg round back-to-top" role="button">
+            <i class="fa fa-angle-up" aria-hidden="false"></i>
+        </a>
+    </div>
+    <!--FOOTER-->
+    <div class="wd_footer_all">
+        <footer class=" hidden-xs   " style="background:#333;">
+            <div class="clearfix">
+                <div class="wd_footer">
+                    <div class="clearfix">
+                        <div class="col-xs-4 text-center">
+                            <h4>婚禮服務</h4>
+                            <ul class="list-unstyled">
+                                <li itemprop="department"><a href="#" itemprop="url">拍婚紗</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">婚攝婚錄</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">新秘</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-4 text-center">
+                            <h4>婚禮周邊</h4>
+                            <ul class="list-unstyled">
+                                <li itemprop="department"><a href="#" itemprop="url">實景預覽</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">線上商城</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-4 text-center">
+                            <h4>新娘專屬</h4>
+                            <ul class="list-unstyled">
+                                <li class=""><a href="#" itemprop="url">討論版</a></li>
+                                <li class=""><a href="#" target="_blank" itemprop="url">會員專區</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div>
+            <br>
+            <p class="text-center small" itemscope itemtype="https://schema.org/copyrightHolder">
+                © 2017 - 2017 <b>She Said Yes!</b> Inc.
+            </p>
+
+            <ul class="list-inline text-center small">
+                <li class="entypo-users"><a class="text-muted" href="#" itemprop="url">隱私權政策</a></li>
+                <li class="entypo-users"><a class="text-muted" href="#" itemprop="url">關於我們</a></li>
+                <li class="entypo-mail "><a class="text-muted" href="inway0407@hotmail.com" target="_blank" itemprop="email"><i class="fa fa-envelope-o" aria-hidden="true"></i> 聯絡我們</a></li>
+            </ul>
+        </div>
+        <address class="text-center" itemprop="address">
+        <span itemprop="addressLocality">桃園市</span>
+        <span itemprop="addressRegion">中壢區</span>
+        <span itemprop="streetAddress">中央大學</span>
+        III
+    </address>
+    </div>
+    <!--FOOTER-->
+
+</body>
+
+</html>

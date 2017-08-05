@@ -35,7 +35,7 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
     
     <div class="form-group">
       <label for="inputlg">Q&A回答</label>
-      <textarea class="form-control" id="inputdefault"  name="reply"
+      <textarea class="form-control" id="comment"  name="reply"
       value="<%= (problemVO==null)? " " : problemVO.getReply()%>"></textarea>
     </div>
    

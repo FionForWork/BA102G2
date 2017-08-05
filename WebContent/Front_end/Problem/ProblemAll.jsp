@@ -29,7 +29,7 @@
       </div>
       
       <div id="${ProblemVO.prob_no }" class="panel-collapse collapse ">
-        <div class="panel-body"><pre>${ProblemVO.reply}</pre> </div>
+        <div class="panel-body">${ProblemVO.reply} </div>
       </div>
 
     
