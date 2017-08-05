@@ -295,14 +295,14 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 //		dao.insert(articleVO1);
 
 //		// 修改
-		ArticleVO articleVO2 = new ArticleVO();
-		articleVO2.setArt_no(5002);
-		articleVO2.setPoster_no(123);
-		articleVO2.setArt_type_no(20);
-		articleVO2.setTitle("標題3");
-		articleVO2.setContent("內文");
-		articleVO2.setArt_date(new Date(date.getTime()));
-		dao.update(articleVO2);
+//		ArticleVO articleVO2 = new ArticleVO();
+//		articleVO2.setArt_no(5002);
+//		articleVO2.setPoster_no(123);
+//		articleVO2.setArt_type_no(20);
+//		articleVO2.setTitle("標題3");
+//		articleVO2.setContent("內文");
+//		articleVO2.setArt_date(new Date(date.getTime()));
+//		dao.update(articleVO2);
 //
 //		// 刪除
 //		dao.delete(2);

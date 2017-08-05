@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <!-- Mobile specific metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Force IE9 to render in normal mode -->
+    <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+    <!-- Import google fonts - Heading first/ text second -->
+    <!-- <link rel='stylesheet' type='text/css' <!--[if lt IE 9]> -->
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <![endif]-->
+        <!-- Css files -->
+        <!-- Icons -->
+        <link href="assets/css/icons.css" rel="stylesheet" />
+        <!-- jQueryUI -->
+        <link href="assets/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
+        <!-- Bootstrap stylesheets (included template modifications) -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- Plugins stylesheets (all plugin custom css) -->
+        <link href="assets/css/plugins.css" rel="stylesheet" />
+        <!-- Main stylesheets (template main css file) -->
+        <link href="assets/css/main.css" rel="stylesheet" />
+        <!-- Custom stylesheets ( Put your own changes here ) -->
+        <link href="assets/css/custom.css" rel="stylesheet" />
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/img/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/img/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/img/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/img/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="icon" href="assets/img/ico/favicon.ico" type="image/png">
+        <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+        <meta name="msapplication-TileColor" content="#3399cc" />
+    </head>
+    <body>
+        <!-- Start #header -->
+        <div id="header">
+            <div class="container-fluid">
+                <div class="navbar">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">
+                            <span class="text-logo"> SHE SAYS YES!</span>
+                        </a>
+                    </div>
+                    <nav class="top-nav" role="navigation">
+                        <ul class="nav navbar-nav pull-right">
+                           
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
+                                <ul class="dropdown-menu notification-menu right" role="menu">
+                                    <li class="clearfix">
+                                        <i class="ec-chat"></i> 
+                                        <a href="#" class="notification-user"> Ric Jones </a> 
+                                        <span class="notification-action"> replied to your </span> 
+                                        <a href="#" class="notification-link"> comment</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown">
+                                    <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">SuggeElson</a>
+                                <ul class="dropdown-menu right" role="menu">
+                                    <li><a href="profile.html"><i class="st-user"></i> Profile</a>
+                                    </li>
+                                    <li><a href="file.html"><i class="st-cloud"></i> Files</a>
+                                    </li>
+                                    <li><a href="#"><i class="st-settings"></i> Settings</a>
+                                    </li>
+                                    <li><a href="login.html"><i class="im-exit"></i> Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Start .header-inner -->
+        </div>
+        <!-- End #header -->
+        <!-- Start #sidebar -->
+        <div id="sidebar">
+            <!-- Start .sidebar-inner -->
+            <div class="sidebar-inner">
+                <!-- Start #sideNav -->
+                <ul id="sideNav" class="nav nav-pills nav-stacked">
+                    <li class="top-search">
+                        <form>
+                            <input type="text" name="search" placeholder="Search ...">
+                            <button type="submit"><i class="ec-search s20"></i>
+                            </button>
+                        </form>
+                    </li>
+                    <li><a href="#"><i class="en-users"></i>一般會員管理 </a>
+                        
+                    </li>
+                    <li><a href="#"><i class="en-users"></i>廠商管理 </a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="en-users"> </i>管理者設定 </a>
+                    </li>
+                    <li><a href="#"> 廣告刊登管理 <i class="im-table2"></i></a>
+                    </li>
+                    <li><a href="#"> 景點管理 <i class="br-location"></i></a>
+                    </li>
+                    <li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a>
+                    </li>
+                    <li><a href="#"><i class="fa-shopping-cart"></i> 商城管理</a>
+                    </li>
+                    <li><a href="#"><i class="im-list2"></i> 參數管理</a>
+                    </li>
+                    <li><a href="#"><i class="ec-mail"></i> 聯絡我們管理 </a>
+                    </li>
+                    <li><a href="#"><i class="im-question"></i>常見問題管理</a>
+                    </li>
+                    <li><a href="#">檢舉管理 <i class="br-warning"></i></a>
+                    </li>
+                </ul>
+                <!-- End #sideNav -->
+            </div>
+            <!-- End .sidebar-inner -->
+        </div>
+        <!-- End #sidebar -->
+        <!-- Start #content -->
+        <div id="content">
+            <!-- Start .content-wrapper -->
+            <div class="content-wrapper">
+                <div class="row">
+                <ul id="crumb" class="breadcrumb">
+                        <div><h3>常見問題管理</h3></div>
+                        </ul>
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Q&A管理
+                        <div class="text-center" style="float:right" >
+                            <button class="btn btn-info"  data-toggle="modal" data-target="#Modal">新增Q&A</button>
+                        </div>
+                        </h4>
+                    </div>
+<!-- ===================================================================================================== -->
+                    <div class="modal fade" id="Modal" role="dialog">
+   <div class="modal-dialog">
+                                        
+     <div class="modal-content">
+   <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+     <h4 class="modal-title">新增Q&A</h4>
+      </div>
+
+<div class="modal-body">
+                                              
+<div class="container-fluid">
+   
+  <form>
+     <div class="form-group">
+      <label for="sel1">Q&A類別</label>
+      <select class="form-control" id="sel1">
+        <option>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>40</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="inputdefault">Q&A問題</label>
+      <input class="form-control" id="inputdefault" type="text">
+    </div>
+    <div class="form-group">
+      <label for="inputlg">Q&A回答</label>
+      
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    
+   
+   
+    
+  </form>
+</div>
+</div>
+
+   <div class="modal-footer">
+                                              
+   <button type="button" class="btn btn-default" data-dismiss="modal">存檔</button>
+
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+                                          
+ </div>
+ </div>
+
+
+<!-- =================================================================================================== -->
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Q&A編號</th>
+                                    <th>Q&A類別</th>
+                                    <th>Q&A問題</th>
+                                    <th>Q&A回答</th>
+                                    <th>Q&A修改</th>
+                                    <th>Q&A移除</th>
+                                </tr>
+                            </thead>
+<!-- ===================================================================================================== -->
+                             <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>10帳號問題</td>
+                                    <td>問題</td>
+                                    <td>回答</td>
+                                    <!-- <td><button type="submit" class="btn btn-default btn-block btn-primary">修改</button>
+                                    </td> -->
+<!-- ===================================================================================================== -->
+                                    <td><button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">修改</button></td>
+
+  <div class="modal fade" id="myModal" role="dialog">
+   <div class="modal-dialog">
+                                        
+     <div class="modal-content">
+   <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+     <h4 class="modal-title">修改Q&A</h4>
+      </div>
+
+<div class="modal-body">
+                                              
+<div class="container-fluid">
+   
+  <form>
+     <div class="form-group">
+      <label for="sel1">Q&A類別</label>
+      <select class="form-control" id="sel1">
+        <option>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>40</option>
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="inputdefault">Q&A問題</label>
+      <input class="form-control" id="inputdefault" type="text">
+    </div>
+    <div class="form-group">
+      <label for="inputlg">Q&A回答</label>
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    
+   
+   
+    
+  </form>
+</div>
+</div>
+
+   <div class="modal-footer">
+                                              
+   <button type="button" class="btn btn-default" data-dismiss="modal">存檔</button>
+
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+                                          
+ </div>
+ </div>
+  
+<!-- ====================================================================================================== -->
+
+                                    <td><button type="submit" class="btn btn-default btn-danger btn-primary">移除 </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                    </div>
+                    </div>
+                    <!-- End .page-header -->
+                </div>
+                <!-- End .row -->
+        </div>               
+            <!-- End .content-wrapper -->
+            <div class="clearfix"></div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ================================================================================================================================== -->
+        <!-- End #content -->
+        <!-- Javascripts -->
+        <!-- Load pace first -->
+        <script src="assets/plugins/core/pace/pace.min.js"></script>
+        <!-- Important javascript libs(put in all pages) -->
+        <script src="assets/js/jquery-1.8.3.min.js"></script>
+        <script>
+        window.jQuery || document.write('<script src="assets/js/libs/jquery-2.1.1.min.js">\x3C/script>')
+        </script>
+        <script src="assets/js/jquery-ui.js"></script>
+        <script>
+        window.jQuery || document.write('<script src="assets/js/libs/jquery-ui-1.10.4.min.js">\x3C/script>')
+        </script>
+        <!--[if lt IE 9]>
+    <script type="text/javascript" src="assets/js/libs/excanvas.min.js"></script>
+    <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script type="text/javascript" src="assets/js/libs/respond.min.js"></script>
+    <![endif]-->
+        <!-- Bootstrap plugins -->
+        <script src="assets/js/bootstrap/bootstrap.js"></script>
+        <!-- Core plugins ( not remove ever) -->
+        <!-- Handle responsive view functions -->
+        <script src="assets/js/jRespond.min.js"></script>
+        <!-- Custom scroll for sidebars,tables and etc. -->
+        <script src="assets/plugins/core/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="assets/plugins/core/slimscroll/jquery.slimscroll.horizontal.min.js"></script>
+        <!-- Resize text area in most pages -->
+        <script src="assets/plugins/forms/autosize/jquery.autosize.js"></script>
+        <!-- Proivde quick search for many widgets -->
+        <script src="assets/plugins/core/quicksearch/jquery.quicksearch.js"></script>
+        <!-- Bootbox confirm dialog for reset postion on panels -->
+        <script src="assets/plugins/ui/bootbox/bootbox.js"></script>
+        <!-- Other plugins ( load only nessesary plugins for every page) -->
+        <script src="assets/plugins/charts/flot/jquery.flot.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.pie.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.resize.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.time.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.growraf.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.categories.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.stack.js"></script>
+        <script src="assets/plugins/charts/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="assets/plugins/charts/flot/date.js"></script>
+        <script src="assets/plugins/charts/sparklines/jquery.sparkline.js"></script>
+        <script src="assets/plugins/charts/pie-chart/jquery.easy-pie-chart.js"></script>
+        <script src="assets/plugins/forms/icheck/jquery.icheck.js"></script>
+        <script src="assets/plugins/forms/tags/jquery.tagsinput.min.js"></script>
+        <script src="assets/plugins/forms/tinymce/tinymce.min.js"></script>
+        <script src="assets/plugins/misc/highlight/highlight.pack.js"></script>
+        <script src="assets/plugins/misc/countTo/jquery.countTo.js"></script>
+        <script src="assets/plugins/ui/weather/skyicons.js"></script>
+        <script src="assets/plugins/ui/notify/jquery.gritter.js"></script>
+        <script src="assets/plugins/ui/calendar/fullcalendar.js"></script>
+        <script src="assets/js/jquery.sprFlat.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/pages/dashboard.js"></script>
+    </body>
+</html>

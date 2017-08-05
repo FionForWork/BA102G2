@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="BIG5"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>BA102G2</display-name>
   <welcome-file-list>
@@ -103,4 +103,29 @@
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+		<servlet-name>ProblemServlet</servlet-name>
+		<servlet-class>com.problem.controller.ProblemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProblemServlet</servlet-name>
+		<url-pattern>/Problem/Problem.do</url-pattern>
+	</servlet-mapping>
+	 <servlet>
+		<servlet-name>TraditionServlet</servlet-name>
+		<servlet-class>com.tradition.controller.TraditionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TraditionServlet</servlet-name>
+		<url-pattern>/Tradition/Tradition.do</url-pattern>
+	</servlet-mapping>
+	 <servlet>
+		<servlet-name>ArticleServlet</servlet-name>
+		<servlet-class>com.article.controller.ArticleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ArticleServlet</servlet-name>
+		<url-pattern>/Article/Article.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
