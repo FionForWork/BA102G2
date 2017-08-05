@@ -16,7 +16,7 @@
    <div class="panel-group" id="accordion">
     <div class="panel " style="background-color: #f5f5f5;" >
      <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#${TraditionVO.tra_no }">${TraditionVO.tra_order }.${TraditionVO.title}</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#${TraditionVO.tra_no }">${TraditionVO.tra_no }.${TraditionVO.title}</a>
           
         </h4>
       </div>

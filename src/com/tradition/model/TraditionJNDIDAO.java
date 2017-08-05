@@ -202,9 +202,9 @@ public class TraditionJNDIDAO implements Tradition_interface{
 					traditionVO.setArticle(rs.getString("article"));
 					
 
-					Blob blob = rs.getBlob("img");
-					int blobLength = (int) blob.length();
-					traditionVO.setImg(blob.getBytes(1, blobLength));
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
 					
 				}
@@ -262,9 +262,9 @@ public class TraditionJNDIDAO implements Tradition_interface{
 					traditionVO.setTitle(rs.getString("title"));
 					traditionVO.setArticle(rs.getString("article"));
 
-					Blob blob = rs.getBlob("img");
-					int blobLength = (int) blob.length();
-					traditionVO.setImg(blob.getBytes(1, blobLength));
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
 				
 					list.add(traditionVO); // Store the row in the list
