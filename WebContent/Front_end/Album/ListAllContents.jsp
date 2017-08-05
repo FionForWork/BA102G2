@@ -9,8 +9,8 @@
 	class="com.album.model.AlbumService"></jsp:useBean>
 
 <%
-	//String alb_no = (String) request.getParameter("alb_no");
-	String alb_no = "0001";
+	String alb_no = (String) request.getParameter("alb_no");
+	//String alb_no = "0001";
 	pageContext.setAttribute("alb_no", alb_no);
 %>
 
