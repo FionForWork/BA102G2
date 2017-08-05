@@ -64,7 +64,7 @@
 			<td>${comVO.com_desc}</td>
 			<td>${comVO.phone}</td>
 			<td>${comVO.account}</td>
-			<td><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"/></td>
+			<td><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" /></td>
 			<td>${comVO.status}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">

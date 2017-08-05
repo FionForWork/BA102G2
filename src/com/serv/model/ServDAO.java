@@ -189,7 +189,7 @@ private static DataSource ds = null;
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 			}
 			
 			
@@ -250,7 +250,7 @@ private static DataSource ds = null;
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 				list.add(servVO); // Store the row in the list
 			} 
 		}catch (SQLException se) {

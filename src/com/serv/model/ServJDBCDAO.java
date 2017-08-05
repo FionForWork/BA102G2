@@ -200,7 +200,7 @@ public class ServJDBCDAO implements ServDAO_Interface{
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -265,7 +265,7 @@ public class ServJDBCDAO implements ServDAO_Interface{
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 				list.add(servVO); // Store the row in the list
 			}
 			

@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-<!--以登入 且 會員頁面-->
+<!--以登入 且 廠商頁面-->
 <head>
     
      <meta charset="UTF-8">
@@ -21,11 +21,9 @@
     <script src="<%=request.getContextPath()%>/Front_end/mem/js/top.js" type="text/javascript"></script>
 
 </head>
-<form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
+<form name="form1" ACTION="<%= request.getContextPath() %>/com/com.do" method=post >
                     <input type="hidden"  name="action" value="logout"/>
                           </form>
-                          
-
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
         <div class="container" style="position: relative;">
@@ -51,18 +49,20 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
-                    <li >
-                        <a  href="<%= request.getContextPath() %>/Front_end/mem/index.jsp">
-                          ${memVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />
+                    <li>
+                        <a  href="<%= request.getContextPath() %>/Front_end/com/index.jsp" >
+                            ${comVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />
                         </a>
                     </li>
+                    
+                    
                     <li>
                    
-                        <a href="javascript:document.logout.submit();">
-                           <h4>登出</h4>
+                        <a href="javascript:document.form1.submit();">
+                     <h4>登出</h4>
                         </a> 
                     </li>
-                    
+                  
                 </ul>
             </div>
         </div>
@@ -266,7 +266,7 @@
         <div class="banner_hero text-center">
             <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
                 <b class="hello_word">
-           歡迎加入,成功加入後就可以使用所有功能!
+           歡迎加入,成為廠商就可以使用所有功能!
             </b>
             </h1>
             <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
@@ -292,23 +292,22 @@
     </div>
 </div>
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-  
+   
     <div class="container">
         <div class="row">
 <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2 col-xs-0">
-             <br><br><br> 
+            <div class="col-md-offset-1 col-md-2">
                 <ul class="list-group">
-                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua ">編輯廠商資料</a><br>
                     <a href="#" class="list-group-item menua">密碼修改</a><br>
                     <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
+                    <a href="#" class="list-group-item menua">行事曆</a><br>
+                    <a href="#" class="list-group-item menua">作品管理</a><br>
+                  
                 </ul>
 
-																				
-                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default">查看個人資料</a>
+				
+                <a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" name="action" value="insert" class="btn btn-block btn-default">查看廠商資料</a>
             </div>
