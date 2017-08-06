@@ -1,19 +1,28 @@
 package com.message.controller;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.*;
+
+import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
+import javax.websocket.Session;
+import javax.websocket.OnOpen;
+import javax.websocket.OnMessage;
+import javax.websocket.OnError;
+import javax.websocket.OnClose;
+import javax.websocket.CloseReason;
 
 import com.message.model.MessageService;
 
+@ServerEndpoint("/MessageServlet/{memName}/{comName}")
 public class MessageServlet extends HttpServlet {
+	private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -45,6 +54,36 @@ public class MessageServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+	}
+	
+	@OnOpen
+	public void onOpen(@PathParam("memName") String memName, @PathParam("comName") int comName, Session userSession) throws IOException {
+		allSessions.add(userSession);
+//		System.out.println(userSession.getId() + ": 已連線");
+		System.out.println(memName + ": 已連線");
+		System.out.println(comName + ": 已連線");
+//		userSession.getBasicRemote().sendText("WebSocket 連線成功");
+	}
+
+	
+	@OnMessage
+	public void onMessage(Session userSession, String message) {
+		for (Session session : allSessions) {
+			if (session.isOpen())
+				session.getAsyncRemote().sendText(message);
+		}
+		System.out.println("Message received: " + message);
+	}
+	
+	@OnError
+	public void onError(Session userSession, Throwable e){
+//		e.printStackTrace();
+	}
+	
+	@OnClose
+	public void onClose(Session userSession, CloseReason reason) {
+		allSessions.remove(userSession);
+		System.out.println(userSession.getId() + ": Disconnected: " + Integer.toString(reason.getCloseCode().getCode()));
 	}
 
 }
