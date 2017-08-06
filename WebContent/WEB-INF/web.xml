@@ -164,4 +164,47 @@
     <url-pattern>/advertising/advertising.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<display-name>RFQServlet</display-name>
+  	<servlet-name>RFQServlet</servlet-name>
+  	<servlet-class>com.rfq.controller.RFQServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RFQServlet</servlet-name>
+  	<url-pattern>/rfq/rfq.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<display-name>QuoteServlet</display-name>
+  	<servlet-name>QuoteServlet</servlet-name>
+  	<servlet-class>com.quote.controller.QuoteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QuoteServlet</servlet-name>
+  	<url-pattern>/quote/quote.do</url-pattern>
+  </servlet-mapping>
+  
+	<servlet>
+		<display-name>ReservationServlet</display-name>
+		<servlet-name>ReservationServlet</servlet-name>
+		<servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ReservationServlet</servlet-name>
+		<url-pattern>/reservation/reservation.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>CalendarServlet</display-name>
+		<servlet-name>CalendarServlet</servlet-name>
+		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/calendar/calendar.do</url-pattern>
+	</servlet-mapping>
+  
 </web-app>
