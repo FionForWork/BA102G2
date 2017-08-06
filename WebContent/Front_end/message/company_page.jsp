@@ -56,9 +56,7 @@
 
 	<div class="text-center">
 		<h1>${comVO.name}</h1>
-		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
 	</div>
-	
 
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">
@@ -71,10 +69,9 @@
 
 	<!--店家資料-->
 	<div class="container" id="info">
-		<div class="col-sm-1"></div>
-		<div class="col-sm-8">
+		<div class="col-sm-10">
 			<div class="hidden-xs">
-				<table class="table">
+				<table class="table table-condensed">
 					<tbody>
 						<tr>
 							<th>店休日</th>
@@ -93,7 +90,7 @@
 
 						<tr>
 							<th>信箱</th>
-							<td>${comVO.id}</td>
+							<td><a href="">${comVO.id}</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -101,20 +98,59 @@
 		</div>
 		<!--////////////////////////////-->
 		<!--預約按鈕-->
-		<div class="col-sm-3">
+		<div class="col-sm-2">
 			<p class="text-center">
-				<a class="btn btn-reservation btn-lg" href="">連絡我們 <i class="fa fa-comment"></i></a>
-				<br><br>
-				<a class="btn btn-reservation btn-lg" href="">預約 </a>
+				<a class="btn btn-reservation btn-lg" href=""> 線上預約 </a>
+			</p>
+			<br><br>
+			<p class="text-center" id="addClass">
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(1)">
+					聯絡我們 </a>
+			</p>
+			<p class="text-center" style="display: none;" id="dClass">
+
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(2)">
+					聯絡我們 </a>
 			</p>
 		</div>
 	</div>
 	<!--店家資料-->
 
+	<!--聯絡我們-->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="chat_box panel panel-primary" id="chatbox">
+					<div class="panel-heading">
+						<h3 id="statusOutput" class="statusOutput"></h3>
+					</div>
+					<div class="panel-body">
+						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+					</div>
+					<div class="panel-footer">
+						<div class="panel input-area">
+							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" /> 
+							<input id="message" class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
+							<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" />
+							<input type="button" id="connect" class="button" value="連線" onclick="connect();" />
+							<input type="button" id="disconnect" class="button" value="離線" onclick="disconnect();" />		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--聯絡我們-->
+
+
+
+
+
+
 	<!--店家相簿-->
 	<div class="text-center" id="works">
 		<span>
-			<h1>作品</h1>
+			<h1>廠商作品</h1>
 		</span>
 	</div>
 	<div class="container">
@@ -124,14 +160,14 @@
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
-						<li class="list-unstyled">
-							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+						<li class="list-unstyled"><a href="#"
+							class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
+								<img class="works_image img-thumbnail"
+								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								<div class="overlay">
 									<div class="works_text">${worksVO.works_desc}</div>
 								</div>
-							</div>
-						</li>
+						</a></li>
 					</ul>
 				</div>
 			</c:forEach>
@@ -145,7 +181,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-info btn-lg" href="#"> 看更多作品
+				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
 				</a>
@@ -158,19 +194,19 @@
 	<!--店家方案-->
 	<div class="text-center" id="service">
 		<span>
-			<h1>方案</h1>
+			<h1>廠商方案</h1>
 		</span>
 	</div>
 	<div class="container">
 		<div class="row">
 
 			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
-				<div class="service col-xs-12 col-sm-3">
+				<div class="col-xs-12 col-sm-3">
 					<ul class="service_box">
-						<li class="service_title"><div>${servVO.title}</div></li>
-						<div class="text"><li>${servVO.content}</li></div>
-						<li class="cost"><div>$NT<span>${servVO.price}</span></div>
-						</li>
+						<li class="service_title">${servVO.title}</li><br>
+						<li class="text">${servVO.content}</li>
+						<li class="cost"><span>$NT</span>
+						<span style="color: #ef8b87;">${servVO.price}</span></li>
 					</ul>
 				</div>
 			</c:forEach>
@@ -183,10 +219,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a class="btn btn-info btn-lg" href="#"> 看更多方案
+				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
-				
+				</a>
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
@@ -200,15 +236,21 @@
 	<!--店家自介-->
 	<div class="text-center" id="introduction">
 		<span>
-			<h1>介紹</h1>
+			<h1>廠商介紹</h1>
 		</span>
 	</div>
-	<div class="container">
-		<div class="row com_intro">
+	<div class="com_intro container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-8">基本介紹： ${comVO.com_desc}</div>
+			</div>
+			<div class="col-xs-12 col-sm-6">
 
-			<div class="col-xs-12 col-sm-4"></div>
-			<div class="col-xs-12 col-sm-4">${comVO.com_desc}</div>
-			<div class="col-xs-12 col-sm-4"></div>
+				<div class="col-xs-12 col-sm-4"></div>
+
+				<div class="col-xs-12 col-sm-8"></div>
+			</div>
 		</div>
 	</div>
 

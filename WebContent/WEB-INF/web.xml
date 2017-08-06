@@ -63,7 +63,6 @@
     <servlet-name>TempServlet</servlet-name>
     <url-pattern>/temp/temp.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ContentServlet</servlet-name>
     <servlet-class>com.content.controller.ContentServlet</servlet-class>
@@ -72,7 +71,6 @@
     <servlet-name>ContentServlet</servlet-name>
     <url-pattern>/content/content.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <servlet-class>test.ShowPictureServletDAO</servlet-class>
@@ -81,7 +79,6 @@
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>UploadPhotoToDBDAO</servlet-name>
     <servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
@@ -90,7 +87,6 @@
     <servlet-name>UploadPhotoToDBDAO</servlet-name>
     <url-pattern>/UploadPhotoToDBDAO</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>AdvertisingServlet</servlet-name>
     <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
@@ -99,5 +95,4 @@
     <servlet-name>AdvertisingServlet</servlet-name>
     <url-pattern>/advertising/advertising.do</url-pattern>
   </servlet-mapping>
-  
 </web-app>

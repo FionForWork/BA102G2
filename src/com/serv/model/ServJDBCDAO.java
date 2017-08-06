@@ -374,6 +374,13 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public List<ServVO> getAllAvg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

@@ -58,5 +58,8 @@ public class ServService {
 		
 	}
 	
-	
+	public List<ServVO> getAllAvg(){
+		return dao.getAllAvg();
+		
+	}
 }

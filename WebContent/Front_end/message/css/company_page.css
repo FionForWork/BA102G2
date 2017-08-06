@@ -7,20 +7,6 @@
 .com_logo {
 	width: 200px;
 }
-.com_box {
-	width: 250px;
-	height: 250px;
-	text-align: center;
-	font-size: 14px;
-}
-
-a.thumbnail {
-	color: black;
-}
-
-a.thumbnail:hover {
-	color: black;
-}
 
 #service, #works {
 	margin-bottom: 30px;
@@ -29,6 +15,7 @@ a.thumbnail:hover {
 .service_box, .works_box {
 	padding-left: 0px;
 	text-align: center;
+	border: 1px solid #e2e2e2;
 }
 
 .works_image {
@@ -41,29 +28,17 @@ li {
 	list-style: none;
 }
 
+.sercive_image {
+	width: 80%;
+	height: 80%;
+	margin-bottom: 50px;
+}
+
 .cost {
 	border-top: 1px solid #e2e2e2;
-	margin: 10px;
-	font-size: 16px;
-}
-
-.cost div {
-	margin:10px;
-}
-
-.cost span {
-	 color: #ef8b87;
-}
-
-.service_title {
-	text-align: center;
-	margin: 20px;
-	border-bottom: 1px solid #e2e2e2;
-	font-size: 16px;
-}
-
-.service_title div {
-	margin: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
 }
 
 .check_service {
@@ -95,17 +70,10 @@ li {
 .text {
 	margin-bottom: 10px;
 	padding: 50px;
-	line-height: 50px;
-	height: 300px;
-	font-size: 16px;
 }
 
 .com_intro {
-	border: 1px solid #ddd;
-	line-height: 24px;
-	text-align: center;
-	font-size: 16px;
-	margin: 20px;
+	background-color: #e5edef
 }
 
 .table th {
@@ -122,7 +90,6 @@ li {
 }
 
 .overlay {
-	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -150,6 +117,9 @@ li {
 	-ms-transform: translate(-50%, -50%);
 }
 
-.btn {
-	 width:200px;
+.service_title {
+	text-align: center;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	border-bottom: 1px solid #e2e2e2;
 }
