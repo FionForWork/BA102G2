@@ -8,6 +8,7 @@ public interface RFQ_DetailDAO_Interface {
 	void update(RFQ_DetailVO rfqVO);
 	void delete(String rfqdetail_no);
 	RFQ_DetailVO findByPK(String rfqdetail_no);
+	RFQ_DetailVO getOneFromQuote(String quo_no);
 	List<RFQ_DetailVO> getAll();
 	List<RFQ_DetailVO> getSome(String rfq_no);
 	List<RFQ_DetailVO> getMy(String mem_no);

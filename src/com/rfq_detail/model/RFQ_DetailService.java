@@ -68,4 +68,10 @@ public class RFQ_DetailService {
 		
 	}
 	
+	public RFQ_DetailVO getOneFromQuote(String quo_no){
+		
+		return dao.getOneFromQuote(quo_no);
+		
+	}
+	
 }
