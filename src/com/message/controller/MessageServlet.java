@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.message.model.MessageService;
 
-@WebServlet("/MessageServlet")
 public class MessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

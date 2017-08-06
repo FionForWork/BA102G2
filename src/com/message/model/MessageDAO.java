@@ -10,15 +10,15 @@ public class MessageDAO implements MessageDAO_Interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ProjectDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private static final String INSERT_STMT = "insert into message (msg_no, mem_no, com_no, content) values (ltrim(to_char(msg_no_seq.nextval,'0009')), ?, ?, ?)";
-	private static final String GET_ALL_STMT = "select msg_no, mem_no, com_no, content from message order by adv_no";
-	private static final String GET_ONE_STMT = "select msg_no, mem_no, com_no, content from message where adv_no = ?";
+	private static final String GET_ALL_STMT = "select msg_no, mem_no, com_no, content from message order by msg_no";
+	private static final String GET_ONE_STMT = "select msg_no, mem_no, com_no, content from message where msg_no = ?";
 	private static final String DELETE = "delete from message where msg_no = ?";
 	private static final String UPDATE = "update message set mem_no=?, com_no=?, content=? where msg_no = ?";
 

@@ -19,6 +19,8 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
+	
+	session.setAttribute("mem_no","1001");
 %>
 
 <html>
