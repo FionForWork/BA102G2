@@ -36,6 +36,7 @@
 			<th>服務內容</th>
 			<th>金額</th>
 			<th>預約狀態</th>
+			<th>查看更多</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,6 +47,12 @@
 			<td>${sortingHat.getServType(reservationVO.stype_no)}</td>
 			<td>${def.format(reservationVO.price)}</td>
 			<td>${sortingHat.getResStatus(reservationVO.status)}</td>
+			<td>
+				<form>
+					<input type="hidden" name="res_no" value="${reservationVO.res_no}">
+					<input type="submit" class="btn btn-info" value="查看更多">
+				</form>				
+			</td>
 		</tr>
 		</c:forEach>
 		
