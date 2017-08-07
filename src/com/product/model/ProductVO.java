@@ -1,8 +1,11 @@
 package com.product.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ProductVO {
+import sun.misc.BASE64Encoder;
+
+public class ProductVO implements Serializable {
     private String pro_no;
     private String pro_name;
     private String seller_no;
@@ -20,8 +23,7 @@ public class ProductVO {
         super();
     }
 
-    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount,
-            byte[] img, Timestamp pro_date, String protype_no, String status, Integer times, Integer score) {
+    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount, byte[] img, Timestamp pro_date, String protype_no, String status, Integer times, Integer score) {
         super();
         this.pro_no = pro_no;
         this.pro_name = pro_name;
@@ -133,4 +135,24 @@ public class ProductVO {
         this.score = score;
     }
     
+    public String getImgBase64(){
+        BASE64Encoder base64Encoder=new BASE64Encoder();
+        return base64Encoder.encode(this.img);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ProductVO) {
+            if(((ProductVO) obj).getPro_no().equals(this.pro_no)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Integer.valueOf(this.pro_no);
+    }
+
 }

@@ -2,12 +2,21 @@ package com.protra.model;
 
 import java.util.List;
 
-public interface ProTraDAO_Interface {
+public interface ProtraDAO_Interface {
 
-	public String insertProTra(ProTraVO proTra);
-	public void deleteProTra(String protra_no);
-	public void updateProTra(ProTraVO proTra);
-	public ProTraVO findProTraByPK(String protra_no);
-	public List<ProTraVO> findProTraByMemNo(String mem_no);
-	public List<ProTraVO> findAll();
+    void add(ProtraVO protracking_listVO);
+
+    void delete(String protra_no);
+
+    void update(ProtraVO protracking_listVO);
+
+    ProtraVO getOneByPK(String protra_no);
+
+    List<ProtraVO> getAllByMem(String mem_no);
+
+    List<ProtraVO> getAll();
+
+    int getRowCount(String mem_no);
+
+    List<ProtraVO> getSome(String mem_no, int nowPage, int count);
 }

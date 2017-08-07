@@ -13,262 +13,284 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ProTraDAO implements ProTraDAO_Interface{
+import com.product.model.ProductVO;
 
-	private static final String INSERT_SQL = "insert into protra(protra_no,pro_no,mem_no) values(ltrim(To_char(protra_sq.nextval,'0009')),?,?)";
-	private static final String DELETE_SQL = "delete from protra where protra_no = ?";
-	private static final String UPDATE_SQL = "update protra set pro_no=?,mem_no=? where protra_no = ?";
-	private static final String FIND_BY_PK = "select * from protra where protra_no = ?";
-	private static final String FIND_BY_MEM_NO = "select * from protra where mem_no=?";
-	private static final String FIND_ALL = "select * from protra";
-	private static DataSource ds = null;
-	static{
-		Context ctx;
-		try {
-			ctx = new javax.naming.InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	public String insertProTra(ProTraVO proTra) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String[] cols = { "protra_no" };
-		String protra_no ="";
-		try {
-			conn = ds.getConnection();
-			conn.setAutoCommit(false);
-			pstmt = conn.prepareStatement(INSERT_SQL, cols);
-			pstmt.setString(1, proTra.getPro_no());
-			pstmt.setString(2, proTra.getMem_no());
-			pstmt.executeUpdate();
-			rs = pstmt.getGeneratedKeys();
-			while (rs.next()) {
-				protra_no = rs.getString(1);
-			}
-			conn.commit();
-		} catch (Exception e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return protra_no;
-	}
+public class ProtraDAO implements ProtraDAO_Interface {
+    private static final String INSERT                = "insert into PROTRA (PROTRA_NO, PRO_NO,MEM_NO)" + "values(PROTRA_SQ.NEXTVAL, ?,?)";
+    private static final String DELETE_BY_NO          = "delete from PROTRA where PRO_NO = ?";
+    private static final String FIND_BY_PK            = "select * from PROTRA where PROTRA_NO = ?";
+    private static final String FIND_BY_MEM           = "select * from PROTRA where MEM_NO = ?";
+    private static final String GET_ALL_ORDER_BY_ASC  = "select * from PROTRA order by PROTRA_NO asc";
+    private static final String GET_ALL_ORDER_BY_DESC = "select * from PROTRA order by PROTRA_NO desc";
+    private static final String GET_ALL_ROW_BY_MEM    = "select count(rownum) from PROTRA where MEM_NO = ?";
+    private static final String GET_SOME_ROW          = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PROTRA a where MEM_NO = ? order by PRO_NO asc) b) where bRn between ? and ?";
 
-	@Override
-	public void deleteProTra(String protra_no) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+    private Connection        connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet         resultSet;
 
-		try {
-			conn = ds.getConnection();
-			conn.setAutoCommit(false);
-			pstmt = conn.prepareStatement(DELETE_SQL);
-			pstmt.setString(1, protra_no);
-			pstmt.executeUpdate();
-			conn.commit();
+    private Connection JNDIinit() throws NamingException, SQLException {
+        Context context = new javax.naming.InitialContext();
+        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
+        if (dataSource != null) {
+            return dataSource.getConnection();
+        }
+        else {
+            return null;
+        }
+    }
 
-		} catch (Exception e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+    private Connection JDBCinit() throws ClassNotFoundException, SQLException {
+        String DRIVER = "oracle.jdbc.driver.OracleDriver";
+        String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+        String USER = "ProjectDB";
+        String PASSWORD = "eric1101105351";
+        Class.forName(DRIVER);
+        Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+        return con;
+    }
 
-	@Override
-	public void updateProTra(ProTraVO proTra) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = ds.getConnection();
-			conn.setAutoCommit(false);
-			pstmt = conn.prepareStatement(UPDATE_SQL);
-			pstmt.setString(1, proTra.getPro_no());
-			pstmt.setString(2, proTra.getMem_no());
-			pstmt.setString(3, proTra.getProtra_no());
-			pstmt.executeUpdate();
-			conn.commit();
-		} catch (Exception e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+    public void cancelConnection() throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (preparedStatement != null) {
+            preparedStatement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
 
-	@Override
-	public ProTraVO findProTraByPK(String protra_no) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ProTraVO proTra = null;
-		try {
-			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(FIND_BY_PK);
-			pstmt.setString(1, protra_no);
-			rs = pstmt.executeQuery();
-			rs.next();
-			proTra = new ProTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return proTra;
-	}
+    @Override
+    public void add(ProtraVO protracking_listVO) {
+        try {
+            connection = JNDIinit();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(INSERT);
+            preparedStatement.setString(1, protracking_listVO.getPro_no());
+            preparedStatement.setString(2, protracking_listVO.getMem_no());
+            preparedStatement.execute();
+            connection.commit();
+        }
+        catch (Exception e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	@Override
-	public List<ProTraVO> findProTraByMemNo(String mem_no) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ProTraVO comTra = null;
-		List<ProTraVO> comTraList = new ArrayList<>();
-		try {
-			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(FIND_BY_MEM_NO);
-			pstmt.setString(1, mem_no);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				comTra = new ProTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
-				comTraList.add(comTra);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return comTraList;
-	}
+    @Override
+    public void delete(String pro_no) {
+        try {
+            connection = JNDIinit();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(DELETE_BY_NO);
+            preparedStatement.setString(1, pro_no);
+            preparedStatement.execute();
+            connection.commit();
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public List<ProTraVO> findAll() {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		ProTraVO proTra = null;
-		List<ProTraVO> proTraList = new ArrayList<>();
-		try {
-			conn = ds.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(FIND_ALL);
-			while (rs.next()) {
-				proTra = new ProTraVO(rs.getString(1),rs.getString(2),rs.getString(3));
-				proTraList.add(proTra);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return proTraList;
-	}
+    @Override
+    public void update(ProtraVO protracking_listVO) {
+    }
+
+    @Override
+    public ProtraVO getOneByPK(String protra_no) {
+        try {
+            connection = JNDIinit();
+            preparedStatement = connection.prepareStatement(FIND_BY_PK);
+            preparedStatement.setString(1, protra_no);
+            resultSet = preparedStatement.executeQuery();
+            ProtraVO protracking_listVO = new ProtraVO();
+            while (resultSet.next()) {
+                protracking_listVO.setProtra_no(resultSet.getString(1));
+                protracking_listVO.setPro_no(resultSet.getString(2));
+                protracking_listVO.setMem_no(resultSet.getString(3));
+            }
+            return protracking_listVO;
+        }
+        catch (Exception e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProtraVO> getAll() {
+        try {
+            connection = JNDIinit();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
+            List<ProtraVO> list = new ArrayList<>();
+            while (resultSet.next()) {
+                ProtraVO protracking_listVO = new ProtraVO();
+                protracking_listVO.setPro_no(resultSet.getString(1));
+                protracking_listVO.setPro_no(resultSet.getString(2));
+                protracking_listVO.setMem_no(resultSet.getString(3));
+                list.add(protracking_listVO);
+            }
+            return list;
+        }
+        catch (Exception e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProtraVO> getAllByMem(String mem_no) {
+        try {
+            connection = JNDIinit();
+            preparedStatement = connection.prepareStatement(FIND_BY_MEM);
+            preparedStatement.setString(1, mem_no);
+            resultSet = preparedStatement.executeQuery();
+            List<ProtraVO> list = new ArrayList<ProtraVO>();
+            while (resultSet.next()) {
+                ProtraVO protracking_listVO = new ProtraVO();
+                protracking_listVO.setProtra_no(resultSet.getString(1));
+                protracking_listVO.setPro_no(resultSet.getString(2));
+                protracking_listVO.setMem_no(resultSet.getString(3));
+                list.add(protracking_listVO);
+            }
+            return list;
+        }
+        catch (Exception e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int getRowCount(String mem_no) {
+        try {
+            connection = JNDIinit();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_ROW_BY_MEM);
+            preparedStatement.setString(1, mem_no);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public List<ProtraVO> getSome(String mem_no, int nowPage, int count) {
+        try {
+            connection = JNDIinit();
+            int start = (nowPage - 1) * count + 1;
+            int end = nowPage * count;
+            preparedStatement = connection.prepareStatement(GET_SOME_ROW);
+            preparedStatement.setString(1, mem_no);
+            preparedStatement.setInt(2, start);
+            preparedStatement.setInt(3, end);
+            List<ProtraVO> list = new ArrayList<ProtraVO>();
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ProtraVO protracking_listVO = new ProtraVO();
+                protracking_listVO.setProtra_no(resultSet.getString(3));
+                protracking_listVO.setPro_no(resultSet.getString(4));
+                protracking_listVO.setMem_no(resultSet.getString(5));
+                list.add(protracking_listVO);
+            }
+            return list;
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 }
