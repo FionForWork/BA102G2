@@ -11,10 +11,9 @@ public class PlaceService {
         dao = new PlaceDAO();
     }
 
-    public void addPlace(String name, byte[] img, String lng, String lat, String addr) {
+    public void addPlace(String name, String lng, String lat, String addr) {
         PlaceVO placeVO = new PlaceVO();
         placeVO.setName(name);
-        placeVO.setImg(img);
         placeVO.setLng(lng);
         placeVO.setLat(lat);
         placeVO.setAddr(addr);
@@ -29,10 +28,9 @@ public class PlaceService {
         dao.delete(pla_no);
     }
 
-    public void updatePlace(String name, byte[] img, String lng, String lat, String addr) {
+    public void updatePlace(String name, String lng, String lat, String addr) {
         PlaceVO placeVO = new PlaceVO();
         placeVO.setName(name);
-        placeVO.setImg(img);
         placeVO.setLng(lng);
         placeVO.setLat(lat);
         placeVO.setAddr(addr);

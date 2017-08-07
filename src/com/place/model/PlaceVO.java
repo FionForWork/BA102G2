@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class PlaceVO implements Serializable {
     private String pla_no;
     private String name;
-    private byte[] img;
     private String lng;
     private String lat;
     private String addr;
@@ -14,11 +13,10 @@ public class PlaceVO implements Serializable {
         super();
     }
 
-    public PlaceVO(String pla_no, String name, byte[] img, String lng, String lat, String addr) {
+    public PlaceVO(String pla_no, String name, String lng, String lat, String addr) {
         super();
         this.pla_no = pla_no;
         this.name = name;
-        this.img = img;
         this.lng = lng;
         this.lat = lat;
         this.addr = addr;
@@ -40,13 +38,6 @@ public class PlaceVO implements Serializable {
         this.name = name;
     }
 
-    public byte[] getImg() {
-        return img;
-    }
-
-    public void setImg(byte[] img) {
-        this.img = img;
-    }
 
     public String getLng() {
         return lng;
