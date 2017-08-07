@@ -11,10 +11,9 @@ public class PlaceService {
         dao = new PlaceDAO();
     }
 
-    public void addPlace(String name, byte[] img, String lng, String lat, String addr) {
+    public void addPlace(String name, String lng, String lat, String addr) {
         PlaceVO placeVO = new PlaceVO();
         placeVO.setName(name);
-        placeVO.setImg(img);
         placeVO.setLng(lng);
         placeVO.setLat(lat);
         placeVO.setAddr(addr);
@@ -29,10 +28,9 @@ public class PlaceService {
         dao.delete(pla_no);
     }
 
-    public void updatePlace(String name, byte[] img, String lng, String lat, String addr) {
+    public void updatePlace(String name, String lng, String lat, String addr) {
         PlaceVO placeVO = new PlaceVO();
         placeVO.setName(name);
-        placeVO.setImg(img);
         placeVO.setLng(lng);
         placeVO.setLat(lat);
         placeVO.setAddr(addr);
@@ -51,15 +49,7 @@ public class PlaceService {
         return dao.getAll();
     }
 
-<<<<<<< HEAD
-	public PlaceVO getOnePlace(String pla_no) {
-		return dao.findByPrimaryKey(pla_no);
-	}
 
-	public void deletePlace(String pla_no) {
-		dao.delete(pla_no);
-	}
-=======
     public List<PlaceVO>getSome(int page,int itemsCount){
         return dao.getSome(page, itemsCount);
     }
@@ -67,5 +57,5 @@ public class PlaceService {
     public List<PlaceVO>getSome(String south,String west,String north,String east){
         return dao.getSome( south, west, north, east);
     }
->>>>>>> e731dce92445e994e8147f8a23d07a487834b9eb
+
 }
