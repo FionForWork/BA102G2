@@ -28,7 +28,9 @@ public class ReservationDAO implements ReservationDAO_Interface {
 	private static final String INSERT = 
 			"INSERT INTO RESERVATION VALUES (LTRIM(TO_CHAR(RESERVATION_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?, ?, '0', 0)";
 	private static final String UPDATE = 
-			"UPDATE RESERVATION SET NAME=? where RES_NO = ?";
+			"UPDATE RESERVATION SET status=? where RES_NO = ?";
+	private static final String UPDATESCORE = 
+			"UPDATE RESERVATION SET status=?, score=? where RES_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM RESERVATION where RES_NO = ?";
 	private static final String GET_ONE_STMT = 
@@ -82,7 +84,37 @@ public class ReservationDAO implements ReservationDAO_Interface {
 
 	@Override
 	public void update(ReservationVO reservationVO) {
-		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, reservationVO.getStatus());
+			pstmt.setString(2, reservationVO.getRes_no());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -355,6 +387,42 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void updateScore(ReservationVO reservationVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESCORE);
+
+			pstmt.setString(1, reservationVO.getStatus());
+			pstmt.setInt(2, reservationVO.getScore());
+			pstmt.setString(3, reservationVO.getRes_no());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 }

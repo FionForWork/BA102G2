@@ -10,9 +10,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <% 
-	MemVO memVO = (MemVO)session.getAttribute("memVO");
 	ReservationService reservationService = new ReservationService();
-	List<ReservationVO> list = reservationService.getMemRes(memVO.getMem_no());
+	List<ReservationVO> list = reservationService.getMemRes("1001");
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("YYYY年M月d日");
 	pageContext.setAttribute("dateDF", dateDF);
@@ -30,43 +29,18 @@
 <title>Insert title here</title>
 </head>
 <%@ include file="page/memHeader.file" %>
-	<table class="table">
-		<thead>
-			<tr>
-			 	<th>日期</th>
-			 	<th>金額</th>
-			 	<th>廠商</th>
-			 	<th>服務內容</th>
-			 	<th>訂單狀態</th>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach var="reservationVO" items="${list}">
-			<tr>
-				<td>${dateDF.format(reservationVO.serv_date)}</td>
-				<td>${reservationVO.price}</td>
-				<td>${comService.getOneCom(reservationVO.com_no).name}</td>
-				<c:if test="${reservationVO.serv_no.startsWith('7')}">
-				<td>${quoteService.getOneQuote(reservationVO.serv_no).content}</td>
-				</c:if>
-				<c:if test="${reservationVO.serv_no.startsWith('0')}">
-				<td>${servService.getOneServ(reservationVO.serv_no).content}</td>
-				</c:if>
-				<td>${sortingHat.getResStatus(reservationVO.status)}</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row">
 						<div class="col-md-6">
-							與${comService.getOneCom(reservationVO.com_no).name}的
+							${comService.getOneCom(reservationVO.com_no).name}
+							${dateDF.format(reservationVO.serv_date)}的
 							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
-							<button class="btn btn-info">聊聊</button>
 						</div>
-						<div class="col-md-offset-3 col-md-3">
+						<div class="col-md-offset-3 col-md-3 text-right">
+							訂單狀態 : 
+							<i class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
 							${sortingHat.getResStatus(reservationVO.status)}
 						</div>
 				</div><hr>
@@ -86,16 +60,124 @@
 							<h4>服務內容</h4>
 							${servService.getOneServ(reservationVO.serv_no).content}
 						</div>
-
 					</c:if>
 					</div><hr>
 					<h4 class="text-right">
+					<c:if test="${reservationVO.status.equals('0')}">
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#myModal">線上刷卡</button>
+					</c:if>
+					<c:if test="${reservationVO.status.equals('1')}">
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
+					</c:if>
+					<c:if test="${reservationVO.status.equals('2')}">
+					<div class="col-md-5">
+					<section class='rating-widget'>
+					  <!-- Rating Stars Box -->
+						<div class='rating-stars'>
+							<ul id='stars'>
+								<li class='star' title='Poor' data-value='1'>
+									<i class='fa fa-star fa-fw'></i>
+								</li>
+								<li class='star' title='Fair' data-value='2'>
+									<i class='fa fa-star fa-fw'></i>
+								</li>
+								<li class='star' title='Good' data-value='3'>
+									<i class='fa fa-star fa-fw'></i>
+								</li>
+								<li class='star' title='Excellent' data-value='4'>
+									<i class='fa fa-star fa-fw'></i>
+								</li>
+								<li class='star' title='WOW!!!' data-value='5'>
+									<i class='fa fa-star fa-fw'></i>
+								</li>
+							</ul>
+						</div>
+					</section>
+					</div>
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="rating(this)">給予評價</button>
+					</c:if>
+					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button>
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>
+					
 			</div>
 		</div>
 	</c:forEach>
 <%@ include file="page/memFooter.file" %>
+<form class="form-group" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">  
+<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">進行線上刷卡</h4><hr style="margin:3px">
+			</div>
+			<div class="modal-body">
+				<label >請填入信用卡號</label>
+				<div class="row">
+					<div class="col-xs-2">
+	        			<input class="form-control" type="text" maxlength="4">
+	      			</div>
+	      			<div class="col-xs-2">
+	        			<input class="form-control" type="text" maxlength="4">
+	      			</div>
+	      			<div class="col-xs-2">
+	        			<input class="form-control" type="text" maxlength="4">
+	      			</div>
+	      			<div class="col-xs-2">
+	        			<input class="form-control" type="text" maxlength="4">
+	      			</div>
+	      		</div><br>
+	      		<div class="row">
+		      		<label class="col-xs-3">信用卡末3碼</label>
+		      		<label class="col-xs-3">到期月分</label>
+		      		<label class="col-xs-3">到期年份</label>
+	      		</div>
+	      		<div class="row">
+		      		<div class="col-xs-3">
+		        			<input class="form-control" type="text" maxlength="3">
+		      		</div>
+		      		<div class="col-xs-3">
+						<select class="form-control">
+						<% for(int i = 0; i < 12; i++){ %>
+						<option><%= i+1 %></option>
+						<% } %>
+						</select>
+		      		</div>
+		      		<div class="col-xs-3">
+						<select class="form-control">
+						<% for(int i = 0; i < 8; i++){ %>
+						<option><%= i+17 %></option>
+						<% } %>
+						</select>
+		      		</div>
+	      		</div>
+			</div>
+			<div class="modal-footer"><hr>
+				<input type="hidden" name="action" value="pay">
+				<input type="hidden" id="res_no" name="res_no" value="">
+				<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+				<input type="submit"  class="btn btn-default" value="確認刷卡">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>    
+	</div>
+</div>
+</form>
+<form id="resCompletedForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+	<input type="hidden" name="action" value="resCompleted">
+	<input type="hidden" id="res_no_completed" name="res_no" value="">
+	<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+</form>
+<form id="ratingForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+	<input type="hidden" name="action" value="rating">
+	<input type="text" id="ratingStar" name="score" value="1">
+	<input type="hidden" id="res_no_rating" name="res_no" value="">
+	<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+</form>
+
 </body>
 </html>

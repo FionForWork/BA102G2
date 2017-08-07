@@ -14,12 +14,16 @@
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/reservation/css/pnotify.custom.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/reservation/css/index.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/ratingStar.css" rel="stylesheet">
-
-    <script src="<%=request.getContextPath()%>/Front_end/reservation/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/rfq.css" rel="stylesheet">
+	
+	<script src="<%=request.getContextPath()%>/Front_end/reservation/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/reservation/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/reservation/js/top.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/reservation/js/memRes.js" type="text/javascript"></script>
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
 </head>
 
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
@@ -36,7 +40,7 @@
                 <!--RWD-->
                 <a class="navbar-brand" href="#">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/reservation/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/quote/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -47,9 +51,10 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
+                    
                     <li>
                         <a class="hidden" href="" role="login">
-                            會員專區
+                            廠商專區
                         </a>
                     </li>
                     <li>
@@ -57,7 +62,7 @@
                             登出
                         </a>
                     </li>
-                    <li>
+                     <li >
                         <a class="" href="" role="login">
                             登入
                         </a>
@@ -86,7 +91,9 @@
                     <!--RWD-->
                     <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
-                        <li><a href="#"><b>找店家</b></a></li>
+                        <li>
+                            <a href="#"><b>找店家</b></a>
+                        </li>
                         <li>
                             <a href="#"><b>看作品</b></a>
                         </li>
@@ -237,7 +244,7 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/reservation/img/banner1.jpg');"></div>
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/quote/img/banner1.jpg');"></div>
                 <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
             </div>
         </div>
@@ -265,39 +272,19 @@
     <!--這裡開始-->
 
     <br>
-    <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-    <div class="container">
-        <div class="col-md-offset-1">
-            <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Private</a></li>
-                <li><a href="#">Pictures</a></li>
-                <li class="active">Vacation</li>
-            </ul>
-        </div>
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+<div class="container">
+    <div class="col-md-offset-1">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Private</a></li>
+            <li><a href="#">Pictures</a></li>
+            <li class="active">Vacation</li>        
+        </ul>
     </div>
-    <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-
+</div>
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+   
     <div class="container">
         <div class="row">
-            <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
-                    <a href="#" class="list-group-item menua active">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
-                </ul>
-
-
-                <a href="#" class="btn btn-block btn-default">查看個人資料</a>
-            </div>
-            <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-            <!--這裡開始===========================================================================-->
-
-            <div class="col-md-8 col-offset-1">
+<div class="col-offset-1 col-md-10 ">

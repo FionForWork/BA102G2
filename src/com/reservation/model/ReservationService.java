@@ -27,6 +27,23 @@ public class ReservationService {
 		return reservationVO;
 	}
 	
+	public void updateStatus(String status,String res_no){
+		ReservationVO reservationVO = new ReservationVO();
+		reservationVO.setRes_no(res_no);
+		reservationVO.setStatus(status);
+		
+		dao.update(reservationVO);
+	}
+	
+	public void updateScore(String status,Integer score,String res_no){
+		ReservationVO reservationVO = new ReservationVO();
+		reservationVO.setRes_no(res_no);
+		reservationVO.setScore(score);
+		reservationVO.setStatus(status);
+		
+		dao.updateScore(reservationVO);
+	}
+	
 	public void deleteReservation(String res_no){
 		
 		dao.delete(res_no);

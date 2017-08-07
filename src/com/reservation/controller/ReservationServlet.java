@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -99,6 +100,38 @@ public class ReservationServlet extends HttpServlet {
 			String url = req.getParameter("requestURL");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
+		}
+		
+		if(action.equals("pay")){
+			String RedirectURL = req.getParameter("RedirectURL");
+			String res_no = req.getParameter("res_no");
+			ReservationService resService = new ReservationService();
+			resService.updateStatus("1", res_no);
+			
+			res.sendRedirect(RedirectURL);
+		}
+		
+		if(action.equals("resCompleted")){
+			String RedirectURL = req.getParameter("RedirectURL");
+			String res_no = req.getParameter("res_no");
+			ReservationService resService = new ReservationService();
+			resService.updateStatus("2", res_no);
+			
+			res.sendRedirect(RedirectURL);
+		}
+		
+		if(action.equals("rating")){
+			String RedirectURL = req.getParameter("RedirectURL");
+			String res_no = req.getParameter("res_no");
+			Integer score = new Integer(req.getParameter("score"));
+			
+			ReservationService resService = new ReservationService();
+			resService.updateScore("3", score, res_no);
+			res.sendRedirect(RedirectURL);
+		}
+		
+		if(action.equals("searchServiceByCompositeQuery")){
+			Map<String, String[]> map = req.getParameterMap();
 		}
 		
 	}

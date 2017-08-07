@@ -12,15 +12,17 @@
 	ReservationService resService = new ReservationService();
 	List<ReservationVO> list = resService.getComRes("2001");
 	pageContext.setAttribute("list", list);
-	DateFormat df = new SimpleDateFormat("yyyy年M月d日 ahh時");
-	pageContext.setAttribute("df", df);
+	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
+	pageContext.setAttribute("dateDF", dateDF);
 	NumberFormat nf = NumberFormat.getInstance();
 	pageContext.setAttribute("nf", nf);
-	DecimalFormat def = new DecimalFormat("$#,##0"); 
-	pageContext.setAttribute("def", def);
 %>
 <<jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
 <jsp:useBean id="memService" class="com.mem.model.MemService"/>
+<jsp:useBean id="comService" class="com.com.model.ComService"/>
+<jsp:useBean id="rfq_dateilService" class="com.rfq_detail.model.RFQ_DetailService"/>
+<jsp:useBean id="quoteService" class="com.quote.model.QuoteService" />
+<jsp:useBean id="servService" class="com.serv.model.ServService"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
@@ -28,36 +30,59 @@
 </head>
 <body>
 <%@ include file="page/comHeader.file" %>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>日期</th>
-			<th>顧客</th>
-			<th>服務內容</th>
-			<th>金額</th>
-			<th>預約狀態</th>
-			<th>查看更多</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="reservationVO" items="${list}">
-		<tr>
-			<td>${df.format(reservationVO.serv_date)}</td>
-			<td>${memService.getOneMem(reservationVO.mem_no).name}</td>
-			<td>${sortingHat.getServType(reservationVO.stype_no)}</td>
-			<td>${def.format(reservationVO.price)}</td>
-			<td>${sortingHat.getResStatus(reservationVO.status)}</td>
-			<td>
-				<form>
-					<input type="hidden" name="res_no" value="${reservationVO.res_no}">
-					<input type="submit" class="btn btn-info" value="查看更多">
-				</form>				
-			</td>
-		</tr>
-		</c:forEach>
-		
-</tbody>
-</table>
+	<c:forEach var="reservationVO" items="${list}">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+						<div class="col-md-6">
+							${memService.getOneMem(reservationVO.mem_no).name}
+							${dateDF.format(reservationVO.serv_date)}的
+							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
+						</div>
+						<div class="col-md-offset-3 col-md-3 text-right">
+							訂單狀態 : 
+							<i class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							${sortingHat.getResStatus(reservationVO.status)}
+							<c:if test="${reservationVO.status.equals('3')}">
+								${reservationVO.score}分!
+							</c:if>
+						</div>
+				</div><hr>
+				<div class="row">
+					<c:if test="${reservationVO.serv_no.startsWith('7')}">
+						<div class="col-md-6" style="border-right:2px solid #d5d5d5">
+							<h4>服務內容</h4>
+							${rfq_dateilService.getOneFromQuote(reservationVO.serv_no).content}
+						</div>
+						<div class="col-md-6">
+							<h4>廠商回覆</h4>
+							${quoteService.getOneQuote(reservationVO.serv_no).content}
+						</div>
+					</c:if>
+					<c:if test="${reservationVO.serv_no.startsWith('0')}">
+						<div class="col-md-12">
+							<h4>服務內容</h4>
+							${servService.getOneServ(reservationVO.serv_no).content}
+						</div>
+					</c:if>
+					</div><hr>
+					<h4 class="text-right">
+					<c:if test="${reservationVO.status.equals('1')}">
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
+					</c:if>
+					<button class="btn" style="background-color:#ff5722;color:white">與客戶聊聊</button>
+					<i class="fa fa-usd" aria-hidden="true"></i>
+						訂單金額 : ${nf.format(reservationVO.price)}
+					</h4>
+					
+			</div>
+		</div>
+	</c:forEach>
+<form id="resCompletedForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+	<input type="hidden" name="action" value="resCompleted">
+	<input type="hidden" id="res_no_completed" name="res_no" value="">
+	<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+</form>
 <%@ include file="page/comFooter.file" %>
 </body>
 </html>
