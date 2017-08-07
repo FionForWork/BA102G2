@@ -169,7 +169,7 @@
 					<ul class="service_box">
 						<li class="service_title"><div>${servVO.title}</div></li>
 						<div class="text"><li>${servVO.content}</li></div>
-						<li class="cost"><div>$NT<span>${servVO.price}</span></div>
+						<li class="cost"><div>價格<b class="price text-pink" >${servVO.price}</b>元</div>
 						</li>
 					</ul>
 				</div>
@@ -200,7 +200,7 @@
 	<!--店家自介-->
 	<div class="text-center" id="introduction">
 		<span>
-			<h1>介紹</h1>
+			<h1>關於我</h1>
 		</span>
 	</div>
 	<div class="container">

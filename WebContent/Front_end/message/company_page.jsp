@@ -5,12 +5,16 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.mem.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
 	ComService comSvc = new ComService();
-	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
-	pageContext.setAttribute("comVO", comVO);
+	ComVO comVO = comSvc.getOneCom("2001");
+	
+	MemService memSvc = new MemService();
+	MemVO memVO = memSvc.getOneMem("1001");
+	pageContext.setAttribute("memVO", memVO);
 
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -20,8 +24,6 @@
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
 	
-	session.setAttribute("mem_no","1001");
-	session.setAttribute("com_no","2001");
 %>
 
 <html>
@@ -29,7 +31,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body onload="connect();" onunload="disconnect();">
-
 
 	<%@ include file="page/before.file"%>
 
@@ -123,16 +124,17 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="chat_box panel panel-primary" id="chatbox">
+				<div class="chat_box panel panel-default" id="chatbox">
 					<div class="panel-heading">
-						<h3 id="statusOutput" class="statusOutput"></h3>
+						<div id="statusOutput"></div>
+						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 					</div>
 					<div class="panel-body">
 						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
 					</div>
 					<div class="panel-footer">
 						<div class="panel input-area">
-							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" /> 
+							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${memVO.name}"/> 
 							<input id="message" class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
 							<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" />
 							<input type="button" id="connect" class="button" value="連線" onclick="connect();" />
@@ -263,84 +265,98 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-var MyPoint = "/MessageServlet/"+<%=session.getAttribute("mem_no")%>+"/"+<%=session.getAttribute("com_no")%>;
+
+var mem_no = "<%=memVO.getMem_no()%>";
+console.log(mem_no);
+var com_no = "<%=comVO.getCom_no()%>";
+console.log(com_no);
+var MyPoint = "/MessageServlet/"+mem_no+"/"+com_no;
+console.log(MyPoint);
 var host = window.location.host;
+console.log(host);
 var path = window.location.pathname;
+console.log(path);
 var webCtx = path.substring(0, path.indexOf('/', 1));
+console.log(webCtx);
 var endPointURL = "ws://" + window.location.host + webCtx
 + MyPoint;
-
+console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
 var webSocket;
 
-function connect() {
-					// 建立 websocket 物件
-					webSocket = new WebSocket(endPointURL);
+ 			if(mem_no === null || com_no === null){
+ 				document.getElementById('sendMessage').disabled = true;
+ 				document.getElementById('connect').disabled = true;
+ 				document.getElementById('disconnect').disabled = true;
+ 				var messagesArea = document.getElementById("messagesArea");
+ 				messagesArea.value = messagesArea.value + "人不在";
+	
+ 			}else{
+ 				function connect() {
+ 					// 建立 websocket 物件
+ 					webSocket = new WebSocket(endPointURL);
 
-					webSocket.onopen = function(event) {
-// 						updateStatus("WebSocket 成功連線");
-						document.getElementById('sendMessage').disabled = false;
-						document.getElementById('connect').disabled = true;
-						document.getElementById('disconnect').disabled = false;
-						var messagesArea = document.getElementById("messagesArea");
-						messagesArea.value = messagesArea.value + "已連線";
+ 					webSocket.onopen = function(event) {
+						updateStatus("WebSocket 成功連線");
+ 						document.getElementById('sendMessage').disabled = false;
+ 						document.getElementById('connect').disabled = true;
+ 						document.getElementById('disconnect').disabled = false;
+ 						var messagesArea = document.getElementById("messagesArea");
+ 						messagesArea.value = messagesArea.value + "\r\n";
 						
-					};
+ 					};
 
-					webSocket.onmessage = function(event) {
-						var messagesArea = document
-						.getElementById("messagesArea");
-						var jsonObj = JSON.parse(event.data);
-						var message = jsonObj.userName + ": " + jsonObj.message
-						+ "\r\n";
-						messagesArea.value = messagesArea.value + message;
-						messagesArea.scrollTop = messagesArea.scrollHeight;
-					};
+ 					webSocket.onmessage = function(event) {
+ 						var messagesArea = document
+ 						.getElementById("messagesArea");
+ 						var jsonObj = JSON.parse(event.data);
+ 						var message = jsonObj.userName + ": " + jsonObj.message + jsonObj.time
+ 						+ "\r\n";
+ 						messagesArea.value = messagesArea.value + message;
+ 						messagesArea.scrollTop = messagesArea.scrollHeight;
+ 					};
 
-					webSocket.onclose = function(event) {
-						updateStatus("WebSocket 已離線");
-					};
-				}
+ 					webSocket.onclose = function(event) {
+ 						updateStatus("已離線");
+ 					};
+ 				}
 
-				var inputUserName = document.getElementById("userName");
-				inputUserName.focus();
+ 				function sendMessage() {
 
-				function sendMessage() {
-					var userName = inputUserName.value.trim();
-					if (userName === "") {
-						alert("使用者名稱請勿空白!");
-						inputUserName.focus();
-						return;
-					}
-
-					var inputMessage = document.getElementById("message");
-					var message = inputMessage.value.trim();
-
-					if (message === "") {
-						alert("訊息請勿空白!");
-						inputMessage.focus();
-					} else {
-						var jsonObj = {
-							"userName" : userName,
-							"message" : message
-						};
-						webSocket.send(JSON.stringify(jsonObj));
+ 					var inputMessage = document.getElementById("message");
+ 					var message = inputMessage.value.trim();
+ 					var date = new Date();
+ 					var nowdate = date.getFullYear() + "-" + (date.getMonth()+1) + "-"
+ 								+ date.getDate() + " " + date.getHours()+":"+
+ 								+ date.getMinutes() + ":" + date.getSeconds();
+ 					inputMessage.focus();
+					
+ 					if (message === "") {
+ 						alert("訊息請勿空白!");
+ 						inputMessage.focus();
+ 					} else {
+ 						var jsonObj = {
+ 							"userName" : "<%=memVO.getName()%>",
+ 							"message" : message,
+ 							"time" : nowdate
+ 						};
+ 						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
-						inputMessage.focus();
-					}
-				}
+ 						inputMessage.focus();
+ 					}
+ 				}
 
-				function disconnect() {
-					webSocket.close();
-					document.getElementById('sendMessage').disabled = true;
-					document.getElementById('connect').disabled = false;
-					document.getElementById('disconnect').disabled = true;
-				}
+ 				function disconnect() {
+ 					webSocket.close();
+ 					document.getElementById('sendMessage').disabled = true;
+ 					document.getElementById('connect').disabled = false;
+ 					document.getElementById('disconnect').disabled = true;
+ 				}
 
-				function updateStatus(newStatus) {
-					statusOutput.innerHTML = newStatus;
-				}
-
+ 				function updateStatus(newStatus) {
+ 					statusOutput.innerHTML = newStatus;
+ 				}
+ 			}
 
 </script>
 </body>

@@ -26,9 +26,10 @@ a.thumbnail:hover {
 	margin-bottom: 30px;
 }
 
-.service_box, .works_box {
+.service_box {
 	padding-left: 0px;
 	text-align: center;
+	border: 1px solid #e2e2e2;
 }
 
 .works_image {

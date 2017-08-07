@@ -1,4 +1,11 @@
-﻿        <script src="assets/plugins/core/pace/pace.min.js"></script>
+﻿</div>
+                    <!-- End .page-header -->
+                </div>
+                <!-- End .row -->
+        </div>               
+            <!-- End .content-wrapper -->
+            <div class="clearfix"></div>        
+<script src="assets/plugins/core/pace/pace.min.js"></script>
         <!-- Important javascript libs(put in all pages) -->
         <script src="assets/js/jquery-1.8.3.min.js"></script>
         <script>

@@ -1,6 +1,9 @@
 .chat_box_on {
 	display: block !important;
 }
+.panel-heading {
+	height: 50px;
+}
 
 .chat_box {
 	display: none;
@@ -18,7 +21,9 @@
 
 #messagesArea {
 	width: 100%;
-	height: 250px;
+	width: 270px;
+	height: 200px;
+	align: center;
 }
 
 .text-field{
