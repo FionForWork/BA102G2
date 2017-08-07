@@ -13,14 +13,14 @@ public class Forum_Comment_Service {
 	}
 	
 	public Forum_CommentVO addFC(Integer art_no,Integer speaker_no,
-			String cont, java.sql.Timestamp fmc_date){
+			String cont, java.sql.Timestamp t){
 		
 		Forum_CommentVO forum_CommentVO=new Forum_CommentVO();
-		Timestamp t = new Timestamp(System.currentTimeMillis()); 
+		Timestamp t1 = new Timestamp(System.currentTimeMillis()); 
 		forum_CommentVO.setArt_no(art_no);
 		forum_CommentVO.setSpeaker_no(speaker_no);
 		forum_CommentVO.setCont(cont);
-		forum_CommentVO.setFmc_date(t);
+		forum_CommentVO.setFmc_date(t1);
 		
 		dao.insert(forum_CommentVO);
 
@@ -50,11 +50,11 @@ public class Forum_Comment_Service {
 		return dao.getAll();
 	}
 
-	public Forum_CommentVO getOneDept(Integer fmc_no) {
+	public Forum_CommentVO getOneForum_Comment(Integer fmc_no) {
 		return dao.findByPrimaryKey(fmc_no);
 	}
 
-	public void deleteDept(Integer fmc_no) {
+	public void deleteForum_Comment(Integer fmc_no) {
 		dao.delete(fmc_no);
 	}
 

@@ -13,6 +13,8 @@ public Article_Service(){
 
 public ArticleVO addArt(Integer poster_no,Integer art_type_no,String title,
 		String content,Date art_date){
+	
+	
 	ArticleVO articleVO=new ArticleVO();
 	articleVO.setPoster_no(poster_no);
 	articleVO.setArt_type_no(art_type_no);
@@ -45,7 +47,7 @@ public List<ArticleVO> getAll() {
 }
 
 public ArticleVO getOneArt(Integer art_no) {
-	System.out.println(art_no);
+//						System.out.println("service"+art_no);
 	return dao.findByPrimaryKey(art_no);
 	
 }

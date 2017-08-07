@@ -20,7 +20,7 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
       <label for="sel1">Q&A類別</label>
       <select class="form-control" id="sel1" name="problem_type_no">
         <c:forEach var="problem_typeVO" items="${problem_type_Svc.all}">
-				<option  value="${problem_typeVO.problem_type_no}" }>
+				<option  value="${problem_typeVO.problem_type_no}" >
 				${problem_typeVO.type}
 			</c:forEach>
       </select>

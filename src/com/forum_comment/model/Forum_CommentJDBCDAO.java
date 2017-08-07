@@ -304,27 +304,27 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 //			dao.delete(6002);
 	//
 			// 查詢
-//			Forum_CommentVO forum_CommentVO3 = dao.findByPrimaryKey(6001);
-//			System.out.print(forum_CommentVO3.getFmc_no() + ",");
-//			System.out.print(forum_CommentVO3.getArt_no() + ",");
-//			System.out.print(forum_CommentVO3.getSpeaker_no() + ",");
-//			System.out.print(forum_CommentVO3.getCont() + ",");
-//			System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO3.getFmc_date() ) + ",");
-//		
-//			System.out.println("---------------------");
+			Forum_CommentVO forum_CommentVO3 = dao.findByPrimaryKey(5001);
+			System.out.print(forum_CommentVO3.getFmc_no() + ",");
+			System.out.print(forum_CommentVO3.getArt_no() + ",");
+			System.out.print(forum_CommentVO3.getSpeaker_no() + ",");
+			System.out.print(forum_CommentVO3.getCont() + ",");
+			System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO3.getFmc_date() ) + ",");
+		
+			System.out.println("---------------------");
 	//
 //			// 查詢
-			List<Forum_CommentVO> list = dao.getAll();
-			for (Forum_CommentVO forum_CommentVO4 : list) {
-				System.out.print(forum_CommentVO4.getFmc_no() + ",");
-				System.out.print(forum_CommentVO4.getArt_no() + ",");
-				System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
-				System.out.print(forum_CommentVO4.getCont() + ",");
-				
-				System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date() ) + ",");
-			
-				System.out.println("---------------------");
-			}
+//			List<Forum_CommentVO> list = dao.getAll();
+//			for (Forum_CommentVO forum_CommentVO4 : list) {
+//				System.out.print(forum_CommentVO4.getFmc_no() + ",");
+//				System.out.print(forum_CommentVO4.getArt_no() + ",");
+//				System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
+//				System.out.print(forum_CommentVO4.getCont() + ",");
+//				
+//				System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date() ) + ",");
+//			
+//				System.out.println("---------------------");
+//			}
 		}
 		
 	

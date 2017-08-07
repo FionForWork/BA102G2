@@ -14,14 +14,26 @@
    	pageContext.setAttribute("article",article);
    	
    %>
+<%
+	Forum_Comment_Service forum_Comment_Svc=new Forum_Comment_Service();
+	   List<Forum_CommentVO> list=forum_Comment_Svc.getAll();
+	   pageContext.setAttribute("list", list);
+	   	
+%>   
+   
+
 <%@ include file="page/discuss_header.file"%>
 <div class="col-xs-12 col-sm-10">
                        
                             <div class="text-center" style="float:right" >
-                                <a href="reply.html">
-        <button class="btn btn-info" style="font-size: 15px"  onclick="location.href='reply.html'">回覆文章
-                                    </button></a>
-        </div> 
+                        <form METHOD="post" ACTION="<%=request.getContextPath()%>/Forum_comment/Forum_commentServlet.do" name="form1"> 
+                            <input type="hidden" name="action" value="getOne_For_Update">
+                             <input type="hidden" name="art_no" value="${article.art_no }">           
+  							 <input type="submit" class="btn btn-info" data-dismiss="modal" value="回覆文章">
+                             </div>  
+                             
+                             </form>                   
+        
                             <div class="panel panel-default">
                             <img src="<%=request.getContextPath()%>/Front_end/Article/img/img1.jpeg" class="pull-left xxx" style="width:100px">
                               <div class="panel-heading" style="height: 100px;font-size: 20px">
@@ -35,6 +47,25 @@
                                 ${article.content }
                               </div>
                             </div>
+<!--                             ********************************************************************* -->
+ <c:forEach var="forum_CommentVO" items="${list}" >
+ <c:if test="${forum_CommentVO.art_no== article.art_no }">
+                            <div class="panel panel-default">
+                            <img src="<%=request.getContextPath()%>/Front_end/Article/img/img1.jpeg" class="pull-left xxx" style="width:100px">
+                              <div class="panel-heading" style="height: 100px;font-size: 20px">
+                               <div class="name">${forum_CommentVO.speaker_no }</div>
+                               <div class="date">${forum_CommentVO.fmc_date }</div>
+                               <div class="text"></div>  
+                               
+                               </div>
+                              
+                              <div class="panel-body">
+                                ${forum_CommentVO.cont }
+                              </div>
+                            </div>
+   </c:if>
+   </c:forEach>
+                            
                         </div>
 
 
