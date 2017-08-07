@@ -19,8 +19,8 @@ public class TempDAO implements TempDAO_Interface{
 	private static final String DELETE_SQL = "delete from temp where temp_no = ?";
 	private static final String UPDATE_SQL = "update temp set com_no=?,mem_no=? ,name=?,create_date=?,available=?,status=? where temp_no = ?";
 	private static final String FIND_BY_PK = "select * from temp where temp_no = ?";
-	private static final String FIND_BY_MEM_NO = "select * from temp where mem_no = ?";
-	private static final String FIND_BY_COM_NO = "select * from temp where com_no = ?";
+	private static final String FIND_BY_MEM_NO = "select * from temp where mem_no = ? order by create_date desc";
+	private static final String FIND_BY_COM_NO = "select * from temp where com_no = ? order by create_date desc";
 	private static final String FIND_ALL = "select * from temp";
 
 	private static DataSource ds = null;

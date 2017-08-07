@@ -44,11 +44,13 @@ public List<ArticleVO> getAll() {
 	return dao.getAll();
 }
 
-public ArticleVO getOneDept(Integer art_no) {
+public ArticleVO getOneArt(Integer art_no) {
+	System.out.println(art_no);
 	return dao.findByPrimaryKey(art_no);
+	
 }
 
-public void deleteDept(Integer art_no) {
+public void deleteArt(Integer art_no) {
 	dao.delete(art_no);
 }
 

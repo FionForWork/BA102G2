@@ -1,22 +1,20 @@
 package com.image;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.place.model.PlaceService;
-import com.place.model.PlaceVO;
 import com.placeview.model.PlaceViewService;
 import com.placeview.model.PlaceViewVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
+@WebServlet("/image/ShowImage")
 public class ShowImage extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

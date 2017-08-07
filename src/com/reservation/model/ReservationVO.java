@@ -7,6 +7,12 @@ public class ReservationVO implements java.io.Serializable {
 	private String mem_no;
 	private String com_no;
 	private Timestamp res_date;
+	private Timestamp serv_date;
+	private String serv_no;
+	private String stype_no;
+	private Integer price;
+	private String status;
+	private Integer score;
 	public ReservationVO() {
 		
 	}
@@ -36,5 +42,53 @@ public class ReservationVO implements java.io.Serializable {
 		this.res_date = res_date;
 	}
 
+	public Timestamp getServ_date() {
+		return serv_date;
+	}
 
+	public void setServ_date(Timestamp serv_date) {
+		this.serv_date = serv_date;
+	}
+
+	public String getServ_no() {
+		return serv_no;
+	}
+
+	public void setServ_no(String serv_no) {
+		this.serv_no = serv_no;
+	}
+
+	public String getStype_no() {
+		return stype_no;
+	}
+
+	public void setStype_no(String stype_no) {
+		this.stype_no = stype_no;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	
 }

@@ -4,26 +4,10 @@
 <%
 AutVO autVO = (AutVO) request.getAttribute("autVO");
 %>
-<html>
-<head>
-<title></title></head>
-
-
-<div id="popupcalendar" class="text"></div>
-
-<body bgcolor='white'>
-
-<table border='1' cellpadding='5' cellspacing='0' width='400'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>AddAut.jsp</h3>
-		</td>
-		<td>
-	    </td>
-	</tr>
-</table>
-
-<h3>員工資料新增:</h3>
+<%@ include file="page/adm_page" %>
+<br><br><br>
+<div id="content">
+<h3>新增員工權限:</h3>
 <a href="listAllAut.jsp">回首頁</a>
 <%--錯誤處理 --%>
 <c:if test="${not empty errorMsgs}">
@@ -36,17 +20,31 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 	</font>
 </c:if>
 
-<FORM METHOD="post" ACTION="aut.do" name="form1">
-<table border="0">
-<tr>
-		<td>管理員編號:</td>
-		<td><input type="TEXT" name="adm_no" size="45" 
-			value="<%= (autVO==null)? "0003" : autVO.getAdm_no()%>" /></td>
-	</tr>
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/aut/aut.do" name="form1">
+<table class="table table-striped">
+	<jsp:useBean id="admSvc" scope="page" class="com.adm.model.AdmService" />
 	<tr>
-		<td>權限編號:</td>
-		<td><input type="TEXT" name="id" size="45" 
-			value="<%= (autVO==null)? "02" : autVO.getId()%>" /></td>
+		<td>管理員:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="adm_no">
+			<c:forEach var="admVO" items="${admSvc.all}">
+				<option value="${admVO.adm_no}" ${(admVO.adm_no==autVO.adm_no)? 'selected':'' } >${admVO.adm_no}${admVO.name} 職位:${admVO.job}
+			</c:forEach>
+		</select></td>
+	</tr>
+	
+	
+	
+	
+	<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
+	<tr>
+		<td>權限:<font color=red><b>*</b></font></td>
+		<td>
+			<select size="1" name="fun_no">
+				<c:forEach var="funVO" items="${funSvc.all}">
+					<option value="${funVO.fun_no}" ${(AutVO.id==funVO.fun_no)? 'selected':'' } >${funVO.fun_no}${funVO.name}
+				</c:forEach>
+			</select>
+		</td>
 	</tr>
 	
 
@@ -54,6 +52,7 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+</div>
 </body>
 
 </html>

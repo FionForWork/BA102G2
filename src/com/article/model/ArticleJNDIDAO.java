@@ -180,7 +180,7 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 			while (rs.next()) {
 				
 				articleVO = new ArticleVO();
-				articleVO.setArt_no(rs.getInt("article_no"));
+				articleVO.setArt_no(rs.getInt("art_no"));
 				articleVO.setPoster_no(rs.getInt("poster_no"));
 				articleVO.setArt_type_no(rs.getInt("art_type_no"));
 				articleVO.setTitle(rs.getString("title"));
@@ -235,7 +235,7 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 
 			while (rs.next()) {
 				articleVO = new ArticleVO();
-				articleVO.setArt_no(rs.getInt("article_no"));
+				articleVO.setArt_no(rs.getInt("art_no"));
 				articleVO.setPoster_no(rs.getInt("poster_no"));
 				articleVO.setArt_type_no(rs.getInt("art_type_no"));
 				articleVO.setTitle(rs.getString("title"));

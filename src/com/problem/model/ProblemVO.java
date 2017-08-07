@@ -2,8 +2,8 @@ package com.problem.model;
 
 public class ProblemVO {
 private Integer prob_no;
-private Integer type;
-private String title;
+private Integer problem_type_no;
+
 private String content;
 private String reply;
 
@@ -14,18 +14,13 @@ public Integer getProb_no() {
 public void setProb_no(Integer prob_no) {
 	this.prob_no = prob_no;
 }
-public Integer getType() {
-	return type;
+public Integer getProblem_type_no() {
+	return problem_type_no;
 }
-public void setType(Integer type) {
-	this.type = type;
+public void setProblem_type_no(Integer problem_type_no) {
+	this.problem_type_no = problem_type_no;
 }
-public String getTitle() {
-	return title;
-}
-public void setTitle(String title) {
-	this.title = title;
-}
+
 public String getContent() {
 	return content;
 }

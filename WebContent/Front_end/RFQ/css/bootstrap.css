@@ -1614,7 +1614,7 @@ th {
   .table > tfoot > tr > td {
     padding: 8px;
     line-height: 1.42857;
-    vertical-align: top;
+    /*vertical-align: top;*/
     border-top: 1px solid #ddd; }
   .table > thead > tr > th {
     vertical-align: bottom;
@@ -3405,10 +3405,10 @@ tbody.collapse.in {
       display: block;
       padding: 10px 15px;
       color: #818181; }
-      .nav > li > a:hover, .nav > li > a:focus {
+      .nav > li > a:hover, .nav > li > a:focus {  // 排序顏色=================
         text-decoration: none;
         background-color: inherit;
-        color: #555; }
+        color: #f14195; }
     .nav > li.disabled > a {
       color: #818181; }
       .nav > li.disabled > a:hover, .nav > li.disabled > a:focus {
@@ -3640,7 +3640,7 @@ body.nav-expanded {
         overflow: visible !important; }
       .navbar-collapse.in {
         overflow-y: visible; }
-      .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+          .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
         padding-left: 0;
         padding-right: 0; } }
 
@@ -4005,7 +4005,7 @@ body.nav-expanded {
       font-size: 1em;
       text-align: center; }
       .navbar-wd .navbar-nav > li > a:hover, .navbar-wd .navbar-nav > li > a:focus {
-        color: #333;
+        color: #f14195;
         background-color: transparent; }
     .navbar-wd .navbar-nav > li > .active > a, .navbar-wd .navbar-nav > li > .active > a:hover, .navbar-wd .navbar-nav > li > .active > a:focus {
       color: #555;
@@ -4110,7 +4110,8 @@ body.nav-expanded {
       padding-bottom: 15px;
       letter-spacing: .13em; }
       .navbar-wd-storelist .navbar-nav > li > a:hover, .navbar-wd-storelist .navbar-nav > li > a:focus {
-        color: #333;
+/*        color: #333;*/
+          color:#f14195;
         background-color: transparent; }
     .navbar-wd-storelist .navbar-nav > li > .active > a, .navbar-wd-storelist .navbar-nav > li > .active > a:hover, .navbar-wd-storelist .navbar-nav > li > .active > a:focus {
       color: #555;
@@ -4168,7 +4169,7 @@ body.nav-expanded {
   display: block; }
   .wd-drop-wrapper:hover .wd-drop_submenu li:hover {
     background: #fff;
-    color: #555; }
+    color: #f14195; }
 
 .wd-drop-wrapper .wd-drop_submenu li a {
   color: inherit;
@@ -4434,17 +4435,21 @@ body.nav-expanded {
       border: 0px solid #ddd;
       margin-left: -1px;
       border-radius: 0; }
+/*
     .pagination > li:first-child > a,
     .pagination > li:first-child > span {
       margin-left: 0;
       border-radius: 0;
       padding: 10px;
+*/
       /*
       @include border-left-radius($border-radius-base);*/ }
+/*
     .pagination > li:last-child > a,
     .pagination > li:last-child > span {
       border-radius: 0;
       padding: 10px;
+*/
       /*
       @include border-right-radius($border-radius-base);*/ }
   .pagination > li > a:hover, .pagination > li > a:focus,
@@ -5344,11 +5349,18 @@ button.list-group-item {
     color: inherit; }
   .list-group-item.disabled .list-group-item-text, .list-group-item.disabled:hover .list-group-item-text, .list-group-item.disabled:focus .list-group-item-text {
     color: #818181; }
-.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus { 
   z-index: 2;
+/*
   color: #fff;
   background-color: #0779b3;
-  border-color: #0779b3; }
+*/
+/*   sidebar 按鈕==============================================================================================   */
+  color: #fff;
+  background-color: #28c8be;
+  border-color: #0779b3;
+
+}
   .list-group-item.active .list-group-item-heading,
   .list-group-item.active .list-group-item-heading > small,
   .list-group-item.active .list-group-item-heading > .small, .list-group-item.active:hover .list-group-item-heading,
