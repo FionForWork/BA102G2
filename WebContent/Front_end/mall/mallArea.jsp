@@ -132,7 +132,8 @@
                                 <td><c:choose>
                                         <c:when test="${role=='0' && now_Status=='0'}">
                                             <p>請盡速繳款</p>
-                                            <p>賣家帳戶:${seller_accountList[s.index]}</p>
+                                            <p>賣家帳戶:</p>
+                                            <p>${seller_accountList[s.index]}</p>
                                             <p><a href="<%=request.getContextPath()%>/order/OrderServlet?action=CANCEL&&ord_no=${ordVO.ord_no}" class="btn btn-danger">取消訂單</a></p>
                                         </c:when>
                                         <c:when test="${role=='0' && now_Status=='1'}">

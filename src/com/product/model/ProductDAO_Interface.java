@@ -34,6 +34,4 @@ public interface ProductDAO_Interface {
     List<ProductVO> getSome(int page, int count, String protype_no, String orderType);
 
     List<ProductVO> getSomeUnPreview(int page, int count);
-
-
 }

@@ -1,4 +1,4 @@
-package com.order_detail_controller;
+package com.order_detail.controller;
 
 import java.io.IOException;
 import java.util.List;

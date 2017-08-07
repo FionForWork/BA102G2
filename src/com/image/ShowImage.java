@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
+import com.placeview.model.PlaceViewService;
+import com.placeview.model.PlaceViewVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
@@ -30,11 +32,11 @@ public class ShowImage extends HttpServlet {
             buf=productVO.getImg();
             
         }
-        else if (request.getParameter("pla_no") != null) {
-            PlaceService placeService = new PlaceService();
-            String pla_no = request.getParameter("pla_no");
-            PlaceVO placeVO=placeService.getOnePlace(pla_no);
-            buf=placeVO.getImg();
+        else if (request.getParameter("view_no") != null) {
+            PlaceViewService placeViewService = new PlaceViewService();
+            String view_no = request.getParameter("view_no");
+            PlaceViewVO placeViewVO =placeViewService.findByPk(view_no);
+            buf=placeViewVO.getImg();
         }
         servletOutputStream.write(buf);
         servletOutputStream.close();

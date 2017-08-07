@@ -39,16 +39,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
         }
     }
 
-    private Connection JDBCinit() throws ClassNotFoundException, SQLException {
-        String DRIVER = "oracle.jdbc.driver.OracleDriver";
-        String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-        String USER = "ProjectDB";
-        String PASSWORD = "eric1101105351";
-        Class.forName(DRIVER);
-        Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-        return con;
-    }
-
     public void cancelConnection() throws SQLException {
         if (resultSet != null) {
             resultSet.close();
@@ -95,6 +85,41 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             }
             catch (SQLException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void insert(Order_detailVO order_detailVO, Connection connection) {
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(INSERT);
+            preparedStatement.setString(1, order_detailVO.getOrd_no());
+            preparedStatement.setString(2, order_detailVO.getPro_no());
+            preparedStatement.setInt(3, order_detailVO.getPrice());
+            preparedStatement.setInt(4, order_detailVO.getQty());
+            preparedStatement.setInt(5, order_detailVO.getItemtot());
+            preparedStatement.setInt(6, order_detailVO.getScore());
+            preparedStatement.setString(7, order_detailVO.getStatus());
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                }
+                catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
             }
         }
     }

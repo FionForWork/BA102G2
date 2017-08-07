@@ -399,7 +399,7 @@ public class ProductServlet extends HttpServlet {
             response.setContentType("text/html; charset=utf-8");
             ProductService productService = new ProductService();
             ProductVO productVO = productService.getOneByPKNoImg(request.getParameter("pro_no"));
-            int productCount=Integer.valueOf(request.getParameter("productCount"));
+            int productCount=(request.getParameter("productCount").equals("0"))?0:Integer.valueOf(request.getParameter("productCount"));
             PrintWriter printWriter = response.getWriter();
             if (carList.contains(productVO)) {
                 int count = countList.get(carList.indexOf(productVO)).intValue();
@@ -519,7 +519,4 @@ public class ProductServlet extends HttpServlet {
         doGet(request, response);
     }
 
-    protected List<ProductVO> filterAndOrder(List<ProductVO> orginList, String protype, String ordertype) {
-        return null;
-    }
 }

@@ -1,30 +1,34 @@
+<%@page import="com.place.model.PlaceService"%>
+<%@page import="com.placeview.model.PlaceViewService"%>
 <%@page import="org.apache.taglibs.standard.tag.common.core.ForEachSupport"%>
 <%@page import="com.place.model.PlaceVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="/Front_end/pages/frontHeader.file"%>
-
 <%
-    List<PlaceVO> placeList = (List<PlaceVO>) session.getAttribute("placeList");
     String pla_no = request.getParameter("pla_no");
-    for (PlaceVO placeVO : placeList) {
-        if (placeVO.getPla_no().equals(pla_no)) {
-            pageContext.setAttribute("placeVO", placeVO);
-        }
-    }
+    PlaceService placeService = new PlaceService();
+    PlaceVO placeVO = placeService.getOnePlace(pla_no);
+    PlaceViewService placeViewService = new PlaceViewService();
+    List<String> viewList = placeViewService.getAllByFk(pla_no);
+    pageContext.setAttribute("viewList", viewList);
+    pageContext.setAttribute("placeVO", placeVO);
 %>
 
-<div class="container">
+<div class="container" style="margin-bottom: 20px;">
     <div class="row">
-        <div id="placeImg" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <img src="<%=request.getContextPath()%>/image/ShowImage?pla_no=${placeVO.pla_no}">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="font-size: 20px;">
+                <h3><b>景點名稱</b></h3>
+                ${placeVO.name}
+                <h3><b>景點地址</b></h3>
+                ${placeVO.addr}
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <dt>景點名稱</dt>
-            <dd>${placeVO.name}</dd>
-            <dt>景點地址</dt>
-            <dd>${placeVO.addr}</dd>
-        </div>
+        <c:forEach var="view" items="${viewList}">
+            <div id="placeImg" class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-bottom: 20px;">
+                <img src="<%=request.getContextPath()%>/image/ShowImage?view_no=${view}">
+            </div>
+        </c:forEach>
     </div>
 </div>
 

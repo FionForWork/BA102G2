@@ -8,7 +8,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.order_detail.model.Order_detailVO;
 import com.product.model.ProductVO;
+import com.sun.org.apache.bcel.internal.generic.DALOAD;
 
 public class OrdService {
     private OrdDAO_Interface dao;
@@ -29,10 +31,14 @@ public class OrdService {
         dao.add(ordVO);
     }
 
+    
     public void addOrd(OrdVO ordVO) {
         dao.add(ordVO);
     }
 
+    public void insert(OrdVO ordVO, List<Order_detailVO> list) {
+        dao.insert(ordVO, list);
+    }
     public void deleteOrd(String ord_no) {
         dao.delete(ord_no);
     }

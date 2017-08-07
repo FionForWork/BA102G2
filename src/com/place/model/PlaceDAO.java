@@ -14,9 +14,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class PlaceDAO implements PlaceDAO_Interface {
-    private static final String INSERT                = "insert into PLACE(PLA_NO, NAME, IMG, LNG,LAT,ADDR)" + "values(PLA_NO_SEQ.NEXTVAL, ?, ?, ? , ?, ?)";
+    private static final String INSERT                = "insert into PLACE(PLA_NO, NAME, LNG,LAT,ADDR)" + "values(PLA_NO_SEQ.NEXTVAL, ?, ?, ? , ?)";
     private static final String DELETE_BY_NO          = "delete from PLACE where PLA_NO = ?";
-    private static final String UPDATE                = "update PLACE set NAME = ? ,IMG = ? ,LNG = ?,LAT = ?,ADDR = ? where PLA_NO = ?";
+    private static final String UPDATE                = "update PLACE set NAME = ? ,LNG = ?,LAT = ?,ADDR = ? where PLA_NO = ?";
     private static final String FIND_BY_PK            = "select * from PLACE where PLA_NO = ?";
     private static final String GET_ALL_ORDER_BY_ASC  = "select * from PLACE order by PLA_NO asc";
     private static final String GET_ALL_ORDER_BY_DESC = "select * from PLACE order by PLA_NO desc";
@@ -57,10 +57,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, placeVO.getName());
-            preparedStatement.setBytes(2, placeVO.getImg());
-            preparedStatement.setString(3, placeVO.getLng());
-            preparedStatement.setString(4, placeVO.getLat());
-            preparedStatement.setString(5, placeVO.getAddr());
+            preparedStatement.setString(2, placeVO.getLng());
+            preparedStatement.setString(3, placeVO.getLat());
+            preparedStatement.setString(4, placeVO.getAddr());
 
             preparedStatement.execute();
             connection.commit();
@@ -123,11 +122,10 @@ public class PlaceDAO implements PlaceDAO_Interface {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, placeVO.getName());
-            preparedStatement.setBytes(2, placeVO.getImg());
-            preparedStatement.setString(3, placeVO.getLng());
-            preparedStatement.setString(4, placeVO.getLat());
-            preparedStatement.setString(5, placeVO.getAddr());
-            preparedStatement.setString(6, placeVO.getPla_no());
+            preparedStatement.setString(2, placeVO.getLng());
+            preparedStatement.setString(3, placeVO.getLat());
+            preparedStatement.setString(4, placeVO.getAddr());
+            preparedStatement.setString(5, placeVO.getPla_no());
             preparedStatement.execute();
             connection.commit();
         }
@@ -164,10 +162,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
             while (resultSet.next()) {
                 placeVO.setPla_no(resultSet.getString(1));
                 placeVO.setName(resultSet.getString(2));
-                placeVO.setImg(resultSet.getBytes(3));
-                placeVO.setLng(resultSet.getString(4));
-                placeVO.setLat(resultSet.getString(5));
-                placeVO.setAddr(resultSet.getString(6));
+                placeVO.setLng(resultSet.getString(3));
+                placeVO.setLat(resultSet.getString(4));
+                placeVO.setAddr(resultSet.getString(5));
             }
             return placeVO;
         }
@@ -199,10 +196,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 PlaceVO placeVO = new PlaceVO();
                 placeVO.setPla_no(resultSet.getString(1));
                 placeVO.setName(resultSet.getString(2));
-                placeVO.setImg(resultSet.getBytes(3));
-                placeVO.setLng(resultSet.getString(4));
-                placeVO.setLat(resultSet.getString(5));
-                placeVO.setAddr(resultSet.getString(6));
+                placeVO.setLng(resultSet.getString(3));
+                placeVO.setLat(resultSet.getString(4));
+                placeVO.setAddr(resultSet.getString(5));
                 list.add(placeVO);
             }
             return list;
@@ -239,10 +235,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 PlaceVO placeVO = new PlaceVO();
                 placeVO.setPla_no(resultSet.getString(3));
                 placeVO.setName(resultSet.getString(4));
-                placeVO.setImg(resultSet.getBytes(5));
-                placeVO.setLng(resultSet.getString(6));
-                placeVO.setLat(resultSet.getString(7));
-                placeVO.setAddr(resultSet.getString(8));
+                placeVO.setLng(resultSet.getString(5));
+                placeVO.setLat(resultSet.getString(6));
+                placeVO.setAddr(resultSet.getString(7));
                 list.add(placeVO);
             }
             return list;
@@ -279,10 +274,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 PlaceVO placeVO = new PlaceVO();
                 placeVO.setPla_no(resultSet.getString(1));
                 placeVO.setName(resultSet.getString(2));
-                placeVO.setImg(resultSet.getBytes(3));
-                placeVO.setLng(resultSet.getString(4));
-                placeVO.setLat(resultSet.getString(5));
-                placeVO.setAddr(resultSet.getString(6));
+                placeVO.setLng(resultSet.getString(3));
+                placeVO.setLat(resultSet.getString(4));
+                placeVO.setAddr(resultSet.getString(5));
                 list.add(placeVO);
             }
             return list;

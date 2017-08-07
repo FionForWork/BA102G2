@@ -129,42 +129,37 @@
             console.log("thrownError " + thrownError);
         },
         success : function(response) {
-            var planoList = JSON.parse(response).planoList;
-            var planameList = JSON.parse(response).planameList;
-            var latList = JSON.parse(response).latList;
-            var lngList = JSON.parse(response).lngList;
+            var placeList=JSON.parse(response).placeList
+            var viewnoList = JSON.parse(response).viewnoList;
             var markers=[];
-//             for(var i=0;i<markers.length;i++){
-//                 markers[i].setMap(null);
-//                 markers[i]=null;
-//             }
-            console.log("markers "+markers.length);
             var position;
             var marker;
-            for (var i = 0; i < planoList.length; i++) {
+            for(var i=0;i<markers.length;i++){
+                markers[i].setMap(null);
+                markers[i]=null;
+                }
+            for (var i = 0; i < placeList.length; i++) {
                 position = {
-                lat : parseFloat(latList[i]),
-                lng : parseFloat(lngList[i])
+                lat : parseFloat(placeList[i].lat),
+                lng : parseFloat(placeList[i].lng)
                 };
                 marker = new google.maps.Marker({
                 position : position,
-                title : planameList[i],
-                label : planameList[i],
+                title : placeList[i].name,
+                label : placeList[i].name,
                 map : map
                 });
                 markers.push(marker);
             }
                 var imgDiv = "";
-                for (var i = 0; i < planoList.length; i++) {
-                    var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/Front_end/place/onePlace.jsp?pla_no=" + planoList[i] + "'>";
-                    var img = "<img style='width:100%;' src='/BA102G2/image/ShowImage?pla_no=" + planoList[i] + "'>"
-                    var h5 = "<h5 class='small' style='height: 5px;'>" + planameList[i] + "</h5>";
+                for (var i = 0; i < placeList.length; i++) {
+                    var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label' href='/BA102G2/Front_end/place/onePlace.jsp?pla_no=" + placeList[i].pla_no + "'>";
+                    var img = "<img style='width:100%;' src='/BA102G2/image/ShowImage?view_no=" + viewnoList[i] + "'>"
+                    var h5 = "<h5 class='small' style='height: 5px;'>" + placeList[i].name + "</h5>";
                     var caption = "<div class='col-xs-3 col-md-6 btn-like-wrapper'><div class='caption'>" + a + img + h5 + "</a></div></div>"
                     imgDiv = imgDiv + caption;
                 }
                 $("#placeImg").html(imgDiv);
-            console.log("planoList "+planoList.length);
-            console.log("markers "+markers.length);
         }
         })
     }

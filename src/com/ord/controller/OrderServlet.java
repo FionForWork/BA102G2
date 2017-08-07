@@ -3,7 +3,9 @@ package com.ord.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.email.MailService;
 import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
 import com.order_detail.model.Order_detailService;
@@ -46,56 +49,60 @@ public class OrderServlet extends HttpServlet {
                 List<ProductVO> carList = (List<ProductVO>) session.getAttribute("carList");
                 List<String> sellerList = new ArrayList<String>();
                 List<OrdVO> ordList = new ArrayList<OrdVO>();
+                Order_detailService order_detailService = new Order_detailService();
                 for (int i = 0; i < carList.size(); i++) {
                     if (!sellerList.contains(carList.get(i).getSeller_no())) {
                         sellerList.add(carList.get(i).getSeller_no());
                     }
                 }
-
+                
                 for (int i = 0; i < sellerList.size(); i++) {
+                    List<Order_detailVO> order_detailList=new ArrayList<Order_detailVO>();
                     int total = 0;
                     for (int j = 0; j < carList.size(); j++) {
                         if (carList.get(j).getSeller_no().equals(sellerList.get(i))) {
+                            Order_detailVO order_detailVO;
                             total += carList.get(j).getPrice() * Integer.valueOf(buyCounts[j]);
+                            order_detailVO=new Order_detailVO();
+                            order_detailVO.setPro_no(carList.get(i).getPro_no());
+                            order_detailVO.setPrice(carList.get(i).getPrice());
+                            order_detailVO.setQty(Integer.valueOf(buyCounts[j]));
+                            order_detailVO.setItemtot(Integer.valueOf(buyCounts[j])*carList.get(i).getPrice());
+                            order_detailVO.setScore(0);
+                            order_detailVO.setStatus("0");
+                            order_detailList.add(order_detailVO);
                         }
                     }
+                    MemVO memVO=(MemVO)session.getAttribute("memVO");
                     OrdVO ordVO = new OrdVO();
                     ordVO.setSeller_no(sellerList.get(i));
-                    ordVO.setCust_no(String.valueOf(session.getAttribute("mem_no")));
+                    ordVO.setCust_no(memVO.getMem_no());
                     ordVO.setAddress(address);
                     ordVO.setOrd_date(new java.sql.Timestamp(new Date().getTime()));
                     ordVO.setTotal(total);
                     ordVO.setScore(0);
                     ordVO.setStatus("0");
-                    ordService.addOrd(ordVO);
-                    ordList.add(ordService.getOneOrdByCustAndSeller(String.valueOf(session.getAttribute("mem_no")), sellerList.get(i)));
-                }
-                Order_detailService order_detailService = new Order_detailService();
-                for (int i = 0; i < ordList.size(); i++) {
-                    for (int j = 0; j < carList.size(); j++) {
-                        if (ordList.get(i).getSeller_no().equals(carList.get(j).getSeller_no())) {
-                            Order_detailVO order_detailVO = new Order_detailVO();
-                            order_detailVO.setOrd_no(ordList.get(i).getOrd_no());
-                            order_detailVO.setPro_no(carList.get(j).getPro_no());
-                            order_detailVO.setPrice(carList.get(j).getPrice());
-                            order_detailVO.setQty(Integer.valueOf(buyCounts[j]));
-                            order_detailVO.setItemtot(carList.get(j).getPrice() * Integer.valueOf(buyCounts[j]));
-                            order_detailVO.setScore(0);
-                            order_detailVO.setStatus("0");
-                            order_detailService.addOrder_detail(order_detailVO);
-                        }
-                    }
+                    ordService.insert(ordVO, order_detailList);
+                    List<Integer> countList = (session.getAttribute("countList") == null) ? new LinkedList<Integer>() : (List<Integer>) session.getAttribute("countList");
+                    int carTotal = 0;
+                    carList.removeAll(carList);
+                    countList.removeAll(countList);
+                    carTotal = 0;
+                    session.setAttribute("carList", carList);
+                    session.setAttribute("countList", countList);
+                    session.setAttribute("carTotal", new Integer(carTotal));
                     String to = "ixlogic@pchome.com.tw";
-                    // String to = new MemService().getOneMem(productVO.getSeller_no()).getEmail();
+                    // String to = new
+                    // MemService().getOneMem(productVO.getSeller_no()).getEmail();
                     String subject = "訂單確認通知";
-                    String cust_name = new MemService().getOneMem(mem_no).getName();
-                    String seller_account = new MemService().getOneMem(ordList.get(i).getSeller_no()).getAccount();
+                    String cust_name = memVO.getName();
+                    String seller_account = new MemService().getOneMem(sellerList.get(i)).getAccount();
                     String messageText = "Hello! " + cust_name + "您的訂單已經確認，請付款,賣家帳戶 " + seller_account;
                     MailService mailService = new MailService();
                     mailService.sendMail(to, subject, messageText);
                 }
                 request.getRequestDispatcher("/Front_end/mall/mallIndexAJAX.jsp").forward(request, response);
-            }
+                }
         }
         else if ("CHECK_GET_ITEM".equals(action)) {
             String ord_no = request.getParameter("ord_no");

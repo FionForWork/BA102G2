@@ -14,6 +14,8 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.order_detail.model.Order_detailDAO;
+import com.order_detail.model.Order_detailVO;
 import com.product.model.ProductVO;
 
 public class OrdDAO implements OrdDAO_Interface {
@@ -90,7 +92,54 @@ public class OrdDAO implements OrdDAO_Interface {
             }
         }
     }
-
+    
+    @Override
+    public void insert(OrdVO ordVO, List<Order_detailVO> list) {
+        try {
+            connection = JNDIinit();
+            connection.setAutoCommit(false);
+            String PKName[]={"ORD_NO"};
+            preparedStatement = connection.prepareStatement(INSERT,PKName);
+            preparedStatement.setString(1, ordVO.getSeller_no());
+            preparedStatement.setString(2, ordVO.getCust_no());
+            preparedStatement.setString(3, ordVO.getAddress());
+            preparedStatement.setTimestamp(4, ordVO.getOrd_date());
+            preparedStatement.setInt(5, ordVO.getTotal());
+            preparedStatement.setInt(6, ordVO.getScore());
+            preparedStatement.setString(7, ordVO.getStatus());
+            preparedStatement.execute();
+            resultSet=preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            String ord_no=resultSet.getString(1);
+            for (Order_detailVO Order_detailVO : list) {
+                Order_detailDAO order_detailDAO=new Order_detailDAO();
+                Order_detailVO.setOrd_no(ord_no);
+                order_detailDAO.insert(Order_detailVO, connection);
+            }
+            connection.commit();
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     @Override
     public void delete(String ord_no) {
         try {
@@ -482,5 +531,4 @@ public class OrdDAO implements OrdDAO_Interface {
         }
         return null;
     }
-
 }
