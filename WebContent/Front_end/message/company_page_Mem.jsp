@@ -246,7 +246,13 @@
 						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 					</div>
 					<div class="panel-body">
-						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+						<textarea id="messagesArea" class="panel message-area" readonly>							
+						<%if (messageList.size() !=0) {
+						for(String message : messageList) {
+						JSONObject j = new JSONObject(message);%>
+							<%=j.get("message")%>
+						<%}}%>
+						</textarea>
 					</div>
 					<div class="panel-footer">
 						<div class="panel input-area">
@@ -275,10 +281,10 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 <%-- var comName = "<%=comVO.getName()%>"; --%>
 // console.log(com_no);
 // console.log(comName);
-<%-- var mem_no = "<%=memVO.getMem_no()%>"; --%>
-<%-- var memName = "<%=memVO.getName()%>"; --%>
-// console.log(mem_no);
-// console.log(memName);
+var mem_no = "<%=memVO.getMem_no()%>";
+var memName = "<%=memVO.getName()%>";
+console.log(mem_no);
+console.log(memName);
 var MyPoint = "/MessageServlet/";
 console.log(MyPoint);
 var host = window.location.host;
@@ -291,9 +297,10 @@ var endPointURL = "ws://" + window.location.host + webCtx
 + MyPoint;
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
-var webSocket;
-var memNo;	
-			
+var webSocket;	
+
+	
+
 
  				function connect() {
  					// 建立 websocket 物件
@@ -306,8 +313,7 @@ var memNo;
  						document.getElementById('disconnect').disabled = false;					
  						var messagesArea = document.getElementById("messagesArea");
  						messagesArea.value = messagesArea.value + "\r\n";
-
-						
+ 							
  					};
 
  					webSocket.onmessage = function(event) {
@@ -317,10 +323,9 @@ var memNo;
  						
  						var messagesArea = document
  						.getElementById("messagesArea");
- 						memNo = jsonObj.memNo;
- 						
  						var jsonObj = JSON.parse(event.data);
- 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+ 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n" + jsonObj.time 
+ 						+ "\r\n";
  						messagesArea.value = messagesArea.value + message;
  						messagesArea.scrollTop = messagesArea.scrollHeight;
  					};
@@ -345,9 +350,9 @@ var memNo;
  						inputMessage.focus();
  					} else {
  						var jsonObj = {
- 	 							"comNo" : "<%=request.getParameter("com_no")%>" || com_no,
- 	 							"memNo" : mem_no || memNo,
- 	 							"userName" : ("<%=memVO.getName()%>"==null)?"<%=comVO.getName()%>":"<%=memVO.getName()%>",
+ 	 							"comNo" : "2001",
+ 	 							"memNo" : mem_no,
+ 	 							"userName" : (memName==null)?comName:memName,
  	 							"message" : message,
  	 							"time" : nowdate
  	 					};

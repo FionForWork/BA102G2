@@ -30,6 +30,10 @@ public class MessageService {
 	public MessageVO getOneMessage(String msg_no) {
 		return dao.findByPrimaryKey(msg_no);
 	}
+	
+	public List<String> getMessageByMem_no(String mem_no) {
+		return dao.getMessageByMem_no(mem_no);
+	}
 
 	public void deleteMessage(String msg_no) {
 		dao.delete(msg_no);

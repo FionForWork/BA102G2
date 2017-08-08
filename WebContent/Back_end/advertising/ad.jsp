@@ -4,6 +4,7 @@
 <%@ page import="com.advertising.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,7 +56,7 @@
 										<td>${comVO.name}</td>
 									</c:if>
 								</c:forEach>
-								<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+								
 								<fmt:formatDate value="${advertisingVO.startDay}" var="startDayFormat" pattern="yyyy-MM-dd"/>
 								<td>${startDayFormat}</td>
 								<td>${(advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24)}</td>

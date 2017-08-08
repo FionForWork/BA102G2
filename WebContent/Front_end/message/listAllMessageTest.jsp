@@ -39,8 +39,7 @@
 					<span>廠商編號:<%=messageVO.getCom_no()%></span><br> 
 					<span>會員編號:<%=messageVO.getMem_no()%></span><br>
 					<span>內容:
-					<% 
-					JSONObject j = new JSONObject(messageVO.getContent());%>
+					<% JSONObject j = new JSONObject(messageVO.getContent());%>
 					userName:<%=j.get("userName")%><br>
 					message:<%=j.get("message")%><br>
 					time:<%=j.get("time")%><br>
@@ -49,7 +48,7 @@
 					<form method="post"
 						action="<%=request.getContextPath()%>/message/message.do">
 						<input type="submit" value="刪除"> <input type="hidden"
-							name="msg_no" value="${messageVO.msg_no}"> <input type="hidden" name="action"
+							name="msg_no" value="<%=messageVO.getMsg_no()%>"> <input type="hidden" name="action"
 							value="delete">
 					</form></li>
 			</ul>
