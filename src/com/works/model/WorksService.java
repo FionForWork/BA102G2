@@ -52,4 +52,7 @@ public class WorksService {
 	public List<WorksVO> getAll(){
 		return dao.findAll();
 	}
+	public int CountWorksInOneComNo(String com_no){
+		return dao.countWorksInOneComNo(com_no);
+	}
 }

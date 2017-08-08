@@ -34,7 +34,7 @@ public class AdmDAO implements AdmDAO_Interface{
 		private static final String DELETE = 
 			"DELETE FROM adminstrator where adm_no = ?";
 		private static final String UPDATE = 
-			"UPDATE adminstrator set id=?, pwd=?, name=?, job=?, status=?,  where adm_no = ?";
+			"UPDATE adminstrator set id=?, pwd=?, name=?, job=?, status=?  where adm_no = ?";
 
 	
 	

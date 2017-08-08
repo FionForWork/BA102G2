@@ -18,7 +18,7 @@ public class AlbumDAO implements AlbumDAO_Interface {
 	private static final String DELETE_SQL = "delete from album where alb_no = ?";
 	private static final String UPDATE_SQL = "update album set mem_no=?,name=?,cover=?,create_date=? where alb_no = ?";
 	private static final String FIND_BY_PK = "select * from album where alb_no = ?";
-	private static final String FIND_BY_MEM_NO = "select * from album where mem_no = ?";
+	private static final String FIND_BY_MEM_NO = "select * from album where mem_no = ? order by create_date desc";
 	private static final String FIND_ALL = "select * from album";
 	
 	private static DataSource ds = null;

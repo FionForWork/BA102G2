@@ -4,26 +4,9 @@
 <%
 AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 %>
-<html>
-<head>
-<title></title></head>
-
-
-<div id="popupcalendar" class="text"></div>
-
-<body bgcolor='white'>
-
-<table border='1' cellpadding='5' cellspacing='0' width='400'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>AddAdm.jsp</h3>
-				<a href="listAllAdm.jsp">回首頁</a>
-		</td>
-		<td>
-	    </td>
-	</tr>
-</table>
-
+<%@ include file="page/adm_page" %>
+<br><br><br>
+<div id="content">
 <h3>員工資料新增:</h3>
 <%--錯誤處理 --%>
 <c:if test="${not empty errorMsgs}">
@@ -36,8 +19,8 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 	</font>
 </c:if>
 
-<FORM METHOD="post" ACTION="adm.do" name="form1">
-<table border="0">
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">
+<table class="table table-striped">
 
 	<tr>
 		<td>管理員編號:</td>
@@ -73,6 +56,8 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+</div>
+
 </body>
 
 </html>
