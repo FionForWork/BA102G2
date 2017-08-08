@@ -69,8 +69,6 @@ public class ProtraServlet extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             int nowPage=Integer.valueOf(request.getParameter("nowPage"));
             int itemsCount=Integer.valueOf(request.getParameter("itemsCount"));
-            int allCount=protraService.getRowCount(mem_no);
-            int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
             List<ProtraVO>protraList=protraService.getAllByMem(mem_no);
             int start=(nowPage-1)*itemsCount;
             int end=(nowPage*itemsCount>protraList.size())?protraList.size():nowPage*itemsCount;
@@ -83,7 +81,6 @@ public class ProtraServlet extends HttpServlet {
             PrintWriter printWriter=response.getWriter();
             JsonObject jsonObject=new JsonObject();
             jsonObject.add("productList", gson.toJsonTree(productList));
-            jsonObject.add("totalPages", gson.toJsonTree(totalPages));
             printWriter.println(jsonObject);
             printWriter.close();
         }

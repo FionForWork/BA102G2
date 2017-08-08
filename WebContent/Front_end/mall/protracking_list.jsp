@@ -75,18 +75,18 @@
                 <nav aria-label="Page navigation ">
                     <ul class="pagination pagination-lg ">
                         <li>
-                            <a class="btn btn-info active" href="javascript:change(1,${itemsCount})" data-page="1">1</a>
+                            <a class="btn btn-info active" href="javascript:change(1,${itemsCount},${totalPages})" data-page="1">1</a>
                         </li>
                         <c:forEach var="i" begin="2" end="5">
                             <li>
-                                <a class="btn btn-info" href="javascript:change(${i},${itemsCount})" data-page="${i}">${i}</a>
+                                <a class="btn btn-info" href="javascript:change(${i},${itemsCount},${totalPages})" data-page="${i}">${i}</a>
                             </li>
                         </c:forEach>
                         <li>
                             <a class="disabled">...</a>
                         </li>
                         <li>
-                            <a class="btn btn-info" href="javascript:change(${totalPages})">${totalPages}</a>
+                            <a class="btn btn-info" href="javascript:change(${totalPages},${itemsCount},${totalPages})">${totalPages}</a>
                         </li>
                     </ul>
                 </nav>
@@ -96,7 +96,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function change(nowPage, itemsCount) {
+    function change(nowPage, itemsCount,totalPages) {
         $.ajax({
         url : "/BA102G2/protra/ProtracServlet",
         type : "post",
@@ -111,35 +111,20 @@
         },
         success : function(response) {
             var productList = JSON.parse(response).productList;
-            var pronoList = [];
-            var pronameList = [];
-            var priceList = [];
-            var amountList = [];
-            var totalPages = JSON.parse(response).totalPages;
-            for (var i = 0; i < productList.length; i++) {
-                pronoList.push(productList[i].pro_no);
-                console.log("pronoList "+pronoList[i]);
-                pronameList.push(productList[i].pro_name);
-                console.log("pronameList "+pronameList[i]);
-                priceList.push(productList[i].price);
-                console.log("priceList "+priceList[i]);
-                amountList.push(productList[i].amount);
-                console.log("amountList "+amountList[i]);
-            }
             pageChange(itemsCount, totalPages, nowPage);
-            tableChange(pronoList, pronameList, priceList, amountList);
+            tableChange(productList);
         }
         });
     }
 
     function pageChange(itemsCount, totalPages, nowPage) {
-        var preHref = "javascript:change(" + 1 + "," + itemsCount + ")";
-        var afterHref = "javascript:change(" + totalPages + "," + itemsCount + ")";
+        var preHref = "javascript:change(" + 1 + "," + itemsCount +","+ totalPages +")";
+        var afterHref = "javascript:change(" + totalPages + "," + itemsCount +","+ totalPages +")";
         var nothing = "<li><a class='disabled'>...</a></li>";
         if (totalPages <= 5) {
             var page = "";
             for (var i = 0; i < totalPages; i++) {
-                var href = "javascript:change(" + (i + 1) + "," + itemsCount + ")";
+                var href = "javascript:change(" + (i + 1) + "," + itemsCount +","+ totalPages +")";
                 var active = "";
                 if ((i + 1) == nowPage) {
                     active = "active";
@@ -151,7 +136,7 @@
             if (nowPage < 5) {
                 var page = "";
                 for (var i = 0; i < 5; i++) {
-                    var href = "javascript:change(" + (i + 1) + "," + itemsCount + ")";
+                    var href = "javascript:change(" + (i + 1) + "," + itemsCount +","+ totalPages + ")";
                     var active = "";
                     if ((i + 1) == nowPage) {
                         active = "active";
@@ -166,7 +151,7 @@
                 page = page + "<li><a class='disabled'>...</a></li>";
                 for (var i = totalPages - 5; i <= totalPages; i++) {
                     var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount + ")";
+                    var href = "javascript:change(" + i + "," + itemsCount + "," + totalPages + ")";
                     if (i == nowPage) {
                         active = "active";
                     }
@@ -178,8 +163,7 @@
                 page = page + nothing;
                 for (var i = nowPage - 2; i <= nowPage + 2; i++) {
                     var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount
-                    ")";
+                    var href = "javascript:change(" + i + "," + itemsCount +","+totalPages +")";
                     if (i == nowPage) {
                         active = "active";
                     }
@@ -192,14 +176,14 @@
         $("ul.pagination-lg").html(page);
     }
 
-    function tableChange(pronoList, pronameList, priceList, amountList) {
+    function tableChange(productList) {
         var tbody = "";
-        for (var i = 0; i < pronoList.length; i++) {
+        for (var i = 0; i < productList.length; i++) {
             tbody = tbody + "<tr>"+
-                   "<td><a target='_blank' href='/BA102G2/Front_end/mall/product.jsp?pro_no=" + pronoList[i] + "'>" + pronameList[i] + "</a></td>" + 
-                   "<td>" + priceList[i] + "</td>"+
-                   "<td>" + amountList[i] + "</td>"+
-                   "<td>"+"<img src='/BA102G2/image/ShowImage?pro_no="+pronoList[i]+"'>"+
+                   "<td><a target='_blank' href='/BA102G2/Front_end/mall/product.jsp?pro_no=" + productList[i].pro_no + "'>" + productList[i].pro_name + "</a></td>" + 
+                   "<td>" + productList[i].price + "</td>"+
+                   "<td>" + productList[i].amount + "</td>"+
+                   "<td>"+"<img src='/BA102G2/image/ShowImage?pro_no="+productList[i].pro_no+"'>"+
                    "</tr>";
         }
         $("tbody").html(tbody);

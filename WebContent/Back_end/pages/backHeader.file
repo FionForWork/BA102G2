@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
-    <meta charset="utf-8">
     <title>Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
     <link href="<%=request.getContextPath()%>/Back_end/res/css/bootstrap.css" rel="stylesheet" />
@@ -18,19 +18,18 @@
     <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>
     
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/top.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexisel.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexslider.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/memenu.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery-3.1.1.min.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/top.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexisel.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexslider.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/js/memenu.js" ></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/plugins/sortable.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/fileinput.js" ></script>
+    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/locales/zh-TW.js" ></script>
+    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
     <meta name="msapplication-TileColor" content="#3399cc" />
 </head>
 <body>
@@ -82,9 +81,9 @@
                 <li><a href="#"><i class="en-users"></i>廠商管理</a></li>
                 <li><a href="#"><i class="en-users"></i>管理者設定</a></li>
                 <li><a href="#"><i class="im-table2"></i>廣告刊登管理</a></li>
-                <li><a href="#"><i class="br-location"></i>景點管理</a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp""><i class="br-location"></i>景點管理</a></li>
                 <li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
                 <li><a href="#"><i class="im-list2"></i>參數管理</a></li>
                 <li><a href="#"><i class="ec-mail"></i>聯絡我們管理</a></li>
                 <li><a href="#"><i class="im-question"></i>常見問題管理</a></li>

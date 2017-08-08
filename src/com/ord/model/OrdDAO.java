@@ -111,8 +111,8 @@ public class OrdDAO implements OrdDAO_Interface {
             resultSet=preparedStatement.getGeneratedKeys();
             resultSet.next();
             String ord_no=resultSet.getString(1);
+            Order_detailDAO order_detailDAO=new Order_detailDAO();
             for (Order_detailVO Order_detailVO : list) {
-                Order_detailDAO order_detailDAO=new Order_detailDAO();
                 Order_detailVO.setOrd_no(ord_no);
                 order_detailDAO.insert(Order_detailVO, connection);
             }

@@ -172,7 +172,7 @@
 										<source
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
 											type="video/mp4">
-										您的瀏覽器不支援此撥放程式
+										<p>您的瀏覽器不支援此撥放程式</p>
 									</video>
 								
 								<div class="caption">
@@ -281,9 +281,6 @@ $("document").ready(function(){
 		});
 		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=<%=com_no%>";
 	});
-	
-		
-	
 	
 });
 	</script>

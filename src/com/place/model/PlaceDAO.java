@@ -13,12 +13,17 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.placeview.model.PlaceViewDAO;
+import com.placeview.model.PlaceViewService;
+import com.placeview.model.PlaceViewVO;
+
 public class PlaceDAO implements PlaceDAO_Interface {
-    private static final String INSERT                = "insert into PLACE(PLA_NO, NAME, LNG,LAT,ADDR)" + "values(PLA_NO_SEQ.NEXTVAL, ?, ?, ? , ?)";
+    private static final String INSERT                = "insert into PLACE(PLA_NO, NAME, LNG,LAT,ADDR,PLA_DESC)" + "values(PLA_NO_SEQ.NEXTVAL, ?, ?, ? , ?,?)";
     private static final String DELETE_BY_NO          = "delete from PLACE where PLA_NO = ?";
-    private static final String UPDATE                = "update PLACE set NAME = ? ,LNG = ?,LAT = ?,ADDR = ? where PLA_NO = ?";
+    private static final String UPDATE                = "update PLACE set NAME = ? ,LNG = ?,LAT = ?,ADDR = ? ,PLA_DESC = ? where PLA_NO = ?";
     private static final String FIND_BY_PK            = "select * from PLACE where PLA_NO = ?";
     private static final String GET_ALL_ORDER_BY_ASC  = "select * from PLACE order by PLA_NO asc";
+    private static final String GET_ALL_COUNT         = "select count(rownum) from PLACE ";
     private static final String GET_ALL_ORDER_BY_DESC = "select * from PLACE order by PLA_NO desc";
     private static final String GET_SOME_ROW          = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PLACE a order by a.PLA_NO) b) where bRn between ? and ?";
     private static final String GET_SOME_ROW_BY_FOUR  = "select * from place where lat between ? and ? and lng between ? and ?";
@@ -51,6 +56,49 @@ public class PlaceDAO implements PlaceDAO_Interface {
     }
 
     @Override
+    public void add(PlaceVO placeVO,List<PlaceViewVO> viewList) {
+        try {
+            connection = JNDIinit();
+            connection.setAutoCommit(false);
+            String PKName[]={"PLA_NO"};
+            preparedStatement = connection.prepareStatement(INSERT,PKName);
+            preparedStatement.setString(1, placeVO.getName());
+            preparedStatement.setString(2, placeVO.getLng());
+            preparedStatement.setString(3, placeVO.getLat());
+            preparedStatement.setString(4, placeVO.getAddr());
+            preparedStatement.setString(5, placeVO.getPla_desc());
+            
+            preparedStatement.execute();
+            resultSet=preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            String pla_no=resultSet.getString(1);
+            PlaceViewService placeViewService=new PlaceViewService();
+            for (PlaceViewVO view : viewList) {
+                view.setPla_no(pla_no);
+                placeViewService.add(view,connection);
+            }
+            connection.commit();
+        }
+        catch (Exception e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @Override
     public void add(PlaceVO placeVO) {
         try {
             connection = JNDIinit();
@@ -60,7 +108,8 @@ public class PlaceDAO implements PlaceDAO_Interface {
             preparedStatement.setString(2, placeVO.getLng());
             preparedStatement.setString(3, placeVO.getLat());
             preparedStatement.setString(4, placeVO.getAddr());
-
+            preparedStatement.setString(5, placeVO.getPla_desc());
+            
             preparedStatement.execute();
             connection.commit();
         }
@@ -90,7 +139,9 @@ public class PlaceDAO implements PlaceDAO_Interface {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, pla_no);
+            PlaceViewDAO placeViewDAO=new PlaceViewDAO();
             preparedStatement.execute();
+            placeViewDAO.deleteByFK(pla_no,connection);
             connection.commit();
         }
         catch (NamingException e) {
@@ -125,7 +176,8 @@ public class PlaceDAO implements PlaceDAO_Interface {
             preparedStatement.setString(2, placeVO.getLng());
             preparedStatement.setString(3, placeVO.getLat());
             preparedStatement.setString(4, placeVO.getAddr());
-            preparedStatement.setString(5, placeVO.getPla_no());
+            preparedStatement.setString(5, placeVO.getPla_desc());
+            preparedStatement.setString(6, placeVO.getPla_no());
             preparedStatement.execute();
             connection.commit();
         }
@@ -165,6 +217,8 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 placeVO.setLng(resultSet.getString(3));
                 placeVO.setLat(resultSet.getString(4));
                 placeVO.setAddr(resultSet.getString(5));
+                placeVO.setPla_desc(resultSet.getString(6));
+                
             }
             return placeVO;
         }
@@ -238,6 +292,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 placeVO.setLng(resultSet.getString(5));
                 placeVO.setLat(resultSet.getString(6));
                 placeVO.setAddr(resultSet.getString(7));
+                placeVO.setPla_desc(resultSet.getString(8));
                 list.add(placeVO);
             }
             return list;
@@ -296,6 +351,32 @@ public class PlaceDAO implements PlaceDAO_Interface {
             }
         }
         return null;
+    }
+
+    @Override
+    public int getAllCount() {
+        try {
+            connection = JNDIinit();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(GET_ALL_COUNT);
+            resultSet.next();
+            return resultSet.getInt(1);
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 
 }

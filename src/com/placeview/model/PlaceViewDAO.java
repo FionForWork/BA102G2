@@ -16,6 +16,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
 
     private static final String INSERT        = "insert into PLACEVIEW (VIEW_NO, PLA_NO, IMG)" + "VALUES(VIEW_NO_SEQ.NEXTVAL, ?, ?)";
     private static final String DELETE_BY_NO  = "delete from PLACEVIEW where VIEW_NO = ? ";
+    private static final String DELETE_BY_FK  = "delete from PLACEVIEW where PLA_NO = ? ";
     private static final String UPDATE        = "update PLACEVIEW set IMG = ? where VIEW_NO = ?";
     private static final String FIND_BY_PK    = "select * from PLACEVIEW where VIEW_NO = ? ";
     private static final String GET_ALL_BY_FK = "select VIEW_NO from PLACEVIEW where PLA_NO =?";
@@ -53,7 +54,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
             connection = JNDIinit();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, placeViewVO.getPal_no());
+            preparedStatement.setString(1, placeViewVO.getPla_no());
             preparedStatement.setBytes(2, placeViewVO.getImg());
             preparedStatement.execute();
             connection.commit();
@@ -81,9 +82,90 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     }
 
     @Override
+    public void add(PlaceViewVO placeViewVO, Connection connection) {
+        try {
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(INSERT);
+            preparedStatement.setString(1, placeViewVO.getPla_no());
+            preparedStatement.setBytes(2, placeViewVO.getImg());
+            preparedStatement.execute();
+            connection.commit();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @Override
     public void delete(String view_no) {
-        // TODO Auto-generated method stub
-
+        try {
+            connection = JNDIinit();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(DELETE_BY_NO);
+            preparedStatement.setString(1, view_no);
+            preparedStatement.execute();
+            connection.commit();
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @Override
+    public void deleteByFK(String pla_no,Connection connection) {
+        try {
+            preparedStatement = connection.prepareStatement(DELETE_BY_FK);
+            preparedStatement.setString(1, pla_no);
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -129,7 +211,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
             PlaceViewVO placeViewVO = new PlaceViewVO();
             while (resultSet.next()) {
                 placeViewVO.setView_no(resultSet.getString(1));
-                placeViewVO.setPal_no(resultSet.getString(2));
+                placeViewVO.setPla_no(resultSet.getString(2));
                 placeViewVO.setImg(resultSet.getBytes(3));
             }
             return placeViewVO;

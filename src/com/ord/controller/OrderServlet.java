@@ -49,7 +49,6 @@ public class OrderServlet extends HttpServlet {
                 List<ProductVO> carList = (List<ProductVO>) session.getAttribute("carList");
                 List<String> sellerList = new ArrayList<String>();
                 List<OrdVO> ordList = new ArrayList<OrdVO>();
-                Order_detailService order_detailService = new Order_detailService();
                 for (int i = 0; i < carList.size(); i++) {
                     if (!sellerList.contains(carList.get(i).getSeller_no())) {
                         sellerList.add(carList.get(i).getSeller_no());

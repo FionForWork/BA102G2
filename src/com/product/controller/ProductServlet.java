@@ -26,6 +26,7 @@ import com.email.MailService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_type.model.Product_typeService;
@@ -104,13 +105,14 @@ public class ProductServlet extends HttpServlet {
             response.setCharacterEncoding("text/html; charset=utf-8");
             List<String> error = new ArrayList<String>();
             ProductVO productVO = new ProductVO();
-
-            String seller_no = String.valueOf(session.getAttribute("mem_no"));
+            MemVO memVO=(MemVO)session.getAttribute("memVO");
+            String seller_no = memVO.getMem_no();
             String pro_desc = request.getParameter("pro_desc");
             String price = request.getParameter("price");
             String amount = request.getParameter("amount");
             String protype_no = request.getParameter("protype_no");
             String pro_name = request.getParameter("pro_name").trim();
+            System.out.println(pro_name);
             byte[] data = null;
             if (pro_name.equals("")) {
                 error.add("請輸入商品名稱");
@@ -268,7 +270,6 @@ public class ProductServlet extends HttpServlet {
             if (!request.getParameter("amount").equals("")) {
                 productVO.setAmount(Integer.valueOf(request.getParameter("amount")));
             }
-            System.out.println(pro_no);
             if (request.getPart("img") != null && ((request.getPart("img").getContentType().indexOf("image") != -1) || (request.getPart("img").getContentType().indexOf("stream") != -1))) {
                 Part part = request.getPart("img");
                 System.out.println(part.getName() + " " + part.getSize());
