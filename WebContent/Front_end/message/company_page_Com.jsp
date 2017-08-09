@@ -266,11 +266,14 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%ComVO comVO = (ComVO) session.getAttribute("comVO");
+<%
+ComVO comVO = (ComVO) session.getAttribute("comVO");
+MemVO memVO = (MemVO) session.getAttribute("memVO");
 %>
 var com_no = "<%=comVO.getCom_no()%>";
 var comName = "<%=comVO.getName()%>";
 console.log(com_no);
+console.log(comName);
 <%-- var mem_no = "<%=memVO.getMem_no()%>"; --%>
 <%-- var userName = "<%=comVO.getName()%>"; --%>
 // console.log(mem_no);
@@ -315,8 +318,7 @@ var memNo;
  						document.getElementById("addClass").style.display = 'none';
  						document.getElementById("dClass").style.display = 'block';
  						
- 						var messagesArea = document
- 						.getElementById("messagesArea");
+ 						var messagesArea = document.getElementById("messagesArea");
  						var jsonObj = JSON.parse(event.data);
  						memNo = jsonObj.memNo;
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";

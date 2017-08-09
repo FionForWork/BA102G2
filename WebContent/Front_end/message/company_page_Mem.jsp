@@ -247,11 +247,6 @@
 					</div>
 					<div class="panel-body">
 						<textarea id="messagesArea" class="panel message-area" readonly>							
-						<%if (messageList.size() !=0) {
-						for(String message : messageList) {
-						JSONObject j = new JSONObject(message);%>
-							<%=j.get("message")%>
-						<%}}%>
 						</textarea>
 					</div>
 					<div class="panel-footer">
@@ -272,7 +267,8 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%ComVO comVO = (ComVO) session.getAttribute("comVO");
+<%
+ComVO comVO = (ComVO) session.getAttribute("comVO");
 MemVO memVO = (MemVO) session.getAttribute("memVO");
 %>
 
@@ -297,8 +293,7 @@ var endPointURL = "ws://" + window.location.host + webCtx
 + MyPoint;
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
-var webSocket;	
-
+var webSocket;
 	
 
 
@@ -321,11 +316,9 @@ var webSocket;
  						document.getElementById("addClass").style.display = 'none';
  						document.getElementById("dClass").style.display = 'block';
  						
- 						var messagesArea = document
- 						.getElementById("messagesArea");
+ 						var messagesArea = document.getElementById("messagesArea");
  						var jsonObj = JSON.parse(event.data);
- 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n" + jsonObj.time 
- 						+ "\r\n";
+ 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
  						messagesArea.value = messagesArea.value + message;
  						messagesArea.scrollTop = messagesArea.scrollHeight;
  					};
@@ -350,7 +343,7 @@ var webSocket;
  						inputMessage.focus();
  					} else {
  						var jsonObj = {
- 	 							"comNo" : "2001",
+ 	 							"comNo" : "<%=request.getParameter("com_no")%>",
  	 							"memNo" : mem_no,
  	 							"userName" : (memName==null)?comName:memName,
  	 							"message" : message,

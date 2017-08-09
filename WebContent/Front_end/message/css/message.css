@@ -9,10 +9,10 @@
 	display: none;
 	border: 1px solid #b0b0b0;
 	bottom: 0;
-	height: 500px;
-	position: fixed;
 	left: 0;
+	height: 500px;
 	width: 300px;
+	position: fixed;
 	margin: 11px 7px 0;
 	padding: 7px 10px;
 	overflow: auto;
