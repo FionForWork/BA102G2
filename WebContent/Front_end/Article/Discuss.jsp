@@ -1,17 +1,24 @@
+<%@page import="com.mem.model.MemService"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.forum_comment.model.*"%>
+<%@ page import="com.mem.model.*"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <% ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");  %>
 <%	
 // 	String art_no=request.getParameter("art_no");
 	Integer art_no = new Integer(request.getParameter("art_no"));
+	String mem_no = request.getParameter("mem_no");
 // 	Integer artno=Integer.valueOf(art_no).intValue(); 
 	
 	Article_Service artSvc=new Article_Service();
     ArticleVO article=artSvc.getOneArt(art_no);
    	pageContext.setAttribute("article",article);
+   	
+   	MemService memSvc=new MemService();
+   	MemVO mem=memSvc.getOneMem(mem_no);
    	
    %>
 <%
@@ -54,7 +61,10 @@
                             <img src="<%=request.getContextPath()%>/Front_end/Article/img/img1.jpeg" class="pull-left xxx" style="width:100px">
                               <div class="panel-heading" style="height: 100px;font-size: 20px">
                                <div class="name">${forum_CommentVO.speaker_no }</div>
-                               <div class="date">${forum_CommentVO.fmc_date }</div>
+                               
+<%--                                <div class="date">${forum_CommentVO.fmc_date }</div> --%>
+
+<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm:ss" value="${forum_CommentVO.fmc_date }"/>
                                <div class="text"></div>  
                                
                                </div>
