@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.ssy.tools.jdbcUtil_CompositeQuery_Serv;
 
 
 
@@ -389,5 +392,69 @@ private static DataSource ds = null;
 			}
 		}
 		return list;
+	}
+
+
+	@Override
+	public List<ServVO> getAll(Map<String, String[]> map) {
+		List<ServVO> list = new ArrayList<ServVO>();
+		ServVO servVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from Service "
+			          + jdbcUtil_CompositeQuery_Serv.get_WhereCondition(map)
+			          + "order by price";
+//			System.out.println(finalSQL);
+			pstmt = con.prepareStatement(finalSQL);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				servVO = new ServVO();
+				servVO.setServ_no(rs.getString("serv_no"));
+				servVO.setStype_no(rs.getString("stype_no"));
+				servVO.setCom_no(rs.getString("com_no"));
+				servVO.setDeposit(rs.getInt("deposit"));
+				servVO.setPrice(rs.getInt("price"));
+				servVO.setTitle(rs.getString("title"));
+				servVO.setContent(rs.getString("content"));
+				servVO.setTimes(rs.getInt("times"));
+				servVO.setScore(rs.getDouble("score"));
+				list.add(servVO); // Store the row in the list
+			} 
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+
 	}
 }

@@ -2,14 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.serv.model.*" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%! int servNum = 1; %>
 <% 
+	LocalDate localDate = LocalDate.now();
+	pageContext.setAttribute("localDate", localDate);
+	if(request.getAttribute("list") == null){
+	Map<String,String[]> map = new HashMap<String,String[]>();
+	map.put("cal_date", new String[] {localDate.toString()});
 	ServService servService = new ServService();
-	List<ServVO> list = servService.getAll();
+	List<ServVO> list = servService.getAll(map);
 	pageContext.setAttribute("list", list);
+	}
+	int servNum = 1;
 %>
+<jsp:useBean id="comService" class="com.com.model.ComService"/>
+<jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,7 +28,7 @@
 <%@ include file="page/searchServiceHeader.file" %>
   <script>
   $( function() {
-	    $( "#datepicker" ).datepicker({dateFormat: 'yy-m-dd'});
+	    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
 	  } );
   </script>
 <!-- 複合查詢 -->
@@ -29,34 +38,35 @@
 	<div class="col-md-3">
 		<div class="input-group">
 			<span class="input-group-addon">服務日期</span>
-			<input id="datepicker" type="text" class="form-control" name="msg" placeholder="請選擇日期">
+			<input id="datepicker" type="text" class="form-control" name="cal_date" value="${map == null?localDate.toString():map.get('cal_date')[0]}" placeholder="請選擇日期">
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="input-group">
 			<span class="input-group-addon">服務類型</span>
-			<select class="form-control" id="sel1">
-				<option value="0000">所有類型</option>
-				<option value="0001">拍婚紗</option>
-				<option value="0002">婚攝/婚錄</option>
-				<option value="0003">新娘秘書</option>
+			<select class="form-control" name="stype_no">
+				<option value="0000" ${map.get('stype_no')[0].equals('0000')? 'selected' : ''}>所有類型</option>
+				<option value="0001" ${map.get('stype_no')[0].equals('0001')? 'selected' : ''}>拍婚紗</option>
+				<option value="0002" ${map.get('stype_no')[0].equals('0002')? 'selected' : ''}>婚攝/婚錄</option>
+				<option value="0003" ${map.get('stype_no')[0].equals('0003')? 'selected' : ''}>新娘秘書</option>
 			</select>
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div class="input-group">
 			<span class="input-group-addon">最低價</span>
-			<input id="msg" type="text" class="form-control" name="msg" placeholder="請輸入最低價格">
+			<input id="msg" type="text" class="form-control" name="bottomPrice" value="${map.get('bottomPrice')[0].equals('')? '' : map.get('bottomPrice')[0]}" placeholder="請輸入最低價格">
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div class="input-group">
 			<span class="input-group-addon">最高價</span>
-			<input id="msg" type="text" class="form-control" name="msg" placeholder="請輸入最高價格">
+			<input id="msg" type="text" class="form-control" name="topPrice" value="${map.get('topPrice')[0].equals('')? '' : map.get('topPrice')[0]}" placeholder="請輸入最高價格">
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div class="input-group">
+		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 		<input type="hidden" name="action" value="searchServiceByCompositeQuery">
 		<button class="btn btn-block btn-danger">送出查詢</button>
 		</div>
@@ -66,31 +76,25 @@
 </div>
 <br>
 <div class="container text-center">
+<c:if test="${list.size() == 0}">
+<h3>很抱歉，沒有符合您搜尋條件的服務!</h3>
+</c:if>
 <c:forEach var="servVO" items="${list}">
 <%	if(servNum == 1 || servNum % 4 == 0){%>
 		<div class="row">
 <% } %>
-<div  class="col-xs-6 col-sm-6 col-md-3 btn-like-wrapper">
+<div  class="col-xs-6 col-sm-6 col-md-3 btn-like-wrapper" data-toggle="modal" data-target="#myModal${servVO.serv_no}">
 <!-- 	<button class="btn btn-lg sharp btn-like" id="userCollect" data-id="1919" data-type="2"><i id="CollectIcon" class="fa fa-heart-o" aria-hidden="true"></i></button> -->
 	<a class="thumbnail thumbnail-service mod-shadow">
 	<div class="ratiobox rat_1_115 bg-cover" style="background-image: url('https://cdn.weddingday.com.tw/wedding-image/service/300/7583ad032f82dede7b38599afa5e61c15915d768ebef0.jpg')">
 	</div>
 	<div class="caption">
-		<h4 class="text-ellipsis"><sapn>純宴客【4小時】</sapn></h4>
+		<h4 class="text-ellipsis"><sapn>${comService.getOneCom(servVO.com_no).name}</sapn></h4>
 		<!--在服務主頁才會出現-->
-		<p class="text-ellipsis text-muted small">CHOC wedding   橋克攝影工作室</p>
+		<p class="text-ellipsis text-muted middle" style="font-size:15px">${sortingHat.getServType(servVO.stype_no)}</p>
 		<div class="text-muted">
-			<div class="clearfix">
+			<div class="clearfix " style="font-size:14px;text-align:justify">
             ${servVO.content}
-<!-- 				<span class="btn service_spec disable text-default bg-light-grey sharp btn-xs" >儀式 </span> -->
-				
-<!-- 				<span class="btn service_spec text-default bg-light-grey sharp btn-xs" >午宴 <b></b></span> -->
-				
-<!-- 				<span class="btn service_spec text-default bg-light-grey sharp btn-xs" >晚宴 <b></b></span> -->
-				
-<!-- 				<span class="btn service_spec text-default bg-light-grey sharp btn-xs" >拍攝時數 <b>4</b></span> -->
-				
-<!-- 				<span class="btn service_spec text-default bg-light-grey sharp btn-xs" >攝影師數 <b>1</b></span> -->
 			</div>
 		</div>
 	</div>
@@ -109,10 +113,59 @@
 		</div>
 <% }servNum++; %>
 
-</c:forEach>
-</div>
+<!-- 預約單 -->
+<div class="modal fade" id="myModal${servVO.serv_no}" role="dialog">
+<form method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+	<div class="modal-dialog">  
+<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">是否確定預約${map == null?localDate.toString():map.get('cal_date')[0]}的以下服務</h4>
+			</div>
+			<div class="modal-body row">
+				<div  class="col-xs-offset-3 col-xs-6 btn-like-wrapper"">
+				<!-- 	<button class="btn btn-lg sharp btn-like" id="userCollect" data-id="1919" data-type="2"><i id="CollectIcon" class="fa fa-heart-o" aria-hidden="true"></i></button> -->
+					<a class="thumbnail thumbnail-service mod-shadow">
+					<div class="ratiobox rat_1_115 bg-cover" style="background-image: url('https://cdn.weddingday.com.tw/wedding-image/service/300/7583ad032f82dede7b38599afa5e61c15915d768ebef0.jpg')">
+					</div>
+					<div class="caption">
+						<h4 class="text-ellipsis"><sapn>${comService.getOneCom(servVO.com_no).name}</sapn></h4>
+						<!--在服務主頁才會出現-->
+						<p class="text-ellipsis text-muted middle" style="font-size:15px">${sortingHat.getServType(servVO.stype_no)}</p>
+						<div class="text-muted">
+							<div class="clearfix " style="font-size:14px;text-align:justify">
+				            ${servVO.content}
+							</div>
+						</div>
+					</div>
+					<div class="footer">
+						<div class="label-price">
+							<span class="small">價格</span>
+							<b class="price text-pink" >${servVO.price}</b>
+							<span class="hidden-xs">元</span>
+						</div>
+					</div>
+					</a>
+				</div><!--包套item-->
+			</div>
+			<div class="modal-footer btn-group">
+				<input type="hidden" name="serv_no" value="${servVO.serv_no}">
+				<input type="hidden" name="serv_date" value="${map == null?localDate.toString():map.get('cal_date')[0]}">
+				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
+				<input type="hidden" name="action" value="resFromSearchService">
+				<input type="submit" class="btn btn-info" value="確認預約">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</form>
 </div>
 
+</c:forEach>
+<% servNum = 1; %>
+</div>
+</div>
 
 
 

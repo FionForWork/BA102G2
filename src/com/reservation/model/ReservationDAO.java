@@ -28,7 +28,7 @@ public class ReservationDAO implements ReservationDAO_Interface {
 	}
 	
 	private static final String INSERT = 
-			"INSERT INTO RESERVATION VALUES (LTRIM(TO_CHAR(RESERVATION_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?, ?, '0', 0)";
+			"INSERT INTO RESERVATION VALUES (LTRIM(TO_CHAR(RESERVATION_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 	private static final String UPDATE = 
 			"UPDATE RESERVATION SET status=? where RES_NO = ?";
 	private static final String UPDATESCORE = 
@@ -66,6 +66,7 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			pstmt.setString(5, reservationVO.getServ_no());
 			pstmt.setString(6, reservationVO.getStype_no());
 			pstmt.setInt(7, reservationVO.getPrice());
+			pstmt.setString(8, reservationVO.getStatus());
 			pstmt.executeUpdate();
 			
 			String RES_NO = null;

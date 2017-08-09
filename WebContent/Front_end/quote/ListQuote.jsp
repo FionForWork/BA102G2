@@ -69,7 +69,7 @@
 						<img src="<%=request.getContextPath()%>/Front_end/RFQ/img/LOGO.png" class="mem_img img-circle">
 					</div>
 					<div class="col-md-6">
-						<h3>${comService.getOneEmp(quoteVO.com_no).name}</h3>
+						<h3>${comService.getOneCom(quoteVO.com_no).name}</h3>
 						<p>於 ${minDF.format(quoteVO.quo_date)} 報價</p>
 						<p>${quoteVO.content}</p>
 						<h4>報價金額 : ${quoteVO.price} </h4>
@@ -87,7 +87,7 @@
 								<div class="modal-content col-md-offset-1 col-md-10">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title" >您選擇預約 ${comService.getOneEmp(quoteVO.com_no).name} 的服務內容為...</h4>
+										<h4 class="modal-title" >您選擇預約 ${comService.getOneCom(quoteVO.com_no).name} 的服務內容為...</h4>
 									</div>
 									<hr>
 									<div class="modal-body">

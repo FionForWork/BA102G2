@@ -14,7 +14,7 @@ public class ReservationService {
 	}
 	
 	public ReservationVO addReservation (String mem_no, String com_no, Timestamp res_date,
-			Timestamp serv_date, String serv_no, String stype_no, Integer price, CalendarVO calendarVO){
+			Timestamp serv_date, String serv_no, String stype_no, Integer price, String status, CalendarVO calendarVO){
 		
 		ReservationVO reservationVO = new ReservationVO();
 		reservationVO.setMem_no(mem_no);
@@ -24,6 +24,7 @@ public class ReservationService {
 		reservationVO.setServ_no(serv_no);
 		reservationVO.setStype_no(stype_no);
 		reservationVO.setPrice(price);
+		reservationVO.setStatus(status);
 		dao.insert(reservationVO, calendarVO);
 		
 		return reservationVO;

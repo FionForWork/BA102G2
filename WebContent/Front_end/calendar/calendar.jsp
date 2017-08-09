@@ -7,8 +7,8 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.temporal.TemporalAdjusters" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%! int dayOfWeek = 0;int week = 1;int flag = 0;%>
 <%
+	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	// localDate = LocalDate.of(localDate.getYear(),7,1);
 	// 本月最後一天的日期(LocalDate)

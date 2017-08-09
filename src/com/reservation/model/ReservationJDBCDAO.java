@@ -422,10 +422,10 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //		reservationVO.setPrice(33500);
 //		dao.insert(reservationVO);
 		
-		ReservationVO reservationVO = new ReservationVO();
-		reservationVO.setRes_no("0001");
-		reservationVO.setStatus("1");
-		dao.update(reservationVO);
+//		ReservationVO reservationVO = new ReservationVO();
+//		reservationVO.setRes_no("0001");
+//		reservationVO.setStatus("1");
+//		dao.update(reservationVO);
 		
 //		dao.delete("0001");
 		
@@ -455,7 +455,7 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //			System.out.println(reservationVO.getScore());
 //		}
 
-	
+		
 	}
 
 	
