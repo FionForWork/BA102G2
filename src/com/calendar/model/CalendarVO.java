@@ -7,20 +7,13 @@ public class CalendarVO implements java.io.Serializable {
 	private String cal_no;
 	private String com_no;
 	private String content;
-	private Timestamp start_time;
-	private Timestamp end_time;
+	private Timestamp cal_date;
+	private String status;
 	
 	public CalendarVO(){
 		
 	}
 	
-	public CalendarVO(String cal_no, String com_no, String content, Timestamp start_time, Timestamp end_time) {
-		this.cal_no = cal_no;
-		this.com_no = com_no;
-		this.content = content;
-		this.start_time = start_time;
-		this.end_time = end_time;
-	}
 	
 	public String getCal_no() {
 		return cal_no;
@@ -40,18 +33,24 @@ public class CalendarVO implements java.io.Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Timestamp getStart_time() {
-		return start_time;
+
+	public Timestamp getCal_date() {
+		return cal_date;
 	}
-	public void setStart_time(Timestamp start_time) {
-		this.start_time = start_time;
+
+	public void setCal_date(Timestamp cal_date) {
+		this.cal_date = cal_date;
 	}
-	public Timestamp getEnd_time() {
-		return end_time;
+
+
+	public String getStatus() {
+		return status;
 	}
-	public void setEnd_time(Timestamp end_time) {
-		this.end_time = end_time;
+
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
+
 	
 }

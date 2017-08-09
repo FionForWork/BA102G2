@@ -51,6 +51,15 @@ public class ServService {
 		
 	}
 	
+	public List<String> getComnoByStypeno(String stype_no){
+		return dao.findByStype_no(stype_no);
+		
+	}
+	
+	public List<ServVO> getCom(String com_no){
+		return dao.getCom(com_no);
+		
+	}
 	
 	
 }

@@ -22,7 +22,7 @@ Object comVO = session.getAttribute("comVO");
 				<span  >logo :</span><br>
 				
 				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" />
-				<input type="button" class="btn btn-info " id="addpic" value="修改logo">
+				
 			 	
 			</div>
 		
@@ -51,10 +51,7 @@ Object comVO = session.getAttribute("comVO");
 				<span>廠商緯度:</span>
 				${comVO.lat}
 		</div>
-		<div class="form-group">
-				<span>廠商介紹:</span>
-				${comVO.com_desc}
-		</div>
+		
 		<div class="form-group">
 				<span>電話 :</span>
 				${comVO.phone}
@@ -72,6 +69,11 @@ Object comVO = session.getAttribute("comVO");
 				${comVO.status}
 		</div>
 		
+		<div class="form-group">
+				<span>廠商介紹:</span>
+				<div ></div>
+				 <pre style="border:0;">${comVO.com_desc}</pre>
+		</div>
 
 		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
 			 <input type="submit" class="btn btn-info " value="修改">
@@ -82,6 +84,6 @@ Object comVO = session.getAttribute("comVO");
 		</div>
 	</div>
 </div>
-<%@ include file="/Front_end/com/page/addpic.file"%>
+
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

@@ -13,11 +13,11 @@ public class EparamService {
 		return dao.getAll();
 	}
 
-	public EparamVO getOneDept(String eparam_no) {
+	public EparamVO getOneEparam(String eparam_no) {
 		return dao.findByPrimaryKey(eparam_no);
 	}
 
-	public void deleteDept(String eparam_no) {
+	public void deleteEparam(String eparam_no) {
 		dao.delete(eparam_no);
 	}
 }

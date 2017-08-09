@@ -28,16 +28,6 @@
 			</div>
 			<!-- The lightbox Modal (img)-->
 
-			<!-- The lightbox Modal (vdo)-->
-			<div id="lightboxVdoModal" class="modal">
-				<span class="closeVdo">&times;</span>
-				<video controls class="lightbox-modal-content" id="lightboxVdo" >
-					<source type="video/mp4">
-					您的瀏覽器不支援此撥放程式
-				</video>
-
-			</div>
-			<!-- The lightbox Modal (vdo)-->
 
 <%///////// 顯示未挑選頁面 ///////// %>
 <c:if test='${temp.status.equals("未挑選")}'>
@@ -173,9 +163,9 @@
 				<div class="col-md-3 col-sm-3 col-xs-6">
 
 					<div class="image-container">
-						<c:if test="${tempContVO.vdo != null}">
+						<c:if test="${tempContVO.img == null}">
 							 <video
-									width="400" controls class="img-responsive img-thumbnail bb">
+									width="400" controls class="img-responsive img-thumbnail">
 									<source
 										src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
 										type="video/mp4">
@@ -276,9 +266,9 @@
 			<div class="col-md-3 col-sm-3 col-xs-6">
 
 				<div class="image-container">
-					<c:if test="${tempContVO.vdo != null}">
+					<c:if test="${tempContVO.img == null}">
 						<video
-								width="400" controls class="img-responsive img-thumbnail bb">
+								width="400" controls class="img-responsive img-thumbnail">
 								<source
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }"
 									type="video/mp4">

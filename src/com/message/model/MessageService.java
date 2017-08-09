@@ -13,11 +13,11 @@ public class MessageService {
 		return dao.getAll();
 	}
 
-	public MessageVO getOneDept(String msg_no) {
+	public MessageVO getOneMessage(String msg_no) {
 		return dao.findByPrimaryKey(msg_no);
 	}
 
-	public void deleteDept(String msg_no) {
+	public void deleteMessage(String msg_no) {
 		dao.delete(msg_no);
 	}
 

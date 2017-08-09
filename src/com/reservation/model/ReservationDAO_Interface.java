@@ -8,4 +8,6 @@ public interface ReservationDAO_Interface {
 	void delete(String res_no);
 	ReservationVO findByPK(String res_no);
 	List<ReservationVO> getAll();
+	List<ReservationVO> getMemRes(String mem_no);
+	List<ReservationVO> getComRes(String com_no);
 }

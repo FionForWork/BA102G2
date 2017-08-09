@@ -47,16 +47,9 @@ public class MemService {
 		
 	}                                                     
 	
-	public MemVO updatePic(String mem_no,byte[] picture){
-		MemVO memVO = new MemVO();
-		memVO.setMem_no(mem_no);
-		memVO.setPicture(picture);
-		dao.updatePic(memVO);
-		
-		return memVO;
-	}
+	
 	public MemVO updateMem(String mem_no,String id,String name,String sex,Date bday,String phone,
-			String email,String account,Integer report,String status){
+			String email,String account,byte[] picture,Integer report,String status){
 		
 		MemVO memVO = new MemVO();
 		memVO.setMem_no(mem_no);
@@ -68,7 +61,7 @@ public class MemService {
 		memVO.setPhone(phone);
 		memVO.setEmail(email);
 		memVO.setAccount(account);
-	
+		memVO.setPicture(picture);
 		memVO.setReport(report);
 		memVO.setStatus(status);
 		dao.update(memVO);

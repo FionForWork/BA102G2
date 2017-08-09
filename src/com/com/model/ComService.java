@@ -18,6 +18,16 @@ public class ComService {
 	public  ComVO oldPwd(String com_no){
 		return dao.oldPwd(com_no);
 	}
+	
+	public ComVO confirmCom(String com_no){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		
+		dao.confirmCom(comVO);
+		
+		return comVO;
+	}
+	
 	public ComVO updatePwd(String com_no,String pwd){
 		ComVO comVO = new ComVO();
 		comVO.setCom_no(com_no);
@@ -27,14 +37,7 @@ public class ComService {
 		return comVO;
 	}
 	
-	public ComVO updatePic(String com_no,byte[] logo){
-		ComVO comVO = new ComVO();
-		comVO.setCom_no(com_no);
-		comVO.setLogo(logo);
-		dao.updatePic(comVO);
-		
-		return comVO;
-	}
+	
 	
 public List<ComVO> loginpwd(){
 		
@@ -46,16 +49,13 @@ public List<ComVO> loginpwd(){
 		return dao.loginid();
 	}
 	
-	public ComVO addCom(String id,String pwd,String name,String loc,String lon,
-			String lat,String com_desc,String phone,String account,byte[] logo)
+	public ComVO addCom(String id,String pwd,String name,String loc,String com_desc,String phone,String account,byte[] logo)
 	{
 		ComVO comVO =new ComVO();
 		comVO.setId(id);
 		comVO.setPwd(pwd);
 		comVO.setName(name);
 		comVO.setLoc(loc);
-		comVO.setLon(lon);
-		comVO.setLat(lat);
 		comVO.setCom_desc(com_desc);
 		comVO.setPhone(phone);
 		comVO.setAccount(account);
@@ -71,9 +71,10 @@ public List<ComVO> loginpwd(){
 	}
 	
 	public ComVO updateCom(String com_no,String id,String name,String loc,String lon,
-			String lat,String com_desc,String phone,String account,String status)
+			String lat,String com_desc,String phone,String account,byte[] logo,String status)
 	{
 		ComVO comVO=new ComVO();
+		comVO.setCom_no(com_no);
 		comVO.setId(id);
 		
 		comVO.setName(name);
@@ -83,12 +84,12 @@ public List<ComVO> loginpwd(){
 		comVO.setCom_desc(com_desc);
 		comVO.setPhone(phone);
 		comVO.setAccount(account);
-		
+		comVO.setLogo(logo);
 		comVO.setStatus(status);
 		
 		dao.update(comVO);
 		
-		return dao.findByPrimaryKey(com_no);
+		return comVO;
 	}
 	//預留給 Struts 2 用的
 	public void updateCom(ComVO comVO){

@@ -11,7 +11,7 @@ public class AdvertisingJNDIDAO implements AdvertisingDAO_Interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ProjectDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

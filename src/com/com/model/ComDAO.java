@@ -30,7 +30,7 @@ public class ComDAO implements ComDAO_Interface {
 	
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')),?,?, ?, ?, ?, ?,?,?,?,?,'正常')";
+			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')),?,?, ?, ?,0,0,?,?,?,?,'待驗證')";
 		private static final String GET_ALL_STMT = 
 			"SELECT com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status FROM company order by com_no";
 		private static final String GET_ONE_STMT = 
@@ -38,17 +38,52 @@ public class ComDAO implements ComDAO_Interface {
 		private static final String DELETE = 
 			"DELETE FROM company where com_no = ?";
 		private static final String UPDATE = 
-			"UPDATE company set id=?,pwd=?,name=?,loc=?,lon=?,lat=?,com_desc=?,phone=?,account=?,logo=?,status=? where com_no = ?";
+			"UPDATE company set id=?,name=?,loc=?,lon=?,lat=?,com_desc=?,phone=?,account=?,logo=?,status=? where com_no = ?";
 		private static final String LOGINPWD ="SELECT pwd FROM company";
 		private static final String LOGINID ="SELECT id FROM company";
-		
 		private static final String findById = "SELECT com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status from company where id= ?";
-		private static final String UPDATEPIC = 
-				"UPDATE company set logo=? where com_no = ?";
 		private static final String UPDATEPWD = 
 				"UPDATE company set pwd=? where com_no = ?";
 		private static final String OLDPWD = 
 				"SELECT pwd from company where com_no = ?";
+		private static final String CONFIRMCOM= 
+				"UPDATE company set status='正常' where com_no = ?";
+				
+		@Override
+		public void confirmCom(ComVO comVO) {
+			
+		
+			Connection con = null;
+			PreparedStatement pstmt = null;
+						
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(CONFIRMCOM);
+				pstmt.setString(1, comVO.getCom_no());
+				pstmt.executeUpdate();
+							
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+
 		
 		@Override
 		public void updatePwd(ComVO comVO) {
@@ -86,7 +121,6 @@ public class ComDAO implements ComDAO_Interface {
 			
 			
 		}
-		
 		
 		@Override
 		public ComVO oldPwd(String com_no) {
@@ -145,45 +179,8 @@ public class ComDAO implements ComDAO_Interface {
 			return comVO;
 		}
 		
-		@Override
-		public void updatePic(ComVO comVO) {
-			// TODO Auto-generated method stub
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try{
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(UPDATEPIC);
-				pstmt.setBytes(1, comVO.getLogo());
-				pstmt.setString(2, comVO.getCom_no());
-				pstmt.executeUpdate();
-				
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-			
-			
-		}
 		
-		
-		
+
 		@Override
 		public ComVO findById(String id) {
 			ComVO comVO =null;
@@ -266,6 +263,7 @@ public class ComDAO implements ComDAO_Interface {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(LOGINID);
 				rs = pstmt.executeQuery();
+				
 				while (rs.next()) {
 					comVO =new ComVO();
 				
@@ -347,7 +345,8 @@ public class ComDAO implements ComDAO_Interface {
 			}
 			return list;
 		}
-	@Override
+	
+		@Override
 	public void insert(ComVO comVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -360,12 +359,10 @@ public class ComDAO implements ComDAO_Interface {
 			pstmt.setString(2, comVO.getPwd());
 			pstmt.setString(3, comVO.getName());
 			pstmt.setString(4, comVO.getLoc());
-			pstmt.setString(5, comVO.getLon());
-			pstmt.setString(6, comVO.getLat());
-			pstmt.setString(7, comVO.getCom_desc());
-			pstmt.setString(8, comVO.getPhone());
-			pstmt.setString(9, comVO.getAccount());
-			pstmt.setBytes(10, comVO.getLogo());
+			pstmt.setString(5, comVO.getCom_desc());
+			pstmt.setString(6, comVO.getPhone());
+			pstmt.setString(7, comVO.getAccount());
+			pstmt.setBytes(8, comVO.getLogo());
 		
 			
 			pstmt.executeUpdate();
@@ -402,17 +399,17 @@ public class ComDAO implements ComDAO_Interface {
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, comVO.getId());
-			pstmt.setString(2, comVO.getPwd());
-			pstmt.setString(3, comVO.getName());
-			pstmt.setString(4, comVO.getLoc());
-			pstmt.setString(5, comVO.getLon());
-			pstmt.setString(6, comVO.getLat());
-			pstmt.setString(7, comVO.getCom_desc());
-			pstmt.setString(8, comVO.getPhone());
-			pstmt.setString(9, comVO.getAccount());
-			pstmt.setBytes(10, comVO.getLogo());
-			pstmt.setString(11, comVO.getStatus());
-			
+
+			pstmt.setString(2, comVO.getName());
+			pstmt.setString(3, comVO.getLoc());
+			pstmt.setString(4, comVO.getLon());
+			pstmt.setString(5, comVO.getLat());
+			pstmt.setString(6, comVO.getCom_desc());
+			pstmt.setString(7, comVO.getPhone());
+			pstmt.setString(8, comVO.getAccount());
+			pstmt.setBytes(9, comVO.getLogo());
+			pstmt.setString(10, comVO.getStatus());
+			pstmt.setString(11, comVO.getCom_no());
 			pstmt.executeUpdate();
 			
 		}catch(SQLException se){

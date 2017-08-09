@@ -1,8 +1,10 @@
 package com.adm.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,16 +34,22 @@ public class AdmServlet extends HttpServlet {
 		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new HashMap<String,String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
+			
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String id = req.getParameter("id").trim();
+				 if (id == null || (id.trim()).length() == 0 ) {
+					 errorMsgs.put("id","帳號為電子信箱,請勿空白");
+					}
 				String pwd = req.getParameter("pwd").trim();
 				String name =req.getParameter("name").trim();
+				if (name == null || (name.trim()).length() == 0 ) {
+					 errorMsgs.put("name","姓名請勿空白");
+					}
 				String job =req.getParameter("job").trim();
 				String status =req.getParameter("status").trim();
 				
@@ -67,12 +75,7 @@ public class AdmServlet extends HttpServlet {
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Back_end/adm/addAdm.jsp");
-				failureView.forward(req, res);
-			}
+			
 		
 			
 		}

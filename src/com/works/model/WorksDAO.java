@@ -25,7 +25,7 @@ public class WorksDAO implements WorksDAO_Interface {
 	private static final String DELETE_SQL = "delete from works where works_no = ?";
 	private static final String UPDATE_SQL = "update works set com_no=?, name=?, works_desc=? ,img=?,vdo=?,upload_date=? where works_no = ?";
 	private static final String FIND_BY_PK = "select * from works where works_no = ?";
-	private static final String FIND_BY_COM_NO = "select * from works where com_no = ?";
+	private static final String FIND_BY_COM_NO = "select works_no,com_no,name,works_desc,img,upload_date from works where com_no = ? order by upload_date desc";
 	private static final String FIND_ALL = "select * from works";
 	private static final String COUNT_SQL ="select count(*) from works where com_no = ? ";
 
@@ -232,7 +232,6 @@ public class WorksDAO implements WorksDAO_Interface {
 				works.setName(rs.getString("NAME"));
 				works.setUpload_date(rs.getTimestamp("UPLOAD_DATE"));
 				works.setImg(rs.getBytes("IMG"));
-				works.setVdo(rs.getBytes("VDO"));
 				works.setWorks_desc(readString(rs.getCharacterStream("WORKS_DESC")));
 				worksList.add(works);
 			}

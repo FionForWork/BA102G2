@@ -15,14 +15,13 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
-  
   <filter>
-    <filter-name>loginFilter</filter-name>
-    <filter-class>com.filters.LoginFilter</filter-class>
+    <filter-name>loginComFilter</filter-name>
+    <filter-class>com.filters.LoginComFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>loginFilter</filter-name>
-    <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+    <filter-name>loginComFilter</filter-name>
+    
       <url-pattern>/Front_end/com/index.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
@@ -30,10 +29,24 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+
   
- 
+ <filter>
+    <filter-name>loginMemFilter</filter-name>
+    <filter-class>com.filters.LoginMemFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginMemFilter</filter-name>
+    
+      <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
   
-  
+
   
   <servlet>
     <servlet-name>ComServlet</servlet-name>
@@ -91,6 +104,7 @@
     <servlet-name>TempServlet</servlet-name>
     <url-pattern>/temp/temp.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>TempContServlet</servlet-name>
     <servlet-class>com.tempcont.controller.TempContServlet</servlet-class>
@@ -123,6 +137,7 @@
     <servlet-name>WorksServlet</servlet-name>
     <url-pattern>/works/works.do</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <servlet-class>test.ShowPictureServletDAO</servlet-class>
@@ -131,6 +146,7 @@
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
+  
   <servlet>
 		<servlet-name>ProblemServlet</servlet-name>
 		<servlet-class>com.problem.controller.ProblemServlet</servlet-class>
@@ -156,4 +172,56 @@
 		<url-pattern>/Article/Article.do</url-pattern>
 	</servlet-mapping>
 	
+  <servlet>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <url-pattern>/advertising/advertising.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<display-name>RFQServlet</display-name>
+  	<servlet-name>RFQServlet</servlet-name>
+  	<servlet-class>com.rfq.controller.RFQServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RFQServlet</servlet-name>
+  	<url-pattern>/rfq/rfq.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<display-name>QuoteServlet</display-name>
+  	<servlet-name>QuoteServlet</servlet-name>
+  	<servlet-class>com.quote.controller.QuoteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QuoteServlet</servlet-name>
+  	<url-pattern>/quote/quote.do</url-pattern>
+  </servlet-mapping>
+  
+	<servlet>
+		<display-name>ReservationServlet</display-name>
+		<servlet-name>ReservationServlet</servlet-name>
+		<servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ReservationServlet</servlet-name>
+		<url-pattern>/reservation/reservation.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>CalendarServlet</display-name>
+		<servlet-name>CalendarServlet</servlet-name>
+		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/calendar/calendar.do</url-pattern>
+	</servlet-mapping>
+  
 </web-app>
