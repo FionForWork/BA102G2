@@ -40,7 +40,7 @@
                 <!--RWD-->
                 <a class="navbar-brand" href="homepage.html">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/Album/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -258,7 +258,7 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Album/img/banner1.jpg');"></div>
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/mem/img/banner1.jpg');"></div>
                 <!--banner圖放這裡-->
             </div>
         </div>
@@ -300,7 +300,7 @@
              <br><br><br> 
                 <ul class="list-group">
                     <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a><br>
                     <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">作品挑選管理</a><br>

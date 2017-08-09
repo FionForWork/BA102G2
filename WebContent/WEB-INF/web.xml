@@ -17,12 +17,12 @@
   </resource-ref>
   
   <filter>
-    <filter-name>loginFilter</filter-name>
-    <filter-class>com.filters.LoginFilter</filter-class>
+    <filter-name>loginComFilter</filter-name>
+    <filter-class>com.filters.LoginComFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>loginFilter</filter-name>
-    <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+    <filter-name>loginComFilter</filter-name>
+    
       <url-pattern>/Front_end/com/index.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
@@ -31,7 +31,20 @@
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
   
- 
+ <filter>
+    <filter-name>loginMemFilter</filter-name>
+    <filter-class>com.filters.LoginMemFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginMemFilter</filter-name>
+    
+      <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
   
   
   
