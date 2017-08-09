@@ -90,12 +90,12 @@
 			<br>
 
 
-			<div class="tab-content">
+			<div class="tab-content" style="border:0">
 				<div id="unselect" class="tab-pane fade in active">
             
             
             
-			<table class="table table-hover table-responsive" id="tempList">
+			<table class="table table-hover table-responsive tempList">
 				<thead>
 					<tr>
 						
@@ -126,7 +126,7 @@
 			</div>
 			
 			<div id="selected" class="tab-pane fade">
-			<table class="table table-hover table-responsive" id="tempList">
+			<table class="table table-hover table-responsive tempList">
 				<thead>
 					<tr>
 						<th>待挑選作品</th>

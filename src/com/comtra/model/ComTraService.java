@@ -47,4 +47,10 @@ public class ComTraService {
 	public List<ComTraVO> getAll(){
 		return dao.findAll();
 	}
+	public List<String> getComNoListByMemNo(String mem_no){
+		return dao.getComNoListByMemNo(mem_no);
+	}
+	public ComTraVO getComTraByComNoAndMemNo(String com_no,String mem_no){
+		return dao.getComTraByComNoAndMemNo(com_no, mem_no);
+	}
 }

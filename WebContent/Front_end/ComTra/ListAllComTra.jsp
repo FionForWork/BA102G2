@@ -108,6 +108,7 @@
 							<input type='hidden' name='action' value='delete_ComTra'>
 							<input type='hidden' name='comtra_no' value='${comtraVO.comtra_no}'>
 							<input type='hidden' name='nowPage' value='${nowPage}'>
+							<input type='hidden' name='requestURL' value='<%=request.getServletPath()%>'>
 						</form>
 						<a href="#">
 						<tr>
@@ -115,6 +116,7 @@
 							<td>${comSvc.getOneCom(comtraVO.com_no).name}</td>
 							<td>${comtraVO.tracking_date.toString().substring(0,10)}</td>
 							<td><a href='#' onclick='document.getElementById("deleteComTra${s.count}").submit();'><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td>
+<%-- 							<td><a href='#' onclick='document.getElementById("deleteComTra${s.count}").submit();'><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td> --%>
 						</tr>
 						</a>
 					</c:forEach>

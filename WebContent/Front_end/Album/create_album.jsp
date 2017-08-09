@@ -34,7 +34,7 @@
 		<c:forEach var="albVO" items="${albSvc.all }" >
 			<tr>
 				<td>${albVO.name }</td>
-				<td><img src='/BA102G2/ShowPictureServletDAO?alb_no=${albVO.alb_no }' width="200"><td>
+				<td><img src='<%=request.getContextPath()%>/ShowPictureServletDAO?alb_no=${albVO.alb_no }' width="200"><td>
 				<c:out value="${albVO.alb_no }"></c:out>
 			</tr>
 		
