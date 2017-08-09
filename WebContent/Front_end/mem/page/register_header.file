@@ -32,7 +32,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
         </div> 
         <div class="modal-body" style="padding:40px 50px;">
-          <form action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+          <form   action="<%= request.getContextPath() %>/mem/mem.do" method="post">
 
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
@@ -51,7 +51,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
-          <p>不是會員嗎? <a href="#">馬上註冊</a></p>
+          <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
           <p>忘記 <a href="#">密碼?</a></p>
         </div>
       </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
-          <p>還沒註冊成為廠商嗎? <a href="#">馬上註冊</a></p>
+          <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
           <p>忘記 <a href="#">密碼?</a></p>
         </div>
       </div>
@@ -137,7 +137,7 @@ $(document).ready(function(){
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                      <li class="wd-drop-wrapper">
-                        <a class="" href="<%= request.getContextPath() %>/Front_end/login/login.jsp" role="login">
+                        <a class=""  role="login">
                            登入
                         </a>
                        
@@ -155,7 +155,7 @@ $(document).ready(function(){
                         
                     </li>
                      <li class="wd-drop-wrapper">
-                        <a href="#">註冊</a>
+                        <a >註冊</a>
                         <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>

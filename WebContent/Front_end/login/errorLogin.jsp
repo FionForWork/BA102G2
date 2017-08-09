@@ -4,14 +4,14 @@
 <%@ page import="java.util.*"%>
 <%@ include file="/Front_end/mem/page/register_header.file"%>
 
-<title>帳號未驗證</title>
+<title>登入錯誤</title>
 <br><br><br><br><br><br>
 
-<center> <h1>帳號尚未驗證,驗證信已發送到信箱</h1></center>
+<center> <h1>你的帳號 , 密碼無效,請重新登入!</h1></center>
 
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
+
 <br><br><br><br>
 
 

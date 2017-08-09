@@ -50,8 +50,8 @@
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li>
-                        <a  href="<%= request.getContextPath() %>/Front_end/com/index.jsp" >
-                            ${comVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />
+                        <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp" >
+                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
                         </a>
                     </li>
                     

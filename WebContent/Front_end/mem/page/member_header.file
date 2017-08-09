@@ -53,7 +53,7 @@
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li >
                         <a  href="<%= request.getContextPath() %>/Front_end/mem/index.jsp">
-                          ${memVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />
+                          <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp<span style="font-size:19px;">${memVO.name}</span>
                         </a>
                     </li>
                     <li>

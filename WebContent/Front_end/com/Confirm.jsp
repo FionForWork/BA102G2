@@ -4,15 +4,15 @@
 <%@ page import="java.util.*"%>
 <%@ include file="/Front_end/mem/page/register_header.file"%>
 
-<title>帳號未驗證</title>
+<title>帳號驗證正確</title>
 <br><br><br><br><br><br>
 
-<center> <h1>帳號尚未驗證,驗證信已發送到信箱</h1></center>
+<center> <h1>恭喜驗證成功,登入後可以開始使用本網站功能囉!</h1></center>
 
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
+
 <br><br><br><br>
 
 
-<%@ include file="/Front_end/mem/page/register_footer.file"%>
+<%@ include file="/Front_end/mem/page/register_footer.file"%>>

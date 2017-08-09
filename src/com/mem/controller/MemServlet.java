@@ -100,7 +100,7 @@ public class MemServlet extends HttpServlet{
 		if ("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
-			
+			//整個連線拔掉
 			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.html");
 		    return;
 		}
@@ -108,6 +108,10 @@ public class MemServlet extends HttpServlet{
 		
 		
 		if ("login".equals(action)) {
+			Map<String,String> errorMsgs = new HashMap<String,String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
 		    // 【取得使用者 帳號(account) 密碼(password)】
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
@@ -120,7 +124,7 @@ public class MemServlet extends HttpServlet{
 		
 
 			 for(int i=0;i<list.size();i++){
-				 if (!list.get(i).getId().equals(id)) {
+				 if (list.get(i).getId().equals(id)) {
 					 
 					
 					 for(int j=0;j<list1.size();j++){
@@ -128,6 +132,10 @@ public class MemServlet extends HttpServlet{
 						 if (list1.get(j).getPwd().equals(pwd)) {
 							
 							 HttpSession session = req.getSession();
+							 session.removeAttribute("id");
+							 session.removeAttribute("memVO");
+
+								
 						      MemVO memVO = memSvc.getOneMemById(id);
 						    
 						      session.setAttribute("id", id);
@@ -142,7 +150,7 @@ public class MemServlet extends HttpServlet{
 						          }
 						      }catch(Exception ignored){}
 						      
-						      res.sendRedirect(req.getContextPath()+"/Front_end/mem/index.jsp");
+						      res.sendRedirect(req.getContextPath()+"/Front_end/mem/listOneMem.jsp");
 						      return;
 						 }
 
@@ -151,14 +159,9 @@ public class MemServlet extends HttpServlet{
 				 }
 
 			 }
+			 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
+		      return;
 			
-			   
-			 out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-		      out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-		      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>重新登入</A>");
-		      out.println("</BODY></HTML>");
-			 
-			 
 		}
 		
 		

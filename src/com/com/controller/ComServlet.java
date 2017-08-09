@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import com.com.model.ComService;
 import com.com.model.ComVO;
+import com.email.MailService;
 
 
 
@@ -29,44 +30,7 @@ public class ComServlet extends HttpServlet {
 		doPost(req, res);
 	}
 
-	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-		public void sendMail(String to, String subject, String messageText) {
-				
-		   try {
-			   // 設定使用SSL連線至 Gmail smtp Server
-			   Properties props = new Properties();
-			   props.put("mail.smtp.host", "smtp.gmail.com");
-			   props.put("mail.smtp.socketFactory.port", "465");
-			   props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-			   props.put("mail.smtp.auth", "true");
-			   props.put("mail.smtp.port", "465");
-
-	       // ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
-	       // ●須將myGmail的【安全性較低的應用程式存取權】打開
-		     final String myGmail = "shesaidyesteam@gmail.com";
-		     final String myGmail_password = "ba102123456789";
-			   Session session = Session.getInstance(props, new Authenticator() {
-				   protected PasswordAuthentication getPasswordAuthentication() {
-					   return new PasswordAuthentication(myGmail, myGmail_password);
-				   }
-			   });
-
-			   Message message = new MimeMessage(session);
-			   message.setFrom(new InternetAddress(myGmail));
-			   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-			  
-			   //設定信中的主旨  
-			   message.setSubject(subject);
-			   //設定信中的內容 
-			   message.setText(messageText);
-
-			   Transport.send(message);
-			   System.out.println("傳送成功!");
-	     }catch (MessagingException e){
-		     System.out.println("傳送失敗!");
-		     e.printStackTrace();
-	     }
-	   }
+	
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -76,18 +40,6 @@ public class ComServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
-		//驗證廠商
-				if("confirmCom".equals(action)){
-					
-					ComVO comVO = new ComVO();
-					String com_no = req.getParameter("com_no").trim();
-
-					 ComService comSvc = new ComService();
-					 comVO =comSvc.confirmCom(com_no);
-					 
-					 
-					 
-				}
 				
 				
 		//修改密碼
@@ -173,8 +125,8 @@ public class ComServlet extends HttpServlet {
 						 if (list1.get(j).getPwd().equals(pwd)) {
 							 HttpSession session = req.getSession();
 							
-							 
-							 
+							 session.removeAttribute("id");
+							 session.removeAttribute("comVO");
 							 
 						      ComVO comVO = comSvc.getOneComById(id);
 					
@@ -183,10 +135,8 @@ public class ComServlet extends HttpServlet {
 						     System.out.println(ststus);
 						      if("待驗證".equals(ststus)){
 									 
-									 out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-								      out.println("<BODY>你的帳號待驗證,請去電子郵件收驗證信!<BR>");
-								      out.println("</BODY></HTML>");
-								     return;
+						    	  res.sendRedirect(req.getContextPath()+"/Front_end/com/notConfirmCom.jsp");
+							      return;
 								 }else{
 									 session.setAttribute("id", id);
 								     session.setAttribute("comVO", comVO);
@@ -200,11 +150,9 @@ public class ComServlet extends HttpServlet {
 								          }
 								      }catch(Exception ignored){}
 								      
-								      res.sendRedirect(req.getContextPath()+"/Front_end/com/index.jsp");
+								      res.sendRedirect(req.getContextPath()+"/Front_end/com/listOneCom.jsp");
 								      return;
 								 }
-						    
-						      
 						 }
 
 					 }
@@ -213,14 +161,9 @@ public class ComServlet extends HttpServlet {
 
 			 }
 			 
-			
-			 
-			 out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-		      out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-		      out.println("請按此重新登入 <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>重新登入</A>");
-		      out.println("</BODY></HTML>");
-			 
-			 
+		 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
+		      return;
+	 
 		}
 	
         if ("insert".equals(action)) {   
@@ -295,20 +238,21 @@ public class ComServlet extends HttpServlet {
 			      session.setAttribute("comVO", comVO);
 			      
 			     
-			      int passRandom = (int)(Math.random()*999+1);  
-			      String to = "lf2lf2111@gmail.com";
+			     //管理員可用 int passRandom = (int)(Math.random()*999+1);  
+			      String to = id;
 			      
-			      String subject = "密碼通知";
+			      String subject = "廠商帳號驗證";
 			      
-			      String ch_name = "peter1";
+			      String ch_name = name;
+			      String messageText = "你好!" + ch_name +"歡迎加入she said yes! \n"+
 			      
-			      String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" +" (已經啟用)"; 
+			     "請點選網址完成驗證 http://localhost:8081/BA102G2/Confirm?action=conFirmCom&&com_no="+comVO.getCom_no() + " \n" ; 
 			       
-			      ComServlet mailService = new ComServlet();
+			      MailService mailService = new MailService();
 			      mailService.sendMail(to, subject, messageText);
 			      
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/Front_end/com/listOneCom.jsp";
+				String url = "/Front_end/com/notConfirmCom.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
