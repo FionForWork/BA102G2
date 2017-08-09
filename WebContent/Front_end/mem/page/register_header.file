@@ -52,7 +52,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
-          <p>忘記 <a href="#">密碼?</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
         </div>
       </div>
       
@@ -90,7 +90,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
-          <p>忘記 <a href="#">密碼?</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
         </div>
       </div>
       

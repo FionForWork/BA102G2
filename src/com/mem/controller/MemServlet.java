@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 
 import com.com.model.ComService;
 import com.com.model.ComVO;
+import com.email.MailService;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
@@ -44,9 +45,74 @@ public class MemServlet extends HttpServlet{
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
+		if("change".equals(action)){
+			int passRandom = (int)(Math.random()*99999+1);  
+			MemVO memVO = new MemVO();
+			String id = req.getParameter("id").trim();
+			MemService memSvc = new MemService();
+			 memVO =memSvc.getOneMemById(id);
+			 memSvc.updatePwd(memVO.getMem_no(),"B"+passRandom);
+			
+
+			 String to = id;
+			 String subject = "忘記密碼";
+				
+		     String messageText = "你好! \n"+"B"+passRandom+" \n這是你的新密碼,請妥善保管,登入後建議馬上更改密碼 \n";
+		      
+		    
+		       
+		      MailService mailService = new MailService();
+		      mailService.sendMail(to, subject, messageText);
 		
+		      res.sendRedirect(req.getContextPath()+"/Front_end/login/forgetPwdOk.jsp");
+			    return;
+		}
 		
-		
+		if("forgetPwd".equals(action)){
+			Map<String,String> errorMsgs = new HashMap<String,String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			MemVO memVO = new MemVO();
+			String id = req.getParameter("id").trim();
+			
+			 MemService memSvc = new MemService();
+			 List<MemVO> list = memSvc.loginid();
+			
+			 for(int i=0;i<list.size();i++){
+					
+				 if (list.get(i).getId().equals(id)) {
+					 memVO =memSvc.getOneMemById(id);
+					 
+					
+					 String to = id;
+					 String subject = "忘記密碼";
+						
+				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+"http://localhost:8081/BA102G2/mem/mem.do?action=change&&id="+id;
+				      
+				    
+				       
+				      MailService mailService = new MailService();
+				      mailService.sendMail(to, subject, messageText);
+				      res.sendRedirect(req.getContextPath()+"/Front_end/login/forgetPwdOk.jsp");
+					    return;
+				 }
+			 
+			 
+			 }
+			 		
+			 			errorMsgs.put("forgetPwdMem","請輸入正確帳號");
+			 		
+					
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/Front_end/login/forgetPwd.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+			
+		}
 		
 		//修改密碼
 		if ("updatePwd".equals(action)) {
@@ -74,6 +140,7 @@ public class MemServlet extends HttpServlet{
 						failureView.forward(req, res);
 						return;//程式中斷
 					}
+				 
 				 if(!oldpwd.equals(a.getPwd())){
 					 errorMsgs.add("舊密碼錯誤更改失敗");
 					 String url = "/Front_end/mem/updatePwd.jsp";

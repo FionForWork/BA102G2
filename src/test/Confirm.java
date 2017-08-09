@@ -2,6 +2,7 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.com.model.ComService;
 import com.com.model.ComVO;
+import com.email.MailService;
 
 /**
  * Servlet implementation class Confirm
@@ -25,7 +27,9 @@ public class Confirm extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
-
+		
+		
+		
 		//驗證廠商
 				if("conFirmCom".equals(action)){
 					//http://localhost:8081/BA102G2/Confirm?action=conFirmCom&&com_no=2001

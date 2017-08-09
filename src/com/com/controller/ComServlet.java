@@ -40,7 +40,78 @@ public class ComServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
+		if("change".equals(action)){
+			int passRandom = (int)(Math.random()*99999+1);  
+			ComVO comVO = new ComVO();
+			String id = req.getParameter("id").trim();
+			 ComService comSvc = new ComService();
+			 comVO =comSvc.getOneComById(id);
+			
+
+			 String to = id;
+			 String subject = "忘記密碼";
+			 comSvc.updatePwd(comVO.getCom_no(),"B"+passRandom);
 				
+		     String messageText = "你好! \n"+"B"+passRandom+" \n這是你的新密碼,請妥善保管,登入後建議馬上更改密碼 \n";
+		      
+		    
+		       
+		      MailService mailService = new MailService();
+		      mailService.sendMail(to, subject, messageText);
+		
+		      res.sendRedirect(req.getContextPath()+"/Front_end/login/forgetPwdOk.jsp");
+			    return;
+		}
+		
+		
+		if("forgetPwd".equals(action)){
+			Map<String,String> errorMsgs = new HashMap<String,String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			ComVO comVO = new ComVO();
+			String id = req.getParameter("id").trim();
+			
+			 ComService comSvc = new ComService();
+			 List<ComVO> list = comSvc.loginid();
+			
+			 for(int i=0;i<list.size();i++){
+					
+				 if (list.get(i).getId().equals(id)) {
+					 comVO =comSvc.getOneComById(id);
+					 
+					
+					 String to = id;
+					 String subject = "忘記密碼";
+						
+				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+"http://localhost:8081/BA102G2/com/com.do?action=change&&id="+id;
+				      
+				    
+				       
+				      MailService mailService = new MailService();
+				      mailService.sendMail(to, subject, messageText);
+				      res.sendRedirect(req.getContextPath()+"/Front_end/login/forgetPwdOk.jsp");
+					    return;
+				 }
+			 
+			 
+			 }
+			 		
+			 			errorMsgs.put("forgetPwdCom","請輸入正確帳號");
+			 		
+					
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/Front_end/login/forgetPwd.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+			
+		}
+		
+		
+		
 				
 		//修改密碼
 				if ("updatePwd".equals(action)) {
@@ -68,9 +139,10 @@ public class ComServlet extends HttpServlet {
 								failureView.forward(req, res);
 								return;//程式中斷
 							}
+						 
 						 if(!oldpwd.equals(a.getPwd())){
- 
-							 String url = "/Front_end/com/updatePwd.jsp";
+							 errorMsgs.add("舊密碼錯誤更改失敗");
+							 String url = "/Front_end/mem/updatePwd.jsp";
 								RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
 								successView.forward(req, res);	
 						}else{

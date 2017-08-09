@@ -21,7 +21,7 @@
 	</font>
 </c:if>
 
-<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form3" onSubmit="return check();" >
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form9" onSubmit="return check();" >
 		<div class="form-group">
            <span >舊密碼:<font color='red'>${errorMsgs.get(0)}</font></span>
            <input type="password" class="form-control"  name="oldpwd" value="">
@@ -44,7 +44,7 @@
 <script language="javascript"> 
 	function check() 
 	{ 
-	if ((document.form3.elements[1].value)!=(document.form3.elements[2].value)){ 
+	if ((document.form9.elements[1].value)!=(document.form9.elements[2].value)){ 
 	alert("確認新密碼不一致"); 
 	return false; 
 	} 
