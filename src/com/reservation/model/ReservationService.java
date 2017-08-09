@@ -3,6 +3,8 @@ package com.reservation.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.calendar.model.CalendarVO;
+
 public class ReservationService {
 	
 	private ReservationDAO_Interface dao;
@@ -12,7 +14,7 @@ public class ReservationService {
 	}
 	
 	public ReservationVO addReservation (String mem_no, String com_no, Timestamp res_date,
-			Timestamp serv_date, String serv_no, String stype_no, Integer price){
+			Timestamp serv_date, String serv_no, String stype_no, Integer price, CalendarVO calendarVO){
 		
 		ReservationVO reservationVO = new ReservationVO();
 		reservationVO.setMem_no(mem_no);
@@ -22,7 +24,7 @@ public class ReservationService {
 		reservationVO.setServ_no(serv_no);
 		reservationVO.setStype_no(stype_no);
 		reservationVO.setPrice(price);
-		dao.insert(reservationVO);
+		dao.insert(reservationVO, calendarVO);
 		
 		return reservationVO;
 	}

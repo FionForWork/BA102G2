@@ -58,7 +58,7 @@ public class ReservationServlet extends HttpServlet {
 			String requestURL = req.getParameter("requestURL");
 			
 			ReservationService reservationService = new ReservationService();
-			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price);
+//			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price);
 		
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
 			successView.forward(req, res);
@@ -70,20 +70,26 @@ public class ReservationServlet extends HttpServlet {
 			String serv_date = req.getParameter("serv_date");
 			String requestURI = req.getParameter("requestURI");
 			
+			// Calendar必要資訊
 			ServService servService = new ServService();
 			ServVO servVO =  servService.getOneServ(serv_no);
-			
-			ReservationService reservationService = new ReservationService();
-			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
-					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice());
 			
 			MemService memService = new MemService();
 			Service_TypeService stypeService = new Service_TypeService();
 			String content = memService.getOneMem("1001").getName() + "-" 
-							+ stypeService.getOne(servVO.getStype_no()).getName()+"服務";
+					+ stypeService.getOne(servVO.getStype_no()).getName()+"服務";
 			
-			CalendarService calendarService = new CalendarService();
-			calendarService.addCalendar(servVO.getCom_no(), content, Timestamp.valueOf(serv_date+" 00:00:00"),serv_no);
+			
+			CalendarVO calendarVO = new CalendarVO();
+			calendarVO.setCom_no(servVO.getCom_no());
+			calendarVO.setContent(content);
+			calendarVO.setCal_date(Timestamp.valueOf(serv_date+" 00:00:00"));
+			
+			// 將訂單和行事曆一起送進Service
+			ReservationService reservationService = new ReservationService();
+			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
+					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(),calendarVO);
+			
 			
 //			forward會再預約一次
 //			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 

@@ -1,5 +1,6 @@
 package com.rfq_detail.model;
 
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -11,8 +12,9 @@ public class RFQ_DetailService {
 		dao = new RFQ_DetailDAO();
 	}
 	
+	// 不會用到
 	public RFQ_DetailVO addRFQDetail( String stype_no, String location,
-									Timestamp ser_date, String content, String status){
+									Timestamp ser_date, String content, String status, Connection con){
 		
 		RFQ_DetailVO rfq_detailVO = new RFQ_DetailVO();
 		
@@ -21,7 +23,7 @@ public class RFQ_DetailService {
 		rfq_detailVO.setSer_date(ser_date);
 		rfq_detailVO.setContent(content);
 		rfq_detailVO.setStatus(status);
-		dao.insert(rfq_detailVO);
+		dao.insert(rfq_detailVO, con);
 		
 		return rfq_detailVO;
 		

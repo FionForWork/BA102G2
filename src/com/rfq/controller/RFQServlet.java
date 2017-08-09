@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -67,15 +68,24 @@ public class RFQServlet extends HttpServlet {
 			String[] location = req.getParameterValues("location");
 			String[] content = req.getParameterValues("content");
 			
-			RFQService rfqService = new RFQService();
-			rfqService.addRFQ(memVO.getMem_no(), new Timestamp(System.currentTimeMillis()));
+			List<RFQ_DetailVO> list = new ArrayList<RFQ_DetailVO>();
 			
 			RFQ_DetailService rfqDetailService = new RFQ_DetailService();
 			for(int i = 0; i < type.length ; i++){
 				int formNum = Integer.valueOf(type[i]);
 				Timestamp t = Timestamp.valueOf(ser_date[formNum]+" "+time[formNum]);
-				rfqDetailService.addRFQDetail( stype_no[formNum], location[formNum], t, content[formNum].trim().replace("\n", "<br>"), "1");
+				RFQ_DetailVO rfq_DetailVO = new RFQ_DetailVO();
+				rfq_DetailVO.setStype_no(stype_no[formNum]);
+				rfq_DetailVO.setLocation(location[formNum]);
+				rfq_DetailVO.setSer_date(t);
+				rfq_DetailVO.setContent(content[formNum].trim().replace("\n", "<br>"));
+				rfq_DetailVO.setStatus("1");
+				list.add(rfq_DetailVO);
+//				rfqDetailService.addRFQDetail( stype_no[formNum], location[formNum], t, content[formNum].trim().replace("\n", "<br>"), "1");
 			}
+			
+			RFQService rfqService = new RFQService();
+			rfqService.addRFQ(memVO.getMem_no(), new Timestamp(System.currentTimeMillis()), list);
 			
 			String url = "/Front_end/RFQ/listAllRFQ.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

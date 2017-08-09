@@ -36,10 +36,9 @@ public class RFQ_DetailJDBCDAO implements RFQ_DetailDAO_Interface {
 			"SELECT * FROM RFQ_DETAIL where RFQDETAIL_NO = (select RFQDETAIL_NO from quote where Quo_No = ?)";
 	
 	@Override
-	public void insert(RFQ_DetailVO rfq_detailVO) {
-		Connection con = null;
+	public void insert(RFQ_DetailVO rfq_detailVO, Connection con) {
 		PreparedStatement pstmt = null;
-		
+		// 已改為自增主鍵，不能用
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);

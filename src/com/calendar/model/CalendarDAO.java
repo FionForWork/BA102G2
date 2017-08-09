@@ -72,6 +72,40 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			}
 		}
 	}
+	
+	@Override
+	public void insertFromRes(CalendarVO calendarVO, Connection con) {
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT);
+			
+			pstmt.setString(1,calendarVO.getCom_no());
+			pstmt.setString(2, calendarVO.getContent());
+			pstmt.setTimestamp(3, calendarVO.getCal_date());
+			pstmt.setString(4, calendarVO.getStatus());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if(con != null){
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	@Override
 	public void updateDate(CalendarVO calendarVO) {

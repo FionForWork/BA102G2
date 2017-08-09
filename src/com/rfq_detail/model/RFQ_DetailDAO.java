@@ -26,7 +26,7 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 	}
 	
 	private static final String INSERT = 
-			"INSERT INTO RFQ_DETAIL VALUES (LTRIM(TO_CHAR(RFQDETAIL_SQ.NEXTVAL,'0009')), LTRIM(TO_CHAR(RFQ_SQ.CURRVAL,'0009')), ?, ?, ?, ?, ?)";
+			"INSERT INTO RFQ_DETAIL VALUES (LTRIM(TO_CHAR(RFQDETAIL_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = 
 			"UPDATE RFQ_DETAIL SET STATUS=? WHERE RFQDETAIL_NO = ?";
 	private static final String DELETE = 
@@ -43,34 +43,34 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 			"SELECT * FROM RFQ_DETAIL where RFQDETAIL_NO = (select RFQDETAIL_NO from quote where Quo_No = ?)";
 	
 	@Override
-	public void insert(RFQ_DetailVO rfq_detailVO) {
-		Connection con = null;
+	public void insert(RFQ_DetailVO rfq_detailVO ,Connection con) {
 		PreparedStatement pstmt = null;
 		
+		// 自增主鍵版本
 		try {
-			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 			
-			pstmt.setString(1, rfq_detailVO.getStype_no());
-			pstmt.setString(2, rfq_detailVO.getLocation());
-			pstmt.setTimestamp(3, rfq_detailVO.getSer_date());
-			pstmt.setString(4, rfq_detailVO.getContent());
-			pstmt.setString(5, rfq_detailVO.getStatus());
+			pstmt.setString(1, rfq_detailVO.getRfq_no());
+			pstmt.setString(2, rfq_detailVO.getStype_no());
+			pstmt.setString(3, rfq_detailVO.getLocation());
+			pstmt.setTimestamp(4, rfq_detailVO.getSer_date());
+			pstmt.setString(5, rfq_detailVO.getContent());
+			pstmt.setString(6, rfq_detailVO.getStatus());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}finally{
 			if(pstmt != null){
 				try {
 					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(con != null){
-				try {
-					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

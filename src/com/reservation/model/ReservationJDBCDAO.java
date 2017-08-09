@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.calendar.model.CalendarVO;
+
 public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -34,7 +36,7 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 			"SELECT * FROM RESERVATION WHERE COM_NO = ?";
 	
 	@Override
-	public void insert(ReservationVO reservationVO) {
+	public void insert(ReservationVO reservationVO,CalendarVO calendarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		

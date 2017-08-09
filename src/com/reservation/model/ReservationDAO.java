@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.calendar.model.*;
+
 public class ReservationDAO implements ReservationDAO_Interface {
 	
 	private static DataSource ds = null;
@@ -45,13 +47,17 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			"SELECT * FROM RESERVATION WHERE serv_date >= ? and serv_date <= ? and COM_NO = ?;";
 	
 	@Override
-	public void insert(ReservationVO reservationVO) {
+	public void insert(ReservationVO reservationVO,CalendarVO calendarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT);
+			con.setAutoCommit(false);
+			
+			String cols[] = {"RES_NO"};
+			
+			pstmt = con.prepareStatement(INSERT, cols);
 			
 			pstmt.setString(1,reservationVO.getMem_no());
 			pstmt.setString(2,reservationVO.getCom_no());
@@ -62,8 +68,30 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			pstmt.setInt(7, reservationVO.getPrice());
 			pstmt.executeUpdate();
 			
+			String RES_NO = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				RES_NO = rs.getString(1);
+			}
+			rs.close();
+			
+			calendarVO.setStatus(RES_NO);
+			CalendarDAO calendarDAO = new CalendarDAO();
+			calendarDAO.insertFromRes(calendarVO, con);
+			
+			con.commit();
+			con.setAutoCommit(true);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			if(con!= null){
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}finally{
 			if(pstmt != null){
 				try {

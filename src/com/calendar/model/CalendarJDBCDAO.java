@@ -359,6 +359,12 @@ public static void main(String args[]){
 		System.out.println(l);
 	}
 
+@Override
+public void insertFromRes(CalendarVO calendarVO, Connection con) {
+	// TODO Auto-generated method stub
+	
+}
+
 
 
 }
