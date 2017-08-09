@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.advertising.model.AdvertisingService;
+import com.advertising.model.AdvertisingVO;
 import com.album.model.AlbumService;
 import com.album.model.AlbumVO;
-import com.com.model.ComService;
-import com.com.model.ComVO;
+import com.com.model.*;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 import com.tempcont.model.TempContService;
 import com.tempcont.model.TempContVO;
-import com.works.model.WorksService;
-import com.works.model.WorksVO;
+import com.works.model.*;
 
 public class ShowPictureServletDAO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			AlbumVO alb = albSvc.getOneAlbum(pk);
 			byte[] cover = alb.getCover();
 			out.write(cover);
-			out.close(); 
+			out.close();
 			return;
 		}
 		if(file.startsWith("cont_no")){
@@ -70,36 +70,24 @@ public class ShowPictureServletDAO extends HttpServlet {
 				tempcont = tempcontVO.getImg();
 			}
 			out.write(tempcont);
-			out.close(); 
-			return;
-		}
-		if(file.startsWith("mem_no")){
-			pk = request.getParameter("mem_no");
-			byte[] picture =null;
-			System.out.println(pk);
-			MemService memSvc = new MemService();
-			MemVO memVO = memSvc.getOneMem(pk);
-			picture = memVO.getPicture();
-			out.write(picture);
-			out.close(); 
+			out.close();
 			return;
 		}
 		if(file.startsWith("works_no")){
 			pk = request.getParameter("works_no");
-			byte[] work =null;
+			byte[] workcont =null;
 			System.out.println(pk);
 			WorksService worksSvc = new WorksService();
 			WorksVO worksVO = worksSvc.getOneWork(pk);
 			if(worksVO.getImg() == null){
-				work = worksVO.getVdo();
+				workcont = worksVO.getVdo();
 			}else{
-				work = worksVO.getImg();
+				workcont = worksVO.getImg();
 			}
-			out.write(work);
+			out.write(workcont);
 			out.close(); 
 			return;
 		}
-		
 		
 		if(file.startsWith("mem_no")){
 			pk = request.getParameter("mem_no");
@@ -130,5 +118,16 @@ public class ShowPictureServletDAO extends HttpServlet {
 		}
 		
 		
+		if(file.startsWith("adv_no")){
+			pk = request.getParameter("adv_no");
+			byte[] advcont =null;
+			System.out.println(pk);
+			AdvertisingService advertisingSvc = new AdvertisingService();
+			AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(pk);
+			advcont = advertisingVO.getImg();
+			out.write(advcont);
+			out.close();
+			return;
+		}
 	}
 }

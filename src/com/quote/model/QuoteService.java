@@ -11,15 +11,13 @@ public class QuoteService {
 		dao = new QuoteDAO();
 	}
 	
-	public QuoteVO addQuote(String quo_no, String com_no, String rfqdetail_no, Integer price, 
-							String title, String content, Timestamp quo_date){
+	public QuoteVO addQuote(String com_no, String rfqdetail_no, Integer price, 
+							String content, Timestamp quo_date){
 		
 		QuoteVO quoteVO = new QuoteVO();
-		quoteVO.setQuo_no(quo_no);
 		quoteVO.setCom_no(com_no);
 		quoteVO.setRfqdetail_no(rfqdetail_no);
 		quoteVO.setPrice(price);
-		quoteVO.setTitle(title);
 		quoteVO.setContent(content);
 		quoteVO.setQuo_date(quo_date);
 		dao.insert(quoteVO);
@@ -34,7 +32,7 @@ public class QuoteService {
 		quoteVO.setQuo_no(quo_no);
 		quoteVO.setPrice(price);
 		quoteVO.setQuo_date(quo_date);
-		dao.updateStatus(quoteVO);
+		dao.update(quoteVO);
 		
 		return quoteVO;
 	}
@@ -47,8 +45,8 @@ public class QuoteService {
 		return dao.findByPK(quo_no);
 	}
 	
-	public List<QuoteVO> getAllQuote(){
-		return dao.getAll();
+	public List<QuoteVO> getAllQuote(String rfqdetail_no){
+		return dao.getAll(rfqdetail_no);
 	}
 	
 }

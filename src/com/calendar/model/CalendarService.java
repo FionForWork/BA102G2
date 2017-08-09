@@ -11,27 +11,24 @@ public class CalendarService {
 		dao = new CalendarDAO();
 	}
 	
-	public CalendarVO addCalendar(String cal_no, String com_no, String content, Timestamp start_time,Timestamp end_time){
+	public CalendarVO addCalendar(String com_no, String content, Timestamp cal_date, String status){
 		
 		CalendarVO vo = new CalendarVO();
-		vo.setCal_no(cal_no);
 		vo.setCom_no(com_no);
 		vo.setContent(content);
-		vo.setStart_time(start_time);
-		vo.setEnd_time(end_time);
+		vo.setCal_date(cal_date);
+		vo.setStatus(status);
 		dao.insert(vo);
 		
 		return vo;
 	}
 	
-	public CalendarVO updateCalendar(String cal_no,String content, Timestamp start_time,Timestamp end_time){
+	public CalendarVO updateDate(String cal_no, Timestamp cal_date){
 		
 		CalendarVO vo = new CalendarVO();
 		vo.setCal_no(cal_no);
-		vo.setContent(content);
-		vo.setStart_time(start_time);
-		vo.setEnd_time(end_time);
-		dao.update(vo);
+		vo.setCal_date(cal_date);
+		dao.updateDate(vo);
 		
 		return vo;
 	}
@@ -46,6 +43,9 @@ public class CalendarService {
 	
 	public List<CalendarVO> getAllCalendar(){
 		return dao.getAll();
-		
+	}
+	
+	public List<CalendarVO> getMonthCalendar(int year, int month, int dayNum, String com_no){
+		return dao.getMonthCal(year, month, dayNum, com_no);
 	}
 }

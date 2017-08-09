@@ -126,13 +126,18 @@
 				<ul class="pagination pagination-lg">
 				
 					<c:choose>
-					
+						
 						<c:when test="<%= nowPage < 5 %>">
-							
-							<c:forEach var="page" begin="1" end="5">
+							<c:if test="<%=pageNumber < 5 %>">
+								<c:forEach var="page" begin="1" end="<%=pageNumber%>">
 								<li><a href='<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}' class="btn btn-info ${nowPage == page?'active':'' }">${page}</a></li>
-							</c:forEach>
+								</c:forEach>
+							</c:if>
+							
 							<c:if test="<%=pageNumber > 5 %>">
+								<c:forEach var="page" begin="1" end="5">
+								<li><a href='<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=${page}' class="btn btn-info ${nowPage == page?'active':'' }">${page}</a></li>
+								</c:forEach>
 								<li><a class='disabled'>...</a></li>
 								<li><a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp?nowPage=<%=pageNumber%>"><%= pageNumber %></a></li>
 							</c:if>

@@ -46,7 +46,7 @@ public class InsertAlbumAndPhotoToDB {
 			
 			for (int j = start; j <= numberOfPic; j++) {
 				System.out.println("222222222222222222");
-				String path = "C:\\Users\\mac\\Dropbox\\test\\" + j + ".jpg";
+				String path = "WebContent/Front_end/Album/img/ab/" + j + ".jpg";
 				
 				
 					fis = new FileInputStream(path);
