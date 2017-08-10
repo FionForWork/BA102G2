@@ -1,3 +1,4 @@
+<%@page import="com.com.model.ComVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
@@ -7,9 +8,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <% ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");  %>
+<% ComVO comVO= (ComVO) session.getAttribute("comVO"); %>
+<% MemVO memVO= (MemVO) session.getAttribute("memVO"); %>
 <%	
 // 	String art_no=request.getParameter("art_no");
 	Integer art_no = new Integer(request.getParameter("art_no"));
+	 
 	String mem_no = request.getParameter("mem_no");
 // 	Integer artno=Integer.valueOf(art_no).intValue(); 
 	
@@ -42,7 +46,7 @@
                              </form>                   
         
                             <div class="panel panel-default">
-                            <img src="<%=request.getContextPath()%>/Front_end/Article/img/img1.jpeg" class="pull-left xxx" style="width:100px">
+                            <img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no="${mem.mem_no }" class="pull-left xxx" style="width:130px">
                               <div class="panel-heading" style="height: 100px;font-size: 20px">
                                <div class="name">${article.art_no }</div>
                                <div class="date">${article.art_date }</div>

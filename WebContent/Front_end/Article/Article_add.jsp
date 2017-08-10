@@ -1,3 +1,5 @@
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -5,6 +7,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="page/add_header.file"%>
 <%
+   MemService memService=new MemService();
+MemVO memVO=memService.getOneMem("1001");
+session.setAttribute("memVo", memVO);
 	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 %>
 <form METHOD="post"
