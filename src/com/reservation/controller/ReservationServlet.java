@@ -78,8 +78,6 @@ public class ReservationServlet extends HttpServlet {
 			ReservationService reservationService = new ReservationService();
 			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price, "1", calendarVO, rfq_detailVO);
 		
-			
-			
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
 			successView.forward(req, res);
 			
