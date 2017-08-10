@@ -11,9 +11,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-// 	ComService comSvc = new ComService();
-// 	ComVO comVO1 = comSvc.getOneCom("2001");
-// 	session.setAttribute("comVO", comVO1);
+	ComService comSvc = new ComService();
+	ComVO comVO1 = comSvc.getOneCom("2003");
+	session.setAttribute("comVO", comVO1);
 	
 	MemService memSvc = new MemService();
 	MemVO memVO1 = memSvc.getOneMem("1001");
@@ -115,12 +115,12 @@
 			</p>
 			<br><br>
 			<p class="text-center" id="addClass">
-				<a class="btn btn-reservation btn-lg" href="#" onclick="change(1)">
+				<a class="btn btn-reservation btn-lg" onclick="change(1)">
 					立即聯絡我們 </a>
 			</p>
 			<p class="text-center" style="display: none;" id="dClass">
 
-				<a class="btn btn-reservation btn-lg" href="#" onclick="change(2)">
+				<a class="btn btn-reservation btn-lg" onclick="change(2)">
 					立即聯絡我們 </a>
 			</p>
 		</div>
@@ -242,8 +242,8 @@
 			<div class="col-md-12">
 				<div class="chat_box panel panel-default" id="chatbox">
 					<div class="panel-heading">
-						<div id="statusOutput"></div>
 						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
+						<div id="statusOutput"></div>
 					</div>
 					<div class="panel-body">
 						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
@@ -251,10 +251,10 @@
 					<div class="panel-footer">
 						<div class="panel input-area">
 							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/> 
-							<input id="message" class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
-							<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" />
-							<input type="button" id="connect" class="button" value="連線" onclick="connect();" />
-							<input type="button" id="disconnect" class="button" value="離線" onclick="disconnect();" />		
+							<div class="row">
+							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage();" />	
+							</div>		
 						</div>
 					</div>
 				</div>
@@ -271,14 +271,9 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 %>
 
 
-<%-- var com_no = "<%=comVO.getCom_no()%>"; --%>
-<%-- var comName = "<%=comVO.getName()%>"; --%>
-// console.log(com_no);
-// console.log(comName);
-<%-- var mem_no = "<%=memVO.getMem_no()%>"; --%>
-<%-- var memName = "<%=memVO.getName()%>"; --%>
-// console.log(mem_no);
-// console.log(memName);
+
+
+
 var MyPoint = "/MessageServlet/";
 console.log(MyPoint);
 var host = window.location.host;
@@ -311,20 +306,21 @@ var memNo;
  					};
 
  					webSocket.onmessage = function(event) {
- 						document.getElementById("chatbox").style.display = 'block';
- 						document.getElementById("addClass").style.display = 'none';
- 						document.getElementById("dClass").style.display = 'block';
+ 						
  						
  						var messagesArea = document
  						.getElementById("messagesArea");
  						memNo = jsonObj.memNo;
- 						
+ 						if(comNo == com_no) {
+ 	 						document.getElementById("chatbox").style.display = 'block';
+ 	 						document.getElementById("addClass").style.display = 'none';
+ 	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
  						messagesArea.value = messagesArea.value + message;
  						messagesArea.scrollTop = messagesArea.scrollHeight;
+ 						}
  					};
-
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
  					};
@@ -343,14 +339,33 @@ var memNo;
  					if (message === "") {
  						alert("訊息請勿空白!");
  						inputMessage.focus();
- 					} else {
+ 					} else if(memVO != null) {
+ 						var mem_no = "<%=memVO.getMem_no()%>";
+ 						var memName = "<%=memVO.getName()%>";
+ 						console.log(mem_no);
+ 						console.log(memName);
  						var jsonObj = {
- 	 							"comNo" : "<%=request.getParameter("com_no")%>" || com_no,
- 	 							"memNo" : mem_no || memNo,
- 	 							"userName" : ("<%=memVO.getName()%>"==null)?"<%=comVO.getName()%>":"<%=memVO.getName()%>",
+ 	 							"comNo" : "<%=request.getParameter("com_no")%>",
+ 	 							"memNo" : mem_no,
+ 	 							"userName" : memName,
  	 							"message" : message,
  	 							"time" : nowdate
  	 					};
+ 						webSocket.send(JSON.stringify(jsonObj));
+						inputMessage.value = "";
+ 						inputMessage.focus();
+ 					} else if (comVO != null) {
+ 						var com_no = "<%=comVO.getCom_no()%>";
+ 						var comName = "<%=comVO.getName()%>";
+ 						console.log(com_no);
+ 						console.log(comName);
+ 						var jsonObj = {
+ 								"comNo" : com_no,
+ 	 							"memNo" : memNo,
+ 	 							"userName" : comName,
+ 	 							"message" : message,
+ 	 							"time" : nowdate
+ 						};
  						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
  						inputMessage.focus();

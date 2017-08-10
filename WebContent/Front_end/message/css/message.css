@@ -1,6 +1,4 @@
-.chat_box_on {
-	display: block !important;
-}
+
 .panel-heading {
 	height: 50px;
 }
@@ -26,6 +24,14 @@
 	align: center;
 }
 
-.text-field{
-	width: 100%;
+.input-area {
+	position:absolute;
+ 	bottom:0;
+ 	width:90%;
+}
+
+.chat-header-button {
+	position:absolute;
+	right:0;
+	top:0;
 }
