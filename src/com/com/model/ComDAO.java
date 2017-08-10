@@ -48,7 +48,8 @@ public class ComDAO implements ComDAO_Interface {
 				"SELECT pwd from company where com_no = ?";
 		private static final String CONFIRMCOM= 
 				"UPDATE company set status='正常' where com_no = ?";
-				
+		 private static final String Get_ALL_BylA = 
+					"Select * from company where lon between ? and ? and lat between ? and ?";		
 		@Override
 		public void confirmCom(ComVO comVO) {
 			
@@ -605,6 +606,74 @@ public class ComDAO implements ComDAO_Interface {
 	}
 
 	
+	@Override
+	public List<ComVO> findBylocation(String lon1, String lon2, String lat1, String lat2) {
+		// TODO Auto-generated method stub
+		List<ComVO> list = new ArrayList<ComVO>();
+		ComVO comVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(Get_ALL_BylA);
+			pstmt.setString(1, lon1);
+			pstmt.setString(2, lon2);
+			pstmt.setString(3, lat1);
+			pstmt.setString(4, lat2);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 銋迂� Domain objects
+				comVO = new ComVO();
+				comVO.setCom_no(rs.getString("com_no"));
+				comVO.setId(rs.getString("id"));
+				comVO.setPwd(rs.getString("pwd"));
+				comVO.setName(rs.getString("name"));
+				comVO.setLoc(rs.getString("loc"));
+				comVO.setLon(rs.getString("lon"));
+				comVO.setLat(rs.getString("lat"));
+				comVO.setCom_desc(rs.getString("com_desc"));
+				comVO.setPhone(rs.getString("phone"));
+				comVO.setAccount(rs.getString("account"));
+				comVO.setLogo(rs.getBytes("logo"));
+				comVO.setStatus(rs.getString("status"));
+				list.add(comVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	
 

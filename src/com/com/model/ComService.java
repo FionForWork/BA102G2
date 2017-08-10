@@ -114,4 +114,7 @@ public List<ComVO> loginpwd(){
 	public List<ComVO> getAll(){
 		return dao.getAll();
 	}	
+	public List<ComVO> getLocation(String lon1, String lon2, String lat1, String lat2){
+		return dao.findBylocation(lon1, lon2, lat1, lat2);
+	}
 }

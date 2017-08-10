@@ -45,16 +45,7 @@ public class LoginMemFilter implements Filter {
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
 		
-		try{
-			MemVO memVO =(MemVO)session.getAttribute("memVO");
-			memVO.getMem_no();
-		}catch(Exception e){
-			out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-		      out.println("<BODY>你的帳號錯誤請先登出後登入會員帳號!<BR>");
-		     
-		      out.println("</BODY></HTML>");
-		    return;
-		}
+	
 		
 		
 		if (id == null) {
@@ -62,6 +53,13 @@ public class LoginMemFilter implements Filter {
 			res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
 			return;
 		} else {
+			try{
+				MemVO memVO =(MemVO)session.getAttribute("memVO");
+				memVO.getMem_no();
+			}catch(Exception e){
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin.jsp");
+				return;
+			}
 				chain.doFilter(request, response);
 
 		}

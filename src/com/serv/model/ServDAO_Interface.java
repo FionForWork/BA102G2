@@ -15,5 +15,5 @@ public interface ServDAO_Interface {
     public List<ServVO> getAll();
     public List<String> findByStype_no(String stype_no);
     public List<ServVO> getCom(String com_no);
-	
+    public List<ServVO> findBysh(String sh);
 }

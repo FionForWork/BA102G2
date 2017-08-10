@@ -49,11 +49,6 @@
     <servlet-name>ComServlet</servlet-name>
     <url-pattern>/com/com.do</url-pattern>
   </servlet-mapping>
-  
-  
-  
-  
-  
   <servlet>
     <servlet-name>ServServlet</servlet-name>
     <servlet-class>com.serv.controller.ServServlet</servlet-class>

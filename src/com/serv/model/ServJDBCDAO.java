@@ -33,6 +33,8 @@ public class ServJDBCDAO implements ServDAO_Interface{
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
 		private static final String GET_COM_STMT = 
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
+		
+	
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -379,6 +381,13 @@ public class ServJDBCDAO implements ServDAO_Interface{
 
 	@Override
 	public List<ServVO> getCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<ServVO> findBysh(String sh) {
 		// TODO Auto-generated method stub
 		return null;
 	}

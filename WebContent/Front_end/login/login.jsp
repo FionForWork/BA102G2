@@ -12,7 +12,7 @@
 	
 		
 	</div>
-	<br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><center><h1>請登入帳號</h1></center><br><br><br><br><br>
 </div>
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

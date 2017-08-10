@@ -17,6 +17,8 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
+ <script src="<%=request.getContextPath()%>/Front_end/login/recaptcha.js"></script>
+ <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async></script>
 
 <title>廠商註冊</title>
 
@@ -86,10 +88,10 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 		
 	</div>
 	
-
+<center>請驗證<br><div id="recaptcha_box"></div>
 		<input type="hidden" name=com_no" value="${comVO.com_no}">
 		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
+		<input type="submit" class="btn btn-info " id="submit" style="display:none" value="送出新增"></center>
 	</FORM>
 	</div>
 	</div>

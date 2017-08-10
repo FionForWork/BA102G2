@@ -45,20 +45,19 @@ public class LoginComFilter implements Filter {
 	
 	
 		
-		try{
-			ComVO comVO =(ComVO)session.getAttribute("comVO");
-			comVO.getCom_no();
-		}catch(Exception e){
-			out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-		      out.println("<BODY>你的帳號錯誤請先登出後登入廠商帳號!<BR>");
-		      out.println("</BODY></HTML>");
-		    return;
-		}
+		
 		if (id == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
 			return;
 		} else {
+			try{
+				ComVO comVO =(ComVO)session.getAttribute("comVO");
+				comVO.getCom_no();
+			}catch(Exception e){
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin.jsp");
+				 return;
+			}
 				chain.doFilter(request, response);
 			}
 
