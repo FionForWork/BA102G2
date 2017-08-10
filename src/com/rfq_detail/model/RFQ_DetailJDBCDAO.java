@@ -496,6 +496,12 @@ public static void main(String args[]){
 	
 	}
 
+@Override
+public void updateStatusFromRes(RFQ_DetailVO rfqVO, Connection con) {
+	// TODO Auto-generated method stub
+	
+}
+
 
 
 

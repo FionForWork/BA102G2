@@ -14,6 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.calendar.model.*;
+import com.rfq_detail.model.*;
 
 public class ReservationDAO implements ReservationDAO_Interface {
 	
@@ -79,6 +80,76 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			calendarVO.setStatus(RES_NO);
 			CalendarDAO calendarDAO = new CalendarDAO();
 			calendarDAO.insertFromRes(calendarVO, con);
+			
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if(con!= null){
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	// 未修改完
+	@Override
+	public void insert(ReservationVO reservationVO,CalendarVO calendarVO, RFQ_DetailVO rfq_detailVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			
+			String cols[] = {"RES_NO"};
+			
+			pstmt = con.prepareStatement(INSERT, cols);
+			
+			pstmt.setString(1,reservationVO.getMem_no());
+			pstmt.setString(2,reservationVO.getCom_no());
+			pstmt.setTimestamp(3,reservationVO.getRes_date());
+			pstmt.setTimestamp(4, reservationVO.getServ_date());
+			pstmt.setString(5, reservationVO.getServ_no());
+			pstmt.setString(6, reservationVO.getStype_no());
+			pstmt.setInt(7, reservationVO.getPrice());
+			pstmt.setString(8, reservationVO.getStatus());
+			pstmt.executeUpdate();
+			
+			String RES_NO = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				RES_NO = rs.getString(1);
+			}
+			rs.close();
+			
+			// 新增行事曆
+			calendarVO.setStatus(RES_NO);
+			CalendarDAO calendarDAO = new CalendarDAO();
+			calendarDAO.insertFromRes(calendarVO, con);
+			
+			// 改變詢價狀態
+			RFQ_DetailDAO rfq_DetailDAO = new RFQ_DetailDAO();
+			rfq_DetailDAO.updateStatusFromRes(rfq_detailVO, con);
 			
 			con.commit();
 			con.setAutoCommit(true);

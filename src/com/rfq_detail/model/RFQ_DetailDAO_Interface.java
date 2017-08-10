@@ -7,6 +7,7 @@ public interface RFQ_DetailDAO_Interface {
 	
 	void insert(RFQ_DetailVO rfqVO, Connection con);
 	void update(RFQ_DetailVO rfqVO);
+	void updateStatusFromRes(RFQ_DetailVO rfqVO, Connection con);
 	void delete(String rfqdetail_no);
 	RFQ_DetailVO findByPK(String rfqdetail_no);
 	RFQ_DetailVO getOneFromQuote(String quo_no);

@@ -59,6 +59,7 @@ public class ReservationServlet extends HttpServlet {
 			String stype_no = req.getParameter("stype_no");
 			String requestURL = req.getParameter("requestURL");
 			
+			RFQ_DetailService rfq_DetailService = new RFQ_DetailService();
 			MemService memService = new MemService();
 			Service_TypeService stypeService = new Service_TypeService();
 			// 會員名稱寫死
@@ -70,8 +71,12 @@ public class ReservationServlet extends HttpServlet {
 			calendarVO.setContent(content);
 			calendarVO.setCal_date(serv_date);
 			
+			RFQ_DetailVO rfq_detailVO = new RFQ_DetailVO();
+			rfq_detailVO.setStatus("0");
+			rfq_detailVO.setRfqdetail_no(rfq_DetailService.getOneFromQuote(quo_no).getRfqdetail_no());
+			
 			ReservationService reservationService = new ReservationService();
-			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price, "1", calendarVO);
+			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price, "1", calendarVO, rfq_detailVO);
 		
 			
 			

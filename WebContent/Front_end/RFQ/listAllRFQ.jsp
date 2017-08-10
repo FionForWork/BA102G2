@@ -113,6 +113,7 @@
 							<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 							<input type="submit" class="btn btn-block btn-default" value="查看內容">
 							</form>
+<!-- 廠商資料寫死 會員無法報價 -->
 							<c:if test="${rfqDetailVO.status.equals('1')}">
 							<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal${rfqDetailVO.rfqdetail_no}">我要報價</button>
 						<!-- Quote -->

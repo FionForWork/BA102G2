@@ -112,7 +112,44 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 			}
 		}
 	}
+	
+	// 預約後更改狀態
+	@Override
+	public void updateStatusFromRes(RFQ_DetailVO rfq_detailVO, Connection con) {
+		
+		PreparedStatement pstmt = null;
 
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, rfq_detailVO.getStatus());
+			pstmt.setString(2, rfq_detailVO.getRfqdetail_no());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if(con != null){
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(String rfqdetail_no) {
 		Connection con = null;

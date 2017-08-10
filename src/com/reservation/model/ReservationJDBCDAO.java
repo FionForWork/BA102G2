@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.calendar.model.CalendarVO;
+import com.rfq_detail.model.RFQ_DetailVO;
 
 public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	
@@ -455,6 +456,12 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //			System.out.println(reservationVO.getScore());
 //		}
 
+		
+	}
+
+	@Override
+	public void insert(ReservationVO reservationVO, CalendarVO calendarVO, RFQ_DetailVO rfq_detailVO) {
+		// TODO Auto-generated method stub
 		
 	}
 

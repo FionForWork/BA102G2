@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.calendar.model.CalendarVO;
+import com.rfq_detail.model.RFQ_DetailVO;
 
 public class ReservationService {
 	
@@ -26,6 +27,23 @@ public class ReservationService {
 		reservationVO.setPrice(price);
 		reservationVO.setStatus(status);
 		dao.insert(reservationVO, calendarVO);
+		
+		return reservationVO;
+	}
+	
+	public ReservationVO addReservation (String mem_no, String com_no, Timestamp res_date,Timestamp serv_date
+		, String serv_no, String stype_no, Integer price, String status, CalendarVO calendarVO, RFQ_DetailVO rfq_detailVO){
+		
+		ReservationVO reservationVO = new ReservationVO();
+		reservationVO.setMem_no(mem_no);
+		reservationVO.setCom_no(com_no);
+		reservationVO.setRes_date(res_date);
+		reservationVO.setServ_date(serv_date);
+		reservationVO.setServ_no(serv_no);
+		reservationVO.setStype_no(stype_no);
+		reservationVO.setPrice(price);
+		reservationVO.setStatus(status);
+		dao.insert(reservationVO, calendarVO, rfq_detailVO);
 		
 		return reservationVO;
 	}

@@ -8,15 +8,13 @@
 <%@ page import="java.text.DateFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% 
-	RFQ_DetailVO rfqDetailVO = (RFQ_DetailVO) request.getAttribute("rfqDetailVO");
-	List<QuoteVO> list = (List<QuoteVO>)request.getAttribute("list");
-	request.setAttribute("rfqDetailVO", rfqDetailVO);
 	DateFormat df = new SimpleDateFormat("YYYY年M月d日 ah點");
 	pageContext.setAttribute("df", df);
 	DateFormat minDF = new SimpleDateFormat("YYYY年M月d日 ah點mm分");
 	pageContext.setAttribute("minDF", minDF);
 %>
 <jsp:useBean id="comService" class="com.com.model.ComService"/>
+<jsp:useBean id="rfqService" class="com.rfq.model.RFQService"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -75,6 +73,8 @@
 						<h4>報價金額 : ${quoteVO.price} </h4>
 						
 					</div>
+<!--判斷是否自己的報價才能預約，以及是否預約過-->
+					<c:if test="${rfqService.getOneRFQ(rfqDetailVO.rfq_no).mem_no.equals(memVO.mem_no) && rfqDetailVO.status.equals('1')}">
 					<div class="col-md-2">
 					<br>
 <!--馬上預約-->
@@ -109,11 +109,11 @@
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>
-						      
 							</div>
 						</div>
 					</form>
 					</div>
+					</c:if>
 				</div>
 			<br>
 			<hr>
