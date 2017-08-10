@@ -43,6 +43,7 @@ private static DataSource ds = null;
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
 		private static final String GET_search_STMT = 
 				"SELECT * FROM service where title like ?";
+		
 		@Override
 		public List<ServVO> findBysh(String sh) {
 			// TODO Auto-generated method stub
