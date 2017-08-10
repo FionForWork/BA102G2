@@ -15,9 +15,9 @@
 	ComVO comVO1 = comSvc.getOneCom("2003");
 	session.setAttribute("comVO", comVO1);
 	
-	MemService memSvc = new MemService();
-	MemVO memVO1 = memSvc.getOneMem("1001");
-	session.setAttribute("memVO", memVO1);
+// 	MemService memSvc = new MemService();
+// 	MemVO memVO1 = memSvc.getOneMem("1001");
+// 	session.setAttribute("memVO", memVO1);
 	
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -240,17 +240,22 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="chat_box panel panel-default" id="chatbox">
+				<div class="chat_box panel" id="chatbox">
 					<div class="panel-heading">
+						<div>
+							<img style="width:20%;" src="<%=request.getContextPath()%>/ShowPictureServletDAO?${(memVO==null)?'com_no=':'mem_no='}${(memVO==null)?comVO.com_no:memVO.mem_no}">
+							${(memVO==null)?comVO.name:memVO.name}
+						</div>
 						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 						<div id="statusOutput"></div>
 					</div>
 					<div class="panel-body">
-						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+						<textarea id="messagesArea" class="panel message-area" readonly>
+						
+						</textarea>
 					</div>
 					<div class="panel-footer">
 						<div class="panel input-area">
-							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/> 
 							<div class="row">
 							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
 							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage();" />	
