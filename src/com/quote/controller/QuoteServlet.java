@@ -74,7 +74,7 @@ public class QuoteServlet extends HttpServlet {
 		
 		if(action.equals("listQuote")){
 			// session效率問題
-			
+			String rfqMem_no = req.getParameter("rfqMem_no");
 			String sort = req.getParameter("sort");
 			// 日期、金額排序
 			if(sort != null){
@@ -105,6 +105,7 @@ public class QuoteServlet extends HttpServlet {
 						Collections.reverse(list);
 						}
 				}
+				req.setAttribute("rfqMem_no", rfqMem_no);
 				req.setAttribute("rfqDetailVO", rfqDetailVO);
 				req.setAttribute("list", list);
 				
@@ -123,6 +124,7 @@ public class QuoteServlet extends HttpServlet {
 			QuoteService quoteService = new QuoteService();
 			List<QuoteVO> list = quoteService.getAllQuote(rfqdetail_no);
 			
+			req.setAttribute("rfqMem_no", rfqMem_no);
 			req.setAttribute("rfqDetailVO", rfqDetailVO);
 			req.setAttribute("list", list);
 			

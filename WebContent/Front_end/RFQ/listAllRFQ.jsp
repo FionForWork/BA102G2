@@ -111,6 +111,7 @@
 						<!-- listQuote -->
 							<form  method="post" action="<%= request.getContextPath() %>/quote/quote.do">
 							<input type="hidden" name="action" value="listQuote">
+							<input type="hidden" name="rfqMem_no" value="${rfqVO.mem_no}">
 							<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 							<input type="submit" class="btn btn-block btn-default" value="查看內容">
 							</form>

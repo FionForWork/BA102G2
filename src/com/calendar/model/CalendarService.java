@@ -48,4 +48,8 @@ public class CalendarService {
 	public List<CalendarVO> getMonthCalendar(int year, int month, int dayNum, String com_no){
 		return dao.getMonthCal(year, month, dayNum, com_no);
 	}
+	
+	public CalendarVO checkForRes(String com_no, String cal_date){
+		return dao.findByNoandDate(com_no, cal_date);
+	}
 }

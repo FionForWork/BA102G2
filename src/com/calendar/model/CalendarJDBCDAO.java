@@ -365,6 +365,12 @@ public void insertFromRes(CalendarVO calendarVO, Connection con) {
 	
 }
 
+@Override
+public CalendarVO findByNoandDate(String com_no, String cal_date) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 
 
 }

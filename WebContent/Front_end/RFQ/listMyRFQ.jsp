@@ -45,7 +45,7 @@
 					${rfq_detailVO.content}
 				</td>
 				<td>
-					<a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&rfqdetail_no=${rfq_detailVO.rfqdetail_no}">
+					<a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&rfqdetail_no=${rfq_detailVO.rfqdetail_no}&rfqMem_no=${memVO.mem_no}">
 						${sortingHat.getQuoteNum(quoteService.getAllQuote(rfq_detailVO.rfqdetail_no).size())}
 					</a>
 				</td>

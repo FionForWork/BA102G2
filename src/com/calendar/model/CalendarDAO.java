@@ -37,6 +37,8 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			"SELECT * FROM CALENDAR order by CAL_NO ";
 	private static final String GET_MONTH_STMT = 
 			"SELECT * FROM CALENDAR where cal_date >= ? and cal_date <= ? and com_no = ? ";
+	private static final String getOneByComNOandDate = 
+			"SELECT * FROM CALENDAR where com_no = ? and to_char(cal_date,'YYYY-MM-DD') = ? ";
 	
 	@Override
 	public void insert(CalendarVO calendarVO) {
@@ -339,6 +341,60 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public CalendarVO findByNoandDate(String com_no, String cal_date) {
+		CalendarVO calendarVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getOneByComNOandDate);
+
+			pstmt.setString(1, com_no);
+			pstmt.setString(2, cal_date);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				calendarVO = new CalendarVO();
+				calendarVO.setCal_no(rs.getString("cal_no"));
+				calendarVO.setCom_no(rs.getString("com_no"));
+				calendarVO.setContent(rs.getString("content"));
+				calendarVO.setCal_date(rs.getTimestamp("cal_date"));
+				calendarVO.setStatus(rs.getString("status"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return calendarVO;
 	}
 
 }

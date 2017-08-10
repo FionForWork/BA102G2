@@ -12,5 +12,6 @@ public interface CalendarDAO_Interface {
 	CalendarVO findByPK(String cal_no);
 	List<CalendarVO> getAll();
 	List<CalendarVO> getMonthCal(int year, int month,int dayNum, String com_no);
+	CalendarVO findByNoandDate(String com_no, String cal_date);
 	
 }
