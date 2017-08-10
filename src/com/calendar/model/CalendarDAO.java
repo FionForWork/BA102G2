@@ -26,15 +26,17 @@ public class CalendarDAO implements CalendarDAO_Interface {
 	}
 	
 	private static final String INSERT = 
-			"INSERT INTO CALENDAR VALUES (LTRIM(TO_CHAR(CAL_SQ.NEXTVAL,'0009')), ?, ?, ?, ?)";
-	private static final String UPDATE = 
-			"UPDATE CALENDAR SET CONTENT=?, START_TIME=?, END_TIME=? where CAL_NO = ?";
+			"INSERT INTO CALENDAR VALUES (LTRIM(TO_CHAR(CALENDAR_SQ.NEXTVAL,'0009')), ?, ?, ?, ?)";
+	private static final String UPDATE_DATE = 
+			"UPDATE CALENDAR SET cal_date=? where CAL_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM CALENDAR where CAL_NO = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM CALENDAR where CAL_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM CALENDAR order by CAL_NO ";
+	private static final String GET_MONTH_STMT = 
+			"SELECT * FROM CALENDAR where cal_date >= ? and cal_date <= ? and com_no = ? ";
 	
 	@Override
 	public void insert(CalendarVO calendarVO) {
@@ -47,8 +49,8 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			
 			pstmt.setString(1,calendarVO.getCom_no());
 			pstmt.setString(2, calendarVO.getContent());
-			pstmt.setTimestamp(3, calendarVO.getStart_time());
-			pstmt.setTimestamp(4, calendarVO.getEnd_time());
+			pstmt.setTimestamp(3, calendarVO.getCal_date());
+			pstmt.setString(4, calendarVO.getStatus());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -72,18 +74,17 @@ public class CalendarDAO implements CalendarDAO_Interface {
 	}
 
 	@Override
-	public void update(CalendarVO calendarVO) {
+	public void updateDate(CalendarVO calendarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
+			pstmt = con.prepareStatement(UPDATE_DATE);
 
-			pstmt.setString(1, calendarVO.getContent());
-			pstmt.setTimestamp(2, calendarVO.getStart_time());
-			pstmt.setTimestamp(3, calendarVO.getEnd_time());
+			pstmt.setTimestamp(1, calendarVO.getCal_date());
+			pstmt.setString(2, calendarVO.getCal_no());
 
 			pstmt.executeUpdate();
 
@@ -163,8 +164,8 @@ public class CalendarDAO implements CalendarDAO_Interface {
 				calendarVO.setCal_no(rs.getString("cal_no"));
 				calendarVO.setCom_no(rs.getString("com_no"));
 				calendarVO.setContent(rs.getString("content"));
-				calendarVO.setStart_time(rs.getTimestamp("start_time"));
-				calendarVO.setEnd_time(rs.getTimestamp("end_time"));
+				calendarVO.setCal_date(rs.getTimestamp("cal_date"));
+				calendarVO.setStatus(rs.getString("status"));
 			}
 			
 		} catch (SQLException e) {
@@ -215,8 +216,66 @@ public class CalendarDAO implements CalendarDAO_Interface {
 				calendarVO.setCal_no(rs.getString("cal_no"));
 				calendarVO.setCom_no(rs.getString("com_no"));
 				calendarVO.setContent(rs.getString("content"));
-				calendarVO.setStart_time(rs.getTimestamp("start_time"));
-				calendarVO.setEnd_time(rs.getTimestamp("end_time"));
+				calendarVO.setCal_date(rs.getTimestamp("cal_date"));
+				calendarVO.setStatus(rs.getString("status"));
+				list.add(calendarVO);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<CalendarVO> getMonthCal(int year, int month,int dayNum, String com_no) {
+		List<CalendarVO> list = new ArrayList<CalendarVO>();
+		CalendarVO calendarVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String firstDay = "01-"+month+"月-"+year;
+		String lastDay = dayNum+"-"+month+"月-"+year;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_MONTH_STMT);
+			pstmt.setString(1, firstDay);
+			pstmt.setString(2, lastDay);
+			pstmt.setString(3, com_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				calendarVO = new CalendarVO();
+				calendarVO.setCal_no(rs.getString("cal_no"));
+				calendarVO.setCom_no(rs.getString("com_no"));
+				calendarVO.setContent(rs.getString("content"));
+				calendarVO.setCal_date(rs.getTimestamp("cal_date"));
+				calendarVO.setStatus(rs.getString("status"));
 				list.add(calendarVO);
 			}
 			

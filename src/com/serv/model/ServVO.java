@@ -10,7 +10,7 @@ public class ServVO {
 	private String title;
 	private String content;
 	private Integer times;
-	private Integer score;
+	private Double score;
 	
 	public String getServ_no() {
 		return serv_no;
@@ -60,10 +60,10 @@ public class ServVO {
 	public void setTimes(Integer times) {
 		this.times = times;
 	}
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	

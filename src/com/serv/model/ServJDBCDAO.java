@@ -31,7 +31,8 @@ public class ServJDBCDAO implements ServDAO_Interface{
 			"DELETE FROM service where serv_no = ?";
 		private static final String UPDATE = 
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
-	
+		private static final String GET_COM_STMT = 
+				"SELECT * FROM SERVICE WHERE COM_NO = ?";
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -200,7 +201,7 @@ public class ServJDBCDAO implements ServDAO_Interface{
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -265,7 +266,7 @@ public class ServJDBCDAO implements ServDAO_Interface{
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 				list.add(servVO); // Store the row in the list
 			}
 			
@@ -367,10 +368,23 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		
 		
 	}
+
+
+	@Override
+	public List<String> findByStype_no(String stype_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<ServVO> getCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
-
 
 
 

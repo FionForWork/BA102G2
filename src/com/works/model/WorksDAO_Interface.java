@@ -10,5 +10,6 @@ public interface WorksDAO_Interface {
 	public WorksVO findWorksByPK(String works_no);
 	public List<WorksVO> findWorksByComNo(String com_no);
 	public List<WorksVO> findAll();
+	public int countWorksInOneComNo(String com_no);
 
 }

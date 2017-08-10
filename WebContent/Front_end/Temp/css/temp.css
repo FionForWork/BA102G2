@@ -1,0 +1,208 @@
+
+@media screen and (max-width: 767px) {
+    
+    .row.content {
+        height: auto;
+    }
+}
+h2{
+	padding-left:10px;
+}
+.margin-top {
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+.img-thumbnail {
+    margin-bottom: 10px;
+        
+}
+
+.jumbotron {
+    padding-top: 5px
+
+}
+.image-container{
+	position: relative;
+	width:100%;
+	
+}
+.image-container img {
+	
+	padding:0px;
+	width:100%;
+	border-radius:8px;
+	cursor:pointer;
+}
+
+.overlay{
+	opacity:0;
+	position:absolute;
+	height:25%;
+	width:99%;
+	bottom:30px;
+	left:0px;
+	border-radius:5px;
+	padding:0px;
+	cursor:pointer;
+	background: rgba(0,0,0,0.6);
+	
+}
+.image-container:hover .overlay{
+	opacity:1;
+	
+}
+.overlap{
+	opacity:0;
+	position:absolute;
+	top:5px;
+	right:10px;
+}
+.image-container:hover .overlap{
+	opacity:1;
+	
+}
+
+.checkbox{
+	position:absolute;
+	top:0;
+	left:0;
+	opacity:0;
+}
+
+.checked{
+	opacity:1;
+	position:absolute;
+	height:83%;
+	width:100%;
+	top:0px;
+	left:0px;
+	border-radius:5px;
+	padding:0px;
+	cursor:pointer;
+	background: rgba(0,0,0,0.4);
+	padding-top:30px;
+	}
+
+.checkMark , .textMark{
+	color:#00d7d3;
+	padding-top:16px;
+	
+}
+.dropdownContent{
+	display:none;
+	position:absolute;
+	background-color:#f9f9f9;
+	min-width:100px;
+	
+	overflow:auto;
+	box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);
+	right:0;
+	z-index:1;
+}
+.dropdownContent a {
+	color:black;
+	text-decoration:none;
+	display:block;
+	padding: 12px 16px;
+}
+.dropdown a:hover {
+	background-color:#f1f1f1;
+}
+.dropdown:hover .dropdownContent {
+    display: block;
+}
+.errorMsgs {
+	color:red;
+	
+}
+
+#tempList {
+	border-collapse: collapse;
+	/* Collapse borders */
+	width: 100%;
+	/* Full-width */
+	font-size: 14px;
+	/* Increase font-size */
+}
+
+#tempList th, #tempList td {
+	text-align: center;
+	/* Left-align text */
+	padding: 5px;
+	/* Add padding */
+}
+
+#tempList tr {
+	/* Add a bottom border to all table rows */
+	border-bottom: 1px solid #ddd;
+}
+
+
+
+/* The Modal (background) */
+#lightboxImgModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.lightbox-modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+
+
+/* Add Animation */
+.lightbox-modal-content {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.closeImg {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.closeImg:hover,
+.closeImg:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .lightbox-modal-content {
+        width: 100%;
+    }
+}

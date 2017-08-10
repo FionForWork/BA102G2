@@ -33,8 +33,6 @@ public class ContentServlet extends HttpServlet {
 	
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
-		System.out.println("XXXXXXXXXXXXXXXXXXX");
-		System.out.println(action);
 		ContentService contSvc = new ContentService();
 		AlbumService albSvc = new AlbumService();
 		

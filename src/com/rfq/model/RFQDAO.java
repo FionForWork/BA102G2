@@ -34,7 +34,11 @@ public class RFQDAO implements RFQDAO_Interface {
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM RFQ where RFQ_NO = ?";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM RFQ order by RFQ_NO ";
+			"SELECT * FROM RFQ order by RFQ_DATE DESC ";
+	private static final String GET_MEM_NO =
+			"Select * From RFQ where RFQ_NO = "
+			+ "(select RFQ_NO from Rfq_Detail where Rfqdetail_No = "
+			+ "(select RFQdetail_no from quote where quo_no = ?))";
 	
 	@Override
 	public void insert(RFQVO rfqVO) {
@@ -240,6 +244,57 @@ public class RFQDAO implements RFQDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public RFQVO findFromQuote(String quo_no) {
+		RFQVO rfqVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_MEM_NO);
+
+			pstmt.setString(1, quo_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				rfqVO = new RFQVO();
+				rfqVO.setRfq_no(rs.getString("rfq_no"));
+				rfqVO.setMem_no(rs.getString("mem_no"));
+				rfqVO.setRfq_date(rs.getTimestamp("rfq_date"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return rfqVO;
 	}
 
 }
