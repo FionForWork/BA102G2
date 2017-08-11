@@ -11,6 +11,6 @@ public interface Tradition_interface {
     public TraditionVO findByPrimaryKey(Integer tra_no);
     public List<TraditionVO> getAll();
    
-	public TraditionVO getOneAll(Integer tra_type_no);
+	public List<TraditionVO> getOneAll(Integer tra_type_no);
 	
 }

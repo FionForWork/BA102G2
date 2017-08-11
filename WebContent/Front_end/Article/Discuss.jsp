@@ -19,17 +19,24 @@
 	
 	Article_Service artSvc=new Article_Service();
     ArticleVO article=artSvc.getOneArt(art_no);
+    
    	pageContext.setAttribute("article",article);
-   	
+  
    	MemService memSvc=new MemService();
-   	MemVO mem=memSvc.getOneMem(mem_no);
+   	MemVO mem=memSvc.getOneMem("art_no");
+   	
+   	pageContext.setAttribute("mem", mem);
    	
    %>
 <%
 	Forum_Comment_Service forum_Comment_Svc=new Forum_Comment_Service();
 	   List<Forum_CommentVO> list=forum_Comment_Svc.getAll();
 	   pageContext.setAttribute("list", list);
-	   	
+	   
+	 Forum_CommentVO forum_Comment=forum_Comment_Svc.getOneAll(5001);
+	 pageContext.setAttribute("forum_Comment", forum_Comment);
+	 
+	 
 %>   
    
 
@@ -46,9 +53,11 @@
                              </form>                   
         
                             <div class="panel panel-default">
-                            <img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no="${mem.mem_no }" class="pull-left xxx" style="width:130px">
-                              <div class="panel-heading" style="height: 100px;font-size: 20px">
-                               <div class="name">${article.art_no }</div>
+ 
+                            <img src="<%=request.getContextPath()%>/ShowPictureServletDAO?all=${article.poster_no}" height="100px" width="130px"class="pull-left xxx" >
+
+                              <div class="panel-heading" style="height: 100px;font-size: 20px" >
+                               <div class="name">${article.poster_no }</div>
                                <div class="date">${article.art_date }</div>
                                <div class="text"></div>  
                                
@@ -62,7 +71,7 @@
  <c:forEach var="forum_CommentVO" items="${list}" >
  <c:if test="${forum_CommentVO.art_no== article.art_no }">
                             <div class="panel panel-default">
-                            <img src="<%=request.getContextPath()%>/Front_end/Article/img/img1.jpeg" class="pull-left xxx" style="width:100px">
+                            <img src="<%=request.getContextPath()%>/ShowPictureServletDAO?all=${forum_CommentVO.speaker_no }" height="100px" width="130px" class="pull-left xxx" >
                               <div class="panel-heading" style="height: 100px;font-size: 20px">
                                <div class="name">${forum_CommentVO.speaker_no }</div>
                                

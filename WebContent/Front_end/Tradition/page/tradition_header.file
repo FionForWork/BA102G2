@@ -4,20 +4,20 @@
 <head>
     <title>She Said Yes!</title>
     <meta charset="UTF-8">
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Tradition/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="css/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Tradition/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/pnotify.custom.min.css" rel="stylesheet">
-    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Tradition/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Tradition/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Tradition/css/index.css" rel="stylesheet">
 
-    <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="js/top.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Tradition/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Tradition/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Tradition/js/top.js" type="text/javascript"></script>
 </head>
 
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
@@ -34,7 +34,7 @@
                 <!--RWD-->
                 <a class="navbar-brand" href="homepage.html">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/Tradition/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -248,7 +248,7 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('img/banner1.jpg');"></div>
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Tradition/img/banner1.jpg');"></div>
                 <!--banner圖放這裡-->
             </div>
         </div>
@@ -299,17 +299,10 @@
     <br>
     <div class="container" style="width:90%">
             <div class="row">
-                <div class="col-md-3">
-                        <ul class="list-group">
-                            <li class="list-group-item"><a href="TraditionAll.jsp" class="menua">婚禮流程</a></li>
-                            
-                            <ul><a href="Tradition10.jsp">訂婚流程</a></ul>
-                            <ul><a href="Tradition20.jsp">結婚流程</a></ul>
-                            <ul><a href="Tradition30.jsp">禁忌、歸寧</a></ul>
-                            <ul><a href="Tradition40.jsp">六禮、十二禮</a></ul>
-                           
-                        </ul>
+                <div class="col-md-1">
                 </div>
+                       
+                
                 
                 
 <!--FORM===========================================================================-->

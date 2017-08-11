@@ -75,7 +75,9 @@ public class Tradition_Service {
 	public void deleteTradition(Integer tra_no) {
 		dao.delete(tra_no);
 	}
-	public TraditionVO getOneAll(Integer tra_type_no){
+	public List<TraditionVO> getOneAll(Integer tra_type_no){
+		
+		
 		return dao.getOneAll(tra_type_no);
 	}
 	

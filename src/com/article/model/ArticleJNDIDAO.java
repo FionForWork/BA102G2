@@ -274,7 +274,6 @@ public ArticleVO findByPrimaryKey(Integer art_no) {
 				}
 			}
 		}
-
 		return list;
 	}
 }

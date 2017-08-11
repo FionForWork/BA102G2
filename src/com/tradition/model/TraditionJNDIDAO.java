@@ -302,9 +302,9 @@ public class TraditionJNDIDAO implements Tradition_interface{
 			return list;
 		}
 		@Override
-		public TraditionVO getOneAll(Integer tra_type_no) {
+		public List<TraditionVO> getOneAll(Integer tra_type_no) {
 			
-			
+			List<TraditionVO> list = new ArrayList<TraditionVO>();
 			TraditionVO traditionVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -318,7 +318,7 @@ public class TraditionJNDIDAO implements Tradition_interface{
 				pstmt.setInt(1, tra_type_no);
 
 				rs = pstmt.executeQuery();
-
+				
 				while (rs.next()) {
 					
 					traditionVO = new TraditionVO();
@@ -333,11 +333,11 @@ public class TraditionJNDIDAO implements Tradition_interface{
 //					int blobLength = (int) blob.length();
 //					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
-					
+					list.add(traditionVO); 
 				}
 
 				
-			} catch (SQLException  se) {
+			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "
 						+ se.getMessage());
 				
@@ -364,7 +364,8 @@ public class TraditionJNDIDAO implements Tradition_interface{
 					}
 				}
 			}
-			return traditionVO;
+			
+			return list;
 		
 		}
 		

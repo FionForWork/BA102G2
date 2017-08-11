@@ -31,7 +31,7 @@ public class ArticleServlet extends HttpServlet {
 		
 		
 		if ("getOnedata".equals(action)) { 
-			System.out.println(action);
+			
 
 			List<String> errorMsgs = new LinkedList<String>();
 			
@@ -40,11 +40,11 @@ public class ArticleServlet extends HttpServlet {
 			try {
 				/***************************1.接收請求參數****************************************/
 				Integer art_no = new Integer(req.getParameter("art_no"));
-				System.out.println(art_no);
+				
 				/***************************2.開始查詢資料****************************************/
 				Article_Service articleSvc = new Article_Service();
 				ArticleVO articleVO = articleSvc.getOneArt(art_no);
-					System.out.println(articleVO);			
+							
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("articleVO", articleVO);         
 				

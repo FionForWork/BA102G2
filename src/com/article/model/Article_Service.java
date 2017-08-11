@@ -47,7 +47,7 @@ public List<ArticleVO> getAll() {
 }
 
 public ArticleVO getOneArt(Integer art_no) {
-//						System.out.println("service"+art_no);
+//					
 	return dao.findByPrimaryKey(art_no);
 	
 }

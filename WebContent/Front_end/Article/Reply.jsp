@@ -9,7 +9,9 @@
 <%
 ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 Forum_CommentVO forum_CommentVO = (Forum_CommentVO) request.getAttribute("forum_CommentVO"); 
-MemVO memVO = (MemVO) request.getAttribute("1001");
+// MemVO memVO = (MemVO) request.getAttribute("1001");
+session.getAttribute("memVo");
+session.getAttribute("comVo");
 %>
 <jsp:useBean id="article_Svc" scope="page" class="com.article.model.Article_Service" />
 
@@ -40,7 +42,7 @@ MemVO memVO = (MemVO) request.getAttribute("1001");
 <div class="container" style="display: block;">
 	<input type="hidden" name="action" value="insert">
      <input type="hidden" name="art_no" value="<%=articleVO.getArt_no() %>"> 
-     <input type="hidden" name="speaker_no" value="1001">                                  
+     <input type="hidden" name="speaker_no" value="${comVO.com_no }">                                  
    <input type="submit" class="btn btn-info" data-dismiss="modal" value="新增">
 
 </form>

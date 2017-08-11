@@ -250,6 +250,7 @@ public class Forum_CommentJNDIDAO implements Forum_Comment_interface {
 			if (con != null) {
 				try {
 					con.close();
+				
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
@@ -295,6 +296,20 @@ public class Forum_CommentJNDIDAO implements Forum_Comment_interface {
 					rs.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}

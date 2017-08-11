@@ -27,6 +27,7 @@ public class ProblemJDBCDAO implements Problem_interface{
 			"DELETE FROM PROBLEM where prob_no = ?";
 		private static final String UPDATE = 
 			"UPDATE PROBLEM set problem_type_no=?,content=?,reply=? where prob_no=?";
+		private static final String GET_ONE_ALL = "SELECT * FROM PROBLEM where problem_type_no = ?";
 		
 		
 		@Override
@@ -268,6 +269,82 @@ public class ProblemJDBCDAO implements Problem_interface{
 
 			return list;
 		}
+		@Override
+		public List<ProblemVO> getOneAll(Integer problem_type_no) {
+			List<ProblemVO> list = new ArrayList<ProblemVO>();
+			ProblemVO problemVO = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(GET_ONE_ALL);
+				pstmt.setInt(1, problem_type_no);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					problemVO = new ProblemVO();
+					problemVO.setProb_no(rs.getInt("prob_no"));
+					problemVO.setProblem_type_no(rs.getInt("problem_type_no"));
+					
+					problemVO.setContent(rs.getString("content"));
+					problemVO.setReply(rs.getString("reply"));
+					
+				
+					list.add(problemVO); 
+				}
+
+				
+			} catch (SQLException | ClassNotFoundException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+			return list;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public static void main(String[] args) {
 
@@ -315,6 +392,16 @@ public class ProblemJDBCDAO implements Problem_interface{
 //			System.out.print(problem4.getReply()+ ",");
 //			System.out.println();
 //			}
+			// 查詢
+			List<ProblemVO> list = dao.getOneAll(10);
+			for (ProblemVO problem5 : list) {
+			System.out.print(problem5.getProb_no() + ",");
+			System.out.print(problem5.getProblem_type_no() + ",");
+	
+			System.out.print(problem5.getContent() + ",");
+			System.out.print(problem5.getReply()+ ",");
+			System.out.println();
+			}
 		
 		
 	}

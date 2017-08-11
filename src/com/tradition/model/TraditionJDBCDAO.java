@@ -305,9 +305,9 @@ public class TraditionJDBCDAO implements Tradition_interface{
 			return list;
 		}
 		@Override
-		public TraditionVO getOneAll(Integer tra_type_no) {
+		public List<TraditionVO> getOneAll(Integer tra_type_no) {
 			
-			
+			List<TraditionVO> list = new ArrayList<TraditionVO>();
 			TraditionVO traditionVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -320,9 +320,9 @@ public class TraditionJDBCDAO implements Tradition_interface{
 				pstmt = con.prepareStatement(GET_ONE_ALL);
 
 				pstmt.setInt(1, tra_type_no);
-
+				
 				rs = pstmt.executeQuery();
-
+			
 				while (rs.next()) {
 					
 					traditionVO = new TraditionVO();
@@ -337,7 +337,7 @@ public class TraditionJDBCDAO implements Tradition_interface{
 //					int blobLength = (int) blob.length();
 //					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
-					
+					list.add(traditionVO); 
 				}
 
 				
@@ -368,8 +368,9 @@ public class TraditionJDBCDAO implements Tradition_interface{
 					}
 				}
 			}
-			return traditionVO;
-		
+			
+			return list;
+			
 		}
 		
 	
@@ -453,15 +454,16 @@ public class TraditionJDBCDAO implements Tradition_interface{
 		
 			
 			//查詢
-			TraditionVO traditionVO3 = dao.getOneAll(10);
-			System.out.print(traditionVO3.getTra_no() + ",");
-			System.out.print(traditionVO3.getTra_type_no()+ ",");
-			System.out.println(traditionVO3.getTra_order());
-			System.out.println(traditionVO3.getTitle()+",");
-			System.out.print(traditionVO3.getArticle()+ ",");
-			System.out.print(traditionVO3.getImg() + ",");
-			
-			System.out.println("---------------------");
+			List<TraditionVO> list = dao.getOneAll(30);
+			for (TraditionVO tradition4 : list) {
+				System.out.print(tradition4.getTra_no() + ",");
+				System.out.print(tradition4.getTra_type_no() + ",");
+				System.out.print(tradition4.getTra_order());
+				System.out.println(tradition4.getTitle()+",");
+				System.out.print(tradition4.getArticle()+ ",");
+				System.out.print(tradition4.getImg() + ",");
+				
+				System.out.println();
 }
-		
-}
+		}	
+		}

@@ -33,7 +33,7 @@ public class Forum_commentServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		
 		if ("insert".equals(action)) { 
-			System.out.println("insert"+action);	
+				
 			List<String> errorMsgs = new LinkedList<String>();
 			
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -75,7 +75,7 @@ public class Forum_commentServlet extends HttpServlet{
 		}
 		
 		if ("getOne_For_Update".equals(action)) { 
-//	System.out.println(action);	
+
 			List<String> errorMsgs = new LinkedList<String>();
 			
 			req.setAttribute("errorMsgs", errorMsgs);

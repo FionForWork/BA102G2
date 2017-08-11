@@ -1,3 +1,5 @@
+<%@page import="com.com.model.ComVO"%>
+<%@page import="com.com.model.ComService"%>
 <%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@ page import="java.util.*"%>
@@ -6,12 +8,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="page/add_header.file"%>
+<%ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); %>
 <%
    MemService memService=new MemService();
 MemVO memVO=memService.getOneMem("1001");
 session.setAttribute("memVo", memVO);
-	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
+
 %>
+<%
+ComService comService=new ComService();
+ComVO comVO=comService.getOneCom("2001");
+session.setAttribute("comVO", comVO);
+
+%>
+
 <form METHOD="post"
 	ACTION="<%=request.getContextPath()%>/Article/Article.do" name="form1">
 	<div class="container-fluid">
@@ -47,7 +57,7 @@ session.setAttribute("memVo", memVO);
 
 	<div class="container" style="display: block;">
 		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="poster_no" value="1001"> <input
+			type="hidden" name="poster_no" value="${comVO.com_no }"> <input
 			type="submit" class="btn btn-info" data-dismiss="modal" value="發佈">
 </form>
 <input type="submit" class="btn btn-default btn-danger btn-primary"
