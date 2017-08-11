@@ -252,11 +252,8 @@
 						<div class="panel input-area">
 							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/> 
 							<div class="row">
-							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-								 																														  '${memVO != null? memVO.name : comVO.name}');" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" 
-							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-												 '${memVO != null? memVO.name : comVO.name}')" />	
+							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage();" />	
 							</div>		
 						</div>
 					</div>
@@ -269,11 +266,7 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%-- <%ComVO comVO = (ComVO) session.getAttribute("comVO"); --%>
-// MemVO memVO = (MemVO) session.getAttribute("memVO");
-<%-- %> --%>
-<%-- var comVO = <%=comVO%>; --%>
-<%-- var memVO = <%=memVO%>; --%>
+
 
 
 
@@ -299,7 +292,9 @@ var memNo;
 
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;				
+ 						document.getElementById('sendMessage').disabled = false;
+ 						document.getElementById('connect').disabled = true;
+ 						document.getElementById('disconnect').disabled = false;					
  						var messagesArea = document.getElementById("messagesArea");
  						messagesArea.value = messagesArea.value + "\r\n";
 
@@ -309,24 +304,25 @@ var memNo;
  					webSocket.onmessage = function(event) {
  						
  						
- 						var messagesArea = document.getElementById("messagesArea");
- 						
+ 						var messagesArea = document
+ 						.getElementById("messagesArea");
+ 						memNo = jsonObj.memNo;
+ 						if(comNo == com_no) {
  	 						document.getElementById("chatbox").style.display = 'block';
  	 						document.getElementById("addClass").style.display = 'none';
  	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
- 						memNo = jsonObj.memNo;
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
  						messagesArea.value = messagesArea.value + message;
  						messagesArea.scrollTop = messagesArea.scrollHeight;
- 						
+ 						}
  					};
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
  					};
  				}
 
- 				function sendMessage(no, userName) {
+ 				function sendMessage() {
 
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
@@ -339,32 +335,41 @@ var memNo;
  					if (message === "") {
  						alert("訊息請勿空白!");
  						inputMessage.focus();
- 					} else {
- 						if(no.startsWith("1")){
- 							var jsonObj = {
+ 					} else if(<%=session.getAttribute("memVO") != null%>) {
+ 						<%MemVO memVO = (MemVO) session.getAttribute("memVO");%>
+ 						var mem_no = <%=session.getAttribute("memVO") != null? memVO.getMem_no():""%>;
+ 						var memName = <%=session.getAttribute("memVO") != null? memVO.getName():""%>;
+ 						console.log(mem_no);
+ 						console.log(memName);
+ 						var jsonObj = {
  	 							"comNo" : "<%=request.getParameter("com_no")%>",
- 	 							"memNo" : no,
- 	 							"userName" : userName,
+ 	 							"memNo" : mem_no,
+ 	 							"userName" : memName,
  	 							"message" : message,
  	 							"time" : nowdate
- 	 						};
+ 	 					};
  						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
  						inputMessage.focus();
- 						}else {
- 							var jsonObj = {
- 	 	 						"comNo" : no,
- 	 	 						"memNo" : memNo,
- 	 	 						"userName" : userName,
- 	 	 						"message" : message,
- 	 	 						"time" : nowdate
- 	 	 					};
- 	 						webSocket.send(JSON.stringify(jsonObj));
- 							inputMessage.value = "";
- 	 						inputMessage.focus();	
- 						}
+ 					} else if (<%=session.getAttribute("comVO") != null%>) {
+ 						<%ComVO comVO = (ComVO) session.getAttribute("comVO");%>
+ 						var com_no = <%=session.getAttribute("comVO") != null? comVO.getCom_no():""%>;
+ 						var comName = <%=session.getAttribute("comVO") != null? comVO.getName():""%>;
+ 						console.log(com_no);
+ 						console.log(comName);
+ 						var jsonObj = {
+ 								"comNo" : com_no,
+ 	 							"memNo" : memNo,
+ 	 							"userName" : comName,
+ 	 							"message" : message,
+ 	 							"time" : nowdate
+ 						};
+ 						webSocket.send(JSON.stringify(jsonObj));
+						inputMessage.value = "";
+ 						inputMessage.focus();
  					}
  				}
+
  				function disconnect() {
  					webSocket.close();
  					document.getElementById('sendMessage').disabled = true;
@@ -375,7 +380,7 @@ var memNo;
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
  				}
- 				
+
 
 </script>
 </body>
