@@ -95,12 +95,10 @@
     <servlet-name>AdvertisingServlet</servlet-name>
     <url-pattern>/advertising/advertising.do</url-pattern>
   </servlet-mapping>
-  
   <context-param>
     <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
     <param-value>307200</param-value>
   </context-param>
-  
   <servlet>
     <servlet-name>MessageServlet</servlet-name>
     <servlet-class>com.message.controller.MessageServlet</servlet-class>
@@ -110,4 +108,12 @@
     <url-pattern>/message/message.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ContactUs</servlet-name>
+    <servlet-class>com.wang.test.ContactUs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactUs</servlet-name>
+    <url-pattern>/ContactUs</url-pattern>
+  </servlet-mapping>
 </web-app>
