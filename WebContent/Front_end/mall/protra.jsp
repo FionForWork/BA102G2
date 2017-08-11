@@ -1,3 +1,5 @@
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
 <%@page import="com.protra.model.ProtraService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
@@ -8,25 +10,25 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-    String mem_no = "1010";
-	int nowPage = (request.getParameter("nowPage") == null)
-	? 1
-	: Integer.parseInt((request.getParameter("nowPage")));
+    //MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService = new MemService();
+    MemVO memVO = memService.getOneMem("1010");
+	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.parseInt((request.getParameter("nowPage")));
 	int itemsCount = 5;
 	ProtraService protraService = new ProtraService();
-	int allCount = protraService.getRowCount(mem_no);
+	int allCount = protraService.getRowCount(memVO.getMem_no());
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
 	ProductService productService = new ProductService();
 	List<ProductVO> productList = new ArrayList<ProductVO>();
 
-	List<String> protracking_list = protraService.getSome(mem_no, nowPage, itemsCount);
+	List<String> protracking_list = protraService.getSome(memVO.getMem_no(), nowPage, itemsCount);
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 
 	for (int i = 0; i < protracking_list.size(); i++) {
-        productList.add(productService.getOneByPK(protracking_list.get(i)));
+        productList.add(productService.getOneByPKNoImg(protracking_list.get(i)));
 	}
-    session.setAttribute("mem_no", mem_no);
-	session.setAttribute("productList", productList);
+    session.setAttribute("memVO", memVO);
+    pageContext.setAttribute("productList", productList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);

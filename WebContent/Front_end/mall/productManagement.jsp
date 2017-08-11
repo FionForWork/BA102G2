@@ -6,14 +6,15 @@
 <%@page import="java.util.List"%>
 <%@page import="com.product.model.ProductService"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="pages/mallIndexHeader.file"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-	MemVO memVO = (session.getAttribute("memVO") == null)? new MemService().getOneMem("1010"): (MemVO) session.getAttribute("memVO");
+//  MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService=new MemService();
+	MemVO memVO =memService.getOneMem("1010");
 	ProductService productService = new ProductService();
 	List<ProductVO> productList = productService.getAllBySeller(memVO.getMem_no());
 	Product_typeService product_typeService = new Product_typeService();
@@ -24,6 +25,7 @@
 	pageContext.setAttribute("preLocation", preLocation);
 	session.setAttribute("productList", productList);
 %>
+<%@include file="pages/mallIndexHeader.file"%>
 <style>
 .addImg, .updateImg {
 	width: 200px;
@@ -132,7 +134,7 @@ img {
                                         </c:when>
                                         <c:when test="${productVO.status=='2'}">
                                             <td><div id="status${productVO.pro_no}">
-                                                    <a class="btn btn-danger" href="javascript:onOrOff(${productVO.pro_no})">商品下架</a>
+                                                    <a class="btn btn-info" href="javascript:onOrOff(${productVO.pro_no})">商品上架</a>
                                                 </div></td>
                                         </c:when>
                                         <c:otherwise>
@@ -318,16 +320,6 @@ img {
             }
         }
     });
-
-    // function preview(input){
-    //     if(input.files[0]){
-    //         var reader = new FileReader();
-    //         reader.readAsDataURL(input.files[0]);
-    //         reader.onload = function (e) {
-    //         $(".updatePreview").attr('src', e.target.result);
-    //         }
-    //     }
-    // }
 
     function onOrOff(pro_no) {
         $.ajax({

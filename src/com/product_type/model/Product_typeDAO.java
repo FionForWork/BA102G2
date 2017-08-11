@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -24,28 +25,16 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
-
-    private Connection JNDIinit() throws NamingException, SQLException {
-        Context context = new javax.naming.InitialContext();
-        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
-        if (dataSource != null) {
-            return dataSource.getConnection();
-        }
-        else {
-            System.out.println("DataSource is null");
-            return null;
+    private static DataSource dataSource = null;
+    static {
+        try {
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
     }
 
-    private Connection JDBCinit() throws ClassNotFoundException, SQLException {
-        String DRIVER = "oracle.jdbc.driver.OracleDriver";
-        String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-        String USER = "ProjectDB";
-        String PASSWORD = "eric1101105351";
-        Class.forName(DRIVER);
-        Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-        return con;
-    }
 
     public void cancelConnection() throws SQLException {
         if (resultSet != null) {
@@ -62,15 +51,12 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     @Override
     public void add(Product_typeVO product_typeVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, product_typeVO.getType_name());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -94,15 +80,12 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     @Override
     public void delete(String protype_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, protype_no);
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -126,16 +109,13 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     @Override
     public void update(Product_typeVO product_typeVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, product_typeVO.getType_name());
             preparedStatement.setString(2, product_typeVO.getProtype_no());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -159,7 +139,7 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     @Override
     public Product_typeVO getOneByPK(String protype_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, protype_no);
             resultSet = preparedStatement.executeQuery();
@@ -169,9 +149,6 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
                 product_typeVO.setType_name(resultSet.getString(2));
             }
             return product_typeVO;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -190,7 +167,7 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
     @Override
     public List<Product_typeVO> getAll() {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
             List<Product_typeVO> list = new ArrayList<>();
@@ -201,9 +178,6 @@ public class Product_typeDAO implements Product_typeDAO_Interface {
                 list.add(product_typeVO);
             }
             return list;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();

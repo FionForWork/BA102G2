@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -31,15 +32,13 @@ public class PlaceDAO implements PlaceDAO_Interface {
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
-
-    private Connection JNDIinit() throws NamingException, SQLException {
-        Context context = new javax.naming.InitialContext();
-        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
-        if (dataSource != null) {
-            return dataSource.getConnection();
-        }
-        else {
-            return null;
+    private static DataSource dataSource = null;
+    static {
+        try {
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +57,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public void add(PlaceVO placeVO,List<PlaceViewVO> viewList) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             String PKName[]={"PLA_NO"};
             preparedStatement = connection.prepareStatement(INSERT,PKName);
@@ -101,7 +100,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public void add(PlaceVO placeVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, placeVO.getName());
@@ -135,7 +134,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public void delete(String pla_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, pla_no);
@@ -143,9 +142,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
             preparedStatement.execute();
             placeViewDAO.deleteByFK(pla_no,connection);
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -169,7 +165,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public void update(PlaceVO placeVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, placeVO.getName());
@@ -180,9 +176,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
             preparedStatement.setString(6, placeVO.getPla_no());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -206,7 +199,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public PlaceVO getOneByPK(String pla_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, pla_no);
             resultSet = preparedStatement.executeQuery();
@@ -221,9 +214,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 
             }
             return placeVO;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -242,7 +232,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public List<PlaceVO> getAll() {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
             List<PlaceVO> list = new ArrayList<>();
@@ -256,9 +246,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
                 list.add(placeVO);
             }
             return list;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -277,7 +264,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public List<PlaceVO> getSome(int page, int count) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             int start = (page - 1) * count + 1;
             int end = page * count;
             PreparedStatement preparedStatement = connection.prepareStatement(GET_SOME_ROW);
@@ -297,9 +284,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
             }
             return list;
         }
-        catch (NamingException e) {
-            e.printStackTrace();
-        }
         catch (SQLException e) {
             e.printStackTrace();
         }
@@ -317,7 +301,7 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public List<PlaceVO> getSome(String south, String west, String north, String east) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_SOME_ROW_BY_FOUR);
             preparedStatement.setString(1, south);
             preparedStatement.setString(2, north);
@@ -336,9 +320,6 @@ public class PlaceDAO implements PlaceDAO_Interface {
             }
             return list;
         }
-        catch (NamingException e) {
-            e.printStackTrace();
-        }
         catch (SQLException e) {
             e.printStackTrace();
         }
@@ -356,14 +337,11 @@ public class PlaceDAO implements PlaceDAO_Interface {
     @Override
     public int getAllCount() {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_COUNT);
             resultSet.next();
             return resultSet.getInt(1);
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();

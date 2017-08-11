@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface Order_detailDAO_Interface {
 
-    void add(Order_detailVO order_detailVO);
+    void insert(Order_detailVO order_detailVO);
     
     void insert(Order_detailVO order_detailVO,Connection connection);
 
-    void delete(String ord_no, String pro_no);
+    void delete(String ord_no);
 
     void update(Order_detailVO order_detailVO);
 
@@ -17,6 +17,6 @@ public interface Order_detailDAO_Interface {
 
     List<Order_detailVO> getAll();
 
-    List<Order_detailVO> getAllByOrdNo(String ord_no);
+    List<Order_detailVO> getAllByFK(String ord_no);
 
 }

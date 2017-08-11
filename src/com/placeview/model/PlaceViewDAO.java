@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -24,15 +25,13 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
-    
-    private Connection JNDIinit() throws NamingException, SQLException {
-        Context context = new javax.naming.InitialContext();
-        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
-        if (dataSource != null) {
-            return dataSource.getConnection();
-        }
-        else {
-            return null;
+    private static DataSource dataSource = null;
+    static {
+        try {
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,16 +50,13 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     @Override
     public void add(PlaceViewVO placeViewVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, placeViewVO.getPla_no());
             preparedStatement.setBytes(2, placeViewVO.getImg());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -113,15 +109,12 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     @Override
     public void delete(String view_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, view_no);
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -171,16 +164,13 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     @Override
     public void update(PlaceViewVO placeViewVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setBytes(1, placeViewVO.getImg());
             preparedStatement.setString(2, placeViewVO.getView_no());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -204,7 +194,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     @Override
     public PlaceViewVO findByPk(String view_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, view_no);
             resultSet = preparedStatement.executeQuery();
@@ -215,9 +205,6 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
                 placeViewVO.setImg(resultSet.getBytes(3));
             }
             return placeViewVO;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -236,7 +223,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
     @Override
     public List<String> getAllByFK(String pla_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_ALL_BY_FK);
             preparedStatement.setString(1, pla_no);
             resultSet=preparedStatement.executeQuery();
@@ -245,9 +232,6 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface {
                 list.add(resultSet.getString(1));
             }
             return list;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();

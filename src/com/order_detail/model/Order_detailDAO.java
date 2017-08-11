@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -17,7 +18,7 @@ import com.product.model.ProductVO;
 
 public class Order_detailDAO implements Order_detailDAO_Interface {
     private static final String INSERT                = "insert into ORDER_DETAIL (ORD_NO, PRO_NO, PRICE, QTY,ITEMTOT,SCORE,STATUS)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE_BY_NO          = "delete from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
+    private static final String DELETE_BY_NO          = "delete from ORDER_DETAIL where ORD_NO = ?";
     private static final String UPDATE                = "update ORDER_DETAIL set PRICE = ?, QTY = ?, ITEMTOT = ?, SCORE = ?, STATUS = ? where ORD_NO = ? and PRO_NO = ?";
     private static final String FIND_BY_PK            = "select * from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
     private static final String GET_ALL_ORDER_BY_ASC  = "select * from ORDER_DETAIL order by ORD_NO asc";
@@ -27,15 +28,13 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
-
-    private Connection JNDIinit() throws NamingException, SQLException {
-        Context context = new javax.naming.InitialContext();
-        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
-        if (dataSource != null) {
-            return dataSource.getConnection();
-        }
-        else {
-            return null;
+    private static DataSource dataSource = null;
+    static {
+        try {
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
+        } catch (NamingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -52,9 +51,9 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     }
 
     @Override
-    public void add(Order_detailVO order_detailVO) {
+    public void insert(Order_detailVO order_detailVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, order_detailVO.getOrd_no());
@@ -66,9 +65,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             preparedStatement.setString(7, order_detailVO.getStatus());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -125,18 +121,14 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     }
 
     @Override
-    public void delete(String ord_no, String pro_no) {
+    public void delete(String ord_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, ord_no);
-            preparedStatement.setString(2, pro_no);
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -160,7 +152,7 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     @Override
     public void update(Order_detailVO order_detailVO) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setInt(1, order_detailVO.getPrice());
@@ -172,9 +164,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             preparedStatement.setString(7, order_detailVO.getPro_no());
             preparedStatement.execute();
             connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -198,7 +187,7 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     @Override
     public Order_detailVO getOneByPK(String ord_no, String pro_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, ord_no);
             preparedStatement.setString(2, pro_no);
@@ -214,9 +203,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
                 order_detailVO.setStatus(resultSet.getString(7));
             }
             return order_detailVO;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -235,7 +221,7 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     @Override
     public List<Order_detailVO> getAll() {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
             List<Order_detailVO> list = new ArrayList<>();
@@ -252,9 +238,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             }
             return list;
         }
-        catch (NamingException e) {
-            e.printStackTrace();
-        }
         catch (SQLException e) {
             e.printStackTrace();
         }
@@ -270,9 +253,9 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
     }
 
     @Override
-    public List<Order_detailVO> getAllByOrdNo(String ord_no) {
+    public List<Order_detailVO> getAllByFK(String ord_no) {
         try {
-            connection = JNDIinit();
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_ALL_BY_ORD_NO);
             preparedStatement.setString(1, ord_no);
             resultSet = preparedStatement.executeQuery();
@@ -289,9 +272,6 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
                 list.add(order_detailVO);
             }
             return list;
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();

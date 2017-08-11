@@ -13,7 +13,7 @@ import com.order_detail.model.Order_detailVO;
 
 import hibernate.util.HibernateUtil;
 
-public class OrdDAO implements OrdDAO_Interface{
+public class OrdDAO_Hibernate implements OrdDAO_Interface{
 
     @Override
     public void insert(OrdVO ordVO) {
@@ -105,7 +105,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("from OrdVO where CUST_NO = :cust_no and Status = :status");
+            Query query = session.createQuery("from ORD where CUST_NO = :cust_no and Status = :status");
             query.setParameter("cust_no", cust_no);
             query.setParameter("status", status);
             list = query.list();
@@ -123,7 +123,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("from OrdVO where SELLER_NO = :seller_no and Status = :status ");
+            Query query = session.createQuery("from ORD where SELLER_NO = :seller_no and Status = :status ");
             query.setParameter("seller_no", seller_no);
             query.setParameter("status", status);
             list = query.list();
@@ -141,7 +141,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("from OrdVO where CUST_NO = :cust_no and Status = :status order by :orderMethod");
+            Query query = session.createQuery("from ORD where CUST_NO = :cust_no and Status = :status order by :orderMethod");
             query.setParameter("cust_no", cust_no);
             query.setParameter("status", status);
             query.setParameter("orderMethod", orderMethod);
@@ -160,7 +160,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("from OrdVO where SELLER_NO = :seller_no and Status = :status order by :orderMethod");
+            Query query = session.createQuery("from ORD where SELLER_NO = :seller_no and Status = :status order by :orderMethod");
             query.setParameter("seller_no", seller_no);
             query.setParameter("status", status);
             query.setParameter("orderMethod", orderMethod);
@@ -179,7 +179,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select count(rownum) from OrdVO where CUST_NO = :cust_no and Status = :status");
+            Query query = session.createQuery("select count(rownum) from ORD where CUST_NO = :cust_no and Status = :status");
             query.setParameter("cust_no", cust_no);
             query.setParameter("status", status);
             List result=query.list();
@@ -197,7 +197,7 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select count(rownum) from OrdVO where SELLER_NO = :seller_no and Status = :status");
+            Query query = session.createQuery("select count(rownum) from ORD where SELLER_NO = :seller_no and Status = :status");
             query.setParameter("seller_no", seller_no);
             query.setParameter("status", status);
             List result=query.list();
@@ -215,10 +215,10 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            String getPageByCust="from OrdVO where CUST_NO = :cust_no and Status = :status order by "+orderMethod;
-            Query query = session.createQuery(getPageByCust);
+            Query query = session.createQuery("from ORD where CUST_NO = :cust_no and Status = :status order by :orderMethod");
             query.setParameter("cust_no", cust_no);
             query.setParameter("status", status);
+            query.setParameter("orderMethod", orderMethod);
             query.setFirstResult(start);
             query.setMaxResults(itemsCount);
             list = query.list();
@@ -236,10 +236,10 @@ public class OrdDAO implements OrdDAO_Interface{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            String getPageBySeller="from OrdVO where SELLER_NO = :seller_no and Status = :status order by "+orderMethod;
-            Query query = session.createQuery(getPageBySeller);
+            Query query = session.createQuery("from ORD where SELLER_NO = :seller_no and Status = :status order by :orderMethod");
             query.setParameter("seller_no", seller_no);
             query.setParameter("status", status);
+            query.setParameter("orderMethod", orderMethod);
             query.setFirstResult(start);
             query.setMaxResults(itemsCount);
             list = query.list();

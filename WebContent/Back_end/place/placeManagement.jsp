@@ -233,7 +233,7 @@
             "<td>"+ placeList[i].name + "</td>" + 
             "<td>" + placeList[i].addr + "</td>" + 
             "<td style='word-break:break-all;width:500px;'>"+placeList[i].pla_desc+"</td>"+
-            "<td style='width: 80px;'><a style='width: 100%;' class='btn btn-success' href='/BA102G2/place/PlaceServlet?action=UPDATE&&pla_no=" + placeList[i].pla_no + "'>資料修改</a>" + 
+            "<td style='width: 80px;'><a style='width: 100%;' class='btn btn-success' href='/BA102G2/Back_end/place/placeUpdate.jsp?pla_no=" + placeList[i].pla_no + "'>資料修改</a>" + 
             "<a style='width: 100%;' class='btn btn-danger' href='/BA102G2/place/PlaceServlet?action=DELETE&&pla_no=" + placeList[i].pla_no + "'>刪除景點</a></td>"+
             "</tr>";
         }

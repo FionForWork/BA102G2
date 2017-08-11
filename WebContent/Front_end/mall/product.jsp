@@ -13,15 +13,14 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     int carTotal = (session.getAttribute("carTotal") == null) ? 0 : Integer.valueOf(String.valueOf((session.getAttribute("carTotal"))));
-    MemVO memVO=(session.getAttribute("memVO")==null)?new MemService().getOneMem("1010"):(MemVO)session.getAttribute("memVO");
+//MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService=new MemService();
+    MemVO memVO =memService.getOneMem("1010");
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     ProtraService protraService = new ProtraService();
     List<String> protrackingProNolist=new ArrayList<String>();;
     List<ProtraVO>protraList=protraService.getAllByMem(memVO.getMem_no());
-    for(int i=0;i<protraList.size();i++){
-        protrackingProNolist.add(protraList.get(i).getPro_no());
-    }
     String[] productStatus = { "審核中", "上架中", "已下架" };
     String pro_no;
     int mine = 0;
@@ -38,19 +37,27 @@
         pageContext.setAttribute("productVO", productVO);
      
     }
+    boolean tracing=false;
+    for(int i=0;i<protraList.size();i++){
+        if(protraList.get(i).getPro_no().equals(pro_no)){
+            tracing=true;
+        }
+    }
+    
     String preLocation = request.getContextPath() + "/Front_end/mall";
     
+    pageContext.setAttribute("tracing", tracing);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("pro_no", pro_no);
     pageContext.setAttribute("mine", mine);
-    pageContext.setAttribute("protrackingProNolist", protrackingProNolist);
     pageContext.setAttribute("productStatus", productStatus);
     pageContext.setAttribute("typeList", typeList);
     
     session.setAttribute("carTotal", new Integer(carTotal));
 %>
 <%@include file="pages/ProductHeader.file"%>
-<div class="container" style="margin-bottom: 10px;">
+<!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
+<div class="container">
     <div class="row">
         <div class="col-md-2">
             <ul class="list-group">
@@ -85,8 +92,8 @@
                                     <dt>上架日期</dt>
                                     <dd>${productVO.pro_date}</dd>
                                     <dt>商品描述</dt>
-<%--                                     <dd><pre style="border: 0px;margin: 0px; padding: 0px;">${productVO.pro_desc}</pre></dd> --%>
-                                    <dd>${productVO.pro_desc}</dd>
+                                    <dd><pre style="border: 0px;margin: 0px; padding: 0px;">${productVO.pro_desc}</pre></dd>
+<%--                                     <dd>${productVO.pro_desc}</dd> --%>
                                     <dt>商品價格</dt>
                                     <dd>${productVO.price}</dd>
                                     <dt>商品庫存</dt>
@@ -105,24 +112,17 @@
                                     <c:choose>
                                         <c:when test="${mine==0}">
                                             <c:if test="${productVO.status==1}">
-<%--                                                 <form action="<%=request.getContextPath()%>/product/ProductServlet" method="post"> --%>
-<!--                                                     <label>數量</label> -->
-<%--                                                     <input type="hidden" name="action" value="ADD_TO_CAR"> <input type="number" name="product_account" value="1" min="1" max="${productVO.amount}" style="width: 80px;"> --%>
-<!--                                                     <button type="submit" class="btn btn-default ">加入購物車</button> -->
-<!--                                                 </form> -->
                                             <label>數量</label>
-                                            <input id="productCount" type="number" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
+                                            <input id="productCount" type="number" required="required" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
                                             <a href="javascript:add(${productVO.pro_no})" class="btn btn-primary">加入購物車</a>
                                             </c:if>
                                             <div id="protracking">
                                                 <c:choose>
-                                                <c:when test="${protrackingProNolist.contains(pro_no)}">
-<%--                                                     <a href="<%=request.getContextPath() %>/protracking_list/Protracking_listServlet?action=DELETE" class="btn btn-danger">取消追蹤</a> --%>
-                                                        <a href="javascript:protracking('DELETE_AJAX',${productVO.pro_no})" class="btn btn-danger">取消追蹤</a>
+                                                <c:when test="${tracing}">
+                                                        <a href="javascript:protracking('DELETE_AJAX')" class="btn btn-danger">取消追蹤</a>
                                                 </c:when>
                                                 <c:otherwise>
-<%--                                                     <a href="<%=request.getContextPath() %>/protracking_list/Protracking_listServlet?action=ADD" class="btn btn-success">加入追蹤</a> --%>
-                                                        <a href="javascript:protracking('ADD_AJAX',${productVO.pro_no})" class="btn btn-success">加入追蹤</a>
+                                                        <a href="javascript:protracking('ADD_AJAX')" class="btn btn-success">加入追蹤</a>
                                                 </c:otherwise>
                                             </c:choose>
                                             </div>
@@ -156,13 +156,13 @@
 </div>
 
 <script>
-    function protracking(todo,pro_no){
+    function protracking(todo){
             $.ajax({
                 url:"/BA102G2/protra/ProtracServlet",
                 type : "post",
                 data:{
                     action:todo,
-                    pro_no:pro_no
+                    pro_no:<%=pro_no%>
                 }, 
                 error : function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -174,14 +174,14 @@
             });
     }
     
-    function add(pro_no){
+    function add(){
             $.ajax({
                 url:"/BA102G2/product/ProductServlet",
                 type : "post",
                 data:{
                     action:"ADD_TO_CAR_AJAX",
                     productCount:$("#productCount").val(),
-                    pro_no:pro_no
+                    pro_no:<%=pro_no%>
                 }, 
                 error : function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);

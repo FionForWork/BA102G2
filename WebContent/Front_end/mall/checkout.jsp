@@ -1,9 +1,14 @@
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="java.util.List"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+//MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService=new MemService();
+    MemVO memVO =memService.getOneMem("1010");
     List<ProductVO> carList = (session.getAttribute("carList") == null) ? new ArrayList<ProductVO>() : (List<ProductVO>) session.getAttribute("carList");
     List<Integer> countList = (session.getAttribute("countList") == null) ? new ArrayList<Integer>() : (List<Integer>) session.getAttribute("countList");
     int totalPrice = 0;
@@ -29,7 +34,7 @@
     <div class="row">
         <div class="col-md-12">
             <form action="<%=request.getContextPath()%>/order/OrderServlet" method="post">
-                <table class="table table-striped table-bordered table-condensed" style="vertical-align:middle;">
+                <table class="table table-hover table-striped" style="vertical-align:middle;">
                     <thead>
                         <tr>
                             <th>商品名稱</th>
@@ -65,7 +70,6 @@
                                 <td>
                                     <div class="form-group">
                                         <label class="sr-only" for="buyCount">數量</label>
-<%--                                         <input type="number" class="form-control" name="buyCount" placeholder="<%=countList.get(count)%>" value="<%=countList.get(count)%>" min="1" max="${item.amount}"> --%>
                                         <input type="number" class="form-control" name="buyCount" placeholder="${countList[s.index]}" value="${countList[s.index]}" min="1" max="${item.amount}">
                                     </div>
                                 <td>

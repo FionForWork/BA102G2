@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ord.model.OrdVO" table="ORD" >
+        
+        <id name="ord_no" column="ord_no">
+            <generator class="sequence" >
+              <param name="sequence">ord_no_seq</param>
+            </generator>  
+        </id>
+        
+        <property name="seller_no" column="seller_no" />
+        <property name="cust_no" column="cust_no" />
+        <property name="address" column="address" />
+        <property name="ord_date" column="ord_date" />
+        <property name="total" column="total" />
+        <property name="score" column="score" />
+        <property name="status" column="status" />
+        
+    </class>
+</hibernate-mapping>
