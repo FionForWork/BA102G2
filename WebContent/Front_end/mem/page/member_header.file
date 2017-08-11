@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="homepage.html">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
 
                     <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
@@ -52,7 +52,7 @@
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li >
-                        <a  href="<%= request.getContextPath() %>/Front_end/mem/index.jsp">
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp">
                           <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp<span style="font-size:19px;">${memVO.name}</span>
                         </a>
                     </li>
@@ -211,7 +211,7 @@
                 </ol>
             </li>
             <li class="wd-drop-wrapper">
-                <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
+                <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" ><h3>線上商城</h3></a>
                 <!--RWD-->
                 <div class="mobile-main-choice visible-xs">
                     <a href="#">手機1</a><span> / </span>
@@ -300,13 +300,18 @@
              <br><br><br> 
                 <ul class="list-group">
                     <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a><br>
+
                     <a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a><br>
+
                     <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
+
+                    <a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a><br>
+
                     <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
+                    
+                    <a href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" class="list-group-item menua">商城專區</a><br>
                 </ul>
 
 																				
