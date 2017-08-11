@@ -163,7 +163,7 @@
                                                                         <td>評價</td>
                                                                     </tr>
                                                                     <input type="hidden" name="ord_no" value="${ordVO.ord_no}">
-                                                                    <c:forEach var="order_detailVO" items="${order_detailService.getAllByOrdNo(ordVO.ord_no)}">
+                                                                    <c:forEach var="order_detailVO" items="${order_detailService.getAllByOrd(ordVO.ord_no)}">
                                                                         <tr>
                                                                             <c:if test="${!productList.contains(productService.getOneByPKNoImg(order_detailVO.pro_no))}">
                                                                                 <!--${productList.add(productService.getOneByPKNoImg(order_detailVO.pro_no))}-->

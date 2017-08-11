@@ -142,7 +142,7 @@ public class OrderServlet extends HttpServlet {
             Order_detailService order_detailService =new Order_detailService();
             ordVO.setStatus("4");
             ordService.update(ordVO);
-            List<Order_detailVO>detailList=order_detailService.getAllByOrdNo(ord_no);
+            List<Order_detailVO>detailList=order_detailService.getAllByOrd(ord_no);
             ProductService productService =new ProductService();
             for(int i=0;i<detailList.size();i++){
                 ProductVO productVO=productService.getOneByPK(detailList.get(i).getPro_no());
@@ -162,7 +162,7 @@ public class OrderServlet extends HttpServlet {
                 Order_detailService order_detailService = new Order_detailService();
                 ProductService productService = new ProductService();
                 for (int i = 0; i < pro_noList.length; i++) {
-                    Order_detailVO order_detailVO = order_detailService.getOneOrder_detailVO(ord_no, pro_noList[i]);
+                    Order_detailVO order_detailVO = order_detailService.getOneByComposite(ord_no, pro_noList[i]);
                     int score = (scoreList[i].equals("")) ? 0 : Integer.valueOf(scoreList[i]);
                     order_detailVO.setScore(score);
                     order_detailVO.setStatus("1");

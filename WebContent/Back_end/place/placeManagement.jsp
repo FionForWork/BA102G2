@@ -13,7 +13,7 @@
 	int itemsCount = 9;
 	int allCount = placeService.getAllCount();
 	int totalPages = allCount / itemsCount + 1;
-	List<PlaceVO> placeList = placeService.getSome(nowPage, itemsCount);
+	List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
 	String preLocation = request.getContextPath() + "/Back_end/place";
 	pageContext.setAttribute("placeList", placeList);
 	pageContext.setAttribute("preLocation", preLocation);

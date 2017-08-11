@@ -26,6 +26,9 @@
 
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="com/ord/model/ord.hbm.xml" />
+		<mapping resource="com/order_detail/model/order_detail.hbm.xml" />
+		<mapping resource="com/place/model/place.hbm.xml" />
+		<mapping resource="com/placeview/model/placeview.hbm.xml" />
 
 	</session-factory>
 	

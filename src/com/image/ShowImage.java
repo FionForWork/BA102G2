@@ -33,7 +33,7 @@ public class ShowImage extends HttpServlet {
         else if (request.getParameter("view_no") != null) {
             PlaceViewService placeViewService = new PlaceViewService();
             String view_no = request.getParameter("view_no");
-            PlaceViewVO placeViewVO =placeViewService.findByPk(view_no);
+            PlaceViewVO placeViewVO =placeViewService.getOneByPK(view_no);
             buf=placeViewVO.getImg();
         }
         servletOutputStream.write(buf);

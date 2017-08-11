@@ -3,12 +3,17 @@ package com.placeview.model;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.management.relation.Role;
+
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
-import hibernate.util.HibernateUtil;
+import com.ord.model.OrdVO;
 
-public class PlaceViewDAO implements PlaceViewDAO_Interface{
+import hibernate.util.HibernateUtil;
+import oracle.net.aso.q;
+
+public class PlaceViewDAO_Hibernate implements PlaceViewDAO_Interface{
 
     @Override
     public void insert(PlaceViewVO placeViewVO) {
@@ -77,7 +82,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
         List<String> list=null;
         try {
             session.beginTransaction();
-            Query query=session.createQuery("select view_no from PlaceViewVO where PLA_NO = :pla_no");
+            Query query=session.createQuery("select VIEW_NO from PlaveViewVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
             list=query.list();
         }

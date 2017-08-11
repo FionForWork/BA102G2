@@ -55,7 +55,7 @@ public class PlaceServlet extends HttpServlet {
 
             PlaceService placeService = new PlaceService();
             PlaceViewService placeViewService = new PlaceViewService();
-            List<PlaceVO> placeList = placeService.getSome(south, west, north, east);
+            List<PlaceVO> placeList = placeService.getRange(south, west, north, east);
             List<String> viewnoList = new ArrayList<String>();
             if (placeList != null) {
                 for (int i = 0; i < placeList.size(); i++) {
@@ -76,7 +76,7 @@ public class PlaceServlet extends HttpServlet {
             int nowPage = Integer.valueOf(request.getParameter("nowPage"));
             int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
             PlaceService placeService = new PlaceService();
-            List<PlaceVO> placeList = placeService.getSome(nowPage, itemsCount);
+            List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
             Gson gson = new Gson();
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter = response.getWriter();
@@ -157,7 +157,7 @@ public class PlaceServlet extends HttpServlet {
                             PlaceViewVO placeViewVO = new PlaceViewVO();
                             placeViewVO.setPla_no(pla_no);
                             placeViewVO.setImg(toByteArray(inputStream));
-                            placeViewService.add(placeViewVO);
+                            placeViewService.insert(placeViewVO);
                         }
                     }
                 }

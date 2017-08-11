@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 import com.product.model.ProductVO;
 
-public class Order_detailDAO implements Order_detailDAO_Interface {
+public class Order_detailDAO_JDBC implements Order_detailDAO_Interface {
     private static final String INSERT               = "insert into ORDER_DETAIL (ORD_NO, PRO_NO, PRICE, QTY,ITEMTOT,SCORE,STATUS)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String DELETE_BY_ORD        = "delete from ORDER_DETAIL where ORD_NO = ?";
     private static final String UPDATE               = "update ORDER_DETAIL set PRICE = ?, QTY = ?, ITEMTOT = ?, SCORE = ?, STATUS = ? where ORD_NO = ? and PRO_NO = ?";
@@ -52,43 +52,12 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
 
     @Override
     public void insert(Order_detailVO order_detailVO) {
-        try {
-            connection = dataSource.getConnection();
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, order_detailVO.getOrd_no());
-            preparedStatement.setString(2, order_detailVO.getPro_no());
-            preparedStatement.setInt(3, order_detailVO.getPrice());
-            preparedStatement.setInt(4, order_detailVO.getQty());
-            preparedStatement.setInt(5, order_detailVO.getItemtot());
-            preparedStatement.setInt(6, order_detailVO.getScore());
-            preparedStatement.setString(7, order_detailVO.getStatus());
-            preparedStatement.execute();
-            connection.commit();
-        }
-        catch (SQLException e) {
-            try {
-                connection.rollback();
-            }
-            catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                cancelConnection();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void insert(Order_detailVO order_detailVO, Connection connection) {
         try {
-            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, order_detailVO.getOrd_no());
             preparedStatement.setString(2, order_detailVO.getPro_no());
@@ -113,19 +82,13 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
                 try {
                     preparedStatement.close();
                 }
-                catch (SQLException se) {
-                    se.printStackTrace(System.err);
+                catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    @Override
-    public void delete(String ord_no) {
-     // TODO Auto-generated method stub
-    }
-
-    @Override
     public void delete(String ord_no, Connection connection) {
         try {
             preparedStatement = connection.prepareStatement(DELETE_BY_ORD);
@@ -152,7 +115,12 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             }
         }
     }
-    
+
+    @Override
+    public void delete(String ord_no) {
+        // TODO Auto-generated method stub
+    }
+
     @Override
     public void update(Order_detailVO order_detailVO) {
         try {
@@ -229,7 +197,7 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             preparedStatement = connection.prepareStatement(GET_ALL_BY_ORD);
             preparedStatement.setString(1, ord_no);
             resultSet = preparedStatement.executeQuery();
-            List<Order_detailVO> list=new ArrayList<Order_detailVO>();
+            List<Order_detailVO> list = new ArrayList<Order_detailVO>();
             while (resultSet.next()) {
                 Order_detailVO order_detailVO = new Order_detailVO();
                 order_detailVO.setOrd_no(resultSet.getString(1));
@@ -264,7 +232,7 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
             preparedStatement = connection.prepareStatement(GET_ALL_BY_PRO);
             preparedStatement.setString(1, pro_no);
             resultSet = preparedStatement.executeQuery();
-            List<Order_detailVO> list=new ArrayList<Order_detailVO>();
+            List<Order_detailVO> list = new ArrayList<Order_detailVO>();
             while (resultSet.next()) {
                 Order_detailVO order_detailVO = new Order_detailVO();
                 order_detailVO.setOrd_no(resultSet.getString(1));
@@ -291,5 +259,4 @@ public class Order_detailDAO implements Order_detailDAO_Interface {
         }
         return null;
     }
-
 }

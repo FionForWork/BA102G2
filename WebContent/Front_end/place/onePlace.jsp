@@ -19,10 +19,8 @@
 <div class="container" style="margin-bottom: 20px;">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="font-size: 20px;">
-                <h3><b>景點名稱</b></h3>
-                ${placeVO.name}
-                <h3><b>景點地址</b></h3>
-                ${placeVO.addr}
+            <h3><b>景點名稱:</b>${placeVO.name}</h3>
+            <h3><b>景點地址:</b>${placeVO.addr}</h3>
         </div>
         <c:forEach var="view" items="${viewList}">
             <div id="placeImg" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 " style="margin-bottom: 20px;">

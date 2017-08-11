@@ -5,19 +5,19 @@
 <hibernate-mapping>
     <class name="com.ord.model.OrdVO" table="ORD" >
         
-        <id name="ord_no" column="ord_no">
+        <id name="ord_no" column="ORD_NO">
             <generator class="sequence" >
-              <param name="sequence">ord_no_seq</param>
+              <param name="sequence">ORD_NO_SEQ</param>
             </generator>  
         </id>
         
-        <property name="seller_no" column="seller_no" />
-        <property name="cust_no" column="cust_no" />
-        <property name="address" column="address" />
-        <property name="ord_date" column="ord_date" />
-        <property name="total" column="total" />
-        <property name="score" column="score" />
-        <property name="status" column="status" />
+        <property name="seller_no" column="SELLER_NO" />
+        <property name="cust_no" column="CUST_NO" />
+        <property name="address" column="ADDRESS" />
+        <property name="ord_date" column="ORD_DATE" />
+        <property name="total" column="TOTAL" />
+        <property name="score" column="SCORE" />
+        <property name="status" column="STATUS" />
         
     </class>
 </hibernate-mapping>

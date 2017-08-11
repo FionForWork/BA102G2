@@ -10,14 +10,15 @@ import com.placeview.model.PlaceViewVO;
 import com.sun.mail.util.QEncoderStream;
 
 import hibernate.util.HibernateUtil;
+import oracle.net.aso.q;
 
-public class PlaceDAO implements PlaceDAO_Interface{
+public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
 
     @Override
     public void insert(PlaceVO placeVO) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             session.saveOrUpdate(placeVO);
             session.getTransaction().commit();
         }
@@ -31,7 +32,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
     public void insert(PlaceVO placeVO, List<PlaceViewVO> viewList) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             session.saveOrUpdate(placeVO);
             PlaceViewDAO placeViewDAO=new PlaceViewDAO();
             for (PlaceViewVO placeViewVO : viewList) {
@@ -49,7 +50,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
     public void delete(String pla_no) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             Query query=session.createQuery("from PlaceVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
             PlaceViewDAO placeViewDAO=new PlaceViewDAO();
@@ -66,7 +67,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
     public void update(PlaceVO placeVO) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             session.saveOrUpdate(placeVO);
             session.getTransaction().commit();
         }
@@ -81,10 +82,9 @@ public class PlaceDAO implements PlaceDAO_Interface{
         PlaceVO placeVO=null;
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             Query query=session.createQuery("from PlaceVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
-            placeVO=(PlaceVO)(query.list().get(0));
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();
@@ -98,7 +98,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
         int allCount=0;
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             Query query=session.createQuery("select count(rownum) from PlaceVO");
             allCount=Integer.valueOf(String.valueOf(query.list().get(0)));
         }
@@ -114,7 +114,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
         List<PlaceVO> list=null;
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             Query query=session.createQuery("from PlaceVO");
             query.setFirstResult(start);
             query.setMaxResults(itemsCount);
@@ -132,7 +132,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
         List<PlaceVO> list=null;
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.beginTransaction();
+            session.getTransaction();
             Query query=session.createQuery("from PlaceVO where LAT between ? and ? and LNG between ? and ?");
             query.setParameter(0, south);
             query.setParameter(1, north);

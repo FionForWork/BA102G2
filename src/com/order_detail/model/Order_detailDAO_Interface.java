@@ -11,12 +11,14 @@ public interface Order_detailDAO_Interface {
 
     void delete(String ord_no);
 
+    void delete(String ord_no,Connection connection);
+
     void update(Order_detailVO order_detailVO);
 
-    Order_detailVO getOneByPK(String ord_no, String pro_no);
+    Order_detailVO getOneByComposite(String ord_no, String pro_no);
 
-    List<Order_detailVO> getAll();
+    List<Order_detailVO> getAllByOrd(String ord_no);
 
-    List<Order_detailVO> getAllByFK(String ord_no);
+    List<Order_detailVO> getAllByPro(String pro_no);
 
 }
