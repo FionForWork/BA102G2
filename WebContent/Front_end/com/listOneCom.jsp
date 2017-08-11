@@ -72,7 +72,7 @@ Object comVO = session.getAttribute("comVO");
 		<div class="form-group">
 				<span>廠商介紹:</span>
 				<div ></div>
-				 <pre style="border:0;">${comVO.com_desc}</pre>
+				 <pre style="border:0;font-size:19px;font-weight:900;">${comVO.com_desc}</pre>
 		</div>
 
 		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
