@@ -9,4 +9,5 @@ public interface QuoteDAO_Interface {
 	void delete(String quo_no);
 	QuoteVO findByPK(String quo_no);
 	List<QuoteVO> getAll(String rfqdetail_no);
+	List<QuoteVO> getCom(String com_no);
 }

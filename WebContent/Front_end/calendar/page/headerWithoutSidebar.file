@@ -250,26 +250,7 @@
         </div>
     </nav>
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <div class="fade-carousel">
-        <div class="home-banner fade-carousel" style="overflow: hidden;">
-            <div class="item slides">
-                <div class="overlay"></div>
-                <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/quote/img/banner1.jpg');"></div>
-                <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
-            </div>
-        </div>
 
-        <div class="banner_hero text-center">
-            <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
-                <b class="hello_word">
-            妳需要的婚禮廠商，我們幫妳嚴選
-            </b>
-            </h1>
-            <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
-        </div>
-
-    </div>
 
 
     <!--這裡開始-->

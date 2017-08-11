@@ -31,9 +31,67 @@
 
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
 <%@ include file="page/headerWithoutSidebar.file" %>
-
+<script>
+	$( function() {
+	
+	    $( ".draggable" ).draggable({ snap: ".ui-widget-head",scope:"calendar",
+	            drag:function (event, ui) {
+	                $("#dragid").val($(this).attr("id"));
+	                $("#thisDate").val($(this).parent('td').attr("id").replace(/-/g,""));
+	            }
+	        });
+	
+	    $(".calendar").droppable({
+	            scope: "calendar",            
+	            drop: function (event, ui) {
+	                $(this).css("background-color", "lightgreen");
+	                $("#dropid").val($(this).attr("id"));
+	                $("#toDate").val($(this).attr("id").replace(/-/g,""));
+	                changeSchedule();
+	                $("#updateDateForm").submit();
+	            },
+	            over: function (event, ui) {
+	                $(this).css("background-color", "lightgreen")
+	            },
+	            out: function (event, ui) {
+	                $(this).css("background-color", "")
+	            }
+	        });
+	  } );
+	
+	function change(){
+		
+		$('#changeCalendar').submit();
+	}
+	
+	function add(y){
+	  var obj = $(y);
+		$("#datepicker").val($(obj).attr("id"));
+	}
+	
+	$( function() {
+	    $( "#datepicker" ).datepicker({dateFormat: 'yy-m-dd'});
+	  } );
+	
+	function show(y){
+	$(y).children("button").show();
+	}
+	
+	function hide(y){
+		$(y).children("button").hide();
+	  }
+	
+	function deleteSchedule(y){
+	  	var j = $(y).parent('div').attr("id");
+	  	var thisDate = $(y).parent('div').parent('td').attr("id").replace(/-/g,"");
+	  	$('#cal_no').val(j);
+	  	$('#thisDate').val(thisDate);
+	  	onDeleteSchedule();
+		$('#deleteForm').submit();
+	  }
+</script>
 <div class="container">
 <div class="text-center col-md-offset-1 col-md-10">
 <table class="table table-bordered ui-widget-head" >
@@ -128,7 +186,7 @@
 <br>
 </div>
 <!-- 新增Schedule -->
-<form method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
+<form id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 		<!-- Modal content-->
@@ -151,7 +209,8 @@
 				<div class="modal-footer">
 					<input type="hidden" name="action" value="addSchedule">
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-					<input type="submit" class="btn btn-info" value="新增活動">
+<!-- 					<input type="submit" class="btn btn-info" value="新增活動"> -->
+					<button type="button" class="btn btn-info" onclick="addSchedule()">新增活動</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -172,7 +231,100 @@
   	<input type="hidden" name="cal_no" id="cal_no" value="">
   	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 </form>
-
+<!-- For WebSocket -->
+<input type="text" id="thisDate" value="">
+<input type="text" id="toDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
-</body>
+</body >
+
+<script>
+    
+    var MyPoint = "/ResServer/peter/309";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var statusOutput = document.getElementById("statusOutput");
+	var webSocket;
+	
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+// 			updateStatus("WebSocket 成功連線");
+// 			document.getElementById('sendMessage').disabled = false;
+// 			document.getElementById('connect').disabled = true;
+// 			document.getElementById('disconnect').disabled = false;
+		};
+
+		webSocket.onmessage = function(event) {
+	        var jsonObj = JSON.parse(event.data);
+	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        
+	        var action = jsonObj.action;
+	        if(action == "onRes"){
+	        	var thisDate = document.getElementById(jsonObj.thisDate);
+	        	var name = jsonObj.name;
+				var content = $("<div style='background-color:pink'>").text(name);
+	        	$(thisDate).append(content);
+	        }
+// 	        if(resDate != null){
+// 		        $(resDate).children('a').hide();
+// 		        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
+// 	        }
+		};
+
+		webSocket.onclose = function(event) {
+			updateStatus("WebSocket 已離線");
+		};
+	}
+	
+	
+	
+	function changeSchedule() {
+		
+		var jsonObj = {"thisDate" : $("#thisDate").val(),
+						"toDate" : $("#toDate").val(),
+						"action" : "changeSchedule"};
+		
+		webSocket.send(JSON.stringify(jsonObj));
+		
+	}
+
+	function onDeleteSchedule() {
+		
+		var jsonObj = {"thisDate" : $("#thisDate").val(),
+						"action" : "deleteSchedule"};
+		
+		webSocket.send(JSON.stringify(jsonObj));
+		
+	}
+	
+	function addSchedule() {
+
+		$('#thisDate').val($('#datepicker').val().replace(/-/g,""));
+		
+		var jsonObj = {"thisDate" : $("#thisDate").val(),
+						"action" : "addSchedule"};
+		
+		webSocket.send(JSON.stringify(jsonObj));
+		$('#addScheduleForm').submit();
+	}
+	
+	function disconnect () {
+		webSocket.close();
+// 		document.getElementById('sendMessage').disabled = true;
+// 		document.getElementById('connect').disabled = false;
+// 		document.getElementById('disconnect').disabled = true;
+	}
+
+	
+	function updateStatus(newStatus) {
+		statusOutput.innerHTML = newStatus;
+	}
+    
+</script>
+
 </html>

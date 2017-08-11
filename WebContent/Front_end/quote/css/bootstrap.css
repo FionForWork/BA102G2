@@ -1599,8 +1599,8 @@ caption {
   color: #818181;
   text-align: left; }
 
-th {
-  text-align: left; }
+/* th { */
+/*   text-align: left; } */
 
 .table {
   width: 100%;

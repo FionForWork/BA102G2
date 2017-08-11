@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.calendar.model.*" %>
+<%@ page import="com.mem.model.*" %>
 <%@ page import="com.serv.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Timestamp" %>
@@ -20,6 +21,11 @@
 	int dayNum = lastDayOfMonth.getDayOfMonth();
 	// 本月第一天是星期幾
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
+	
+	MemService memService = new MemService();
+	MemVO memVO = memService.getOneMem("1001");
+	session.setAttribute("memVO", memVO);
+	
 	CalendarService calerdarService = new CalendarService();
 	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, "2001");
 	pageContext.setAttribute("month", localDate.getMonthValue());
@@ -40,13 +46,13 @@
 		position:relative;
 		width:90px;
 		height:110px;
-		overflow: hidden;
+ 		overflow: hidden;
 		color:black;
 	}
 	td a {
 	    display: block;
-	    margin: -10em;
-	    padding: 10em;
+ 	    margin: -10em;
+ 	    padding: 10em;
 	}
 	td a:hover{
 		color:#f14195;
@@ -60,7 +66,7 @@
 	}
 	
 </style>
-<body>
+<body onload="connect();" onunload="disconnect();">
 <%@ include file="page/headerWithoutSidebar.file" %>
 <style>
 	.table{
@@ -82,7 +88,6 @@
 </script>
 <div class="container">
 <div class="text-center">
-<!-- 控制當天以前無法預約 -->
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -158,13 +163,14 @@
 				} %>
 <!-- 行事曆有行程，無法預約 -->
 					<% if(flag == 1){ %>
-						<td style="background-color:#D9D9D9;cursor:not-allowed;">
+						<td id="<%= localDate.getYear() %><%=localDate.getMonthValue()%>${date}" style="background-color:#D9D9D9;cursor:not-allowed;">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p>
 							<br>
+							<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#myModal" class="menua" style="display:none">馬上預約</a>
 						</td>
 <!-- 行事曆沒行程，可以預約 -->
 					<% } else{ %>
-					<td>
+					<td id="<%= localDate.getYear() %><%=localDate.getMonthValue()%>${date}">
 						<p class="day"><%= i-firstDayOfWeek+2 %></p>
 						<br>
 						<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#myModal" class="menua">馬上預約</a>
@@ -189,7 +195,7 @@
 </div>
 
 <!-- 預約單 -->
-<form method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+<form id="resForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 <!-- Modal content-->
@@ -197,7 +203,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 id="res-date" class="modal-title">
-					你想預約<%= localDate.getYear() %>年<%=localDate.getMonthValue()%>月${date}日的服務是...
+					您想預約<%= localDate.getYear() %>年<%=localDate.getMonthValue()%>月${date}日的服務是...
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -217,8 +223,10 @@
 				
 				<input type="hidden" name="action" value="resFromCalendar">
 				<input type="hidden" id="serv_date" name="serv_date" value="">
+				<input type="hidden" id="aID" value="">
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
-				<input type="submit" class="btn btn-info" value="送出預約">
+<!-- 				<input type="submit" class="btn btn-info" value="送出預約"> -->
+				<button type="button" class="btn btn-info" onclick="onMessage('${memVO.name}')">送出預約</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -229,4 +237,90 @@
 
 <%@ include file="page/footerWithoutSidebar.file" %>
 </body>
+
+<script>
+    
+    var MyPoint = "/ResServer/peter/309";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var statusOutput = document.getElementById("statusOutput");
+	var webSocket;
+	
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+// 			updateStatus("WebSocket 成功連線");
+// 			document.getElementById('sendMessage').disabled = false;
+// 			document.getElementById('connect').disabled = true;
+// 			document.getElementById('disconnect').disabled = false;
+		};
+
+		webSocket.onmessage = function(event) {
+	        var jsonObj = JSON.parse(event.data);
+	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        var action = jsonObj.action;
+	        
+	        if(action == "changeSchedule"){
+	        	var thisDate = document.getElementById(jsonObj.thisDate);
+	        	var toDate = document.getElementById(jsonObj.toDate);
+	        	$(thisDate).children('a').show();
+	        	$(thisDate).attr("style","");
+	        	$(toDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
+	        	$(toDate).children('a').hide();
+	        }else if(action == "deleteSchedule"){
+	        	var thisDate = document.getElementById(jsonObj.thisDate);
+	        	$(thisDate).children('a').show();
+	        	$(thisDate).attr("style","");
+	        }else if(action == "addSchedule"){
+	        	var thisDate = document.getElementById(jsonObj.thisDate);
+	        	$(thisDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
+	        	$(thisDate).children('a').hide();
+	        }else if(action == "onRes"){
+		        var resDate = document.getElementById(jsonObj.thisDate);
+		        if(resDate != null){
+			        $(resDate).children('a').hide();
+			        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
+	        
+		        }
+			}
+		};
+
+		webSocket.onclose = function(event) {
+			updateStatus("WebSocket 已離線");
+		};
+	}
+	
+	
+	
+	function onMessage(name) {
+		
+		var serv_date = document.getElementById('serv_date').value;
+		var memName = name;
+		var jsonObj = {"thisDate" : $('#serv_date').val(),
+						"name" : memName,
+						"action" : "onRes"};
+		webSocket.send(JSON.stringify(jsonObj));
+		
+		$('#resForm').submit();
+	}
+
+	
+	function disconnect () {
+		webSocket.close();
+// 		document.getElementById('sendMessage').disabled = true;
+// 		document.getElementById('connect').disabled = false;
+// 		document.getElementById('disconnect').disabled = true;
+	}
+
+	
+	function updateStatus(newStatus) {
+		statusOutput.innerHTML = newStatus;
+	}
+    
+</script>
 </html>

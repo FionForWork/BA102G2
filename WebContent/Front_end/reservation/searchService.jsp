@@ -86,7 +86,7 @@
 <div  class="col-xs-6 col-sm-6 col-md-3 btn-like-wrapper" data-toggle="modal" data-target="#myModal${servVO.serv_no}">
 <!-- 	<button class="btn btn-lg sharp btn-like" id="userCollect" data-id="1919" data-type="2"><i id="CollectIcon" class="fa fa-heart-o" aria-hidden="true"></i></button> -->
 	<a class="thumbnail thumbnail-service mod-shadow">
-	<div class="ratiobox rat_1_115 bg-cover" style="background-image: url('https://cdn.weddingday.com.tw/wedding-image/service/300/7583ad032f82dede7b38599afa5e61c15915d768ebef0.jpg')">
+	<div class="ratiobox rat_1_115 bg-cover" style="background-image: url(<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no})">
 	</div>
 	<div class="caption">
 		<h4 class="text-ellipsis"><sapn>${comService.getOneCom(servVO.com_no).name}</sapn></h4>

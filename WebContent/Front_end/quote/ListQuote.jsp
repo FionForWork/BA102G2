@@ -4,8 +4,7 @@
 <%@ page import="com.rfq_detail.model.*" %>
 <%@ page import="com.quote.model.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% 
 	DateFormat df = new SimpleDateFormat("YYYY年M月d日 ah點");
@@ -73,8 +72,9 @@
 						<h3>${comService.getOneCom(quoteVO.com_no).name}</h3>
 						<p>於 ${minDF.format(quoteVO.quo_date)} 報價</p>
 						<p>${quoteVO.content}</p>
-						<h4>報價金額 : ${quoteVO.price} </h4>
-						
+						<h4><span>價格</span>
+							<b class="price text-pink" >${quoteVO.price}</b>
+						<span class="hidden-xs">元</span>
 					</div>
 <!--判斷是否自己的報價才能預約、是否預約過、廠商是否還有空-->
 					<c:if test="${rfqService.getOneRFQ(rfqDetailVO.rfq_no).mem_no.equals(memVO.mem_no) 
@@ -119,7 +119,6 @@
 					</div>
 					</c:if>
 				</div>
-			<br>
 			<hr>
 			</c:forEach>
 			</div>

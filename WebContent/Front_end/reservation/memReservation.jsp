@@ -34,6 +34,7 @@
 			<div class="panel-body">
 				<div class="row">
 						<div class="col-md-6">
+							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${reservationVO.com_no}"class="img-circle" style="width:30px;height:30px">
 							${comService.getOneCom(reservationVO.com_no).name}
 							${dateDF.format(reservationVO.serv_date)}的
 							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
