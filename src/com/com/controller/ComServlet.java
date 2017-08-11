@@ -171,7 +171,7 @@ public class ComServlet extends HttpServlet {
 //		      out.println("<BODY><h1>你的帳號已登出!<BR>");
 //		      out.println(" <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>返回</h1></A>");
 //		      out.println("</BODY></HTML>");
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.html");
+			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.jsp");
 		    return;
 		}
 	

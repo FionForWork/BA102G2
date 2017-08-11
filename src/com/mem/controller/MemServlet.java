@@ -168,7 +168,7 @@ public class MemServlet extends HttpServlet{
 			HttpSession session = req.getSession();
 			session.invalidate();
 			//整個連線拔掉
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.html");
+			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.jsp");
 		    return;
 		}
 		
