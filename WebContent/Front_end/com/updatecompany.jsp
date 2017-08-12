@@ -34,11 +34,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	</font>
 </c:if>
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form1"  enctype="multipart/form-data">
-		
-		<div class="form-group">
-				<span>廠商編號 :</span>
-				${comVO.com_no}
-		</div>
+
 
 		<div class="form-group">
 				<span>廠商帳號 :</span>
@@ -53,14 +49,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
            <span >廠商地址:<font color='red'>${errorMsgs.get("loc")}</font></span>
            <input type="text" class="form-control"  name="loc" value="${comVO.loc}">
     	</div>
-    	<div class="form-group">
-           <span >地址經度:</span>
-           ${comVO.lon}
-    	</div>
-    	<div class="form-group">
-           <span >地址緯度:</span>
-           ${comVO.lat}
-    	</div>
+
     	
     	<div class="form-group">
            <span >電話:<font color='red'>${errorMsgs.get("phone")}</font></span>
@@ -72,15 +61,13 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
            <input type="text" class="form-control"  name="account" value="${comVO.account}">
     	</div>
     	
-		<div class="form-group">
-				<span>狀態 :</span>
-				${comVO.status}
-		</div>
+
 		<div>
-		<span>LOGO:<br></span>
+		<span>LOGO:<font color='red'>${errorMsgs.get("logo")}</font><br></span>
 	
 			<label class="control-label">選擇圖片</label>
-			<input id="input-1" type="file" name="logo" value="${comVO.logo}" class="file">
+			<input id="input-1" type="file" name="logo"  class="file">
+			
 	</div>
 		
 		<div class="form-group">
@@ -88,8 +75,8 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
            <textarea name=com_desc  class="form-control" rows=8 >${comVO.com_desc}</textarea>
  
     	</div>
-    	
-    	
+
+
 <input type="hidden" name="lat" value="${comVO.lat}">
 <input type="hidden" name="lon" value="${comVO.lon}">
 <input type="hidden" name="id" value="${comVO.id}">

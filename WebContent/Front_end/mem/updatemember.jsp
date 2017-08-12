@@ -71,7 +71,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     	</div>
     	
 		<div >
-		<span>上傳圖片 :<br></span>
+		<span>上傳圖片 :<font color='red'>${errorMsgs.get("picture")}</font><br></span>
 		
 <input id="input-1" type="file" name="picture" class="file" value="${memVO.picture}">
 	</div><br>

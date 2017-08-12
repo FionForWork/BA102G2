@@ -5,7 +5,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +25,7 @@ import com.adm.model.AdmService;
 import com.adm.model.AdmVO;
 import com.aut.model.AutService;
 import com.aut.model.AutVO;
+import com.email.MailService;
 
 
 
@@ -25,12 +35,24 @@ public class AdmServlet extends HttpServlet {
 			throws ServletException, IOException {
 		doPost(req, res);
 	}
+	
+	
+	public int admPwd(int passRandom) {
+		int random=passRandom*36+77;
 
+		return random;
+	}
+	
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+		
+		
+		
 		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
@@ -45,7 +67,16 @@ public class AdmServlet extends HttpServlet {
 				 if (id == null || (id.trim()).length() == 0 ) {
 					 errorMsgs.put("id","帳號為電子信箱,請勿空白");
 					}
-				String pwd = req.getParameter("pwd").trim();
+				 
+				 int passRandom = (int)(Math.random()*9999+1);
+				
+				String realpwd = "h"+passRandom;
+				
+				 int admPwd=admPwd(passRandom);
+				
+				String pwd = "h"+admPwd;
+				
+				
 				String name =req.getParameter("name").trim();
 				if (name == null || (name.trim()).length() == 0 ) {
 					 errorMsgs.put("name","姓名請勿空白");
@@ -68,7 +99,12 @@ public class AdmServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 				AdmService admSvc = new AdmService();
 				admVO = admSvc.addAdm(id, pwd, name, job, status);
-				
+				 String to = id;
+				 String subject = "管理員密碼";
+				 
+			     String messageText = "你好! \n"+realpwd+" \n這是你的密碼,請妥善保管 \n";
+			     MailService mailService = new MailService();
+			      mailService.sendMail(to, subject, messageText);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/Back_end/adm/listAllAdm.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp

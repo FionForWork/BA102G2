@@ -446,6 +446,9 @@ public class MemServlet extends HttpServlet{
 				byte[] picture = new byte[in.available()];
 				in.read(picture);
 				
+				if(part.getSize()==0){
+					errorMsgs.put("logo","請選擇圖片");
+					}
 
 				
 
@@ -546,7 +549,9 @@ public class MemServlet extends HttpServlet{
 				byte[] picture = new byte[in.available()];
 				in.read(picture); 
 				
-
+				if(part.getSize()==0){
+					errorMsgs.put("logo","請選擇圖片");
+					}
 				MemVO memVO = new MemVO();
 				memVO.setMem_no(mem_no);
 				memVO.setId(id);

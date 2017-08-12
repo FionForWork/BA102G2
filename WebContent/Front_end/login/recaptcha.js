@@ -4,7 +4,6 @@ grecaptcha.render("recaptcha_box", {
 "callback": callback
 });
 };
-
 function callback() {
 	$(document).ready(function(){
 		  
@@ -14,5 +13,3 @@ function callback() {
 		});
 
 }
-
-

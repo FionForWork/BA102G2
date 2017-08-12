@@ -50,9 +50,9 @@ public class ComServlet extends HttpServlet {
 
 			 String to = id;
 			 String subject = "忘記密碼";
-			 comSvc.updatePwd(comVO.getCom_no(),"B"+passRandom);
+			 comSvc.updatePwd(comVO.getCom_no(),"b"+passRandom);
 				
-		     String messageText = "你好! \n"+"B"+passRandom+" \n這是你的新密碼,請妥善保管,登入後建議馬上更改密碼 \n";
+		     String messageText = "你好! \n"+"b"+passRandom+" \n這是你的新密碼,請妥善保管,登入後建議馬上更改密碼 \n";
 		      
 		    
 		       
@@ -281,6 +281,9 @@ public class ComServlet extends HttpServlet {
 			
 
 				ComVO comVO = new ComVO();
+				if(part.getSize()==0){
+					errorMsgs.put("logo","請選擇圖片");
+					}
 				comVO.setId(id);
 				comVO.setPwd(pwd);
 				comVO.setName(name);
@@ -449,28 +452,37 @@ public class ComServlet extends HttpServlet {
 				if (account == null || (account.trim()).length() == 0) {
 					errorMsgs.put("account","請輸入正確銀行帳戶");
 				}
-				
+			
+		
 				Part part = req.getPart("logo");
+
 				InputStream in = part.getInputStream();
 				byte[] logo = new byte[in.available()];
 				in.read(logo); 
+
 				
+		
 				String status =req.getParameter("status").trim();
+				ComVO comVO = new ComVO();
 				
+				
+			if(part.getSize()==0){
+				errorMsgs.put("logo","請選擇大頭貼");
+				}
 				
 
-				ComVO comVO = new ComVO();
-				comVO.setCom_no(com_no);
-				comVO.setId(id);
-				comVO.setName(name);
-				comVO.setLoc(loc);
-				comVO.setLon(lon);
-				comVO.setLat(lat);
-				comVO.setPhone(phone);
-				comVO.setCom_desc(com_desc);
-				comVO.setAccount(account);
-				comVO.setLogo(logo);
-				comVO.setStatus(status);
+
+			comVO.setCom_no(com_no);
+			comVO.setId(id);
+			comVO.setName(name);
+			comVO.setLoc(loc);
+			comVO.setLon(lon);
+			comVO.setLat(lat);
+			comVO.setPhone(phone);
+			comVO.setCom_desc(com_desc);
+			comVO.setAccount(account);
+			comVO.setLogo(logo);
+			comVO.setStatus(status);
 					
 			
 

@@ -22,11 +22,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 		<td><input type="email" name="id" 
 			value="<%= (admVO==null)? "123@1234.com" : admVO.getId()%>" /></td>
 	</tr>
-	<tr>
-		<td>管理員密碼:</td>
-		<td><input type="password" name="pwd" required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$"
-			value="<%= (admVO==null)? "123" : admVO.getPwd()%>" /></td>
-	</tr>
+	
 
 
 
@@ -59,6 +55,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 
 </table>
 <br>
+
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
 </div>

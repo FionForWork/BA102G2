@@ -16,8 +16,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
- <script src="<%=request.getContextPath()%>/Front_end/login/recaptcha.js"></script>
- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>   </script>
 <title>會員註冊</title>
 		
 <div class="col-xs-12 col-sm-7">
@@ -83,11 +84,11 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</div>
 	
 	<div >
-		<span>上傳圖片 :<br></span>
+		<span>上傳圖片 :<font color='red'>${errorMsgs.get("picture")}</font><br></span>
 		<label class="control-label">選擇圖片</label>
 <input id="input-1" type="file" name="picture" class="file"><br>
 	</div>
-	<center>請驗證<br><div id="recaptcha_box"></div>
+	<center><br><div id="recaptcha_box">請驗證</div>
 		<input type="hidden" name="mem_no" value="${memVO.mem_no}">
 		<input type="hidden" name="action" value="insert">
 		<input style="display:none" type="submit" id="submit" class="btn btn-info " value="送出新增"></center>

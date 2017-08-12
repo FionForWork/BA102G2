@@ -9,6 +9,8 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="/Front_end/mem/page/register_header.file"%>
+<script src="<%=request.getContextPath()%>/Front_end/login/recaptcha3.js"></script>
+
 <link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/piexif.min.js" type="text/javascript"></script>
@@ -17,8 +19,12 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
- <script src="<%=request.getContextPath()%>/Front_end/login/recaptcha.js"></script>
- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async></script>
+
+ <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+
+
 
 <title>廠商註冊</title>
 
@@ -40,7 +46,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 
 
 	<div class="form-group">
-				<span>廠商帳號 :請填正確電子郵件稍後為發送驗證信件</span>
+				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到</span>
 				<input type="email" placeholder="請填電子郵件" name="id" class="form-control"
 			value="<%= (comVO==null)? "lf21@gmail.com" : comVO.getId()%>" />
 	</div>
@@ -76,7 +82,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	
 	
 	<div >
-		<span>LOGO:<br></span>
+		<span>LOGO:<font color='red'>${errorMsgs.get("logo")}</font><br></span>
 	
 			<label class="control-label">選擇圖片</label>
 			<input id="input-1" type="file" name="logo" class="file">
@@ -88,7 +94,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 		
 	</div>
 	
-<center>請驗證<br><div id="recaptcha_box"></div>
+<center><br><div id="recaptcha_box">請驗證</div>
 		<input type="hidden" name=com_no" value="${comVO.com_no}">
 		<input type="hidden" name="action" value="insert">
 		<input type="submit" class="btn btn-info " id="submit" style="display:none" value="送出新增"></center>

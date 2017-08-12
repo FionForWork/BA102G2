@@ -310,7 +310,7 @@
                     <a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a><br>
 
                     <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    
+                    <a href="#" class="list-group-item menua">實景預覽</a><br>
                     <a href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" class="list-group-item menua">商城專區</a><br>
                 </ul>
 
