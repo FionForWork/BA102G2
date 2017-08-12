@@ -1,184 +1,91 @@
 package com.placeview.model;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import org.hibernate.Query;
+import org.hibernate.classic.Session;
 
-public class PlaceViewDAO implements PlaceViewDAO_Interface {
+import hibernate.util.HibernateUtil;
 
-    private static final String INSERT        = "insert into PLACEVIEW (VIEW_NO, PLA_NO, IMG)" + "VALUES(VIEW_NO_SEQ.NEXTVAL, ?, ?)";
-    private static final String DELETE_BY_NO  = "delete from PLACEVIEW where VIEW_NO = ? ";
-    private static final String UPDATE        = "update PLACEVIEW set IMG = ? where VIEW_NO = ?";
-    private static final String FIND_BY_PK    = "select * from PLACEVIEW where VIEW_NO = ? ";
-    private static final String GET_ALL_BY_FK = "select VIEW_NO from PLACEVIEW where PLA_NO =?";
+public class PlaceViewDAO implements PlaceViewDAO_Interface{
 
-    private Connection        connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet         resultSet;
-    
-    private Connection JNDIinit() throws NamingException, SQLException {
-        Context context = new javax.naming.InitialContext();
-        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
-        if (dataSource != null) {
-            return dataSource.getConnection();
-        }
-        else {
-            return null;
-        }
-    }
-
-    public void cancelConnection() throws SQLException {
-        if (resultSet != null) {
-            resultSet.close();
-        }
-        if (preparedStatement != null) {
-            preparedStatement.close();
-        }
-        if (connection != null) {
-            connection.close();
-        }
-    }
-    
     @Override
-    public void add(PlaceViewVO placeViewVO) {
+    public void insert(PlaceViewVO placeViewVO) {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            connection = JNDIinit();
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, placeViewVO.getPal_no());
-            preparedStatement.setBytes(2, placeViewVO.getImg());
-            preparedStatement.execute();
-            connection.commit();
+            session.getTransaction();
+            session.saveOrUpdate(placeViewVO);
         }
-        catch (NamingException e) {
-            e.printStackTrace();
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
-        catch (SQLException e) {
-            try {
-                connection.rollback();
-            }
-            catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                cancelConnection();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+    }
+
+    @Override
+    public void insert(PlaceViewVO placeViewVO, Connection connection) {
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void delete(String view_no) {
-        // TODO Auto-generated method stub
+     // TODO Auto-generated method stub
+    }
 
+    @Override
+    public void deleteByFK(String pla_no, Connection connection) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void deleteByFK(String pla_no) {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.getTransaction();
+            Query query=session.createQuery("from PlaceViewVO where PLA_NO = :pla_no");
+            query.setParameter("pla_no", pla_no);
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
     }
 
     @Override
     public void update(PlaceViewVO placeViewVO) {
-        try {
-            connection = JNDIinit();
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(UPDATE);
-            preparedStatement.setBytes(1, placeViewVO.getImg());
-            preparedStatement.setString(2, placeViewVO.getView_no());
-            preparedStatement.execute();
-            connection.commit();
-        }
-        catch (NamingException e) {
-            e.printStackTrace();
-        }
-        catch (SQLException e) {
-            try {
-                connection.rollback();
-            }
-            catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                cancelConnection();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        // TODO Auto-generated method stub
     }
 
     @Override
-    public PlaceViewVO findByPk(String view_no) {
+    public PlaceViewVO getOneByPK(String view_no) {
+        PlaceViewVO placeViewVO=null;
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            connection = JNDIinit();
-            preparedStatement = connection.prepareStatement(FIND_BY_PK);
-            preparedStatement.setString(1, view_no);
-            resultSet = preparedStatement.executeQuery();
-            PlaceViewVO placeViewVO = new PlaceViewVO();
-            while (resultSet.next()) {
-                placeViewVO.setView_no(resultSet.getString(1));
-                placeViewVO.setPal_no(resultSet.getString(2));
-                placeViewVO.setImg(resultSet.getBytes(3));
-            }
-            return placeViewVO;
+            session.beginTransaction();
+            placeViewVO=(PlaceViewVO)session.get(PlaceViewVO.class, view_no);
         }
-        catch (NamingException e) {
-            e.printStackTrace();
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                cancelConnection();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        return placeViewVO;
     }
 
     @Override
     public List<String> getAllByFK(String pla_no) {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        List<String> list=null;
         try {
-            connection = JNDIinit();
-            preparedStatement = connection.prepareStatement(GET_ALL_BY_FK);
-            preparedStatement.setString(1, pla_no);
-            resultSet=preparedStatement.executeQuery();
-            List<String> list = new ArrayList<>();
-            while (resultSet.next()) {
-                list.add(resultSet.getString(1));
-            }
-            return list;
+            session.beginTransaction();
+            Query query=session.createQuery("select view_no from PlaceViewVO where PLA_NO = :pla_no");
+            query.setParameter("pla_no", pla_no);
+            list=query.list();
         }
-        catch (NamingException e) {
-            e.printStackTrace();
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                cancelConnection();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        return list;
     }
 
 }

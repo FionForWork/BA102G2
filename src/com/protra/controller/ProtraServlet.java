@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mem.model.MemVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.protra.model.ProtraService;
@@ -29,7 +33,8 @@ public class ProtraServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        String mem_no = String.valueOf(session.getAttribute("mem_no"));
+        MemVO memVO=(MemVO)session.getAttribute("memVO");
+        String mem_no = memVO.getMem_no();
         ProductVO productVO=(ProductVO)session.getAttribute("productVO");
         ProtraService protraService = new ProtraService();
 
@@ -67,25 +72,31 @@ public class ProtraServlet extends HttpServlet {
         }
         else if("CHANGE_AJAX".equals(action)){
             response.setContentType("text/html;charset=utf-8");
-            int nowPage=Integer.valueOf(request.getParameter("nowPage"));
-            int itemsCount=Integer.valueOf(request.getParameter("itemsCount"));
-            int allCount=protraService.getRowCount(mem_no);
-            int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
             List<ProtraVO>protraList=protraService.getAllByMem(mem_no);
-            int start=(nowPage-1)*itemsCount;
-            int end=(nowPage*itemsCount>protraList.size())?protraList.size():nowPage*itemsCount;
-            List<ProductVO> productList=new ArrayList<ProductVO>();
-            ProductService productService=new ProductService();
-            for(int i=start;i<end;i++){
-                productList.add(productService.getOneByPKNoImg(protraList.get(i).getPro_no()));
+            if(protraList.size()>0){
+                int nowPage=Integer.valueOf(request.getParameter("nowPage"));
+                int itemsCount=Integer.valueOf(request.getParameter("itemsCount"));
+                int start=(nowPage-1)*itemsCount;
+                int end=(nowPage*itemsCount>protraList.size())?protraList.size():nowPage*itemsCount;
+                List<ProductVO> productList=new ArrayList<ProductVO>();
+                ProductService productService=new ProductService();
+                for(int i=start;i<end;i++){
+                    productList.add(productService.getOneByPKNoImg(protraList.get(i).getPro_no()));
+                }
+                PrintWriter printWriter=response.getWriter();
+                JSONObject jsonObject=new JSONObject();
+                try {
+                    jsonObject.put("productList", productList);
+                    printWriter.println(jsonObject.toString());
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                printWriter.close();
             }
-            Gson gson =new Gson();
-            PrintWriter printWriter=response.getWriter();
-            JsonObject jsonObject=new JsonObject();
-            jsonObject.add("productList", gson.toJsonTree(productList));
-            jsonObject.add("totalPages", gson.toJsonTree(totalPages));
-            printWriter.println(jsonObject);
-            printWriter.close();
+            else{
+                
+            }
         }
     }
 

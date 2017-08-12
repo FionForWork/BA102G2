@@ -207,7 +207,7 @@
                     </ol>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="mallIndex.jsp" ><h3>線上商城</h3></a>
+                    <a itemprop="url" href="${preLocation}/mallIndexAJAX.jsp" ><h3>線上商城</h3></a>
                     <!--RWD-->
                     <div class="mobile-main-choice visible-xs">
                         <a href="#">手機1</a><span> / </span>

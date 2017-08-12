@@ -19,15 +19,15 @@ public class Order_detailService {
         order_detailVO.setQty(qty);
         order_detailVO.setItemtot(itemtot);
         order_detailVO.setScore(score);
-        dao.add(order_detailVO);
+        dao.insert(order_detailVO);
     }
 
     public void addOrder_detail(Order_detailVO order_detailVO) {
-        dao.add(order_detailVO);
+        dao.insert(order_detailVO);
     }
 
-    public void deleteOrder_detail(String ord_no, String pro_no) {
-        dao.delete(ord_no, pro_no);
+    public void deleteOrder_detail(String ord_no) {
+        dao.delete(ord_no);
     }
 
     public void updateOrder_detail(Integer price, Integer qty, Integer itemtot, Integer score) {
@@ -43,15 +43,15 @@ public class Order_detailService {
         dao.update(order_detailVO);
     }
 
-    public Order_detailVO getOneOrder_detailVO(String ord_no, String pro_no) {
-        return dao.getOneByPK(ord_no, pro_no);
+    public Order_detailVO getOneByComposite(String ord_no, String pro_no) {
+        return dao.getOneByComposite(ord_no, pro_no);
     }
 
-    public List<Order_detailVO> getAll() {
-        return dao.getAll();
+    public List<Order_detailVO> getAllByOrd(String ord_no) {
+        return dao.getAllByOrd(ord_no);
     }
 
-    public List<Order_detailVO> getAllByOrdNo(String ord_no) {
-        return dao.getAllByOrdNo(ord_no);
+    public List<Order_detailVO> getAllByPro(String ord_no) {
+        return dao.getAllByPro(ord_no);
     }
 }
