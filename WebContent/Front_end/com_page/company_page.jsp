@@ -5,11 +5,13 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.comtra.model.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<jsp:useBean id="comtraSvc" scope="page" class="com.comtra.model.ComTraService"/>
 <%
 	ComService comSvc = new ComService();
-	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
+	String com_no = request.getParameter("com_no");
+	ComVO comVO = comSvc.getOneCom(com_no);
 	pageContext.setAttribute("comVO", comVO);
 
 	WorksService worksSvc = new WorksService();
@@ -19,6 +21,9 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
+	String mem_no = (String)session.getAttribute("mem_no");
+	List<String> comNoList = comtraSvc.getComNoListByMemNo(mem_no);
+	pageContext.setAttribute("comNoList", comNoList);
 %>
 
 <html>
@@ -53,12 +58,28 @@
 			alt="She Said Yes">
 	</div>
 	<!--店家大頭照-->
-
+	
 	<div class="text-center">
+	
 		<h1>${comVO.name}</h1>
-		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
+		<div id="comTracking">
+			<c:choose>
+			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
+			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
+		
+			</c:when>
+			<c:otherwise>
+				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+			</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
+		<input type='hidden' name='mem_no' value='${mem_no}'>
+		<input type='hidden' name='path' value='<%= request.getContextPath()%>/comtra/comtra.do'>
 	</div>
 	
+<div id="snackbar">請先登入會員...</div>
 
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">

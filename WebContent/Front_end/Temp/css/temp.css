@@ -117,7 +117,7 @@ h2{
 	
 }
 
-#tempList {
+.tempList {
 	border-collapse: collapse;
 	/* Collapse borders */
 	width: 100%;
@@ -126,14 +126,14 @@ h2{
 	/* Increase font-size */
 }
 
-#tempList th, #tempList td {
+.tempList th, .tempList td {
 	text-align: center;
 	/* Left-align text */
 	padding: 5px;
 	/* Add padding */
 }
 
-#tempList tr {
+.tempList tr {
 	/* Add a bottom border to all table rows */
 	border-bottom: 1px solid #ddd;
 }

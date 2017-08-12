@@ -92,17 +92,17 @@
 			</form>
 			<!-- End Modal add works -->
 
-			<div class="row">
+			<div class="row" style="position:relative" >
 				<div class="col-xs-12 col-sm-12">
-					<div class='text-right'>
-						<div class="btn-group text-right">
+						<div class="btn-group" style="right:15px; top:15px;position:absolute;">
 							<button type="submit" class="btn btn-info" id="updateWorks"> 儲存修改 </button>
 							<button type="submit" class="btn btn-info" id="uploadbtn"> 新增作品 </button>
 						</div>
-					</div>
+						<br>
 
 					<div class="text-center">
 						<h2>修改作品</h2>
+						<br>
 					</div>
 				</div>
 			</div>

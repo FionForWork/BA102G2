@@ -1,6 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
 <%@ page import="com.temp.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -94,9 +94,11 @@ $("document").ready(function(){
 <% 
 	Map<String,String> errorMsgs = (Map)request.getAttribute("errorMsgs");
 	TempVO temp = (TempVO)request.getAttribute("temp");
+	session.setAttribute("com_no","2001");
 %>
 	
-
+<jsp:useBean id="reservationSvc" scope="page" class="com.reservation.model.ReservationService"/>
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService"/>
 	
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
@@ -139,6 +141,7 @@ $("document").ready(function(){
 		<form action="<%=request.getContextPath()%>/temp/temp.do" method="post"
 				enctype="multipart/form-data">
 			<h3>建立待挑選成品</h3>
+			<br>
 			<label for="name">待挑選作品名稱 <span class='errorMsgs'> ${errorMsgs.get("name")}</span></label> 
 			<input type="text" id="name" name="name" value="<%= (temp==null)? "" : temp.getName()%>"> 
 			<label for="datepicker1">拍攝日期 <span class='errorMsgs'> ${errorMsgs.get("create_date")}</span></label> 
@@ -149,9 +152,10 @@ $("document").ready(function(){
 				
 			<label for="country">客戶名稱</label>
 			<select id="mem_no" name="mem_no">
-				<option value="1001">Fion</option>
-				<option value="1002">Cara</option>
-				<option value="1003">Mary</option>
+			<c:forEach var='mem_no' items='${reservationSvc.getComResDistinctMemNO(com_no)}'>
+				<option value="${mem_no}">${memSvc.getOneMem(mem_no).name}</option>
+			</c:forEach>
+			
 			</select> 
 			<br>
 			<label for="upload">選擇作品上傳 <span class='errorMsgs'> ${errorMsgs.get("file")}</span></label>
@@ -163,7 +167,7 @@ $("document").ready(function(){
 			
 			</div>
 			<input type='hidden' name='action' value='create_Temp'>
-			
+			<input type='hidden' name='com_no' value='${com_no}'>
 			
 		</form>
 	</div>	

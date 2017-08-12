@@ -97,6 +97,14 @@
     <url-pattern>/album/album.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>PreviewServlet</servlet-name>
+    <servlet-class>com.album.controller.PreviewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreviewServlet</servlet-name>
+    <url-pattern>/album/preview.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>TempServlet</servlet-name>
     <servlet-class>com.temp.controller.TempServlet</servlet-class>
   </servlet>
@@ -213,8 +221,7 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<description>
-		</description>
+		
 		<display-name>CalendarServlet</display-name>
 		<servlet-name>CalendarServlet</servlet-name>
 		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
