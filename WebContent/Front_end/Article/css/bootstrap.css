@@ -5687,8 +5687,9 @@ button.list-group-item-danger {
 .panel-default {
   border-color: #ddd; }
   .panel-default > .panel-heading {
-    color: #fff;
-    background-color: #555;
+  
+    color: black;
+    background-color: #d5d5d5;
     border-color: #ddd; }
     .panel-default > .panel-heading + .panel-collapse > .panel-body {
       border-top-color: #ddd; }

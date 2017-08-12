@@ -42,7 +42,16 @@ session.getAttribute("comVo");
 <div class="container" style="display: block;">
 	<input type="hidden" name="action" value="insert">
      <input type="hidden" name="art_no" value="<%=articleVO.getArt_no() %>"> 
-     <input type="hidden" name="speaker_no" value="${comVO.com_no }">                                  
+<%--      <input type="hidden" name="speaker_no" value="${comVO.com_no }">  --%>
+     <c:choose>
+     <c:when test="${(comVO.com_no)!=null }">
+     <input type="hidden" name="speaker_no" value="${comVO.com_no }">   
+     </c:when>
+     <c:when test="${(memVO.mem_no)!=null}">
+     <input type="hidden" name="speaker_no" value="${memVO.mem_no }">   
+     </c:when>    
+     <c:otherwise></c:otherwise>
+     </c:choose>                               
    <input type="submit" class="btn btn-info" data-dismiss="modal" value="新增">
 
 </form>

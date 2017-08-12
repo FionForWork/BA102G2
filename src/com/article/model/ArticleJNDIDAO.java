@@ -37,6 +37,8 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 			"DELETE FROM article where art_no = ?";
 		private static final String UPDATE = 
 				"UPDATE article set poster_no=?, art_type_no=?, title=?, content=?, art_date=? where art_no=?";
+		private static final String GET_ONE_ALL = 
+				"SELECT * FROM article where art_type_no =?";
 	
 	
 	
@@ -274,6 +276,65 @@ public ArticleVO findByPrimaryKey(Integer art_no) {
 				}
 			}
 		}
+		return list;
+	}
+	@Override
+	public List<ArticleVO> getOneAll(Integer art_type_no) {
+		List<ArticleVO> list = new ArrayList<ArticleVO>();
+		ArticleVO articleVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_ALL);
+			pstmt.setInt(1, art_type_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				articleVO = new ArticleVO();
+				articleVO.setArt_no(rs.getInt("art_no"));
+				articleVO.setPoster_no(rs.getInt("poster_no"));
+				articleVO.setArt_type_no(rs.getInt("art_type_no"));
+				articleVO.setTitle(rs.getString("title"));
+				articleVO.setContent(rs.getString("content"));
+				articleVO.setArt_date(rs.getDate("art_date"));
+			
+				list.add(articleVO); 
+			}
+
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
 		return list;
 	}
 }

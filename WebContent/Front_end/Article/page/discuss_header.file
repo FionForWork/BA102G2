@@ -305,23 +305,14 @@
     <!--這裡開始-->
 
     <br>
-    <br>
-    <br>
-    <br>
+ 
     <br>
     <br>
 <!--menu-->
     <div class="container" style="width:90%">
         <div class="row">
             <div class="col-md-2">
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="#" class="menua">綜合版</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚秘</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚紗</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚攝</a></li>
-                    
-                    <li class="list-group-item"></li>
-                </ul>
+              
 
 
                 
@@ -329,12 +320,4 @@
 
 
             <!--裡面放東西===========================================================================-->
-            <div class="col-md-8">
-            <div >
-            <div class="aa" text-align:center><H3>主題</H3></div>
-            </div>
-        <div class="container">
-            <div class="row">
-               
-                <div class="col-xs-12 col-sm-11">
-                    <div class="row">
+            
