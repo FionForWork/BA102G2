@@ -35,6 +35,8 @@ public class QuoteDAO implements QuoteDAO_Interface {
 			"SELECT * FROM QUOTE where QUO_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM QUOTE WHERE RFQDETAIL_NO = ? order by QUO_DATE DESC ";
+	private static final String GET_COM_STMT = 
+			"SELECT * FROM QUOTE WHERE COM_NO = ? order by QUO_DATE DESC ";
 	
 	@Override
 	public void insert(QuoteVO quoteVO) {
@@ -197,6 +199,54 @@ public class QuoteDAO implements QuoteDAO_Interface {
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			
 			pstmt.setString(1, rfqdetail_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				quoteVO = new QuoteVO();
+				quoteVO.setQuo_no(rs.getString("quo_no"));
+				quoteVO.setCom_no(rs.getString("com_no"));
+				quoteVO.setRfqdetail_no(rs.getString("rfqdetail_no"));
+				quoteVO.setPrice(rs.getInt("price"));
+				quoteVO.setContent(rs.getString("content"));
+				quoteVO.setQuo_date(rs.getTimestamp("quo_date"));
+				list.add(quoteVO);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<QuoteVO> getCom(String com_no) {
+		List<QuoteVO> list = new ArrayList<QuoteVO>();
+		QuoteVO quoteVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_COM_STMT);
+			
+			pstmt.setString(1, com_no);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

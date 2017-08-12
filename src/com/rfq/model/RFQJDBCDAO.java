@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rfq_detail.model.RFQ_DetailVO;
+
 public class RFQJDBCDAO implements RFQDAO_Interface {
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -32,7 +34,7 @@ public class RFQJDBCDAO implements RFQDAO_Interface {
 			+ "(select RFQdetail_no from quote where quo_no = ?))";
 	
 	@Override
-	public void insert(RFQVO rfqVO) {
+	public void insertWithDetail(RFQVO rfqVO, List<RFQ_DetailVO> list) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -310,11 +312,11 @@ public static void main(String args[]){
 		
 		RFQJDBCDAO dao = new RFQJDBCDAO();
 		
-		RFQVO rfqVO = new RFQVO();
-		rfqVO.setMem_no("1001");
-		Timestamp t = new Timestamp(System.currentTimeMillis());
-		rfqVO.setRfq_date(t);
-		dao.insert(rfqVO);
+//		RFQVO rfqVO = new RFQVO();
+//		rfqVO.setMem_no("1001");
+//		Timestamp t = new Timestamp(System.currentTimeMillis());
+//		rfqVO.setRfq_date(t);
+//		dao.insert(rfqVO);
 		
 		
 //		RFQVO rfqVO = new RFQVO();

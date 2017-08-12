@@ -26,7 +26,7 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 	}
 	
 	private static final String INSERT = 
-			"INSERT INTO RFQ_DETAIL VALUES (LTRIM(TO_CHAR(RFQDETAIL_SQ.NEXTVAL,'0009')), LTRIM(TO_CHAR(RFQ_SQ.CURRVAL,'0009')), ?, ?, ?, ?, ?)";
+			"INSERT INTO RFQ_DETAIL VALUES (LTRIM(TO_CHAR(RFQDETAIL_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = 
 			"UPDATE RFQ_DETAIL SET STATUS=? WHERE RFQDETAIL_NO = ?";
 	private static final String DELETE = 
@@ -39,36 +39,38 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 			"SELECT * FROM RFQ_DETAIL where rfq_no = ? order by SER_DATE DESC ";
 	private static final String GET_MY_STMT = 
 			"SELECT * FROM RFQ_DETAIL where rfq_no in (select rfq_no from RFQ where mem_no = ?) order by status desc";
+	private static final String GET_ONE_FROM_QUOTE = 
+			"SELECT * FROM RFQ_DETAIL where RFQDETAIL_NO = (select RFQDETAIL_NO from quote where Quo_No = ?)";
 	
 	@Override
-	public void insert(RFQ_DetailVO rfq_detailVO) {
-		Connection con = null;
+	public void insert(RFQ_DetailVO rfq_detailVO ,Connection con) {
 		PreparedStatement pstmt = null;
 		
+		// 自增主鍵版本
 		try {
-			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 			
-			pstmt.setString(1, rfq_detailVO.getStype_no());
-			pstmt.setString(2, rfq_detailVO.getLocation());
-			pstmt.setTimestamp(3, rfq_detailVO.getSer_date());
-			pstmt.setString(4, rfq_detailVO.getContent());
-			pstmt.setString(5, rfq_detailVO.getStatus());
+			pstmt.setString(1, rfq_detailVO.getRfq_no());
+			pstmt.setString(2, rfq_detailVO.getStype_no());
+			pstmt.setString(3, rfq_detailVO.getLocation());
+			pstmt.setTimestamp(4, rfq_detailVO.getSer_date());
+			pstmt.setString(5, rfq_detailVO.getContent());
+			pstmt.setString(6, rfq_detailVO.getStatus());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}finally{
 			if(pstmt != null){
 				try {
 					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(con != null){
-				try {
-					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -110,7 +112,44 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 			}
 		}
 	}
+	
+	// 預約後更改狀態
+	@Override
+	public void updateStatusFromRes(RFQ_DetailVO rfq_detailVO, Connection con) {
+		
+		PreparedStatement pstmt = null;
 
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, rfq_detailVO.getStatus());
+			pstmt.setString(2, rfq_detailVO.getRfqdetail_no());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if(con != null){
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void delete(String rfqdetail_no) {
 		Connection con = null;
@@ -366,6 +405,61 @@ public class RFQ_DetailDAO implements RFQ_DetailDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public RFQ_DetailVO getOneFromQuote(String quo_no) {
+		RFQ_DetailVO rfq_detailVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_FROM_QUOTE);
+
+			pstmt.setString(1, quo_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				rfq_detailVO = new RFQ_DetailVO();
+				rfq_detailVO.setRfqdetail_no(rs.getString("rfqdetail_no"));
+				rfq_detailVO.setRfq_no(rs.getString("rfq_no"));
+				rfq_detailVO.setStype_no(rs.getString("stype_no"));
+				rfq_detailVO.setLocation(rs.getString("location"));
+				rfq_detailVO.setSer_date(rs.getTimestamp("ser_date"));
+				rfq_detailVO.setContent(rs.getString("content"));
+				rfq_detailVO.setStatus(rs.getString("status"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return rfq_detailVO;
 	}
 	
 	

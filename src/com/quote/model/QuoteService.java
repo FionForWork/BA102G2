@@ -49,4 +49,8 @@ public class QuoteService {
 		return dao.getAll(rfqdetail_no);
 	}
 	
+	public List<QuoteVO> getComQuote(String com_no){
+		return dao.getCom(com_no);
+	}
+	
 }

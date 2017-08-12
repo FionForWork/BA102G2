@@ -291,5 +291,11 @@ public static void main(String args[]){
 
 	
 	}
+
+@Override
+public List<QuoteVO> getCom(String com_no) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 }

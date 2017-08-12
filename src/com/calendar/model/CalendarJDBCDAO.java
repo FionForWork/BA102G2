@@ -359,6 +359,18 @@ public static void main(String args[]){
 		System.out.println(l);
 	}
 
+@Override
+public void insertFromRes(CalendarVO calendarVO, Connection con) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public CalendarVO findByNoandDate(String com_no, String cal_date) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 
 
 }

@@ -39,10 +39,21 @@ public class SortingHat {
 	public String getResStatus(String status){
 		HashMap<String, String> resMap = new HashMap<String, String>();
 		resMap.put("0", "未繳訂金");
-		resMap.put("1", "已繳訂金");
-		resMap.put("2", "服務已完成");
+		resMap.put("1", "訂單確認");
+		resMap.put("2", "尚未評價");
+		resMap.put("3", "評價完成");
 		
 		return resMap.get(status);
+	}
+	
+	public String getResIcon(String status){
+		HashMap<String, String> iconMap = new HashMap<String, String>();
+		iconMap.put("0", "fa fa-money");
+		iconMap.put("1", "fa fa-check-square-o");
+		iconMap.put("2", "fa fa-pencil-square-o");
+		iconMap.put("3", "fa fa-star");
+		
+		return iconMap.get(status);
 	}
 	
 }

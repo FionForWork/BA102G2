@@ -1,6 +1,7 @@
 package com.serv.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ServService {
 	private ServDAO_Interface dao;
@@ -48,6 +49,11 @@ public class ServService {
 	
 	public List<ServVO> getAll(){
 		return dao.getAll();
+		
+	}
+	
+	public List<ServVO> getAll(Map<String, String[]> map){
+		return dao.getAll(map);
 		
 	}
 	

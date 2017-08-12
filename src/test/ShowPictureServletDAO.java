@@ -92,7 +92,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("mem_no")){
 			pk = request.getParameter("mem_no");
 			byte[] picture =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			MemService memSvc = new MemService();
 			MemVO memVO = memSvc.getOneMem(pk);
 			
@@ -106,7 +106,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("com_no")){
 			pk = request.getParameter("com_no");
 			byte[] logo =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			ComService comSvc = new ComService();
 			ComVO comVO = comSvc.getOneCom(pk);
 			
