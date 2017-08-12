@@ -126,7 +126,9 @@
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+								<a href="#">
+									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+								</a>	
 								<div class="overlay">
 									<div class="works_text">${worksVO.works_desc}</div>
 								</div>
@@ -142,7 +144,9 @@
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+								<a href="#">
+									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+								</a>
 								<div class="overlay">
 									<div class="works_text">${worksVO.works_desc}</div>
 								</div>

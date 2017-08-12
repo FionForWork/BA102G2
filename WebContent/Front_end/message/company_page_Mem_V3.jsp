@@ -142,7 +142,7 @@ var memNo;
  	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
  						memNo = jsonObj.memNo;
- 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+ 						var message = jsonObj.message + "\r\n";
 
 
  						if (memNo == no){
@@ -152,14 +152,14 @@ var memNo;
  					                                '<p>'+ message +'</p>' +
  					                            '</div>' +
  					                        '</div>' +
- 					                    '</li>';                    
+ 					                    '</li>'+'<br>';                    
  					    }else{
  					        control = '<li style="width:100%;">' +
  					                        '<div class="msg-l">' +
  					                            '<div class="text text-l">' +
  					                                '<p>'+message+'</p>' +
  					                            '</div>' +                               
- 					                  '</li>';
+ 					                  '</li>'+'<br>';
  					    }   
  					
  				        		$("#textArea").append(control);
