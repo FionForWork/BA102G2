@@ -308,15 +308,15 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 //		dao.delete(2);
 //
 //		// 查詢
-//		ArticleVO articleVO3 = dao.findByPrimaryKey(4);
-//		System.out.print(articleVO3.getArt_no() + ",");
-//		System.out.print(articleVO3.getPoster_no()+ ",");
-//		System.out.print(articleVO3.getArt_type_no()+ ",");
-//		System.out.print(articleVO3.getTitle()+ ",");
-//		System.out.print(articleVO3.getContent() + ",");
-//		System.out.print(articleVO3.getArt_date()+ ",");
-//		
-//		System.out.println("---------------------");
+		ArticleVO articleVO3 = dao.findByPrimaryKey(5001);
+		System.out.print(articleVO3.getArt_no() + ",");
+		System.out.print(articleVO3.getPoster_no()+ ",");
+		System.out.print(articleVO3.getArt_type_no()+ ",");
+		System.out.print(articleVO3.getTitle()+ ",");
+		System.out.print(articleVO3.getContent() + ",");
+		System.out.print(articleVO3.getArt_date()+ ",");
+		
+		System.out.println("---------------------");
 //
 //		// 查詢
 //		List<ArticleVO> list = dao.getAll();

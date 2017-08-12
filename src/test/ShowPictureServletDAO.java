@@ -89,6 +89,37 @@ public class ShowPictureServletDAO extends HttpServlet {
 			return;
 		}
 		
+		if(file.startsWith("all")){
+			pk=request.getParameter("all");
+			
+			if((pk.substring(0,1)).equals("1")){
+				byte[] tempcont =null;
+				System.out.println(pk);
+				MemService memSvc = new MemService();
+				MemVO memVO = memSvc.getOneMem(pk);
+				tempcont = memVO.getPicture();
+				
+				out.write(tempcont);
+				out.close(); 
+				return;
+				
+			}else{
+				byte[] logo =null;
+				System.out.println(pk);
+				ComService comSvc = new ComService();
+				ComVO comVO = comSvc.getOneCom(pk);
+				
+				logo = comVO.getLogo();
+				
+				out.write(logo);
+				out.close(); 
+				return;
+			}
+			
+		}
+		
+
+		
 		if(file.startsWith("mem_no")){
 			pk = request.getParameter("mem_no");
 			byte[] picture =null;
@@ -127,6 +158,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			advcont = advertisingVO.getImg();
 			out.write(advcont);
 			out.close();
+
 			return;
 		}
 	}

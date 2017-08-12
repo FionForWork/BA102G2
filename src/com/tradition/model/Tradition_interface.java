@@ -10,4 +10,7 @@ public interface Tradition_interface {
     public void delete(Integer tra_no);
     public TraditionVO findByPrimaryKey(Integer tra_no);
     public List<TraditionVO> getAll();
+   
+	public List<TraditionVO> getOneAll(Integer tra_type_no);
+	
 }

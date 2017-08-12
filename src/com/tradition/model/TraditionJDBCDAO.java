@@ -35,6 +35,7 @@ public class TraditionJDBCDAO implements Tradition_interface{
 			"DELETE FROM Tradition where tra_no = ?";
 		private static final String UPDATE = 
 			"UPDATE Tradition set tra_type_no=?,tra_order=?, title=?,Article=?, Img=? where tra_no=?";
+		private static final String GET_ONE_ALL = "SELECT * FROM Tradition where tra_type_no = ?";
 		
 		
 		
@@ -303,6 +304,78 @@ public class TraditionJDBCDAO implements Tradition_interface{
 
 			return list;
 		}
+		@Override
+		public List<TraditionVO> getOneAll(Integer tra_type_no) {
+			
+			List<TraditionVO> list = new ArrayList<TraditionVO>();
+			TraditionVO traditionVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(GET_ONE_ALL);
+
+				pstmt.setInt(1, tra_type_no);
+				
+				rs = pstmt.executeQuery();
+			
+				while (rs.next()) {
+					
+					traditionVO = new TraditionVO();
+					traditionVO.setTra_no(rs.getInt("tra_no"));
+					traditionVO.setTra_type_no(rs.getInt("tra_type_no"));
+					traditionVO.setTra_order(rs.getInt("tra_order"));
+					traditionVO.setTitle(rs.getString("title"));
+					traditionVO.setArticle(rs.getString("article"));
+					
+					
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
+					
+					list.add(traditionVO); 
+				}
+
+				
+			} catch (SQLException | ClassNotFoundException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return list;
+			
+		}
+		
+	
+		
+		
 		
 		public static void main(String[] args) throws IOException {
 
@@ -368,7 +441,20 @@ public class TraditionJDBCDAO implements Tradition_interface{
 //			System.out.println("---------------------");
 	//
 //			// 查詢
-			List<TraditionVO> list = dao.getAll();
+//			List<TraditionVO> list = dao.getAll();
+//			for (TraditionVO tradition4 : list) {
+//				System.out.print(tradition4.getTra_no() + ",");
+//				System.out.print(tradition4.getTra_type_no() + ",");
+//				System.out.print(tradition4.getTra_order());
+//				System.out.println(tradition4.getTitle()+",");
+//				System.out.print(tradition4.getArticle()+ ",");
+//				System.out.print(tradition4.getImg() + ",");
+//				
+//				System.out.println();
+		
+			
+			//查詢
+			List<TraditionVO> list = dao.getOneAll(30);
 			for (TraditionVO tradition4 : list) {
 				System.out.print(tradition4.getTra_no() + ",");
 				System.out.print(tradition4.getTra_type_no() + ",");
@@ -378,7 +464,6 @@ public class TraditionJDBCDAO implements Tradition_interface{
 				System.out.print(tradition4.getImg() + ",");
 				
 				System.out.println();
-			}
-
-	}
 }
+		}	
+		}

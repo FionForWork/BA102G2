@@ -42,6 +42,9 @@ public class Problem_Service {
 	public void deleteproblem(Integer prob_no) {
 		dao.delete(prob_no);
 	}
+	public List<ProblemVO>getOneAll(Integer problem_type_no){
+		return dao.getOneAll(problem_type_no);
+	}
 
 	
 }
