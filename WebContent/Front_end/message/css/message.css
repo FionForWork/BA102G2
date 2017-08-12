@@ -17,12 +17,6 @@
 	font-size: 21px;
 }
 
-#messagesArea {
-	width: 100%;
-	width: 270px;
-	height: 200px;
-	align: center;
-}
 
 .input-area {
 	position:absolute;
@@ -35,3 +29,17 @@
 	right:0;
 	top:0;
 }
+
+.msg-l {
+	float:left;
+}
+
+
+.msg-r {
+	float:right;
+}
+
+.text {
+	padding:0px;
+}
+

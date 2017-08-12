@@ -61,9 +61,9 @@ public class MessageServlet extends HttpServlet {
 	public void onOpen(Session userSession)
 			throws IOException {
 		allSessions.add(userSession);
-		// System.out.println(userSession.getId() + ": 已連線");
+		 System.out.println(userSession.getId() + ": 已連線");
 //		System.out.println(no + ": 已連線");
-		// userSession.getBasicRemote().sendText("WebSocket 連線成功");
+//		 userSession.getBasicRemote().sendText("WebSocket 連線成功");
 	}
 
 	@OnMessage

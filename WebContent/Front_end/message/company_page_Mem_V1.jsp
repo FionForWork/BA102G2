@@ -12,7 +12,7 @@
 
 <%
 // 	ComService comSvc = new ComService();
-// 	ComVO comVO1 = comSvc.getOneCom("2003");
+// 	ComVO comVO1 = comSvc.getOneCom("2001");
 // 	session.setAttribute("comVO", comVO1);
 	
 	MemService memSvc = new MemService();
@@ -115,12 +115,12 @@
 			</p>
 			<br><br>
 			<p class="text-center" id="addClass">
-				<a class="btn btn-reservation btn-lg" onclick="change(1)">
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(1)">
 					立即聯絡我們 </a>
 			</p>
 			<p class="text-center" style="display: none;" id="dClass">
 
-				<a class="btn btn-reservation btn-lg" onclick="change(2)">
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(2)">
 					立即聯絡我們 </a>
 			</p>
 		</div>
@@ -242,22 +242,20 @@
 			<div class="col-md-12">
 				<div class="chat_box panel panel-default" id="chatbox">
 					<div class="panel-heading">
-						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 						<div id="statusOutput"></div>
+						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 					</div>
 					<div class="panel-body">
-						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+						<textarea id="messagesArea" class="panel message-area" readonly>							
+						</textarea>
 					</div>
 					<div class="panel-footer">
 						<div class="panel input-area">
 							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/> 
-							<div class="row">
-							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-								 																														  '${memVO != null? memVO.name : comVO.name}');" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" 
-							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-												 '${memVO != null? memVO.name : comVO.name}')" />	
-							</div>		
+							<input id="message" class="text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
+							<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" />
+							<input type="button" id="connect" class="button" value="連線" onclick="connect();" />
+							<input type="button" id="disconnect" class="button" value="離線" onclick="disconnect();" />		
 						</div>
 					</div>
 				</div>
@@ -269,14 +267,20 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%-- <%ComVO comVO = (ComVO) session.getAttribute("comVO"); --%>
-// MemVO memVO = (MemVO) session.getAttribute("memVO");
-<%-- %> --%>
-<%-- var comVO = <%=comVO%>; --%>
-<%-- var memVO = <%=memVO%>; --%>
+<%
+ComVO comVO = (ComVO) session.getAttribute("comVO");
+MemVO memVO = (MemVO) session.getAttribute("memVO");
+%>
 
 
-
+<%-- var com_no = "<%=comVO.getCom_no()%>"; --%>
+<%-- var comName = "<%=comVO.getName()%>"; --%>
+// console.log(com_no);
+// console.log(comName);
+var mem_no = "<%=memVO.getMem_no()%>";
+var memName = "<%=memVO.getName()%>";
+console.log(mem_no);
+console.log(memName);
 var MyPoint = "/MessageServlet/";
 console.log(MyPoint);
 var host = window.location.host;
@@ -290,8 +294,8 @@ var endPointURL = "ws://" + window.location.host + webCtx
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
 var webSocket;
-var memNo;	
-			
+	
+
 
  				function connect() {
  					// 建立 websocket 物件
@@ -299,34 +303,32 @@ var memNo;
 
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;				
+ 						document.getElementById('sendMessage').disabled = false;
+ 						document.getElementById('connect').disabled = true;
+ 						document.getElementById('disconnect').disabled = false;					
  						var messagesArea = document.getElementById("messagesArea");
  						messagesArea.value = messagesArea.value + "\r\n";
-
-						
+ 							
  					};
 
  					webSocket.onmessage = function(event) {
- 						
+ 						document.getElementById("chatbox").style.display = 'block';
+ 						document.getElementById("addClass").style.display = 'none';
+ 						document.getElementById("dClass").style.display = 'block';
  						
  						var messagesArea = document.getElementById("messagesArea");
- 						
- 	 						document.getElementById("chatbox").style.display = 'block';
- 	 						document.getElementById("addClass").style.display = 'none';
- 	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
- 						memNo = jsonObj.memNo;
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
  						messagesArea.value = messagesArea.value + message;
  						messagesArea.scrollTop = messagesArea.scrollHeight;
- 						
  					};
+
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
  					};
  				}
 
- 				function sendMessage(no, userName) {
+ 				function sendMessage() {
 
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
@@ -340,31 +342,19 @@ var memNo;
  						alert("訊息請勿空白!");
  						inputMessage.focus();
  					} else {
- 						if(no.startsWith("1")){
- 							var jsonObj = {
+ 						var jsonObj = {
  	 							"comNo" : "<%=request.getParameter("com_no")%>",
- 	 							"memNo" : no,
- 	 							"userName" : userName,
+ 	 							"memNo" : mem_no,
+ 	 							"userName" : (memName==null)?comName:memName,
  	 							"message" : message,
  	 							"time" : nowdate
- 	 						};
+ 	 					};
  						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
  						inputMessage.focus();
- 						}else {
- 							var jsonObj = {
- 	 	 						"comNo" : no,
- 	 	 						"memNo" : memNo,
- 	 	 						"userName" : userName,
- 	 	 						"message" : message,
- 	 	 						"time" : nowdate
- 	 	 					};
- 	 						webSocket.send(JSON.stringify(jsonObj));
- 							inputMessage.value = "";
- 	 						inputMessage.focus();	
- 						}
  					}
  				}
+
  				function disconnect() {
  					webSocket.close();
  					document.getElementById('sendMessage').disabled = true;
@@ -375,7 +365,7 @@ var memNo;
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
  				}
- 				
+
 
 </script>
 </body>

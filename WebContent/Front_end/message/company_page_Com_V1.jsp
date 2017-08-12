@@ -11,14 +11,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-// 	ComService comSvc = new ComService();
-// 	ComVO comVO1 = comSvc.getOneCom("2003");
-// 	session.setAttribute("comVO", comVO1);
+	ComService comSvc = new ComService();
+	ComVO comVO1 = comSvc.getOneCom("2003");
+	session.setAttribute("comVO", comVO1);
 	
-	MemService memSvc = new MemService();
-	MemVO memVO1 = memSvc.getOneMem("1001");
-	session.setAttribute("memVO", memVO1);
-	
+// 	MemService memSvc = new MemService();
+// 	MemVO memVO1 = memSvc.getOneMem("1001");
+// 	session.setAttribute("memVO", memVO1);
+
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
 	pageContext.setAttribute("worksList", worksList);
@@ -115,12 +115,12 @@
 			</p>
 			<br><br>
 			<p class="text-center" id="addClass">
-				<a class="btn btn-reservation btn-lg" onclick="change(1)">
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(1)">
 					立即聯絡我們 </a>
 			</p>
 			<p class="text-center" style="display: none;" id="dClass">
 
-				<a class="btn btn-reservation btn-lg" onclick="change(2)">
+				<a class="btn btn-reservation btn-lg" href="#" onclick="change(2)">
 					立即聯絡我們 </a>
 			</p>
 		</div>
@@ -237,24 +237,24 @@
 	<!--店家自介-->
 	
 	<!--聯絡我們-->
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="chat_box panel panel-default" id="chatbox">
+				<div class="chat_box panel" id="chatbox">
+					<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 					<div class="panel-heading">
-						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
 						<div id="statusOutput"></div>
 					</div>
 					<div class="panel-body">
 						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
 					</div>
-					<div class="panel-footer">
+					<div class="panel-footer" style="position:absolute;bottom:0">
 						<div class="panel input-area">
-							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/> 
+<%-- 							<input id="userName" class="text-field" type="text" placeholder="使用者名稱" value="${(memVO==null)?comVO.name:memVO.name}" disabled="true"/>  --%>
 							<div class="row">
 							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage(${memVO.mem_no},${memVO.name},${param.com_no});" />	
-							</div>		
+							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage();" />	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -266,13 +266,17 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%-- <%ComVO comVO = (ComVO) session.getAttribute("comVO"); --%>
-// MemVO memVO = (MemVO) session.getAttribute("memVO");
-<%-- %> --%>
-<%-- var comVO = <%=comVO%>; --%>
-<%-- var memVO = <%=memVO%>; --%>
-
-
+<%
+ComVO comVO = (ComVO) session.getAttribute("comVO");
+MemVO memVO = (MemVO) session.getAttribute("memVO");
+%>
+var com_no = "<%=comVO.getCom_no()%>";
+var comName = "<%=comVO.getName()%>";
+console.log(com_no);
+console.log(comName);
+<%-- var mem_no = "<%=memVO.getMem_no()%>"; --%>
+<%-- var userName = "<%=comVO.getName()%>"; --%>
+// console.log(mem_no);
 
 var MyPoint = "/MessageServlet/";
 console.log(MyPoint);
@@ -287,9 +291,12 @@ var endPointURL = "ws://" + window.location.host + webCtx
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
 var webSocket;
-var memNo;	
-			
+var memNo;						
+	
 
+	
+
+ 			
  				function connect() {
  					// 建立 websocket 物件
  					webSocket = new WebSocket(endPointURL);
@@ -297,35 +304,37 @@ var memNo;
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
  						document.getElementById('sendMessage').disabled = false;
+ 						document.getElementById('connect').disabled = true;
  						document.getElementById('disconnect').disabled = false;					
  						var messagesArea = document.getElementById("messagesArea");
  						messagesArea.value = messagesArea.value + "\r\n";
 
 						
  					};
-
- 					webSocket.onmessage = function(event) {
+					
+ 				webSocket.onmessage = function(event) {
  						
- 						
- 						var messagesArea = document
- 						.getElementById("messagesArea");
+ 						var messagesArea = document.getElementById("messagesArea");
  						var jsonObj = JSON.parse(event.data);
  						memNo = jsonObj.memNo;
- 						if(comNo == com_no) {
- 	 						document.getElementById("chatbox").style.display = 'block';
- 	 						document.getElementById("addClass").style.display = 'none';
- 	 						document.getElementById("dClass").style.display = 'block';
+ 						comNo = jsonObj.comNo;
+ 						
+ 					if(comNo == com_no) {
+ 						document.getElementById("chatbox").style.display = 'block';
+ 						document.getElementById("addClass").style.display = 'none';
+ 						document.getElementById("dClass").style.display = 'block';
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
- 						messagesArea.value = messagesArea.value + message;
- 						messagesArea.scrollTop = messagesArea.scrollHeight;
- 						}
- 					};
+ 							messagesArea.value = messagesArea.value + message;
+ 							messagesArea.scrollTop = messagesArea.scrollHeight;
+ 					}
+ 				};
+
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
  					};
  				}
 
- 				function sendMessage(mem_no, memName, com_no) {
+ 				function sendMessage() {
 
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
@@ -338,19 +347,18 @@ var memNo;
  					if (message === "") {
  						alert("訊息請勿空白!");
  						inputMessage.focus();
- 					}else {
- 						
+ 					} else {
  						var jsonObj = {
- 	 							"comNo" : com_no,
- 	 							"memNo" : mem_no,
- 	 							"userName" : memName,
+ 								"comNo" : com_no,
+ 	 							"memNo" : memNo,
+ 	 							"userName" : comName,
  	 							"message" : message,
  	 							"time" : nowdate
- 	 					};
+ 						};
  						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
  						inputMessage.focus();
- 					} 
+ 					}
  				}
 
  				function disconnect() {
@@ -363,7 +371,6 @@ var memNo;
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
  				}
-
 
 </script>
 </body>

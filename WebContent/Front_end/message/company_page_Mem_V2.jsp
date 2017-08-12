@@ -15,9 +15,9 @@
 // 	ComVO comVO1 = comSvc.getOneCom("2003");
 // 	session.setAttribute("comVO", comVO1);
 	
-// 	MemService memSvc = new MemService();
-// 	MemVO memVO1 = memSvc.getOneMem("1001");
-// 	session.setAttribute("memVO", memVO1);
+	MemService memSvc = new MemService();
+	MemVO memVO1 = memSvc.getOneMem("1001");
+	session.setAttribute("memVO", memVO1);
 	
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -43,6 +43,8 @@
 
 
 	
+
+	
 		<!--預約按鈕-->
 		<div class="col-sm-2">
 			<p class="text-center">
@@ -61,6 +63,7 @@
 		</div>
 	</div>
 	<!--店家資料-->
+
 	
 	<!--聯絡我們-->
 	<div class="container-fluid">
@@ -125,7 +128,7 @@ var memNo;
 
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;					
+ 						document.getElementById('sendMessage').disabled = false;				
  						var messagesArea = document.getElementById("messagesArea");
  						messagesArea.value = messagesArea.value + "\r\n";
 
@@ -153,7 +156,7 @@ var memNo;
  				}
 
  				function sendMessage(no, userName) {
- 					console.log(no);
+					console.log(no);
 					console.log(userName);
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
@@ -198,7 +201,7 @@ var memNo;
 
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
- 				}
+ 				}		
 </script>
 </body>
 </html>

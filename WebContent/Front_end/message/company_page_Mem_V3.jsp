@@ -15,9 +15,9 @@
 // 	ComVO comVO1 = comSvc.getOneCom("2003");
 // 	session.setAttribute("comVO", comVO1);
 	
-// 	MemService memSvc = new MemService();
-// 	MemVO memVO1 = memSvc.getOneMem("1001");
-// 	session.setAttribute("memVO", memVO1);
+	MemService memSvc = new MemService();
+	MemVO memVO1 = memSvc.getOneMem("1001");
+	session.setAttribute("memVO", memVO1);
 	
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -37,10 +37,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body onload="connect();" onunload="disconnect();">
+<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
 
 	<%@ include file="page/before.file"%>
 
+
+	
 
 	
 		<!--預約按鈕-->
@@ -61,6 +63,7 @@
 		</div>
 	</div>
 	<!--店家資料-->
+
 	
 	<!--聯絡我們-->
 	<div class="container-fluid">
@@ -72,7 +75,7 @@
 						<div id="statusOutput"></div>
 					</div>
 					<div class="panel-body">
-						<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">
 						<div class="panel input-area">
@@ -119,17 +122,14 @@ var webSocket;
 var memNo;	
 			
 
- 				function connect() {
+ 				function connect(no) {
  					// 建立 websocket 物件
  					webSocket = new WebSocket(endPointURL);
 
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;					
- 						var messagesArea = document.getElementById("messagesArea");
- 						messagesArea.value = messagesArea.value + "\r\n";
-
-						
+ 						document.getElementById('sendMessage').disabled = false;				
+ 						
  					};
 
  					webSocket.onmessage = function(event) {
@@ -143,9 +143,30 @@ var memNo;
  						var jsonObj = JSON.parse(event.data);
  						memNo = jsonObj.memNo;
  						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
- 						messagesArea.value = messagesArea.value + message;
- 						messagesArea.scrollTop = messagesArea.scrollHeight;
+
+
+ 						if (memNo == no){
+ 					        control = '<li style="width:100%">' +
+ 					                        '<div class="msg-r">' +
+ 					                            '<div class="text text-r">' +
+ 					                                '<p>'+ message +'</p>' +
+ 					                            '</div>' +
+ 					                        '</div>' +
+ 					                    '</li>';                    
+ 					    }else{
+ 					        control = '<li style="width:100%;">' +
+ 					                        '<div class="msg-l">' +
+ 					                            '<div class="text text-l">' +
+ 					                                '<p>'+message+'</p>' +
+ 					                            '</div>' +                               
+ 					                  '</li>';
+ 					    }   
+ 					
+ 				        		$("#textArea").append(control);
+ 				        
+	
  						
+ 						 						
  					};
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
@@ -153,7 +174,7 @@ var memNo;
  				}
 
  				function sendMessage(no, userName) {
- 					console.log(no);
+					console.log(no);
 					console.log(userName);
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
@@ -198,7 +219,7 @@ var memNo;
 
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
- 				}
+ 				}		
 </script>
 </body>
 </html>
