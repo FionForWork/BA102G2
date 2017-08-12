@@ -31,6 +31,16 @@
           'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
           'callback' : callback
         });
+        
+        grecaptcha.render('recaptcha_box2', {
+          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
+     'callback' : callback2
+        });
+        
+        grecaptcha.render('recaptcha_box3', {
+          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
+       'callback' : callback3
+        });
       };
       
       
@@ -44,7 +54,24 @@
 
     	}
 
-   
+function callback2() {
+    		$(document).ready(function(){
+    			  
+    			$("#recaptcha_box2").hide(1000);
+    			  $("#submit2").show(1000);
+    			  
+    			});
+
+    	}
+   function callback3() {
+    		$(document).ready(function(){
+    			  
+    			$("#recaptcha_box3").hide(1000);
+    			  $("#submit3").show(1000);
+    			  
+    			});
+
+    	}
     </script>
       
 </div>	
@@ -71,13 +98,13 @@
             <div class="checkbox">
              
             </div>
-           
+           <center><div id="recaptcha_box2">請驗證</div>
               <input type="hidden" name="action" value="login">
-              <button   type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+              <button style="display:none" type="submit" id="submit2"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
         <div class="modal-footer">
-          <button  type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <button    type="submit"class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
           <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
         </div>
@@ -107,9 +134,9 @@
             <div class="checkbox">
              
             </div>
-            
+             <center><div id="recaptcha_box3">請驗證</div>
             <input type="hidden" name="action" value="login">
-              <button  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+              <button  style="display:none" type="submit" id="submit3" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
         <div class="modal-footer">
