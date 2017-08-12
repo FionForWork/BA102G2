@@ -59,5 +59,9 @@ public class Forum_Comment_Service {
 
 		return dao.getOneAll(art_no);
 	}
+	public Forum_CommentVO getArt_no_All(Integer art_no) {
+
+		return dao.getArt_no_All(art_no);
+	}
 
 }

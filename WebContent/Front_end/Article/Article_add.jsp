@@ -12,13 +12,13 @@
 <%
    MemService memService=new MemService();
 MemVO memVO=memService.getOneMem("1001");
-session.setAttribute("memVo", memVO);
+// session.setAttribute("memVO", memVO);
 
 %>
 <%
 ComService comService=new ComService();
 ComVO comVO=comService.getOneCom("2001");
-session.setAttribute("comVO", comVO);
+ session.setAttribute("comVO", comVO);
 
 %>
 

@@ -297,21 +297,12 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
+    
 <!--menu-->
     <div class="container" style="width:90%">
         <div class="row">
             <div class="col-md-3">
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="#" class="menua">綜合版</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚秘</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚紗</a></li>
-                    <li class="list-group-item"><a href="#" class="menua">婚攝</a></li>
-                    
-                    <li class="list-group-item"></li>
-                </ul>
+              
 
 
                 

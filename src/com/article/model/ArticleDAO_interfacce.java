@@ -10,4 +10,5 @@ public interface ArticleDAO_interfacce {
       public void delete(Integer art_no);
       public ArticleVO findByPrimaryKey(Integer art_no);
       public List<ArticleVO> getAll();
+      public List<ArticleVO> getOneAll(Integer art_type_no);
 }
