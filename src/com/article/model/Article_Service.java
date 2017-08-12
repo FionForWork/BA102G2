@@ -55,6 +55,9 @@ public ArticleVO getOneArt(Integer art_no) {
 public void deleteArt(Integer art_no) {
 	dao.delete(art_no);
 }
+public List<ArticleVO> getOneAll(Integer art_type_no) {
+	return dao.getOneAll(art_type_no);
+}
 
 
 
