@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
@@ -29,14 +28,26 @@ public class ProtraDAO implements ProtraDAO_Interface {
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
-    private static DataSource dataSource = null;
-    static {
-        try {
-            Context ctx = new InitialContext();
-            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
-        } catch (NamingException e) {
-            e.printStackTrace();
+
+    private Connection JNDIinit() throws NamingException, SQLException {
+        Context context = new javax.naming.InitialContext();
+        DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/BA102G2DB");
+        if (dataSource != null) {
+            return dataSource.getConnection();
         }
+        else {
+            return null;
+        }
+    }
+
+    private Connection JDBCinit() throws ClassNotFoundException, SQLException {
+        String DRIVER = "oracle.jdbc.driver.OracleDriver";
+        String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+        String USER = "ProjectDB";
+        String PASSWORD = "eric1101105351";
+        Class.forName(DRIVER);
+        Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+        return con;
     }
 
     public void cancelConnection() throws SQLException {
@@ -54,7 +65,7 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public void add(ProtraVO protracking_listVO) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, protracking_listVO.getPro_no());
@@ -84,12 +95,15 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public void delete(String pro_no) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(DELETE_BY_NO);
             preparedStatement.setString(1, pro_no);
             preparedStatement.execute();
             connection.commit();
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
         }
         catch (SQLException e) {
             try {
@@ -109,7 +123,7 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public ProtraVO getOneByPK(String protra_no) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             preparedStatement = connection.prepareStatement(FIND_BY_PK);
             preparedStatement.setString(1, protra_no);
             resultSet = preparedStatement.executeQuery();
@@ -144,7 +158,7 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public List<ProtraVO> getAll() {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(GET_ALL_ORDER_BY_ASC);
             List<ProtraVO> list = new ArrayList<>();
@@ -180,7 +194,7 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public List<ProtraVO> getAllByMem(String mem_no) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             preparedStatement = connection.prepareStatement(FIND_BY_MEM);
             preparedStatement.setString(1, mem_no);
             resultSet = preparedStatement.executeQuery();
@@ -217,12 +231,15 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public int getRowCount(String mem_no) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_ROW_BY_MEM);
             preparedStatement.setString(1, mem_no);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1);
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -241,7 +258,7 @@ public class ProtraDAO implements ProtraDAO_Interface {
     @Override
     public List<ProtraVO> getSome(String mem_no, int nowPage, int count) {
         try {
-            connection = dataSource.getConnection();
+            connection = JNDIinit();
             int start = (nowPage - 1) * count + 1;
             int end = nowPage * count;
             preparedStatement = connection.prepareStatement(GET_SOME_ROW);
@@ -258,6 +275,9 @@ public class ProtraDAO implements ProtraDAO_Interface {
                 list.add(protracking_listVO);
             }
             return list;
+        }
+        catch (NamingException e) {
+            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
