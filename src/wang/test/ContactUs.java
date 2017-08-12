@@ -2,7 +2,6 @@ package wang.test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,13 @@ public class ContactUs extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
+
+		String name = req.getParameter("name");
+		System.out.println(name);
+		String email = req.getParameter("email");
+		System.out.println(email);
+		String messagesArea = req.getParameter("messagesArea");
+		System.out.println(messagesArea);
 	}
 
 }

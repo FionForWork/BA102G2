@@ -110,7 +110,7 @@
   
   <servlet>
     <servlet-name>ContactUs</servlet-name>
-    <servlet-class>com.wang.test.ContactUs</servlet-class>
+    <servlet-class>wang.test.ContactUs</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ContactUs</servlet-name>
