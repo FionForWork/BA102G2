@@ -96,6 +96,14 @@
 		$('#deleteForm').submit();
 	  }
 </script>
+<c:if test="${not empty errorMsgs}">
+	<c:forEach var="message" items="${errorMsgs}">
+		<div class=" alert alert-danger alert-dismissable fade in">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			${message}
+		</div>
+	</c:forEach>
+</c:if>
 <div class="container">
 <div class="text-center col-md-offset-1 col-md-10">
 <table class="table table-bordered ui-widget-head" >

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -60,11 +62,26 @@ public class CalendarServlet extends HttpServlet {
 			successView.forward(req, res);
 			
 		}
+		
 //		新增行程
 		if(action.equals("addSchedule")){
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 			String cal_date = req.getParameter("cal_date");
 			String content = req.getParameter("content");
 			String requestURL = req.getParameter("requestURL");
+			
+			Timestamp t = null;
+			try{
+				t.valueOf(cal_date+" 00:00:00");
+			}catch(IllegalArgumentException e){
+				errorMsgs.add("請輸入正確的日期格式!");
+				RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+				successView.forward(req, res);
+				return;
+			}
 			
 			CalendarService calendarService = new CalendarService();
 			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
@@ -75,6 +92,7 @@ public class CalendarServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 			successView.forward(req, res);
 		}
+		
 //		刪除行程
 		if(action.equals("deleteSchedule")){
 			String cal_no = req.getParameter("cal_no");

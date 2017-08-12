@@ -281,7 +281,8 @@
 	        	$(thisDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
 	        	$(thisDate).children('a').hide();
 	        }else if(action == "onRes"){
-		        var resDate = document.getElementById(jsonObj.thisDate);
+// 	        	有BUG
+		        var resDate = document.getElementById(jsonObj.thisDate.replace(/-/g,""));
 		        if(resDate != null){
 			        $(resDate).children('a').hide();
 			        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
