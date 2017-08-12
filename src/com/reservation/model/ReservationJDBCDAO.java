@@ -30,7 +30,8 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 			"SELECT * FROM RESERVATION WHERE MEM_NO = ?";
 	private static final String GET_COM_STMT = 
 			"SELECT * FROM RESERVATION WHERE COM_NO = ?";
-	
+	private static final String GET_COM_DISTINCT_MEM_NO_STMT = "SELECT DISTINCT MEM_NO FROM RESERVATION WHERE COM_NO = ?";
+
 	@Override
 	public void insert(ReservationVO reservationVO) {
 		Connection con = null;
@@ -408,6 +409,59 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 		}
 
 	
+	}
+
+	@Override
+	public List<String> getComResDistinctMemNO(String com_no) {
+		List<String> list = new ArrayList<String>();
+		ReservationVO reservationVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_COM_DISTINCT_MEM_NO_STMT);
+			pstmt.setString(1, com_no);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				list.add(rs.getString(1));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
 
 

@@ -9,7 +9,6 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="/Front_end/mem/page/register_header.file"%>
-<script src="<%=request.getContextPath()%>/Front_end/login/recaptcha3.js"></script>
 
 <link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />

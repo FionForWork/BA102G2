@@ -10,4 +10,6 @@ public interface ComTraDAO_Interface {
 	public ComTraVO findComTraByPK(String comtra_no);
 	public List<ComTraVO> findComTraByMemNo(String mem_no);
 	public List<ComTraVO> findAll();
+	public List<String> getComNoListByMemNo(String mem_no);
+	public ComTraVO getComTraByComNoAndMemNo(String com_no,String mem_no);
 }

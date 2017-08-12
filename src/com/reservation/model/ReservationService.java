@@ -49,4 +49,7 @@ public class ReservationService {
 	public List<ReservationVO> getComRes(String com_no){
 		return dao.getComRes(com_no);
 	}
+	public List<String> getComResDistinctMemNO(String com_no){
+		return dao.getComResDistinctMemNO(com_no);
+	}
 }

@@ -91,21 +91,19 @@
 			</form>
 			<!-- End Modal add works -->
 
-			<div class="row">
+			<div class="row" style="position:relative" >
 				<div class="col-xs-12 col-sm-12">
-				<div class='text-right'>
-				<div class='btn-group'>
+				<div class='btn-group' style="right:15px; top:15px;position:absolute;">
 				<button type="submit" class="btn btn-info text-right" id="uploadbtn" >新增作品</button>
 				<button class="btn btn-info text-right" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${com_no}'" >編輯作品</button>
 				</div>
-				</div>
-						
+					<br>	
 					<div class="text-center">
 						<h2>所有作品</h2>
 					</div>
 				</div>
 			</div>
-
+<br>
 
 
 <!-- The lightbox Modal (img)-->

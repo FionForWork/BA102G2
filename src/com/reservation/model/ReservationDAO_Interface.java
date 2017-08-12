@@ -10,4 +10,5 @@ public interface ReservationDAO_Interface {
 	List<ReservationVO> getAll();
 	List<ReservationVO> getMemRes(String mem_no);
 	List<ReservationVO> getComRes(String com_no);
+	List<String> getComResDistinctMemNO(String com_no);
 }

@@ -226,7 +226,7 @@
 		<div class="col-md-3 col-sm-3 col-xs-6">
 			<div class="image-container">
 
-				<c:if test="${tempContVO.vdo != null}">
+				<c:if test="${tempContVO.img == null}">
 				
 					<video width="400" controls class="img-responsive img-thumbnail">
 					  <source src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }" type="video/mp4">
