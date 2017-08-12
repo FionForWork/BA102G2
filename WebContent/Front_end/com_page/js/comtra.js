@@ -1,16 +1,14 @@
 	
 		
 		function insertComtra(){
-			console.log("00000000000000");
+			
 			var mem_no = $('input[name="mem_no"]').val();
 			if(mem_no.length == 0){
+				
 				$("#snackbar").addClass("show");
-				console.log("XXXXXXX");
 				setTimeout('$("#snackbar").removeClass("show")',5000);
-				console.log("@@@@@@@@@@");
 				
 			}else{
-				console.log("111111111111111");
 				$.ajax({
 					url:$('input[name="path"]').val(),
 					type:'POST',
@@ -30,7 +28,6 @@
 		};
 		
 		function deleteComtra(){
-			console.log("22222222222222");
 				$.ajax({
 					url:$('input[name="path"]').val(),
 					type:'POST',
