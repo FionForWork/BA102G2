@@ -2,9 +2,11 @@ package com.reservation.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -185,6 +187,46 @@ public class ReservationServlet extends HttpServlet {
 		}
 		
 		if(action.equals("searchServiceByCompositeQuery")){
+			
+			String requestURL = req.getParameter("requestURL");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String cal_date = req.getParameter("cal_date");
+			
+			Date date = null;
+			Integer bottomPrice = null;
+			Integer topPrice = null;
+			try{
+				date = Date.valueOf(cal_date);
+
+			}catch(IllegalArgumentException e){
+				errorMsgs.add("請輸入正確的日期格式!");
+			}
+			
+			if(!req.getParameter("bottomPrice").equals("")){
+				try{
+					bottomPrice = new Integer(req.getParameter("bottomPrice"));
+				}catch (NumberFormatException e) {
+					errorMsgs.add("請輸入正確的金額格式!");
+				}
+			}
+			if(!req.getParameter("topPrice").equals("")){
+				try{
+					topPrice = new Integer(req.getParameter("topPrice"));
+				}catch (NumberFormatException e) {
+					errorMsgs.add("請輸入正確的金額格式!");
+				}
+			}
+			
+			if (!errorMsgs.isEmpty()) {
+				List<ServVO> list = new ArrayList<ServVO>();
+				req.setAttribute("list", list);
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+				return;
+			}
+			
 			Map<String, String[]> map = req.getParameterMap();
 
 			ServService servService = new ServService();
@@ -192,7 +234,7 @@ public class ReservationServlet extends HttpServlet {
 			req.setAttribute("list", list);
 			req.setAttribute("map", map);
 			
-			String requestURL = req.getParameter("requestURL");
+			
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
 			successView.forward(req, res);
 		}

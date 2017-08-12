@@ -29,15 +29,17 @@ public class CalendarServlet extends HttpServlet {
 		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
 		
+		// 更改行程時間
 		if(action.equals("updateDate")){
-			// LocalDate localDate = (LocalDate)req.getAttribute("localDate");
 			
-			LocalDate localDate = LocalDate.now();
-			req.setAttribute("localDate", localDate);
 			String cal_no = req.getParameter("cal_no");
 			String cal_date = req.getParameter("cal_date");
 			String requestURL = req.getParameter("requestURL");
 			Timestamp t = Timestamp.valueOf(cal_date+" 00:00:00");
+			
+			String[] date = cal_date.split("-");
+			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+			req.setAttribute("localDate", localDate);
 			
 			CalendarService calendarService = new CalendarService();
 			calendarService.updateDate(cal_no, t);
@@ -47,17 +49,7 @@ public class CalendarServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-		if(action.equals("listSchedule")){
-			String calendarDate = req.getParameter("calendarDate");
-			if(calendarDate.equals("today")){
-				LocalDate localDate = LocalDate.now();
-				req.setAttribute("localDate", localDate);
-				String url = "/Front_end/calendar/calendar.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-			}
-		}
-		
+		// 更改年份、月份
 		if(action.equals("changeCalendar")){
 			int month = Integer.valueOf(req.getParameter("month"));
 			int year = Integer.valueOf(req.getParameter("year"));
@@ -68,7 +60,7 @@ public class CalendarServlet extends HttpServlet {
 			successView.forward(req, res);
 			
 		}
-		
+//		新增行程
 		if(action.equals("addSchedule")){
 			String cal_date = req.getParameter("cal_date");
 			String content = req.getParameter("content");
@@ -83,7 +75,7 @@ public class CalendarServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 			successView.forward(req, res);
 		}
-		
+//		刪除行程
 		if(action.equals("deleteSchedule")){
 			String cal_no = req.getParameter("cal_no");
 			String requestURL = req.getParameter("requestURL");

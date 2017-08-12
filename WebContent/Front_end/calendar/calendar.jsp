@@ -10,6 +10,9 @@
 <%
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
+	if(localDate == null){
+		localDate = LocalDate.now();
+	}
 	// localDate = LocalDate.of(localDate.getYear(),7,1);
 	// 本月最後一天的日期(LocalDate)
 	LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
@@ -19,6 +22,7 @@
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
 	Timestamp t = new Timestamp(System.currentTimeMillis());
 	CalendarService calerdarService = new CalendarService();
+	// 廠商編號寫死
 	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, "2001");
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
@@ -232,8 +236,8 @@
   	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 </form>
 <!-- For WebSocket -->
-<input type="text" id="thisDate" value="">
-<input type="text" id="toDate" value="">
+<input type="hidden" id="thisDate" value="">
+<input type="hidden" id="toDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
 </body >
 
@@ -270,18 +274,12 @@
 				var content = $("<div style='background-color:pink'>").text(name);
 	        	$(thisDate).append(content);
 	        }
-// 	        if(resDate != null){
-// 		        $(resDate).children('a').hide();
-// 		        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
-// 	        }
 		};
 
 		webSocket.onclose = function(event) {
 			updateStatus("WebSocket 已離線");
 		};
 	}
-	
-	
 	
 	function changeSchedule() {
 		
@@ -315,9 +313,7 @@
 	
 	function disconnect () {
 		webSocket.close();
-// 		document.getElementById('sendMessage').disabled = true;
-// 		document.getElementById('connect').disabled = false;
-// 		document.getElementById('disconnect').disabled = true;
+
 	}
 
 	
