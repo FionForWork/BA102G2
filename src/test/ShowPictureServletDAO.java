@@ -18,8 +18,7 @@ import com.album.model.AlbumVO;
 import com.com.model.*;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
+import com.mem.model.*;
 import com.tempcont.model.TempContService;
 import com.tempcont.model.TempContVO;
 import com.works.model.*;
@@ -159,6 +158,17 @@ public class ShowPictureServletDAO extends HttpServlet {
 			out.write(advcont);
 			out.close();
 
+			return;
+		}
+		if(file.startsWith("mem_no")){
+			pk = request.getParameter("mem_no");
+			byte[] memcont =null;
+			System.out.println(pk);
+			MemService memSvc = new MemService();
+			MemVO memVO = memSvc.getOneMem(pk);
+			memcont = memVO.getPicture();
+			out.write(memcont);
+			out.close(); 
 			return;
 		}
 	}

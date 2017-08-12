@@ -4,6 +4,7 @@
 <%@ page import="com.advertising.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +21,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%@ include file="page/before.file"%>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -44,7 +46,7 @@
 							<th>狀態</th>
 						</tr>
 					</thead>
-					<%@ include file="page1.file"%>
+					<%@ include file="page/page1.file"%>
 					<tbody>
 						<c:forEach var="advertisingVO" items="${advertisingList}"
 							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -54,7 +56,9 @@
 										<td>${comVO.name}</td>
 									</c:if>
 								</c:forEach>
-								<td>${advertisingVO.startDay}</td>
+								
+								<fmt:formatDate value="${advertisingVO.startDay}" var="startDayFormat" pattern="yyyy-MM-dd"/>
+								<td>${startDayFormat}</td>
 								<td>${(advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24)}</td>
 								<td>${(advertisingVO.status==1)?"已審核":"未審核"}</td>
 								<td>
@@ -80,7 +84,7 @@
 							</tr>
 						</c:forEach>
 					</tbody>
-					<%@ include file="page2.file"%>
+					<%@ include file="page/page2.file"%>
 				</table>
 
 			</div>
@@ -98,6 +102,6 @@
 	<%=request.getServletPath()%><br>
 	<font color=blue>request.getParameter("whichPage"):</font>
 	<%=request.getParameter("whichPage")%><br>
-
+<%@ include file="page/after.file"%>
 </body>
 </html>

@@ -13,10 +13,6 @@
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
-
-	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAllAvg();
-	pageContext.setAttribute("servList", servList);
 %>
 </head>
 <body>
@@ -33,18 +29,13 @@
 				<c:forEach var="comVO" items="${comList}">
 
 					<div class="col-xs-12 col-sm-3">
-						<ul class="com_box">
+						<ul class="works_box">
 							<li class="list-unstyled"><a
 								href="company_page.jsp?com_no=${comVO.com_no}"
-								class="thumbnail thumbnail-service mod-shadow img-label">
+								class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
 									<img class="works_image img-thumbnail"
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
-									${comVO.name} 
-									<c:forEach var="servVO" items="${servList}">
-										<c:if test="${comVO.com_no==servVO.com_no}">
-											<span class="fa fa-star text-warning">${servVO.score/servVO.times}</span>
-										</c:if>
-									</c:forEach>
+									<h3>${comVO.name}</h3>
 
 							</a></li>
 						</ul>
