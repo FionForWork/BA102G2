@@ -5,6 +5,7 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.service_type.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,34 +18,46 @@
 	String stype_no = request.getParameter("stype_no");
 	System.out.println("stype_no=" + stype_no);
 	
-	ServService servSvc = new ServService();
-	List<String> com_noList = servSvc.getComnoByStypeno(stype_no);
+	ServService servSvc1 = new ServService();
+	List<String> com_noList = servSvc1.getComnoByStypeno(stype_no);
 	pageContext.setAttribute("com_noList", com_noList);
+	
+	ServService servSvc2 = new ServService();
+	List<ServVO> servList = servSvc2.getAllAvg();
+	pageContext.setAttribute("servList", servList);
+	
+	Service_TypeService service_TypeSvc = new Service_TypeService();
+	List<Service_TypeVO> service_TypeList = service_TypeSvc.getAllServiceType();
+	pageContext.setAttribute("service_TypeList", service_TypeList);
 %>
 </head>
 <body>
 	<%@ include file="page/before.file"%>
-
-
-
-
-
-
-
-
-
-
+	<br>
+	<br>
+	
+	<div class="container">
+        <div class="col-md-offset-1">
+            <ul class="breadcrumb">
+                <li><a href="#">首頁</a></li>
+            <c:forEach var="service_TypeList" items="${service_TypeList}">
+            <c:if test="${service_TypeList.stype_no==param.stype_no}">
+                <li><a href="#">${service_TypeList.name}</a></li>
+            </c:if>    
+			</c:forEach>
+            </ul>
+        </div>
+    </div>
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-md-2"></div>
 			<!--圖===========================================================================-->
-			<div class="col-xs-12 col-md-10">
+			<div class="col-xs-12 col-md-12">
 
 							<c:forEach var="com_noList" items="${com_noList}">
 
 								<div class="col-xs-12 col-sm-3">
-									<ul class="works_box">
+									<ul class="com_box">
 										<li class="list-unstyled"><a
 											href="company_page.jsp?com_no=${com_noList}"
 											class="thumbnail thumbnail thumbnail-service mod-shadow img-label">
@@ -52,9 +65,15 @@
 												src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${com_noList}">
 												<c:forEach var="comVO" items="${comList}">
 												<c:if test="${comVO.com_no==com_noList}">
-												<h3>${comVO.name}</h3>
+												${comVO.name}
 												</c:if>
 												</c:forEach>
+												
+												<c:forEach var="servVO" items="${servList}">
+												<c:if test="${com_noList==servVO.com_no}">
+													<span class="fa fa-star text-warning">${servVO.score/servVO.times}</span>
+												</c:if>
+												</c:forEach>																							
 										</a></li>
 									</ul>
 								</div>
@@ -64,7 +83,8 @@
 			<!--圖===========================================================================-->
 		</div>
 	</div>
-
+	<br>
+	<br>
 	<%@ include file="page/after.file"%>
 </body>
 </html>

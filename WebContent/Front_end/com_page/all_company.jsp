@@ -26,9 +26,8 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-md-2"></div>
 			<!--圖===========================================================================-->
-			<div class="col-xs-12 col-md-10">
+			<div class="col-xs-12 col-md-12">
 
 				<c:forEach var="comVO" items="${comList}">
 
@@ -36,8 +35,8 @@
 						<ul class="com_box">
 							<li class="list-unstyled"><a
 								href="company_page.jsp?com_no=${comVO.com_no}"
-								class="thumbnail thumbnail-service mod-shadow img-label">
-									<img class="works_image img-thumbnail"
+								class="thumbnail thumbnail-service mod-shadow img-label"> <img
+									class="works_image img-thumbnail"
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
 									${comVO.name} 
 									<c:forEach var="servVO" items="${servList}">
@@ -55,7 +54,8 @@
 			<!--圖===========================================================================-->
 		</div>
 	</div>
-
+	<br>
+	<br>
 
 
 
