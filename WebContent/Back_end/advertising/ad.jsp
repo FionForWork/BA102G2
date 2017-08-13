@@ -31,7 +31,14 @@
 			</ul>
 		</font>
 	</c:if>
-
+	
+	
+	<ul class="nav nav-tabs nav-justified"> 
+        <li class="active"><a href="<%= request.getContextPath() %>/Back_end/advertising/ad.jsp" class="menua">所有廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/select_ad.jsp?status=0" class="menua">未審核廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/select_ad.jsp?status=1" class="menua">已審核廣告</a></li>
+        <br><br>
+    </ul>
 
 	<div class="container">
 		<div class="row">
@@ -84,13 +91,6 @@
 							</tr>
 						</c:forEach>
 					</tbody>
-					<%@ include file="page/page2.file"%>
-				</table>
-
-			</div>
-			<div class="col-xs-12 col-sm-1"></div>
-		</div>
-	</div>
 	<%
 		if (request.getAttribute("listOneAdContent") != null) {
 	%>
@@ -98,6 +98,13 @@
 	<%
 		}
 	%>
+					<%@ include file="page/page2.file"%>
+				</table>
+
+			</div>
+			<div class="col-xs-12 col-sm-1"></div>
+		</div>
+	</div>
 	<font color=blue>request.getServletPath():</font>
 	<%=request.getServletPath()%><br>
 	<font color=blue>request.getParameter("whichPage"):</font>

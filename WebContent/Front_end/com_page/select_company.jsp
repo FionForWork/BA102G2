@@ -39,10 +39,10 @@
 	<div class="container">
         <div class="col-md-offset-1">
             <ul class="breadcrumb">
-                <li><a href="#">首頁</a></li>
+                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">首頁</a></li>
             <c:forEach var="service_TypeList" items="${service_TypeList}">
             <c:if test="${service_TypeList.stype_no==param.stype_no}">
-                <li><a href="#">${service_TypeList.name}</a></li>
+                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${param.stype_no}">${service_TypeList.name}</a></li>
             </c:if>    
 			</c:forEach>
             </ul>

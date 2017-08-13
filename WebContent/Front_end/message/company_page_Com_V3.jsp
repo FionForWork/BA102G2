@@ -142,7 +142,7 @@ var memNo;
  	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
  						memNo = jsonObj.memNo;
- 						var message = jsonObj.message + "\r\n";
+ 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
 
 
  						if (memNo == no){

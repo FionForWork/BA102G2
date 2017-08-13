@@ -7,12 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="page/before.file"%>
+
 	<div class="mobile-main-choice">
 		<a href="ad.jsp">所有廣告</a>
 		<a href="select_ad.jsp?status=0">未審核廣告</a>
 		<a href="select_ad.jsp?status=1">已審核廣告</a>
 	</div>
-<%@ include file="page/after.file"%>
+
 </body>
 </html>
