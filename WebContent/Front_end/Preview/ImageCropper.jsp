@@ -2,41 +2,25 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="org.json.JSONObject"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style type="text/css">
-#canvas-bg {
-	float: left;
-	text-align: left;
-	height: 70px;
-}
 
-#canvas-wrapper {
-	position: relative;
-	width: auto;
-	margin: auto;
-}
-
-canvas {
-	border: dashed 1px #808080;
-}
-
-#canvas-background {
-	display: block;
-	width: 100%;
-	margin-top: 5px;
-}
-</style>
-</head>
 <%
+	//String mem_no = (String)session.getAttribute("mem_no");
+	session.setAttribute("mem_no","1001");
 	String originalCont_no = (String) request.getAttribute("originalCont_no");
-	//String originalCont_no = "0128";
-	System.out.println("jsp original==" + originalCont_no);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
 	//String cropCont_no = "0129";
-	System.out.println("jsp crop==" + cropCont_no);
 %>
 
 <%@ include file="page/preview_header.file"%>
-
+<div class="container">
+	<div class="col-md-offset-1">
+		<ul class="breadcrumb">
+			<li><a href="#">首頁</a></li>
+			<li><a href="#">會員專區</a></li>
+			<li class="active">實景預覽</li>
+		</ul>
+	</div>
+</div>
 <div class="container">
 	<div class="row">
 		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
@@ -66,7 +50,7 @@ canvas {
 					class="list-group-item menua">我的相簿</a>
 				<br>
 
-				<a href="#" class="list-group-item menua">我的最愛</a>
+				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua">我的最愛</a>
 				<br>
 				<a href="#" class="list-group-item menua">實景預覽</a>
 				<br>
@@ -81,14 +65,13 @@ canvas {
 				class="btn btn-block btn-default">查看個人資料</a>
 		</div>
 		<div class="col-md-8 col-offset-1">
-
-
-
 			<div class="row">
 				<div class='col-sm-12 col-xs-12'>
-					<button class="btn btn-default" id='drawBtn'>畫邊框</button>
-					<button class="btn btn-default" onclick='clearDrawing()'>清除</button>
-
+					<a type='button' class="btn btn-app btn-default" id='btnLoad'
+					onclick='load_image();'><i class="fa fa-image"></i> 選擇照片</a>
+					<button class="btn btn-default" id='drawBtn'><i class="fa fa-paint-brush"></i> 畫邊框</button>
+					<button class="btn btn-default" onclick='clearDrawing()'><i class="fa fa-times"></i> 清除</button>
+					<button class="btn btn-info" id='submitBtn'>裁切</button>
 
 					<form id="image-form"
 						action='<%=request.getContextPath()%>/album/preview.do'
@@ -96,29 +79,21 @@ canvas {
 
 						<input type='hidden' id='xPoints' name='xPoints' value=''>
 						<input type='hidden' id='yPoints' name='yPoints' value=''>
+						<input type='hidden' name='mem_no' value='${mem_no}'> 
 						<input type='hidden' name='action' value='cropImage'> <input
 							type="file" name="imageRemove" id='imgfile'
-							onchange="preview_images()" style="display: none"> <a
-							type='button' class="btn btn-app btn-default" id='btnLoad'
-							onclick='load_image();'><i class="fa fa-image"></i>選擇照片</a>
+							onchange="preview_images()" style="display: none"> 
 					</form>
-					<button class="btn btn-info" id='submitBtn'>裁切</button>
-
 				</div>
-
 			</div>
-
+			<br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
 					<div id="canvas-wrapper">
-						<canvas id="canvas" width="700" height="640"></canvas>
+						<canvas id="canvas" width="790" height="500"></canvas>
 					</div>
-
-
 				</div>
-
 			</div>
-
 		</div>
 <script type="text/javascript">
 		

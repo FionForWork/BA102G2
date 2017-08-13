@@ -60,7 +60,7 @@
 	color:black;
 	text-decoration:none;
 	display:block;
-	padding: 12px 16px;
+	padding: 10px 10px;
 }
 .dropdown a:hover {
 	background-color:#f1f1f1;
@@ -100,7 +100,7 @@
     margin: auto;
     display: block;
     width: 80%;
-    max-width: 700px;
+    max-width: 600px;
 }
 
 
