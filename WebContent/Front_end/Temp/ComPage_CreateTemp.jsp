@@ -85,6 +85,8 @@ $("document").ready(function(){
 	if(mm<10){mm='0'+mm} 
 	today = yyyy+'-'+mm+'-'+dd;
 	$('#datePicker').attr('value', today).attr('max',today); 
+	$("#datePicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
+		 
 	
 });
 
@@ -145,9 +147,9 @@ $("document").ready(function(){
 			<label for="name">待挑選作品名稱 <span class='errorMsgs'> ${errorMsgs.get("name")}</span></label> 
 			<input type="text" id="name" name="name" value="<%= (temp==null)? "" : temp.getName()%>"> 
 			<label for="datepicker1">拍攝日期 <span class='errorMsgs'> ${errorMsgs.get("create_date")}</span></label> 
-			<input type="date" id="datePicker" name="create_date" value="<%= (temp==null)? "" : temp.getCreate_date()%>"/> 
+			<input type="text" id="datePicker" name="create_date" value="<%= (temp==null)? "" : temp.getCreate_date()%>"/> 
 				
-			<label for="available">可挑選張數 <span class='errorMsgs'> ${errorMsgs.get("available_empty")} ${errorMsgs.get("available_number")}</span></label> 
+			<label for="available">可挑選數量 <span class='errorMsgs'> ${errorMsgs.get("available_empty")} ${errorMsgs.get("available_number")}</span></label> 
 			<input type="number" id='available' name="available" step="1" value="<%= (temp==null)? "" : temp.getAvailable()%>"> 
 				
 			<label for="country">客戶名稱</label>

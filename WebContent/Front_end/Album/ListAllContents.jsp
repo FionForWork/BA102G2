@@ -187,6 +187,7 @@
 								<i class="fa fa-cog" aria-hidden="true"></i>
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
+								<a href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=${contVO.cont_no}' id='download'>下載</a>
 								<form id="update${s.count}"
 									action="<%=request.getContextPath()%>/content/content.do"
 									method="post">

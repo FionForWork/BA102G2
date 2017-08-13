@@ -18,6 +18,11 @@
 %>
 
 <%@ include file="page/temp_com_header.file"%>
+<script type="text/javascript">
+$("document").ready(function(){
+	$("#datePicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
+});
+</script>
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 <div class="container">
@@ -138,9 +143,8 @@
 					<h4>
 						<div class="input-group">
 							<label for="create_date" class="input-group-addon">建立日期  <span class='errorMsgs'> ${errorMsgs.get("create_date")}</span></label>
-							<input type='date' name='create_date' class="form-control"
-								id="create_date"
-								value='${temp.create_date.toString().substring(0,10)}'>
+							<input type='text' name='create_date' class="form-control"
+								id="datePicker" value='${temp.create_date.toString().substring(0,10)}'>
 						</div>
 					</h4>
 					<h4>

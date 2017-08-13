@@ -31,6 +31,8 @@ import com.album.model.AlbumService;
 import com.album.model.AlbumVO;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
+import com.placeview.model.PlaceViewService;
+import com.placeview.model.PlaceViewVO;
 
 @MultipartConfig(fileSizeThreshold = 10 * 1024 * 1024, maxFileSize = 5 * 10 * 1021 * 1024, maxRequestSize = 5 * 5 * 10
 		* 1024 * 1024)
@@ -40,18 +42,17 @@ public class PreviewServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		doPost(request,response);
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		//request.setCharacterEncoding("utf-8");
-		// response.setContentType("image/jpeg");
-		// ServletOutputStream out = response.getOutputStream();
 		String action = request.getParameter("action");
 		AlbumService albSvc = new AlbumService();
 		ContentService contSvc = new ContentService();
+		PlaceViewService placeviewSvc = new PlaceViewService();
 		ServletContext context = getServletContext();
 		
 		if("cropImage".equals(action)){
@@ -154,8 +155,7 @@ public class PreviewServlet extends HttpServlet {
 			// 裁切過的圖片存進DB
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(subimage, "png", baos);
-			InputStream is = new ByteArrayInputStream(baos.toByteArray());
-			cropCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),toByteArray(is), null);
+			cropCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),baos.toByteArray(), null);
 			
 			
 			request.setAttribute("originalCont_no", originalCont.getCont_no());
@@ -168,27 +168,30 @@ public class PreviewServlet extends HttpServlet {
 		}
 		if("overlayImage".equals(action)){
 			
-			System.out.println("0000000000000");
-			ServletOutputStream out = response.getOutputStream();
-			response.setContentType("image/jpeg");
 			BufferedImage img = null ;
-			ContentVO originalCont = null;
-			ContentVO mergeCont = null;
+			ContentVO cropCont = null;
+			ContentVO resultCont = null;
 			String alb_no = null;
+			
 			String name = "實景預覽";
 			String mem_no = request.getParameter("mem_no");
-			System.out.println("mem_no=="+mem_no);
-			String backgroundImage = request.getParameter("backgroundImage");
-			System.out.println("backgroundImage=="+backgroundImage);
+			String placeview_no = request.getParameter("placeview_no").trim();
+			
+			String cropWidth = request.getParameter("cropWidth").trim();
+			String cropHeight = request.getParameter("cropHeight").trim();
+			int intcropWidth= 0;
+			int intcropHeight = 0;
+			
+			
+			System.out.println("backgroundImage=="+placeview_no);
 			String cropCont_no = request.getParameter("cropCont_no");
 			System.out.println("cropCont_no=="+cropCont_no);
 			Double doublexPoint = Double.parseDouble(request.getParameter("xPoint"));
-			System.out.println("xPoint=="+doublexPoint);
 			int xPoint = doublexPoint.intValue();
 			Double doubleyPoint = Double.parseDouble(request.getParameter("yPoint"));
 			int yPoint = doubleyPoint.intValue();
-			System.out.println("yPoint=="+doubleyPoint);
 			
+			// get the album no
 			List<AlbumVO> albums = albSvc.getAllByMemNo(mem_no);
 			forloop:
 			for(AlbumVO album : albums){
@@ -198,26 +201,47 @@ public class PreviewServlet extends HttpServlet {
 				}
 			}
 			
-			Part part = request.getPart("imgfile");
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				String filename = getFileNameFromPart(part);
-				img = javax.imageio.ImageIO.read(part.getInputStream());
-				System.out.println("img----" + img);
-				byte[] file = toByteArray(part.getInputStream());
+			// 判斷使用景點照或是上傳照片
+			if(placeview_no.length() != 0){
 				
-				if (isImgFile(context.getMimeType(filename))) {
-					originalCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()), file, null);
+				PlaceViewVO placeview = placeviewSvc.getOneByPK(placeview_no);
+				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(placeview.getImg()));
+				
+			}else{
+				
+				Part part = request.getPart("imgfile");
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+					img = javax.imageio.ImageIO.read(part.getInputStream());
+					System.out.println("img----" + img);
 				}
 			}
-			mergeCont = contSvc.getOneContent(cropCont_no);
-			InputStream is = new ByteArrayInputStream(mergeCont.getImg());
-			BufferedImage cropImage = javax.imageio.ImageIO.read(is);
+			
+			cropCont = contSvc.getOneContent(cropCont_no);
+			BufferedImage cropImage = javax.imageio.ImageIO.read(new ByteArrayInputStream(cropCont.getImg()));
 			Graphics g = img.getGraphics();
-			g.drawImage(cropImage, xPoint, yPoint, null);
+			
+			//判斷是否有調整cropCont大小
+			if(cropWidth.length() != 0 && cropHeight.length() != 0){
+				Double doublecropWidth = Double.parseDouble(cropWidth);
+				intcropWidth = doublecropWidth.intValue();
+				
+				Double doublecropHeight = Double.parseDouble(cropHeight);
+				intcropHeight = doublecropHeight.intValue();
+				g.drawImage(cropImage, xPoint, yPoint,intcropWidth,intcropHeight, null);
+			}else{
+				g.drawImage(cropImage, xPoint, yPoint,null);
+			}
 			g.dispose();
-			ImageIO.write(img, "jpeg", out);
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(img, "jpeg", baos);
+			resultCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),baos.toByteArray(), null);
+			
+			request.setAttribute("mergeCont_no",resultCont.getCont_no());
+			String url = "/Front_end/Preview/ShowResult.jsp";
+			request.getRequestDispatcher(url).forward(request, response);
+
 		}
-		
 	}
 
 	private String getFileNameFromPart(Part part) {

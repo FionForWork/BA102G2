@@ -12,6 +12,12 @@
 %>
 
 <%@ include file="page/works_header.file"%>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".datepicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
+	
+});
+</script>
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 <div class="container">
@@ -182,8 +188,8 @@
 											placeholder='未命名的作品'>
 									</div>
 									<div class='form-group'>
-										<label for='upload_date'>上傳日期 </label> <input type='date'
-											id='upload_date' class='form-control' name='upload_date'
+										<label for='upload_date${s.count}'>上傳日期 </label> <input type='text'
+											id='upload_date${s.count}' class='form-control datepicker' name='upload_date'
 											value='${worksVO.upload_date.toString().substring(0,10)}'>
 									</div>
 									<div class='form-group'>
@@ -209,8 +215,8 @@
 											placeholder='未命名的作品'>
 									</div>
 									<div class='form-group'>
-										<label for='upload_date'>上傳日期 </label> <input type='date'
-											id='upload_date' class='form-control' name='upload_date'
+										<label for='upload_date${s.count}'>上傳日期 </label> <input type='text'
+											id='upload_date${s.count}' class='form-control datepicker' name='upload_date'
 											value='${worksVO.upload_date.toString().substring(0,10)}'>
 									</div>
 									<div class='form-group'>

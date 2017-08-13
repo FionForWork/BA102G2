@@ -171,5 +171,25 @@ public class ShowPictureServletDAO extends HttpServlet {
 			out.close(); 
 			return;
 		}
+		if(file.startsWith("downloadCont_no")){
+			
+			pk = request.getParameter("downloadCont_no");
+			response.setContentType("application/octet-stream");
+			
+			byte[] cont =null;
+			System.out.println(pk);
+			ContentService contSvc = new ContentService();
+			ContentVO contVO = contSvc.getOneContent(pk);
+			if(contVO.getImg() == null){
+				cont = contVO.getVdo();
+				response.setHeader("Content-Disposition", "attachment;filename=\""+pk+".mp4\"");
+			}else{
+				cont = contVO.getImg();
+				response.setHeader("Content-Disposition", "attachment;filename=\""+pk+".jpg\"");
+			}
+			out.write(cont);
+			out.close(); 
+			return;
+		}
 	}
 }
