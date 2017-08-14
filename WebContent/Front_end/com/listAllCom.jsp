@@ -34,7 +34,7 @@
 	</font>
 </c:if>
 
-<table border='1' bordercolor='#CCCCFF' width='800'>
+<table border='1' bordercolor='#CCCCFF' >
 	<tr>
 		<th>廠商編號</th>
 		<th>廠商帳號</th>
@@ -46,7 +46,7 @@
 		<th>介紹</th>
 		<th>電話</th>
 		<th>銀行帳戶</th>
-		<th>LOGO</th>
+		<th width="100px" height="100px">LOGO</th>
 		<th>狀態</th>
 		<th>修改</th>
 		<th>刪除</th>
@@ -64,7 +64,7 @@
 			<td>${comVO.com_desc}</td>
 			<td>${comVO.phone}</td>
 			<td>${comVO.account}</td>
-			<td><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" /></td>
+			<td ><c:if test="${comVO.logo!=null}"><img width="100%" height="auto" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" /></c:if></td>
 			<td>${comVO.status}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">

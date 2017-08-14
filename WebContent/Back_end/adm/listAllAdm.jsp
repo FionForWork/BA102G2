@@ -10,7 +10,7 @@
     pageContext.setAttribute("list",list);
 %>
 
-<%@ include file="page/adm_page" %>
+<%@ include file="/Back_end/pages/backHeader.file"%>
 <title>員工資料</title>
 <br><br><br>
 <div id="content">
@@ -62,7 +62,5 @@
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="page2.file" %>
-</div>
-</body>
-</html>
+<%@ include file="/Back_end/pages/backFooter.file"%>
+

@@ -18,19 +18,17 @@ Object memVO = session.getAttribute("memVO");
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
 		<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">個人資料</h1>
-			<div class="form-group">
-				<span  >大頭貼 :</span><br>
-				<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" />
+			
+				<div class="form-group" style="width:200px;height:200px;">		 
+				   
+				<img width="100%" height="auto"  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" />
 
-				<input type="button" class="btn btn-info " id="addpic" value="修改頭貼">
+				
 			 	
 				
 			</div>
 		
-		<div class="form-group">
-				<span>會員編號 :*</span>
-				${memVO.mem_no}
-		</div>
+
 
 		<div class="form-group">
 				<span>帳號 :</span>
@@ -44,10 +42,7 @@ Object memVO = session.getAttribute("memVO");
 				<span>性別 :</span>
 				${memVO.sex}
 		</div>
-		<div class="form-group">
-				<span>帳號 :</span>
-				${memVO.name}
-		</div>
+
 		<div class="form-group">
 				<span>生日 :</span>
 				${memVO.bday}
@@ -85,6 +80,6 @@ Object memVO = session.getAttribute("memVO");
 		</div>
 	</div>
 </div>
-<%@ include file="/Front_end/mem/page/addpic.file"%>
+
 
 <%@ include file="page/register_footer.file"%>

@@ -18,4 +18,5 @@ public interface ServDAO_Interface {
     public List<ServVO> getCom(String com_no);
     public List<ServVO> getAllAvg();
 	
+    public List<ServVO> findBysh(String sh);
 }

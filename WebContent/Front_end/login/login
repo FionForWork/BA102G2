@@ -10,7 +10,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
         </div> 
         <div class="modal-body" style="padding:40px 50px;">
-          <form action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+          <form name="form4" onSubmit="return check();" action="<%= request.getContextPath() %>/mem/mem.do" method="post">
 >
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
@@ -86,4 +86,3 @@ $(document).ready(function(){
         $("#com").modal();
     });
 });
-</script>

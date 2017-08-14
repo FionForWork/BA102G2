@@ -293,4 +293,16 @@ public static void main(String[] args) {
 	
 	
 	}
+
+@Override
+public List<AdmVO> loginid() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public AdmVO findById(String id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

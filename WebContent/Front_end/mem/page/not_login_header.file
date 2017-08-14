@@ -37,10 +37,7 @@
      'callback' : callback2
         });
         
-        grecaptcha.render('recaptcha_box3', {
-          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
-       'callback' : callback3
-        });
+        
       };
       
       
@@ -63,15 +60,7 @@ function callback2() {
     			});
 
     	}
-   function callback3() {
-    		$(document).ready(function(){
-    			  
-    			$("#recaptcha_box3").hide(1000);
-    			  $("#submit3").show(1000);
-    			  
-    			});
-
-    	}
+   
     </script>
       
 </div>	
@@ -98,9 +87,9 @@ function callback2() {
             <div class="checkbox">
              
             </div>
-           <center><div id="recaptcha_box2">請驗證</div>
+           <center><div id="recaptcha_box">請驗證</div>
               <input type="hidden" name="action" value="login">
-              <button style="display:none" type="submit" id="submit2"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+              <button style="display:none" type="submit" id="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
         <div class="modal-footer">
@@ -134,9 +123,9 @@ function callback2() {
             <div class="checkbox">
              
             </div>
-             <center><div id="recaptcha_box3">請驗證</div>
+             <center><div id="recaptcha_box2">請驗證</div>
             <input type="hidden" name="action" value="login">
-              <button  style="display:none" type="submit" id="submit3" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+              <button  style="display:none" type="submit" id="submit2" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
         <div class="modal-footer">

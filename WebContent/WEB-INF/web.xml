@@ -16,21 +16,31 @@
     <res-auth>Container</res-auth>
   </resource-ref>
   <filter>
-    <filter-name>loginFilter</filter-name>
-    <filter-class>com.filters.LoginFilter</filter-class>
+    <filter-name>loginComFilter</filter-name>
+    <filter-class>com.filters.LoginComFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>loginFilter</filter-name>
-    <url-pattern>/Front_end/mem/index.jsp</url-pattern>
-      <url-pattern>/Front_end/com/index.jsp</url-pattern>
+    <filter-name>loginComFilter</filter-name>
+    <url-pattern>/Front_end/com/index.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
-  
-  
+  <filter>
+    <filter-name>loginMemFilter</filter-name>
+    <filter-class>com.filters.LoginMemFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginMemFilter</filter-name>
+    <url-pattern>/Front_end/mem/index.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
   <servlet>
     <servlet-name>ComServlet</servlet-name>
     <servlet-class>com.com.controller.ComServlet</servlet-class>
@@ -136,29 +146,57 @@
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
   <servlet>
-		<servlet-name>ProblemServlet</servlet-name>
-		<servlet-class>com.problem.controller.ProblemServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProblemServlet</servlet-name>
-		<url-pattern>/Problem/Problem.do</url-pattern>
-	</servlet-mapping>
-	 <servlet>
-		<servlet-name>TraditionServlet</servlet-name>
-		<servlet-class>com.tradition.controller.TraditionServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>TraditionServlet</servlet-name>
-		<url-pattern>/Tradition/Tradition.do</url-pattern>
-	</servlet-mapping>
-	 <servlet>
-		<servlet-name>ArticleServlet</servlet-name>
-		<servlet-class>com.article.controller.ArticleServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ArticleServlet</servlet-name>
-		<url-pattern>/Article/Article.do</url-pattern>
-	</servlet-mapping>
+    <servlet-name>ProblemServlet</servlet-name>
+    <servlet-class>com.problem.controller.ProblemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProblemServlet</servlet-name>
+    <url-pattern>/Problem/Problem.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TraditionServlet</servlet-name>
+    <servlet-class>com.tradition.controller.TraditionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TraditionServlet</servlet-name>
+    <url-pattern>/Tradition/Tradition.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ArticleServlet</servlet-name>
+    <servlet-class>com.article.controller.ArticleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleServlet</servlet-name>
+    <url-pattern>/Article/Article.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <url-pattern>/advertising/advertising.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>RFQServlet</display-name>
+    <servlet-name>RFQServlet</servlet-name>
+    <servlet-class>com.rfq.controller.RFQServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RFQServlet</servlet-name>
+    <url-pattern>/rfq/rfq.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>QuoteServlet</display-name>
+    <servlet-name>QuoteServlet</servlet-name>
+    <servlet-class>com.quote.controller.QuoteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuoteServlet</servlet-name>
+    <url-pattern>/quote/quote.do</url-pattern>
+  </servlet-mapping>
+
+  
 	<servlet>
 		<display-name>ReservationServlet</display-name>
 		<servlet-name>ReservationServlet</servlet-name>
@@ -197,14 +235,6 @@
     <servlet-name>UploadPhotoToDBDAO</servlet-name>
     <url-pattern>/UploadPhotoToDBDAO</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>AdvertisingServlet</servlet-name>
-    <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdvertisingServlet</servlet-name>
-    <url-pattern>/advertising/advertising.do</url-pattern>
-  </servlet-mapping>
   <context-param>
     <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
     <param-value>307200</param-value>
@@ -226,4 +256,5 @@
     <servlet-name>ContactUs</servlet-name>
     <url-pattern>/ContactUs</url-pattern>
   </servlet-mapping>
+
 </web-app>
