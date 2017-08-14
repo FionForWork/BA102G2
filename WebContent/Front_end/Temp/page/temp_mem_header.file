@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--以登入 且 會員頁面-->
 <head>
     <title>She Said Yes!</title>
     <meta charset="UTF-8">
@@ -26,6 +26,10 @@
  <script src="<%=request.getContextPath()%>/Front_end/Temp/js/mem_temp.js" type="text/javascript"></script>
 
 </head>
+<form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
+                          
 
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
@@ -39,9 +43,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -52,24 +56,18 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
-                    <li>
-                        <a class="hidden" href="" role="login">
-                            會員專區
+                    <li >
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp">
+                          <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp<span style="font-size:19px;">${memVO.name}</span>
                         </a>
                     </li>
                     <li>
-                        <a class="hidden" href="" role="login">
-                            登出
-                        </a>
+                   
+                        <a href="javascript:document.logout.submit();">
+                           <h4>登出</h4>
+                        </a> 
                     </li>
-                    <li>
-                        <a class="" href="" role="login">
-                            登入
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" role="join" title="註冊會員">註冊會員</a>
-                    </li>
+                    
                 </ul>
             </div>
         </div>
@@ -79,7 +77,7 @@
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="company_page.html">
                         <h3>
                             拍婚紗
                         </h3>
@@ -159,7 +157,7 @@
                     </ol>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="rfq.html">
                         <h3>新人問報價</h3>
                     </a>
                     <!--RWD-->
@@ -202,9 +200,23 @@
                         <a href="#">手機1</a><span>
                 </div>
                 <!--RWD-->
+                <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                    <li>
+                        <a href="#">
+                            <b>標題</b> <small></small>
+                            <br>
+                            <small class="hidden-xs">內文</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <b>婚禮習俗2</b>
+                        </a>
+                    </li>
+                </ol>
             </li>
             <li class="wd-drop-wrapper">
-                <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
+                <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" ><h3>線上商城</h3></a>
                 <!--RWD-->
                 <div class="mobile-main-choice visible-xs">
                     <a href="#">手機1</a><span> / </span>
@@ -213,7 +225,7 @@
                     <!--RWD-->
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="article.html">
                         <h3>討論版</h3>
                     </a>
                     <!--RWD-->
@@ -221,6 +233,13 @@
                         <a href="#">手機1</a>
                     </div>
                     <!--RWD-->
+                    <ol class="wd-drop_submenu list-unstyled text-center  hidden-xs">
+                        <li>
+                            <a href="#">
+                                <b>討論版1</b>
+                            </a>
+                        </li>
+                    </ol>
                 </li>
 
 
@@ -244,18 +263,19 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Resource/img/banner1.jpg');"></div>
-                <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/mem/img/banner1.jpg');"></div>
+                <!--banner圖放這裡-->
             </div>
         </div>
 
         <div class="banner_hero text-center">
             <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
                 <b class="hello_word">
-            妳需要的婚禮廠商，我們幫妳嚴選
+           歡迎加入,成功加入後就可以使用所有功能!
             </b>
             </h1>
             <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
+          
         </div>
 
     </div>
@@ -263,12 +283,4 @@
 
     <!--這裡開始-->
     <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-
-    <br>
+     <br>

@@ -6,8 +6,8 @@
 <%
 	//String mem_no = (String) session.getAttribute("mem_no");
 	session.setAttribute("mem_no", "1001");
-	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0166";
+	//String cropCont_no = (String) request.getAttribute("cropCont_no");
+	String cropCont_no = "0166";
 	String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
@@ -86,7 +86,6 @@
 						<input type='hidden' id='yPoint' name='yPoint' value=''>
 						<input type='hidden' name='cropWidth' value=''> 
 						<input type='hidden' name='cropHeight' value=''> 
-							
 						<input type='hidden' name='action' value='overlayImage'>
 						<input type="file" name="imgfile" id='imgfile'
 							onchange="preview_images()" style="display: none">
@@ -96,8 +95,8 @@
 					<a type='button' class="btn btn-app btn-default" id='btnLoad'
 							onclick='load_image();'><i class="fa fa-image"></i> 選擇背景照片</a>
 					<button class='btn btn-default' id='clearBtn'><i class="fa fa-times"></i> 清除背景照</button>
-					<input type='submit' value='確定' id='submitBtn'
-						class='btn btn-default'>
+					<button onclick="history.back()" class='btn btn-default'>回上一頁</button>
+					<input type='submit' value='確定' id='submitBtn' class='btn btn-info'>
 				</div>
 				<div class='row'>
 					<div class='col-xs-12 col-sm-12'>
@@ -147,19 +146,19 @@
 						<div id='dragCrop' style="display: inline-block">
 							<img id='resizable'
 								src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 <script>
 	
 	var xPoint,yPoint;
 	var image;
 	var imageWidth,imageHeight;
+	var hasBackgroundImage = false;
+	
 	function load_image(){
 		 
 		   var input;
@@ -178,6 +177,7 @@
 	    $("input[name=placeview_no]").val(""); 
 	    	 }
 	     }
+	     hasBackgroundImage = true;
 	}
 	
 	function doFirst(){
@@ -207,6 +207,7 @@
 		dropZone.style.backgroundImage = "url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')";
 		dropZone.style.backgroundRepeat = "no-repeat";
 		document.getElementById("placeview_no").setAttribute("value",placeview_no);
+		hasBackgroundImage = true;
 	}
 	window.addEventListener('load',doFirst,false);
 	
@@ -249,6 +250,7 @@
 			});
 
 			$("#submitBtn").on("click", function() {
+				if(hasBackgroundImage == false){return;}
 				var JSONxPoint = JSON.stringify(xPoint);
 				var JSONyPoint = JSON.stringify(yPoint);
 				$("#xPoint").val(JSONxPoint);
@@ -258,6 +260,7 @@
 
 			$("#clearBtn").on("click", function() {
 				$dropZone.css("background", "none");
+				hasBackgroundImage = false;
 			});
 
 			// 移動背景

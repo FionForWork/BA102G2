@@ -7,8 +7,8 @@
 	//String mem_no = (String)session.getAttribute("mem_no");
 	session.setAttribute("mem_no","1001");
 	String originalCont_no = (String) request.getAttribute("originalCont_no");
-	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0129";
+	//String cropCont_no = (String) request.getAttribute("cropCont_no");
+	String cropCont_no = "0129";
 %>
 
 <%@ include file="page/preview_header.file"%>
@@ -90,7 +90,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
 					<div id="canvas-wrapper">
-						<canvas id="canvas" width="790" height="500"></canvas>
+						<canvas id="canvas" width="800" height="500"></canvas>
 					</div>
 				</div>
 			</div>
@@ -102,7 +102,19 @@
 		var xPoints = [];
 		var yPoints = [];
 		var image;
+		var hasImage = false;
+		var hasBeenDrawn = false;
+		
+	function init(){
+		
+		context.font = "30px Sacramento";
+		var middleWidth = canvas.width / 2 - 100;
+		var middleHeight = canvas.height / 2 -10 ;
+		context.fillText("請先選擇照片!",middleWidth, middleHeight);
+	}	
 	
+		
+		
 	// 預覽圖片	
 	function load_image(){
 			 
@@ -112,6 +124,7 @@
 	}
 	
 	function preview_images() {
+		clearDrawing();
 		image = new Image();
 	    image.onload = function() {
 	        context.drawImage(image,0,0,image.width,image.height);
@@ -127,6 +140,7 @@
 	    		console.log(image);
 	         }
 	     }
+	     hasImage = true;
 	}
 	// 滑鼠滾動事件處發圖片縮放效果
 	function wheelImage(e){
@@ -158,8 +172,8 @@
 		
 		function clearDrawing(){
 			context.clearRect(0, 0, canvas.width, canvas.height);
+			hasImage = false;
 		}
-		
 		
 		$(document).ready(function(e) {
 			
@@ -198,9 +212,11 @@
 					stillDown = false;
 					context.closePath();
 				});
+				hasBeenDrawn = true;
 			});
 			
 			$("#submitBtn").on("click", function() {
+				if(hasBeenDrawn == false || hasImage == false){return;}
 				var JSONxPoints = JSON.stringify(xPoints);
 				var JSONyPoints = JSON.stringify(yPoints);
 				$("#xPoints").val(JSONxPoints);
@@ -211,7 +227,7 @@
 			});
 			
 		});
-		
+		window.addEventListener("load",init,false);
 	</script>
 
 		<%@ include file="page/preview_footer.file"%>

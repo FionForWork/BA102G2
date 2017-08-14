@@ -50,6 +50,8 @@
 				<br>
 				<a href="#" class="list-group-item menua">我的最愛</a>
 				<br>
+				<a href="#" class="list-group-item menua">實景預覽</a>
+				<br>
 				<a href="#" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
