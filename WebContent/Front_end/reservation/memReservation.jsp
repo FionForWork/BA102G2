@@ -31,7 +31,7 @@
 <%@ include file="page/memHeader.file" %>
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
-			<div class="panel-body">
+			<div class="panel-body" style="margin:15px">
 				<div class="row">
 						<div class="col-md-6">
 							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${reservationVO.com_no}"class="img-circle" style="width:30px;height:30px">
@@ -41,7 +41,7 @@
 						</div>
 						<div class="col-md-offset-3 col-md-3 text-right">
 							訂單狀態 : 
-							<i class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							<i style="color:#f14195" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
 							${sortingHat.getResStatus(reservationVO.status)}
 						</div>
 				</div><hr>
@@ -65,7 +65,10 @@
 					</div><hr>
 					<h4 class="text-right">
 					<c:if test="${reservationVO.status.equals('0')}">
-					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#myModal">線上刷卡</button>
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#myModal">
+						刷卡支付訂金 :<i class="fa fa-usd" aria-hidden="true"></i>${nf.format(servService.getOneServ(reservationVO.serv_no).deposit)}
+					</button>
+
 					</c:if>
 					<c:if test="${reservationVO.status.equals('1')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
@@ -116,7 +119,10 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">進行線上刷卡</h4><hr style="margin:3px">
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" style="padding-top:0px">
+				<div calss="row">
+					<img style="width:50%" src="<%=request.getContextPath()%>/Front_end/reservation/img/card.jpg">
+				</div>
 				<label >請填入信用卡號</label>
 				<div class="row">
 					<div class="col-xs-2">
@@ -161,7 +167,7 @@
 				<input type="hidden" name="action" value="pay">
 				<input type="hidden" id="res_no" name="res_no" value="">
 				<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
-				<input type="submit"  class="btn btn-default" value="確認刷卡">
+				<input type="submit"  class="btn btn-danger" value="確認刷卡">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>    
@@ -181,4 +187,28 @@
 </form>
 
 </body>
+<script>
+function checkNumber(){	
+	
+	var xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function (){
+		if( xhr.readyState == 4){
+			if( xhr.status == 200){
+				showCom(xhr.responseText); //jsonStr
+			}else{
+				alert( xhr.status );
+			}
+		}
+	};//function 
+	  
+	var data_info = "action=ajax&com_no=2001";
+	var url = "<%=request.getContextPath()%>/reversation/reversation.do";
+	xhr.open( "post" , url, true);
+	//送出請求
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send( data_info );
+	
+}
+</script>
 </html>

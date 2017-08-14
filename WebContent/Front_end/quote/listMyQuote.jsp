@@ -26,16 +26,14 @@
 <body>
 <%@ include file="page/header.file" %>
 <c:if test="${not empty errorMsgs}">
-	<font color='red'>報價失敗:
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<div class="alert alert-danger alert-dismissable fade in">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Danger!</strong> ${message}
+				<strong>修改失敗!</strong> ${message}
 			</div>
 		</c:forEach>
 	</ul>
-	</font>
 </c:if>
 <table class="table table-striped"  >
 	<tr>

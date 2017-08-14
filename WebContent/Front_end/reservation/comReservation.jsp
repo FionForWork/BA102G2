@@ -42,7 +42,7 @@
 						</div>
 						<div class="col-md-offset-3 col-md-3 text-right">
 							訂單狀態 : 
-							<i class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							<i style="color:#f14195" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
 							${sortingHat.getResStatus(reservationVO.status)}
 							<c:if test="${reservationVO.status.equals('3')}">
 								${reservationVO.score}分!

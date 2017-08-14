@@ -7,14 +7,27 @@ import java.util.*;
 import javax.websocket.*;
 import javax.websocket.server.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @ServerEndpoint("/ResServer/{myName}/{myRoom}")
 public class ResWebSocket {
 
 private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
-	
+private static final Map<String , Set<Session>> mp = Collections.synchronizedMap(new HashMap<String , Set<Session>>());
+
 	@OnOpen
-	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") int myRoom, Session userSession) throws IOException {
-		allSessions.add(userSession);
+	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") String myRoom, Session userSession) throws IOException {
+		
+		if(mp.get(myRoom) == null){
+			mp.put(myRoom, new HashSet<Session>());
+			mp.get(myRoom).add(userSession);
+			System.out.println("創立新房間新連線");
+		}else{
+			mp.get(myRoom).add(userSession);
+			System.out.println("房間存在，加入房間");
+		}
+//		allSessions.add(userSession);
 		System.out.println(userSession.getId() + ": 已連線");
 		System.out.println(myName + ": 已連線");
 		System.out.println(myRoom + ": 房號");
@@ -23,12 +36,17 @@ private static final Set<Session> allSessions = Collections.synchronizedSet(new 
 	
 	
 	@OnMessage
-	public void onMessage(Session userSession, String message) {
-		System.out.println(message);
-		for (Session session : allSessions) {
+	public void onMessage(Session userSession, String message, @PathParam("myRoom") String myRoom) throws JSONException {
+
+		for(Session session : mp.get(myRoom)){
+			System.out.println("發送訊息");
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
 		}
+//		for (Session session : allSessions) {
+//			if (session.isOpen())
+//				session.getAsyncRemote().sendText(message);
+//		}
 		System.out.println("Message received: " + message);
 	}
 	
@@ -38,8 +56,13 @@ private static final Set<Session> allSessions = Collections.synchronizedSet(new 
 	}
 	
 	@OnClose
-	public void onClose(Session userSession, CloseReason reason) {
-		allSessions.remove(userSession);
+	public void onClose(Session userSession, CloseReason reason, @PathParam("myRoom") String myRoom) {
+		mp.get(myRoom).remove(userSession);
+		if(mp.get(myRoom).size()==0 ){
+			mp.remove(myRoom);
+			System.out.println("房間沒人了，關閉房間");
+		}
+//		allSessions.remove(userSession);
 		System.out.println(userSession.getId() + ": Disconnected: " + Integer.toString(reason.getCloseCode().getCode()));
 	}
 

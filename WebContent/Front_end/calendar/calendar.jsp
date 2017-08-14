@@ -2,18 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.calendar.model.*" %>
+<%@ page import="com.com.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.temporal.TemporalAdjusters" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
+	// 廠商資料
+	ComVO comVO = new ComVO();
+	comVO.setCom_no("2001");	
+
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
 		localDate = LocalDate.now();
 	}
-	// localDate = LocalDate.of(localDate.getYear(),7,1);
 	// 本月最後一天的日期(LocalDate)
 	LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
 	// 本月共有幾天
@@ -23,7 +27,7 @@
 	Timestamp t = new Timestamp(System.currentTimeMillis());
 	CalendarService calerdarService = new CalendarService();
 	// 廠商編號寫死
-	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, "2001");
+	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
 %>
@@ -199,7 +203,7 @@
 </div>
 <!-- 新增Schedule -->
 <form id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
-	<div id="myModal" class="modal fade" role="dialog">
+	<div id="myModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
 			<div class="modal-content">
@@ -251,7 +255,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/peter/309";
+    var MyPoint = "/ResServer/peter/<%= comVO.getCom_no() %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));
