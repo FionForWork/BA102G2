@@ -55,18 +55,12 @@
 				<a class="btn btn-reservation btn-lg" href=""> 線上預約 </a>
 			</p>
 			<br><br>
-			<p class="text-center" id="addClass">
-				<a class="btn btn-reservation btn-lg" onclick="change(1)">
-					立即聯絡我們 </a>
-			</p>
-			<p class="text-center" style="display: none;" id="dClass">
-
-				<a class="btn btn-reservation btn-lg" onclick="change(2)">
-					立即聯絡我們 </a>
+			<p class="text-center" id="open_chat">
+				<a class="btn btn-reservation btn-lg">立即聯絡我們 </a>
 			</p>
 		</div>
-	</div>
-	<!--店家資料-->
+		
+	<!--預約按鈕-->
 
 	
 	<!--聯絡我們-->
@@ -75,11 +69,11 @@
 			<div class="col-md-12">
 				<div class="chat_box panel panel" id="chatbox">
 					<div class="panel-heading">
-						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
+						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
 						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 						<c:forEach var="comVO" items="${comSvc.all}">
 						<c:if test="${param.com_no==comVO.com_no}">
-						<div>${comVO.name}</div>
+						<div><img class="img-circle" style="width:25%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">${comVO.name}</div>
 						</c:if>
 						</c:forEach>
 						<div id="statusOutput"></div>
@@ -100,144 +94,7 @@
 	<!--聯絡我們-->
 	
 	<%@ include file="page/after.file"%>
+	<%@ include file="page/message_script.file"%>
 
-<script type="text/javascript">
-<%-- <%ComVO comVO = (ComVO) session.getAttribute("comVO"); --%>
-// MemVO memVO = (MemVO) session.getAttribute("memVO");
-<%-- %> --%>
-<%-- var comVO = <%=comVO%>; --%>
-<%-- var memVO = <%=memVO%>; --%>
-
-
-
-var MyPoint = "/MessageServlet/";
-console.log(MyPoint);
-var host = window.location.host;
-console.log(host);
-var path = window.location.pathname;
-console.log(path);
-var webCtx = path.substring(0, path.indexOf('/', 1));
-console.log(webCtx);
-var endPointURL = "ws://" + window.location.host + webCtx
-+ MyPoint;
-console.log(endPointURL);
-var statusOutput = document.getElementById("statusOutput");
-var webSocket;
-var memNo;	
-			
-
- 				function connect(no) {
- 					// 建立 websocket 物件
- 					console.log('connect(no):'+no);
- 					webSocket = new WebSocket(endPointURL);
-
- 					webSocket.onopen = function(event) {
-						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;				
- 						
- 					};
-
- 					webSocket.onmessage = function(event) {
- 						
- 						var me = {};
- 						me.img = "";
-
- 						var you = {};
- 						you.img = "";
- 						
- 						
- 						var messagesArea = document.getElementById("messagesArea");
- 						
- 	 					document.getElementById("chatbox").style.display = 'block';
- 	 					document.getElementById("addClass").style.display = 'none';
- 	 					document.getElementById("dClass").style.display = 'block';
- 						var jsonObj = JSON.parse(event.data);
- 						memNo = jsonObj.memNo;
- 						var who = jsonObj.who;
- 						var userName = jsonObj.userName;
- 						var message = jsonObj.message + "\r\n";
-
-
- 						if (who==no){
- 					        control = '<li style="width:100%;">' +
- 					                        '<div class="msg-r">' +
- 					                            '<div class="text text-r">' +
- 					                                '<p>' + message + ":" + userName+ '</p>' +
- 					                            '</div>' +
- 					                            '<div class="image"><img class="img-circle" style="width:100%;" src="'+ me.img +'" /></div>' +
- 					                        	'</div>' +
- 					                    '</li>'+'<br>';                    
- 					    }else{
- 					        control = '<li style="width:100%;">' +
- 					                        '<div class="msg-l">' +
- 					                        	'<div class="image"><img class="img-circle" style="width:100%;" src="'+ you.img +'" /></div>' +    
- 					                            '<div class="text text-l">' +
- 					                                '<p>' + userName+ ":" + message + '</p>' +
- 					                            '</div>' +
- 					                        	'</div>' +    
- 					                  '</li>'+'<br>';
- 					    }   
- 					
- 				        		$("#textArea").append(control);
- 				        
-	
- 						
- 						 						
- 					};
- 					webSocket.onclose = function(event) {
- 						updateStatus("已離線");
- 					};
- 				}
-
- 				function sendMessage(no, userName) {
-					console.log('NO:'+no);
-					console.log(userName);
- 					var inputMessage = document.getElementById("message");
- 					var message = inputMessage.value.trim();
- 					var date = new Date();
- 					var nowdate = date.getFullYear() + "-" + (date.getMonth()+1) + "-"
- 								+ date.getDate() + " " + date.getHours()+":"+
- 								+ date.getMinutes() + ":" + date.getSeconds();
- 					inputMessage.focus();
-					
- 					if (message === "") {
- 						alert("訊息請勿空白!");
- 						inputMessage.focus();
- 					} else {
- 						if(no.indexOf("1")==0){
- 							var jsonObj = {
- 								"who" : no,
- 								"comNo" : "<%=request.getParameter("com_no")%>",
- 	 							"memNo" : no,
- 	 							"userName" : userName,
- 	 							"message" : message,
- 	 							"time" : nowdate
- 	 						};
- 						webSocket.send(JSON.stringify(jsonObj));
-						inputMessage.value = "";
- 						inputMessage.focus();
- 						}else {
- 							var jsonObj = {
- 								"who" : no,
- 								"comNo" : no,
- 	 	 						"memNo" : memNo,
- 	 	 						"userName" : userName,
- 	 	 						"message" : message,
- 	 	 						"time" : nowdate
- 	 	 					};
- 	 						webSocket.send(JSON.stringify(jsonObj));
- 							inputMessage.value = "";
- 	 						inputMessage.focus();	
- 						}
- 					}
- 				}
- 				function disconnect() {
- 					webSocket.close();
- 				}
-
- 				function updateStatus(newStatus) {
- 					statusOutput.innerHTML = newStatus;
- 				}		
-</script>
 </body>
 </html>
