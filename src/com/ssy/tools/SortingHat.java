@@ -42,6 +42,7 @@ public class SortingHat {
 		resMap.put("1", "訂單確認");
 		resMap.put("2", "尚未評價");
 		resMap.put("3", "評價完成");
+		resMap.put("4", "服務完成");
 		
 		return resMap.get(status);
 	}

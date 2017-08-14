@@ -13,18 +13,18 @@ import org.json.JSONObject;
 @ServerEndpoint("/ResServer/{myName}/{myRoom}")
 public class ResWebSocket {
 
-private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
-private static final Map<String , Set<Session>> mp = Collections.synchronizedMap(new HashMap<String , Set<Session>>());
+//private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
+private static final Map<String , Set<Session>> sessionMap = Collections.synchronizedMap(new HashMap<String , Set<Session>>());
 
 	@OnOpen
 	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") String myRoom, Session userSession) throws IOException {
 		
-		if(mp.get(myRoom) == null){
-			mp.put(myRoom, new HashSet<Session>());
-			mp.get(myRoom).add(userSession);
+		if(sessionMap.get(myRoom) == null){
+			sessionMap.put(myRoom, new HashSet<Session>());
+			sessionMap.get(myRoom).add(userSession);
 			System.out.println("創立新房間新連線");
 		}else{
-			mp.get(myRoom).add(userSession);
+			sessionMap.get(myRoom).add(userSession);
 			System.out.println("房間存在，加入房間");
 		}
 //		allSessions.add(userSession);
@@ -38,7 +38,7 @@ private static final Map<String , Set<Session>> mp = Collections.synchronizedMap
 	@OnMessage
 	public void onMessage(Session userSession, String message, @PathParam("myRoom") String myRoom) throws JSONException {
 
-		for(Session session : mp.get(myRoom)){
+		for(Session session : sessionMap.get(myRoom)){
 			System.out.println("發送訊息");
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
@@ -57,9 +57,9 @@ private static final Map<String , Set<Session>> mp = Collections.synchronizedMap
 	
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason, @PathParam("myRoom") String myRoom) {
-		mp.get(myRoom).remove(userSession);
-		if(mp.get(myRoom).size()==0 ){
-			mp.remove(myRoom);
+		sessionMap.get(myRoom).remove(userSession);
+		if(sessionMap.get(myRoom).size()==0 ){
+			sessionMap.remove(myRoom);
 			System.out.println("房間沒人了，關閉房間");
 		}
 //		allSessions.remove(userSession);

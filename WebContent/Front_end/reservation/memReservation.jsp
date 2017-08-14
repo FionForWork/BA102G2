@@ -5,8 +5,7 @@
 <%@ page import="com.mem.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page import="java.text.DateFormat" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <% 
@@ -39,9 +38,13 @@
 							${dateDF.format(reservationVO.serv_date)}的
 							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
 						</div>
-						<div class="col-md-offset-3 col-md-3 text-right">
+						<div class="col-md-6 text-right">
 							訂單狀態 : 
-							<i style="color:#f14195" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							<i style="color:#f14195;font-weight:500" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true">
+							<c:if test="${reservationVO.status.equals('3')}">
+								${reservationVO.score}分!
+							</c:if>
+							</i>
 							${sortingHat.getResStatus(reservationVO.status)}
 						</div>
 				</div><hr>
@@ -126,7 +129,7 @@
 				<label >請填入信用卡號</label>
 				<div class="row">
 					<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4">
+	        			<input class="form-control" type="text" maxlength="4" onkeyup="checkNum(this)">
 	      			</div>
 	      			<div class="col-xs-2">
 	        			<input class="form-control" type="text" maxlength="4">
@@ -188,27 +191,24 @@
 
 </body>
 <script>
-function checkNumber(){	
-	
-	var xhr = new XMLHttpRequest();
-
-	xhr.onreadystatechange = function (){
-		if( xhr.readyState == 4){
-			if( xhr.status == 200){
-				showCom(xhr.responseText); //jsonStr
-			}else{
-				alert( xhr.status );
-			}
+function checkNum(y) {
+	alert($(y).val());
+	$.ajax({
+		url : "<%= request.getContextPath() %>/reservation/reservation.do",
+		data : {
+			action : "checkNum",
+			cardNum1 : $(y).val()
+		},
+		type : 'POST',
+		dataType: "JSON",
+		error : function(xhr) {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			alert(result.r);
 		}
-	};//function 
-	  
-	var data_info = "action=ajax&com_no=2001";
-	var url = "<%=request.getContextPath()%>/reversation/reversation.do";
-	xhr.open( "post" , url, true);
-	//送出請求
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send( data_info );
-	
+	});
+// 	$('#showPanel').load("listComDetail.jsp");
 }
 </script>
 </html>

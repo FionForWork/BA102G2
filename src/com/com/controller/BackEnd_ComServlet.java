@@ -2,6 +2,7 @@ package com.com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,12 +26,14 @@ public class BackEnd_ComServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
-		PrintWriter out = res.getWriter();
+		
 		
 //		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
 		res.setCharacterEncoding("UTF-8"); 
 
+		PrintWriter out = res.getWriter();
+		
 		String action = req.getParameter("action");
 		
 		if(action.equals("getOne_For_Display")){
@@ -51,22 +54,28 @@ public class BackEnd_ComServlet extends HttpServlet {
 			String com_no = req.getParameter("com_no");
 			ComService comService = new ComService();
 			ComVO comVO = comService.getOneCom(com_no);
-			
-			System.out.println(comVO.getCom_desc());
+			List<ComVO> comList = comService.getAll();
 			
 			JSONObject com = new JSONObject();
 			try {
-				com.put("com_no", comVO.getCom_no());
-				com.put("a", comVO.getAccount());
-				com.put("b", comVO.getCom_desc());
-				com.put("c", comVO.getName());
-				com.put("d", comVO.getPwd());
-			} catch (JSONException e) {
+				com.put("comList", comList);
+			}catch (JSONException e) {
 				e.printStackTrace();
 			}
-			out.print( com );
-			
-			
+			out.print(com);
+		}
+		if(action.equals("update")){
+			String com_no = req.getParameter("com_no");
+			ComService comService = new ComService();
+			comService.updatePwd(com_no, "123456");
+			JSONObject com = new JSONObject();
+			try {
+				com.put("1", "123");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			out.print(com);
 		}
 	}
 

@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.calendar.model.*;
 import com.mem.model.*;
 import com.mem.model.MemVO;
@@ -170,8 +173,16 @@ public class ReservationServlet extends HttpServlet {
 		if(action.equals("resCompleted")){
 			String RedirectURL = req.getParameter("RedirectURL");
 			String res_no = req.getParameter("res_no");
+			
+			// 判斷是一般服務或是詢價服務
 			ReservationService resService = new ReservationService();
-			resService.updateStatus("2", res_no);
+			ReservationVO resVO =  resService.getOneReservation(res_no);
+			
+			if(resVO.getServ_no().startsWith("7")){
+				resService.updateStatus("4", res_no);
+			}else{
+				resService.updateStatus("2", res_no);
+			}
 			
 			res.sendRedirect(RedirectURL);
 		}
@@ -204,14 +215,14 @@ public class ReservationServlet extends HttpServlet {
 				errorMsgs.add("請輸入正確的日期格式!");
 			}
 			
-			if(!req.getParameter("bottomPrice").equals("")){
+			if(!req.getParameter("bottomPrice").trim().equals("")){
 				try{
 					bottomPrice = new Integer(req.getParameter("bottomPrice"));
 				}catch (NumberFormatException e) {
 					errorMsgs.add("請輸入正確的金額格式!");
 				}
 			}
-			if(!req.getParameter("topPrice").equals("")){
+			if(!req.getParameter("topPrice").trim().equals("")){
 				try{
 					topPrice = new Integer(req.getParameter("topPrice"));
 				}catch (NumberFormatException e) {
@@ -237,6 +248,26 @@ public class ReservationServlet extends HttpServlet {
 			
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
 			successView.forward(req, res);
+		}
+		
+		if(action.equals("checkNum")){
+			PrintWriter out = res.getWriter();
+			String cardNum1 = req.getParameter("cardNum1");
+			
+			JSONObject result = new JSONObject();
+			Integer num = null;
+			try{
+				num = new Integer(cardNum1);
+			}catch(NumberFormatException e){
+				try {
+					result.put("r", "請輸入正確卡號");
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				out.print(result);
+			}
+			out.print(result);
 		}
 		
 	}

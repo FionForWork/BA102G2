@@ -37,7 +37,9 @@
 				</tr>
 				<c:forEach var="comVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 					<tr align='center' valign='middle'>
-						<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" height="100" width="120"/></td>
+						<td >
+<%-- 						<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" height="100" width="120"/> --%>
+						</td>
 						<td>${comVO.com_no}</td>
 						<td>${comVO.id}</td>
 						<td>${comVO.name}</td>
@@ -50,12 +52,14 @@
 						    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" >
 						    <input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 						</td>
-						<td></td><td></td>
+						<td>
+						    <input id="delbtn" type="submit" value="刪除">
+						</td><td></td>
 					</tr>
 				</c:forEach>
 			</table>
 		<%@ include file="page/page2.file" %>
-<input type="button" value="顯示員工資料"	onclick="getCompany();">
+<input type="button" value="顯示員工資料" id="btn">
 <div id="showPanel"></div>
 <!-- 內文 -->		
 		</div>
@@ -65,38 +69,30 @@
 	<div class="clearfix"></div>
 </body>
 <script>
-function getCompany(){	
-	
-	var xhr = new XMLHttpRequest();
 
-	xhr.onreadystatechange = function (){
-		if( xhr.readyState == 4){
-			if( xhr.status == 200){
-				showCom(xhr.responseText); //jsonStr
-			}else{
-				alert( xhr.status );
-			}
+$("#btn").click(function() {
+	
+	$.ajax({
+		url : "<%= request.getContextPath() %>/com/backendcom.do",
+		data : {
+			action : "ajax",
+			com_no : "2001"
+		},
+		type : 'POST',
+		dataType: "JSON",
+		error : function(xhr) {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			console.log(result);
+			var com = result.comList;
+			console.log(result.comList[0].com_no);
+			$("#showPanel").html(com[0].com_no + "<br>" +com[0].loc + "<br>" +com[0].name);
 		}
-	};//function 
-	  
-	var data_info = "action=ajax&com_no=2001";
-	var url = "<%=request.getContextPath()%>/com/backendcom.do";
-	xhr.open( "post" , url, true);
-	//送出請求
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send( data_info );
-	
-}
+	});
 
-function showCom(jsonStr){
+	$('#showPanel').load("listComDetail.jsp");
+});
 
-	  var com = JSON.parse(jsonStr);
-
-	  //準備要輸出的網頁結構
-	  var str = com.d +"<br>"+ com.a+"<br>"+com.b+"<br>"+com.c+"<br>"+com.com_no; 
-
-	  //放入頁面
-	  document.getElementById("showPanel").innerHTML = str;
-	}
 </script>
 </html>

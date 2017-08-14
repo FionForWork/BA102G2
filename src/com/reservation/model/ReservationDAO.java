@@ -41,9 +41,9 @@ public class ReservationDAO implements ReservationDAO_Interface {
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM RESERVATION order by RES_NO ";
 	private static final String GET_MEM_STMT = 
-			"SELECT * FROM RESERVATION WHERE MEM_NO = ?";
+			"SELECT * FROM RESERVATION WHERE MEM_NO = ? order by res_date desc";
 	private static final String GET_COM_STMT = 
-			"SELECT * FROM RESERVATION WHERE COM_NO = ?";
+			"SELECT * FROM RESERVATION WHERE COM_NO = ? order by res_date desc";
 	private static final String GET_COM_MONTH_STMT = 
 			"SELECT * FROM RESERVATION WHERE serv_date >= ? and serv_date <= ? and COM_NO = ?;";
 	
