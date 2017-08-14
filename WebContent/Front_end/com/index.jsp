@@ -10,7 +10,7 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br>我是被鎖住的頁面只有廠商能進來<br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 

@@ -63,7 +63,4 @@
 	</c:forEach>
 </table>
 <%@ include file="/Back_end/pages/backFooter.file"%>
-<%@ include file="page2.file" %>
-</div>
-</body>
-</html>
+

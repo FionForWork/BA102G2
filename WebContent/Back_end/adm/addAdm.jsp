@@ -4,7 +4,7 @@
 <%
 AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 %>
-<%@ include file="page/adm_page" %>
+<%@ include file="/Back_end/pages/backHeader.file"%>
 <br><br><br>
 <div id="content">
 <h3>員工資料新增:</h3>
@@ -59,7 +59,4 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
 </div>
-
-</body>
-
-</html>
+<%@ include file="/Back_end/pages/backFooter.file"%>

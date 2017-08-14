@@ -317,3 +317,4 @@
 																				
                 <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default">查看個人資料</a>
             </div>
+            
