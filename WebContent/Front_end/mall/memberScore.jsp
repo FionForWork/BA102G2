@@ -1,3 +1,5 @@
+<%@page import="com.mem.model.MemService"%>
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.ord.model.OrdVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ord.model.OrdService"%>
@@ -6,20 +8,37 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-    String mem_no = String.valueOf(session.getAttribute("mem_no"));
+    //MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService = new MemService();
+    MemVO memVO = memService.getOneMem("1010");
     OrdService ordService = new OrdService();
-    List<OrdVO> ordList = ordService.getAllByCust(mem_no, "3");
+    List<OrdVO> ordList = ordService.getAllByRole("0", memVO.getMem_no(), "3");
     double avg = 0.0;
-    for (int i = 0; i < ordList.size(); i++) {
-        avg += ordList.get(i).getScore();
+    if (ordList.size() > 0) {
+        for (int i = 0; i < ordList.size(); i++) {
+            avg += ordList.get(i).getScore();
+        }
+        avg = avg / ordList.size();
     }
-    avg = avg / ordList.size();
-
+    String preLocation = request.getContextPath() + "/Front_end/mall";
+    //////////////////////分頁需求參數//////////////////////////////////
+    int itemsCount = 8;
+    int nowPage = 1;
+    int allCount = ordService.getAllRowCountByRole("0", memVO.getMem_no(), "3");
+    int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    //     List<OrdVO> ordList = ordService.getAllByCust(mem_no, "3");
     pageContext.setAttribute("ordList", ordList);
+    pageContext.setAttribute("itemsCount", itemsCount);
+    pageContext.setAttribute("nowPage", nowPage);
+    pageContext.setAttribute("totalPages", totalPages);
+    //////////////////////分頁需求參數//////////////////////////////////
+    pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("avg", avg);
 %>
 <div class="text-center" style="height: 50px; margin-top: 50px">
-    <h2>您的平均評價為 <fmt:formatNumber value="${avg}" maxFractionDigits="1" />
+    <h2>
+        您的平均評價為
+        <fmt:formatNumber value="${avg}" maxFractionDigits="1" />
     </h2>
 </div>
 <div class="container">
@@ -44,14 +63,12 @@
                             <tbody>
                                 <c:forEach var="ordVO" items="${ordList}">
                                     <tr>
-                                    <td>${ordVO.ord_no}</td>
-                                    <td>${ordVO.seller_no}</td>
-                                    <td>${ordVO.address}</td>
-                                    <td>
-                                        <fmt:formatDate value="${ordVO.ord_date}" pattern="yyyy-MM-dd HH:mm" />
-                                    </td>
-                                    <td>${ordVO.total}</td>
-                                    <td>${ordVO.score}</td>
+                                        <td>${ordVO.ord_no}</td>
+                                        <td>${ordVO.seller_no}</td>
+                                        <td>${ordVO.address}</td>
+                                        <td><fmt:formatDate value="${ordVO.ord_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                        <td>${ordVO.total}</td>
+                                        <td>${ordVO.score}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -61,4 +78,5 @@
             </div>
         </div>
     </div>
-    <%@include file="pages/mallIndexFooter.file"%>
+</div>
+<%@include file="pages/mallIndexFooter.file"%>

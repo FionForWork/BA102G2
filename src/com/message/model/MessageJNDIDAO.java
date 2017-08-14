@@ -245,4 +245,10 @@ public class MessageJNDIDAO implements MessageDAO_Interface {
 
 		return list;
 	}
+
+	@Override
+	public List<String> getMessageByMem_no(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

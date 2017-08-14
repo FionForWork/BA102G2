@@ -1,6 +1,7 @@
 package com.serv.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ServService {
 	private ServDAO_Interface dao;
@@ -51,6 +52,11 @@ public class ServService {
 		
 	}
 	
+	public List<ServVO> getAll(Map<String, String[]> map){
+		return dao.getAll(map);
+		
+	}
+	
 	public List<String> getComnoByStypeno(String stype_no){
 		return dao.findByStype_no(stype_no);
 		
@@ -62,4 +68,8 @@ public class ServService {
 	}
 	
 	
+	public List<ServVO> getAllAvg(){
+		return dao.getAllAvg();
+		
+	}
 }

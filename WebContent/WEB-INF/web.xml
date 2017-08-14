@@ -80,6 +80,14 @@
     <url-pattern>/album/album.do</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>PreviewServlet</servlet-name>
+    <servlet-class>com.album.controller.PreviewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreviewServlet</servlet-name>
+    <url-pattern>/album/preview.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>TempServlet</servlet-name>
     <servlet-class>com.temp.controller.TempServlet</servlet-class>
   </servlet>
@@ -87,7 +95,6 @@
     <servlet-name>TempServlet</servlet-name>
     <url-pattern>/temp/temp.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>TempContServlet</servlet-name>
     <servlet-class>com.tempcont.controller.TempContServlet</servlet-class>
@@ -120,7 +127,6 @@
     <servlet-name>WorksServlet</servlet-name>
     <url-pattern>/works/works.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <servlet-class>test.ShowPictureServletDAO</servlet-class>
@@ -129,7 +135,6 @@
     <servlet-name>ShowPictureServletDAO</servlet-name>
     <url-pattern>/ShowPictureServletDAO/*</url-pattern>
   </servlet-mapping>
-  
   <servlet>
 		<servlet-name>ProblemServlet</servlet-name>
 		<servlet-class>com.problem.controller.ProblemServlet</servlet-class>
@@ -155,6 +160,27 @@
 		<url-pattern>/Article/Article.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<display-name>ReservationServlet</display-name>
+		<servlet-name>ReservationServlet</servlet-name>
+		<servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ReservationServlet</servlet-name>
+		<url-pattern>/reservation/reservation.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		
+		<display-name>CalendarServlet</display-name>
+		<servlet-name>CalendarServlet</servlet-name>
+		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/calendar/calendar.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 	<servlet-name>Forum_commentServlet</servlet-name>
 		<servlet-class>com.forum_comment.controller.Forum_commentServlet</servlet-class>
 	</servlet>
@@ -163,5 +189,41 @@
 		<url-pattern>/Forum_comment/Forum_commentServlet.do</url-pattern>
 	</servlet-mapping>
 	
-
+<servlet>
+    <servlet-name>UploadPhotoToDBDAO</servlet-name>
+    <servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadPhotoToDBDAO</servlet-name>
+    <url-pattern>/UploadPhotoToDBDAO</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdvertisingServlet</servlet-name>
+    <url-pattern>/advertising/advertising.do</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
+    <param-value>307200</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>MessageServlet</servlet-name>
+    <servlet-class>com.message.controller.MessageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MessageServlet</servlet-name>
+    <url-pattern>/message/message.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ContactUs</servlet-name>
+    <servlet-class>com.wang.test.ContactUs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactUs</servlet-name>
+    <url-pattern>/ContactUs</url-pattern>
+  </servlet-mapping>
 </web-app>

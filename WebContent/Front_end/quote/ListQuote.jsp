@@ -4,19 +4,19 @@
 <%@ page import="com.rfq_detail.model.*" %>
 <%@ page import="com.quote.model.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% 
-	RFQ_DetailVO rfqDetailVO = (RFQ_DetailVO) request.getAttribute("rfqDetailVO");
-	List<QuoteVO> list = (List<QuoteVO>)request.getAttribute("list");
-	request.setAttribute("rfqDetailVO", rfqDetailVO);
 	DateFormat df = new SimpleDateFormat("YYYY年M月d日 ah點");
+	DateFormat checkdf = new SimpleDateFormat("YYYY-MM-dd");
 	pageContext.setAttribute("df", df);
+	pageContext.setAttribute("checkdf", checkdf);
 	DateFormat minDF = new SimpleDateFormat("YYYY年M月d日 ah點mm分");
 	pageContext.setAttribute("minDF", minDF);
 %>
 <jsp:useBean id="comService" class="com.com.model.ComService"/>
+<jsp:useBean id="rfqService" class="com.rfq.model.RFQService"/>
+<jsp:useBean id="calService" class="com.calendar.model.CalendarService"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,10 +34,10 @@
 	
 <!--排序 -->
 	<ul class="nav nav-tabs nav-justified">
-		<li class="active"><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=dateDesc" class="menua">日期 : 近到遠</a></li>
-		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=dateOrder" class="menua">日期 : 遠到近</a></li>
-		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=priceOrder" class="menua">金額 : 低到高</a></li>
-		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=priceDesc" class="menua">金額 : 高到低</a></li>
+		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=dateDesc&rfqMem_no=${rfqMem_no}" class="menua">日期 : 近到遠</a></li>
+		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=dateOrder&rfqMem_no=${rfqMem_no}" class="menua">日期 : 遠到近</a></li>
+		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=priceOrder&rfqMem_no=${rfqMem_no}" class="menua">金額 : 低到高</a></li>
+		<li><a href="<%= request.getContextPath() %>/quote/quote.do?action=listQuote&sort=priceDesc&rfqMem_no=${rfqMem_no}" class="menua">金額 : 高到低</a></li>
 	</ul>
 	<br>
 <!--詢價單-->
@@ -46,7 +46,7 @@
 					<div class="row">
 					<br>
 						<div class="col-md-2">
-							<img src="<%=request.getContextPath()%>/Front_end/quote/img/LOGO.png" class="mem_img img-circle">
+							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${rfqMem_no}" class="mem_img img-circle">
 						</div>
 						<div class="col-md-8">
 							<h3>${df.format(rfqDetailVO.ser_date)}
@@ -66,15 +66,19 @@
 				<div class="row">
 					<div class="col-md-1"></div>
 					<div class="col-md-2">
-						<img src="<%=request.getContextPath()%>/Front_end/RFQ/img/LOGO.png" class="mem_img img-circle">
+						<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${quoteVO.com_no}" class="com_img img-circle">
 					</div>
 					<div class="col-md-6">
-						<h3>${comService.getOneEmp(quoteVO.com_no).name}</h3>
+						<h3>${comService.getOneCom(quoteVO.com_no).name}</h3>
 						<p>於 ${minDF.format(quoteVO.quo_date)} 報價</p>
 						<p>${quoteVO.content}</p>
-						<h4>報價金額 : ${quoteVO.price} </h4>
-						
+						<h4><span>價格</span>
+							<b class="price text-pink" >${quoteVO.price}</b>
+						<span class="hidden-xs">元</span>
 					</div>
+<!--判斷是否自己的報價才能預約、是否預約過、廠商是否還有空-->
+					<c:if test="${rfqService.getOneRFQ(rfqDetailVO.rfq_no).mem_no.equals(memVO.mem_no) 
+					&& rfqDetailVO.status.equals('1') && calService.checkForRes(quoteVO.com_no,checkdf.format(rfqDetailVO.ser_date)) == null}">
 					<div class="col-md-2">
 					<br>
 <!--馬上預約-->
@@ -87,7 +91,7 @@
 								<div class="modal-content col-md-offset-1 col-md-10">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title" >您選擇預約 ${comService.getOneEmp(quoteVO.com_no).name} 的服務內容為...</h4>
+										<h4 class="modal-title" >您選擇預約 ${comService.getOneCom(quoteVO.com_no).name} 的服務內容為...</h4>
 									</div>
 									<hr>
 									<div class="modal-body">
@@ -109,13 +113,12 @@
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>
-						      
 							</div>
 						</div>
 					</form>
 					</div>
+					</c:if>
 				</div>
-			<br>
 			<hr>
 			</c:forEach>
 			</div>

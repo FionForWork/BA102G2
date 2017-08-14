@@ -5,7 +5,7 @@ import java.util.List;
 import com.order_detail.model.Order_detailVO;
 
 public interface OrdDAO_Interface {
-    void add(OrdVO ordVO);
+    void insert(OrdVO ordVO);
     
     void insert(OrdVO ordVO,List<Order_detailVO> list);
     
@@ -15,18 +15,21 @@ public interface OrdDAO_Interface {
 
     OrdVO getOneByPK(String ord_no);
 
-    OrdVO getOne(String cust_no, String seller_no);
-
     List<OrdVO> getAll();
 
     List<OrdVO> getAllByCust(String cust_no, String status);
 
-    List<OrdVO> getAllBySeller(String seller_no, String status);
-
-    List<OrdVO> getAllByRoleAndOrder(String role, String role_no, String status, String orderType);
-
-    int getAllOrderCount(String role,String role_no,String status);
- 
-    List<OrdVO> getAllOrderByRole(String role,String role_no,String status);
+    List<OrdVO> getAllByCust(String cust_no, String status,String orderMethod);
     
+    List<OrdVO> getAllBySeller(String seller_no, String status);
+    
+    List<OrdVO> getAllBySeller(String seller_no, String status,String orderMethod);
+    
+    int getAllRowCountByCust(String cust_no,String status);
+
+    int getAllRowCountBySeller(String seller_no,String status);
+
+    List<OrdVO> getPageByCust(int start,int itemsCount,String cust_no, String status,String orderMethod);
+    
+    List<OrdVO> getPageBySeller(int start,int itemsCount,String seller_no, String status,String orderMethod);
 }

@@ -16,7 +16,6 @@
 <%@ include file="page/temp_com_header.file"%>
 <style type="text/css">
 .table-hover>tbody>tr:hover {
-	cursor: pointer;
 	background-color: rgb(247, 209, 211);
 }
 </style>
@@ -72,10 +71,10 @@
 				<li><a data-toggle="tab" href="#selected">已挑選</a></li>
 			</ul>
 			<br>
-			<div class="tab-content">
+			<div class="tab-content" style="border:0">
 				<div id="unselect" class="tab-pane fade in active">
 
-					<table class="table table-hover table-responsive" id="tempList">
+					<table class="table table-hover table-responsive tempList">
 						<thead>
 							<tr>
 								
@@ -84,7 +83,7 @@
 								<th>可挑選數量</th>
 								<th>拍攝時間</th>
 								<th>狀態</th>
-								<th colspan="4" align="center">
+								<th colspan="3" align="center">
 									<button class="btn btn-info btn-block" name='createTemp'
 										onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_CreateTemp.jsp'">新增成品</button>
 								</th>
@@ -124,7 +123,7 @@
 									<!--  End Modal Delete temp -->
 
 
-									<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
+									<tr>
 										
 										<td>${tempVO.name }</td>
 										<td>${memSvc.getOneMem(tempVO.mem_no).name}</td>
@@ -132,6 +131,7 @@
 										<td>${tempVO.create_date.toString().substring(0,10)}</td>
 
 										<td>${tempVO.status}</td>
+										<td><button class="btn btn-default" type='submit' name='displayTemp' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">查看</button></td>
 										<form
 											action="<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp"
 											method="post">
@@ -166,7 +166,7 @@
 <br>
 				<div id="selected" class="tab-pane fade">
 
-					<table class="table table-hover table-responsive" id="tempList">
+					<table class="table table-hover table-responsive tempList">
 						<thead>
 							<tr>
 								
@@ -175,7 +175,7 @@
 								<th>可挑選數量</th>
 								<th>拍攝時間</th>
 								<th>狀態</th>
-								<th colspan="4" align="center"></th>
+								<th colspan="3" align="center"></th>
 
 							</tr>
 						</thead>
@@ -238,15 +238,15 @@
 									</div>
 									<!--  End Modal Transfer Temp -->
 
-									<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
+									<tr>
 										
-										<td>${tempVO.name }</td>
+										<td>${tempVO.name}</td>
 										<td>${memSvc.getOneMem(tempVO.mem_no).name}</td>
 										<td>${tempVO.available}</td>
 										<td>${tempVO.create_date.toString().substring(0,10)}</td>
 
 										<td>${tempVO.status}</td>
-					
+										<td><button class="btn btn-default" type='submit' name='displayTemp' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">查看</button></td>
 										<form
 											action="<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp"
 											method="post">

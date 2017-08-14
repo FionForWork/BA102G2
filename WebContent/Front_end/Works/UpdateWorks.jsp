@@ -12,6 +12,12 @@
 %>
 
 <%@ include file="page/works_header.file"%>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".datepicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
+	
+});
+</script>
 
 <!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 <div class="container">
@@ -92,17 +98,17 @@
 			</form>
 			<!-- End Modal add works -->
 
-			<div class="row">
+			<div class="row" style="position:relative" >
 				<div class="col-xs-12 col-sm-12">
-					<div class='text-right'>
-						<div class="btn-group text-right">
+						<div class="btn-group" style="right:15px; top:15px;position:absolute;">
 							<button type="submit" class="btn btn-info" id="updateWorks"> 儲存修改 </button>
 							<button type="submit" class="btn btn-info" id="uploadbtn"> 新增作品 </button>
 						</div>
-					</div>
+						<br>
 
 					<div class="text-center">
 						<h2>修改作品</h2>
+						<br>
 					</div>
 				</div>
 			</div>
@@ -172,7 +178,7 @@
 										<source
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
 											type="video/mp4">
-										您的瀏覽器不支援此撥放程式
+										<p>您的瀏覽器不支援此撥放程式</p>
 									</video>
 								
 								<div class="caption">
@@ -182,8 +188,8 @@
 											placeholder='未命名的作品'>
 									</div>
 									<div class='form-group'>
-										<label for='upload_date'>上傳日期 </label> <input type='date'
-											id='upload_date' class='form-control' name='upload_date'
+										<label for='upload_date${s.count}'>上傳日期 </label> <input type='text'
+											id='upload_date${s.count}' class='form-control datepicker' name='upload_date'
 											value='${worksVO.upload_date.toString().substring(0,10)}'>
 									</div>
 									<div class='form-group'>
@@ -209,8 +215,8 @@
 											placeholder='未命名的作品'>
 									</div>
 									<div class='form-group'>
-										<label for='upload_date'>上傳日期 </label> <input type='date'
-											id='upload_date' class='form-control' name='upload_date'
+										<label for='upload_date${s.count}'>上傳日期 </label> <input type='text'
+											id='upload_date${s.count}' class='form-control datepicker' name='upload_date'
 											value='${worksVO.upload_date.toString().substring(0,10)}'>
 									</div>
 									<div class='form-group'>
@@ -281,9 +287,6 @@ $("document").ready(function(){
 		});
 		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=<%=com_no%>";
 	});
-	
-		
-	
 	
 });
 	</script>

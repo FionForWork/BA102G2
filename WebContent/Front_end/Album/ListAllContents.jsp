@@ -102,12 +102,13 @@
 				</div>
 			</form>
 			<!-- End Modal addContent -->
-			<div class="jumbotron">
+			<div class="jumbotron " style="position:relative" >
 				<div class="row">
 					<button type="submit" class="btn btn-info" id="uploadbtn"
-						style="float: right; margin-button: 0;">新增相片</button>
+						style="right:15px; top:15px;position:absolute;">新增相片</button>
 					<div class="col-xs-12 col-sm-12">
 						<div class="text-center">
+						<br>
 							<h2>${albSvc.getOneAlbum(alb_no).name}</h2>
 						</div>
 					</div>
@@ -186,6 +187,7 @@
 								<i class="fa fa-cog" aria-hidden="true"></i>
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
+								<a href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=${contVO.cont_no}' id='download'>下載</a>
 								<form id="update${s.count}"
 									action="<%=request.getContextPath()%>/content/content.do"
 									method="post">

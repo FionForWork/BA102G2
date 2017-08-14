@@ -76,7 +76,7 @@ public class TempServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new Hashtable<String, String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 
-			String com_no = (String) session.getAttribute("com_no");
+			String com_no = (String) request.getParameter("com_no");
 			String status = request.getParameter("status");
 			String temp_no = request.getParameter("temp_no");
 			String mem_no = request.getParameter("mem_no");

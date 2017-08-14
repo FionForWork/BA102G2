@@ -9,6 +9,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.calendar.model.CalendarVO;
+import com.rfq_detail.model.RFQ_DetailVO;
+
 public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -19,7 +22,9 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	private static final String INSERT = 
 			"INSERT INTO RESERVATION VALUES (LTRIM(TO_CHAR(RESERVATION_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?, ?, '0', 0)";
 	private static final String UPDATE = 
-			"UPDATE RESERVATION SET NAME=? where RES_NO = ?";
+			"UPDATE RESERVATION SET status=? where RES_NO = ?";
+	private static final String UPDATESCORE = 
+			"UPDATE RESERVATION SET status=?, score=? where RES_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM RESERVATION where RES_NO = ?";
 	private static final String GET_ONE_STMT = 
@@ -30,9 +35,10 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 			"SELECT * FROM RESERVATION WHERE MEM_NO = ?";
 	private static final String GET_COM_STMT = 
 			"SELECT * FROM RESERVATION WHERE COM_NO = ?";
-	
+	private static final String GET_COM_DISTINCT_MEM_NO_STMT = "SELECT DISTINCT MEM_NO FROM RESERVATION WHERE COM_NO = ?";
+
 	@Override
-	public void insert(ReservationVO reservationVO) {
+	public void insert(ReservationVO reservationVO,CalendarVO calendarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -74,7 +80,40 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 
 	@Override
 	public void update(ReservationVO reservationVO) {
-		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, reservationVO.getStatus());
+			pstmt.setString(2, reservationVO.getRes_no());
+
+			pstmt.executeUpdate();
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -364,6 +403,12 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 		return list;
 	}
 	
+	@Override
+	public void updateScore(ReservationVO reservationVO) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public static void main(String args[]){
 		
 		ReservationJDBCDAO dao = new ReservationJDBCDAO();
@@ -379,6 +424,11 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //		reservationVO.setPrice(33500);
 //		dao.insert(reservationVO);
 		
+//		ReservationVO reservationVO = new ReservationVO();
+//		reservationVO.setRes_no("0001");
+//		reservationVO.setStatus("1");
+//		dao.update(reservationVO);
+		
 //		dao.delete("0001");
 		
 //		ReservationVO reservationVO = dao.findByPK("0002");
@@ -393,21 +443,82 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //		System.out.println(reservationVO.getStatus());
 //		System.out.println(reservationVO.getScore());
 		
-		List<ReservationVO> list = dao.getComRes("2001");
-		for(ReservationVO reservationVO : list){
-			System.out.println(reservationVO.getRes_no());
-			System.out.println(reservationVO.getMem_no());
-			System.out.println(reservationVO.getCom_no());
-			System.out.println(reservationVO.getRes_date());
-			System.out.println(reservationVO.getServ_date());
-			System.out.println(reservationVO.getServ_no());
-			System.out.println(reservationVO.getStype_no());
-			System.out.println(reservationVO.getPrice());
-			System.out.println(reservationVO.getStatus());
-			System.out.println(reservationVO.getScore());
-		}
+//		List<ReservationVO> list = dao.getComRes("2001");
+//		for(ReservationVO reservationVO : list){
+//			System.out.println(reservationVO.getRes_no());
+//			System.out.println(reservationVO.getMem_no());
+//			System.out.println(reservationVO.getCom_no());
+//			System.out.println(reservationVO.getRes_date());
+//			System.out.println(reservationVO.getServ_date());
+//			System.out.println(reservationVO.getServ_no());
+//			System.out.println(reservationVO.getStype_no());
+//			System.out.println(reservationVO.getPrice());
+//			System.out.println(reservationVO.getStatus());
+//			System.out.println(reservationVO.getScore());
+//		}
+
+		
+	}
+
+	@Override
+	public void insert(ReservationVO reservationVO, CalendarVO calendarVO, RFQ_DetailVO rfq_detailVO) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
+
+	@Override
+	public List<String> getComResDistinctMemNO(String com_no) {
+		List<String> list = new ArrayList<String>();
+		ReservationVO reservationVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_COM_DISTINCT_MEM_NO_STMT);
+			pstmt.setString(1, com_no);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				list.add(rs.getString(1));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
 	}
 
 

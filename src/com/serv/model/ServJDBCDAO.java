@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -379,6 +380,17 @@ public class ServJDBCDAO implements ServDAO_Interface{
 
 	@Override
 	public List<ServVO> getCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ServVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<ServVO> getAllAvg() {
 		// TODO Auto-generated method stub
 		return null;
 	}

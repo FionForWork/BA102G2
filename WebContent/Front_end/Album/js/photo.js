@@ -35,7 +35,7 @@ $(document).ready(function(){
     });   
     
     $("#inputFile").fileinput({
-        maxFileCount: 50,
+        maxFileCount: 100,
         allowedFileTypes: ["image", "video"],
         language: 'zh-TW', //设置语言
         showUpload: false,
@@ -58,7 +58,9 @@ $(document).ready(function(){
         	
         });
     });
-
+    $("#lightboxImgModal").on("click",function(){
+    	$(this).css("display","none");
+    });
 });
 function preview_images() {
 	

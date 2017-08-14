@@ -3,6 +3,8 @@ $(document).ready(function(){
         $("#uploadModal").modal();
     });
     
+   
+	
     $(".overlay").on("click",function(){
     	$(this).toggleClass("checked");
     	$(this).find("i").toggleClass("fa-4x");
@@ -61,7 +63,9 @@ $(document).ready(function(){
         	
         });
     });
-
+    $("#lightboxImgModal").on("click",function(){
+    	$(this).css("display","none");
+    });
 
 
 });

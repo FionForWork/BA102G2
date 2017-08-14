@@ -1,4 +1,5 @@
 package com.message.model;
+
 import java.sql.*;
 import java.util.*;
 import javax.naming.*;
@@ -10,17 +11,18 @@ public class MessageDAO implements MessageDAO_Interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/ProjectDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA102G2DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private static final String INSERT_STMT = "insert into message (msg_no, mem_no, com_no, content) values (ltrim(to_char(msg_no_seq.nextval,'0009')), ?, ?, ?)";
-	private static final String GET_ALL_STMT = "select msg_no, mem_no, com_no, content from message order by adv_no";
-	private static final String GET_ONE_STMT = "select msg_no, mem_no, com_no, content from message where adv_no = ?";
+	private static final String GET_ALL_STMT = "select msg_no, mem_no, com_no, content from message order by msg_no";
+	private static final String GET_ONE_STMT = "select msg_no, mem_no, com_no, content from message where msg_no = ?";
 	private static final String DELETE = "delete from message where msg_no = ?";
 	private static final String UPDATE = "update message set mem_no=?, com_no=?, content=? where msg_no = ?";
+	private static final String GET_MSG_BY_MEMNO_STMT = "select content from message where mem_no=?";
 
 	@Override
 	public void insert(MessageVO messageVO) {
@@ -142,20 +144,8 @@ public class MessageDAO implements MessageDAO_Interface {
 				messageVO.setMsg_no(rs.getString("msg_no"));
 				messageVO.setMem_no(rs.getString("mem_no"));
 				messageVO.setCom_no(rs.getString("com_no"));
-
-				Clob clob = rs.getClob("content");
-				StringBuilder sb = new StringBuilder();
-				BufferedReader br = new BufferedReader(clob.getCharacterStream());
-				String str;
-				while ((str = br.readLine()) != null) {
-					sb.append(str);
-					sb.append("\n");
-				}
-				br.close();
-				messageVO.setContent(sb.toString());
+				messageVO.setContent(rs.getString("content"));
 			}
-		} catch (IOException e) {
-			System.out.println(e);
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -200,24 +190,12 @@ public class MessageDAO implements MessageDAO_Interface {
 				messageVO.setMsg_no(rs.getString("msg_no"));
 				messageVO.setMem_no(rs.getString("mem_no"));
 				messageVO.setCom_no(rs.getString("com_no"));
-
-				Clob clob = rs.getClob("content");
-				StringBuilder sb = new StringBuilder();
-				BufferedReader br = new BufferedReader(clob.getCharacterStream());
-				String str;
-				while ((str = br.readLine()) != null) {
-					sb.append(str);
-					sb.append("\n");
-				}
-				br.close();
-				messageVO.setContent(sb.toString());
+				messageVO.setContent(rs.getString("content"));
 				list.add(messageVO);
 			}
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} catch (IOException ie) {
-			System.out.println(ie);
 		} finally {
 			if (rs != null) {
 				try {
@@ -242,6 +220,49 @@ public class MessageDAO implements MessageDAO_Interface {
 			}
 		}
 
+		return list;
+	}
+
+	@Override
+	public List<String> getMessageByMem_no(String mem_no) {
+		List<String> list = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_MSG_BY_MEMNO_STMT);
+			pstmt.setString(1, mem_no);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {				
+				list.add(rs.getString("content"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 		return list;
 	}
 }

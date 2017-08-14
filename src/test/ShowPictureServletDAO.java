@@ -18,8 +18,7 @@ import com.album.model.AlbumVO;
 import com.com.model.*;
 import com.content.model.ContentService;
 import com.content.model.ContentVO;
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
+import com.mem.model.*;
 import com.tempcont.model.TempContService;
 import com.tempcont.model.TempContVO;
 import com.works.model.*;
@@ -122,23 +121,22 @@ public class ShowPictureServletDAO extends HttpServlet {
 		
 		if(file.startsWith("mem_no")){
 			pk = request.getParameter("mem_no");
-
-			byte[] tempcont =null;
-			System.out.println(pk);
+			byte[] picture =null;
+//			System.out.println(pk);
 			MemService memSvc = new MemService();
 			MemVO memVO = memSvc.getOneMem(pk);
-			tempcont = memVO.getPicture();
-			out.write(tempcont);
-			out.close(); 
-
 			
+			picture = memVO.getPicture();
+			
+			out.write(picture);
+			out.close(); 
 			return;
 		}
 		
 		if(file.startsWith("com_no")){
 			pk = request.getParameter("com_no");
 			byte[] logo =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			ComService comSvc = new ComService();
 			ComVO comVO = comSvc.getOneCom(pk);
 			
@@ -160,6 +158,37 @@ public class ShowPictureServletDAO extends HttpServlet {
 			out.write(advcont);
 			out.close();
 
+			return;
+		}
+		if(file.startsWith("mem_no")){
+			pk = request.getParameter("mem_no");
+			byte[] memcont =null;
+			System.out.println(pk);
+			MemService memSvc = new MemService();
+			MemVO memVO = memSvc.getOneMem(pk);
+			memcont = memVO.getPicture();
+			out.write(memcont);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("downloadCont_no")){
+			
+			pk = request.getParameter("downloadCont_no");
+			response.setContentType("application/octet-stream");
+			
+			byte[] cont =null;
+			System.out.println(pk);
+			ContentService contSvc = new ContentService();
+			ContentVO contVO = contSvc.getOneContent(pk);
+			if(contVO.getImg() == null){
+				cont = contVO.getVdo();
+				response.setHeader("Content-Disposition", "attachment;filename=\""+pk+".mp4\"");
+			}else{
+				cont = contVO.getImg();
+				response.setHeader("Content-Disposition", "attachment;filename=\""+pk+".jpg\"");
+			}
+			out.write(cont);
+			out.close(); 
 			return;
 		}
 	}

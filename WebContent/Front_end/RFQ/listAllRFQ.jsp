@@ -88,7 +88,8 @@
 				<div class="panel-body rfq-row">
 					<div class="row">
 						<div class="col-md-2">
-							<img src="<%=request.getContextPath()%>/Front_end/RFQ/img/LOGO.png" class="mem_img img-circle">
+<%-- <%=request.getContextPath()%>/Front_end/RFQ/img/LOGO.png --%>
+							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${rfqVO.mem_no}" class="mem_img img-circle">
 						</div>
 						<c:forEach var="rfqDetailVO" items="${rfqDetailSvc.getSomeRFQDetail(rfqVO.rfq_no)}">
 						<% index++; %>
@@ -110,9 +111,11 @@
 						<!-- listQuote -->
 							<form  method="post" action="<%= request.getContextPath() %>/quote/quote.do">
 							<input type="hidden" name="action" value="listQuote">
+							<input type="hidden" name="rfqMem_no" value="${rfqVO.mem_no}">
 							<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 							<input type="submit" class="btn btn-block btn-default" value="查看內容">
 							</form>
+<!-- 廠商資料寫死 會員無法報價 -->
 							<c:if test="${rfqDetailVO.status.equals('1')}">
 							<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal${rfqDetailVO.rfqdetail_no}">我要報價</button>
 						<!-- Quote -->

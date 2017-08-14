@@ -65,32 +65,12 @@
 
 			<div class="clearfix">
 				<h1 class="text-center" style="font-size: 26px;">
-					<i class="fa fa-heart text-pink" aria-hidden="true"></i> 我的最愛 <span
-						class="dropdown collect-dropdown">
-						<button class="btn btn-outline" id="collects_type" type="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							選擇種類 <span class="caret"></span>
-						</button>
-
-						<ul id="collects_type_list" class="dropdown-menu"
-							aria-labelledby="collects_type" role="tablist">
-							<li role="presentation" class><a href="#store"
-								aria-controls="store" role="tab" data-toggle="tab">店家收藏</a></li>
-							<li role="presentation" class><a href="#service"
-								aria-controls="service" role="tab" data-toggle="tab">包套/服務</a></li>
-							<li role="presentation" class><a href="#image"
-								aria-controls="image" role="tab" data-toggle="tab">相片作品 </a></li>
-							<li role="presentation" class><a href="#dress"
-								aria-controls="dress" role="tab" data-toggle="tab">婚紗禮服 </a></li>
-							<li role="presentation" class><a href="#post"
-								aria-controls="post" role="tab" data-toggle="tab">分享文收藏 </a></li>
-						</ul>
-					</span>
+					<i class="fa fa-heart text-pink" aria-hidden="true"></i> 我的最愛 
 				</h1>
 			</div>
-
+			<br>
+			<br>
 			<!--table table table table table table table table table -->
-			<h3>店家收藏</h3>
 			<table class="table table-hover table-striped" id='comtraList'>
 
 				<thead>
@@ -108,6 +88,7 @@
 							<input type='hidden' name='action' value='delete_ComTra'>
 							<input type='hidden' name='comtra_no' value='${comtraVO.comtra_no}'>
 							<input type='hidden' name='nowPage' value='${nowPage}'>
+							<input type='hidden' name='requestURL' value='<%=request.getServletPath()%>'>
 						</form>
 						<a href="#">
 						<tr>
@@ -115,6 +96,7 @@
 							<td>${comSvc.getOneCom(comtraVO.com_no).name}</td>
 							<td>${comtraVO.tracking_date.toString().substring(0,10)}</td>
 							<td><a href='#' onclick='document.getElementById("deleteComTra${s.count}").submit();'><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td>
+<%-- 							<td><a href='#' onclick='document.getElementById("deleteComTra${s.count}").submit();'><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td> --%>
 						</tr>
 						</a>
 					</c:forEach>

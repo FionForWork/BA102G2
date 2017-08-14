@@ -5,12 +5,18 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.comtra.model.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<jsp:useBean id="comtraSvc" scope="page" class="com.comtra.model.ComTraService"/>
 <%
+
+	
 	ComService comSvc = new ComService();
-	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
+	String com_no = request.getParameter("com_no");
+	ComVO comVO = comSvc.getOneCom(com_no);
 	pageContext.setAttribute("comVO", comVO);
+	
+	
 
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -19,6 +25,9 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
+	String mem_no = (String)session.getAttribute("mem_no");
+	List<String> comNoList = comtraSvc.getComNoListByMemNo(mem_no);
+	pageContext.setAttribute("comNoList", comNoList);
 %>
 
 <html>
@@ -55,9 +64,26 @@
 	<!--店家大頭照-->
 
 	<div class="text-center">
+	
 		<h1>${comVO.name}</h1>
-		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
+		<div id="comTracking">
+			<c:choose>
+			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
+			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
+		
+			</c:when>
+			<c:otherwise>
+				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+			</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
+		<input type='hidden' name='mem_no' value='${mem_no}'>
+		<input type='hidden' name='path' value='<%= request.getContextPath()%>/comtra/comtra.do'>
 	</div>
+	
+<div id="snackbar">請先登入會員...</div>
 	
 
 	<div class="catalog hidden-xs">
@@ -124,19 +150,36 @@
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
-						<li class="list-unstyled"><a href="#"
-							class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="works_image img-thumbnail"
-								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+						<li class="list-unstyled">
+							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
+								<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								<div class="overlay">
 									<div class="works_text">${worksVO.works_desc}</div>
 								</div>
-						</a></li>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</c:forEach>
-
-
+			
+			<div id="more_works" style="display: none;">
+			<c:forEach var="worksVO" items="${worksList}" begin="11">
+				<div class="col-xs-12 col-sm-4">
+					<ul class="works_box">
+						<li class="list-unstyled">
+							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
+								<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
+								<div class="overlay">
+									<div class="works_text">${worksVO.works_desc}</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</c:forEach>
+			</div>
+			
+			
 		</div>
 	</div>
 
@@ -145,10 +188,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-info btn-lg" href="#"> 看更多作品
+				<a class="btn btn-info btn-lg" onclick="change(1)" id="more_works_btn"> 看更多作品
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
-				</a>
+
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
@@ -161,29 +204,46 @@
 			<h1>方案</h1>
 		</span>
 	</div>
+
 	<div class="container">
 		<div class="row">
 
 			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
+			<c:if test="${servVO.com_no==comVO.com_no}">
 				<div class="service col-xs-12 col-sm-3">
 					<ul class="service_box">
 						<li class="service_title"><div>${servVO.title}</div></li>
 						<div class="text"><li>${servVO.content}</li></div>
-						<li class="cost"><div>$NT<span>${servVO.price}</span></div>
+						<li class="cost"><div>價格<b class="price text-pink" >${servVO.price}</b>元</div>
 						</li>
 					</ul>
 				</div>
+			</c:if>	
 			</c:forEach>
+			
+			<div id="more_services" style="display: none;">
+			<c:forEach var="servVO" items="${servList}" begin="5">
+			<c:if test="${servVO.com_no==comVO.com_no}">
+				<div class="service col-xs-12 col-sm-3">
+					<ul class="service_box">
+						<li class="service_title"><div>${servVO.title}</div></li>
+						<div class="text"><li>${servVO.content}</li></div>
+						<li class="cost"><div>價格<b class="price text-pink" >${servVO.price}</b>元</div>
+						</li>
+					</ul>
+				</div>
+			</c:if>		
+			</c:forEach>
+			</div>
 
 		</div>
 	</div>
-
-
+	
 	<div class="container text-center">
 		<div class="row">
 			<div class="col-xs-12 col-sm-3"></div>
 			<div class="col-xs-12 col-sm-6">
-				<a class="btn btn-info btn-lg" href="#"> 看更多方案
+				<a class="btn btn-info btn-lg" onclick="change(2)" id="more_services_btn"> 看更多方案
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				</a>
 				
@@ -191,6 +251,7 @@
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
 	</div>
+	
 	</div>
 	<!--店家方案-->
 
@@ -200,7 +261,7 @@
 	<!--店家自介-->
 	<div class="text-center" id="introduction">
 		<span>
-			<h1>介紹</h1>
+			<h1>關於我</h1>
 		</span>
 	</div>
 	<div class="container">

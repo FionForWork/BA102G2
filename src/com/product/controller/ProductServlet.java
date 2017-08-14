@@ -22,10 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.email.MailService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_type.model.Product_typeService;
@@ -41,6 +45,7 @@ public class ProductServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        MemVO memVO = (MemVO) session.getAttribute("memVO");
         List<ProductVO> carList = (session.getAttribute("carList") == null) ? new LinkedList<ProductVO>() : (List<ProductVO>) session.getAttribute("carList");
         List<Integer> countList = (session.getAttribute("countList") == null) ? new LinkedList<Integer>() : (List<Integer>) session.getAttribute("countList");
         int carTotal = 0;
@@ -104,13 +109,13 @@ public class ProductServlet extends HttpServlet {
             response.setCharacterEncoding("text/html; charset=utf-8");
             List<String> error = new ArrayList<String>();
             ProductVO productVO = new ProductVO();
-
-            String seller_no = String.valueOf(session.getAttribute("mem_no"));
+            String seller_no = memVO.getMem_no();
             String pro_desc = request.getParameter("pro_desc");
             String price = request.getParameter("price");
             String amount = request.getParameter("amount");
             String protype_no = request.getParameter("protype_no");
             String pro_name = request.getParameter("pro_name").trim();
+            System.out.println(pro_name);
             byte[] data = null;
             if (pro_name.equals("")) {
                 error.add("請輸入商品名稱");
@@ -268,7 +273,6 @@ public class ProductServlet extends HttpServlet {
             if (!request.getParameter("amount").equals("")) {
                 productVO.setAmount(Integer.valueOf(request.getParameter("amount")));
             }
-            System.out.println(pro_no);
             if (request.getPart("img") != null && ((request.getPart("img").getContentType().indexOf("image") != -1) || (request.getPart("img").getContentType().indexOf("stream") != -1))) {
                 Part part = request.getPart("img");
                 System.out.println(part.getName() + " " + part.getSize());
@@ -356,81 +360,25 @@ public class ProductServlet extends HttpServlet {
             List<ProductVO> productList = productService.getSome(nowPage, itemsCount, now_Pro_Type, now_Order_Type);
             List<Product_typeVO> product_typeList = product_typeService.getAll();
 
-            List<String> proTypeList = new ArrayList<String>();
-            List<String> pronoList = new ArrayList<String>();
-            List<String> pronameList = new ArrayList<String>();
-            List<Integer> priceList = new ArrayList<Integer>();
+            List<String> proTypeNameList = new ArrayList<String>();
             for (Product_typeVO product_typeVO : product_typeList) {
-                proTypeList.add(product_typeVO.getType_name());
+                proTypeNameList.add(product_typeVO.getType_name());
             }
-            for (ProductVO productVO : productList) {
-                pronoList.add(productVO.getPro_no());
-                pronameList.add(productVO.getPro_name());
-                priceList.add(productVO.getPrice());
-            }
-            int allCount = productService.getTypeAllCount(now_Pro_Type);
-            int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
             session.setAttribute("productList", productList);
+            int allCount = productService.getTypeAllCount(now_Pro_Type);
+            int totalPages = (allCount % itemsCount == 0) ? allCount / itemsCount : allCount / itemsCount + 1;
+            PrintWriter printWriter = response.getWriter();
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("productList", productList);
+                jsonObject.put("proTypeNameList", proTypeNameList);
+                jsonObject.put("totalPages", totalPages);
+                printWriter.print(jsonObject.toString());
 
-            PrintWriter printWriter = response.getWriter();
-            Gson gson = new Gson();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.add("pronoList", gson.toJsonTree(pronoList));
-            jsonObject.add("pronameList", gson.toJsonTree(pronameList));
-            jsonObject.add("priceList", gson.toJsonTree(priceList));
-            jsonObject.add("proTypeList", gson.toJsonTree(proTypeList));
-            jsonObject.addProperty("totalPages", totalPages);
-            printWriter.println(gson.toJson(jsonObject));
-            printWriter.close();
-        }
-        else if ("CLEAR_AJAX".equals(action)) {
-            response.setContentType("text/html; charset=utf-8");
-            if (carList != null) {
-                carList.removeAll(carList);
-                countList.removeAll(countList);
-                carTotal = 0;
-                session.setAttribute("carList", carList);
-                session.setAttribute("countList", countList);
-                session.setAttribute("carTotal", new Integer(carTotal));
             }
-        }
-        //////////////////////////////////////// AJAX加入購物車//////////////////////////////////////////
-        else if ("ADD_TO_CAR_AJAX".equals(action)) {
-            response.setContentType("text/html; charset=utf-8");
-            ProductService productService = new ProductService();
-            ProductVO productVO = productService.getOneByPKNoImg(request.getParameter("pro_no"));
-            int productCount=(request.getParameter("productCount").equals("0"))?0:Integer.valueOf(request.getParameter("productCount"));
-            PrintWriter printWriter = response.getWriter();
-            if (carList.contains(productVO)) {
-                int count = countList.get(carList.indexOf(productVO)).intValue();
-                count += productCount;
-                if(count>productVO.getAmount()){
-                    printWriter.print("out of amount");
-                    printWriter.close();
-                    return;
-                }
-                else{
-                    countList.set(carList.indexOf(productVO), new Integer(count));
-                }
+            catch (JSONException e) {
+                e.printStackTrace();
             }
-            else {
-                if(productCount>productVO.getAmount()){
-                    printWriter.print("out of amount");
-                    printWriter.close();
-                    return;
-                }
-                else{
-                    carList.add(productVO);
-                    countList.add(productCount);
-                }
-            }
-            for (int i = 0; i < carList.size(); i++) {
-                carTotal += carList.get(i).getPrice() * countList.get(i);
-            }
-            session.setAttribute("carList", carList);
-            session.setAttribute("countList", countList);
-            session.setAttribute("carTotal", new Integer(carTotal));
-            printWriter.print(carTotal);
             printWriter.close();
         }
         else if ("CHANGE_LAMBDA".equals(action)) {
@@ -441,15 +389,10 @@ public class ProductServlet extends HttpServlet {
             int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
             String now_Pro_Type = request.getParameter("now_Pro_Type");
             String now_Order_Type = request.getParameter("now_Order_Type");
-            int allCount;
+            int allCount = (now_Pro_Type.equals("0")) ? originList.size() : (int) originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
+            originList = (now_Pro_Type.equals("0")) ? originList : originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).collect(Collectors.toList());
             Comparator<ProductVO> byMethod = comparing(ProductVO::getPro_no);
-            if (now_Pro_Type.equals("0")) {
-                allCount = originList.size();
-            }
-            else {
-                allCount = (int) originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).count();
-                originList = originList.stream().filter(product -> product.getProtype_no().equals(now_Pro_Type)).collect(Collectors.toList());
-            }
+            int totalPages = (allCount % itemsCount == 0) ? allCount / itemsCount : allCount / itemsCount + 1;
             switch (now_Order_Type) {
                 case "1":
                     byMethod = comparing(ProductVO::getPro_name);
@@ -469,12 +412,10 @@ public class ProductServlet extends HttpServlet {
                 case "6":
                     byMethod = comparing(ProductVO::getSeller_no);
                     break;
-
                 default:
                     byMethod = comparing(ProductVO::getPro_no);
                     break;
             }
-            int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
             originList = originList.stream().sorted(byMethod).collect(Collectors.toList());
             List<ProductVO> productList = new ArrayList<ProductVO>();
             int start = (nowPage - 1) * itemsCount;
@@ -484,15 +425,80 @@ public class ProductServlet extends HttpServlet {
             }
             Product_typeService product_typeService = new Product_typeService();
             List<Product_typeVO> product_typeList = product_typeService.getAll();
+            List<String> proTypeNameList = new ArrayList<String>();
+            for (Product_typeVO product_typeVO : product_typeList) {
+                proTypeNameList.add(product_typeVO.getType_name());
+            }
             PrintWriter printWriter = response.getWriter();
-            Gson gson = new Gson();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.add("productList", gson.toJsonTree(productList));
-            jsonObject.add("totalPages", gson.toJsonTree(totalPages));
-            jsonObject.add("product_typeList", gson.toJsonTree(product_typeList));
-            printWriter.print(gson.toJson(jsonObject));
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("productList", productList);
+                jsonObject.put("proTypeNameList", proTypeNameList);
+                jsonObject.put("totalPages", totalPages);
+                printWriter.print(jsonObject.toString());
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
             printWriter.close();
         }
+        ////////////////////////////////////////// AJAX清空購物車//////////////////////////////////////////////////////
+        else if ("CLEAR_AJAX".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            if (carList != null) {
+                carList.removeAll(carList);
+                countList.removeAll(countList);
+                carTotal = 0;
+                session.setAttribute("carList", carList);
+                session.setAttribute("countList", countList);
+                session.setAttribute("carTotal", new Integer(carTotal));
+            }
+        }
+        //////////////////////////////////////// AJAX加入購物車//////////////////////////////////////////
+        else if ("ADD_TO_CAR_AJAX".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            ProductService productService = new ProductService();
+            ProductVO productVO = productService.getOneByPKNoImg(request.getParameter("pro_no"));
+            int productCount = (request.getParameter("productCount").equals("")) ? 0 : Integer.valueOf(request.getParameter("productCount"));
+            PrintWriter printWriter = response.getWriter();
+            if (productCount != 0) {
+                if (carList.contains(productVO)) {
+                    int count = countList.get(carList.indexOf(productVO)).intValue();
+                    count += productCount;
+                    if (count > productVO.getAmount()) {
+                        printWriter.print("out of amount");
+                        printWriter.close();
+                        return;
+                    }
+                    else {
+                        countList.set(carList.indexOf(productVO), new Integer(count));
+                    }
+                }
+                else {
+                    if (productCount > productVO.getAmount()) {
+                        printWriter.print("out of amount");
+                        printWriter.close();
+                        return;
+                    }
+                    else {
+                        carList.add(productVO);
+                        countList.add(productCount);
+                    }
+                }
+                for (int i = 0; i < carList.size(); i++) {
+                    carTotal += carList.get(i).getPrice() * countList.get(i);
+                }
+                session.setAttribute("carList", carList);
+                session.setAttribute("countList", countList);
+                session.setAttribute("carTotal", new Integer(carTotal));
+                printWriter.print(carTotal);
+            }
+            else {
+                printWriter.print(0);
+            }
+            printWriter.close();
+        }
+        ///////////////////////////////////// AJAX上下架/////////////////////////////////////////////////////
         else if ("onOrOff".equals(action)) {
             response.setContentType("text/html; charset=utf-8");
             String pro_no = request.getParameter("pro_no");
@@ -512,6 +518,34 @@ public class ProductServlet extends HttpServlet {
         else if ("TEST".equals(action)) {
             System.out.println(request.getParameter("pointX"));
             System.out.println(request.getParameter("pointY"));
+        }
+        else if ("PROTRA_CHANGE".equals(action)) {
+            response.setContentType("text/html; charset=utf-8");
+            int nowPage = Integer.valueOf(request.getParameter("nowPage"));
+            int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
+            ProductService productService = new ProductService();
+            List<ProductVO> originList = productService.getAllBySeller(memVO.getMem_no());
+            PrintWriter printWriter = response.getWriter();
+            if (originList.size() > 0) {
+                List<ProductVO> productList = new ArrayList<ProductVO>();
+                int start = (nowPage - 1) * itemsCount;
+                int end = (nowPage * itemsCount > originList.size()) ? originList.size() : nowPage * itemsCount;
+                for (int i = start; i < end; i++) {
+                    productList.add(originList.get(i));
+                }
+                JSONObject jsonObject=new JSONObject();
+                try {
+                    jsonObject.put("productList", productList);
+                    printWriter.println(jsonObject.toString());
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                printWriter.println("nothing");
+            }
+            printWriter.close();
         }
     }
 

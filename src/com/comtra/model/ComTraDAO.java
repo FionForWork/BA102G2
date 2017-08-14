@@ -22,6 +22,8 @@ public class ComTraDAO implements ComTraDAO_Interface {
 	private static final String FIND_BY_PK = "select * from comtra where comtra_no = ?";
 	private static final String FIND_BY_MEM_NO = "select * from comtra where mem_no=? order by tracking_date desc";
 	private static final String FIND_ALL = "select * from comtra";
+	private static final String FIND_COM_NO_LIST = "select com_no from comtra where mem_no = ?";
+	private static final String FIND_BY_COM_NO_AND_MEM_NO = "select * from comtra where com_no = ? and mem_no = ?";
 
 	private static DataSource ds = null;
 	
@@ -275,6 +277,94 @@ public class ComTraDAO implements ComTraDAO_Interface {
 			}
 		}
 		return comTraList;
+	}
+
+	
+	@Override
+	public List<String> getComNoListByMemNo(String mem_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String> comNoList = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(FIND_COM_NO_LIST);
+			pstmt.setString(1, mem_no);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				comNoList.add(rs.getString(1));
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return comNoList;
+
+	}
+
+	@Override
+	public ComTraVO getComTraByComNoAndMemNo(String com_no, String mem_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ComTraVO comTra = null;
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(FIND_BY_COM_NO_AND_MEM_NO);
+			pstmt.setString(1, com_no);
+			pstmt.setString(2, mem_no);
+			rs = pstmt.executeQuery();
+			rs.next();
+			comTra = new ComTraVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return comTra;
 	}
 
 	

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
+
 import com.email.MailService;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
@@ -33,7 +35,7 @@ public class OrderServlet extends HttpServlet {
         response.setCharacterEncoding("text/html; charset=utf-8");
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        String mem_no = String.valueOf(session.getAttribute("mem_no"));
+        MemVO memVO=(MemVO)session.getAttribute("memVO");
         String errorMsg = "";
         OrdService ordService = new OrdService();
         ///////////////////////////////////////////////////// 訂單新增/////////////////////////////////////////////////////////////////
@@ -49,13 +51,12 @@ public class OrderServlet extends HttpServlet {
                 List<ProductVO> carList = (List<ProductVO>) session.getAttribute("carList");
                 List<String> sellerList = new ArrayList<String>();
                 List<OrdVO> ordList = new ArrayList<OrdVO>();
-                Order_detailService order_detailService = new Order_detailService();
                 for (int i = 0; i < carList.size(); i++) {
                     if (!sellerList.contains(carList.get(i).getSeller_no())) {
                         sellerList.add(carList.get(i).getSeller_no());
                     }
                 }
-                
+                ProductService productService =new ProductService();
                 for (int i = 0; i < sellerList.size(); i++) {
                     List<Order_detailVO> order_detailList=new ArrayList<Order_detailVO>();
                     int total = 0;
@@ -65,15 +66,17 @@ public class OrderServlet extends HttpServlet {
                             total += carList.get(j).getPrice() * Integer.valueOf(buyCounts[j]);
                             order_detailVO=new Order_detailVO();
                             order_detailVO.setPro_no(carList.get(i).getPro_no());
+                            ProductVO productVO=productService.getOneByPKNoImg(carList.get(i).getPro_no());
                             order_detailVO.setPrice(carList.get(i).getPrice());
                             order_detailVO.setQty(Integer.valueOf(buyCounts[j]));
+                            productVO.setAmount(productVO.getAmount()-Integer.valueOf(buyCounts[j]));
                             order_detailVO.setItemtot(Integer.valueOf(buyCounts[j])*carList.get(i).getPrice());
                             order_detailVO.setScore(0);
                             order_detailVO.setStatus("0");
+                            productService.updateProduct(productVO);
                             order_detailList.add(order_detailVO);
                         }
                     }
-                    MemVO memVO=(MemVO)session.getAttribute("memVO");
                     OrdVO ordVO = new OrdVO();
                     ordVO.setSeller_no(sellerList.get(i));
                     ordVO.setCust_no(memVO.getMem_no());
@@ -105,38 +108,47 @@ public class OrderServlet extends HttpServlet {
                 }
         }
         else if ("CHECK_GET_ITEM".equals(action)) {
+            response.setCharacterEncoding("utf-8");
             String ord_no = request.getParameter("ord_no");
-            OrdVO ordVO = ordService.getOneOrd(ord_no);
+            OrdVO ordVO = ordService.getOneByPK(ord_no);
             ordVO.setStatus("2");
-            ordService.updateOrd(ordVO);
+            ordService.update(ordVO);
             String to = "ixlogic@pchome.com.tw";
             // String to = new MemService().getOneMem(mem_no).getEmail();
             String subject = "訂單完成通知";
-            String cust_name = new MemService().getOneMem(mem_no).getName();
+            String cust_name = memVO.getName();
             String messageText = "Hello! " + cust_name + "您的訂單已經完成，請評價 ";
             MailService mailService = new MailService();
             mailService.sendMail(to, subject, messageText);
-            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp&&role=0").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=0").forward(request, response);
         }
         else if ("CHECK_GET_MONEY".equals(action)) {
             String ord_no = request.getParameter("ord_no");
-            OrdVO ordVO = ordService.getOneOrd(ord_no);
+            OrdVO ordVO = ordService.getOneByPK(ord_no);
             ordVO.setStatus("1");
-            ordService.updateOrd(ordVO);
+            ordService.update(ordVO);
             String to = "ixlogic@pchome.com.tw";
             // String to = new MemService().getOneMem(mem_no).getEmail();
             String subject = "訂單出貨通知";
-            String cust_name = new MemService().getOneMem(mem_no).getName();
+            String cust_name = memVO.getName();
             String messageText = "Hello! " + cust_name + "賣家已出貨，請耐心等待領收 ";
             MailService mailService = new MailService();
             mailService.sendMail(to, subject, messageText);
-            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp&&role=1").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=1").forward(request, response);
         }
         else if ("CANCEL".equals(action)) {
             String ord_no = request.getParameter("ord_no");
-            OrdVO ordVO = ordService.getOneOrd(ord_no);
+            OrdVO ordVO = ordService.getOneByPK(ord_no);
+            Order_detailService order_detailService =new Order_detailService();
             ordVO.setStatus("4");
-            ordService.updateOrd(ordVO);
+            ordService.update(ordVO);
+            List<Order_detailVO>detailList=order_detailService.getAllByOrd(ord_no);
+            ProductService productService =new ProductService();
+            for(int i=0;i<detailList.size();i++){
+                ProductVO productVO=productService.getOneByPK(detailList.get(i).getPro_no());
+                productVO.setAmount(productVO.getAmount()+detailList.get(i).getQty());
+                productService.updateProduct(productVO);
+            }
             request.getRequestDispatcher("/Front_end/mall/mallArea.jsp").forward(request, response);
         }
         else if ("EVALUATION_TO_ITEM".equals(action)) {
@@ -150,7 +162,7 @@ public class OrderServlet extends HttpServlet {
                 Order_detailService order_detailService = new Order_detailService();
                 ProductService productService = new ProductService();
                 for (int i = 0; i < pro_noList.length; i++) {
-                    Order_detailVO order_detailVO = order_detailService.getOneOrder_detailVO(ord_no, pro_noList[i]);
+                    Order_detailVO order_detailVO = order_detailService.getOneByComposite(ord_no, pro_noList[i]);
                     int score = (scoreList[i].equals("")) ? 0 : Integer.valueOf(scoreList[i]);
                     order_detailVO.setScore(score);
                     order_detailVO.setStatus("1");
@@ -167,10 +179,10 @@ public class OrderServlet extends HttpServlet {
             String ord_no = request.getParameter("ord_no");
             int score = (request.getParameter("score") == null) ? 0 : Integer.valueOf(request.getParameter("score"));
             System.out.println(score);
-            OrdVO ordVO = ordService.getOneOrd(ord_no);
+            OrdVO ordVO = ordService.getOneByPK(ord_no);
             ordVO.setScore(score);
             ordVO.setStatus("3");
-            ordService.updateOrd(ordVO);
+            ordService.update(ordVO);
             request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=1&&now_Status=3").forward(request, response);
         }
         
