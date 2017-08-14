@@ -60,7 +60,7 @@ ComVO comVO=comService.getOneCom("2001");
 			type="hidden" name="poster_no" value="${comVO.com_no }"> <input
 			type="submit" class="btn btn-info" data-dismiss="modal" value="發佈">
 </form>
-<input type="submit" class="btn btn-default btn-danger btn-primary"
+<input type="submit" class="btn  btn-danger "
 	value="返回" onclick="history.back()">
 </div>
 

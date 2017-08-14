@@ -1,0 +1,25 @@
+
+@media screen and (max-width: 767px) {
+    
+    .row.content {
+        height: auto;
+    }
+}
+
+.margin-top {
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+.img-thumbnail {
+    margin-bottom: 10px;
+}
+
+
+div button {
+    margin-top: 20px;
+}
+.jumbotron {
+    padding-top: 5px
+
+}
