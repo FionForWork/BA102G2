@@ -150,6 +150,7 @@ public class Forum_CommentJNDIDAO implements Forum_Comment_interface {
 
 	@Override
 	public Forum_CommentVO findByPrimaryKey(Integer fmc_no) {
+	
 		Forum_CommentVO forum_CommentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;

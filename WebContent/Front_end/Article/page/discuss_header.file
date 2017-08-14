@@ -309,15 +309,11 @@
     <br>
     <br>
 <!--menu-->
-    <div class="container" style="width:90%">
-        <div class="row">
-            <div class="col-md-2">
-              
-
-
-                
-            </div>
+   
 
 
             <!--裡面放東西===========================================================================-->
+             <div class="container" style="width:90%">
+        <div class="row">
+            <div class="col-md-2"></div>
             

@@ -94,7 +94,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			
 			if((pk.substring(0,1)).equals("1")){
 				byte[] tempcont =null;
-				System.out.println(pk);
+				System.out.println("memPicture"+pk);
 				MemService memSvc = new MemService();
 				MemVO memVO = memSvc.getOneMem(pk);
 				tempcont = memVO.getPicture();
@@ -105,7 +105,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				
 			}else{
 				byte[] logo =null;
-				System.out.println(pk);
+				System.out.println("comPicture"+pk);
 				ComService comSvc = new ComService();
 				ComVO comVO = comSvc.getOneCom(pk);
 				
