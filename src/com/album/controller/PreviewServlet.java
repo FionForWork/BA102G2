@@ -18,7 +18,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +35,6 @@ import com.placeview.model.PlaceViewVO;
 
 @MultipartConfig(fileSizeThreshold = 10 * 1024 * 1024, maxFileSize = 5 * 10 * 1021 * 1024, maxRequestSize = 5 * 5 * 10
 		* 1024 * 1024)
-@WebServlet("/RemoverServlet2")
 public class PreviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,9 +53,10 @@ public class PreviewServlet extends HttpServlet {
 		PlaceViewService placeviewSvc = new PlaceViewService();
 		ServletContext context = getServletContext();
 		
+		/***** 圖片裁切  *****/
 		if("cropImage".equals(action)){
-			/********* 建立實景預覽專用相簿與相簿內容 *********/
 			
+			/********* 建立實景預覽專用相簿與相簿內容 *********/
 			ContentVO originalCont = null;
 			ContentVO cropCont = null;
 			AlbumVO alb = new AlbumVO();
@@ -81,14 +80,14 @@ public class PreviewServlet extends HttpServlet {
 					break forloop;
 				}
 			}
-			/********* 新增相簿 *********/
+			/********* 新增實景預覽相簿 *********/
 			if(!alreadyCreated){
 				name = "實景預覽";
 				alb = albSvc.addAlbum(mem_no, name, cover, create_date);
 				alb_no = alb.getAlb_no();
 			}
 
-			/********* 新增相簿內容 *********/
+			// 取得原照片
 			BufferedImage img = null;
 			Part part = request.getPart("imageRemove");
 			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
@@ -102,7 +101,6 @@ public class PreviewServlet extends HttpServlet {
 				}
 			}
 
-			/********* 修改相簿封面 *********/
 			cover = originalCont.getImg();
 			albSvc.updateAlbum(alb_no, mem_no, name, cover, create_date);
 			
@@ -112,6 +110,7 @@ public class PreviewServlet extends HttpServlet {
 			String yPoints = request.getParameter("yPoints");
 			System.out.println("xPoints= " + xPoints);
 			System.out.println("yPoints= " + yPoints);
+			
 			// 轉成陣列
 			String[] xStrArr = xPoints.substring(1, xPoints.length() - 1).split(",");
 			String[] yStrArr = yPoints.substring(1, yPoints.length() - 1).split(",");
@@ -123,13 +122,12 @@ public class PreviewServlet extends HttpServlet {
 				yIntArr[i] = Double.parseDouble(yStrArr[i]);
 			}
 			
-			// 
+			// 畫出傳入的x y座標
 			Graphics2D g = null;
 			BufferedImage image = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			System.out.println(img.getWidth());
 			System.out.println(img.getHeight());
 			g = image.createGraphics();
-
 			Path2D path = new Path2D.Double();
 			path.moveTo(xIntArr[0], yIntArr[0]);
 			for (int i = 1; i < xIntArr.length; i++) {
@@ -166,6 +164,8 @@ public class PreviewServlet extends HttpServlet {
 
 
 		}
+		
+		/***** 圖片合成  *****/
 		if("overlayImage".equals(action)){
 			
 			BufferedImage img = null ;
@@ -215,7 +215,7 @@ public class PreviewServlet extends HttpServlet {
 					System.out.println("img----" + img);
 				}
 			}
-			
+			// 取得裁剪過的圖
 			cropCont = contSvc.getOneContent(cropCont_no);
 			BufferedImage cropImage = javax.imageio.ImageIO.read(new ByteArrayInputStream(cropCont.getImg()));
 			Graphics g = img.getGraphics();

@@ -6,7 +6,7 @@
 <%
 	//String mem_no = (String)session.getAttribute("mem_no");
 	session.setAttribute("mem_no","1001");
-	String originalCont_no = (String) request.getAttribute("originalCont_no");
+	//String originalCont_no = (String) request.getAttribute("originalCont_no");
 	//String cropCont_no = (String) request.getAttribute("cropCont_no");
 	String cropCont_no = "0129";
 %>
@@ -27,36 +27,23 @@
 		<div class="col-md-offset-1 col-md-2 col-xs-0">
 			<br> <br> <br>
 			<ul class="list-group">
-				<a
-					href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp"
-					class="list-group-item menua">編輯個人資料</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
 				<br>
-
-				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp"
-					class="list-group-item menua">密碼修改</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 				<br>
-
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 				<br>
-				<a
-					href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp"
-					class="list-group-item menua">作品挑選管理</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 				<br>
-
-				<a
-					href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp"
-					class="list-group-item menua">我的相簿</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a>
 				<br>
-
 				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua">我的最愛</a>
 				<br>
-				<a href="#" class="list-group-item menua">實景預覽</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua active">實景預覽</a>
 				<br>
-				<a
-					href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp"
-					class="list-group-item menua">商城專區</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
 
@@ -70,6 +57,11 @@
 					<a type='button' class="btn btn-app btn-default" id='btnLoad'
 					onclick='load_image();'><i class="fa fa-image"></i> 選擇照片</a>
 					<button class="btn btn-default" id='drawBtn'><i class="fa fa-paint-brush"></i> 畫邊框</button>
+					
+<!-- 						<input type="text" id="brushWidth1" readonly style="border:0; color:#f6931f; font-weight:bold;"> -->
+<!-- 						<input type="range" id="brushWidth" value="5" max='10' min='1'> -->
+					<div id="brushWidth" ></div>
+					<button class="btn btn-default" id='stopDrawing'> Stop Drawing</button>
 					<button class="btn btn-default" onclick='clearDrawing()'><i class="fa fa-times"></i> 清除</button>
 					<button class="btn btn-info" id='submitBtn'>裁切</button>
 
@@ -80,7 +72,8 @@
 						<input type='hidden' id='xPoints' name='xPoints' value=''>
 						<input type='hidden' id='yPoints' name='yPoints' value=''>
 						<input type='hidden' name='mem_no' value='${mem_no}'> 
-						<input type='hidden' name='action' value='cropImage'> <input
+						<input type='hidden' name='action' value='cropImage'> 
+						<input
 							type="file" name="imageRemove" id='imgfile'
 							onchange="preview_images()" style="display: none"> 
 					</form>
@@ -95,6 +88,15 @@
 				</div>
 			</div>
 		</div>
+		
+<style>
+	#brushWidth{
+		display:none;
+ 		width: 100px; 
+		margin: 0 8px;
+	}
+
+</style>
 <script type="text/javascript">
 		
 		var canvas = document.getElementById("canvas");
@@ -102,6 +104,7 @@
 		var xPoints = [];
 		var yPoints = [];
 		var image;
+		var lineWidth;
 		var hasImage = false;
 		var hasBeenDrawn = false;
 		
@@ -110,10 +113,9 @@
 		context.font = "30px Sacramento";
 		var middleWidth = canvas.width / 2 - 100;
 		var middleHeight = canvas.height / 2 -10 ;
-		context.fillText("請先選擇照片!",middleWidth, middleHeight);
+		context.fillText("請先選擇照片...",middleWidth, middleHeight);
 	}	
 	
-		
 		
 	// 預覽圖片	
 	function load_image(){
@@ -170,8 +172,11 @@
           }
         }
 		
+		// Clear the Drawing and Image
 		function clearDrawing(){
 			context.clearRect(0, 0, canvas.width, canvas.height);
+			xPoints=[];
+			yPoints=[];
 			hasImage = false;
 		}
 		
@@ -180,41 +185,57 @@
 			var stillDown = false;
 			var canvas = $("#canvas");
 			
-			// Drawing Effect
+			function mouseDownHandler(e){
+				stillDown = true;
+				console.log("down");
+                var pos = getMousePos(document.getElementById("canvas"), e);
+				context.beginPath();
+                console.log("click" + pos.x + "," +  pos.y)
+				context.moveTo(pos.x, pos.y);
+			}
+			
+			function mouseMoveHandler(e){
+				if (!stillDown) {
+					return;
+				}
+				console.log("moving");
+				context.lineWidth = lineWidth ;
+				context.strokeStyle = "green";
+				context.lineCap = 'round';
+                var pos = getMousePos(document.getElementById("canvas"), e);
+				context.lineTo(pos.x, pos.y);
+				xPoints.push(pos.x);
+				yPoints.push(pos.y);
+				context.stroke();
+			}
+			
+			function mouseUpHandler(e){
+				stillDown = false;
+				context.closePath();
+			}
+			
+			// Start Drawing
 			$("#drawBtn").on("click",function(e){
 				console.log("1111111111");
+				$("#brushWidth").css("display","inline-block");
 				canvas.css("cursor","crosshair");
-				canvas.on("mousedown", function(e) {
-					stillDown = true;
-					console.log("down");
-                    var pos = getMousePos(document.getElementById("canvas"), e);
-					context.beginPath();
-                    console.log("click" + pos.x + "," +  pos.y)
-					context.moveTo(pos.x, pos.y);
-
-				});
-				canvas.on("mousemove", function(e) {
-					if (!stillDown) {
-						return;
-					}
-					console.log("moving");
-					context.lineWidth = 10;
-					context.strokeStyle = "green";
-					context.lineCap = 'round';
-                    var pos = getMousePos(document.getElementById("canvas"), e);
-					context.lineTo(pos.x, pos.y);
-					xPoints.push(pos.x);
-					yPoints.push(pos.y);
-					context.stroke();
-
-				});
-				canvas.on("mouseup", function(e) {
-					stillDown = false;
-					context.closePath();
-				});
+				canvas.on("mousedown", mouseDownHandler);
+				canvas.on("mousemove", mouseMoveHandler);
+				canvas.on("mouseup", mouseUpHandler);
 				hasBeenDrawn = true;
 			});
+			// Stop Drawing
+			$("#stopDrawing").on("click",function(e){
+				console.log("22222222222");
+				$("#brushWidth").css("display","none");
+				canvas.css("cursor","default");
+				canvas.off("mousedown", mouseDownHandler);
+				canvas.off("mousemove", mouseMoveHandler);
+				canvas.off("mouseup", mouseUpHandler);
+				
+			});
 			
+			// Submit
 			$("#submitBtn").on("click", function() {
 				if(hasBeenDrawn == false || hasImage == false){return;}
 				var JSONxPoints = JSON.stringify(xPoints);
@@ -224,6 +245,17 @@
 				console.log("XXX");
 				$("#image-form").submit();
 				console.log("YYY");
+			});
+			
+			// Change Brush Width
+			$("#brushWidth").slider({
+			      range: "min",
+			      value: 5,
+			      min: 1,
+			      max: 10,
+			      slide: function( event, ui ) {
+			    	 lineWidth = ui.value;
+			      }
 			});
 			
 		});

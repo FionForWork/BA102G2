@@ -36,23 +36,23 @@
 		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2">
 			<ul class="list-group">
-				<a href="#" class="list-group-item menua">編輯個人資料</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
 				<br>
-				<a href="#" class="list-group-item menua">密碼修改</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 				<br>
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">作品挑選管理</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 				<br>
-				<a href="#" class="list-group-item menua active">我的相簿</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua active">我的相簿</a>
 				<br>
-				<a href="#" class="list-group-item menua">我的最愛</a>
+				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua">我的最愛</a>
 				<br>
-				<a href="#" class="list-group-item menua">實景預覽</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 				<br>
-				<a href="#" class="list-group-item menua">商城專區</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
 
@@ -161,8 +161,6 @@
 							</a>
 						</div>
 						<div class="panel-footer">
-
-
 							<form class="form-inline" id="update${s.count}"
 								action="<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp"
 								method="post">
@@ -177,9 +175,10 @@
 								<input type="hidden" name="action" value="delete_Album">
 
 							</form>
-							<div class="text-right">
-								<span style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
+							
+								<span id='pictureCount' style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
 									張相片</span> 
+									<div class="text-right">
 									<a href="#"
 									onclick="document.getElementById('update${s.count}').submit();">
 									<span class='fa fa-pencil' style='font-size: 20px;'></span>
