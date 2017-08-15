@@ -73,7 +73,8 @@
 						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 						<c:forEach var="comVO" items="${comSvc.all}">
 						<c:if test="${param.com_no==comVO.com_no}">
-						<div><img class="img-circle" style="width:25%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">${comVO.name}</div>
+						<div class="col-md-4"><img class="img-circle" style="width:80%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
+						<div class="col-md-8">${comVO.name}</div>
 						</c:if>
 						</c:forEach>
 						<div id="statusOutput"></div>
@@ -82,7 +83,7 @@
 					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">							
-							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',																												  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',																												  '${memVO != null? memVO.name : comVO.name}');" />	
 							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
 							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
 												 '${memVO != null? memVO.name : comVO.name}')" />	

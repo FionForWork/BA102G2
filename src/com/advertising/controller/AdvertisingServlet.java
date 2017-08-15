@@ -269,8 +269,9 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
+			String whichPage = req.getParameter("whichPage");
+			req.setAttribute("whichPage", whichPage);
 			try {
-				String whichPage = req.getParameter("whichPage");
 				
 				String adv_no = new String(req.getParameter("adv_no"));
 				System.out.println("ADV_NO=" + adv_no);
@@ -291,8 +292,10 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
+			System.out.println("requestURL:" + requestURL);
+			String whichPage = req.getParameter("whichPage");
+			req.setAttribute("whichPage", whichPage);
 			try {
-				String whichPage = req.getParameter("whichPage");
 				
 				String adv_no = new String(req.getParameter("adv_no"));
 				System.out.println("ADV_NO:" + adv_no);
@@ -307,7 +310,46 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getVdo(), "1");
 
 				req.setAttribute("advertisingVO", advertisingVO);
-				String url = requestURL+"?whichPage="+whichPage+"&adv_no="+adv_no;
+				String url = null;
+				if (requestURL.equals("/Back_end/advertising/ad.jsp"))
+					url = requestURL+"?whichPage="+whichPage;
+				else
+					url = requestURL;
+				
+				req.getRequestDispatcher(url).forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+			}
+		}
+		
+		if("disapproved".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
+			String whichPage = req.getParameter("whichPage");
+			req.setAttribute("whichPage", whichPage);
+			try {
+				
+				String adv_no = new String(req.getParameter("adv_no"));
+				System.out.println("ADV_NO:" + adv_no);
+				
+				AdvertisingVO advertisingVO = new AdvertisingVO();
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
+
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
+						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
+						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
+						oldAdvertisingVO.getVdo(), "2");
+
+				req.setAttribute("advertisingVO", advertisingVO);
+				String url = null;
+				if (requestURL.equals("/Back_end/advertising/ad.jsp"))
+					url = requestURL+"?whichPage="+whichPage;
+				else
+					url = requestURL;
 				req.getRequestDispatcher(url).forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
@@ -319,9 +361,7 @@ public class AdvertisingServlet extends HttpServlet {
 
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		System.out.println("header=" + header); // 測試用
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		System.out.println("filename=" + filename); // 測試用
 		if (filename.length() == 0) {
 			return null;
 		}

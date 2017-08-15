@@ -47,8 +47,7 @@ public class ContactUs extends HttpServlet {
 		
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("map", map);
-			String requestURL = req.getParameter("requestURL");
-			req.getRequestDispatcher(requestURL).forward(req, res);
+			req.getRequestDispatcher("/Front_end/com_page/Index.jsp").forward(req, res);
 			return;
 			
 		}
@@ -62,9 +61,7 @@ public class ContactUs extends HttpServlet {
 		MailService mailService = new MailService();
 	    mailService.sendMail(to, subject, messageText);
 	    
-
-	    String requestURL = req.getParameter("requestURL");
-		req.getRequestDispatcher(requestURL).forward(req, res);
+		req.getRequestDispatcher("/Front_end/com_page/Index.jsp").forward(req, res);
 	}
 
 }

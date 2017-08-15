@@ -19,6 +19,8 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
+	
+	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
 %>
 
 <html>
@@ -26,6 +28,37 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
+	
+	<!--聯絡我們 -->
+	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">聯絡我們</h4>
+        </div>
+        <div class="modal-body">
+         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(map.name==null)?'':map.name}">
+         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(map.email==null)?'':map.email}"> 
+         	要說的話:<font color='red'>${errorMsgs.messagesArea}</font><br>
+         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(map.messagesArea==null)?'':map.messagesArea}</textarea>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
+          <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  </form>
+	<!--聯絡我們 -->
+
+
 
 
 	<%@ include file="page/before.file"%>
@@ -46,20 +79,22 @@
 	</c:forEach>
 	<!--banner -->
 
-	<!--店家大頭照-->
+	<!--廠商大頭照-->
 	<div class="com_head container">
 		<img class="com_logo img-circle center-block"
 			src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"
 			alt="She Said Yes">
 	</div>
-	<!--店家大頭照-->
+	<!--廠商大頭照-->
 
+	<!--廠商名稱-->
 	<div class="text-center">
 		<h1>${comVO.name}</h1>
 		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
 	</div>
+	<!--廠商名稱-->
 	
-
+	<!--麵包削-->
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">
 			<li><a href="#info" title="聯絡資訊"> 聯絡資訊 </a></li>
@@ -68,8 +103,9 @@
 			<li><a href="#introduction" title="關於我"> 關於我 </a></li>
 		</ul>
 	</div>
-
-	<!--店家資料-->
+	<!--麵包削-->
+	
+	<!--廠商資料-->
 	<div class="container" id="info">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-8">
@@ -99,19 +135,20 @@
 				</table>
 			</div>
 		</div>
-		<!--////////////////////////////-->
-		<!--預約按鈕-->
+		<!--廠商資料-->
+		
+		<!--預約+即時訊息按鈕-->
 		<div class="col-sm-3">
 			<p class="text-center">
-				<a class="btn btn-reservation btn-lg" href="">連絡我們 <i class="fa fa-comment"></i></a>
+				<a class="btn btn-reservation btn-lg">立即連絡我們 <i class="fa fa-comment"></i></a>
 				<br><br>
 				<a class="btn btn-reservation btn-lg" href="">預約 </a>
 			</p>
 		</div>
 	</div>
-	<!--店家資料-->
+	<!--預約+即時訊息按鈕-->
 
-	<!--店家相簿-->
+	<!--廠商相簿-->
 	<div class="text-center" id="works">
 		<span>
 			<h1>作品</h1>
@@ -174,9 +211,9 @@
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
 	</div>
-	<!--店家相簿-->
+	<!--廠商相簿-->
 
-	<!--店家方案-->
+	<!--廠商方案-->
 	<div class="text-center" id="service">
 		<span>
 			<h1>方案</h1>
@@ -231,12 +268,13 @@
 	</div>
 	
 	</div>
-	<!--店家方案-->
+	<!--廠商方案-->
+	
 
-	<!--店家影片-->
-	<!--店家影片-->
+	<!--廠商影片-->
+	<!--廠商影片-->
 
-	<!--店家自介-->
+	<!--廠商自介-->
 	<div class="text-center" id="introduction">
 		<span>
 			<h1>關於我</h1>
@@ -251,7 +289,7 @@
 		</div>
 	</div>
 
-	<!--店家自介-->
+	<!--廠商自介-->
 
 
 	<%@ include file="page/after.file"%>

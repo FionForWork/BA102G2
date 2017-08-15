@@ -1,6 +1,12 @@
 
 .panel-heading {
-	height: 50px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 70px;
+	padding: 0px;
+	border-bottom: 1px solid #FFFFFF;
 }
 .panel-footer {
 	background:#FFC0CB;
@@ -99,9 +105,6 @@
     border-color: whitesmoke transparent transparent transparent;     
 }
 
-.text {
-	padding:0px;
-}
 
 .text-field {
 	width: 240px;
@@ -119,6 +122,7 @@
 }
 
 .text{
+	padding:0px;
     width:75%;
     display:flex;
     flex-direction:column;

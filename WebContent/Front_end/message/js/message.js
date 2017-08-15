@@ -1,9 +1,9 @@
 
 $(document).ready(function(){
 	$("#open_chat").click(function(){
-		$("#chatbox").toggle();
+		$("#chatbox").slideToggle();
 	 });
 	$("#close_chat").click(function(){
-		$("#chatbox").toggle();
+		$("#chatbox").slideToggle();
 	 });
 });
