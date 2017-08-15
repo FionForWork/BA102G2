@@ -84,6 +84,10 @@ public class ReservationService {
 		return dao.getAllMemRes(mem_no);
 	}
 	
+	public List<ReservationVO> getAllComRes(String com_no){
+		return dao.getAllComRes(com_no);
+	}
+	
 	public List<ReservationVO> getMemRes(String mem_no, String status){
 		return dao.getMemRes(mem_no, status);
 	}
@@ -95,7 +99,7 @@ public class ReservationService {
 	public List<ReservationVO> getMemRes(String mem_no, String status, String status2){
 		return dao.getMemRes(mem_no, status,status2);
 	}
-	public List<ReservationVO> getCOMRes(String mem_no, String status, String status2){
+	public List<ReservationVO> getComRes(String mem_no, String status, String status2){
 		return dao.getMemRes(mem_no, status,status2);
 	}
 }

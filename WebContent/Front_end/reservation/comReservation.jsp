@@ -10,8 +10,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	ReservationService resService = new ReservationService();
-	List<ReservationVO> list = resService.getComRes("2001","1");
-	
+	String status = request.getParameter("status");
+	List<ReservationVO> list = null;
+	if(status != null){
+		if(status.equals("3")){
+			list = resService.getComRes("2001",status,"4");
+		}else{
+			list = resService.getComRes("2001",status);
+		}
+	}else{
+		list = resService.getAllComRes("2001");
+	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
 	pageContext.setAttribute("dateDF", dateDF);
@@ -32,13 +41,16 @@
 <body>
 <%@ include file="page/comHeader.file" %>
 <ul class="nav nav-tabs nav-justified">
-	<li><a id="0" class="menua" onclick="showRes(0)">未繳訂金</a></li>
-	<li><a id="1" class="menua" onclick="showRes(1)">訂單確認</a></li>
-	<li><a id="2" class="menua" onclick="showRes(2)">尚未評價</a></li>
-	<li><a id="3" class="menua" onclick="showRes(3)">服務完成</a></li>
+	<li class="pointer"><a id="0" class="menua" onclick="showRes(0)">未繳訂金</a></li>
+	<li class="pointer"><a id="1" class="menua" onclick="showRes(1)">訂單確認</a></li>
+	<li class="pointer"><a id="2" class="menua" onclick="showRes(2)">尚未評價</a></li>
+	<li class="pointer"><a id="3" class="menua" onclick="showRes(3)">服務完成</a></li>
 <br>
 </ul>
 <div id="allRes">
+<c:if test="${list.size() == 0 }">
+	<h3 class="text-center">目前沒有此狀態訂單資訊!</h3>
+</c:if>
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
 			<div class="panel-body">
@@ -98,7 +110,7 @@
 </body>
 <script>
 	function showRes(y){
-		$('#allRes').load("memReservation.jsp #allRes",{"status":y});
+		$('#allRes').load("comReservation.jsp #allRes",{"status":y});
 	}
 </script>
 </html>

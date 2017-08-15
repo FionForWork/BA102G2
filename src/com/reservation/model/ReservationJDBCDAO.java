@@ -483,6 +483,12 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 		return null;
 	}
 
+	@Override
+	public List<ReservationVO> getAllComRes(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

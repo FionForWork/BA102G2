@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.calendar.model.*;
 
 /**
@@ -30,6 +33,8 @@ public class CalendarServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
+		System.out.println("servletAction : " + action);
+		PrintWriter out = res.getWriter();
 		
 		// 更改行程時間
 		if(action.equals("updateDate")){
@@ -83,8 +88,18 @@ public class CalendarServlet extends HttpServlet {
 				return;
 			}
 			
+			
 			CalendarService calendarService = new CalendarService();
 			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
+
+//			JSONObject j = new JSONObject();
+//			try {
+//				j.put("result", "success");
+//				out.print(j);
+//				return;
+//			}catch (JSONException e) {
+//				e.printStackTrace();
+//			}		
 			
 			String[] date = cal_date.split("-");
 			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
@@ -108,6 +123,41 @@ public class CalendarServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 			successView.forward(req, res);
 			
+		}
+		
+		
+		if(action.equals("addScheduleAjax")){
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String cal_date = req.getParameter("cal_date");
+			String content = req.getParameter("content");
+			System.out.println(content);
+//			Timestamp t = null;
+//			try{
+//				t.valueOf(cal_date+" 00:00:00");
+//			}catch(IllegalArgumentException e){
+//				errorMsgs.add("請輸入正確的日期格式!");
+//				
+//			}
+			
+			CalendarService calendarService = new CalendarService();
+			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
+			
+//			String[] date = cal_date.split("-");
+//			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+//			req.setAttribute("localDate", localDate);
+//			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+//			successView.forward(req, res);
+			
+			JSONObject j = new JSONObject();
+			try {
+				j.put("result", "success");
+				out.print(j);
+			}catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

@@ -12,10 +12,7 @@
 	// 廠商資料
 	ComVO comVO = new ComVO();
 	comVO.setCom_no("2001");	
-	
-	String action = request.getParameter("action");
-	System.out.print("JSPAction : " + action);
-	
+
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
@@ -111,7 +108,7 @@
 		</div>
 	</c:forEach>
 </c:if>
-<div class="container">
+<div id="cal" class="container">
 <div class="text-center col-md-offset-1 col-md-10">
 <table class="table table-bordered ui-widget-head" >
 	<thead>
@@ -205,13 +202,14 @@
 <br>
 </div>
 <!-- 新增Schedule -->
+<button class="btn btn-danger" onclick="addCalendar()">ajax</button>
 <form  id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
 	<div id="myModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
 						為您的行事曆新增活動
 					</h4>
@@ -229,6 +227,7 @@
 					<input type="hidden" name="action" value="addSchedule">
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 <!-- 					<input type="submit" class="btn btn-info" value="新增活動"> -->
+					<button type="button" class="btn btn-danger" onclick="addCalendar(this)">AJAX</button>
 					<button type="button" class="btn btn-info" onclick="addSchedule()">新增活動</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
@@ -254,7 +253,6 @@
 <input type="hidden" id="thisDate" value="">
 <input type="hidden" id="toDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
-
 </body >
 
 <script>
@@ -324,21 +322,45 @@
 						"action" : "addSchedule"};
 		
 		webSocket.send(JSON.stringify(jsonObj));
-		$('#addScheduleForm').submit();
+// 非AJAX用
+// 		$('#addScheduleForm').submit();
+	}
+	
+	function ajaxaddSchedule() {
+
+		
+		var jsonObj = {"thisDate" : "2017831",
+						"action" : "addSchedule"};
+		
+		webSocket.send(JSON.stringify(jsonObj));
 	}
 	
 	function disconnect () {
 		webSocket.close();
 
 	}
-
 	
 	function updateStatus(newStatus) {
 		statusOutput.innerHTML = newStatus;
 	}
     
 </script>
-<%
-System.out.print("JSPAction2 : " + request.getParameter("action"));
-%>
+<script type="text/javascript">
+function addCalendar() {
+	$('#modalClose').click();
+	$.ajax({
+		url : "<%= request.getContextPath() %>/calendar/calendar.do",
+		data : $("#addScheduleForm").serialize(),
+		type : 'POST',
+		cache:false,
+		error : function(xhr) {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			addSchedule();
+			$('#cal').load("calendar.jsp #cal");
+		}
+	});
+}
+</script>
 </html>
