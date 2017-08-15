@@ -266,6 +266,13 @@ public class ReservationServlet extends HttpServlet {
 					e1.printStackTrace();
 				}
 				out.print(result);
+				return;
+			}
+			try {
+				result.put("r", "卡號正確");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			out.print(result);
 		}

@@ -129,16 +129,16 @@
 				<label >請填入信用卡號</label>
 				<div class="row">
 					<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4" onkeyup="checkNum(this)">
+	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
 	      			</div>
 	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4">
+	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
 	      			</div>
 	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4">
+	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
 	      			</div>
 	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4">
+	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
 	      			</div>
 	      		</div><br>
 	      		<div class="row">
@@ -148,7 +148,7 @@
 	      		</div>
 	      		<div class="row">
 		      		<div class="col-xs-3">
-		        			<input class="form-control" type="text" maxlength="3">
+		        			<input class="form-control" type="text" maxlength="3" onblur="checkNum(this)">
 		      		</div>
 		      		<div class="col-xs-3">
 						<select class="form-control">
@@ -167,11 +167,15 @@
 	      		</div>
 			</div>
 			<div class="modal-footer"><hr>
-				<input type="hidden" name="action" value="pay">
-				<input type="hidden" id="res_no" name="res_no" value="">
-				<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
-				<input type="submit"  class="btn btn-danger" value="確認刷卡">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			
+				<div id="showResult" style="text-align:left" class="col-md-6"></div>
+				<div class="col-md-6">
+					<input type="hidden" name="action" value="pay">
+					<input type="hidden" id="res_no" name="res_no" value="">
+					<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+					<input type="submit"  class="btn btn-danger" value="確認刷卡">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>			
 			</div>
 		</div>    
 	</div>
@@ -192,7 +196,6 @@
 </body>
 <script>
 function checkNum(y) {
-	alert($(y).val());
 	$.ajax({
 		url : "<%= request.getContextPath() %>/reservation/reservation.do",
 		data : {
@@ -205,10 +208,12 @@ function checkNum(y) {
 			alert('Ajax request 發生錯誤');
 		},
 		success : function(result) {
-			alert(result.r);
+			if(result.r == "卡號正確"){
+				alert("123");
+			}
+			$('#showResult').html(result.r);
 		}
 	});
-// 	$('#showPanel').load("listComDetail.jsp");
 }
 </script>
 </html>
