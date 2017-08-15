@@ -10,7 +10,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	ReservationService resService = new ReservationService();
-	List<ReservationVO> list = resService.getComRes("2001");
+	List<ReservationVO> list = resService.getComRes("2001","1");
+	
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
 	pageContext.setAttribute("dateDF", dateDF);
@@ -30,6 +31,14 @@
 </head>
 <body>
 <%@ include file="page/comHeader.file" %>
+<ul class="nav nav-tabs nav-justified">
+	<li><a id="0" class="menua" onclick="showRes(0)">未繳訂金</a></li>
+	<li><a id="1" class="menua" onclick="showRes(1)">訂單確認</a></li>
+	<li><a id="2" class="menua" onclick="showRes(2)">尚未評價</a></li>
+	<li><a id="3" class="menua" onclick="showRes(3)">服務完成</a></li>
+<br>
+</ul>
+<div id="allRes">
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
 			<div class="panel-body">
@@ -79,6 +88,7 @@
 			</div>
 		</div>
 	</c:forEach>
+</div>
 <form id="resCompletedForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 	<input type="hidden" name="action" value="resCompleted">
 	<input type="hidden" id="res_no_completed" name="res_no" value="">
@@ -86,4 +96,9 @@
 </form>
 <%@ include file="page/comFooter.file" %>
 </body>
+<script>
+	function showRes(y){
+		$('#allRes').load("memReservation.jsp #allRes",{"status":y});
+	}
+</script>
 </html>

@@ -40,7 +40,6 @@ $(document).ready(function(){
 	    
 	  });
 	  
-	  
 	});
 
 		function pay(y){

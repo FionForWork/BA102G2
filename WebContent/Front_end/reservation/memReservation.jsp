@@ -10,7 +10,17 @@
 
 <% 
 	ReservationService reservationService = new ReservationService();
-	List<ReservationVO> list = reservationService.getMemRes("1001");
+	String status = request.getParameter("status");
+	List<ReservationVO> list = null;
+	if(status != null){
+		if(status.equals("3")){
+			list = reservationService.getMemRes("1001",status,"4");
+		}else{
+			list = reservationService.getMemRes("1001",status);
+		}
+	}else{
+		list = reservationService.getAllMemRes("1001");
+	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("YYYY年M月d日");
 	pageContext.setAttribute("dateDF", dateDF);
@@ -28,6 +38,18 @@
 <title>Insert title here</title>
 </head>
 <%@ include file="page/memHeader.file" %>
+
+<ul class="nav nav-tabs nav-justified">
+	<li><a id="0" class="menua" onclick="showRes(0)">未繳訂金</a></li>
+	<li><a id="1" class="menua" onclick="showRes(1)">訂單確認</a></li>
+	<li><a id="2" class="menua" onclick="showRes(2)">尚未評價</a></li>
+	<li><a id="3" class="menua" onclick="showRes(3)">服務完成</a></li>
+<br>
+</ul>
+<div id="allRes">
+	<c:if test="${list.size() == 0}">
+		<h3 class="text-center">目前沒有此狀態訂單資訊!</h3>
+	</c:if>
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
 			<div class="panel-body" style="margin:15px">
@@ -82,19 +104,19 @@
 					  <!-- Rating Stars Box -->
 						<div class='rating-stars'>
 							<ul id='stars'>
-								<li class='star' title='Poor' data-value='1'>
+								<li onclick="clickStars(this)" class='star' title='Poor' data-value='1'>
 									<i class='fa fa-star fa-fw'></i>
 								</li>
-								<li class='star' title='Fair' data-value='2'>
+								<li onclick="clickStars(this)" class='star' title='Fair' data-value='2'>
 									<i class='fa fa-star fa-fw'></i>
 								</li>
-								<li class='star' title='Good' data-value='3'>
+								<li onclick="clickStars(this)" class='star' title='Good' data-value='3'>
 									<i class='fa fa-star fa-fw'></i>
 								</li>
-								<li class='star' title='Excellent' data-value='4'>
+								<li onclick="clickStars(this)" class='star' title='Excellent' data-value='4'>
 									<i class='fa fa-star fa-fw'></i>
 								</li>
-								<li class='star' title='WOW!!!' data-value='5'>
+								<li onclick="clickStars(this)" class='star' title='WOW!!!' data-value='5'>
 									<i class='fa fa-star fa-fw'></i>
 								</li>
 							</ul>
@@ -107,12 +129,12 @@
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>
-					
 			</div>
 		</div>
 	</c:forEach>
+</div>
 <%@ include file="page/memFooter.file" %>
-<form class="form-group" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
+<form id="payForm" class="form-group" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
 	<div class="modal-dialog">  
@@ -126,29 +148,32 @@
 				<div calss="row">
 					<img style="width:50%" src="<%=request.getContextPath()%>/Front_end/reservation/img/card.jpg">
 				</div>
-				<label >請填入信用卡號</label>
-				<div class="row">
-					<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
+				<div calss="row col-md-12">
+					<label class="col-md-3">請填入信用卡號</label>
+					<div  class="col-md-9" id="showResult"></div>
+				</div>
+				<div class="row col-md-12">
+					<div class="col-md-2">
+	        			<input class="form-control" id="cardNum1" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
+	      			<div class="col-md-2">
+	        			<input class="form-control" id="cardNum2" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
+	      			<div class="col-md-2">
+	        			<input class="form-control" id="cardNum3" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-xs-2">
-	        			<input class="form-control" type="text" maxlength="4" onblur="checkNum(this)">
+	      			<div class="col-md-2">
+	        			<input class="form-control" id="cardNum4" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
 	      		</div><br>
 	      		<div class="row">
-		      		<label class="col-xs-3">信用卡末3碼</label>
-		      		<label class="col-xs-3">到期月分</label>
-		      		<label class="col-xs-3">到期年份</label>
+		      		<label class="col-md-3">信用卡末3碼</label>
+		      		<label class="col-md-3">到期月分</label>
+		      		<label class="col-md-3">到期年份</label>
 	      		</div>
 	      		<div class="row">
 		      		<div class="col-xs-3">
-		        			<input class="form-control" type="text" maxlength="3" onblur="checkNum(this)">
+		        			<input class="form-control" id="threeNum" type="text" maxlength="3" onblur="checkNum(this)">
 		      		</div>
 		      		<div class="col-xs-3">
 						<select class="form-control">
@@ -167,15 +192,14 @@
 	      		</div>
 			</div>
 			<div class="modal-footer"><hr>
-			
-				<div id="showResult" style="text-align:left" class="col-md-6"></div>
+				<div class="col-md-6" id="showPanel"></div>
 				<div class="col-md-6">
 					<input type="hidden" name="action" value="pay">
 					<input type="hidden" id="res_no" name="res_no" value="">
 					<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
-					<input type="submit"  class="btn btn-danger" value="確認刷卡">
+					<input type="button"  class="btn btn-danger" value="確認刷卡" onclick="checkForm()">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>			
+				</div>
 			</div>
 		</div>    
 	</div>
@@ -195,12 +219,13 @@
 
 </body>
 <script>
-function checkNum(y) {
+function checkCardNum(y) {
 	$.ajax({
 		url : "<%= request.getContextPath() %>/reservation/reservation.do",
 		data : {
 			action : "checkNum",
-			cardNum1 : $(y).val()
+			type : "cardNum",
+			cardNum : $(y).val()
 		},
 		type : 'POST',
 		dataType: "JSON",
@@ -209,11 +234,101 @@ function checkNum(y) {
 		},
 		success : function(result) {
 			if(result.r == "卡號正確"){
-				alert("123");
+				var checkResult = $("<div style='color:green'>").text(result.r);
+				$('#showResult').html(checkResult);
+			}else{
+				var checkResult = $("<div style='color:red'>").text(result.r);
+				$('#showResult').html(checkResult);
 			}
-			$('#showResult').html(result.r);
 		}
 	});
 }
+
+function checkNum(y) {
+	$.ajax({
+		url : "<%= request.getContextPath() %>/reservation/reservation.do",
+		data : {
+			action : "checkNum",
+			type : "threeNum",
+			threeNum : $(y).val()
+		},
+		type : 'POST',
+		dataType: "JSON",
+		error : function(xhr) {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			if(result.r == "卡號正確"){
+				var checkResult = $("<div style='color:green'>").text(result.r);
+				$('#showResult').html(checkResult);
+			}else{
+				var checkResult = $("<div style='color:red'>").text(result.r);
+				$('#showResult').html(checkResult);
+			}
+		}
+	});
+}
+
+function checkForm() {
+	$.ajax({
+		url : "<%= request.getContextPath() %>/reservation/reservation.do",
+		data : {
+			action : "checkForm",
+			cardNum1 : $('#cardNum1').val(),
+			cardNum2 : $('#cardNum2').val(),
+			cardNum3 : $('#cardNum3').val(),
+			cardNum4 : $('#cardNum4').val(),
+			threeNum : $('#threeNum').val()
+		},
+		type : 'POST',
+		dataType: "JSON",
+		error : function(xhr) {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			if(result.r == "卡號正確"){
+				$('#payForm').submit();
+			}else{
+				var checkResult = $("<div style='color:red'>").text(result.r);
+				$('#showPanel').html(checkResult);
+			}
+		}
+	});
+}
+
+function showRes(y){
+	$('#allRes').load("memReservation.jsp #allRes",{"status":y});
+}
+
+function clickStars(y){
+	var onStar = parseInt($(y).data('value'), 10); // The star currently selected
+    var stars = $(y).parent().children('li.star');
+    
+    for (i = 0; i < stars.length; i++) {
+      $(stars[i]).removeClass('selected');
+    }
+    
+    for (i = 0; i < onStar; i++) {
+      $(stars[i]).addClass('selected');
+    }
+    
+    // JUST RESPONSE (Not needed)
+    var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+    $('#ratingStar').val(ratingValue);
+}
+
+function overStars(y){
+	var onStar = parseInt($(y).data('value'), 10); // The star currently mouse on
+    // Now highlight all the stars that's not after the current hovered star
+    $(y).parent().children('li.star').each(function(e){
+      if (e < onStar) {
+        $(y).addClass('hover');
+      }
+      else {
+        $(y).removeClass('hover');
+      }
+    });
+}
+
 </script>
 </html>

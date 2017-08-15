@@ -202,7 +202,7 @@
 <br>
 </div>
 <!-- 新增Schedule -->
-<form id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
+<form  id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
 	<div id="myModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
@@ -327,7 +327,6 @@
 		webSocket.close();
 
 	}
-
 	
 	function updateStatus(newStatus) {
 		statusOutput.innerHTML = newStatus;

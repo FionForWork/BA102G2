@@ -252,30 +252,95 @@ public class ReservationServlet extends HttpServlet {
 		
 		if(action.equals("checkNum")){
 			PrintWriter out = res.getWriter();
-			String cardNum1 = req.getParameter("cardNum1");
+			String type = req.getParameter("type");
+			if(type.equals("cardNum") || type.equals("threeNum")){
+				String cardNum = null;
+				
+				if(type.equals("cardNum")){
+					cardNum = req.getParameter("cardNum");
+				}else{
+					cardNum = req.getParameter("threeNum");
+				}
+				
+				JSONObject result = new JSONObject();
+				
+				Integer num = null;
+				try{
+					num = new Integer(cardNum);
+				}catch(NumberFormatException e){
+					try {
+						result.put("r", "請輸入正確卡號");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				if((type.equals("cardNum") && cardNum.trim().length() != 4) || (type.equals("threeNum") && cardNum.trim().length() != 3)){
+					try {
+						result.put("r", "卡號長度不符");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				try {
+					result.put("r", "卡號正確");
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			
+			}
+		}
+		
+		if(action.equals("checkForm")){
+			PrintWriter out = res.getWriter();
+			String cardNum1 = req.getParameter("cardNum1");
+			String cardNum2 = req.getParameter("cardNum2");
+			String cardNum3 = req.getParameter("cardNum3");
+			String cardNum4 = req.getParameter("cardNum4");
+			String threeNum = req.getParameter("threeNum");
 			JSONObject result = new JSONObject();
-			Integer num = null;
-			try{
-				num = new Integer(cardNum1);
-			}catch(NumberFormatException e){
+			
+			if(cardNum1.trim().length() == 4 && cardNum2.trim().length() == 4 &&
+				cardNum3.trim().length() == 4 && cardNum4.trim().length() == 4 && threeNum.length() == 3){
+				
+				try{
+					Integer cardNum5 = new Integer(cardNum1);
+					Integer cardNum6 = new Integer(cardNum2);
+					Integer cardNum7 = new Integer(cardNum3);
+					Integer cardNum8 = new Integer(cardNum4);
+					Integer cardNum9 = new Integer(threeNum);
+				}catch(NumberFormatException e){
+					try {
+						result.put("r", "請輸入正確卡號");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				try {
+					result.put("r", "卡號正確");
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}else{
 				try {
 					result.put("r", "請輸入正確卡號");
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-				out.print(result);
-				return;
 			}
-			try {
-				result.put("r", "卡號正確");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			out.print(result);
 		}
+		
 		
 	}
 

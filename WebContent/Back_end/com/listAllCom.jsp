@@ -60,7 +60,7 @@
 			</table>
 		<%@ include file="page/page2.file" %>
 <input type="button" value="顯示員工資料" id="btn">
-<div id="showPanel"></div>
+<div id="showPanel" ></div>
 <!-- 內文 -->		
 		</div>
 	</div>
@@ -87,11 +87,11 @@ $("#btn").click(function() {
 			console.log(result);
 			var com = result.comList;
 			console.log(result.comList[0].com_no);
-			$("#showPanel").html(com[0].com_no + "<br>" +com[0].loc + "<br>" +com[0].name);
+// 			$("#showPanel").html(com[0].com_no + "<br>" +com[0].loc + "<br>" +com[0].name);
 		}
 	});
-
-	$('#showPanel').load("listComDetail.jsp");
+	var com_no = "2001";
+	$('#showPanel').load("listComDetail.jsp?com_no=2002");
 });
 
 </script>

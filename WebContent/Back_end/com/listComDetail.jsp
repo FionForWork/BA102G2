@@ -5,7 +5,8 @@
 <%@ page import="java.util.*" %>
 <%
 	ComService comSvc = new ComService();
-	ComVO listComDeatil = comSvc.getOneCom("2001");
+	String com_no = request.getParameter("com_no");
+	ComVO listComDeatil = comSvc.getOneCom(com_no);
 	pageContext.setAttribute("listComDeatil", listComDeatil);
 	
 %>

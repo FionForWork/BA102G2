@@ -52,7 +52,7 @@ private static final Map<String , Set<Session>> sessionMap = Collections.synchro
 	
 	@OnError
 	public void onError(Session userSession, Throwable e){
-//		e.printStackTrace();
+		e.printStackTrace();
 	}
 	
 	@OnClose
