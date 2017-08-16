@@ -37,8 +37,8 @@ public class CalendarServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 		
 		// 更改行程時間
-		if(action.equals("updateDate")){
-			
+		if("updateDate".equals(action)){
+
 			String cal_no = req.getParameter("cal_no");
 			String cal_date = req.getParameter("cal_date");
 			String requestURL = req.getParameter("requestURL");
@@ -57,7 +57,7 @@ public class CalendarServlet extends HttpServlet {
 		}
 		
 		// 更改年份、月份
-		if(action.equals("changeCalendar")){
+		if("changeCalendar".equals(action)){
 			int month = Integer.valueOf(req.getParameter("month"));
 			int year = Integer.valueOf(req.getParameter("year"));
 			LocalDate localDate = LocalDate.of(year, month, 1);
@@ -69,7 +69,7 @@ public class CalendarServlet extends HttpServlet {
 		}
 		
 //		新增行程
-		if(action.equals("addSchedule")){
+		if("addSchedule".equals(action)){
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -92,24 +92,24 @@ public class CalendarServlet extends HttpServlet {
 			CalendarService calendarService = new CalendarService();
 			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
 
-//			JSONObject j = new JSONObject();
-//			try {
-//				j.put("result", "success");
-//				out.print(j);
-//				return;
-//			}catch (JSONException e) {
-//				e.printStackTrace();
-//			}		
+			JSONObject j = new JSONObject();
+			try {
+				j.put("result", "success");
+				out.print(j);
+				return;
+			}catch (JSONException e) {
+				e.printStackTrace();
+			}		
 			
-			String[] date = cal_date.split("-");
-			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
-			req.setAttribute("localDate", localDate);
-			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
-			successView.forward(req, res);
+//			String[] date = cal_date.split("-");
+//			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+//			req.setAttribute("localDate", localDate);
+//			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+//			successView.forward(req, res);
 		}
 		
 //		刪除行程
-		if(action.equals("deleteSchedule")){
+		if("deleteSchedule".equals(action)){
 			String cal_no = req.getParameter("cal_no");
 			String requestURL = req.getParameter("requestURL");
 			String[] date = req.getParameter("date").split("-");
@@ -126,7 +126,7 @@ public class CalendarServlet extends HttpServlet {
 		}
 		
 		
-		if(action.equals("addScheduleAjax")){
+		if("addScheduleAjax".equals(action)){
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

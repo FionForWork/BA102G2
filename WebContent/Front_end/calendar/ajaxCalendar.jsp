@@ -352,13 +352,13 @@ function addCalendar() {
 		url : "<%= request.getContextPath() %>/calendar/calendar.do",
 		data : $("#addScheduleForm").serialize(),
 		type : 'POST',
-		cache:false,
+		cache : false,
 		error : function(xhr) {
 			alert('Ajax request 發生錯誤');
 		},
 		success : function(result) {
 			addSchedule();
-			$('#cal').load("calendar.jsp #cal");
+			$('#cal').load("ajaxCalendar.jsp #cal");
 		}
 	});
 }
