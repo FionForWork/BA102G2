@@ -41,7 +41,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
+<body onunload="disconnect();">
 	
 	<%@ include file="page/before.file"%>
 
@@ -83,7 +83,8 @@
 					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">							
-							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',																												  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+																																							  '${memVO != null? memVO.name : comVO.name}');" />	
 							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
 							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
 												 '${memVO != null? memVO.name : comVO.name}')" />	

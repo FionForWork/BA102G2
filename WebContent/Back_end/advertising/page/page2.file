@@ -4,7 +4,7 @@
     <div align="center">
     <ul class="pagination">
     <%for (int i=1; i<=pageNumber; i++){%>
-           <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>" ><%=i%></a></li>
+           <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
         <%}%> 
   	</ul>
   	</div>

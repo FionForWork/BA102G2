@@ -245,9 +245,6 @@ public class AdvertisingServlet extends HttpServlet {
 				String adv_no = new String(req.getParameter("adv_no"));
 				System.out.println("ADV_NO:" + adv_no);
 				
-				String status = req.getParameter("status");
-				req.setAttribute("status", status);
-				
 				String whichPage = req.getParameter("whichPage");
 				req.setAttribute("whichPage", whichPage);
 
@@ -310,16 +307,12 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getVdo(), "1");
 
 				req.setAttribute("advertisingVO", advertisingVO);
-				String url = null;
-				if (requestURL.equals("/Back_end/advertising/ad.jsp"))
-					url = requestURL+"?whichPage="+whichPage;
-				else
-					url = requestURL;
 				
-				req.getRequestDispatcher(url).forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
+				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -328,6 +321,7 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
+			System.out.println("requestURL:" + requestURL);
 			String whichPage = req.getParameter("whichPage");
 			req.setAttribute("whichPage", whichPage);
 			try {
@@ -345,15 +339,15 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getVdo(), "2");
 
 				req.setAttribute("advertisingVO", advertisingVO);
+				
 				String url = null;
-				if (requestURL.equals("/Back_end/advertising/ad.jsp"))
 					url = requestURL+"?whichPage="+whichPage;
-				else
-					url = requestURL;
-				req.getRequestDispatcher(url).forward(req, res);
+
+					RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
+					failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -124,5 +124,6 @@ var memNo;
 
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
- 				}		
+ 				}
+ 						
 </script>

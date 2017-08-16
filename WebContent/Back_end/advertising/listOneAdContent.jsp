@@ -30,8 +30,6 @@
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
 					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-					<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
-					<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
 					<input type="hidden" name="action" value="approved">
 					<input type="submit" class="btn btn-info btn-block" value="通過">				
 				</form>
@@ -39,10 +37,8 @@
 				<form method="post"
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
-					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-					<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">						
+					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">					
 					<input type="hidden" name="action" value="disapproved">
-					<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
 					<input type="submit" class="btn btn-danger btn-block" value="未通過">				
 				</form>
 			</div>
@@ -50,11 +46,5 @@
 	</div>
 	
 	
-	<font color=blue>request.getParameter("whichPage"):</font>
-	<%=request.getParameter("whichPage")%><br>
-	<font color=blue>request.getParameter("requestURL"):</font>
-	<%=request.getParameter("requestURL")%><br>
-	<font color=blue>request.getServletPath():</font>
-	<%=request.getParameter("status")%><br>
 </body>
 </html>
