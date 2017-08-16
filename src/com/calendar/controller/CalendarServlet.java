@@ -92,14 +92,14 @@ public class CalendarServlet extends HttpServlet {
 			CalendarService calendarService = new CalendarService();
 			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
 
-			JSONObject j = new JSONObject();
-			try {
-				j.put("result", "success");
-				out.print(j);
-				return;
-			}catch (JSONException e) {
-				e.printStackTrace();
-			}		
+//			JSONObject j = new JSONObject();
+//			try {
+//				j.put("result", "success");
+//				out.print(j);
+//				return;
+//			}catch (JSONException e) {
+//				e.printStackTrace();
+//			}		
 			
 //			String[] date = cal_date.split("-");
 //			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));

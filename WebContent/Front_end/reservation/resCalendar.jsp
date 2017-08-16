@@ -245,7 +245,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/peter/<%= comVO.getCom_no() %>";
+    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));

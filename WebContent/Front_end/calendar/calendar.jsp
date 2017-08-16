@@ -14,7 +14,7 @@
 	comVO.setCom_no("2001");	
 	
 	String action = request.getParameter("action");
-	System.out.print("JSPAction : " + action);
+	System.out.println("JSPAction : " + action);
 	
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
@@ -259,7 +259,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/peter/<%= comVO.getCom_no() %>";
+    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -339,6 +339,6 @@
     
 </script>
 <%
-System.out.print("JSPAction2 : " + request.getParameter("action"));
+System.out.println("JSPAction2 : " + request.getParameter("action"));
 %>
 </html>
