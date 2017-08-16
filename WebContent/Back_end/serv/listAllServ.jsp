@@ -15,13 +15,7 @@
 </head>
 <body bgcolor='white'>
 <b><font color=red>此頁練習採用 EL 的寫法取值:</font></b>
-<table border='1' cellpadding='5' cellspacing='0' width='800'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>所有服務jsp</h3>
-		</td>
-	</tr>
-</table>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -34,7 +28,7 @@
 	</font>
 </c:if>
 
-<table border='1' bordercolor='#CCCCFF' width='800'>
+<table class="table table-striped">
 	<tr>
 		<th>服務編號</th>
 		<th>服務型態</th>

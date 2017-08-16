@@ -28,7 +28,7 @@ private static DataSource ds = null;
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0)";
+			"INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times,status) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0,?)";
 
 		private static final String GET_ALL_STMT = 
 			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times FROM service order  by score desc";
@@ -117,6 +117,7 @@ private static DataSource ds = null;
 			pstmt.setInt(4, servVO.getPrice());
 			pstmt.setString(5, servVO.getTitle());
 			pstmt.setString(6, servVO.getContent());
+			pstmt.setString(7,servVO.getStatus());
 			pstmt.executeUpdate();
 		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "

@@ -9,7 +9,7 @@ public class ServService {
 		dao = new ServDAO();
 	}
 	
-	public ServVO addServ(String stype_no,String com_no,Integer deposit,Integer price,String title,String content){
+	public ServVO addServ(String stype_no,String com_no,Integer deposit,Integer price,String title,String content,String status){
 		
 		ServVO servVO=new ServVO();
 		servVO.setStype_no(stype_no);
@@ -18,6 +18,7 @@ public class ServService {
 		servVO.setPrice(price);
 		servVO.setTitle(title);
 		servVO.setContent(content);
+		servVO.setStatus(status);
 		dao.insert(servVO);
 		return servVO;
 	}

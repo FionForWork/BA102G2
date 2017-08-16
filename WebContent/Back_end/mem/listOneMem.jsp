@@ -2,15 +2,17 @@
 <%@ page import="com.mem.model.*"%>
 
 <%
-Object mem_no = session.getAttribute("mem_no");
+
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
-<%@ include file="page/adm_page" %>
+<%@ include file="/Back_end/pages/backHeader.file"%>
+
 <br><br><br>
 <div id="content">
 
 
-
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
+		
 <table class="table table-striped">
 	<tr>
 		<th>照片</th>
@@ -24,8 +26,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<th>銀行帳戶</th>
 		<th>被檢舉次數</th>
 		<th>狀態</th>
-		<th>修改</th>
-		<th>刪除</th>
+		<th>修改狀態</th>
+		
 	</tr>
 	<tr>
 		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
@@ -38,21 +40,19 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<td>${memVO.email}</td>
 		<td>${memVO.account}</td>
 		<td>${memVO.report}</td>
-		<td>${memVO.status}</td>
 		<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
-			     <input type="submit" value="修改">
+				<select style="width:150px;" name="status">
+				<option value="正常">正常
+				<option value="停權">停權
+				</select>
+		</td>
+		<td>
+
+			     <input type="submit" value="修改狀態">
+
 			     <input type="hidden" name="mem_no"value="${memVO.mem_no}" >
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			     <input type="hidden" name="action"	value="updateStatus">
 			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
-			    <input type="submit" value="刪除">
-			    <input type="hidden" name="memVO" value="${memVO.mem_no}">
-			    <input type="hidden" name="action" value="delete"></FORM>
-			</td>
-	</tr>
-</table>
-</div>
-</body>
-</html>
+		
+	</tr></table></FORM>
+<%@ include file="/Back_end/pages/backFooter.file"%>

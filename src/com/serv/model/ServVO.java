@@ -11,7 +11,14 @@ public class ServVO {
 	private String content;
 	private Integer times;
 	private Double score;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getServ_no() {
 		return serv_no;
 	}

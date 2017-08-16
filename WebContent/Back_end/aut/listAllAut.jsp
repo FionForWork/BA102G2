@@ -7,6 +7,7 @@
     AutService autSvc = new AutService();
     List<AutVO> list = autSvc.getAll();
     pageContext.setAttribute("list",list);
+    
 %>
 
 <%@ include file="page/adm_page" %>
@@ -34,6 +35,7 @@
 	<%@ include file="page1.file" %> 
 	<c:forEach var="autVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<tr align='center' valign='middle'>
+		
 			<td>${autVO.adm_no}</td>
 			<td>${autVO.id}</td>
 
