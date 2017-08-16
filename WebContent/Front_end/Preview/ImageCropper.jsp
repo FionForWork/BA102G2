@@ -6,9 +6,8 @@
 <%
 	//String mem_no = (String)session.getAttribute("mem_no");
 	session.setAttribute("mem_no","1001");
-	//String originalCont_no = (String) request.getAttribute("originalCont_no");
-	//String cropCont_no = (String) request.getAttribute("cropCont_no");
-	String cropCont_no = "0129";
+	String cropCont_no = (String) request.getParameter("cropCont_no");
+	//String cropCont_no = "0129";
 %>
 
 <%@ include file="page/preview_header.file"%>
@@ -61,8 +60,8 @@
 <!-- 						<input type="text" id="brushWidth1" readonly style="border:0; color:#f6931f; font-weight:bold;"> -->
 <!-- 						<input type="range" id="brushWidth" value="5" max='10' min='1'> -->
 					<div id="brushWidth" ></div>
-					<button class="btn btn-default" id='stopDrawing'> Stop Drawing</button>
-					<button class="btn btn-default" onclick='clearDrawing()'><i class="fa fa-times"></i> 清除</button>
+					<button class="btn btn-default" id='stopDrawing'> 不畫了</button>
+					<button class="btn btn-default" onclick='clearDrawing();'><i class="fa fa-times"></i> 清除</button>
 					<button class="btn btn-info" id='submitBtn'>裁切</button>
 
 					<form id="image-form"
@@ -104,7 +103,7 @@
 		var xPoints = [];
 		var yPoints = [];
 		var image;
-		var lineWidth;
+		var lineWidth = 10;
 		var hasImage = false;
 		var hasBeenDrawn = false;
 		
@@ -127,35 +126,40 @@
 	
 	function preview_images() {
 		clearDrawing();
+		var file = event.target.files[0];
 		image = new Image();
 	    image.onload = function() {
-	        context.drawImage(image,0,0,image.width,image.height);
+	    	if(image.width > 800 || image.height > 500){
+	    		canvas.setAttribute("width",image.width);
+	    		canvas.setAttribute("height",image.height);
+	    		canvas.addEventListener("mousewheel",wheelImage,false);
+	    	}
+	    	context.drawImage(image,0,0,image.width,image.height);
+	        
 	     };
-	     var total_file=document.getElementById("imgfile").files.length;
 	     console.log(context);
-	     for(var i = 0; i < total_file; i++){
-	         if(event.target.files[i].type.match('image.*')){
-	            image.setAttribute("src",URL.createObjectURL(event.target.files[i]));
+	     
+	         if(file.type.match('image.*')){
+	            image.setAttribute("src",URL.createObjectURL(file));
 	            image.setAttribute("id","imagePreview");
 	            console.log(image);
-	    		image.addEventListener("mousewheel",wheelImage,false);
-	    		console.log(image);
 	         }
-	     }
+	     
 	     hasImage = true;
+	     
 	}
 	// 滑鼠滾動事件處發圖片縮放效果
 	function wheelImage(e){
 		var width = parseInt(window.getComputedStyle(this).width);
 		var height = parseInt(window.getComputedStyle(this).height);
-		var zoom = 40;
+		var zoom = 10;
 		
 		if(e.wheelDelta > 0){
 			this.style.width = Math.min(1500,width + zoom) + "px";
-			this.style.height = Math.min(1500,height + zoom) + "px";
+			//this.style.height = Math.min(1500,height + zoom) + "px";
 		}else{
 			this.style.width = Math.max(200,width - zoom) + "px";
-			this.style.height = Math.max(200,height - zoom) + "px";
+			//this.style.height = Math.max(200,height - zoom) + "px";
 		}
 		e.preventDefault();
 	}
@@ -187,11 +191,10 @@
 			
 			function mouseDownHandler(e){
 				stillDown = true;
+				var pos = getMousePos(document.getElementById("canvas"), e);
+				this.X = pos.x ;
+			    this.Y = pos.y ;
 				console.log("down");
-                var pos = getMousePos(document.getElementById("canvas"), e);
-				context.beginPath();
-                console.log("click" + pos.x + "," +  pos.y)
-				context.moveTo(pos.x, pos.y);
 			}
 			
 			function mouseMoveHandler(e){
@@ -199,14 +202,18 @@
 					return;
 				}
 				console.log("moving");
-				context.lineWidth = lineWidth ;
-				context.strokeStyle = "green";
+				context.beginPath();
+				context.moveTo(this.X, this.Y);
 				context.lineCap = 'round';
-                var pos = getMousePos(document.getElementById("canvas"), e);
+				context.lineWidth = lineWidth;
+				context.strokeStyle = "#80ff00";
+				var pos = getMousePos(document.getElementById("canvas"), e);
 				context.lineTo(pos.x, pos.y);
+				context.stroke();
 				xPoints.push(pos.x);
 				yPoints.push(pos.y);
-				context.stroke();
+		         this.X = pos.x ;
+		         this.Y = pos.y;
 			}
 			
 			function mouseUpHandler(e){
@@ -216,6 +223,7 @@
 			
 			// Start Drawing
 			$("#drawBtn").on("click",function(e){
+				canvas.off("mousewheel",wheelImage);
 				console.log("1111111111");
 				$("#brushWidth").css("display","inline-block");
 				canvas.css("cursor","crosshair");
@@ -237,6 +245,8 @@
 			
 			// Submit
 			$("#submitBtn").on("click", function() {
+				console.log("hasBeenDrawn"+hasBeenDrawn);
+				console.log("hasImage"+hasImage);
 				if(hasBeenDrawn == false || hasImage == false){return;}
 				var JSONxPoints = JSON.stringify(xPoints);
 				var JSONyPoints = JSON.stringify(yPoints);
@@ -244,21 +254,33 @@
 				$("#yPoints").val(JSONyPoints);
 				console.log("XXX");
 				$("#image-form").submit();
-				console.log("YYY");
+				
+				
 			});
 			
 			// Change Brush Width
 			$("#brushWidth").slider({
 			      range: "min",
-			      value: 5,
+			      value: 10,
 			      min: 1,
-			      max: 10,
+			      max: 20,
 			      slide: function( event, ui ) {
 			    	 lineWidth = ui.value;
 			      }
 			});
 			
 		});
+		
+		<%if (cropCont_no != null) {%>
+		var img = new Image();
+		var output = document.getElementById("canvas").getContext("2d");
+		img.onload = function() {
+		output.drawImage(img, 0, 0);
+		hasImage = true;
+		};
+		img.src ="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>";
+	<%}%>
+	
 		window.addEventListener("load",init,false);
 	</script>
 

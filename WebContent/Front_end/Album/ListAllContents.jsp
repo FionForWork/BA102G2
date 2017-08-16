@@ -117,19 +117,12 @@
 				</div>
 			</div>
 
-
-
-
 			<!-- The lightbox Modal (img)-->
 			<div id="lightboxImgModal" class="modal">
 				<span class="closeImg">&times;</span> <img
 					class="lightbox-modal-content" id="lightboxImg">
 			</div>
 			<!-- The lightbox Modal (img)-->
-
-
-
-
 
 			<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
 				varStatus="s">
@@ -155,7 +148,7 @@
 
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal" id='deletebtn'
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									onclick="doAjax('delete_Content','${contVO.cont_no}');">刪除</button>
 
 							</div>
 						</div>
@@ -179,8 +172,6 @@
 							<img class="img-responsive img-thumbnail original aa"
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
 
-
-
 						</c:if>
 
 						<div class="overlap dropdown">
@@ -190,24 +181,8 @@
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
 								<a href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=${contVO.cont_no}' id='download'>下載</a>
-								<form id="update${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='action' value='setCover'> <input
-										type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' id='setCover'
-										onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
-								</form>
-								<form id="delete${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='action' value='delete_Content'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' data-toggle="modal"
-										data-target="#deleteModal${s.count}">刪除相片</a>
-								</form>
+								<a href='#' id='setCover' onclick="doAjax('setCover','${contVO.cont_no}');">設成封面</a>
+								<a href='#' data-toggle="modal" data-target="#deleteModal${s.count}">刪除相片</a>
 							</div>
 						</div>
 					</div>
@@ -218,6 +193,25 @@
 		</c:forEach>
 		<br>
 	</div>
-
+<script type="text/javascript">
+	function doAjax(action,cont_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/content/content.do',
+			type:'POST',
+			data:{
+				alb_no :'<%=alb_no%>',
+				cont_no : cont_no,
+				action : action
+			},
+			success:function success(){
+				
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	
+</script>
 
 	<%@ include file="page/album_footer.file"%>

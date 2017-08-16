@@ -3,6 +3,7 @@ package com.album.controller;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
@@ -19,7 +20,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +57,6 @@ public class PreviewServlet extends HttpServlet {
 		if("cropImage".equals(action)){
 			
 			/********* 建立實景預覽專用相簿與相簿內容 *********/
-			ContentVO originalCont = null;
 			ContentVO cropCont = null;
 			AlbumVO alb = new AlbumVO();
 			
@@ -91,19 +90,10 @@ public class PreviewServlet extends HttpServlet {
 			BufferedImage img = null;
 			Part part = request.getPart("imageRemove");
 			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				String filename = getFileNameFromPart(part);
 				img = javax.imageio.ImageIO.read(part.getInputStream());
 				System.out.println("img----" + img);
-				byte[] file = toByteArray(part.getInputStream());
-				
-				if (isImgFile(context.getMimeType(filename))) {
-					originalCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()), file, null);
-				}
 			}
 
-			cover = originalCont.getImg();
-			albSvc.updateAlbum(alb_no, mem_no, name, cover, create_date);
-			
 			// 取得x座標
 			String xPoints = request.getParameter("xPoints");
 			// 取得y座標
@@ -122,11 +112,12 @@ public class PreviewServlet extends HttpServlet {
 				yIntArr[i] = Double.parseDouble(yStrArr[i]);
 			}
 			
-			// 畫出傳入的x y座標
-			Graphics2D g = null;
+			// 畫出根原圖一樣大小的image
 			BufferedImage image = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			System.out.println(img.getWidth());
 			System.out.println(img.getHeight());
+			// 繪製裁切的路線
+			Graphics2D g = null;
 			g = image.createGraphics();
 			Path2D path = new Path2D.Double();
 			path.moveTo(xIntArr[0], yIntArr[0]);
@@ -154,16 +145,13 @@ public class PreviewServlet extends HttpServlet {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(subimage, "png", baos);
 			cropCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),baos.toByteArray(), null);
-			
-			
-			request.setAttribute("originalCont_no", originalCont.getCont_no());
+			albSvc.updateAlbum(alb_no, mem_no, name, cropCont.getImg(), create_date);
 			request.setAttribute("cropCont_no", cropCont.getCont_no());
 			
 			String url = "/Front_end/Preview/ImageLayover.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
-
-
 		}
+		
 		
 		/***** 圖片合成  *****/
 		if("overlayImage".equals(action)){
@@ -182,16 +170,25 @@ public class PreviewServlet extends HttpServlet {
 			int intcropWidth= 0;
 			int intcropHeight = 0;
 			
-			
 			System.out.println("backgroundImage=="+placeview_no);
 			String cropCont_no = request.getParameter("cropCont_no");
 			System.out.println("cropCont_no=="+cropCont_no);
-			Double doublexPoint = Double.parseDouble(request.getParameter("xPoint"));
-			int xPoint = doublexPoint.intValue();
-			Double doubleyPoint = Double.parseDouble(request.getParameter("yPoint"));
-			int yPoint = doubleyPoint.intValue();
 			
-			// get the album no
+			// 取得裁切圖片移動的座標
+			int xPoint = 0;
+			int yPoint = 0;
+			try{
+				Double doublexPoint = Double.parseDouble(request.getParameter("xPoint"));
+				xPoint = doublexPoint.intValue();
+				Double doubleyPoint = Double.parseDouble(request.getParameter("yPoint"));
+				yPoint = doubleyPoint.intValue();
+				
+			}catch(NumberFormatException e){
+				xPoint = 0;
+				yPoint = 0;
+			}
+			
+			// 取得相簿編號
 			List<AlbumVO> albums = albSvc.getAllByMemNo(mem_no);
 			forloop:
 			for(AlbumVO album : albums){
@@ -227,7 +224,8 @@ public class PreviewServlet extends HttpServlet {
 				
 				Double doublecropHeight = Double.parseDouble(cropHeight);
 				intcropHeight = doublecropHeight.intValue();
-				g.drawImage(cropImage, xPoint, yPoint,intcropWidth,intcropHeight, null);
+				Image cropImageTmp = cropImage.getScaledInstance(intcropWidth, intcropHeight, Image.SCALE_AREA_AVERAGING);
+				g.drawImage(cropImageTmp, xPoint, yPoint, null);
 			}else{
 				g.drawImage(cropImage, xPoint, yPoint,null);
 			}
@@ -236,7 +234,7 @@ public class PreviewServlet extends HttpServlet {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(img, "jpeg", baos);
 			resultCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),baos.toByteArray(), null);
-			
+			albSvc.updateAlbum(alb_no, mem_no, name, resultCont.getImg(), new Timestamp(System.currentTimeMillis()));
 			request.setAttribute("mergeCont_no",resultCont.getCont_no());
 			String url = "/Front_end/Preview/ShowResult.jsp";
 			request.getRequestDispatcher(url).forward(request, response);
@@ -253,20 +251,4 @@ public class PreviewServlet extends HttpServlet {
 		}
 		return filename;
 	}
-
-	private byte[] toByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int length = 0;
-		byte[] bytes = new byte[1024];
-		while ((length = is.read(bytes)) != -1) {
-			baos.write(bytes, 0, length);
-		}
-		baos.close();
-		return baos.toByteArray();
-	}
-
-	private boolean isImgFile(String mimetype) {
-		return mimetype != null && mimetype.startsWith("image");
-	}
-
 }

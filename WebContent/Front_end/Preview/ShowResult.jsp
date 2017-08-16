@@ -6,7 +6,7 @@
 		//String mem_no = (String) session.getAttribute("mem_no");
 		session.setAttribute("mem_no","1001");
 		String mergeCont_no = (String)request.getAttribute("mergeCont_no");
-		//String mergeCont_no ="0216";
+		//String mergeCont_no ="0357";
 	%>
 	
 <%@ include file="page/preview_header.file"%>
@@ -47,14 +47,12 @@
            <div class="col-md-8 col-offset-1">
             
 			<div class='row'>
-				<div class='col-sm-12 col-xs-12'>
-				<form action='<%=request.getContextPath()%>/album/preview.do'
-				method="post" enctype="multipart/form-data" id='overlayImageForm'>
-					<input type='submit' value='儲存' id='submitBtn' class='btn btn-info'>
-					<input type='hidden' name='action' value='storeImage'>
-				</form>
+				<div class='col-sm-8 col-xs-8 col-sm-offset-2'>
+					<h2>合成的照片已經匯入您的私人相簿囉~</h2>
+					
 				</div>
 			</div>
+			<br>
 			<div class='row'>
 				<div class='col-sm-12 col-xs-12'>
 				<div class='text-center'>
@@ -63,8 +61,21 @@
 					
 				</div>
 			</div>
+			<br>
+			<div class='row'>
+			<div class='col-sm-8 col-xs-8 col-sm-offset-2'>
+				<button class='btn btn-default btn-block' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp'">再玩一次</button>
+				<button class='btn btn-default btn-block' onclick="javascript:location.href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=<%=mergeCont_no%>'">下載圖片</button>
+			</div>	
+			</div>
 	</div>
 </div>
 
+<style>
+.img-thumbnail {
+    border: 1px solid #ddd;
+    padding: 7px;
+}
 
+</style>
 <%@ include file="page/preview_footer.file"%>

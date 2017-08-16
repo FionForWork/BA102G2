@@ -3,8 +3,6 @@
 <%@ page import="java.util.Map"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
 <jsp:useBean id="albSvc" scope="page"
 	class="com.album.model.AlbumService"></jsp:useBean>
 <jsp:useBean id="contSvc" scope="page"

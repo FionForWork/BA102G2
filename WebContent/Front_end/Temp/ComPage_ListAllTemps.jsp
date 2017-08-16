@@ -264,7 +264,6 @@
 										<td><button class='btn btn-default' data-toggle="modal"
 												data-target="#transferModal${s.count}">匯入會員相簿</button></td>
 									</tr>
-
 								</c:if>
 							</c:forEach>
 						</tbody>

@@ -13,7 +13,7 @@
 <%
 	String alb_no = (String) request.getParameter("alb_no");
 	//String alb_no = "0012";
-	session.setAttribute("alb_no", alb_no);
+	pageContext.setAttribute("alb_no", alb_no);
 	AlbumService albSvc = new AlbumService();
 	AlbumVO alb = albSvc.getOneAlbum(alb_no);
 	session.setAttribute("alb", alb);
@@ -211,7 +211,7 @@
 
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal" id='deletebtn'
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									onclick="doAjax('delete_Content','${contVO.cont_no}');">刪除</button>
 
 							</div>
 						</div>
@@ -244,24 +244,8 @@
 								<i class="fa fa-cog" aria-hidden="true"></i>
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
-								<form id="update${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='action' value='setCover'> <input
-										type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' id='setCover'
-										onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
-								</form>
-								<form id="delete${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='action' value='delete_Content'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' data-toggle="modal"
-										data-target="#deleteModal${s.count}">刪除相片</a>
-								</form>
+									<a href='#' id='setCover' onclick="doAjax('setCover','${contVO.cont_no}');">設成封面</a>
+									<a href='#' data-toggle="modal" data-target="#deleteModal${s.count}">刪除相片</a>
 							</div>
 						</div>
 					</div>
@@ -272,5 +256,24 @@
 		</c:forEach>
 		<br>
 	</div>
-
+<script type="text/javascript">
+	function doAjax(action,cont_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/content/content.do',
+			type:'POST',
+			data:{
+				alb_no :'<%=alb_no%>',
+				cont_no : cont_no,
+				action : action
+			},
+			success:function success(){
+				
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	
+</script>
 	<%@ include file="page/album_footer.file"%>

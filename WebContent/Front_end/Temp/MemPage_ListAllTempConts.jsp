@@ -109,10 +109,11 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-
+						<h4 class="modal-title"><span class='fa fa-warning' style='color:red;'></span> 提醒</h4>
+						
 					</div>
 					<div class="modal-body">
-						<p>超過可挑選數量</p>
+						<p>超過可挑選數量了喔 !</p>
 					</div>
 
 				</div>
@@ -127,10 +128,10 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-
+						<h4 class="modal-title"><span class='fa fa-warning' style='color:red;'></span> 提醒</h4>
 					</div>
 					<div class="modal-body">
-						<p>您尚未挑選任何照片或影片</p>
+						<p>您尚未挑選任何照片或影片喔 !</p>
 					</div>
 
 				</div>

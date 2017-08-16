@@ -7,7 +7,7 @@
 	//String mem_no = (String) session.getAttribute("mem_no");
 	session.setAttribute("mem_no", "1001");
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0166";
+	//String cropCont_no = "0051";
 	String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
@@ -80,7 +80,7 @@
 					<a type='button' class="btn btn-app btn-default" id='btnLoad'
 							onclick='load_image();'><i class="fa fa-image"></i> 選擇背景照片</a>
 					<button class='btn btn-default' id='clearBtn'><i class="fa fa-times"></i> 清除背景照</button>
-					<button onclick="history.back()" class='btn btn-default'>回上一頁</button>
+					<button onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp?cropCont_no=<%=cropCont_no%>'" class='btn btn-default'>回上一頁</button>
 					<input type='submit' value='確定' id='submitBtn' class='btn btn-info'>
 				</div>
 				<div class='row'>
@@ -129,7 +129,7 @@
 				<div class='col-sm-12 col-xs-12'>
 					<div id="dropZone">
 						<div id='dragCrop' style="display: inline-block">
-							<img id='resizable'
+							<img id='resizable' style='max-width:200px'
 								src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
 						</div>
 					</div>
@@ -152,18 +152,53 @@
 		  
 	}
 	function preview_images() {
+		dropZone = $('#dropZone');
 		
-	     var total_file=document.getElementById("imgfile").files.length;
+	     var file = event.target.files[0];
 	     image = new Image();
-	     for(var i = 0; i < total_file; i++){
-	    	 if(event.target.files[i].type.match('image.*')){
-	    		 $('#dropZone').css("background","url("+URL.createObjectURL(event.target.files[i])+")")
+		 image.onload = function() {
+		    if(image.width > 840){
+		    	console.log(image.width);
+		    	dropZone.css("width",image.width);
+				dropZone.css("height",image.height);
+				dropZone.on("mousewheel",wheelImage);
+		    }
+		 };
+	    	if(file.type.match('image.*')){
+	    		image.setAttribute("src",URL.createObjectURL(file));
+	    		dropZone.css("background","url("+URL.createObjectURL(file)+")")
 	    		 				.css("background-repeat","no-repeat");
-	    $("input[name=placeview_no]").val(""); 
+	    		$("input[name=placeview_no]").val(""); 
+	    		
+	    	 }else{
+	    		 return;
 	    	 }
-	     }
+	   	 console.log(image);
 	     hasBackgroundImage = true;
 	}
+	
+	
+	// 滑鼠滾動事件處發圖片縮放效果
+	function wheelImage(e){
+		var width = parseInt(window.getComputedStyle(this).width);
+		console.log("width...."+width);
+		var height = parseInt(window.getComputedStyle(this).height);
+		var zoom = 10;
+		
+		if(e.wheelDelta > 0){
+			console.log("00000");
+			this.style.width = Math.min(1500,width + zoom) + "px";
+			this.style.height = Math.min(1500,height + zoom) + "px";
+		}else{
+			console.log("1111111111");
+			this.style.width = Math.max(200,width - zoom) + "px";
+			this.style.height = Math.max(200,height - zoom) + "px";
+		}
+		e.preventDefault();
+	}
+	
+	
+	
 	
 	function doFirst(){
 		placeView = document.getElementsByClassName('placeView');
@@ -244,57 +279,10 @@
 			});
 
 			$("#clearBtn").on("click", function() {
-				$dropZone.css("background", "none");
+				$dropZone.css("background", "none").css("width","auto").css("height","500px");
 				hasBackgroundImage = false;
 			});
 
-			// 移動背景
-			// 		    function move (e){
-			// 		        var moveby = {
-			// 		            x: origin.x - e.clientX, 
-			// 		            y: origin.y - e.clientY
-			// 		        };
-
-			// 		        if (movecontinue === true) {
-			// 		            start.x = start.x - moveby.x;
-			// 		            start.y = start.y - moveby.y;
-
-			// 		            $(this).css('background-position', start.x + 'px ' + start.y + 'px');
-			// 		        }
-
-			// 		        origin.x = e.clientX;
-			// 		        origin.y = e.clientY;
-
-			// 		        e.stopPropagation();
-			// 		        return false;
-			// 		    }
-
-			// 		    function handle (e){
-			// 		        movecontinue = false;
-			// 		        $dropZone.unbind('mousemove', move);
-
-			// 		        if (e.type == 'mousedown') {
-			// 		            origin.x = e.clientX;
-			// 		            origin.y = e.clientY;
-			// 		            movecontinue = true;
-			// 		            $dropZone.bind('mousemove', move);
-			// 		        } else {
-			// 		            $(document.body).focus();
-			// 		        }
-
-			// 		        e.stopPropagation();
-			// 		        return false;
-			// 		    }
-
-			// 		    function reset (){
-			// 		        start = {x: 0, y: 0};
-			// 		        $(this).css('backgroundPosition', '0 0');
-			// 		    }
-			// 		    if ($("#dropZone").css('background-image') != 'none') {
-
-			// 			 	$dropZone.bind('mousedown mouseup mouseleave', handle);
-			// 			    $dropZone.bind('dblclick', reset);
-			// 			}
 
 		});
 	</script>

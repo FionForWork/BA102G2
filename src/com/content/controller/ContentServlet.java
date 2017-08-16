@@ -50,6 +50,7 @@ public class ContentServlet extends HttpServlet {
 		/*********   變更相簿封面       *********/
 		if("setCover".equals(action)){
 			String alb_no = request.getParameter("alb_no");
+			System.out.println("alb_no========"+alb_no);
 			String cont_no = request.getParameter("cont_no");
 			AlbumVO alb = albSvc.getOneAlbum(alb_no);
 			ContentVO cont = contSvc.getOneContent(cont_no);
