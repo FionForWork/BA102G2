@@ -101,11 +101,11 @@ public class CalendarServlet extends HttpServlet {
 //				e.printStackTrace();
 //			}		
 			
-//			String[] date = cal_date.split("-");
-//			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
-//			req.setAttribute("localDate", localDate);
-//			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
-//			successView.forward(req, res);
+			String[] date = cal_date.split("-");
+			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+			req.setAttribute("localDate", localDate);
+			RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+			successView.forward(req, res);
 		}
 		
 //		刪除行程
