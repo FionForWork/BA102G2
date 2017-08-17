@@ -13,9 +13,6 @@
 	ComVO comVO = new ComVO();
 	comVO.setCom_no("2001");	
 	
-	String action = request.getParameter("action");
-	System.out.println("JSPAction : " + action);
-	
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
@@ -338,7 +335,4 @@
 	}
     
 </script>
-<%
-System.out.println("JSPAction2 : " + request.getParameter("action"));
-%>
 </html>

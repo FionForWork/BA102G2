@@ -24,43 +24,34 @@
 		<%} %>
 		<%@ include file="page/page1.file" %>
 			<table class="table table-striped">
-				<tr>
-					<th>照片</th>
+				<tr align='center' valign='middle'>
 					<th>廠商編號</th>
-					<th>廠商帳號</th>
 					<th>廠商名稱</th>
+					<th>廠商帳號</th>
 					<th>電話</th>
 					<th>狀態</th>
 					<th>查看全部</th>
-					<th>修改</th>
-					<th>刪除</th>
 				</tr>
 				<c:forEach var="comVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 					<tr align='center' valign='middle'>
-						<td >
-<%-- 						<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" height="100" width="120"/> --%>
-						</td>
 						<td>${comVO.com_no}</td>
-						<td>${comVO.id}</td>
 						<td>${comVO.name}</td>
+						<td>${comVO.id}</td>
 						<td>${comVO.phone}</td>
 						<td>${comVO.status}</td>
 						<td>
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/backendcom.do">
-						    <input type="submit" value="查看全部">
-						    <input type="hidden" name="com_no" value="${comVO.com_no}" >
-						    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>" >
-						    <input type="hidden" name="action"	value="getOne_For_Display"></FORM>
+							<button id="delbtn" onclick="showComDetail(this,${comVO.com_no})">查看詳細資料</button>
 						</td>
-						<td>
-						    <input id="delbtn" type="submit" value="刪除">
-						</td><td></td>
+
+					</tr>
+					<tr>
+						<td colspan="9" id="${comVO.com_no}" style="display:none"></td>
 					</tr>
 				</c:forEach>
 			</table>
 		<%@ include file="page/page2.file" %>
 <input type="button" value="顯示員工資料" id="btn">
-<div id="showPanel" ></div>
+
 <!-- 內文 -->		
 		</div>
 	</div>
@@ -70,29 +61,20 @@
 </body>
 <script>
 
-$("#btn").click(function() {
-	
-	$.ajax({
-		url : "<%= request.getContextPath() %>/com/backendcom.do",
-		data : {
-			action : "ajax",
-			com_no : "2001"
-		},
-		type : 'POST',
-		dataType: "JSON",
-		error : function(xhr) {
-			alert('Ajax request 發生錯誤');
-		},
-		success : function(result) {
-			console.log(result);
-			var com = result.comList;
-			console.log(result.comList[0].com_no);
-// 			$("#showPanel").html(com[0].com_no + "<br>" +com[0].loc + "<br>" +com[0].name);
+function showComDetail(y,com_no){
+	if($(y).html() == "查看詳細資料"){
+		if($("#"+com_no).html() != ""){
+			$("#"+com_no).show();
+			$(y).html("隱藏詳細資料");
+		}else{
+			$("#"+com_no).load("listComDetail.jsp?com_no="+com_no).show();
+			$(y).html("隱藏詳細資料");
 		}
-	});
-	var com_no = "2001";
-	$('#showPanel').load("listComDetail.jsp?com_no=2002");
-});
+	}else{
+		$(y).html("查看詳細資料");
+		$("#"+com_no).hide();
+	}
+}
 
 </script>
 </html>
