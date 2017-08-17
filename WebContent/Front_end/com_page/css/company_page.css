@@ -35,7 +35,6 @@ a.thumbnail:hover {
 .works_image {
 	width: 100%;
 	height: 100%;
-	margin-bottom: 10px;
 }
 
 li {
@@ -115,6 +114,10 @@ li {
 
 .table td {
 	word-break: break-all;
+}
+
+.works_box {
+	padding-left:0px;
 }
 
 .works_a {

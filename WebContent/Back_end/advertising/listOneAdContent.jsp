@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-4">
-				<img
+				<img style="width:50%"
 					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
 			</div>
 			<div class="col-xs-12 col-sm-8"><%=advertisingVO.getText()%></div>
@@ -25,29 +25,26 @@
 	<br>
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12">
+			<div class="col-xs-12 col-sm-8">
 				<form method="post"
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
 					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-					<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
-					<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
 					<input type="hidden" name="action" value="approved">
-					<input type="submit" class="btn btn-info btn-block" value="通過">
-						
+					<input type="submit" class="btn btn-info btn-block" value="通過">				
 				</form>
+				
 				<form method="post"
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
-					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-					<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">						
-					<input type="hidden" name="action" value="delete">
-					<input type="hidden" name="status" value="<%=request.getParameter("status")%>">
-					<input type="submit" class="btn btn-danger btn-block" value="未通過">
-						
+					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">					
+					<input type="hidden" name="action" value="disapproved">
+					<input type="submit" class="btn btn-danger btn-block" value="未通過">				
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	
 </body>
 </html>
