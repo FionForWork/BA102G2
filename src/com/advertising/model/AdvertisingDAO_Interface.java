@@ -8,4 +8,5 @@ public interface AdvertisingDAO_Interface {
 	public void delete(String adv_no);
 	public AdvertisingVO findByPrimaryKey(String adv_no);
 	public List<AdvertisingVO> getAll();
+	public List<AdvertisingVO> getAllUnverified();
 }

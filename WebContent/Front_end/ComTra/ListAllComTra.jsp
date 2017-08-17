@@ -97,7 +97,7 @@
 							<td><a onclick="javascript:doAjax('delete_ComTra','${comtraVO.comtra_no}','${nowPage}');"><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td>
 <%-- 							<td><a href='#' onclick='document.getElementById("deleteComTra${s.count}").submit();'><i class='fa fa-heart text-pink'></i>&nbsp;&nbsp;取消收藏</a></td> --%>
 						</tr>
-						</a>
+						
 					</c:forEach>
 					
 				</tbody>

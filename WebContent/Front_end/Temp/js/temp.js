@@ -38,7 +38,7 @@ $(document).ready(function(){
     
     
     $("#inputFile").fileinput({
-        maxFileCount: 100,
+        maxFileCount: 50,
         allowedFileTypes: ["image", "video"],
         language: 'zh-TW', //设置语言
         dropZoneEnabled: true,//是否显示拖拽区域

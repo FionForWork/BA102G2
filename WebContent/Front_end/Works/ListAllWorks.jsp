@@ -7,7 +7,7 @@
 
 <%
 	//String com_no = (String) session.getAttribute("com_no");
-	String com_no = "2001";
+	String com_no = "2003";
 	pageContext.setAttribute("com_no", com_no);
 %>
 
@@ -212,7 +212,7 @@ $("document").ready(function(){
 	    }
 	});
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
-        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp";
+        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=<%=com_no%>";
 	});
 });
 
