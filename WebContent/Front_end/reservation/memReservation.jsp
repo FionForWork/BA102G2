@@ -19,7 +19,7 @@
 			list = reservationService.getMemRes("1001",status);
 		}
 	}else{
-		list = reservationService.getAllMemRes("1001");
+		list = reservationService.getMemRes("1001","0");
 	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("YYYY年M月d日");
@@ -40,10 +40,10 @@
 <%@ include file="page/memHeader.file" %>
 
 <ul class="nav nav-tabs nav-justified">
-	<li class="pointer"><a class="menua" onclick="showRes(0)">未繳訂金</a></li>
-	<li class="pointer"><a class="menua" onclick="showRes(1)">訂單確認</a></li>
-	<li class="pointer"><a class="menua" onclick="showRes(2)">尚未評價</a></li>
-	<li class="pointer"><a class="menua" onclick="showRes(3)">服務完成</a></li>
+	<li class="pointer active"><a class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,2)">尚未評價</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,3)">服務完成</a></li>
 <br>
 </ul>
 <div id="allRes">
@@ -141,7 +141,7 @@
 <!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button id="close" type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">進行線上刷卡</h4><hr style="margin:3px">
 			</div>
 			<div class="modal-body" style="padding-top:0px">
@@ -287,7 +287,20 @@ function checkForm() {
 		},
 		success : function(result) {
 			if(result.r == "卡號正確"){
-				$('#payForm').submit();
+// 				$('#payForm').submit();
+				$('#close').click();
+				$.ajax({
+					url : "<%= request.getContextPath() %>/reservation/reservation.do",
+					data : $('#payForm').serialize(),
+					type : 'POST',
+					error : function() {
+						alert('Ajax request 發生錯誤');
+					},
+					success : function() {
+						$('#allRes').load("memReservation.jsp #allRes",{"status":"0"});
+					}
+				});
+				
 			}else{
 				var checkResult = $("<div style='color:red'>").text(result.r);
 				$('#showPanel').html(checkResult);
@@ -296,8 +309,39 @@ function checkForm() {
 	});
 }
 
-function showRes(y){
+function showRes(x,y){
+	
+	changeActive(x);
+	
 	$('#allRes').load("memReservation.jsp #allRes",{"status":y});
+
+	$(document).on('DOMNodeInserted', function(e) {
+		$('li').unbind('mouseover','mouseout');
+		  $('li').on('mouseover', function(){
+			    var onStar = parseInt($(this).data('value'), 10); 
+			   
+			    $(this).parent().children('li.star').each(function(e){
+			      if (e < onStar) {
+			        $(this).addClass('hover');
+			      }
+			      else {
+			        $(this).removeClass('hover');
+			      }
+			    });
+			    
+			  }).on('mouseout', function(){
+			    $(this).parent().children('li.star').each(function(e){
+			      $(this).removeClass('hover');
+			    });
+			  });
+	});
+}
+
+function changeActive(x){
+	$(".pointer a").css("color","#818181");
+	$(x).css("color","#f14195");
+	$(x).parent().attr("class","active pointer focus");
+	$(x).parent().siblings().attr("class","pointer");
 }
 
 function clickStars(y){
@@ -328,6 +372,39 @@ function overStars(y){
         $(y).removeClass('hover');
       }
     });
+}
+
+function resCompleted(y){
+	$('#res_no_completed').val($(y).attr("id"));
+	$.ajax({
+		url : "<%= request.getContextPath() %>/reservation/reservation.do",
+		data : $('#resCompletedForm').serialize(),
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$('#allRes').load("memReservation.jsp #allRes",{"status":"1"});
+		}
+	});
+	
+}
+
+function rating(y){
+	$('#res_no_rating').val($(y).attr("id"));
+// 	$('#ratingForm').submit();
+	
+	$.ajax({
+		url : "<%= request.getContextPath() %>/reservation/reservation.do",
+		data : $('#ratingForm').serialize(),
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$('#allRes').load("memReservation.jsp #allRes",{"status":"2"});
+		}
+	});
 }
 
 </script>

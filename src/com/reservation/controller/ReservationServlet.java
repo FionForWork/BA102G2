@@ -167,7 +167,7 @@ public class ReservationServlet extends HttpServlet {
 			ReservationService resService = new ReservationService();
 			resService.updateStatus("1", res_no);
 			
-			res.sendRedirect(RedirectURL);
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("resCompleted")){
@@ -183,8 +183,7 @@ public class ReservationServlet extends HttpServlet {
 			}else{
 				resService.updateStatus("2", res_no);
 			}
-			
-			res.sendRedirect(RedirectURL);
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("rating")){
@@ -194,7 +193,7 @@ public class ReservationServlet extends HttpServlet {
 			
 			ReservationService resService = new ReservationService();
 			resService.updateScore("3", score, res_no);
-			res.sendRedirect(RedirectURL);
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("searchServiceByCompositeQuery")){

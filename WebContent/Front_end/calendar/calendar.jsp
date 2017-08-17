@@ -44,7 +44,7 @@
 <script>
 	$( function() {
 	
-	    $( ".draggable" ).draggable({ snap: ".ui-widget-head",scope:"calendar",
+	    $( ".draggable" ).draggable({scope:"calendar",containment: "#box",revert: true,
 	            drag:function (event, ui) {
 	                $("#dragid").val($(this).attr("id"));
 	                $("#thisDate").val($(this).parent('td').attr("id").replace(/-/g,""));
@@ -149,7 +149,7 @@
 			<th>週日</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="box">
 		
 		<% for(int i = 0; i < dayNum+firstDayOfWeek-1; i++){ %>
 			<% if(i%7 == 0){ %>
@@ -167,28 +167,43 @@
 			<% }else{ %>
 				<% dayOfWeek++; %>
 				<% pageContext.setAttribute("date", i-firstDayOfWeek+2); %>
-				<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+<%-- 				<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)"> --%>
 
-				<p class="day"><%= i-firstDayOfWeek+2 %></p>
-				<br>
+<%-- 				<p class="day"><%= i-firstDayOfWeek+2 %></p> --%>
+<!-- 				<br> -->
+<!-- 開始比對行事曆日期與當前的日期 -->
 				<c:forEach var="calendarVO" items="${list}">
 					<c:if test="${calendarVO.cal_date.getDate() == date}">
+<!-- 行事曆行程 -->
 						<c:if test="${calendarVO.status == '0'}">
+						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#BDE7FF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
 								<button type="button" class="close" display="none" onclick="deleteSchedule(this)" style="display:none">&times;</button>
 								<p style="margin-top:3px">${calendarVO.content}</p>
 								<% flag = 1; %>
 							</div>
+						</td>
 						</c:if>
+<!-- 預約行程 -->
 						<c:if test="${calendarVO.status != '0'}">
+						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:pink;">
 								<p style="margin-top:3px"><a style="color:black;">${calendarVO.content}</a></p>
 								<% flag = 1; %>
 							</div>
+						</td>
 						</c:if>
 					</c:if>
 				</c:forEach>
-				</td>
+				<%if(flag == 0){ %>
+						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
+						</td>
+					<% } %>
+				<% flag = 0; %>
+<!-- 				</td> -->
 			<% } %>
 			<% if(dayOfWeek %7 == 0){ %>
 			<% dayOfWeek = 0; %>

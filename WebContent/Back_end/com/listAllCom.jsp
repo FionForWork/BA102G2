@@ -12,13 +12,20 @@
 <%@ include file="page/backEnd_Header.file" %>
 	<!-- Start content ===================================================================================================== -->
 <div >
-
+<Style>
+	th{
+		text-align:center;
+	}
+</Style>
 <div id="content">
 	<div class="content-wrapper">
 		<br><br>
 	</div>
 	<div class="outlet">
 <!-- 內文 -->
+<div class="text-center well" >
+	<h2 style="font-weight:900">廠商資料一覽</h3>
+</div>
 		<%if (request.getAttribute("listComDeatil")!=null){%>
 			<jsp:include page="listComDetail.jsp" />
 		<%} %>
@@ -40,9 +47,8 @@
 						<td>${comVO.phone}</td>
 						<td>${comVO.status}</td>
 						<td>
-							<button id="delbtn" onclick="showComDetail(this,${comVO.com_no})">查看詳細資料</button>
+							<button id="delbtn" class="btn btn-info" onclick="showComDetail(this,${comVO.com_no})">查看詳細資料</button>
 						</td>
-
 					</tr>
 					<tr>
 						<td colspan="9" id="${comVO.com_no}" style="display:none"></td>
@@ -50,14 +56,11 @@
 				</c:forEach>
 			</table>
 		<%@ include file="page/page2.file" %>
-<input type="button" value="顯示員工資料" id="btn">
-
 <!-- 內文 -->		
 		</div>
 	</div>
 </div>
-	
-	<div class="clearfix"></div>
+<div class="clearfix"></div>
 </body>
 <script>
 

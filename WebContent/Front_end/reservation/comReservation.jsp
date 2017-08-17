@@ -19,7 +19,7 @@
 			list = resService.getComRes("2001",status);
 		}
 	}else{
-		list = resService.getAllComRes("2001");
+		list = resService.getComRes("2001","0");
 	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
@@ -41,10 +41,10 @@
 <body>
 <%@ include file="page/comHeader.file" %>
 <ul class="nav nav-tabs nav-justified">
-	<li class="pointer"><a id="0" class="menua" onclick="showRes(0)">未繳訂金</a></li>
-	<li class="pointer"><a id="1" class="menua" onclick="showRes(1)">訂單確認</a></li>
-	<li class="pointer"><a id="2" class="menua" onclick="showRes(2)">尚未評價</a></li>
-	<li class="pointer"><a id="3" class="menua" onclick="showRes(3)">服務完成</a></li>
+	<li class="pointer active"><a id="0" class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
+	<li class="pointer"><a id="1" class="menua" onclick="showRes(this,1)">訂單確認</a></li>
+	<li class="pointer"><a id="2" class="menua" onclick="showRes(this,2)">尚未評價</a></li>
+	<li class="pointer"><a id="3" class="menua" onclick="showRes(this,3)">服務完成</a></li>
 <br>
 </ul>
 <div id="allRes">
@@ -109,8 +109,32 @@
 <%@ include file="page/comFooter.file" %>
 </body>
 <script>
-	function showRes(y){
+	function showRes(x,y){
+		changeActive(x);
 		$('#allRes').load("comReservation.jsp #allRes",{"status":y});
+	}
+	
+	function changeActive(x){
+		$(".pointer a").css("color","#818181");
+		$(x).css("color","#f14195");
+		$(x).parent().attr("class","active pointer focus");
+		$(x).parent().siblings().attr("class","pointer");
+	}
+	
+	function resCompleted(y){
+		$('#res_no_completed').val($(y).attr("id"));
+		$.ajax({
+			url : "<%= request.getContextPath() %>/reservation/reservation.do",
+			data : $('#resCompletedForm').serialize(),
+			type : 'POST',
+			error : function() {
+				alert('Ajax request 發生錯誤');
+			},
+			success : function() {
+				$('#allRes').load("comReservation.jsp #allRes",{"status":"1"});
+			}
+		});
+		
 	}
 </script>
 </html>

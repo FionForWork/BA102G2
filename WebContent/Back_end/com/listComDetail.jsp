@@ -19,23 +19,23 @@
 <title>Insert title here</title>
 </head>
 <style>
-	p {
-		 line-height: 1.7em;
-   text-align: justify;
-   text-justify: ideographic;
-   margin: 0;
-   text-indent: 2em;
-   margin-after: 0.5em;
-   word-break: break-all;
+ 	p { 
+		line-height: 1.7em; 
+		text-align: justify; 
+		text-justify: ideographic; 
+		margin: 0; 
+		text-indent: 2em; 
+		margin-after: 0.5em; 
+		word-break: break-all; 
 	}
 </style>
 <body>
 	<div class="panel panel-default">
 		<div class="panel-body row">
-			<div class="col-md-2">
-				<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${listComDeatil.com_no}" style="float:left;padding-right:10px">
+			<div class="col-md-12 col-lg-2">
+				<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${listComDeatil.com_no}" style="margin-right:10px">
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-12 col-lg-10">
 				<label>廠商密碼 :&nbsp;</label>${listComDeatil.pwd}<br>
 				<label>廠商帳戶 :&nbsp;</label>${listComDeatil.account}<br>
 				<label>廠商位置 :&nbsp;</label>${listComDeatil.loc}<br>
