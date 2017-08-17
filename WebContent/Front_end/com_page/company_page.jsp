@@ -6,7 +6,6 @@
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <%
 	ComService comSvc = new ComService();
 	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
@@ -156,14 +155,12 @@
 	</div>
 	<div class="container">
 		<div class="row">
-
-
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<a href="#">
+								<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								</a>	
 								<div class="overlay">
@@ -172,16 +169,19 @@
 							</div>
 						</li>
 					</ul>
-				</div>
+				</div>				
 			</c:forEach>
-			
+			</div>
+		</div>	
+		<div class="container">
+			<div class="row">
 			<div id="more_works" style="display: none;">
 			<c:forEach var="worksVO" items="${worksList}" begin="11">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<a href="#">
+								<a data-lightbox="lightbox">
 									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								</a>
 								<div class="overlay">
@@ -193,8 +193,6 @@
 				</div>
 			</c:forEach>
 			</div>
-			
-			
 		</div>
 	</div>
 

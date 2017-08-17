@@ -34,9 +34,9 @@
 	
 	
 	<ul class="nav nav-tabs nav-justified"> 
-        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad.jsp" class="menua">所有廣告</a></li>
-        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad.jsp?status=0" class="menua">未審核廣告</a></li>
-        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad.jsp?status=1" class="menua">已審核廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad_v1.jsp" class="menua">所有廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad_v1.jsp?status=0" class="menua">未審核廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad_v1.jsp?status=1" class="menua">已審核廣告</a></li>
         <br><br>
     </ul>
 

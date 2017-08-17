@@ -13,11 +13,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-4">
+				<a  data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
 				<img style="width:50%"
 					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
+				</a>
 			</div>
 			<div class="col-xs-12 col-sm-8"><%=advertisingVO.getText()%></div>
 		</div>
@@ -30,6 +33,7 @@
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
 					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<input type="hidden" name="action" value="approved">
 					<input type="submit" class="btn btn-info btn-block" value="通過">				
 				</form>
@@ -37,7 +41,8 @@
 				<form method="post"
 					action="<%=request.getContextPath()%>/advertising/advertising.do">
 					<input type="hidden" name="adv_no" value="<%=advertisingVO.getAdv_no()%>">
-					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">					
+					<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">					
 					<input type="hidden" name="action" value="disapproved">
 					<input type="submit" class="btn btn-danger btn-block" value="未通過">				
 				</form>

@@ -9,6 +9,7 @@ function change(c) {
 	}
 }
 
+
 function validateForm(form){
 	if (!checkName(form.name.value)){
 		return(false);	
@@ -19,6 +20,7 @@ function validateForm(form){
 	if (!checkMessage(form.messagesArea.value)){
 		return(false);	
 	}
+	alert("已成功送出！");
 	form.submit();
 	return(true);
 }

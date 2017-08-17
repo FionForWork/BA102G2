@@ -241,6 +241,9 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
+			
+			String active = req.getParameter("active");
+			req.setAttribute("active", active);
 			try {
 				String adv_no = new String(req.getParameter("adv_no"));
 				System.out.println("ADV_NO:" + adv_no);
@@ -253,7 +256,8 @@ public class AdvertisingServlet extends HttpServlet {
 
 				req.setAttribute("listOneAdContent", advertisingVO);
 				String url = requestURL;
-				req.getRequestDispatcher(url).forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要展示的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
@@ -277,7 +281,8 @@ public class AdvertisingServlet extends HttpServlet {
 				advertisingSvc.deleteAdvertising(adv_no);
 
 				String url = requestURL+"?whichPage="+whichPage;
-				req.getRequestDispatcher(url).forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
@@ -308,11 +313,13 @@ public class AdvertisingServlet extends HttpServlet {
 
 				req.setAttribute("advertisingVO", advertisingVO);
 				
-				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
+				String url = requestURL+"?whichPage="+whichPage;
+				
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 		}
@@ -341,13 +348,13 @@ public class AdvertisingServlet extends HttpServlet {
 				req.setAttribute("advertisingVO", advertisingVO);
 				
 				String url = null;
-					url = requestURL+"?whichPage="+whichPage;
+				url = requestURL+"?whichPage="+whichPage;
 
-					RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
-					failureView.forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Back_end/advertising/adtest.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 		}

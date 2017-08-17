@@ -13,7 +13,6 @@
 	AdvertisingService advertisingSvc = new AdvertisingService();
 	List<AdvertisingVO> advertisingList = advertisingSvc.getAll();
 	pageContext.setAttribute("advertisingList", advertisingList);
-
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
@@ -36,12 +35,22 @@
 			</ul>
 		</font>
 	</c:if>
+	<%System.out.println(request.getAttribute("active")); %>
+	<script type="text/javascript">
+		if('<%=request.getAttribute("active")%>'=='not_audited') {
+				$('#<%=request.getAttribute("active")%>').addClass("active");
+		}else if ('<%=request.getAttribute("active")%>'=='audited') {
+			$('#<%=request.getAttribute("active")%>').addClass("active");
+		}
+	</script>
+	
+	
 
 	<div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs nav-justified">
 			<li class="active"><a href="#all" data-toggle="tab">所有廣告</a></li>
-			<li><a href="#0" data-toggle="tab">未審核廣告</a></li>
-			<li><a href="#1or2" data-toggle="tab">已審核廣告</a></li>
+			<li><a href="#not_audited" data-toggle="tab">未審核廣告</a></li>
+			<li><a href="#audited" data-toggle="tab">已審核廣告</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="all">
@@ -90,6 +99,7 @@
 											<input type="hidden" name="action" value="getOne_For_Display">	
 											<input type="hidden" name="whichPage" value="<%=whichPage%>">
 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="active" value="all">
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
 													<input type="submit" class="btn btn-info" value="審核廣告" disabled="disabled">		
@@ -108,7 +118,7 @@
 				</table>
 			</div>
 
-			<div class="tab-pane" id="0">
+			<div class="tab-pane" id="not_audited">
 				<table class="table table-hover">
 
 					<thead>
@@ -150,7 +160,8 @@
 											action="<%=request.getContextPath()%>/advertising/advertising.do">
 											<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">													
+											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="active" value="not_audited">													
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
 													<input type="submit" class="btn btn-info" value="審核廣告"
@@ -170,7 +181,7 @@
 				</table>
 			</div>
 
-			<div class="tab-pane" id="1or2">
+			<div class="tab-pane" id="audited">
 				<table class="table table-hover">
 
 					<thead>
@@ -215,6 +226,7 @@
 											<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 											<input type="hidden" name="action" value="getOne_For_Display">
 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="active" value="audited">
 											<c:choose>
 												<c:when test="${advertisingVO.status==1}">
 													<input type="submit" class="btn btn-info" value="審核廣告" disabled="disabled">
@@ -249,8 +261,11 @@
 		}
 	%>
 	<div class="col-xs-12 col-sm-1"></div>
-	
-	
+	<font color=blue>request.getParameter("whichPage"):</font>
+<%=request.getParameter("whichPage")%><br>
+<font color=blue>request.getParameter("requestURL"):</font>
+<%=request.getParameter("requestURL")%><br>
+
 	<%@ include file="page/after.file"%>
 </body>
 </html>

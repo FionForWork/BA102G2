@@ -51,17 +51,15 @@ var memNo;
  					                            '<div class="text text-r">' +
  					                                '<p>' + message + ":" + userName+ '</p>' +
  					                            '</div>' +
- 					                            '<div class="image"><img class="img-circle" style="width:100%;" src="'+ me.img +'" /></div>' +
- 					                        	'</div>' +
+ 					                        '</div>' +    
  					                    '</li>'+'<br>';                    
  					    }else{
  					        control = '<li style="width:100%;">' +
- 					                        '<div class="msg-l">' +
- 					                        	'<div class="image"><img class="img-circle" style="width:100%;" src="'+ you.img +'" /></div>' +    
+ 					                        '<div class="msg-l">' +   
  					                            '<div class="text text-l">' +
  					                                '<p>' + userName+ ":" + message + '</p>' +
  					                            '</div>' +
- 					                        	'</div>' +    
+ 					                        '</div>' +    
  					                  '</li>'+'<br>';
  					    }   
  					

@@ -41,7 +41,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body onunload="disconnect();">
+<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
 	
 	<%@ include file="page/before.file"%>
 
@@ -73,7 +73,7 @@
 						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 						<c:forEach var="comVO" items="${comSvc.all}">
 						<c:if test="${param.com_no==comVO.com_no}">
-						<div class="col-md-4"><img class="img-circle" style="width:80%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
+						<div class="col-md-4"><img class="img-circle" style="width:50px" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
 						<div class="col-md-8">${comVO.name}</div>
 						</c:if>
 						</c:forEach>
