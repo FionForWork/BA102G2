@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.mem.model.*"%>
 
-<%@ include file="/Back_end/pages/backHeader.file"%>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 <title>選擇會員</title>
 <br><br><br>
 <div id="content" style="padding:20px 1px 1px 20px;" ><h2>查看會員</h2></div>
@@ -15,7 +15,7 @@
 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>輸入會員編號 (如1001):</b></td>
         <td><input type="text" size="30" name="mem_no"></td>
-        <td><input type="submit" value="送出"></td>
+        <td><input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="bgetOne_For_Display">
 		</FORM>
 		
@@ -33,7 +33,7 @@
           <option value="${memVO.mem_no}">${memVO.mem_no}
          </c:forEach>   
        </select></td>
-      <td><input type="submit" value="送出"></td>
+      <td><input type="submit" class="btn btn-info" value="送出"></td>
        <input type="hidden" name="action" value="bgetOne_For_Display">
     </FORM>
 
@@ -47,7 +47,7 @@
           <option value="${memVO.mem_no}">${memVO.name}
          </c:forEach>   
        </select></td>
-       <td><input type="submit" value="送出"></td>
+       <td><input type="submit" class="btn btn-info" value="送出"></td>
        <input type="hidden" name="action" value="bgetOne_For_Display">
      </FORM></td>
      </tr>
@@ -62,7 +62,7 @@
 
          </c:forEach>   
        </select></td>
-     <td>  <input type="submit" value="送出"></td>
+     <td>  <input type="submit" class="btn btn-info" value="送出"></td>
        <input type="hidden" name="action" value="bgetOne_For_Display">
      </FORM>
      </tr>
@@ -71,7 +71,7 @@
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>根據被檢舉多少次以上:</b></td>
       <td>  <input type="text" size="30" name="report"></td>
-     <td>   <input type="submit" value="送出"></td>
+     <td>   <input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="selectByReport">
 	</FORM>
 	</tr>
@@ -86,7 +86,7 @@
          </c:if>
          </c:forEach>   
        </select></td>
-      <td> <input type="submit" value="送出"></td>
+      <td> <input type="submit" class="btn btn-info" value="送出"></td>
        <input type="hidden" name="action" value="bgetOne_For_Display">
      </FORM>
 	</tr>
@@ -101,7 +101,7 @@
          </c:if>
          </c:forEach>   
        </select></td>
-     <td>  <input type="submit" value="送出"></td>
+     <td>  <input type="submit" class="btn btn-info" value="送出"></td>
        <input type="hidden" name="action" value="bgetOne_For_Display">
      </FORM></td>
 	</tr>

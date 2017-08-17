@@ -5,7 +5,7 @@
 
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
-<%@ include file="/Back_end/pages/backHeader.file"%>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 
 <br><br><br>
 <div id="content">
@@ -54,5 +54,5 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 			     <input type="hidden" name="action"	value="updateStatus">
 			</td>
 		
-	</tr></table></FORM>
+	</tr></table></FORM></div>
 <%@ include file="/Back_end/pages/backFooter.file"%>

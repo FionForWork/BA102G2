@@ -9,7 +9,8 @@
     pageContext.setAttribute("list",list);
 %>
 
-<%@ include file="/Back_end/pages/backHeader.file"%>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
+<title>查看會員</title>
 <br><br><br>
 
 <div id="content">
@@ -43,7 +44,7 @@
 			</td>
 		<td>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
-			      <input type="submit" value="查看全部">
+			      <input type="submit" class="btn btn-info" value="查看全部">
 			     <input type="hidden" name="mem_no"value="${memVO.mem_no}" >
 			     <input type="hidden" name="action"	value="bgetOne_For_Display"></FORM>
 			</td>

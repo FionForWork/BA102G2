@@ -10,7 +10,7 @@
     
 %>
 
-<%@ include file="page/adm_page" %>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 <br><br><br>
 <div id="content">
 

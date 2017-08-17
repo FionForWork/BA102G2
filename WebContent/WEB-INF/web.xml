@@ -41,6 +41,19 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+  <filter>
+    <filter-name>loginAdmFilter</filter-name>
+    <filter-class>com.filters.LoginAdmFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginAdmFilter</filter-name>
+    <url-pattern>/Back_end/adm/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
   <servlet>
     <servlet-name>ComServlet</servlet-name>
     <servlet-class>com.com.controller.ComServlet</servlet-class>
@@ -195,29 +208,22 @@
     <servlet-name>QuoteServlet</servlet-name>
     <url-pattern>/quote/quote.do</url-pattern>
   </servlet-mapping>
-
-  
-	<servlet>
-		<display-name>ReservationServlet</display-name>
-		<servlet-name>ReservationServlet</servlet-name>
-		<servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ReservationServlet</servlet-name>
-		<url-pattern>/reservation/reservation.do</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		
-		<display-name>CalendarServlet</display-name>
-		<servlet-name>CalendarServlet</servlet-name>
-		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CalendarServlet</servlet-name>
-		<url-pattern>/calendar/calendar.do</url-pattern>
-	</servlet-mapping>
-  
-
+  <servlet>
+    <display-name>ReservationServlet</display-name>
+    <servlet-name>ReservationServlet</servlet-name>
+    <servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationServlet</servlet-name>
+    <url-pattern>/reservation/reservation.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>CalendarServlet</display-name>
+    <servlet-name>CalendarServlet</servlet-name>
+    <servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CalendarServlet</servlet-name>
+    <url-pattern>/calendar/calendar.do</url-pattern>
+  </servlet-mapping>
 </web-app>

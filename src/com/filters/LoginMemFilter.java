@@ -57,7 +57,7 @@ public class LoginMemFilter implements Filter {
 				MemVO memVO =(MemVO)session.getAttribute("memVO");
 				memVO.getMem_no();
 			}catch(Exception e){
-				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin.jsp");
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin2.jsp");
 				return;
 			}
 				chain.doFilter(request, response);
