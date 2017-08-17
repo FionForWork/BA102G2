@@ -114,15 +114,9 @@
 				</div>
 			</form>
 			<!--end Modal create album -->
-
-
-			<c:forEach var="albVO" items="${albSvc.getAllByMemNo(mem_no)}"
-				varStatus="s">
-				<c:if test="${(s.count % 4) == 1}">
-					<div class="row">
-				</c:if>
-				<!-- Modal delete alb -->
-				<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+			
+			<!-- Modal delete alb -->
+				<div class="modal fade" id="deleteAlbumModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -134,18 +128,29 @@
 							<div class="modal-body">
 								<p>你確定想刪除「 ${albVO.name} 」嗎？在這本相簿中的相片也會被刪除。</p>
 							</div>
+							<input type='hidden' name='alb_no' value=''>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
-									data-dismiss="modal">取消</button>
+									data-dismiss="modal" id='cancel'>取消</button>
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal" id='deletebtn'
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									onclick="deleteAlb()">刪除</button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 				<!--  End Modal Delete Alb -->
+			
+			
+			
+			<div id='changeContent'>
+			<c:forEach var="albVO" items="${albSvc.getAllByMemNo(mem_no)}"
+				varStatus="s">
+				<c:if test="${(s.count % 4) == 1}">
+					<div class="row">
+				</c:if>
+				
 				<div class="col-xs-12 col-sm-4 col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">${albVO.name}</div>
@@ -180,8 +185,7 @@
 									<a href="#"
 									onclick="document.getElementById('update${s.count}').submit();">
 									<span class='fa fa-pencil' style='font-size: 20px;'></span>
-								</a> <a href="#" id="alb${s.count}" data-toggle="modal"
-									data-target="#deleteModal${s.count}"> <span
+								</a> <a id="alb${s.count}" data-toggle="modal" onclick="openModal('${albVO.alb_no}','${albVO.name}')"> <span
 									class='fa fa-trash' style='font-size: 20px;'></span>
 								</a>
 							</div>
@@ -192,5 +196,38 @@
 		</div>
 		</c:if>
 		</c:forEach>
+		</div>
 	</div>
+<script type="text/javascript">
+	function doAjax(action,alb_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/album/album.do',
+			type:'POST',
+			data:{
+				alb_no :alb_no,
+				action : action
+			},
+			success:function success(){
+				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp #changeContent",{
+					alb_no :alb_no
+				});
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	function openModal(alb_no,name){
+		$("#deleteAlbumModal").modal();
+		$('input[name=alb_no]').val(alb_no);
+		$('.modal-body p').html("你確定想刪除「"+name+" 」嗎？在這本相簿中的相片也會被刪除。");
+	}
+	function deleteAlb(){
+		$("#cancel").click();
+		var alb_no = $('input[name=alb_no]').val();
+		doAjax('delete_Album',alb_no);
+		
+	}
+	
+</script>
 	<%@ include file="page/album_footer.file"%>

@@ -138,6 +138,9 @@ h2{
 	border-bottom: 1px solid #ddd;
 }
 
+a{
+	cursor:pointer;
+}
 
 
 /* The Modal (background) */

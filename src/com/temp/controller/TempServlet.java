@@ -55,8 +55,9 @@ public class TempServlet extends HttpServlet {
 
 		/********* 刪除成品與成品內容 *********/
 		if ("delete_Temp".equals(action)) {
+			
 			String temp_no = request.getParameter("temp_no");
-			System.out.println("temp_no" + temp_no);
+			System.out.println("deletetemp_no" + temp_no);
 			List<TempContVO> tempConts = tcontSvc.getAllByTempNo(temp_no);
 			for (TempContVO tcont : tempConts) {
 				tcontSvc.deleteTempCont(tcont.getTcont_no());

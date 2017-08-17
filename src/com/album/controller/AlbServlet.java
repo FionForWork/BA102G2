@@ -59,8 +59,8 @@ public class AlbServlet extends HttpServlet {
 			albSvc.deleteAlbum(alb_no);
 			
 			/*********   回到相簿列表       *********/
-			String url = "/Front_end/Album/ListAllAlbums.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
+//			String url = "/Front_end/Album/ListAllAlbums.jsp";
+//			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 		/*********   更新相簿       *********/

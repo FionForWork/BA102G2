@@ -43,8 +43,9 @@ public class ContentServlet extends HttpServlet {
 			System.out.println("cont_no====="+cont_no);
 			String alb_no = request.getParameter("alb_no");
 			request.setAttribute("alb_no", alb_no);
-			String url = "/Front_end/Album/ListAllContents.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
+//			String url = "/Front_end/Album/ListAllContents.jsp";
+//			request.getRequestDispatcher(url).forward(request, response);
+			
 			return;
 		}
 		/*********   變更相簿封面       *********/
@@ -56,8 +57,8 @@ public class ContentServlet extends HttpServlet {
 			ContentVO cont = contSvc.getOneContent(cont_no);
 			albSvc.updateAlbum(alb_no, alb.getMem_no(), alb.getName(), cont.getImg(), alb.getCreate_date());
 			request.setAttribute("alb_no", alb_no);
-			String url = "/Front_end/Album/ListAllContents.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
+//			String url = "/Front_end/Album/ListAllContents.jsp";
+//			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 		

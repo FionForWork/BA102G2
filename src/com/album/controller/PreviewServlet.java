@@ -41,7 +41,6 @@ public class PreviewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request,response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -51,7 +50,6 @@ public class PreviewServlet extends HttpServlet {
 		AlbumService albSvc = new AlbumService();
 		ContentService contSvc = new ContentService();
 		PlaceViewService placeviewSvc = new PlaceViewService();
-		ServletContext context = getServletContext();
 		
 		/***** 圖片裁切  *****/
 		if("cropImage".equals(action)){
@@ -60,9 +58,7 @@ public class PreviewServlet extends HttpServlet {
 			ContentVO cropCont = null;
 			AlbumVO alb = new AlbumVO();
 			
-			HttpSession session = request.getSession();
-			// String mem_no = (String) session.getAttribute("mem_no");
-			String mem_no = "1001";
+			String mem_no = request.getParameter("mem_no");
 			byte[] cover = null;
 			Timestamp create_date = new Timestamp(System.currentTimeMillis());
 			String alb_no = null;
@@ -129,9 +125,9 @@ public class PreviewServlet extends HttpServlet {
 			path.closePath();
 			
 			// 透明背景
-			g.setComposite(AlphaComposite.Clear);
-			g.fillRect(0, 0, image.getWidth(), image.getHeight());
-			g.setComposite(AlphaComposite.Src);
+//			g.setComposite(AlphaComposite.Clear);
+//			g.fillRect(0, 0, image.getWidth(), image.getHeight());
+//			g.setComposite(AlphaComposite.Src);
 			
 			// 畫入新的BufferedImage
 			g.setClip(path);
@@ -157,6 +153,7 @@ public class PreviewServlet extends HttpServlet {
 		if("overlayImage".equals(action)){
 			
 			BufferedImage img = null ;
+			Graphics g = null;
 			ContentVO cropCont = null;
 			ContentVO resultCont = null;
 			String alb_no = null;
@@ -170,9 +167,11 @@ public class PreviewServlet extends HttpServlet {
 			int intcropWidth= 0;
 			int intcropHeight = 0;
 			
-			System.out.println("backgroundImage=="+placeview_no);
+			String imageWidth = request.getParameter("imageWidth");
 			String cropCont_no = request.getParameter("cropCont_no");
 			System.out.println("cropCont_no=="+cropCont_no);
+			System.out.println("backgroundImage=="+placeview_no);
+			
 			
 			// 取得裁切圖片移動的座標
 			int xPoint = 0;
@@ -203,19 +202,33 @@ public class PreviewServlet extends HttpServlet {
 				
 				PlaceViewVO placeview = placeviewSvc.getOneByPK(placeview_no);
 				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(placeview.getImg()));
-				
+				g = img.getGraphics();
 			}else{
 				
 				Part part = request.getPart("imgfile");
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					img = javax.imageio.ImageIO.read(part.getInputStream());
 					System.out.println("img----" + img);
+					
+					if(imageWidth.length() != 0){
+						BufferedImage originalimg = img;
+						System.out.println("img----" + img);
+						
+						int resizeWidth = Integer.parseInt(imageWidth);
+						int ratio = originalimg.getWidth() / resizeWidth;
+						int resizeHeight = originalimg.getHeight() / ratio;
+						img = new BufferedImage(resizeWidth,resizeHeight,BufferedImage.TYPE_INT_RGB);
+						Graphics tempg = img.getGraphics();
+						tempg.drawImage(originalimg, 0,0,resizeWidth, resizeHeight, null);
+						
+					}
+					g = img.getGraphics();
 				}
 			}
 			// 取得裁剪過的圖
 			cropCont = contSvc.getOneContent(cropCont_no);
 			BufferedImage cropImage = javax.imageio.ImageIO.read(new ByteArrayInputStream(cropCont.getImg()));
-			Graphics g = img.getGraphics();
+			
 			
 			//判斷是否有調整cropCont大小
 			if(cropWidth.length() != 0 && cropHeight.length() != 0){

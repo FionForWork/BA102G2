@@ -91,6 +91,9 @@ div.caption {
 	float:right;
 }
 
+a{
+	cursor:pointer;
+}
 
 /* The Modal (background) */
 #lightboxImgModal{

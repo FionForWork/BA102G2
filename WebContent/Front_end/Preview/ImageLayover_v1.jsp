@@ -7,7 +7,7 @@
 		//String mem_no = (String) session.getAttribute("mem_no");
 		session.setAttribute("mem_no","1001");
 		//String cropCont_no = (String) request.getAttribute("cropCont_no");
-		String cropCont_no = "0166";
+		String cropCont_no = "0051";
 		String place_no = "1";
 		pageContext.setAttribute("place_no",place_no);
 	%>

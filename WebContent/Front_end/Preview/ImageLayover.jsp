@@ -65,6 +65,7 @@
 						method="post" enctype="multipart/form-data" id='overlayImageForm'>
 
 						<input type='hidden' id='placeview_no' name='placeview_no' value=''> 
+						<input type='hidden' name='imageWidth' value=''>
 						<input type='hidden' name='cropCont_no' value='<%=cropCont_no%>'>
 						<input type='hidden' name='mem_no' value='${mem_no}'> 
 						<input type='hidden' id='xPoint' name='xPoint' value=''>
@@ -141,7 +142,6 @@
 	
 	var xPoint,yPoint;
 	var image;
-	var imageWidth,imageHeight;
 	var hasBackgroundImage = false;
 	
 	function load_image(){
@@ -153,21 +153,26 @@
 	}
 	function preview_images() {
 		dropZone = $('#dropZone');
-		
+		var dropZoneWidth = dropZone.css("width");
+		console.log(dropZoneWidth);
 	     var file = event.target.files[0];
 	     image = new Image();
+	     
 		 image.onload = function() {
+			 console.log(image.height);
+			 console.log("image.width "+image.width);
 		    if(image.width > 840){
-		    	console.log(image.width);
-		    	dropZone.css("width",image.width);
-				dropZone.css("height",image.height);
-				dropZone.on("mousewheel",wheelImage);
+		    	//dropZone.css("height",image.height);
+		    	dropZone.css("background-size",dropZoneWidth);
+		    	//dropZone.css("background-size","contain");
+		    	var imageWidth = dropZoneWidth.substring(0,dropZoneWidth.length-2);
+		    	$("input[name=imageWidth]").val(imageWidth);
 		    }
 		 };
 	    	if(file.type.match('image.*')){
 	    		image.setAttribute("src",URL.createObjectURL(file));
-	    		dropZone.css("background","url("+URL.createObjectURL(file)+")")
-	    		 				.css("background-repeat","no-repeat");
+	    		dropZone.css("background-image","url("+URL.createObjectURL(file)+")")
+	    		 		.css("background-repeat","no-repeat").css("background-size","auto");
 	    		$("input[name=placeview_no]").val(""); 
 	    		
 	    	 }else{
@@ -177,30 +182,8 @@
 	     hasBackgroundImage = true;
 	}
 	
-	
-	// 滑鼠滾動事件處發圖片縮放效果
-	function wheelImage(e){
-		var width = parseInt(window.getComputedStyle(this).width);
-		console.log("width...."+width);
-		var height = parseInt(window.getComputedStyle(this).height);
-		var zoom = 10;
-		
-		if(e.wheelDelta > 0){
-			console.log("00000");
-			this.style.width = Math.min(1500,width + zoom) + "px";
-			this.style.height = Math.min(1500,height + zoom) + "px";
-		}else{
-			console.log("1111111111");
-			this.style.width = Math.max(200,width - zoom) + "px";
-			this.style.height = Math.max(200,height - zoom) + "px";
-		}
-		e.preventDefault();
-	}
-	
-	
-	
-	
 	function doFirst(){
+		
 		placeView = document.getElementsByClassName('placeView');
 		for(var i = 0; i < placeView.length; i++){
 			placeView[i].addEventListener('dragstart',startDrag,false);
@@ -216,6 +199,7 @@
 	function startDrag(e){
 		
 		var data = e.target.getAttribute("id");
+		console.log("data "+data);
 		e.dataTransfer.setData('data',data);
 	}
 	function endDrag(){
@@ -224,9 +208,11 @@
 	function dropped(e){
 		e.preventDefault();
 		var placeview_no = e.dataTransfer.getData('data');
-		dropZone.style.backgroundImage = "url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')";
-		dropZone.style.backgroundRepeat = "no-repeat";
-		document.getElementById("placeview_no").setAttribute("value",placeview_no);
+		console.log("placeview_no "+placeview_no);
+		$("#dropZone").css("background-image","url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')")
+						.css("background-repeat","no-repeat").css("background-size","auto");;
+		$("input[name=placeview_no]").val(placeview_no); 
+		//document.getElementById("placeview_no").setAttribute("value",placeview_no);
 		hasBackgroundImage = true;
 	}
 	window.addEventListener('load',doFirst,false);

@@ -65,6 +65,7 @@
 			</ul>
 			<br>
 			<div class="tab-content" style="border:0">
+			<!-- Unselect Section -->
 				<div id="unselect" class="tab-pane fade in active">
 
 					<table class="table table-hover table-responsive tempList">
@@ -125,24 +126,13 @@
 
 										<td>${tempVO.status}</td>
 										<td><button class="btn btn-default" type='submit' name='displayTemp' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">查看</button></td>
-										<form
-											action="<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp"
-											method="post">
-											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
-											<td><button class="btn btn-default" type='submit'
-													name='updateTemp'>修改</button></td>
-										</form>
+										<td><button class="btn btn-default" type='submit' name='updateTemp' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp?temp_no=${tempVO.temp_no}'">修改</button></td>
 										<form action="<%=request.getContextPath()%>/temp/temp.do"
 											method="post" id="delete${s.count}">
 											<input type='hidden' name='action' value='delete_Temp'>
 											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
-											<td><button type='button' class="btn btn-default"
+										<td><button type='button' class="btn btn-default"
 													data-toggle="modal" data-target="#deleteModal${s.count}">刪除</button></td>
-										</form>
-										<form action="<%=request.getContextPath()%>/temp/temp.do"
-											method="post" id='transfer${s.count}'>
-											<input type='hidden' name='action' value='Transfer_Temp'>
-											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
 										</form>
 
 									</tr>
@@ -157,19 +147,17 @@
 
 
 <br>
+<!-- Selected Section -->
 				<div id="selected" class="tab-pane fade">
-
 					<table class="table table-hover table-responsive tempList">
 						<thead>
 							<tr>
-								
 								<th>成品名稱</th>
 								<th>會員名稱</th>
 								<th>可挑選數量</th>
 								<th>拍攝時間</th>
 								<th>狀態</th>
-								<th colspan="3" align="center"></th>
-
+								<th colspan="2" align="center"></th>
 							</tr>
 						</thead>
 
@@ -178,31 +166,6 @@
 								varStatus="s">
 								<c:if test='${tempVO.status.equals("已挑選")}'>
 
-									<!-- Start Modal delete temp -->
-									<div class="modal fade" id="deleteModal${s.count}"
-										role="dialog">
-										<div class="modal-dialog">
-
-											<!-- Modal content-->
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-													<h4 class="modal-title">刪除成品</h4>
-												</div>
-												<div class="modal-body">
-													<p>你確定想刪除「 ${tempVO.name} 」嗎？在這本成品中的相片也會被刪除。</p>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">取消</button>
-													<button class="btn btn-danger" data-dismiss="modal"
-														onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
-												</div>
-											</div>
-
-										</div>
-									</div>
-									<!--  End Modal Delete temp -->
 
 									<!-- Start Modal Transfer Temp -->
 									<div class="modal fade" id="transferModal${s.count}"
@@ -240,27 +203,10 @@
 
 										<td>${tempVO.status}</td>
 										<td><button class="btn btn-default" type='submit' name='displayTemp' onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">查看</button></td>
-										<form
-											action="<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp"
-											method="post">
-											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
-											<td><button class="btn btn-default" type='submit'
-													name='updateTemp'>修改</button></td>
-										</form>
-										<form action="<%=request.getContextPath()%>/temp/temp.do"
-											method="post" id="delete${s.count}">
-											<input type='hidden' name='action' value='delete_Temp'>
-											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
-											<td><button type='button' class="btn btn-default"
-													data-toggle="modal" data-target="#deleteModal${s.count}">刪除</button></td>
-										</form>
-										<form action="<%=request.getContextPath()%>/temp/temp.do"
-											method="post" id='transfer${s.count}'>
+										<form action="<%=request.getContextPath()%>/temp/temp.do" method="post" id='transfer${s.count}'>
 											<input type='hidden' name='action' value='Transfer_Temp'>
 											<input type='hidden' name='temp_no' value='${tempVO.temp_no}'>
 										</form>
-
-
 										<td><button class='btn btn-default' data-toggle="modal"
 												data-target="#transferModal${s.count}">匯入會員相簿</button></td>
 									</tr>
@@ -275,5 +221,22 @@
 </div>
 
 
-
+<script type="text/javascript">
+	function doAjax(action,temp_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/temp/temp.do',
+			type:'POST',
+			data:{
+				temp_no : temp_no,
+				action : action
+			},
+			success:function success(){
+				
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+</script>
 <%@ include file="page/temp_footer.file"%>
