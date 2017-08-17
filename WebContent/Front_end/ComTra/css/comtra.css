@@ -70,3 +70,6 @@ However, delay the fade out process for 2.5 seconds */
     from {top: 50px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
+td a{
+	cursor:pointer;
+}

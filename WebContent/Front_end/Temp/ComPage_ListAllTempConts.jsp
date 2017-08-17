@@ -25,7 +25,7 @@
 		<ul class="breadcrumb">
 			<li><a href="#">首頁</a></li>
 			<li><a href="#">廠商專區</a></li>
-			<li><a href="#">作品挑選管理</a></li>
+			<li><a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp">作品挑選管理</a></li>
 			<li class="active">${temp.name}</li>
 		</ul>
 	</div>
@@ -37,20 +37,13 @@
 		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2">
 			<ul class="list-group">
-				<a href="#" class="list-group-item menua">編輯廠商資料</a>
-				<br>
-				<a href="#" class="list-group-item menua">修改密碼</a>
-				<br>
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua active">作品挑選管理</a>
-				<br>
-				<a href="#" class="list-group-item menua">行事曆</a>
-				<br>
-				<a href="#" class="list-group-item menua">作品管理</a>
-				<br>
+				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua active">作品挑選管理</a><br>
+                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
 			</ul>
 
 
@@ -127,21 +120,14 @@
 
 			<!-- The lightbox Modal (img)-->
 			<div id="lightboxImgModal" class="modal">
-				<span class="closeImg">&times;</span> <img
+				<span class="closeImg" onclick='closeLightBox()'>&times;</span> <img
 					class="lightbox-modal-content" id="lightboxImg">
 			</div>
 			<!-- The lightbox Modal (img)-->
 
-
-
-			<c:forEach var="tempContVO"
-				items="${tempContSvc.getAllByTempNo(temp_no)}" varStatus="s">
-				<c:if test="${(s.count % 4) == 1}">
-					<div class="row">
-				</c:if>
-
+			
 				<!-- Modal delete Content -->
-				<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+				<div class="modal fade" id="deleteModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -155,11 +141,9 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
-									data-dismiss="modal">取消</button>
-
-								<button type="button" class="btn btn-danger"
-									data-dismiss="modal"
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									data-dismiss="modal" id='cancel'>取消</button>
+								<input type='hidden' name='tcont_no' value=''>
+								<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteTempCont()">刪除</button>
 
 							</div>
 						</div>
@@ -167,6 +151,13 @@
 					</div>
 				</div>
 				<!--  End Modal Delete Content -->
+				
+			<div id='changeContent'>
+			<c:forEach var="tempContVO"
+				items="${tempContSvc.getAllByTempNo(temp_no)}" varStatus="s">
+				<c:if test="${(s.count % 4) == 1}">
+					<div class="row">
+				</c:if>
 
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<div class="image-container">
@@ -181,7 +172,7 @@
 
 						</c:if>
 						<c:if test="${tempContVO.img != null}">
-							<img class="img-responsive img-thumbnail aa"
+							<img class="img-responsive img-thumbnail aa" onclick='openLightBox(this)'
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?tcont_no=${tempContVO.tcont_no }" />
 
 						</c:if>
@@ -191,19 +182,9 @@
 									class='dropbtn'>
 									<i class="fa fa-cog" aria-hidden="true"></i>
 								</button>
-
 								<div class='dropdownContent' id='dropdownContent${s.count}'>
-									<form id="delete${s.count}"
-										action="<%=request.getContextPath()%>/tempcont/tempcont.do"
-										method="post">
-										<input type='hidden' name='tcont_no'
-											value='${tempContVO.tcont_no}'> <input type='hidden'
-											name='action' value='delete_TempCont'> <input
-											type='hidden' name='temp_no' value='<%=temp_no%>'> <a
-											href='#' data-toggle='modal'
-											data-target='#deleteModal${s.count}'>刪除相片</a>
-										<!-- <a href='#' data-toggle="modal" data-target="#deleteModal">刪除相片</a> -->
-									</form>
+									<a data-toggle='modal' onclick="openModal('${tempContVO.tcont_no}')">刪除相片</a>
+									<!-- <a href='#' data-toggle="modal" data-target="#deleteModal">刪除相片</a> -->
 								</div>
 							</div>
 						</c:if>
@@ -213,7 +194,44 @@
 		</div>
 		</c:if>
 		</c:forEach>
+		</div>
 		<br>
 	</div>
+	
+<script type="text/javascript">
+	function doAjax(action,tcont_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/tempcont/tempcont.do',
+			type:'POST',
+			data:{
+				temp_no :'<%=temp_no%>',
+				tcont_no : tcont_no,
+				action : action
+			},
+			success:function success(){
+				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTempConts.jsp #changeContent",{
+					temp_no :'<%=temp_no%>'
+				});
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	function openModal(tcont_no){
+		$("#deleteModal").modal();
+		$('input[name=tcont_no]').val(tcont_no);
+	}
+	function deleteTempCont(){
+		$("#cancel").click();
+		var tcont_no = $('input[name=tcont_no]').val();
+		doAjax('delete_TempCont',tcont_no);
+		
+	}
+	
+</script>
+
+
+
 
 	<%@ include file="page/temp_footer.file"%>

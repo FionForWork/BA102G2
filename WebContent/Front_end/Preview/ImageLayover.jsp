@@ -6,8 +6,8 @@
 <%
 	//String mem_no = (String) session.getAttribute("mem_no");
 	session.setAttribute("mem_no", "1001");
-	//String cropCont_no = (String) request.getAttribute("cropCont_no");
-	String cropCont_no = "0166";
+	String cropCont_no = (String) request.getAttribute("cropCont_no");
+	//String cropCont_no = "0051";
 	String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
@@ -33,38 +33,23 @@
 			<br>
 			<br>
 			<ul class="list-group">
-				<a
-					href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp"
-					class="list-group-item menua">編輯個人資料</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
 				<br>
-
-				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp"
-					class="list-group-item menua">密碼修改</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 				<br>
-
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 				<br>
-				<a
-					href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp"
-					class="list-group-item menua">作品挑選管理</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 				<br>
-
-				<a
-					href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp"
-					class="list-group-item menua">我的相簿</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua active">我的相簿</a>
 				<br>
-
-				<a
-					href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp"
-					class="list-group-item menua">我的最愛</a>
+				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua">我的最愛</a>
 				<br>
-				<a href="#" class="list-group-item menua">實景預覽</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 				<br>
-				<a
-					href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp"
-					class="list-group-item menua">商城專區</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
 
@@ -80,6 +65,7 @@
 						method="post" enctype="multipart/form-data" id='overlayImageForm'>
 
 						<input type='hidden' id='placeview_no' name='placeview_no' value=''> 
+						<input type='hidden' name='imageWidth' value=''>
 						<input type='hidden' name='cropCont_no' value='<%=cropCont_no%>'>
 						<input type='hidden' name='mem_no' value='${mem_no}'> 
 						<input type='hidden' id='xPoint' name='xPoint' value=''>
@@ -95,7 +81,7 @@
 					<a type='button' class="btn btn-app btn-default" id='btnLoad'
 							onclick='load_image();'><i class="fa fa-image"></i> 選擇背景照片</a>
 					<button class='btn btn-default' id='clearBtn'><i class="fa fa-times"></i> 清除背景照</button>
-					<button onclick="history.back()" class='btn btn-default'>回上一頁</button>
+					<button onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp?cropCont_no=<%=cropCont_no%>'" class='btn btn-default'>回上一頁</button>
 					<input type='submit' value='確定' id='submitBtn' class='btn btn-info'>
 				</div>
 				<div class='row'>
@@ -144,7 +130,7 @@
 				<div class='col-sm-12 col-xs-12'>
 					<div id="dropZone">
 						<div id='dragCrop' style="display: inline-block">
-							<img id='resizable'
+							<img id='resizable' style='max-width:200px'
 								src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
 						</div>
 					</div>
@@ -156,7 +142,6 @@
 	
 	var xPoint,yPoint;
 	var image;
-	var imageWidth,imageHeight;
 	var hasBackgroundImage = false;
 	
 	function load_image(){
@@ -167,20 +152,38 @@
 		  
 	}
 	function preview_images() {
-		
-	     var total_file=document.getElementById("imgfile").files.length;
+		dropZone = $('#dropZone');
+		var dropZoneWidth = dropZone.css("width");
+		console.log(dropZoneWidth);
+	     var file = event.target.files[0];
 	     image = new Image();
-	     for(var i = 0; i < total_file; i++){
-	    	 if(event.target.files[i].type.match('image.*')){
-	    		 $('#dropZone').css("background","url("+URL.createObjectURL(event.target.files[i])+")")
-	    		 				.css("background-repeat","no-repeat");
-	    $("input[name=placeview_no]").val(""); 
+	     
+		 image.onload = function() {
+			 console.log(image.height);
+			 console.log("image.width "+image.width);
+		    if(image.width > 840){
+		    	//dropZone.css("height",image.height);
+		    	dropZone.css("background-size",dropZoneWidth);
+		    	//dropZone.css("background-size","contain");
+		    	var imageWidth = dropZoneWidth.substring(0,dropZoneWidth.length-2);
+		    	$("input[name=imageWidth]").val(imageWidth);
+		    }
+		 };
+	    	if(file.type.match('image.*')){
+	    		image.setAttribute("src",URL.createObjectURL(file));
+	    		dropZone.css("background-image","url("+URL.createObjectURL(file)+")")
+	    		 		.css("background-repeat","no-repeat").css("background-size","auto");
+	    		$("input[name=placeview_no]").val(""); 
+	    		
+	    	 }else{
+	    		 return;
 	    	 }
-	     }
+	   	 console.log(image);
 	     hasBackgroundImage = true;
 	}
 	
 	function doFirst(){
+		
 		placeView = document.getElementsByClassName('placeView');
 		for(var i = 0; i < placeView.length; i++){
 			placeView[i].addEventListener('dragstart',startDrag,false);
@@ -196,6 +199,7 @@
 	function startDrag(e){
 		
 		var data = e.target.getAttribute("id");
+		console.log("data "+data);
 		e.dataTransfer.setData('data',data);
 	}
 	function endDrag(){
@@ -204,9 +208,11 @@
 	function dropped(e){
 		e.preventDefault();
 		var placeview_no = e.dataTransfer.getData('data');
-		dropZone.style.backgroundImage = "url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')";
-		dropZone.style.backgroundRepeat = "no-repeat";
-		document.getElementById("placeview_no").setAttribute("value",placeview_no);
+		console.log("placeview_no "+placeview_no);
+		$("#dropZone").css("background-image","url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')")
+						.css("background-repeat","no-repeat").css("background-size","auto");;
+		$("input[name=placeview_no]").val(placeview_no); 
+		//document.getElementById("placeview_no").setAttribute("value",placeview_no);
 		hasBackgroundImage = true;
 	}
 	window.addEventListener('load',doFirst,false);
@@ -259,57 +265,10 @@
 			});
 
 			$("#clearBtn").on("click", function() {
-				$dropZone.css("background", "none");
+				$dropZone.css("background", "none").css("width","auto").css("height","500px");
 				hasBackgroundImage = false;
 			});
 
-			// 移動背景
-			// 		    function move (e){
-			// 		        var moveby = {
-			// 		            x: origin.x - e.clientX, 
-			// 		            y: origin.y - e.clientY
-			// 		        };
-
-			// 		        if (movecontinue === true) {
-			// 		            start.x = start.x - moveby.x;
-			// 		            start.y = start.y - moveby.y;
-
-			// 		            $(this).css('background-position', start.x + 'px ' + start.y + 'px');
-			// 		        }
-
-			// 		        origin.x = e.clientX;
-			// 		        origin.y = e.clientY;
-
-			// 		        e.stopPropagation();
-			// 		        return false;
-			// 		    }
-
-			// 		    function handle (e){
-			// 		        movecontinue = false;
-			// 		        $dropZone.unbind('mousemove', move);
-
-			// 		        if (e.type == 'mousedown') {
-			// 		            origin.x = e.clientX;
-			// 		            origin.y = e.clientY;
-			// 		            movecontinue = true;
-			// 		            $dropZone.bind('mousemove', move);
-			// 		        } else {
-			// 		            $(document.body).focus();
-			// 		        }
-
-			// 		        e.stopPropagation();
-			// 		        return false;
-			// 		    }
-
-			// 		    function reset (){
-			// 		        start = {x: 0, y: 0};
-			// 		        $(this).css('backgroundPosition', '0 0');
-			// 		    }
-			// 		    if ($("#dropZone").css('background-image') != 'none') {
-
-			// 			 	$dropZone.bind('mousedown mouseup mouseleave', handle);
-			// 			    $dropZone.bind('dblclick', reset);
-			// 			}
 
 		});
 	</script>

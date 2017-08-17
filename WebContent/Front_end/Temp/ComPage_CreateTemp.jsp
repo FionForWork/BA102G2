@@ -4,7 +4,9 @@
 <%@ page import="com.temp.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <%@ include file="page/temp_com_header.file"%>
+
 <style type="text/css">
 input[type=date], input[type=number],input[type=file] {
 	width: 100%;
@@ -109,7 +111,7 @@ $("document").ready(function(){
         <ul class="breadcrumb">
             <li><a href="#">首頁</a></li>
             <li><a href="#">廠商專區</a></li>
-            <li><a href="#">作品挑選管理</a></li>
+            <li><a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp">作品挑選管理</a></li>
             <li class="active">建立挑選作品</li>        
         </ul>
     </div>
@@ -121,13 +123,13 @@ $("document").ready(function(){
 <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
             <div class="col-md-offset-1 col-md-2">
                  <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯廠商資料</a><br>
-                    <a href="#" class="list-group-item menua">修改密碼</a><br>
-                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua active">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">行事曆</a><br>
-                    <a href="#" class="list-group-item menua">作品管理</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua active">作品挑選管理</a><br>
+                    <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
                 </ul>
 
 

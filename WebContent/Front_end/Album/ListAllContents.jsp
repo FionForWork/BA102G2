@@ -22,7 +22,7 @@
 		<ul class="breadcrumb">
 			<li><a href="#">首頁</a></li>
 			<li><a href="#">會員專區</a></li>
-			<li><a href="#">我的相簿</a></li>
+			<li><a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp">我的相簿</a></li>
 			<li class="active">${albSvc.getOneAlbum(alb_no).name}</li>
 		</ul>
 	</div>
@@ -34,21 +34,23 @@
 		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2">
 			<ul class="list-group">
-				<a href="#" class="list-group-item menua">編輯個人資料</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
 				<br>
-				<a href="#" class="list-group-item menua">密碼修改</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 				<br>
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
+				<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 				<br>
-				<a href="#" class="list-group-item menua">作品挑選管理</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 				<br>
-				<a href="#" class="list-group-item menua active">我的相簿</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua active">我的相簿</a>
 				<br>
-				<a href="#" class="list-group-item menua">我的最愛</a>
+				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua">我的最愛</a>
 				<br>
-				<a href="#" class="list-group-item menua">商城專區</a>
+				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
+				<br>
+				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
 
@@ -61,7 +63,7 @@
 
 		<div class="col-md-8 col-offset-1">
 
-
+		
 			<!-- Photo Start Here -->
 
 
@@ -115,27 +117,16 @@
 				</div>
 			</div>
 
-
-
-
 			<!-- The lightbox Modal (img)-->
 			<div id="lightboxImgModal" class="modal">
-				<span class="closeImg">&times;</span> <img
+				<span class="closeImg" onclick='closeLightBox()'>&times;</span> <img
 					class="lightbox-modal-content" id="lightboxImg">
 			</div>
 			<!-- The lightbox Modal (img)-->
-
-
-
-
-
-			<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
-				varStatus="s">
-				<c:if test="${(s.count % 4) == 1}">
-					<div class="row">
-				</c:if>
-				<!-- Modal delete Content -->
-				<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+			
+			
+			<!-- Modal delete Content -->
+				<div class="modal fade" id="deleteModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -147,20 +138,29 @@
 							<div class="modal-body">
 								<p>刪除相片後將無法復原，確定刪除嗎?</p>
 							</div>
+							<input type='hidden' name='cont_no' value=''>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
-									data-dismiss="modal">取消</button>
+									data-dismiss="modal" id='cancel'>取消</button>
 
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal" id='deletebtn'
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
-
+									onclick="deleteCont()">刪除</button>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<!--  End Modal Delete Content -->
+			
+			
+			
+			<div id='changeContent'>
+			<c:forEach var="contVO" items="${contSvc.getAllByAlbNo(alb_no)}"
+				varStatus="s">
+				<c:if test="${(s.count % 4) == 1}">
+					<div class="row">
+				</c:if>
+				
 				<div class="col-md-3 col-sm-3 col-xs-6">
 					<div class="image-container">
 						<c:if test="${contVO.img == null}">
@@ -170,15 +170,10 @@
 									type="video/mp4">
 								您的瀏覽器不支援此撥放程式
 							</video>
-
 						</c:if>
 						<c:if test="${contVO.img != null}">
-
-							<img class="img-responsive img-thumbnail original aa"
+							<img class="img-responsive img-thumbnail original aa" onclick='openLightBox(this)'
 								src="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=${contVO.cont_no }" />
-
-
-
 						</c:if>
 
 						<div class="overlap dropdown">
@@ -188,34 +183,51 @@
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
 								<a href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=${contVO.cont_no}' id='download'>下載</a>
-								<form id="update${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='action' value='setCover'> <input
-										type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' id='setCover'
-										onclick="document.getElementById('update${s.count}').submit();">設成封面</a>
-								</form>
-								<form id="delete${s.count}"
-									action="<%=request.getContextPath()%>/content/content.do"
-									method="post">
-									<input type='hidden' name='cont_no' value='${contVO.cont_no}'>
-									<input type='hidden' name='action' value='delete_Content'>
-									<input type='hidden' name='alb_no' value='<%=alb_no%>'>
-									<a href='#' data-toggle="modal"
-										data-target="#deleteModal${s.count}">刪除相片</a>
-								</form>
+								<a id='setCover' onclick="doAjax('setCover','${contVO.cont_no}');">設成封面</a>
+								<a data-toggle="modal" id='${contVO.cont_no}' onclick="openModal('${contVO.cont_no}')">刪除相片</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<c:if test="${(s.count % 4) == 0}">
-		</div>
-		</c:if>
+			<c:if test="${(s.count % 4) == 0}">
+				</div>
+			</c:if>
 		</c:forEach>
+		</div>
 		<br>
+		</div>
 	</div>
+<script type="text/javascript">
+	function doAjax(action,cont_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/content/content.do',
+			type:'POST',
+			data:{
+				alb_no :'<%=alb_no%>',
+				cont_no : cont_no,
+				action : action
+			},
+			success:function success(){
+				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Album/ListAllContents.jsp #changeContent",{
+					alb_no :'<%=alb_no%>'
+				});
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	function openModal(cont_no){
+		$("#deleteModal").modal();
+		$('input[name=cont_no]').val(cont_no);
+	}
+	function deleteCont(){
+		$("#cancel").click();
+		var cont_no = $('input[name=cont_no]').val();
+		doAjax('delete_Content',cont_no);
+		
+	}
+	
+</script>
 
-
-	<%@ include file="page/album_footer.file"%>
+<%@ include file="page/album_footer.file"%>

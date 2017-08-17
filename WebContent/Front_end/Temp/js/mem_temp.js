@@ -67,7 +67,9 @@ $(document).ready(function(){
         	
         });
     });
-
+    $("#lightboxImgModal").on("click",function(){
+    	$(this).css("display","none");
+    });
 
 
 });

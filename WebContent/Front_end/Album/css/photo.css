@@ -146,4 +146,6 @@
         width: 100%;
     }
 }
-
+.dropdownContent a {
+	cursor:pointer;
+}

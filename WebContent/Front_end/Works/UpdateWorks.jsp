@@ -6,8 +6,8 @@
 	class="com.works.model.WorksService"></jsp:useBean>
 
 <%
-	//String com_no = (String) request.getParameter("com_no");
-	String com_no = "2001";
+	String com_no = (String) request.getParameter("com_no");
+	//String com_no = "2001";
 	pageContext.setAttribute("com_no", com_no);
 %>
 
@@ -25,7 +25,7 @@ $(document).ready(function(){
 		<ul class="breadcrumb">
 			<li><a href="#">首頁</a></li>
 			<li><a href="#">廠商專區</a></li>
-			<li><a href="#">作品管理</a></li>
+			<li><a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp">作品管理</a></li>
 			<li class="active">編輯作品</li>
 
 		</ul>
@@ -38,20 +38,13 @@ $(document).ready(function(){
 		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2">
 			<ul class="list-group">
-				<a href="#" class="list-group-item menua">編輯廠商資料</a>
-				<br>
-				<a href="#" class="list-group-item menua">修改密碼</a>
-				<br>
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua">作品挑選管理</a>
-				<br>
-				<a href="#" class="list-group-item menua">行事曆</a>
-				<br>
-				<a href="#" class="list-group-item menua active">作品管理</a>
-				<br>
+				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
+                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua active">作品管理</a><br>
 			</ul>
 
 
@@ -88,7 +81,7 @@ $(document).ready(function(){
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default pull-left"
 									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> Cancel
+									<span class="glyphicon glyphicon-remove" id='cancelUpload'></span> Cancel
 								</button>
 
 							</div>
@@ -114,25 +107,17 @@ $(document).ready(function(){
 			</div>
 
 
-<!-- The lightbox Modal (img)-->
+			<!-- The lightbox Modal (img)-->
 			<div id="lightboxImgModal" class="modal">
-				<span class="closeImg">&times;</span> <img
+				<span class="closeImg" onclick='closeLightBox()'>&times;</span> <img
 					class="lightbox-modal-content" id="lightboxImg">
 			</div>
 			<!-- The lightbox Modal (img)-->
-
-
-
-
-			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(com_no)}"
-				varStatus="s">
-				
-				<c:if test="${(s.count % 3) == 1}">
-					<div class="row">
-				</c:if>
-
+			
+			
+			
 				<!-- Modal delete works -->
-				<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+				<div class="modal fade" id="deleteModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -146,17 +131,26 @@ $(document).ready(function(){
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
-									data-dismiss="modal">取消</button>
-
+									data-dismiss="modal" id='cancelDelete'>取消</button>
+								<input type='hidden' name='works_no' value=''>
 								<button type="button" class="btn btn-danger"
-									data-dismiss="modal"
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									data-dismiss="modal" onclick="deleteWorks()">刪除</button>
 
 							</div>
 						</div>
 					</div>
 				</div>
 				<!--  End Modal Delete works -->
+
+
+			<div id='changeContent'>
+			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(com_no)}"
+				varStatus="s">
+				
+				<c:if test="${(s.count % 3) == 1}">
+					<div class="row">
+				</c:if>
+
 
 				<div class="col-md-4 col-sm-4 col-xs-12">
 					<div class="image-container">
@@ -173,7 +167,7 @@ $(document).ready(function(){
 
 							<div class="polaroid">
 								 <video
-										width="400" controls class="img-responsive bb"
+										width="400" controls class="img-responsive"
 										style="width: 100%">
 										<source
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}"
@@ -205,7 +199,7 @@ $(document).ready(function(){
 						<c:if test="${worksVO.img != null}">
 							<div class="polaroid">
 								<img
-									class="img-responsive aa" style="width: 100%"
+									class="img-responsive aa" onclick='openLightBox(this)' style="width: 100%"
 									src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}" />
 							
 								<div class="caption">
@@ -237,16 +231,7 @@ $(document).ready(function(){
 							</button>
 
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
-								<form id="delete${s.count}"
-									action="<%=request.getContextPath()%>/works/works.do"
-									method="post">
-									<input type='hidden' name='works_no' value='${worksVO.works_no}'>
-									<input type='hidden' name='action' value='delete_Works'>
-									<input type='hidden' name='requestURL' value='<%=request.getServletPath()%>'>
-									<input type='hidden' name='com_no' value='<%=com_no%>'>
-									<a href='#' data-toggle='modal'
-										data-target='#deleteModal${s.count}'>刪除作品</a>
-								</form>
+								<a data-toggle='modal' onclick="openModal('${worksVO.works_no}')">刪除作品</a>
 							</div>
 						</div>
 
@@ -256,6 +241,7 @@ $(document).ready(function(){
 		</div>
 		</c:if>
 		</c:forEach>
+		</div>
 		<br>
 	</div>
 	
@@ -278,7 +264,10 @@ $("document").ready(function(){
 	});
 	// 上傳完轉頁面
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
-        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp";
+		$("#cancelUpload").click();
+		$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp #changeContent",{
+			com_no :'<%=com_no%>'
+		});
 	});
 	
 	$("#updateWorks").click(function(){
@@ -289,5 +278,35 @@ $("document").ready(function(){
 	});
 	
 });
+
+function doAjax(action,works_no){
+	$.ajax({
+		url:'<%=request.getContextPath()%>/works/works.do',
+		type:'POST',
+		data:{
+			com_no :'<%=com_no%>',
+			works_no : works_no,
+			action : action
+		},
+		success:function success(){
+			$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp #changeContent",{
+				com_no :'<%=com_no%>'
+			});
+		},
+		error:function(xhr){
+			alert('Ajax request error!');
+		}
+	});
+}
+function openModal(works_no){
+	$("#deleteModal").modal();
+	$('input[name=works_no]').val(works_no);
+}
+function deleteWorks(){
+	$("#cancelDelete").click();
+	var works_no = $('input[name=works_no]').val();
+	doAjax('delete_Works',works_no);
+	
+}
 	</script>
 	<%@ include file="page/works_footer.file"%>

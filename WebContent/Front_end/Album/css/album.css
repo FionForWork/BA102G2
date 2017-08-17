@@ -61,11 +61,21 @@
 .panel .panel-footer div{
 	display:inline;
 	float:right;
+	
 }
+.panel .panel-footer{
+	background-color:#fff;
+}
+#pictureCount{
+	float:left;
+}
+
 .createAlbum {
     margin-bottom: 10px;
 }
-
+a {
+	cursor:pointer;
+}
 
 
 
