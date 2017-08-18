@@ -16,6 +16,7 @@
     <link href="<%=request.getContextPath()%>/Front_end/com_page/css/index.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/com_page/css/company_page.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/Front_end/com_page/lightbox2/src/css/lightbox.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Front_end/com_page/css/message.css" rel="stylesheet">
 	
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/bootstrap.min.js" type="text/javascript"></script>
@@ -24,6 +25,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/top.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/Front_end/com_page/lightbox2/src/js/lightbox.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/message.js" type="text/javascript"></script>
 	
 	
 </head>

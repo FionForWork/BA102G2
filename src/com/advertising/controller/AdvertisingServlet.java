@@ -69,6 +69,8 @@ public class AdvertisingServlet extends HttpServlet {
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
 				String adv_no = new String(req.getParameter("adv_no"));
+				
+				String title = new String(req.getParameter("title"));
 
 				Timestamp startday = null;
 				try {
@@ -100,6 +102,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 				advertisingVO.setAdv_no(oldAdvertisingVO.getAdv_no());
 				advertisingVO.setCom_no(oldAdvertisingVO.getCom_no());
+				advertisingVO.setTitle(oldAdvertisingVO.getTitle());
 				advertisingVO.setStartDay(startday);
 				advertisingVO.setEndDay(endday);
 				advertisingVO.setPrice(price);
@@ -115,7 +118,7 @@ public class AdvertisingServlet extends HttpServlet {
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(), startday, endday,
+				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
 						price, text, oldAdvertisingVO.getImg(), oldAdvertisingVO.getVdo(), status);
 				System.out.print("CONTROLLER update:");
 				System.out.println(advertisingVO == null);
@@ -145,6 +148,14 @@ public class AdvertisingServlet extends HttpServlet {
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
 				String com_no = req.getParameter("com_no").trim();
+				
+				String title = null;
+				try {
+					title = new String(req.getParameter("title").trim());
+				} catch (NumberFormatException e) {
+					title = "";
+					errorMsgs.add("請輸入內容");
+				}
 
 				String text = null;
 				try {
@@ -212,10 +223,10 @@ public class AdvertisingServlet extends HttpServlet {
 					in.close();
 					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 						if (isImgFile(context.getMimeType(filename))) {
-							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, file,
+							advertisingVO = advertisingSvc.addAdvertising(com_no,title, startday, endday, price, text, file,
 									null, status);
 						} else {
-							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, null,
+							advertisingVO = advertisingSvc.addAdvertising(com_no, title , startday, endday, price, text, null,
 									file, status);
 						}
 					}
@@ -307,7 +318,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
 				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
+						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "1");
 
@@ -341,7 +352,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
 				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
+						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getTitle(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "2");
 

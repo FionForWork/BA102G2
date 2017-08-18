@@ -48,16 +48,16 @@ var memNo;
  						if (who==no){
  					        control = '<li style="width:100%;">' +
  					                        '<div class="msg-r">' +
- 					                            '<div class="text text-r">' +
- 					                                '<p>' + message + ":" + userName+ '</p>' +
+ 					                            '<div class="msg_text text-r">' +
+ 					                                '<p>' + message + '</p>' +
  					                            '</div>' +
  					                        '</div>' +    
  					                    '</li>'+'<br>';                    
  					    }else{
  					        control = '<li style="width:100%;">' +
  					                        '<div class="msg-l">' +   
- 					                            '<div class="text text-l">' +
- 					                                '<p>' + userName+ ":" + message + '</p>' +
+ 					                            '<div class="msg_text text-l">' +
+ 					                                '<p>' + message + '</p>' +
  					                            '</div>' +
  					                        '</div>' +    
  					                  '</li>'+'<br>';

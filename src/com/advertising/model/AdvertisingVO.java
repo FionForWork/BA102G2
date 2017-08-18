@@ -5,6 +5,7 @@ import java.sql.*;
 public class AdvertisingVO implements java.io.Serializable {
 	private String adv_no;
 	private String com_no;
+	private String title;
 	private Timestamp startDay;
 	private Timestamp endDay;
 	private Integer price;
@@ -18,6 +19,14 @@ public class AdvertisingVO implements java.io.Serializable {
 	
 	public String getAdv_no() {
 		return adv_no;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setAdv_no(String adv_no) {

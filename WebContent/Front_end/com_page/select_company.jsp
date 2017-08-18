@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
@@ -29,6 +30,9 @@
 	Service_TypeService service_TypeSvc = new Service_TypeService();
 	List<Service_TypeVO> service_TypeList = service_TypeSvc.getAllServiceType();
 	pageContext.setAttribute("service_TypeList", service_TypeList);
+	
+	DecimalFormat df = new DecimalFormat("#,##0.0"); 
+	pageContext.setAttribute("df", df);
 %>
 </head>
 <body>
@@ -39,7 +43,7 @@
 	<div class="container">
         <div class="col-md-offset-1">
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">首頁</a></li>
+                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">所有廠商</a></li>
             <c:forEach var="service_TypeList" items="${service_TypeList}">
             <c:if test="${service_TypeList.stype_no==param.stype_no}">
                 <li><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${param.stype_no}">${service_TypeList.name}</a></li>
@@ -71,7 +75,7 @@
 												
 												<c:forEach var="servVO" items="${servList}">
 												<c:if test="${com_noList==servVO.com_no}">
-													<span class="fa fa-star text-warning">${servVO.score/servVO.times}</span>
+													<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
 												</c:if>
 												</c:forEach>																							
 										</a></li>

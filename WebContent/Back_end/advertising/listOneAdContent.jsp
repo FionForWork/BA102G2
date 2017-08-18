@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-4">
-				<a  data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
+				<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
 				<img style="width:50%"
 					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=<%=advertisingVO.getAdv_no()%>">
 				</a>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
@@ -17,6 +18,9 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();
 	pageContext.setAttribute("servList", servList);
+	
+	DecimalFormat df = new DecimalFormat("#,##0.0"); 
+	pageContext.setAttribute("df", df);
 %>
 </head>
 <body>
@@ -41,7 +45,7 @@
 									${comVO.name} 
 									<c:forEach var="servVO" items="${servList}">
 										<c:if test="${comVO.com_no==servVO.com_no}">
-											<span class="fa fa-star text-warning">${servVO.score/servVO.times}</span>
+											<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
 										</c:if>
 									</c:forEach>
 

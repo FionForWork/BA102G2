@@ -36,14 +36,15 @@
 		</font>
 	</c:if>
 	<%System.out.println(request.getAttribute("active")); %>
-	<script type="text/javascript">
-		if('<%=request.getAttribute("active")%>'=='not_audited') {
-				$('#<%=request.getAttribute("active")%>').addClass("active");
-		}else if ('<%=request.getAttribute("active")%>'=='audited') {
-			$('#<%=request.getAttribute("active")%>').addClass("active");
-		}
-	</script>
 	
+	<%-- 	<%System.out.println(request.getAttribute("active")); %> --%>
+<!-- 	<script type="text/javascript"> -->
+<%-- 		if('<%=request.getAttribute("active")%>'=='not_audited') { --%>
+<%-- 				$('#<%=request.getAttribute("active")%>').addClass("active"); --%>
+<%-- 		}else if ('<%=request.getAttribute("active")%>'=='audited') { --%>
+<%-- 			$('#<%=request.getAttribute("active")%>').addClass("active"); --%>
+<%-- 		}--%>
+<!-- 	</script> -->
 	
 
 	<div class="tabbable" id="tabs">

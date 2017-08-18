@@ -26,7 +26,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body>
+<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
 	
 	<!--聯絡我們 -->
 	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
@@ -36,7 +36,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"></button>
           <h4 class="modal-title text-center">聯絡我們</h4>
         </div>
         <div class="modal-body">
@@ -139,13 +139,47 @@
 		<!--預約+即時訊息按鈕-->
 		<div class="col-sm-3">
 			<p class="text-center">
-				<a class="btn btn-reservation btn-lg">立即連絡我們 <i class="fa fa-comment"></i></a>
+				<a class="btn btn-reservation btn-lg" id="open_chat">立即連絡我們 <i class="fa fa-comment"></i></a>
 				<br><br>
 				<a class="btn btn-reservation btn-lg" href="">預約 </a>
 			</p>
 		</div>
 	</div>
 	<!--預約+即時訊息按鈕-->
+	
+	
+	<!--立即聯絡我們-->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="chat_box panel panel" id="chatbox">
+					<div class="panel-heading">
+						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
+
+						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
+						<div class="col-md-8 chat-header-name">${comVO.name}</div>
+<!-- 						<div id="statusOutput"></div> -->
+					</div>
+					<div class="panel-body">
+					<ul id="textArea"></ul>
+					</div>
+					<div class="panel-footer">							
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
+																																							  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
+							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+												 '${memVO != null? memVO.name : comVO.name}')" />	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--立即聯絡我們-->
+	
+	<%@ include file="page/message_script.file"%>
+	
+	
+	
 
 	<!--廠商相簿-->
 	<div class="text-center" id="works">

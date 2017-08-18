@@ -35,14 +35,7 @@
 			</ul>
 		</font>
 	</c:if>
-<%-- 	<%System.out.println(request.getAttribute("active")); %> --%>
-<!-- 	<script type="text/javascript"> -->
-<%-- 		if('<%=request.getAttribute("active")%>'=='not_audited') { --%>
-<%-- 				$('#<%=request.getAttribute("active")%>').addClass("active"); --%>
-<%-- 		}else if ('<%=request.getAttribute("active")%>'=='audited') { --%>
-<%-- 			$('#<%=request.getAttribute("active")%>').addClass("active"); --%>
-<%-- 		}--%>
-<!-- 	</script> -->
+
 	
 	
 
@@ -101,17 +94,21 @@
 													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
-									</td>
-									
-									<td>
-										<div class="row collapse in" id="${advertisingVO.adv_no}">
+									</td>	
+								</tr>
+								
+								<tr>
+									<td colspan="5">
+										<div class="row collapse" id="${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
+										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 											<img style="width:50%"
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+										</a>
 										</div>
-										<div class="col-xs-12 col-sm-6">${advertisingVO.text}</div>
-										<div class="col-xs-12 col-sm-2">
-											<form method="post"
+										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
+										<div class="col-xs-12 col-sm-4">
+												<form method="post"
 												action="<%=request.getContextPath()%>/advertising/advertising.do">
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
@@ -125,9 +122,9 @@
 													<input type="submit" class="btn btn-info" value="通過">
 												</c:otherwise>
 												</c:choose>			
-											</form>
+												</form>
 				
-											<form method="post"
+												<form method="post"
 												action="<%=request.getContextPath()%>/advertising/advertising.do">
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
@@ -141,11 +138,10 @@
 													<input type="submit" class="btn btn-danger" value="未通過">
 												</c:otherwise>
 												</c:choose>				
-											</form>
+												</form>
+											</div>
 										</div>
-									</div>
 									</td>
-									
 								</tr>
 										
 							</c:forEach>
@@ -168,7 +164,7 @@
 					</thead>
 
 					<tbody>
-						<c:forEach var="advertisingVO" items="${advertisingList}">
+							<c:forEach var="advertisingVO" items="${advertisingList}">
 							<c:if test="${advertisingVO.status=='0'}">
 								<tr>
 									<c:forEach var="comVO" items="${comList}">
@@ -193,26 +189,66 @@
 											</c:otherwise>
 										</c:choose></td>
 									<td>
-										<form method="post"
-											action="<%=request.getContextPath()%>/advertising/advertising.do">
-											<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											<input type="hidden" name="active" value="not_audited">													
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="submit" class="btn btn-info" value="審核廣告"
-														disabled="disabled">
+													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
-													<input type="submit" class="btn btn-info" value="審核廣告">
+													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
-										</form>
 									</td>
 								</tr>
+								
+								<tr>
+									<td colspan="5">
+										<div class="row collapse" id="${advertisingVO.adv_no}">
+										<div class="col-xs-12 col-sm-4">
+										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+											<img style="width:50%"
+											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+										</a>
+										</div>
+										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
+										<div class="col-xs-12 col-sm-4">
+												<form method="post"
+												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
+												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+												<input type="hidden" name="action" value="approved">
+												<c:choose>
+												<c:when test="${advertisingVO.status=='1'}">
+													<input type="submit" class="btn btn-info" value="通過" disabled="disabled">	
+												</c:when>
+												<c:otherwise>
+													<input type="submit" class="btn btn-info" value="通過">
+												</c:otherwise>
+												</c:choose>			
+												</form>
+				
+												<form method="post"
+												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
+												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">					
+												<input type="hidden" name="action" value="disapproved">
+												<c:choose>
+												<c:when test="${advertisingVO.status=='1'}">
+													<input type="submit" class="btn btn-danger" value="未通過" disabled="disabled">	
+												</c:when>
+												<c:otherwise>
+													<input type="submit" class="btn btn-danger" value="未通過">
+												</c:otherwise>
+												</c:choose>				
+												</form>
+											</div>
+										</div>
+									</td>
+								</tr>
+								
 							</c:if>
-						</c:forEach>
+							</c:forEach>
 					</tbody>
 
 				</table>
@@ -231,7 +267,7 @@
 					</thead>
 
 					<tbody>
-						<c:forEach var="advertisingVO" items="${advertisingList}">
+							<c:forEach var="advertisingVO" items="${advertisingList}">
 							<c:if test="${advertisingVO.status!='0'}">
 								<tr>
 									<c:forEach var="comVO" items="${comList}">
@@ -258,26 +294,66 @@
 											</c:otherwise>
 										</c:choose></td>
 									<td>
-										<form method="post"
-											action="<%=request.getContextPath()%>/advertising/advertising.do">
-											<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											<input type="hidden" name="active" value="audited">
 											<c:choose>
-												<c:when test="${advertisingVO.status==1}">
-													<input type="submit" class="btn btn-info" value="審核廣告" disabled="disabled">
-														
+												<c:when test="${advertisingVO.status=='1'}">
+													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
-													<input type="submit" class="btn btn-info" value="審核廣告">
+													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
-										</form>
 									</td>
 								</tr>
+								
+								<tr>
+									<td colspan="5">
+										<div class="row collapse in" id="${advertisingVO.adv_no}">
+										<div class="col-xs-12 col-sm-4">
+										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+											<img style="width:50%"
+											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+										</a>
+										</div>
+										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
+										<div class="col-xs-12 col-sm-4">
+												<form method="post"
+												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
+												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+												<input type="hidden" name="action" value="approved">
+												<c:choose>
+												<c:when test="${advertisingVO.status=='1'}">
+													<input type="submit" class="btn btn-info" value="通過" disabled="disabled">	
+												</c:when>
+												<c:otherwise>
+													<input type="submit" class="btn btn-info" value="通過">
+												</c:otherwise>
+												</c:choose>			
+												</form>
+				
+												<form method="post"
+												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
+												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">					
+												<input type="hidden" name="action" value="disapproved">
+												<c:choose>
+												<c:when test="${advertisingVO.status=='1'}">
+													<input type="submit" class="btn btn-danger" value="未通過" disabled="disabled">	
+												</c:when>
+												<c:otherwise>
+													<input type="submit" class="btn btn-danger" value="未通過">
+												</c:otherwise>
+												</c:choose>				
+												</form>
+											</div>
+										</div>
+									</td>
+								</tr>
+								
 							</c:if>
-						</c:forEach>
+							</c:forEach>
 					</tbody>
 
 				</table>
@@ -298,11 +374,7 @@
 		}
 	%>
 	<div class="col-xs-12 col-sm-1"></div>
-	<font color=blue>request.getParameter("whichPage"):</font>
-<%=request.getParameter("whichPage")%><br>
-<font color=blue>request.getParameter("requestURL"):</font>
-<%=request.getParameter("requestURL")%><br>
-
+	
 	<%@ include file="page/after.file"%>
 </body>
 </html>
