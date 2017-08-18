@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.calendar.model.*" %>
 <%@ page import="com.mem.model.*" %>
+<%@ page import="com.com.model.*" %>
 <%@ page import="com.serv.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Timestamp" %>
@@ -10,6 +11,10 @@
 <%@ page import="java.time.temporal.TemporalAdjusters" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
+	// 廠商資料
+	ComVO comVO = new ComVO();
+	comVO.setCom_no("2001");
+	
 	int dayOfWeek = 0;int week = 1;int flag = 0; int beforeToday = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
@@ -27,10 +32,10 @@
 	session.setAttribute("memVO", memVO);
 	
 	CalendarService calerdarService = new CalendarService();
-	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, "2001");
+	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
-	List<ServVO> servList = new ServService().getCom("2001");
+	List<ServVO> servList = new ServService().getCom(comVO.getCom_no());
 	pageContext.setAttribute("servList", servList);
 %>
 
@@ -240,7 +245,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/peter/309";
+    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -255,9 +260,6 @@
 		
 		webSocket.onopen = function(event) {
 // 			updateStatus("WebSocket 成功連線");
-// 			document.getElementById('sendMessage').disabled = false;
-// 			document.getElementById('connect').disabled = true;
-// 			document.getElementById('disconnect').disabled = false;
 		};
 
 		webSocket.onmessage = function(event) {
@@ -281,7 +283,7 @@
 	        	$(thisDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
 	        	$(thisDate).children('a').hide();
 	        }else if(action == "onRes"){
-		        var resDate = document.getElementById(jsonObj.thisDate);
+		        var resDate = document.getElementById(jsonObj.thisDate.replace(/-/g,""));
 		        if(resDate != null){
 			        $(resDate).children('a').hide();
 			        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
@@ -312,9 +314,7 @@
 	
 	function disconnect () {
 		webSocket.close();
-// 		document.getElementById('sendMessage').disabled = true;
-// 		document.getElementById('connect').disabled = false;
-// 		document.getElementById('disconnect').disabled = true;
+
 	}
 
 	

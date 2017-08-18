@@ -62,6 +62,11 @@ public class ServService {
 		
 	}
 	
+	public List<String> getComStype(String com_no){
+		return dao.getComStype(com_no);
+		
+	}
+	
 	public List<ServVO> getCom(String com_no){
 		return dao.getCom(com_no);
 		

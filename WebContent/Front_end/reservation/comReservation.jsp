@@ -10,7 +10,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	ReservationService resService = new ReservationService();
-	List<ReservationVO> list = resService.getComRes("2001");
+	String status = request.getParameter("status");
+	List<ReservationVO> list = null;
+	if(status != null){
+		if(status.equals("3")){
+			list = resService.getComRes("2001",status,"4");
+		}else{
+			list = resService.getComRes("2001",status);
+		}
+	}else{
+		list = resService.getComRes("2001","0");
+	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
 	pageContext.setAttribute("dateDF", dateDF);
@@ -30,6 +40,17 @@
 </head>
 <body>
 <%@ include file="page/comHeader.file" %>
+<ul class="nav nav-tabs nav-justified">
+	<li class="pointer active"><a id="0" class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
+	<li class="pointer"><a id="1" class="menua" onclick="showRes(this,1)">訂單確認</a></li>
+	<li class="pointer"><a id="2" class="menua" onclick="showRes(this,2)">尚未評價</a></li>
+	<li class="pointer"><a id="3" class="menua" onclick="showRes(this,3)">服務完成</a></li>
+<br>
+</ul>
+<div id="allRes">
+<c:if test="${list.size() == 0 }">
+	<h3 class="text-center">目前沒有此狀態訂單資訊!</h3>
+</c:if>
 	<c:forEach var="reservationVO" items="${list}">
 		<div class="panel panel-default">
 			<div class="panel-body">
@@ -42,7 +63,7 @@
 						</div>
 						<div class="col-md-offset-3 col-md-3 text-right">
 							訂單狀態 : 
-							<i class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							<i style="color:#f14195" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
 							${sortingHat.getResStatus(reservationVO.status)}
 							<c:if test="${reservationVO.status.equals('3')}">
 								${reservationVO.score}分!
@@ -79,6 +100,7 @@
 			</div>
 		</div>
 	</c:forEach>
+</div>
 <form id="resCompletedForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 	<input type="hidden" name="action" value="resCompleted">
 	<input type="hidden" id="res_no_completed" name="res_no" value="">
@@ -86,4 +108,33 @@
 </form>
 <%@ include file="page/comFooter.file" %>
 </body>
+<script>
+	function showRes(x,y){
+		changeActive(x);
+		$('#allRes').load("comReservation.jsp #allRes",{"status":y});
+	}
+	
+	function changeActive(x){
+		$(".pointer a").css("color","#818181");
+		$(x).css("color","#f14195");
+		$(x).parent().attr("class","active pointer focus");
+		$(x).parent().siblings().attr("class","pointer");
+	}
+	
+	function resCompleted(y){
+		$('#res_no_completed').val($(y).attr("id"));
+		$.ajax({
+			url : "<%= request.getContextPath() %>/reservation/reservation.do",
+			data : $('#resCompletedForm').serialize(),
+			type : 'POST',
+			error : function() {
+				alert('Ajax request 發生錯誤');
+			},
+			success : function() {
+				$('#allRes').load("comReservation.jsp #allRes",{"status":"1"});
+			}
+		});
+		
+	}
+</script>
 </html>

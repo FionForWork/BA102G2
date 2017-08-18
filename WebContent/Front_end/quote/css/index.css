@@ -8,7 +8,9 @@ body {
 /*        color: #454b4f;*/
         color: #f14195;
     }
-
+	.pointer{
+		cursor:pointer;
+	}
 /*
 .nav > li > a:hover, .nav > li > a:focus {  // 排序顏色=================
         text-decoration: none;

@@ -2,15 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.calendar.model.*" %>
+<%@ page import="com.com.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Timestamp" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.temporal.TemporalAdjusters" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
+	// 廠商資料
+	ComVO comVO = new ComVO();
+	comVO.setCom_no("2001");	
+	
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
-	// localDate = LocalDate.of(localDate.getYear(),7,1);
+	if(localDate == null){
+		localDate = LocalDate.now();
+	}
 	// 本月最後一天的日期(LocalDate)
 	LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
 	// 本月共有幾天
@@ -19,7 +26,8 @@
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
 	Timestamp t = new Timestamp(System.currentTimeMillis());
 	CalendarService calerdarService = new CalendarService();
-	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, "2001");
+	// 廠商編號寫死
+	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
 %>
@@ -36,7 +44,7 @@
 <script>
 	$( function() {
 	
-	    $( ".draggable" ).draggable({ snap: ".ui-widget-head",scope:"calendar",
+	    $( ".draggable" ).draggable({scope:"calendar",containment: "#box",revert: true,
 	            drag:function (event, ui) {
 	                $("#dragid").val($(this).attr("id"));
 	                $("#thisDate").val($(this).parent('td').attr("id").replace(/-/g,""));
@@ -92,6 +100,14 @@
 		$('#deleteForm').submit();
 	  }
 </script>
+<c:if test="${not empty errorMsgs}">
+	<c:forEach var="message" items="${errorMsgs}">
+		<div class=" alert alert-danger alert-dismissable fade in">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			${message}
+		</div>
+	</c:forEach>
+</c:if>
 <div class="container">
 <div class="text-center col-md-offset-1 col-md-10">
 <table class="table table-bordered ui-widget-head" >
@@ -133,7 +149,7 @@
 			<th>週日</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="box">
 		
 		<% for(int i = 0; i < dayNum+firstDayOfWeek-1; i++){ %>
 			<% if(i%7 == 0){ %>
@@ -151,28 +167,43 @@
 			<% }else{ %>
 				<% dayOfWeek++; %>
 				<% pageContext.setAttribute("date", i-firstDayOfWeek+2); %>
-				<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+<%-- 				<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)"> --%>
 
-				<p class="day"><%= i-firstDayOfWeek+2 %></p>
-				<br>
+<%-- 				<p class="day"><%= i-firstDayOfWeek+2 %></p> --%>
+<!-- 				<br> -->
+<!-- 開始比對行事曆日期與當前的日期 -->
 				<c:forEach var="calendarVO" items="${list}">
 					<c:if test="${calendarVO.cal_date.getDate() == date}">
+<!-- 行事曆行程 -->
 						<c:if test="${calendarVO.status == '0'}">
+						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#BDE7FF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
 								<button type="button" class="close" display="none" onclick="deleteSchedule(this)" style="display:none">&times;</button>
 								<p style="margin-top:3px">${calendarVO.content}</p>
 								<% flag = 1; %>
 							</div>
+						</td>
 						</c:if>
+<!-- 預約行程 -->
 						<c:if test="${calendarVO.status != '0'}">
+						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:pink;">
 								<p style="margin-top:3px"><a style="color:black;">${calendarVO.content}</a></p>
 								<% flag = 1; %>
 							</div>
+						</td>
 						</c:if>
 					</c:if>
 				</c:forEach>
-				</td>
+				<%if(flag == 0){ %>
+						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
+						</td>
+					<% } %>
+				<% flag = 0; %>
+<!-- 				</td> -->
 			<% } %>
 			<% if(dayOfWeek %7 == 0){ %>
 			<% dayOfWeek = 0; %>
@@ -186,8 +217,8 @@
 <br>
 </div>
 <!-- 新增Schedule -->
-<form id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
-	<div id="myModal" class="modal fade" role="dialog">
+<form  id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
+	<div id="myModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
 			<div class="modal-content">
@@ -232,14 +263,15 @@
   	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 </form>
 <!-- For WebSocket -->
-<input type="text" id="thisDate" value="">
-<input type="text" id="toDate" value="">
+<input type="hidden" id="thisDate" value="">
+<input type="hidden" id="toDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
+
 </body >
 
 <script>
     
-    var MyPoint = "/ResServer/peter/309";
+    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -270,18 +302,12 @@
 				var content = $("<div style='background-color:pink'>").text(name);
 	        	$(thisDate).append(content);
 	        }
-// 	        if(resDate != null){
-// 		        $(resDate).children('a').hide();
-// 		        $(resDate).attr("style","background-color:#D9D9D9;cursor:not-allowed;");
-// 	        }
 		};
 
 		webSocket.onclose = function(event) {
 			updateStatus("WebSocket 已離線");
 		};
 	}
-	
-	
 	
 	function changeSchedule() {
 		
@@ -315,9 +341,7 @@
 	
 	function disconnect () {
 		webSocket.close();
-// 		document.getElementById('sendMessage').disabled = true;
-// 		document.getElementById('connect').disabled = false;
-// 		document.getElementById('disconnect').disabled = true;
+
 	}
 
 	
@@ -326,5 +350,4 @@
 	}
     
 </script>
-
 </html>
