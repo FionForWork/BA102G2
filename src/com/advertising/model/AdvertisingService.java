@@ -28,12 +28,13 @@ public class AdvertisingService {
 		return advertisingVO;
 	}
 	
-	public AdvertisingVO addAdvertising(String com_no, java.sql.Timestamp startDay,
+	public AdvertisingVO addAdvertising(String com_no, String title , java.sql.Timestamp startDay,
 			java.sql.Timestamp endDay, Integer price, String text, byte[] img, byte[] vdo, String status) {
 
 		AdvertisingVO advertisingVO = new AdvertisingVO();
 		
 		advertisingVO.setCom_no(com_no);
+		advertisingVO.setTitle(title);
 		advertisingVO.setStartDay(startDay);
 		advertisingVO.setEndDay(endDay);
 		advertisingVO.setPrice(price);
@@ -51,6 +52,7 @@ public class AdvertisingService {
 	}
 
 	public AdvertisingVO getOneAdvertising(String adv_no) {
+		System.out.println("adv_no"+adv_no);
 		return dao.findByPrimaryKey(adv_no);
 	}
 
@@ -59,5 +61,8 @@ public class AdvertisingService {
 	}
 	public List<AdvertisingVO> getAllUnverified(){
 		return dao.getAllUnverified();
+	}
+	public List<AdvertisingVO> getOneAll(String com_no) {
+		return dao.getOneAll(com_no);
 	}
 }

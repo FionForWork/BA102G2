@@ -26,15 +26,14 @@ public class Forum_Comment_Service {
 
 	}
 
-	public Forum_CommentVO updateFC(Integer fmc_no, Integer art_no, Integer speaker_no, String cont,
-			java.sql.Timestamp fmc_date) {
+	public Forum_CommentVO updateFC(Integer fmc_no, Integer art_no, Integer speaker_no, String cont,java.sql.Timestamp fmc_date) {
 
 		Forum_CommentVO forum_CommentVO = new Forum_CommentVO();
-		Timestamp t = new Timestamp(System.currentTimeMillis());
+		
 		forum_CommentVO.setArt_no(art_no);
 		forum_CommentVO.setSpeaker_no(speaker_no);
 		forum_CommentVO.setCont(cont);
-		forum_CommentVO.setFmc_date(t);
+		forum_CommentVO.setFmc_date(fmc_date);
 		forum_CommentVO.setFmc_no(fmc_no);
 
 		dao.update(forum_CommentVO);

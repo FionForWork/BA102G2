@@ -16,14 +16,13 @@
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
-
-	String status = request.getParameter("status");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="page/before.file"%>
+	<%@ include file="page/before.file"%>
+
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -33,6 +32,15 @@
 			</ul>
 		</font>
 	</c:if>
+	
+	
+	<ul class="nav nav-tabs nav-justified"> 
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/ad.jsp" class="menua">所有廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/select_ad.jsp?status=0" class="menua">未審核廣告</a></li>
+        <li><a href="<%= request.getContextPath() %>/Back_end/advertising/select_ad.jsp?status=1" class="menua">已審核廣告</a></li>
+        <br><br>
+    </ul>
+	
 
 
 	<div class="container">
@@ -60,8 +68,8 @@
 									</c:forEach>
 									
 									<fmt:formatDate value="${advertisingVO.startDay}" var="startDayFormat" pattern="yyyy-MM-dd"/>
-									<td>${advertisingVO.startDay}</td>
-									<td>${(advertisingVO.endDay.time-advertisingVO.startDay.time)/(100*60*60*24)}</td>
+									<td>${startDayFormat}</td>
+									<td>${(advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24)}</td>
 									<td>${(advertisingVO.status==1)?"已審核":"未審核"}</td>
 									<td>
 										<form method="post"
@@ -74,7 +82,7 @@
 											<c:choose>
 												<c:when test="${advertisingVO.status==1}">
 													<input type="submit" class="btn btn-info" value="審核廣告"
-														hidden="true">
+														disabled="disabled">
 												</c:when>
 												<c:otherwise>
 													<input type="submit" class="btn btn-info" value="審核廣告">
@@ -105,6 +113,6 @@
 	<font color=blue>status:</font> ${param.status}
 	<br>
 	<font color=blue>request.getParameter("whichPage"):</font> <%= request.getParameter("whichPage")%>
-<%@ include file="page/after.file"%>
+	<%@ include file="page/after.file"%>
 </body>
 </html>

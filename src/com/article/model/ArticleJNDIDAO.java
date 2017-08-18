@@ -35,6 +35,10 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 			"SELECT * FROM article where art_no = ?";
 		private static final String DELETE = 
 			"DELETE FROM article where art_no = ?";
+		private static final String DELETE_ART = 
+				"DELETE FROM article where ART_NO = ?";
+			private static final String DELETE_Forum = 
+					"DELETE FROM FORUM_COMMENT where ART_NO = ?";
 		private static final String UPDATE = 
 				"UPDATE article set poster_no=?, art_type_no=?, title=?, content=?, art_date=? where art_no=?";
 		private static final String GET_ONE_ALL = 
@@ -337,4 +341,63 @@ public ArticleVO findByPrimaryKey(Integer art_no) {
 
 		return list;
 	}
+	
+	@Override
+	public void deleteAll(Integer art_no) {
+		
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先刪除員工
+			pstmt = con.prepareStatement(DELETE_Forum);
+			pstmt.setInt(1, art_no);
+			 pstmt.executeUpdate();
+			// 再刪除部門
+			pstmt = con.prepareStatement(DELETE_ART);
+			pstmt.setInt(1, art_no);
+			pstmt.executeUpdate();
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			
+			// Handle any SQL errors
+		} catch (SQLException  se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+}
 }
