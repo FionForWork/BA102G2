@@ -13,6 +13,7 @@ public class Test {
 //		AdvertisingVO adverstingVO1 = new AdvertisingVO();
 //		try {
 //			adverstingVO1.setCom_no("2005");
+//			adverstingVO1.setTitle("標題");
 //			adverstingVO1.setStartDay(Timestamp.valueOf("2017-7-18 20:20:20"));
 //			adverstingVO1.setEndDay(Timestamp.valueOf("2017-8-18 20:20:20"));
 //			adverstingVO1.setPrice(17000);
@@ -113,22 +114,24 @@ public class Test {
 //		System.out.println("?��?��??��??");
 
 		// ?��詢�?�?
-//		AdvertisingVO adverstingVO3 = dao.findByPrimaryKey("0001");
-//		System.out.print(adverstingVO3.getCom_no() + ",");
-//		System.out.print(adverstingVO3.getStartDay() + ",");
-//		System.out.print(adverstingVO3.getEndDay() + ",");
-//		System.out.print(adverstingVO3.getPrice() + ",");
-//		System.out.print(adverstingVO3.getText());
-//		System.out.print(adverstingVO3.getImg() + ",");
-//		System.out.print(adverstingVO3.getVdo() + ",");
-//		System.out.print(adverstingVO3.getStatus());
-//		System.out.println("?��詢�?��??");
+		AdvertisingVO adverstingVO3 = dao.findByPrimaryKey("0001");
+		System.out.print(adverstingVO3.getCom_no() + ",");
+		System.out.print(adverstingVO3.getTitle() + ",");
+		System.out.print(adverstingVO3.getStartDay() + ",");
+		System.out.print(adverstingVO3.getEndDay() + ",");
+		System.out.print(adverstingVO3.getPrice() + ",");
+		System.out.print(adverstingVO3.getText());
+		System.out.print(adverstingVO3.getImg() + ",");
+		System.out.print(adverstingVO3.getVdo() + ",");
+		System.out.print(adverstingVO3.getStatus());
+		System.out.println("?��詢�?��??");
 
 		// // ?��詢ALL
 //		List<AdvertisingVO> list = dao.getAll();
 //		for (AdvertisingVO adversting : list) {
 //			System.out.print(adversting.getAdv_no() + ",");
 //			System.out.print(adversting.getCom_no() + ",");
+//			System.out.print(adversting.getTitle() + ",");
 //			System.out.print(adversting.getStartDay() + ",");
 //			System.out.print(adversting.getEndDay() + ",");
 //			System.out.print(adversting.getPrice() + ",");
@@ -138,19 +141,20 @@ public class Test {
 //			System.out.print(adversting.getStatus());
 //			System.out.println();
 //		}
-		List<AdvertisingVO> list = dao.getOneAll("2001");
-		for (AdvertisingVO adversting : list) {
-			System.out.print(adversting.getAdv_no() + ",");
-			System.out.print(adversting.getCom_no() + ",");
-			System.out.print(adversting.getStartDay() + ",");
-			System.out.print(adversting.getEndDay() + ",");
-			System.out.print(adversting.getPrice() + ",");
-			System.out.print(adversting.getText() + ",");
-			System.out.print(adversting.getImg() + ",");
-			System.out.print(adversting.getVdo() + ",");
-			System.out.print(adversting.getStatus());
-			System.out.println();
-	}
-	
+//		List<AdvertisingVO> list = dao.getOneAll("2001");
+//		for (AdvertisingVO adversting : list) {
+//			System.out.print(adversting.getAdv_no() + ",");
+//			System.out.print(adversting.getCom_no() + ",");
+//			System.out.print(adversting.getTitle() + ",");
+//			System.out.print(adversting.getStartDay() + ",");
+//			System.out.print(adversting.getEndDay() + ",");
+//			System.out.print(adversting.getPrice() + ",");
+//			System.out.print(adversting.getText() + ",");
+//			System.out.print(adversting.getImg() + ",");
+//			System.out.print(adversting.getVdo() + ",");
+//			System.out.print(adversting.getStatus());
+//			System.out.println();
+//	}
+//	
 	}
 }

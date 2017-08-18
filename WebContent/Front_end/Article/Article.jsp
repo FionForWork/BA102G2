@@ -133,8 +133,7 @@ System.out.println(rowNumber);
 											<FORM METHOD="post"
 												ACTION="<%=request.getContextPath()%>/Article/Article.do">
 
-												<a
-													href="/BA102G2/Front_end/Article/Discuss.jsp?art_no=${ArticleVO.art_no }">${ArticleVO.title }</a>
+												<a href="/BA102G2/Front_end/Article/Discuss.jsp?art_no=${ArticleVO.art_no }">${ArticleVO.title }</a>
 
 
 												<input type="hidden" name="action" value="getOnedata">
