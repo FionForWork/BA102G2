@@ -368,40 +368,37 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 		Timestamp t = new Timestamp(System.currentTimeMillis());
 
 		// 新增
-		// Forum_CommentVO forum_CommentVO1 = new Forum_CommentVO();
-		//
-		// forum_CommentVO1.setArt_no(5002);
-		// forum_CommentVO1.setSpeaker_no(123456);
-		// forum_CommentVO1.setCont("整個社會一直唱衰台灣整天日本好 韓國好 中國好
-		// 東協好為何敢放空台股那麼少人十幾年一直抱怨不景氣 百貨公司一家家開 三不五時跑去日本旅遊或其他國家旅遊 出國花錢不手軟 小費給得很用力
-		// 回到台灣小氣又巴拉 只會省錢不消費");
-		// forum_CommentVO1.setFmc_date(t);
-		//
-		// dao.insert(forum_CommentVO1);
+//		 Forum_CommentVO forum_CommentVO1 = new Forum_CommentVO();
+//		
+//		 forum_CommentVO1.setArt_no(5002);
+//		 forum_CommentVO1.setSpeaker_no(123456);
+//		 forum_CommentVO1.setCont("整個社會一直唱衰台灣整天日本好 韓國好 中國好東協好為何敢放空台股那麼少人十幾年一直抱怨不景氣 百貨公司一家家開 三不五時跑去日本旅遊或其他國家旅遊 出國花錢不手軟 小費給得很用力回到台灣小氣又巴拉 只會省錢不消費");
+//		 forum_CommentVO1.setFmc_date(t);
+//		
+//		 dao.insert(forum_CommentVO1);
 
 		// // 修改
-		// Forum_CommentVO forum_CommentVO2 = new Forum_CommentVO();
-		// forum_CommentVO2.setFmc_no(6004);
-		// forum_CommentVO2.setArt_no(5002);
-		// forum_CommentVO2.setSpeaker_no(123456);
-		// forum_CommentVO2.setCont("j06");
-		// forum_CommentVO2.setFmc_date(t);
-		//
-		// dao.update(forum_CommentVO2);
+//		 Forum_CommentVO forum_CommentVO2 = new Forum_CommentVO();
+//		 forum_CommentVO2.setFmc_no(17);
+//		 forum_CommentVO2.setArt_no(5020);
+//		 forum_CommentVO2.setSpeaker_no(2001);
+//		 forum_CommentVO2.setCont("j0eeee6");
+//		 forum_CommentVO2.setFmc_date(t);
+//		
+//		 dao.update(forum_CommentVO2);
 
 		// // 刪除
 		// dao.delete(6002);
 		//
 		// 查詢
-		// Forum_CommentVO forum_CommentVO3 = dao.findByPrimaryKey(5001);
-		// System.out.print(forum_CommentVO3.getFmc_no() + ",");
-		// System.out.print(forum_CommentVO3.getArt_no() + ",");
-		// System.out.print(forum_CommentVO3.getSpeaker_no() + ",");
-		// System.out.print(forum_CommentVO3.getCont() + ",");
-		// System.out.print(new SimpleDateFormat("yyyy-mm-dd
-		// HH:mm:ss").format(forum_CommentVO3.getFmc_date() ) + ",");
-		//
-		// System.out.println("---------------------");
+//		 Forum_CommentVO forum_CommentVO3 = dao.findByPrimaryKey(17);
+//		 System.out.print(forum_CommentVO3.getFmc_no() + ",");
+//		 System.out.print(forum_CommentVO3.getArt_no() + ",");
+//		 System.out.print(forum_CommentVO3.getSpeaker_no() + ",");
+//		 System.out.print(forum_CommentVO3.getCont() + ",");
+//		 System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO3.getFmc_date() ) + ",");
+//		
+//		 System.out.println("---------------------");
 		//
 		// // 查詢
 		// List<Forum_CommentVO> list = dao.getAll();
@@ -418,22 +415,22 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 		// }
 
 		// 個別查詢
-//		Forum_CommentVO forum_CommentVO4 = dao.getOneAll(5001);
-//
-//		System.out.print(forum_CommentVO4.getFmc_no() + ",");
-//		System.out.print(forum_CommentVO4.getArt_no() + ",");
-//		System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
-//		System.out.print(forum_CommentVO4.getCont() + ",");
-//		System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date()) + ",");
-//
-//		System.out.println("---------------------");
+		Forum_CommentVO forum_CommentVO4 = dao.getOneAll(5016);
+
+		System.out.print(forum_CommentVO4.getFmc_no() + ",");
+		System.out.print(forum_CommentVO4.getArt_no() + ",");
+		System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
+		System.out.print(forum_CommentVO4.getCont() + ",");
+		System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date()) + ",");
+
+		System.out.println("---------------------");
 
 		
 		// 查詢
-				 Forum_CommentVO forum_CommentVO5 = dao.getArt_no_All(5009);
-				 System.out.print(forum_CommentVO5.getArt_no() + ",");
-				
-				 System.out.println("---------------------");
+//				 Forum_CommentVO forum_CommentVO5 = dao.getArt_no_All(5009);
+//				 System.out.print(forum_CommentVO5.getArt_no() + ",");
+//				
+//				 System.out.println("---------------------");
 	}
 
 	

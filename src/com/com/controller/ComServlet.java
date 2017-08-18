@@ -1,6 +1,10 @@
 package com.com.controller;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.*;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -14,6 +18,11 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.com.model.ComService;
 import com.com.model.ComVO;
 import com.email.MailService;
@@ -25,11 +34,77 @@ import com.email.MailService;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 15 * 1024 * 1024, maxRequestSize = 5 * 15 * 1024 * 1024)
 public class ComServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String[] answer;
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
 	}
 
+	 
+	public String[] latlng(String loc)
+	{
+	        String xx="",yy="";
+	        String sKeyWord = loc;
+	        URL url  = null;//p=%s is KeyWord in
+	        try {
+	            url = new URL(String.format("http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&language=zh-TW",
+	                    URLEncoder.encode(sKeyWord, "UTF-8")));
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        } catch (UnsupportedEncodingException e) {
+	            e.printStackTrace();
+	        }
+	        URLConnection connection = null;
+	        try {
+	            connection = url.openConnection();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        String line;
+	        StringBuilder builder = new StringBuilder();
+	        BufferedReader reader = null;
+	        try {
+	            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        try {
+	            while ((line = reader.readLine()) != null) {builder.append(line);}
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        JSONObject json = null; //轉換json格式
+	        try {
+	            json = new JSONObject(builder.toString());
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+	        JSONArray ja = null;//取得json的Array物件
+	        try {
+	            ja = json.getJSONArray("results");
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+	        for (int z = 0; z < ja.length(); z++) {
+	            try {
+	                xx=String.valueOf(ja.getJSONObject(z).getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+	            try {
+	                yy=String.valueOf(ja.getJSONObject(z).getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	     //回傳String[] 陣列
+	        String[] answer=new  String[2];
+	        answer[0]=xx;//緯度
+	        answer[1]=yy;//經度
+	        this.answer=answer;
+	        return answer;
+	    }
 	
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -39,6 +114,104 @@ public class ComServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
+		
+		
+		if ("updatePic".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+		
+				String com_no = req.getParameter("com_no").trim();
+				
+				Part part = req.getPart("logo");
+				InputStream in = part.getInputStream();
+				byte[] logo = new byte[in.available()];
+				in.read(logo); 
+				
+				ComVO comVO = new ComVO();
+				comVO.setCom_no(com_no);
+				comVO.setLogo(logo);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("comVO", comVO); 
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Front_end/com/addPic.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************2.開始新增資料***************************************/
+		
+				ComService comSvc = new ComService();
+				comVO = comSvc.updatePic(com_no,logo);
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+		
+				String url = "/Front_end/com/addPic.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+		
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/com/addPic.jsp");
+				failureView.forward(req, res);
+				
+				
+			}
+			
+		}
+		
+		if ("updateStatus".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+		
+				String com_no = req.getParameter("com_no").trim();
+				String status = req.getParameter("status").trim();
+				 
+				
+				ComVO comVO = new ComVO();
+				comVO.setCom_no(com_no);
+				comVO.setStatus(status);
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("comVO", comVO); 
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Back_end/com/listOneCom.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************2.開始新增資料***************************************/
+		
+				ComService comSvc = new ComService();
+				comVO = comSvc.updateStatus(com_no, status);
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+		
+				String url = "/Back_end/com/listAllCom.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+		
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Back_end/com/listOneCom.jsp");
+				failureView.forward(req, res);
+				
+				
+			}
+			
+		}
+		
 		
 		if("change".equals(action)){
 			int passRandom = (int)(Math.random()*99999+1);  
@@ -188,7 +361,6 @@ public class ComServlet extends HttpServlet {
 			 List<ComVO> list1 = comSvc.loginpwd();
 			
 			 for(int i=0;i<list.size();i++){
-				
 				 if (list.get(i).getId().equals(id)) {
 					
 					
@@ -196,7 +368,6 @@ public class ComServlet extends HttpServlet {
 						
 						 if (list1.get(j).getPwd().equals(pwd)) {
 							 HttpSession session = req.getSession();
-							
 							 session.removeAttribute("id");
 							 session.removeAttribute("comVO");
 							 
@@ -257,6 +428,12 @@ public class ComServlet extends HttpServlet {
 				if (loc == null || (loc.trim()).length() == 0) {
 					errorMsgs.put("loc","地址請勿空白");
 				}
+				ComServlet comServlet = new ComServlet();
+				 String[] locs=comServlet.latlng(loc);
+				 String lat= locs[0].toString();
+				 String lon= locs[1].toString();
+				 System.out.println(lon+"----"+lat);
+				 
 				String com_desc = req.getParameter("com_desc").trim();
 				if (com_desc == null || (com_desc.trim()).length() == 0) {
 					errorMsgs.put("com_desc","介紹請勿空白");
@@ -272,6 +449,8 @@ public class ComServlet extends HttpServlet {
 				if (account == null || (account.trim()).length() == 0) {
 					errorMsgs.put("account","銀行帳戶請勿空白");
 				}
+				
+				
 				
 				Part part = req.getPart("logo");
 				InputStream in = part.getInputStream();
@@ -292,6 +471,8 @@ public class ComServlet extends HttpServlet {
 				comVO.setAccount(account);
 				comVO.setCom_desc(com_desc);
 				comVO.setPhone(phone);
+				comVO.setLon(lon);
+				comVO.setLat(lat);
 			
 			
 
@@ -305,7 +486,7 @@ public class ComServlet extends HttpServlet {
 				}
 				/***************************2.開始新增資料***************************************/
 				ComService comSvc = new ComService();
-				comVO = comSvc.addCom(id, pwd, name, loc,com_desc,phone,account,logo);
+				comVO = comSvc.addCom(id, pwd, name, loc,com_desc,phone,account,logo,lon,lat);
 				HttpSession session = req.getSession();
 				comVO = comSvc.getOneComById(id);
 				

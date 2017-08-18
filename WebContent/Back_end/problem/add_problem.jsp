@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page import="java.util.*"%>
 <%@ page import="com.problem.model.*"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -6,6 +5,7 @@
 <%@ include file="page/problem_header_update.file"%>
 <%
 ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO"); 
+
 
 %>
  <div class="panel-heading">
@@ -57,6 +57,12 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
     </div>
      </form>
 </div>
+
+
+
+
+
+
 
 
 

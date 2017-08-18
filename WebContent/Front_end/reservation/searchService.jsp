@@ -4,17 +4,20 @@
 <%@ page import="com.serv.model.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% 
 	LocalDate localDate = LocalDate.now();
 	pageContext.setAttribute("localDate", localDate);
 	if(request.getAttribute("list") == null){
-	Map<String,String[]> map = new HashMap<String,String[]>();
-	map.put("cal_date", new String[] {localDate.toString()});
-	ServService servService = new ServService();
-	List<ServVO> list = servService.getAll(map);
-	pageContext.setAttribute("list", list);
+		Map<String,String[]> map = new HashMap<String,String[]>();
+		map.put("cal_date", new String[] {localDate.toString()});
+		ServService servService = new ServService();
+		List<ServVO> list = servService.getAll(map);
+		pageContext.setAttribute("list", list);
 	}
+	DateFormat df = new SimpleDateFormat("yyyy年m月d日");
+	pageContext.setAttribute("df", df);
 	int servNum = 1;
 %>
 <jsp:useBean id="comService" class="com.com.model.ComService"/>
@@ -104,6 +107,10 @@
 			<b class="price text-pink" >${servVO.price}</b>
 			<span class="hidden-xs">元</span>
 		</div>
+		<div class="label-price" style="font-size:12px">
+			<span class="small">訂金</span>
+			<span class="hidden-xs">${servVO.deposit}元</span>
+		</div>
 	</div>
 	</a>
 </div><!--包套item-->
@@ -127,7 +134,7 @@
 				<div  class="col-xs-offset-3 col-xs-6 btn-like-wrapper"">
 				<!-- 	<button class="btn btn-lg sharp btn-like" id="userCollect" data-id="1919" data-type="2"><i id="CollectIcon" class="fa fa-heart-o" aria-hidden="true"></i></button> -->
 					<a class="thumbnail thumbnail-service mod-shadow">
-					<div class="ratiobox rat_1_115 bg-cover" style="background-image: url('https://cdn.weddingday.com.tw/wedding-image/service/300/7583ad032f82dede7b38599afa5e61c15915d768ebef0.jpg')">
+					<div class="ratiobox rat_1_115 bg-cover" style="background-image: url(<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no})">
 					</div>
 					<div class="caption">
 						<h4 class="text-ellipsis"><sapn>${comService.getOneCom(servVO.com_no).name}</sapn></h4>
@@ -166,9 +173,6 @@
 <% servNum = 1; %>
 </div>
 </div>
-
-
-
 <%@ include file="page/searchServiceFooter.file" %>
 </body>
 </html>

@@ -36,8 +36,22 @@ public class ComService {
 		
 		return comVO;
 	}
-	
-	
+	public ComVO updateStatus(String com_no,String status){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		comVO.setStatus(status);
+		dao.updateStatus(comVO);
+		
+		return comVO;
+	}
+	public ComVO updatePic(String com_no,byte[] logo){
+		ComVO comVO = new ComVO();
+		comVO.setCom_no(com_no);
+		comVO.setLogo(logo);
+		dao.updatePic(comVO);
+		
+		return comVO;
+	}
 	
 public List<ComVO> loginpwd(){
 		
@@ -49,7 +63,7 @@ public List<ComVO> loginpwd(){
 		return dao.loginid();
 	}
 	
-	public ComVO addCom(String id,String pwd,String name,String loc,String com_desc,String phone,String account,byte[] logo)
+	public ComVO addCom(String id,String pwd,String name,String loc,String com_desc,String phone,String account,byte[] logo,String lon,String lat)
 	{
 		ComVO comVO =new ComVO();
 		comVO.setId(id);
@@ -60,7 +74,8 @@ public List<ComVO> loginpwd(){
 		comVO.setPhone(phone);
 		comVO.setAccount(account);
 		comVO.setLogo(logo);
-	
+		comVO.setLon(lon);
+		comVO.setLat(lat);
 		dao.insert(comVO);
 		return comVO;
 	}

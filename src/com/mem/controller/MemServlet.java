@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +22,9 @@ import javax.servlet.http.Part;
 
 import com.com.model.ComService;
 import com.com.model.ComVO;
+
 import com.email.MailService;
+
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
@@ -44,6 +47,125 @@ public class MemServlet extends HttpServlet{
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
+		
+		
+		if ("updatePic".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+
+				String mem_no = req.getParameter("mem_no").trim();
+				
+				Part part = req.getPart("picture");
+				InputStream in = part.getInputStream();
+				byte[] picture = new byte[in.available()];
+				in.read(picture); 
+				
+				MemVO memVO = new MemVO();
+				memVO.setMem_no(mem_no);
+				memVO.setPicture(picture);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memVO", memVO); 
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Front_end/mem/addPic.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************2.開始新增資料***************************************/
+
+				MemService memSvc = new MemService();
+				memVO = memSvc.updatePic(mem_no,picture);
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+
+				String url = "/Front_end/mem/addPic.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/mem/addMem.jsp");
+				failureView.forward(req, res);
+				
+				
+			}
+			
+		}
+		
+		
+		
+		if ("updateStatus".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+
+				String mem_no = req.getParameter("mem_no").trim();
+				
+				String status = req.getParameter("status").trim();
+				
+				MemVO memVO = new MemVO();
+				memVO.setMem_no(mem_no);
+				memVO.setStatus(status);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memVO", memVO); 
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/***************************2.開始新增資料***************************************/
+
+				MemService memSvc = new MemService();
+				memVO = memSvc.updateStatus(mem_no, status);
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+
+				String url = "/Back_end/mem/listAllMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
+				failureView.forward(req, res);
+				
+				
+			}
+			
+		}
+		
+		
+		if ("selectByReport".equals(action)) {
+			/*************************** 1.接收請求參數 ****************************************/
+			Integer report = new Integer(req.getParameter("report"));
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			MemService memSvc = new MemService();
+			Set<MemVO> set = memSvc.getMemsByReport(report);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("selectByReport", set);    // 資料庫取出的set物件,存入request
+			
+			String url = null;
+			url = "/Back_end/mem/selectByReport.jsp";   
+			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		
 		
 		if("change".equals(action)){
 			int passRandom = (int)(Math.random()*99999+1);  
@@ -187,18 +309,15 @@ public class MemServlet extends HttpServlet{
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
 			 List<MemVO> list1 = memSvc.loginpwd();
-			
-		
-
+	
 			 for(int i=0;i<list.size();i++){
 				 if (list.get(i).getId().equals(id)) {
 					 
 					
 					 for(int j=0;j<list1.size();j++){
-						  
-						 if (list1.get(j).getPwd().equals(pwd)) {
-							
-							 HttpSession session = req.getSession();
+						
+						 if (pwd.equals(list1.get(j).getPwd())) {
+							HttpSession session = req.getSession();
 							 session.removeAttribute("id");
 							 session.removeAttribute("memVO");
 
@@ -231,7 +350,7 @@ public class MemServlet extends HttpServlet{
 			
 		}
 		
-		
+		//前端
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			Map<String,String> errorMsgs = new HashMap<String,String>();
@@ -255,9 +374,32 @@ public class MemServlet extends HttpServlet{
 				/***************************其他可能的錯誤處理**********************************/
 			
 		}
+		//後端
+		if ("bgetOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+
+			Map<String,String> errorMsgs = new HashMap<String,String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			/***************************1.接收請求參數****************************************/
+				String mem_no =req.getParameter("mem_no");
+				
+				/***************************2.開始查詢資料****************************************/
+				MemService memSvc = new MemService();
+				MemVO memVO = memSvc.getOneMem(mem_no);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("memVO", memVO);         // 資料庫取出的empVO物件,存入req
+				String url = "/Front_end/mem/updatemember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理**********************************/
+			
+		}
 		
-		
-		
+		//前
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -282,14 +424,14 @@ public class MemServlet extends HttpServlet{
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Front_end/mem/listAllMem.jsp");
+							.getRequestDispatcher("/Back_end/mem/listAllMem.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
-				String url = "/Front_end/mem/listOneMem.jsp";
+				String url = "/Back_end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -297,13 +439,13 @@ public class MemServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/mem/listAllMem.jsp");
+						.getRequestDispatcher("/Back_end/mem/listAllMem.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
 
-		if ("getOneDisplay".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOneDisplay".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -350,7 +492,7 @@ public class MemServlet extends HttpServlet{
 			}
 		}
 		
-		
+		//後
 		if ("bgetOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -369,6 +511,7 @@ public class MemServlet extends HttpServlet{
 				/***************************2.開始查詢資料*****************************************/
 				MemService memSvc = new MemService();
 				MemVO memVO = memSvc.getOneMem(mem_no);
+				
 				if (memVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -447,7 +590,7 @@ public class MemServlet extends HttpServlet{
 				in.read(picture);
 				
 				if(part.getSize()==0){
-					errorMsgs.put("logo","請選擇圖片");
+					errorMsgs.put("picture","請選擇圖片");
 					}
 
 				
@@ -550,7 +693,7 @@ public class MemServlet extends HttpServlet{
 				in.read(picture); 
 				
 				if(part.getSize()==0){
-					errorMsgs.put("logo","請選擇圖片");
+					errorMsgs.put("picture","請選擇圖片");
 					}
 				MemVO memVO = new MemVO();
 				memVO.setMem_no(mem_no);
@@ -580,9 +723,9 @@ public class MemServlet extends HttpServlet{
 				/***************************2.開始修改資料*****************************************/
 				MemService memSvc = new MemService();
 				memVO = memSvc.updateMem(mem_no, id, name, sex,bday,phone,email,account,picture,report,status);
-				
+				 HttpSession session = req.getSession();
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("memVO",memVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				 session.setAttribute("memVO",memVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/Front_end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);

@@ -109,7 +109,7 @@ public class ArticleServlet extends HttpServlet {
 		}
 
 		if ("OneAll".equals(action)) {
-			System.out.println(action);
+			System.out.println("OneAll:"+action);
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -122,9 +122,7 @@ public class ArticleServlet extends HttpServlet {
 				Article_Service articleSvc = new Article_Service();
 				List<ArticleVO>articlelist =(List<ArticleVO>) articleSvc.getOneAll(art_type_no);
 
-				/***************************
-				 * 3.查詢完成,準備轉交(Send the Success view)
-				 ************/
+				/**************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("articlelist", articlelist);
 
 				String url = "/Front_end/Article/Article.jsp";
@@ -139,7 +137,7 @@ public class ArticleServlet extends HttpServlet {
 			}
 		}
 		if ("All".equals(action)) {
-			System.out.println(action);
+			System.out.println("ALL:"+action);
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -165,6 +163,112 @@ public class ArticleServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/xxArticle.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("getOne_For_Update".equals(action)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				Integer art_no = new Integer(req.getParameter("art_no"));
+				
+				/***************************2.開始查詢資料****************************************/
+				Article_Service articleSvc = new Article_Service();
+				ArticleVO articleVO = articleSvc.getOneArt(art_no);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("articleVO", articleVO);         
+				String url = "/Front_end/Article/Article_update.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Article/xxArticle_update.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("update".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer art_no = new Integer(req.getParameter("art_no").trim());
+				Integer poster_no = new Integer(req.getParameter("poster_no").trim());
+				Integer art_type_no = new Integer(req.getParameter("art_type_no").trim());
+				String title = req.getParameter("title").trim();
+				String content = req.getParameter("content").trim();	
+				
+
+				ArticleVO articleVO = new ArticleVO();
+				java.util.Date date = new java.util.Date();
+
+				long date1 = date.getTime();
+				Date art_date = new Date(date1);
+				
+				articleVO.setArt_no(art_no);
+				articleVO.setPoster_no(poster_no);
+				articleVO.setArt_type_no(art_type_no);
+				articleVO.setTitle(title);
+				articleVO.setContent(content);
+				
+				articleVO.setArt_date(art_date);
+				
+
+				
+				
+				/***************************2.開始修改資料*****************************************/
+				Article_Service articleSvc = new Article_Service();
+				articleVO=articleSvc.updateArt(art_no, poster_no, art_type_no, title, content, art_date);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("articleVO",articleVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/Front_end/Article/Discuss.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Article/xxDiscuss.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("delete".equals(action)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			req.setAttribute("errorMsgs", errorMsgs);
+	
+			try {
+				/***************************1.接收請求參數***************************************/
+				Integer art_no = new Integer(req.getParameter("art_no"));
+				
+				/***************************2.開始刪除資料***************************************/
+				Article_Service articleSvc = new Article_Service();
+				articleSvc.deleteArtAll(art_no);
+				
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+				String url = "/Front_end/Article/Article.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Article/XXXArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}

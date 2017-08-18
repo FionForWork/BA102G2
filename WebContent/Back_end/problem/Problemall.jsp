@@ -1,3 +1,5 @@
+<%@page import="com.problem_type.model.Problem_Type_Service"%>
+<%@page import="com.problem_type.model.Problem_TypeVO"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.problem.model.*"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -7,14 +9,19 @@
    Problem_Service proSvc=new Problem_Service();
    List<ProblemVO> list=proSvc.getAll();
    pageContext.setAttribute("list", list);
+   
+   
+   
    %>
+   <jsp:useBean id="pro_type_Svc" scope="page" class="com.problem_type.model.Problem_Type_Service" />
  
 <%@ include file="page/problem_header.file"%>
 <c:forEach var="ProblemVO" items="${list}" >
   <tbody>
                                 <tr>
                                     <td class="text-center">${ProblemVO.prob_no }</td>
-                                    <td class="text-center">${ProblemVO.problem_type_no }</td>
+                                     <td class="text-center">${pro_type_Svc.getOneProblem_Type(ProblemVO.problem_type_no).type}</td>
+                                  
                                     <td>${ProblemVO.content }</td>
                                     <td>${ProblemVO.reply }</td>
                                     

@@ -1,0 +1,31 @@
+.thead{
+   
+      font-size: 1.5em;
+     box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+ 
+};
+.subjects{
+	font-size: 1.2em;
+};
+.subjects-text{
+	display:block;
+}
+
+
+.mid{
+    text-align: center;
+    width:49%;      
+}
+ul{
+   width:100%;
+   margin:0;
+   padding:0;
+   list-style: none;
+}
+ul li{
+    margin-top: 5px;
+    padding-bottom:5px;
+    display: inline-block;
+    width:70%;
+    border-bottom: dashed 1px;
+}

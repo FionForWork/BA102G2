@@ -278,7 +278,7 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	}
 	
 	@Override
-	public List<ReservationVO> getMemRes(String mem_no) {
+	public List<ReservationVO> getMemRes(String mem_no, String status) {
 		List<ReservationVO> list = new ArrayList<ReservationVO>();
 		ReservationVO reservationVO = null;
 		
@@ -341,7 +341,7 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	}
 
 	@Override
-	public List<ReservationVO> getComRes(String com_no) {
+	public List<ReservationVO> getComRes(String com_no, String status) {
 		List<ReservationVO> list = new ArrayList<ReservationVO>();
 		ReservationVO reservationVO = null;
 		
@@ -464,6 +464,30 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	public void insert(ReservationVO reservationVO, CalendarVO calendarVO, RFQ_DetailVO rfq_detailVO) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<ReservationVO> getAllMemRes(String mem_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReservationVO> getMemRes(String mem_no, String status, String status2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReservationVO> getComRes(String com_no, String status, String status2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReservationVO> getAllComRes(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

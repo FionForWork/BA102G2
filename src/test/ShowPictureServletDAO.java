@@ -93,7 +93,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			
 			if((pk.substring(0,1)).equals("1")){
 				byte[] tempcont =null;
-				System.out.println(pk);
+				System.out.println("memPicture"+pk);
 				MemService memSvc = new MemService();
 				MemVO memVO = memSvc.getOneMem(pk);
 				tempcont = memVO.getPicture();
@@ -104,7 +104,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				
 			}else{
 				byte[] logo =null;
-				System.out.println(pk);
+				System.out.println("comPicture"+pk);
 				ComService comSvc = new ComService();
 				ComVO comVO = comSvc.getOneCom(pk);
 				
@@ -187,6 +187,19 @@ public class ShowPictureServletDAO extends HttpServlet {
 				cont = contVO.getImg();
 				response.setHeader("Content-Disposition", "attachment;filename=\""+pk+".jpg\"");
 			}
+			out.write(cont);
+			out.close(); 
+			return;
+		}
+		if(file.startsWith("adv_no")){
+			pk = request.getParameter("adv_no");
+			byte[] cont =null;
+			System.out.println("adv_no"+pk);
+			AdvertisingService advSvc=new AdvertisingService();
+			AdvertisingVO advertisingVO=advSvc.getOneAdvertising(pk);
+			
+			cont = advertisingVO.getImg();
+			
 			out.write(cont);
 			out.close(); 
 			return;

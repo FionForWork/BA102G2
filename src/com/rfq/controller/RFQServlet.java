@@ -31,17 +31,7 @@ import com.rfq_detail.model.RFQ_DetailVO;
 
 public class RFQServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
-	public void init() throws ServletException {
-		ServletContext context = getServletContext();
-		HashMap<String,String> statusMap = new HashMap<String,String>();
-		statusMap.put("0", "關閉");
-		statusMap.put("1", "開啟");
-		context.setAttribute("statusMap", statusMap);
-		
-		
-	}
+
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);

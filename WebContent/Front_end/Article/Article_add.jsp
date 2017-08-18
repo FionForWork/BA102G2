@@ -11,14 +11,14 @@
 <%ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); %>
 <%
    MemService memService=new MemService();
-MemVO memVO=memService.getOneMem("1001");
-// session.setAttribute("memVO", memVO);
+MemVO memVO=memService.getOneMem("1003");
+session.setAttribute("memVO", memVO);
 
 %>
 <%
 ComService comService=new ComService();
 ComVO comVO=comService.getOneCom("2001");
- session.setAttribute("comVO", comVO);
+//  session.setAttribute("comVO", comVO);
 
 %>
 
@@ -56,11 +56,11 @@ ComVO comVO=comService.getOneCom("2001");
 	</div>
 
 	<div class="container" style="display: block;">
-		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="poster_no" value="${comVO.com_no }"> <input
+		<input type="hidden" name="action" value="insert"> 
+		<input type="hidden" name="poster_no" value="${(comVO.com_no!=null)?comVO.com_no:memVO.mem_no}"> <input
 			type="submit" class="btn btn-info" data-dismiss="modal" value="發佈">
 </form>
-<input type="submit" class="btn btn-default btn-danger btn-primary"
+<input type="submit" class="btn  btn-danger "
 	value="返回" onclick="history.back()">
 </div>
 

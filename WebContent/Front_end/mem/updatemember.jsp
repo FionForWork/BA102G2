@@ -49,9 +49,15 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     	</div>
     		<div class="form-group">
 				<span>性別 :</span>
-			<div><input type="radio" name="sex"   checked="true" value="<%= (memVO==null)? "女" : memVO.getSex()%>" />女<br></div>
-			<div><input type="radio" name="sex"  value="<%= (memVO==null)? "男" : memVO.getSex()%>" />男</div>
-	
+					<c:if test="${memVO.sex==\"男\"}" >
+				<div><input type="radio" name="sex"   value="女" />女<br></div>
+				<div><input type="radio" name="sex" checked="true"  value="男" />男</div>
+				</c:if>
+				<c:if test="${memVO.sex==\"女\"}" >
+				<div><input type="radio" name="sex" checked="true"  value="女" />女<br></div>
+				<div><input type="radio" name="sex"  value="男" />男</div>
+				</c:if>
+			
 		</div>
 		<div class="form-group">
            <span>生日:<font color='red'>${errorMsgs.get("bday")}</font></span>

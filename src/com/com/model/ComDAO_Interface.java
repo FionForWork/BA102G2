@@ -20,5 +20,7 @@ public interface ComDAO_Interface {
     public void updatePwd(ComVO comVO);
     public ComVO oldPwd(String com_no);
     public void confirmCom(ComVO comVO);
+    public void updatePic(ComVO comVO);
+    public void updateStatus(ComVO comVO);
     public List<ComVO> findBylocation(String lon1,String lon2,String lat1,String lat2);
 }

@@ -145,6 +145,14 @@ public class AdvertisingServlet extends HttpServlet {
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
 				String com_no = req.getParameter("com_no").trim();
+				
+				String title=null;
+				try {
+					title = new String(req.getParameter("title").trim());
+				} catch (NumberFormatException e) {
+					title = "";
+					errorMsgs.add("請輸入標題");
+				}
 
 				String text = null;
 				try {
@@ -183,6 +191,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingVO advertisingVO = null;
 				advertisingVO = new AdvertisingVO();
 				advertisingVO.setCom_no(com_no);
+				advertisingVO.setTitle(title);
 				advertisingVO.setText(text);
 				advertisingVO.setStartDay(startday);
 				advertisingVO.setEndDay(endday);
@@ -212,10 +221,10 @@ public class AdvertisingServlet extends HttpServlet {
 					in.close();
 					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 						if (isImgFile(context.getMimeType(filename))) {
-							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, file,
+							advertisingVO = advertisingSvc.addAdvertising(com_no, title, startday, endday, price, text, file,
 									null, status);
 						} else {
-							advertisingVO = advertisingSvc.addAdvertising(com_no, startday, endday, price, text, null,
+							advertisingVO = advertisingSvc.addAdvertising(com_no, title, startday, endday, price, text, null,
 									file, status);
 						}
 					}
@@ -351,6 +360,64 @@ public class AdvertisingServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("add".equals(action)) {
+			System.out.println("add"+action);
+			System.out.println(req.getParameter("date"));
+			System.out.println(req.getParameter("com_no"));
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			Timestamp startDay = null;
+			Timestamp endDay=null;
+			Integer price = null;
+			byte[] data = null;
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String com_no = new String(req.getParameter("com_no"));
+				String title = new String(req.getParameter("title"));
+				startDay = Timestamp.valueOf(req.getParameter("startDay") + " 00:00:00");
+				endDay = Timestamp.valueOf(req.getParameter("endDay") + " 00:00:00");
+				String text =new String(req.getParameter("text"));
+				price = new Integer((int) (endDay.getTime() - startDay.getTime()) / (100 * 60 * 60 * 24) * 1000);
+				String status = new String(req.getParameter("status").trim());
+				
+				Part part = req.getPart("img");
+				 InputStream inputStream = part.getInputStream();
+	                data = new byte[inputStream.available()];
+	                inputStream.read(data);
+	             
+	              AdvertisingVO  advertisingVO = new AdvertisingVO();
+	              advertisingVO.setCom_no(com_no);
+	              advertisingVO.setTitle(title);
+	              advertisingVO.setStartDay(startDay);
+	              advertisingVO.setEndDay(endDay);
+	              advertisingVO.setText(text);
+	              advertisingVO.setPrice(price);
+	              advertisingVO.setImg(data);
+	              
+				
+			
+				/*************************** 2.開始查詢資料 ****************************************/
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				 advertisingVO = advertisingSvc.addAdvertising(com_no, title, startDay, endDay, price, text, data, null, status);
+				
+				/****************************
+				 * 3.查詢完成,準備轉交(Send the Success view)
+				 ************/
+				
+				String url = "/Front_end/Advertising/Advertising.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Advertising/xxxAdvertising.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
 	}
 
 	public String getFileNameFromPart(Part part) {

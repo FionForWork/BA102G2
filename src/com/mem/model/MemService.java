@@ -2,8 +2,10 @@ package com.mem.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.com.model.ComVO;
+
 
 
 
@@ -18,11 +20,30 @@ public class MemService {
 	public  MemVO oldPwd(String mem_no){
 		return dao.oldPwd(mem_no);
 	}
+	
+	public MemVO updatePic(String mem_no,byte[] picture){
+		MemVO memVO = new MemVO();
+		memVO.setMem_no(mem_no);
+		memVO.setPicture(picture);
+		dao.updatePic(memVO);
+		
+		return memVO;
+	}
+	
 	public MemVO updatePwd(String mem_no,String pwd){
 		MemVO memVO = new MemVO();
 		memVO.setMem_no(mem_no);
 		memVO.setPwd(pwd);
 		dao.updatePwd(memVO);
+		
+		return memVO;
+	}
+	
+	public MemVO updateStatus(String mem_no,String status){
+		MemVO memVO = new MemVO();
+		memVO.setMem_no(mem_no);
+		memVO.setStatus(status);
+		dao.updateStatus(memVO);
 		
 		return memVO;
 	}
@@ -97,6 +118,8 @@ public List<MemVO> loginpwd(){
 	public List<MemVO> getAll() {
 		return dao.getAll();
 	}
-	
+	public Set<MemVO> getMemsByReport(Integer report) {
+		return dao.getMemsByReport(report);
+	}
 	
 }

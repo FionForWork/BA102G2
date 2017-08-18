@@ -58,8 +58,9 @@ public void deleteArt(Integer art_no) {
 public List<ArticleVO> getOneAll(Integer art_type_no) {
 	return dao.getOneAll(art_type_no);
 }
-
-
+public void deleteArtAll(Integer art_no) {
+	dao.deleteAll(art_no);
+}
 
 
 }

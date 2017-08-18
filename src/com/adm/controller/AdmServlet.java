@@ -20,12 +20,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.adm.model.AdmService;
 import com.adm.model.AdmVO;
 import com.aut.model.AutService;
 import com.aut.model.AutVO;
 import com.email.MailService;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 
 
 
@@ -53,7 +56,71 @@ public class AdmServlet extends HttpServlet {
 		
 		
 		
+		if ("logout".equals(action)) {
+			HttpSession session = req.getSession();
+			session.invalidate();
+			//整個連線拔掉
+			res.sendRedirect(req.getContextPath()+"/Back_end/adm/login.jsp");
+		    return;
+		}
 		
+		if ("login".equals(action)) {
+			Map<String,String> errorMsgs = new HashMap<String,String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		    // 【取得使用者 帳號(account) 密碼(password)】
+			 String id = req.getParameter("id");//使用者輸入
+			 String pwd = req.getParameter("pwd");
+			  // 【檢查該帳號 , 密碼是否有效】
+			
+			 AdmService admSvc = new AdmService();
+			 List<AdmVO> list = admSvc.loginid();
+			
+	
+			 for(int i=0;i<list.size();i++){
+				 if (list.get(i).getId().equals(id)) {
+					 
+					AdmVO list2= admSvc.getOneAdmById(id);
+					String notRealPwd =list2.getPwd();
+					int var=(Integer.valueOf(notRealPwd)-77)/36;
+					String RealPwd =Integer.toString(var);
+					System.out.println("notRealPwd : "+notRealPwd);
+					System.out.println("RealPwd : "+RealPwd);
+					System.out.println();
+						 if (RealPwd.equals(pwd)) {
+							HttpSession session = req.getSession();
+							 session.removeAttribute("id");
+							 session.removeAttribute("admVO");
+
+								
+						      AdmVO admVO = admSvc.getOneAdmById(id);
+						    
+						      session.setAttribute("id", id);
+						      session.setAttribute("admVO", admVO);
+
+						      try {
+						    	  String admlocation = (String) session.getAttribute("admlocation");
+						          if (admlocation != null) {
+						            session.removeAttribute("admlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						            res.sendRedirect(admlocation);            
+						            return;
+						          }
+						      }catch(Exception ignored){}
+						      
+						      res.sendRedirect(req.getContextPath()+"/Back_end/mem/listAllMem.jsp");
+						      return;
+						 }
+
+					 
+				      
+				 }
+
+			 }
+			 res.sendRedirect(req.getContextPath()+"Back_end/adm/errerlogin.jsp");
+		      return;
+			
+		}
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			Map<String,String> errorMsgs = new HashMap<String,String>();
@@ -70,11 +137,11 @@ public class AdmServlet extends HttpServlet {
 				 
 				 int passRandom = (int)(Math.random()*9999+1);
 				
-				String realpwd = "h"+passRandom;
+				String realpwd = passRandom+"";
 				
 				 int admPwd=admPwd(passRandom);
 				
-				String pwd = "h"+admPwd;
+				String pwd = admPwd+"";
 				
 				
 				String name =req.getParameter("name").trim();
@@ -87,7 +154,7 @@ public class AdmServlet extends HttpServlet {
 				AdmVO admVO = new AdmVO();
 				
 				admVO.setId(id);
-				admVO.setPwd(pwd);
+				admVO.setPwd(pwd.trim());
 				admVO.setName(name);
 				admVO.setJob(job);
 				admVO.setStatus(status);
@@ -98,11 +165,11 @@ public class AdmServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				AdmService admSvc = new AdmService();
-				admVO = admSvc.addAdm(id, pwd, name, job, status);
+				admVO = admSvc.addAdm(id, pwd.trim(), name, job, status);
 				 String to = id;
 				 String subject = "管理員密碼";
 				 
-			     String messageText = "你好! \n"+realpwd+" \n這是你的密碼,請妥善保管 \n";
+			     String messageText = "你好! \n"+realpwd.trim()+" \n這是你的密碼,請妥善保管 \n";
 			     MailService mailService = new MailService();
 			      mailService.sendMail(to, subject, messageText);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
