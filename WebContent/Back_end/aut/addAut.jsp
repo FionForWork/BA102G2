@@ -4,7 +4,7 @@
 <%
 AutVO autVO = (AutVO) request.getAttribute("autVO");
 %>
-<%@ include file="page/adm_page" %>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 <br><br><br>
 <div id="content">
 <h3>新增員工權限:</h3>
@@ -39,7 +39,7 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 	<tr>
 		<td>權限:<font color=red><b>*</b></font></td>
 		<td>
-			<select size="1" name="fun_no">
+			<select size="1" name="id">
 				<c:forEach var="funVO" items="${funSvc.all}">
 					<option value="${funVO.fun_no}" ${(AutVO.id==funVO.fun_no)? 'selected':'' } >${funVO.fun_no}${funVO.name}
 				</c:forEach>
@@ -52,7 +52,4 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
-</div>
-</body>
-
-</html>
+<%@ include file="/Back_end/pages/backFooter.file"%>

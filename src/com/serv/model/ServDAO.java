@@ -27,16 +27,17 @@ public class ServDAO implements ServDAO_Interface {
 			e.printStackTrace();
 		}
 	}
-
-		private static final String INSERT_STMT = "INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0)";
+	
+		private static final String INSERT_STMT = 
+			"INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times,status) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0,?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times FROM service order  by score desc";
+			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service order  by score desc";
 		private static final String GET_ONE_STMT = 
-			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times  FROM service where serv_no = ?";
+			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status  FROM service where serv_no = ?";
 		private static final String DELETE = 
 			"DELETE FROM service where serv_no = ?";
 		private static final String UPDATE = 
-			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
+			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?,status=?  where serv_no = ?";
 		private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
 		private static final String GET_COM_STMT = 
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
@@ -71,6 +72,7 @@ public class ServDAO implements ServDAO_Interface {
 					servVO.setContent(rs.getString("content"));
 					servVO.setTimes(rs.getInt("times"));
 					servVO.setScore(rs.getDouble("score"));
+					servVO.setStatus(rs.getString("status"));
 					list.add(servVO); // Store the row in the list
 				} 
 			}catch (SQLException se) {
@@ -117,6 +119,7 @@ public class ServDAO implements ServDAO_Interface {
 			pstmt.setInt(4, servVO.getPrice());
 			pstmt.setString(5, servVO.getTitle());
 			pstmt.setString(6, servVO.getContent());
+			pstmt.setString(7,servVO.getStatus());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -158,6 +161,7 @@ public class ServDAO implements ServDAO_Interface {
 			pstmt.setString(5, servVO.getTitle());
 			pstmt.setString(6, servVO.getContent());
 			pstmt.setString(7, servVO.getServ_no());
+			pstmt.setString(8, servVO.getStatus());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -249,6 +253,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 			}
 
 		} catch (SQLException se) {
@@ -307,6 +312,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 				list.add(servVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
@@ -408,6 +414,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 				list.add(servVO); // Store the row in the list
 			} 
 		}catch (SQLException se) {

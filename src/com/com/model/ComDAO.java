@@ -28,9 +28,10 @@ public class ComDAO implements ComDAO_Interface {
 		}
 	}
 	
-	
+	private static final String UPDATEPIC = 
+			"UPDATE company set logo=? where com_no = ?";
 	private static final String INSERT_STMT = 
-			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')),?,?, ?, ?,0,0,?,?,?,?,'待驗證')";
+			"INSERT INTO company (com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status) VALUES ('2'||ltrim(TO_CHAR(comid_sq.NEXTVAL,'009')),?,?, ?, ?,?,?,?,?,?,?,'待驗證')";
 		private static final String GET_ALL_STMT = 
 			"SELECT com_no,id,pwd,name,loc,lon,lat,com_desc,phone,account,logo,status FROM company order by com_no";
 		private static final String GET_ONE_STMT = 
@@ -49,8 +50,88 @@ public class ComDAO implements ComDAO_Interface {
 		private static final String CONFIRMCOM= 
 				"UPDATE company set status='正常' where com_no = ?";
 		 private static final String Get_ALL_BylA = 
-					"Select * from company where lon between ? and ? and lat between ? and ?";		
-		@Override
+		"Select * from company where lon between ? and ? and lat between ? and ?";		
+		
+		 private static final String UPDATESTATUS = 
+					"UPDATE member set status=? where com_no = ?";
+		 
+		 
+		 
+		 @Override
+			public void updatePic(ComVO comVO) {
+				// TODO Auto-generated method stub
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				
+				try{
+					con = ds.getConnection();
+					pstmt = con.prepareStatement(UPDATEPIC);
+					pstmt.setBytes(1, comVO.getLogo());
+					pstmt.setString(2, comVO.getCom_no());
+					pstmt.executeUpdate();
+					
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+				
+				
+			}
+		 
+		 @Override
+			public void updateStatus(ComVO comVO) {
+				// TODO Auto-generated method stub
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				
+				try{
+					con = ds.getConnection();
+					pstmt = con.prepareStatement(UPDATESTATUS);
+					pstmt.setString(1, comVO.getStatus());
+					pstmt.setString(2, comVO.getCom_no());
+					pstmt.executeUpdate();
+					
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+				
+				
+			}
+		 
+		 @Override
 		public void confirmCom(ComVO comVO) {
 			
 		
@@ -360,10 +441,12 @@ public class ComDAO implements ComDAO_Interface {
 			pstmt.setString(2, comVO.getPwd());
 			pstmt.setString(3, comVO.getName());
 			pstmt.setString(4, comVO.getLoc());
-			pstmt.setString(5, comVO.getCom_desc());
-			pstmt.setString(6, comVO.getPhone());
-			pstmt.setString(7, comVO.getAccount());
-			pstmt.setBytes(8, comVO.getLogo());
+			pstmt.setString(5,comVO.getLon());
+			pstmt.setString(6,comVO.getLat());
+			pstmt.setString(7, comVO.getCom_desc());
+			pstmt.setString(8, comVO.getPhone());
+			pstmt.setString(9, comVO.getAccount());
+			pstmt.setBytes(10, comVO.getLogo());
 		
 			
 			pstmt.executeUpdate();

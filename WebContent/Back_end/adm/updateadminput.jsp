@@ -6,16 +6,18 @@
 	AdmVO admVO = (AdmVO) request.getAttribute("admVO"); 
 
 %>
-<%@ include file="/Back_end/pages/backHeader.file"%>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 <title>管理員資料修改 - updateadminput.jsp</title>
 <div id="content">
 
 
+<br>
+	
+<input type="button" class="btn btn-info" value="回首頁" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp'" >  <br><br>
+	<h3>管理員資料修改 :</h3>
+		
 
-		<h3>管理員資料修改 - update_adm_input.jsp</h3>
-				<a href="listAllAdm.jsp">回首頁</a>
 
-<h3>資料修改:</h3>
 <%-- 錯誤列表 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:
@@ -56,9 +58,14 @@
 	<tr>
 		<td>管理員狀態:</td>
 		<td><select name="status" style="width: 163px;">
-			　<option value="停權">停權</option>
-			　<option value="正常">正常</option>
-
+			<c:if test="${admVO.status==\"停權\"}">
+			<option value="正常">正常</option>
+			<option value="停權" SELECTED>停權</option>
+			</c:if>
+			<c:if test="${admVO.status==\"正常\"}">
+			<option value="正常" SELECTED>正常</option>
+			<option value="停權" >停權</option>
+			</c:if>
 		</select></td>
 	</tr>
 	
@@ -69,6 +76,6 @@
 <input type="hidden" name="pwd" value="${admVO.pwd}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="adm_no" value="${admVO.adm_no}">
-<input type="submit" value="送出修改"></FORM>
+<input type="submit" class="btn btn-info" value="送出修改"></FORM>
 </div>
 <%@ include file="/Back_end/pages/backFooter.file"%>

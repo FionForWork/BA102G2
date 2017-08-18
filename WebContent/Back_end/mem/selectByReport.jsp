@@ -1,18 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page import="com.mem.model.*"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-
-MemVO memVO = (MemVO) request.getAttribute("memVO");
-%>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
+<jsp:useBean id="selectByReport" scope="request" type="java.util.Set" />
 
-<br><br><br>
+<title>Insert title here</title>
 <div id="content">
 
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-		
 <table class="table table-striped">
 	<tr>
 		<th>照片</th>
@@ -26,9 +20,10 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<th>銀行帳戶</th>
 		<th>被檢舉次數</th>
 		<th>狀態</th>
-		<th>修改狀態</th>
 		
+		<th>刪除</th>
 	</tr>
+	<c:forEach var="memVO" items="${selectByReport}" >
 	<tr>
 		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
 		<td>${memVO.mem_no}</td>
@@ -40,19 +35,16 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<td>${memVO.email}</td>
 		<td>${memVO.account}</td>
 		<td>${memVO.report}</td>
-		<td>
-				<select style="width:150px;" name="status">
-				<option value="正常">正常
-				<option value="停權">停權
-				</select>
-		</td>
-		<td>
-
-			     <input type="submit" value="修改狀態">
-
-			     <input type="hidden" name="mem_no"value="${memVO.mem_no}" >
-			     <input type="hidden" name="action"	value="updateStatus">
-			</td>
+		<td>${memVO.status}</td>
 		
-	</tr></table></FORM></div>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
+			    <input type="submit" value="停權">
+			    <input type="hidden" name="memVO" value="${memVO.mem_no}">
+			    <input type="hidden" name="action" value="stopStatus"></FORM>
+			</td>
+	</tr>
+</c:forEach>
+</table>
+</div>
 <%@ include file="/Back_end/pages/backFooter.file"%>

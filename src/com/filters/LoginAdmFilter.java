@@ -14,12 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.adm.model.AdmVO;
 
-import com.com.model.ComVO;
+/**
+ * Servlet Filter implementation class LoginAdmFilter
+ */
+@WebFilter("/LoginAdmFilter")
+public class LoginAdmFilter implements Filter {
 
-
-@WebFilter("/LoginComFilter")
-public class LoginComFilter implements Filter {
+	private static final long serialVersionUID = 1L;
+       
 	private FilterConfig config;
 
 	public void init(FilterConfig config) {
@@ -29,8 +33,6 @@ public class LoginComFilter implements Filter {
 	public void destroy() {
 		config = null;
 	}
-	
-    
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
@@ -42,28 +44,25 @@ public class LoginComFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
-	
+		
 	
 		
 		
 		if (id == null) {
-			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
+			session.setAttribute("Admlocation", req.getRequestURI());
+			res.sendRedirect(req.getContextPath()+"/Back_end/login/login.jsp");
 			return;
 		} else {
 			try{
-				ComVO comVO =(ComVO)session.getAttribute("comVO");
-				comVO.getCom_no();
+				AdmVO admVO =(AdmVO)session.getAttribute("admVO");
+				admVO.getAdm_no();
 			}catch(Exception e){
-				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin.jsp");
-				 return;
+				res.sendRedirect(req.getContextPath()+"/Back_end/login/errorlogin2.jsp");
+				return;
 			}
 				chain.doFilter(request, response);
-			}
 
-			
 		}
 	}
 
-	
-
+}

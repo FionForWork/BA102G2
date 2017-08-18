@@ -8,20 +8,9 @@
     List<ServVO> list = servSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
+<%@ include file="/Back_end/adm/page/backHeader.file"%>
 
-<html>
-<head>
 <title>所有服務.jsp</title>
-</head>
-<body bgcolor='white'>
-<b><font color=red>此頁練習採用 EL 的寫法取值:</font></b>
-<table border='1' cellpadding='5' cellspacing='0' width='800'>
-	<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-		<td>
-		<h3>所有服務jsp</h3>
-		</td>
-	</tr>
-</table>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -33,8 +22,9 @@
 	</ul>
 	</font>
 </c:if>
-
-<table border='1' bordercolor='#CCCCFF' width='800'>
+<br>
+<div id="content">
+<table class="table table-striped">
 	<tr>
 		<th>服務編號</th>
 		<th>服務型態</th>
@@ -44,8 +34,8 @@
 		<th>服務介紹</th>
 		<th>被購買次數</th>
 		<th>服務評價</th>
-		<th>修改</th>
-		<th>刪除</th>
+		<th>修改狀態</th>
+		<th>修改狀態</th>
 	</tr>
 	
 	<%@ include file="page1.file" %> 
@@ -61,25 +51,20 @@
 			<td>${servVO.content}</td>
 			<td>${servVO.times}</td>
 			<td>${servVO.score}</td>
-			
+			<td>${servVO.status}</td>
 			
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" value="修改">
+			    <input type="submit" value="修改狀態">
 			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
 			    <input type="hidden" name="action" value="getOne_For_Update"></FORM>
 			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" value="刪除">
-			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
-			    <input type="hidden" name="action" value="delete"></FORM>
-			</td>
+			
 		</tr>
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+</div>
 </body>
 </html>
