@@ -23,7 +23,8 @@ import com.message.model.*;
 
 @ServerEndpoint("/MessageServlet/")
 public class MessageServlet extends HttpServlet {
-	private static final Set<Session> allSessions = Collections.synchronizedSet(new HashSet<Session>());
+	private static final Set<Session> room = Collections.synchronizedSet(new HashSet<Session>());
+	private static final Map<String, Set<Session>> map = Collections.synchronizedMap(new HashMap<String, Set<Session>>());
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -59,7 +60,8 @@ public class MessageServlet extends HttpServlet {
 
 	@OnOpen
 	public void onOpen(Session userSession) throws IOException {
-		allSessions.add(userSession);
+		
+		room.add(userSession);
 		System.out.println(userSession.getId() + ": 已連線");
 		// System.out.println(no + ": 已連線");
 		// userSession.getBasicRemote().sendText("WebSocket 連線成功");
@@ -76,7 +78,7 @@ public class MessageServlet extends HttpServlet {
 		if (message.length() != 0) {
 			messageVO = messageSvc.addMessage(mem_no, com_no, message);
 		}
-		for (Session session : allSessions) {
+		for (Session session : room) {
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
 		}
@@ -90,7 +92,7 @@ public class MessageServlet extends HttpServlet {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
-		allSessions.remove(userSession);
+		room.remove(userSession);
 		System.out
 				.println(userSession.getId() + ": Disconnected: " + Integer.toString(reason.getCloseCode().getCode()));
 	}

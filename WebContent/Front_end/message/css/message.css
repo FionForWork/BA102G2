@@ -76,7 +76,7 @@
 .msg-l {
 	float:left;
 	background: #c0c0c0;
-	margin-top: 5px;
+	margin-top: 10px;
     width: auto;
     border-radius: 5px;
     padding: 5px;
@@ -96,7 +96,7 @@
 .msg-r {
 	float:right;
 	background: #c0c0c0;
-	margin-top: 5px;
+	margin-top: 10px;
     width: auto;
     border-radius: 5px;
     padding: 5px;
