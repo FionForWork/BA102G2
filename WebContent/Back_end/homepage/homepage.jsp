@@ -262,6 +262,7 @@
                                        
                                             <tr>
                                                 <th>申請廠商</th>
+                                                <th>廣告標題</th>
                                                 <th>刊登日期</th>
                                                 <th>結束日期</th>
                                                 <th>價格</th>
@@ -272,6 +273,7 @@
 												begin="1" end="2">
                                             <tr>
                                                 <td>${comSvc.getOneCom(advertisingVO.com_no).name}</td>
+                                                <td>${advertisingVO.title}</td>
                                                 <td>${advertisingVO.startDay.toString().substring(0,10)}</td>
                                                 <td>${advertisingVO.endDay.toString().substring(0,10)}</td>
                                                 <td>$ ${advertisingVO.price}</td>
