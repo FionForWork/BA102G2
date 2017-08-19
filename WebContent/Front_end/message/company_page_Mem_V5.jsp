@@ -83,7 +83,6 @@
 	
 	
 ﻿<script type="text/javascript">
-var xxx;
 
 var MyPoint = "/MessageServlet/${memVO.mem_no}${comVO.com_no}/${memVO==null?comVO.com_no:memVO.mem_no}";
 console.log(MyPoint);
@@ -98,6 +97,7 @@ var endPointURL = "ws://" + window.location.host + webCtx
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
 var webSocket;
+var memNo;
 			
 
  				function connect(no) {
@@ -121,7 +121,7 @@ var webSocket;
  						var who = jsonObj.who;
  						var userName = jsonObj.userName;
  						var message = jsonObj.message + "\r\n";
- 						xxx = jsonObj.name;
+ 						memNo = jsonObj.name;
  						console.log(memNo);
  						
  						var me = {};
@@ -174,7 +174,7 @@ var webSocket;
  				}
 
  				function sendMessage(no, userName) {
- 					console.log('XXX:'+xxx);
+ 					console.log('memNo:'+memNo);
 					console.log('NO:'+no);
 					console.log(userName);
  					var inputMessage = document.getElementById("message");
@@ -207,7 +207,7 @@ var webSocket;
  								"action" : "message",
  								"who" : no,
  								"name" : no,
- 	 	 						"toname" : "1001",
+ 	 	 						"toname" : memNo,
  	 	 						"userName" : userName,
  	 	 						"message" : message,
  	 	 						"time" : nowdate
@@ -222,9 +222,6 @@ var webSocket;
  					webSocket.close();
  				}
 
-//  				function updateStatus(newStatus) {
-//  					statusOutput.innerHTML = newStatus;
-//  				}
  						
 </script>
 

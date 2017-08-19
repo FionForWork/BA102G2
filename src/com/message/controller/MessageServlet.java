@@ -90,11 +90,15 @@ public class MessageServlet extends HttpServlet {
 //		String action = (String) j.get("action");
 		
 		//存訊息
-//		MessageService messageSvc = new MessageService();
-//		MessageVO messageVO = new MessageVO();
-//		if (message.length() != 0) {
-//			messageVO = messageSvc.addMessage(name, toname, message);
-//		}
+		MessageService messageSvc = new MessageService();
+		MessageVO messageVO = new MessageVO();
+		if (message.length() != 0) {
+			if(name.startsWith("1")){
+				messageVO = messageSvc.addMessage(name, toname, message);		
+			} else {
+				messageVO = messageSvc.addMessage(toname, name, message);
+			}
+		}
 		
 		//找出廠商Session加入會員房間
 		Set set = sessionUsername.keySet();
@@ -112,10 +116,10 @@ public class MessageServlet extends HttpServlet {
 		}
 		
 		for (Session session : sessionMap.get(myRoom)) {
-			System.out.println("發送訊息");
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
 		}
+		System.out.println("發送訊息");
 		System.out.println("myRoom" + myRoom+"myName"+myName+"myRoomsize"+myRoom.length());	
 		System.out.println("Message received: " + message);
 	}
