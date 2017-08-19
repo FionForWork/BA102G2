@@ -1,6 +1,7 @@
 package com.aut.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.aut.model.AutDAO_Interface;
 import com.com.model.ComVO;
@@ -35,7 +36,8 @@ public class AutService {
 	public List<AutVO> getAll(){
 		return dao.getAll();
 	}
-	public List<AutVO> getOneAll(){
-		return dao.getOneAll();
+	public Map<String, List> getOneAll(String adm_no){
+		
+		return dao.getOneAll(adm_no);
 	}
 }

@@ -76,13 +76,8 @@ public class AdmServlet extends HttpServlet {
 			AutService autSvc = new AutService();
 			 AdmService admSvc = new AdmService();
 			 List<AdmVO> list = admSvc.loginid();
-			 List<AutVO> oneAll =autSvc.getOneAll();
-			 System.out.println("oneAll---"+oneAll);
-			 System.out.println("oneAll.size()---"+oneAll.size());
-			 for(int a=0;a<oneAll.size();a++){
-				
-				 System.out.println(oneAll.get(a));
-			 }
+			 
+			
 			
 			 for(int i=0;i<list.size();i++){
 				 if (list.get(i).getId().equals(id)) {
@@ -109,13 +104,19 @@ public class AdmServlet extends HttpServlet {
 						   
 						      session.setAttribute("id", id);
 						      session.setAttribute("admVO", admVO);
-						      AutService autSvc = new AutService();
-						      AutVO autVO=autSvc.getOneAut(admVO.getAdm_no());
-						      
-						      session.setAttribute("autVO", autVO);
-						      System.out.println("ADMNO-"+autVO.getAdm_no());
-						      System.out.println("ID-"+autVO.getId());
-						      System.out.println("sssssssssss")
+						      Map<String,List> oneAll =autSvc.getOneAll(admVO.getAdm_no());
+								 
+						      System.out.println("oneAll---"+oneAll);
+								 System.out.println("oneAll.size()---"+oneAll.size());
+								
+										for(int a = 0;a<oneAll.values().iterator().next().size();a++){
+											 System.out.println(oneAll.values().iterator().next().get(a));
+											 System.out.println(oneAll.values().iterator().next());
+											 session.setAttribute("aut", oneAll.values().iterator().next());
+										}
+									
+								
+						      System.out.println("sssssssssss");
 						      try {
 						    	  String admlocation = (String) session.getAttribute("admlocation");
 						          if (admlocation != null) {

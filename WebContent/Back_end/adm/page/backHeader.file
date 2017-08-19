@@ -85,7 +85,9 @@
                         <button type="submit"><i class="ec-search s20"></i></button>
                     </form>
                 </li>
+                <c:if test="${aut.get(0)==\"01\"}">
                <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
+				</c:if>
 				<li><a href="#" class='active'><i class="en-users"></i>廠商管理 </a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
