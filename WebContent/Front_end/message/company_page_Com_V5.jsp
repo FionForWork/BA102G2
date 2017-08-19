@@ -19,21 +19,9 @@
 // 	MemVO memVO1 = memSvc.getOneMem("1001");
 // 	session.setAttribute("memVO", memVO1);
 	
-	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
-	pageContext.setAttribute("worksList", worksList);
-
-	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAll();
-	pageContext.setAttribute("servList", servList);
-	
-	MessageService messageSvc = new MessageService();
-	List<String> messageList = messageSvc.getMessageByMem_no("1001");
-	pageContext.setAttribute("messageList", messageList);
-	
 	ComService comSvc2 = new ComService();
-	ComVO comVO2 = comSvc2.getOneCom("2001");
-	pageContext.setAttribute("comVO2", comVO2);
+	ComVO comVO2 = comSvc2.getOneCom("2003");
+	pageContext.setAttribute("comVO", comVO2);
 	
 %>
 
@@ -70,20 +58,16 @@
 				<div class="chat_box panel panel" id="chatbox">
 					<div class="panel-heading">
 						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
-						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
-						<c:forEach var="comVO" items="${comSvc.all}">
-						<c:if test="${param.com_no==comVO.com_no}">
-						<div class="col-md-4"><img class="img-circle" style="width:50px" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
-						<div class="col-md-8">${comVO.name}</div>
-						</c:if>
-						</c:forEach>
-						<div id="statusOutput"></div>
+
+						<div class="col-md-8 chat-header-name">${comVO.name}</div>
+
+<!-- 						<div id="statusOutput"></div> -->
 					</div>
 					<div class="panel-body">
 					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">							
-							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
 																																							  '${memVO != null? memVO.name : comVO.name}');" />	
 							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
 							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
@@ -96,6 +80,153 @@
 	<!--聯絡我們-->
 	
 	<%@ include file="page/after.file"%>
-	<%@ include file="page/message_script.file"%>
+	
+	
+﻿<script type="text/javascript">
+var xxx;
+
+var MyPoint = "/MessageServlet/${memVO.mem_no}${comVO.com_no}/${memVO==null?comVO.com_no:memVO.mem_no}";
+console.log(MyPoint);
+var host = window.location.host;
+console.log(host);
+var path = window.location.pathname;
+console.log(path);
+var webCtx = path.substring(0, path.indexOf('/', 1));
+console.log(webCtx);
+var endPointURL = "ws://" + window.location.host + webCtx
++ MyPoint;
+console.log(endPointURL);
+var statusOutput = document.getElementById("statusOutput");
+var webSocket;
+			
+
+ 				function connect(no) {
+ 					// 建立 websocket 物件
+ 					console.log('connect(no):'+no);
+ 					webSocket = new WebSocket(endPointURL);
+
+ 					webSocket.onopen = function(event) {
+ 						
+ 						document.getElementById('sendMessage').disabled = false;				
+ 						
+ 					};
+
+ 					webSocket.onmessage = function(event) {
+ 						$("#chatbox").show();
+						$("#close_chat").click(function(){
+							$("#chatbox").toggle();
+						});
+ 						var jsonObj = JSON.parse(event.data);
+ 						var messagesArea = document.getElementById("messagesArea");
+ 						var who = jsonObj.who;
+ 						var userName = jsonObj.userName;
+ 						var message = jsonObj.message + "\r\n";
+ 						xxx = jsonObj.name;
+ 						console.log(xxx);
+ 						
+ 						var me = {};
+ 						var you = {};
+ 						if(no.indexOf("1")==0) {
+ 							me.img = "";
+
+ 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
+ 						}
+ 						
+ 						if(no.indexOf("1")!=0) {
+ 							me.img = "";
+
+ 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
+ 						}
+ 						
+ 						if (who==no){
+ 					        control = '<li style="width:100%;">' +
+//  					                            '<div class="msg_logo_r">' +
+//  					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ me.img +'" />' +
+//  					                            '</div>' +
+ 					                        '<div class="msg-r">' +
+ 					                            '<div class="msg_text text-r">' +
+ 					                                '<p>' + message + '</p>' +
+ 					                            '</div>' +
+ 					                        '</div>' +    
+ 					                    '</li>'+'<br>';                    
+ 					    }else{
+ 					        control = '<li style="width:100%;">' +
+ 					                            '<div class="msg_logo_l">' +
+ 					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ you.img +'" />' +
+ 					                            '</div>' +
+ 					                        '<div class="msg-l">' +
+ 					                       		'<div class="msg_text text-l">' +
+			                               			 '<p>' + message + '</p>' +
+			                            		'</div>' +
+ 					                        '</div>' +    
+ 					                  '</li>'+'<br>';
+ 					    }   
+ 					
+ 				        		$("#textArea").append(control);
+ 				        
+	
+ 						
+ 						 						
+ 					};
+ 					webSocket.onclose = function(event) {
+ 						console.log("已離線");
+ 					};
+ 				}
+
+ 				function sendMessage(no, userName) {
+ 					console.log('XXX:'+xxx);
+					console.log('NO:'+no);
+					console.log(userName);
+ 					var inputMessage = document.getElementById("message");
+ 					var message = inputMessage.value.trim();
+ 					var date = new Date();
+ 					var nowdate = date.getFullYear() + "-" + (date.getMonth()+1) + "-"
+ 								+ date.getDate() + " " + date.getHours()+":"+
+ 								+ date.getMinutes() + ":" + date.getSeconds();
+ 					inputMessage.focus();
+					
+ 					if (message === "") {
+ 						alert("訊息請勿空白!");
+ 						inputMessage.focus();
+ 					} else {
+ 						if(no.indexOf("1")==0){
+ 							var jsonObj = {
+ 								"action" : "message",
+ 								"who" : no,
+ 	 							"name" : no,
+ 								"toname" : "${param.com_no}",
+ 	 							"userName" : userName,
+ 	 							"message" : message,
+ 	 							"time" : nowdate
+ 	 						};
+ 						webSocket.send(JSON.stringify(jsonObj));
+						inputMessage.value = "";
+ 						inputMessage.focus();
+ 						}else {
+ 							var jsonObj = {
+ 								"action" : "message",
+ 								"who" : no,
+ 								"name" : no,
+ 	 	 						"toname" : "1001",
+ 	 	 						"userName" : userName,
+ 	 	 						"message" : message,
+ 	 	 						"time" : nowdate
+ 	 	 					};
+ 	 						webSocket.send(JSON.stringify(jsonObj));
+ 							inputMessage.value = "";
+ 	 						inputMessage.focus();	
+ 						}
+ 					}
+ 				}
+ 				function disconnect() {
+ 					webSocket.close();
+ 				}
+
+//  				function updateStatus(newStatus) {
+//  					statusOutput.innerHTML = newStatus;
+//  				}
+ 						
+</script>
+
 </body>
 </html>

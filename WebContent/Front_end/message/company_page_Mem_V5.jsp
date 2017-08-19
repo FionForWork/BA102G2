@@ -19,106 +19,214 @@
 	MemVO memVO1 = memSvc.getOneMem("1001");
 	session.setAttribute("memVO", memVO1);
 	
-	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
-	pageContext.setAttribute("worksList", worksList);
-
-	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAll();
-	pageContext.setAttribute("servList", servList);
-	
-	MessageService messageSvc = new MessageService();
-	List<String> messageList = messageSvc.getMessageByMem_no("1001");
-	pageContext.setAttribute("messageList", messageList);
-	
 	ComService comSvc2 = new ComService();
-	ComVO comVO2 = comSvc2.getOneCom("2001");
-	pageContext.setAttribute("comVO2", comVO2);
+	ComVO comVO2 = comSvc2.getOneCom("2003");
+	pageContext.setAttribute("comVO", comVO2);
 	
 %>
 
 <html>
 <head>
-<link href="css/message_V2.css" rel="stylesheet">
-<script src="js/message.js" type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
 	
+	<%@ include file="page/before.file"%>
+
+	
+	
+
+	
 		<!--預約按鈕-->
 		<div class="col-sm-2">
+			<p class="text-center">
+				<a class="btn btn-reservation btn-lg" href=""> 線上預約 </a>
+			</p>
+			<br><br>
 			<p class="text-center" id="open_chat">
 				<a class="btn btn-reservation btn-lg">立即聯絡我們 </a>
 			</p>
-			<br>
-		</div>	
+		</div>
+		
 	<!--預約按鈕-->
 
 	
 	<!--聯絡我們-->
-	
-		
-		<div class="msg_box_wrap">
-			<div class="add_ask_view" style="height: 400px; width: 330px; right: 80px;">
-				<div class="chat_box">
-					<table style="width: 100%; height: 100%;">
-						<tbody>
-							<tr>
-								<td class="chat_title chat_title_open_color ani-show">
-									<h2 class="chat_h2"><span target="_blank" class="the_studio"><a href="廠商頁面網址">廠商名稱</a></span>
-									<a href="javascript:;" onclick="ask_msg_view_close();" class="close_it">X</a></h2>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="v_chat_room"><div class="chat_time">2017/08/17</div>
-									 <div class="business_chat clearfix">
-										<a href="廠商頁面網址" target="_blank" class="def_pic" style="">
-										<img src="廠商LOGO">
-										</a>
-										<span class="arrow_l_int" style=""></span>
-										<p class="defautl_msg" style="">
-											您好:<br>
-											請留下您的<br>
-											1.預計結婚日期<br>
-											2.地點<br>
-											3.需要的服務<br>
-											4.聯繫方式<br>
-											我們會立即回覆您。<br>
-											<span class="on_time"> 16:17</span>
-										</p>
-									 </div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td style="max-height:114px;">
-									<div class="box_chat clearfix ask_msg_var">
-									<div class="send_btn msg_descri" style="cursor:text;" contenteditable="true" 
-									placeholder="輪入訊息 (Shift + Enter 換行)">
-								
-									</div>
-									<a class="btn_send ask_msg_send" href="javascript:;" onclick="ask_msg_send();">送出
-									</a>
-									<span style="display:none;">未輸入訊息
-									</span>
-									<div style="clear: both">
-								
-									</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="chat_box panel panel" id="chatbox">
+					<div class="panel-heading">
+						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
+
+						<div class="col-md-8 chat-header-name">${comVO.name}</div>
+
+<!-- 						<div id="statusOutput"></div> -->
+					</div>
+					<div class="panel-body">
+					<ul id="textArea"></ul>
+					</div>
+					<div class="panel-footer">							
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
+																																							  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
+							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+												 '${memVO != null? memVO.name : comVO.name}')" />	
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-	
-	
+	</div>
 	<!--聯絡我們-->
-	<%@ include file="page/message_script.file"%>
+	
+	<%@ include file="page/after.file"%>
+	
+	
+﻿<script type="text/javascript">
+var xxx;
+
+var MyPoint = "/MessageServlet/${memVO.mem_no}${comVO.com_no}/${memVO==null?comVO.com_no:memVO.mem_no}";
+console.log(MyPoint);
+var host = window.location.host;
+console.log(host);
+var path = window.location.pathname;
+console.log(path);
+var webCtx = path.substring(0, path.indexOf('/', 1));
+console.log(webCtx);
+var endPointURL = "ws://" + window.location.host + webCtx
++ MyPoint;
+console.log(endPointURL);
+var statusOutput = document.getElementById("statusOutput");
+var webSocket;
+			
+
+ 				function connect(no) {
+ 					// 建立 websocket 物件
+ 					console.log('connect(no):'+no);
+ 					webSocket = new WebSocket(endPointURL);
+
+ 					webSocket.onopen = function(event) {
+
+ 						document.getElementById('sendMessage').disabled = false;				
+ 						
+ 					};
+
+ 					webSocket.onmessage = function(event) {
+ 						$("#chatbox").show();
+						$("#close_chat").click(function(){
+							$("#chatbox").toggle();
+						});
+ 						var jsonObj = JSON.parse(event.data);
+ 						var messagesArea = document.getElementById("messagesArea");
+ 						var who = jsonObj.who;
+ 						var userName = jsonObj.userName;
+ 						var message = jsonObj.message + "\r\n";
+ 						xxx = jsonObj.name;
+ 						console.log(memNo);
+ 						
+ 						var me = {};
+ 						var you = {};
+ 						if(no.indexOf("1")==0) {
+ 							me.img = "";
+
+ 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
+ 						}
+ 						
+ 						if(no.indexOf("1")!=0) {
+ 							me.img = "";
+
+ 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
+ 						}
+ 						
+ 						if (who==no){
+ 					        control = '<li style="width:100%;">' +
+//  					                            '<div class="msg_logo_r">' +
+//  					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ me.img +'" />' +
+//  					                            '</div>' +
+ 					                        '<div class="msg-r">' +
+ 					                            '<div class="msg_text text-r">' +
+ 					                                '<p>' + message + '</p>' +
+ 					                            '</div>' +
+ 					                        '</div>' +    
+ 					                    '</li>'+'<br>';                    
+ 					    }else{
+ 					        control = '<li style="width:100%;">' +
+ 					                            '<div class="msg_logo_l">' +
+ 					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ you.img +'" />' +
+ 					                            '</div>' +
+ 					                        '<div class="msg-l">' +
+ 					                       		'<div class="msg_text text-l">' +
+			                               			 '<p>' + message + '</p>' +
+			                            		'</div>' +
+ 					                        '</div>' +    
+ 					                  '</li>'+'<br>';
+ 					    }   
+ 					
+ 				        		$("#textArea").append(control);
+ 				        
+	
+ 						
+ 						 						
+ 					};
+ 					webSocket.onclose = function(event) {
+ 						console.log("已離線");
+ 					};
+ 				}
+
+ 				function sendMessage(no, userName) {
+ 					console.log('XXX:'+xxx);
+					console.log('NO:'+no);
+					console.log(userName);
+ 					var inputMessage = document.getElementById("message");
+ 					var message = inputMessage.value.trim();
+ 					var date = new Date();
+ 					var nowdate = date.getFullYear() + "-" + (date.getMonth()+1) + "-"
+ 								+ date.getDate() + " " + date.getHours()+":"+
+ 								+ date.getMinutes() + ":" + date.getSeconds();
+ 					inputMessage.focus();
+					
+ 					if (message === "") {
+ 						alert("訊息請勿空白!");
+ 						inputMessage.focus();
+ 					} else {
+ 						if(no.indexOf("1")==0){
+ 							var jsonObj = {
+ 								"action" : "message",
+ 								"who" : no,
+ 	 							"name" : no,
+ 								"toname" : "${param.com_no}",
+ 	 							"userName" : userName,
+ 	 							"message" : message,
+ 	 							"time" : nowdate
+ 	 						};
+ 						webSocket.send(JSON.stringify(jsonObj));
+						inputMessage.value = "";
+ 						inputMessage.focus();
+ 						}else {
+ 							var jsonObj = {
+ 								"action" : "message",
+ 								"who" : no,
+ 								"name" : no,
+ 	 	 						"toname" : "1001",
+ 	 	 						"userName" : userName,
+ 	 	 						"message" : message,
+ 	 	 						"time" : nowdate
+ 	 	 					};
+ 	 						webSocket.send(JSON.stringify(jsonObj));
+ 							inputMessage.value = "";
+ 	 						inputMessage.focus();	
+ 						}
+ 					}
+ 				}
+ 				function disconnect() {
+ 					webSocket.close();
+ 				}
+
+//  				function updateStatus(newStatus) {
+//  					statusOutput.innerHTML = newStatus;
+//  				}
+ 						
+</script>
 
 </body>
 </html>

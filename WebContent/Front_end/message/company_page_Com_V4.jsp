@@ -19,21 +19,10 @@
 // 	MemVO memVO1 = memSvc.getOneMem("1001");
 // 	session.setAttribute("memVO", memVO1);
 	
-	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
-	pageContext.setAttribute("worksList", worksList);
-
-	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAll();
-	pageContext.setAttribute("servList", servList);
-	
-	MessageService messageSvc = new MessageService();
-	List<String> messageList = messageSvc.getMessageByMem_no("1001");
-	pageContext.setAttribute("messageList", messageList);
 	
 	ComService comSvc2 = new ComService();
-	ComVO comVO2 = comSvc2.getOneCom("2001");
-	pageContext.setAttribute("comVO2", comVO2);
+	ComVO comVO2 = comSvc2.getOneCom("2003");
+	pageContext.setAttribute("comVO", comVO2);
 	
 %>
 
@@ -70,13 +59,9 @@
 				<div class="chat_box panel panel" id="chatbox">
 					<div class="panel-heading">
 						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
-						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
-						<c:forEach var="comVO" items="${comSvc.all}">
-						<c:if test="${param.com_no==comVO.com_no}">
-						<div class="col-md-3"><img class="chat-header-logo img-circle" style="width:50px" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
+
 						<div class="col-md-8 chat-header-name">${comVO.name}</div>
-						</c:if>
-						</c:forEach>
+
 <!-- 						<div id="statusOutput"></div> -->
 					</div>
 					<div class="panel-body">
