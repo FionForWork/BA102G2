@@ -14,11 +14,11 @@ public class Product_typeService {
     public void addProduct_type(String type_name) {
         Product_typeVO product_typeVO = new Product_typeVO();
         product_typeVO.setType_name(type_name);
-        dao.add(product_typeVO);
+        dao.insert(product_typeVO);
     }
 
     public void addProduct_type(Product_typeVO product_typeVO) {
-        dao.add(product_typeVO);
+        dao.insert(product_typeVO);
     }
 
     public void deleteProduct_type(String protype_no) {

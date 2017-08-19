@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.temp.model.*"%>
 <%@ page import="java.util.*"%>
@@ -31,40 +31,7 @@
 
 <%///////// 顯示未挑選頁面 ///////// %>
 <c:if test='${temp.status.equals("未挑選")}'>
-	<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-    <div class="col-md-offset-1">
-        <ul class="breadcrumb">
-            <li><a href="#">首頁</a></li>
-            <li><a href="#">會員專區</a></li>
-            <li><a href="#">作品挑選管理</a></li>
-            <li class="active">${temp.name}</li>        
-        </ul>
-    </div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
    
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
-                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua active">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
-                </ul>
-
-
-                <a href="#" class="btn btn-block btn-default">查看個人資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-<!--這裡開始===========================================================================-->
 
             <div class="col-md-8 col-offset-1">
 
@@ -99,10 +66,11 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-
+						<h4 class="modal-title"><span class='fa fa-warning' style='color:red;'></span> 提醒</h4>
+						
 					</div>
 					<div class="modal-body">
-						<p>超過可挑選數量</p>
+						<p>超過可挑選數量了喔 !</p>
 					</div>
 
 				</div>
@@ -117,10 +85,10 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-
+						<h4 class="modal-title"><span class='fa fa-warning' style='color:red;'></span> 提醒</h4>
 					</div>
 					<div class="modal-body">
-						<p>您尚未挑選任何照片或影片</p>
+						<p>您尚未挑選任何照片或影片喔 !</p>
 					</div>
 
 				</div>
@@ -208,40 +176,7 @@
 
 <%///////// 顯示已挑選頁面 ///////// %>
 <c:if test='${temp.status.equals("已挑選")}'>
-	<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-    <div class="col-md-offset-1">
-        <ul class="breadcrumb">
-            <li><a href="#">首頁</a></li>
-            <li><a href="#">會員專區</a></li>
-            <li><a href="#">作品挑選管理</a></li>
-            <li class="active">${temp.name}</li>        
-        </ul>
-    </div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
    
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
-                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua active">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
-                </ul>
-
-
-                <a href="#" class="btn btn-block btn-default">查看個人資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-<!--這裡開始===========================================================================-->
 
             <div class="col-md-8 col-offset-1">
 		<div class="jumbotron">

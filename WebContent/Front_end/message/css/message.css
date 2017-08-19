@@ -1,13 +1,30 @@
 
 .panel-heading {
-	height: 50px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	width: 100%;
+	height: 70px;
+	padding: 0px;
+	border-bottom: 1px solid #FFFFFF;
+}
+.panel-footer {
+	background:#FFC0CB;
+	height: 70px;
+	width: 100%;
+	position:absolute;
+	bottom: 0;
+	left: 0;
+	padding: 0px;
 }
 
+
 .chat_box {
+	background:#FFC0CB;
 	display: none;
 	border: 1px solid #b0b0b0;
 	bottom: 0;
-	left: 0;
+	right: 15px;
 	height: 500px;
 	width: 300px;
 	position: fixed;
@@ -17,16 +34,11 @@
 	font-size: 21px;
 }
 
-#messagesArea {
-	width: 100%;
-	width: 270px;
-	height: 200px;
-	align: center;
-}
 
 .input-area {
 	position:absolute;
  	bottom:0;
+ 	left:5px;
  	width:90%;
 }
 
@@ -34,4 +46,119 @@
 	position:absolute;
 	right:0;
 	top:0;
+}
+
+#textArea {
+    width:83%;
+    list-style-type: none;
+    padding:0px;
+    position:absolute;
+    bottom:32px;
+    display:flex;
+    flex-direction: column;
+}
+
+.msg-l {
+	float:left;
+	background: whitesmoke;
+	margin-top: 5px;
+    width: 85%;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    height:35px;
+}
+
+
+.msg-r {
+	float:right;
+	background: whitesmoke;
+	margin-top: 5px;
+    width: 85%;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    height:35px;
+}
+
+.msg-l:before{
+    width: 0;
+    height: 0;
+    content:"";
+    top:-5px;
+    left:-14px;
+    position:relative;
+    border-style: solid;
+    border-width: 0 13px 13px 0;
+    border-color: transparent whitesmoke transparent transparent;            
+}
+
+.msg-r:after{
+    width: 0;
+    height: 0;
+    content: "";
+    top: -5px;
+    left: 15px;
+    position: relative;
+    border-style: solid;
+    border-width: 13px 13px 0 0;
+    border-color: whitesmoke transparent transparent transparent;     
+}
+
+
+.text-field {
+	width: 240px;
+	position:absolute;
+	left:0px;
+	bottom: 10px;
+	padding: 0px;
+}
+.sendMessage_btn {
+	padding: 0px;
+	width: 60px;
+	position:absolute;
+	bottom: 10px;
+	right: 0px;
+}
+
+.text{
+	padding:0px;
+    width:75%;
+    display:flex;
+    flex-direction:column;
+}
+
+.text > p:first-of-type{
+    width:100%;
+    margin-top:0;
+    margin-bottom:auto;
+    line-height: 13px;
+    font-size: 12px;
+    border:1px;
+}
+.text > p:last-of-type{
+    width:100%;
+    color:black;
+    margin-bottom:-7px;
+    margin-top:auto;
+    border:1px;
+}
+.text-r > p {
+	text-align:right;
+}
+.text-r {
+	float: right;
+}
+.text-l > p {
+	float: left;
+	text-align:left;
+}
+
+.image{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:25%;
+    float:left;
+    padding-right:10px;
 }

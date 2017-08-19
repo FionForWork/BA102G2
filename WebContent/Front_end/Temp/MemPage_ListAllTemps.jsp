@@ -1,16 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page import="com.mem.model.*" %>
 
 
 <jsp:useBean id="tempSvc" scope="page"
 	class="com.temp.model.TempService" />
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 <%
-	//String mem_no = (String)session.getAttribute("mem_no");  
-	String mem_no = "1001";
-	session.setAttribute("mem_no", mem_no);
+	MemVO memVO = (MemVO)session.getAttribute("memVO");  
+	System.out.println("MemVO"+memVO);
+
+	//String mem_no = "1001";
+	//session.setAttribute("mem_no", mem_no);
 %>
 
 
@@ -25,38 +27,8 @@
 
 
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-    <div class="col-md-offset-1">
-        <ul class="breadcrumb">
-            <li><a href="#">首頁</a></li>
-            <li><a href="#">會員專區</a></li>
-            <li class="active">作品挑選管理</li>        
-        </ul>
-    </div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
    
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
-                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua active">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
-                    <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
-                </ul>
-                <a href="#" class="btn btn-block btn-default">查看個人資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-<!--這裡開始===========================================================================-->
-
+    
             <div class="col-md-8 col-offset-1">
             
 
@@ -108,7 +80,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(mem_no)}"
+					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(memVO.mem_no)}"
 						varStatus="s">
 						<c:if test='${tempVO.status.equals("未挑選")}'>
 						<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
@@ -138,12 +110,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(mem_no)}"
+					<c:forEach var="tempVO" items="${tempSvc.getAllByMemNo(memVO.mem_no)}"
 						varStatus="s">
 						<c:if test='${tempVO.status.equals("已挑選")}'>
 						<tr onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTempConts.jsp?temp_no=${tempVO.temp_no}'">
 							
-							<td>${tempVO.name }</td>
+							<td>${tempVO.name}</td>
 							<td>${comSvc.getOneCom(tempVO.com_no).name}</td>
 							<td>${tempVO.available}</td>
 							<td>${tempVO.create_date.toString().substring(0,10)}</td>

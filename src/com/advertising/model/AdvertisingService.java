@@ -59,6 +59,9 @@ public class AdvertisingService {
 	public void deleteAdvertising(String adv_no) {
 		dao.delete(adv_no);
 	}
+	public List<AdvertisingVO> getAllUnverified(){
+		return dao.getAllUnverified();
+	}
 	public List<AdvertisingVO> getOneAll(String com_no) {
 		return dao.getOneAll(com_no);
 	}

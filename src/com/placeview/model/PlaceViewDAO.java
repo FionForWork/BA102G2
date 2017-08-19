@@ -3,10 +3,15 @@ package com.placeview.model;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.management.relation.Role;
+
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
+import com.ord.model.OrdVO;
+
 import hibernate.util.HibernateUtil;
+import oracle.net.aso.q;
 
 public class PlaceViewDAO implements PlaceViewDAO_Interface{
 
@@ -14,8 +19,9 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
     public void insert(PlaceViewVO placeViewVO) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
+            session.beginTransaction();
             session.saveOrUpdate(placeViewVO);
+            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();
@@ -30,7 +36,16 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
 
     @Override
     public void delete(String view_no) {
-     // TODO Auto-generated method stub
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            PlaceViewVO placeViewVO=(PlaceViewVO)session.get(PlaceViewVO.class, view_no);
+            session.delete(placeViewVO);
+            session.getTransaction().commit();
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -42,9 +57,12 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
     public void deleteByFK(String pla_no) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
-            Query query=session.createQuery("from PlaceViewVO where PLA_NO = :pla_no");
+            System.out.println(pla_no);
+            session.beginTransaction();
+            Query query=session.createQuery("delete from PlaceViewVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
+            query.executeUpdate();
+            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             throw e;
@@ -77,7 +95,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
         List<String> list=null;
         try {
             session.beginTransaction();
-            Query query=session.createQuery("select view_no from PlaceViewVO where PLA_NO = :pla_no");
+            Query query=session.createQuery("select VIEW_NO from PlaveViewVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
             list=query.list();
         }

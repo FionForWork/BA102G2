@@ -6,11 +6,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     response.setHeader("Pragma", "no-cache");
-    response.setHeader("Cache-Control", "no-cache");
-    response.setDateHeader("Expires", 0);
-    PlaceService placeService = new PlaceService();
-	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
-	int itemsCount = 9;
+	response.setHeader("Cache-Control", "no-cache");
+	response.setDateHeader("Expires", 0);
+	PlaceService placeService = new PlaceService();
+	int nowPage = (request.getParameter("nowPage") == null)	? 1	: Integer.valueOf(request.getParameter("nowPage"));
+	int itemsCount = 4;
 	int allCount = placeService.getAllCount();
 	int totalPages = allCount / itemsCount + 1;
 	List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
@@ -23,14 +23,8 @@
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
 <div id="content">
-    <div class="content-wrapper">
-        <div class="row">
-            <ul id="crumb" class="breadcrumb">
-            </ul>
-        </div>
-    </div>
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-top: 50px;">
-        <table class="table"  >
+        <table id="table" class="table">
             <thead>
                 <tr>
                     <th>景點名稱</th>
@@ -40,14 +34,14 @@
                 </tr>
             </thead>
             <tbody id="tbody">
-                <c:forEach var="placeVO" items="${placeList}">
-                    <tr>
+                <c:forEach var="placeVO" items="${placeList}" varStatus="s">
+                    <tr class="animated fadeInUp" style="animation-duration: ${s.index*0.4}s;">
                         <td>${placeVO.name}</td>
                         <td>${placeVO.addr}</td>
-                        <td style="word-break:break-all;width:500px;">${placeVO.pla_desc}</td>
+                        <td style="word-break: break-all; width: 500px;">${placeVO.pla_desc}</td>
                         <td style="width: 80px;">
-                            <a style="width: 100%;" class="btn btn-success" href="${preLocation}/placeUpdate.jsp?pla_no=${placeVO.pla_no}">資料修改</a>
-                            <a style="width: 100%;" class="btn btn-danger" href="<%=request.getContextPath()%>/place/PlaceServlet?action=DELETE&&pla_no=${placeVO.pla_no}">刪除景點</a>
+                            <a style="width: 100%;" class="btn btn-success" href="${preLocation}/placeUpdate.jsp?pla_no=${placeVO.pla_no}">資料修改</a> 
+                            <a style="width: 100%;" class="btn btn-danger" href="javascript:deletePlace(${nowPage},${placeVO.pla_no})">刪除景點</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -57,25 +51,69 @@
         <div class="text-center ">
             <nav aria-label="Page navigation ">
                 <ul class="pagination pagination-lg ">
-                    <li>
-                        <a class="btn btn-info active" href="javascript:change(1,${itemsCount},${totalPages})" data-page="1">1</a>
-                    </li>
-                    <c:forEach var="i" begin="2" end="5">
-                        <li>
-                            <a class="btn btn-info" href="javascript:change(${i},${itemsCount},${totalPages})" data-page="${i}">${i}</a>
-                        </li>
-                    </c:forEach>
-                    <li>
-                        <a class="disabled">...</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-info" href="javascript:change(${totalPages},${itemsCount},${totalPages})">${totalPages}</a>
-                    </li>
+                    <c:choose>
+                        <c:when test="${totalPages<=5}">
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <c:choose>
+                                    <c:when test="${nowPage==i}">
+                                        <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:when>
+                        <c:when test="${nowPage<5}">
+                            <c:forEach var="i" begin="1" end="5">
+                                <c:choose>
+                                    <c:when test="${nowPage==i}">
+                                        <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <li><a class="disabled">...</a></li>
+                            <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                        </c:when>
+                        <c:when test="${totalPages-nowPage<5}">
+                            <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                            <li><a class="disabled">...</a></li>
+                            <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                <c:choose>
+                                    <c:when test="${nowPage==i}">
+                                        <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                            <li><a class="disabled">...</a></li>
+                            <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                <c:choose>
+                                    <c:when test="${nowPage==i}">
+                                        <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <li><a class="disabled">...</a></li>
+                            <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </nav>
         </div>
-        <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
+    <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     <div class="col-md-2" style="margin-top: 50px;">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#NewPlace">新增景點</button>
         <div class="modal fade" id="NewPlace">
@@ -145,113 +183,45 @@
             $("#addForm").submit();
         }
     }
-
-    function change(nowPage, itemsCount, totalPages) {
+    
+    function deletePlace(nowPage,pla_no) {
         $.ajax({
-        url : "/BA102G2/place/PlaceServlet",
-        type : "post",
-        data : {
-        action : "CHANGE_AJAX",
-        nowPage : nowPage,
-        itemsCount : itemsCount,
-        },
-        error : function(xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-        },
-        success : function(response) {
-            var placeList = JSON.parse(response);
-            pageChange(itemsCount, totalPages, nowPage);
-            tableChange(placeList);
-        }
+            url : "/BA102G2/place/PlaceServlet",
+            type : "post",
+            data : {
+            action : "DELETE",
+            pla_no : pla_no
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                change(nowPage);
+            }
+        });
+    }
+    
+    function change(nowPage){ 
+        $(window).scrollTop("0");
+        $(window).scrollLeft($(window).scrollLeft());
+        $("#table").load("<%=preLocation%>/placeManagement.jsp #table",{"nowPage":nowPage});
+        $(".pagination").load("<%=preLocation%>/placeManagement.jsp .pagination", {
+            "nowPage" : nowPage
         });
     }
 
-    function pageChange(itemsCount, totalPages, nowPage) {
-        var preHref = "javascript:change(" + 1 + "," + itemsCount + "," + totalPages + ")";
-        var afterHref = "javascript:change(" + totalPages + "," + itemsCount + "," + totalPages + ")";
-        var nothing = "<li><a class='disabled'>...</a></li>";
-        if (totalPages <= 5) {
-            var page = "";
-            for (var i = 0; i < totalPages; i++) {
-                var href = "javascript:change(" + (i + 1) + "," + itemsCount + "," + totalPages + ")";
-                var active = "";
-                if ((i + 1) == nowPage) {
-                    active = "active";
-                }
-                page = page + "<li><a class='btn btn-info " + active + "' href='" + href + "'" + "data-page='" + (i + 1) + "'" + ">" + (i + 1) + "</a></li>"
-            }
-        }
-        else {
-            if (nowPage < 5) {
-                var page = "";
-                for (var i = 0; i < 5; i++) {
-                    var href = "javascript:change(" + (i + 1) + "," + itemsCount + "," + totalPages + ")";
-                    var active = "";
-                    if ((i + 1) == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info " + active + "' href='" + href + "'" + "data-page='" + (i + 1) + "'" + ">" + (i + 1) + "</a></li>";
-                }
-                page = page + nothing;
-                page = page + "<li><a class='btn btn-info' href='" + afterHref + "''" + "data-page='" + (totalPages) + "'" + ">" + (totalPages) + "</a></li>";
-            }
-            else if (totalPages - nowPage < 5) {
-                var page = "<li><a class='btn btn-info' href='" + preHref + "'" + "data-page='" + (1) + "'" + ">" + (1) + "</a></li>";
-                page = page + "<li><a class='disabled'>...</a></li>";
-                for (var i = totalPages - 5; i <= totalPages; i++) {
-                    var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount + "," + totalPages + ")";
-                    if (i == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info "+ active+"' href='" + href + "'" + "data-page='" + i + "'" + ">" + i + "</a></li>";
-                }
-            }
-            else {
-                var page = "<li><a class='btn btn-info' href='"+preHref+"'"+"data-page='"+1+"'"+">" + 1 + "</a></li>";
-                page = page + nothing;
-                for (var i = nowPage - 2; i <= nowPage + 2; i++) {
-                    var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount + "," + totalPages + ")";
-                    if (i == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info "+ active+"' href='" + href + "'" + "data-page='" + i + "'" + ">" + i + "</a></li>"
-                }
-                page = page + nothing;
-                page = page + "<li><a class='btn btn-info' href='"+afterHref+"'"+"data-page='"+totalPages+"'"+">" + totalPages + "</a></li>";
-            }
-        }
-        $("ul.pagination-lg").html(page);
-    }
-
-    function tableChange(placeList) {
-        var tbody = "";
-        for (var i = 0; i < placeList.length; i++) {
-            tbody = tbody + "<tr>" + 
-            "<td>"+ placeList[i].name + "</td>" + 
-            "<td>" + placeList[i].addr + "</td>" + 
-            "<td style='word-break:break-all;width:500px;'>"+placeList[i].pla_desc+"</td>"+
-            "<td style='width: 80px;'><a style='width: 100%;' class='btn btn-success' href='/BA102G2/Back_end/place/placeUpdate.jsp?pla_no=" + placeList[i].pla_no + "'>資料修改</a>" + 
-            "<a style='width: 100%;' class='btn btn-danger' href='/BA102G2/place/PlaceServlet?action=DELETE&&pla_no=" + placeList[i].pla_no + "'>刪除景點</a></td>"+
-            "</tr>";
-        }
-        $("#tbody").html(tbody);
-    }
     $("document").ready(function() {
-        
         $("#addImg").fileinput({
         maxFileCount : 50,
-        showUpload:false,
+        showUpload : false,
         allowedFileTypes : [ "image" ],
         language : 'zh-TW',
         theme : "fa",
         uploadAsync : true,
         browseOnZoneClick : true
         });
-    
+
     });
-    
 </script>
 <%@include file="/Back_end/pages/backFooter.file"%>

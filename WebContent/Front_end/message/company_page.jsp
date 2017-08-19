@@ -11,13 +11,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	ComService comSvc = new ComService();
-	ComVO comVO1 = comSvc.getOneCom("2003");
-	session.setAttribute("comVO", comVO1);
+// 	ComService comSvc = new ComService();
+// 	ComVO comVO1 = comSvc.getOneCom("2003");
+// 	session.setAttribute("comVO", comVO1);
 	
-// 	MemService memSvc = new MemService();
-// 	MemVO memVO1 = memSvc.getOneMem("1001");
-// 	session.setAttribute("memVO", memVO1);
+	MemService memSvc = new MemService();
+	MemVO memVO1 = memSvc.getOneMem("1001");
+	session.setAttribute("memVO", memVO1);
 	
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -37,77 +37,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body onload="connect();" onunload="disconnect();">
+<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
 
 	<%@ include file="page/before.file"%>
 
 
-	<!--banner -->
-	<c:forEach var="worksVO" items="${worksList}" begin="1" end="1">
-		<div class="fade-carousel">
-			<div class="home-banner fade-carousel" style="overflow: hidden;">
-				<div class="item slides">
-					<div class="slide-1 bg-cover lazy"
-						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
+	
 
-				</div>
-			</div>
-		</div>
-		<br>
-	</c:forEach>
-	<!--banner -->
-
-	<!--店家大頭照-->
-	<div class="com_head container">
-		<img class="com_logo img-circle center-block"
-			src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"
-			alt="She Said Yes">
-	</div>
-	<!--店家大頭照-->
-
-	<div class="text-center">
-		<h1>${comVO.name}</h1>
-	</div>
-
-	<div class="catalog hidden-xs">
-		<ul class="list-inline">
-			<li><a href="#info" title="聯絡資訊"> 聯絡資訊 </a></li>
-			<li><a href="#works" title="作品"> 作品 </a></li>
-			<li><a href="#service" title="方案"> 方案 </a></li>
-			<li><a href="#introduction" title="關於我"> 關於我 </a></li>
-		</ul>
-	</div>
-
-	<!--店家資料-->
-	<div class="container" id="info">
-		<div class="col-sm-10">
-			<div class="hidden-xs">
-				<table class="table table-condensed">
-					<tbody>
-						<tr>
-							<th>店休日</th>
-							<td>每周休六日</td>
-						</tr>
-
-						<tr>
-							<th>電話</th>
-							<td>${comVO.phone}</td>
-						</tr>
-
-						<tr>
-							<th>地址</th>
-							<td>${comVO.loc}</td>
-						</tr>
-
-						<tr>
-							<th>信箱</th>
-							<td><a href="">${comVO.id}</a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<!--////////////////////////////-->
+	
 		<!--預約按鈕-->
 		<div class="col-sm-2">
 			<p class="text-center">
@@ -127,140 +64,30 @@
 	</div>
 	<!--店家資料-->
 
-	<!--店家相簿-->
-	<div class="text-center" id="works">
-		<span>
-			<h1>廠商作品</h1>
-		</span>
-	</div>
-	<div class="container">
-		<div class="row">
-
-
-			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
-				<div class="col-xs-12 col-sm-4">
-					<ul class="works_box">
-						<li class="list-unstyled"><a href="#"
-							class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<img class="works_image img-thumbnail"
-								src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
-								<div class="overlay">
-									<div class="works_text">${worksVO.works_desc}</div>
-								</div>
-						</a></li>
-					</ul>
-				</div>
-			</c:forEach>
-
-
-		</div>
-	</div>
-
-
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-xs-12 col-sm-3"></div>
-			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-				</a>
-			</div>
-			<div class="col-xs-12 col-sm-3"></div>
-		</div>
-	</div>
-	<!--店家相簿-->
-
-	<!--店家方案-->
-	<div class="text-center" id="service">
-		<span>
-			<h1>廠商方案</h1>
-		</span>
-	</div>
-	<div class="container">
-		<div class="row">
-
-			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
-				<div class="col-xs-12 col-sm-3">
-					<ul class="service_box">
-						<li class="service_title">${servVO.title}</li><br>
-						<li class="text">${servVO.content}</li>
-						<li class="cost"><span>$NT</span>
-						<span style="color: #ef8b87;">${servVO.price}</span></li>
-					</ul>
-				</div>
-			</c:forEach>
-
-		</div>
-	</div>
-
-
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-xs-12 col-sm-3"></div>
-			<div class="col-xs-12 col-sm-6">
-				<a href="#"> <a class="btn btn-default btn-lg" href="#"> 看更多
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-				</a>
-			</div>
-			<div class="col-xs-12 col-sm-3"></div>
-		</div>
-	</div>
-	</div>
-	<!--店家方案-->
-
-	<!--店家影片-->
-	<!--店家影片-->
-
-	<!--店家自介-->
-	<div class="text-center" id="introduction">
-		<span>
-			<h1>廠商介紹</h1>
-		</span>
-	</div>
-	<div class="com_intro container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-6">
-				<div class="col-xs-12 col-sm-4"></div>
-				<div class="col-xs-12 col-sm-8">基本介紹： ${comVO.com_desc}</div>
-			</div>
-			<div class="col-xs-12 col-sm-6">
-
-				<div class="col-xs-12 col-sm-4"></div>
-
-				<div class="col-xs-12 col-sm-8"></div>
-			</div>
-		</div>
-	</div>
-
-	<!--店家自介-->
 	
 	<!--聯絡我們-->
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="chat_box panel" id="chatbox">
+				<div class="chat_box panel panel" id="chatbox">
 					<div class="panel-heading">
-						<div>
-							<img style="width:20%;" src="<%=request.getContextPath()%>/ShowPictureServletDAO?${(memVO==null)?'com_no=':'mem_no='}${(memVO==null)?comVO.com_no:memVO.mem_no}">
-							${(memVO==null)?comVO.name:memVO.name}
-						</div>
 						<button id=close class="chat-header-button pull-right" type="button" onclick="change(2);"><i class="fa fa-times"></i></button>
+						<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
+						<c:forEach var="comVO" items="${comSvc.all}">
+						<c:if test="${param.com_no==comVO.com_no}">
+						<div>${comVO.name}</div>
+						</c:if>
+						</c:forEach>
 						<div id="statusOutput"></div>
 					</div>
 					<div class="panel-body">
-						<textarea id="messagesArea" class="panel message-area" readonly>
-						
-						</textarea>
+					<ul id="textArea"></ul>
 					</div>
-					<div class="panel-footer">
-						<div class="panel input-area">
-							<div class="row">
-							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button" value="送出" onclick="sendMessage();" />	
-							</div>		
-						</div>
+					<div class="panel-footer">							
+							<input id="message" class="col-md-9 text-field" type="text" placeholder="訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',																												  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
+							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+												 '${memVO != null? memVO.name : comVO.name}')" />	
 					</div>
 				</div>
 			</div>
@@ -271,11 +98,11 @@
 	<%@ include file="page/after.file"%>
 
 <script type="text/javascript">
-<%ComVO comVO = (ComVO) session.getAttribute("comVO");
-MemVO memVO = (MemVO) session.getAttribute("memVO");
-%>
-
-
+<%-- <%ComVO comVO = (ComVO) session.getAttribute("comVO"); --%>
+// MemVO memVO = (MemVO) session.getAttribute("memVO");
+<%-- %> --%>
+<%-- var comVO = <%=comVO%>; --%>
+<%-- var memVO = <%=memVO%>; --%>
 
 
 
@@ -295,44 +122,63 @@ var webSocket;
 var memNo;	
 			
 
- 				function connect() {
+ 				function connect(no) {
  					// 建立 websocket 物件
+ 					console.log('connect(no):'+no);
  					webSocket = new WebSocket(endPointURL);
 
  					webSocket.onopen = function(event) {
 						updateStatus("成功連線");
- 						document.getElementById('sendMessage').disabled = false;
- 						document.getElementById('connect').disabled = true;
- 						document.getElementById('disconnect').disabled = false;					
- 						var messagesArea = document.getElementById("messagesArea");
- 						messagesArea.value = messagesArea.value + "\r\n";
-
-						
+ 						document.getElementById('sendMessage').disabled = false;				
+ 						
  					};
 
  					webSocket.onmessage = function(event) {
  						
  						
- 						var messagesArea = document
- 						.getElementById("messagesArea");
- 						memNo = jsonObj.memNo;
- 						if(comNo == com_no) {
+ 						var messagesArea = document.getElementById("messagesArea");
+ 						
  	 						document.getElementById("chatbox").style.display = 'block';
  	 						document.getElementById("addClass").style.display = 'none';
  	 						document.getElementById("dClass").style.display = 'block';
  						var jsonObj = JSON.parse(event.data);
- 						var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
- 						messagesArea.value = messagesArea.value + message;
- 						messagesArea.scrollTop = messagesArea.scrollHeight;
- 						}
+ 						memNo = jsonObj.memNo;
+ 						var who = jsonObj.who;
+ 						var userName = jsonObj.userName;
+ 						var message = jsonObj.message + "\r\n";
+
+
+ 						if (who==no){
+ 					        control = '<li style="width:100%;">' +
+ 					                        '<div class="msg-r">' +
+ 					                            '<div class="text text-r">' +
+ 					                                '<p>' + message + ":" + userName+ '</p>' +
+ 					                            '</div>' +
+ 					                        '</div>' +
+ 					                    '</li>'+'<br>';                    
+ 					    }else{
+ 					        control = '<li style="width:100%;">' +
+ 					                        '<div class="msg-l">' +
+ 					                            '<div class="text text-l">' +
+ 					                                '<p>' + userName+ ":" + message + '</p>' +
+ 					                            '</div>' +                               
+ 					                  '</li>'+'<br>';
+ 					    }   
+ 					
+ 				        		$("#textArea").append(control);
+ 				        
+	
+ 						
+ 						 						
  					};
  					webSocket.onclose = function(event) {
  						updateStatus("已離線");
  					};
  				}
 
- 				function sendMessage() {
-
+ 				function sendMessage(no, userName) {
+					console.log('NO:'+no);
+					console.log(userName);
  					var inputMessage = document.getElementById("message");
  					var message = inputMessage.value.trim();
  					var date = new Date();
@@ -344,51 +190,41 @@ var memNo;
  					if (message === "") {
  						alert("訊息請勿空白!");
  						inputMessage.focus();
- 					} else if(memVO != null) {
- 						var mem_no = "<%=memVO.getMem_no()%>";
- 						var memName = "<%=memVO.getName()%>";
- 						console.log(mem_no);
- 						console.log(memName);
- 						var jsonObj = {
- 	 							"comNo" : "<%=request.getParameter("com_no")%>",
- 	 							"memNo" : mem_no,
- 	 							"userName" : memName,
+ 					} else {
+ 						if(no.indexOf("1")==0){
+ 							var jsonObj = {
+ 								"who" : no,
+ 								"comNo" : "<%=request.getParameter("com_no")%>",
+ 	 							"memNo" : no,
+ 	 							"userName" : userName,
  	 							"message" : message,
  	 							"time" : nowdate
- 	 					};
+ 	 						};
  						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
  						inputMessage.focus();
- 					} else if (comVO != null) {
- 						var com_no = "<%=comVO.getCom_no()%>";
- 						var comName = "<%=comVO.getName()%>";
- 						console.log(com_no);
- 						console.log(comName);
- 						var jsonObj = {
- 								"comNo" : com_no,
- 	 							"memNo" : memNo,
- 	 							"userName" : comName,
- 	 							"message" : message,
- 	 							"time" : nowdate
- 						};
- 						webSocket.send(JSON.stringify(jsonObj));
-						inputMessage.value = "";
- 						inputMessage.focus();
+ 						}else {
+ 							var jsonObj = {
+ 								"who" : no,
+ 								"comNo" : no,
+ 	 	 						"memNo" : memNo,
+ 	 	 						"userName" : userName,
+ 	 	 						"message" : message,
+ 	 	 						"time" : nowdate
+ 	 	 					};
+ 	 						webSocket.send(JSON.stringify(jsonObj));
+ 							inputMessage.value = "";
+ 	 						inputMessage.focus();	
+ 						}
  					}
  				}
-
  				function disconnect() {
  					webSocket.close();
- 					document.getElementById('sendMessage').disabled = true;
- 					document.getElementById('connect').disabled = false;
- 					document.getElementById('disconnect').disabled = true;
  				}
 
  				function updateStatus(newStatus) {
  					statusOutput.innerHTML = newStatus;
- 				}
-
-
+ 				}		
 </script>
 </body>
 </html>

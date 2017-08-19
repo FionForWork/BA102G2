@@ -16,10 +16,10 @@ import javax.sql.DataSource;
 public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
 
     private static final String INSERT        = "insert into PLACEVIEW (VIEW_NO, PLA_NO, IMG)" + "VALUES(VIEW_NO_SEQ.NEXTVAL, ?, ?)";
-    private static final String DELETE  = "delete from PLACEVIEW where VIEW_NO = ? ";
+    private static final String DELETE_BY_PK  = "delete from PLACEVIEW where VIEW_NO = ? ";
     private static final String DELETE_BY_FK  = "delete from PLACEVIEW where PLA_NO = ? ";
     private static final String UPDATE        = "update PLACEVIEW set IMG = ? where VIEW_NO = ?";
-    private static final String FIND_BY_PK    = "select * from PLACEVIEW where VIEW_NO = ? ";
+    private static final String GET_ONE_BY_PK    = "select * from PLACEVIEW where VIEW_NO = ? ";
     private static final String GET_ALL_BY_FK = "select VIEW_NO from PLACEVIEW where PLA_NO =?";
 
     private Connection        connection;
@@ -53,7 +53,7 @@ public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, placeViewVO.getPla_no());
+//            preparedStatement.setString(1, placeViewVO.getPla_no());
             preparedStatement.setBytes(2, placeViewVO.getImg());
             preparedStatement.execute();
             connection.commit();
@@ -82,7 +82,7 @@ public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
         try {
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT);
-            preparedStatement.setString(1, placeViewVO.getPla_no());
+//            preparedStatement.setString(1, placeViewVO.getPla_no());
             preparedStatement.setBytes(2, placeViewVO.getImg());
             preparedStatement.execute();
             connection.commit();
@@ -111,7 +111,7 @@ public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(DELETE);
+            preparedStatement = connection.prepareStatement(DELETE_BY_PK);
             preparedStatement.setString(1, view_no);
             preparedStatement.execute();
             connection.commit();
@@ -201,13 +201,13 @@ public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
     public PlaceViewVO getOneByPK(String view_no) {
         try {
             connection = dataSource.getConnection();
-            preparedStatement = connection.prepareStatement(FIND_BY_PK);
+            preparedStatement = connection.prepareStatement(GET_ONE_BY_PK);
             preparedStatement.setString(1, view_no);
             resultSet = preparedStatement.executeQuery();
             PlaceViewVO placeViewVO = new PlaceViewVO();
             while (resultSet.next()) {
                 placeViewVO.setView_no(resultSet.getString(1));
-                placeViewVO.setPla_no(resultSet.getString(2));
+//                placeViewVO.setPla_no(resultSet.getString(2));
                 placeViewVO.setImg(resultSet.getBytes(3));
             }
             return placeViewVO;

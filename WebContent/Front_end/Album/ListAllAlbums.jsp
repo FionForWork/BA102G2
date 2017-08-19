@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.Map"%>
+<%@ page import="com.mem.model.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 
 <jsp:useBean id="albSvc" scope="page"
 	class="com.album.model.AlbumService"></jsp:useBean>
@@ -11,55 +10,17 @@
 	class="com.content.model.ContentService"></jsp:useBean>
 
 <%
-	//String mem_no = (String)session.getAttribute("mem_no");//formal
-	String mem_no = "1001";
-	session.setAttribute("mem_no", "1001");
+	//String mem_no = (String)session.getAttribute("mem_no"); //formal
+// 	String mem_no = "1001";
+// 	session.setAttribute("mem_no", "1001");
+	MemVO memVO = (MemVO)session.getAttribute("memVO");  
+	System.out.println("MemVO"+memVO);
 	Map<String, String> errorMsgs = (Map) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="page/album_header_v2.file"%>
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-	<div class="col-md-offset-1">
-		<ul class="breadcrumb">
-			<li><a href="#">首頁</a></li>
-			<li><a href="#">會員專區</a></li>
-			<li class="active">我的相簿</li>
-		</ul>
-	</div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 
-<div class="container">
-	<div class="row">
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-		<div class="col-md-offset-1 col-md-2">
-			<ul class="list-group">
-				<a href="#" class="list-group-item menua">編輯個人資料</a>
-				<br>
-				<a href="#" class="list-group-item menua">密碼修改</a>
-				<br>
-				<a href="#" class="list-group-item menua">預約紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua">報價紀錄查詢</a>
-				<br>
-				<a href="#" class="list-group-item menua">作品挑選管理</a>
-				<br>
-				<a href="#" class="list-group-item menua active">我的相簿</a>
-				<br>
-				<a href="#" class="list-group-item menua">我的最愛</a>
-				<br>
-				<a href="#" class="list-group-item menua">商城專區</a>
-				<br>
-			</ul>
-
-
-			<a href="#" class="btn btn-block btn-default">查看個人資料</a>
-		</div>
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-		<!--這裡開始===========================================================================-->
 
 		<div class="col-md-8 col-offset-1">
 			<div class="row text-right">
@@ -114,15 +75,9 @@
 				</div>
 			</form>
 			<!--end Modal create album -->
-
-
-			<c:forEach var="albVO" items="${albSvc.getAllByMemNo(mem_no)}"
-				varStatus="s">
-				<c:if test="${(s.count % 4) == 1}">
-					<div class="row">
-				</c:if>
-				<!-- Modal delete alb -->
-				<div class="modal fade" id="deleteModal${s.count}" role="dialog">
+			
+			<!-- Modal delete alb -->
+				<div class="modal fade" id="deleteAlbumModal" role="dialog">
 					<div class="modal-dialog">
 
 						<!-- Modal content-->
@@ -134,18 +89,29 @@
 							<div class="modal-body">
 								<p>你確定想刪除「 ${albVO.name} 」嗎？在這本相簿中的相片也會被刪除。</p>
 							</div>
+							<input type='hidden' name='alb_no' value=''>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
-									data-dismiss="modal">取消</button>
+									data-dismiss="modal" id='cancel'>取消</button>
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal" id='deletebtn'
-									onclick="document.getElementById('delete${s.count}').submit();">刪除</button>
+									onclick="deleteAlb()">刪除</button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 				<!--  End Modal Delete Alb -->
+			
+			
+			
+			<div id='changeContent'>
+			<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}"
+				varStatus="s">
+				<c:if test="${(s.count % 4) == 1}">
+					<div class="row">
+				</c:if>
+				
 				<div class="col-xs-12 col-sm-4 col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">${albVO.name}</div>
@@ -159,8 +125,6 @@
 							</a>
 						</div>
 						<div class="panel-footer">
-
-
 							<form class="form-inline" id="update${s.count}"
 								action="<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp"
 								method="post">
@@ -175,14 +139,14 @@
 								<input type="hidden" name="action" value="delete_Album">
 
 							</form>
-							<div class="text-right">
-								<span style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
+							
+								<span id='pictureCount' style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
 									張相片</span> 
+									<div class="text-right">
 									<a href="#"
 									onclick="document.getElementById('update${s.count}').submit();">
 									<span class='fa fa-pencil' style='font-size: 20px;'></span>
-								</a> <a href="#" id="alb${s.count}" data-toggle="modal"
-									data-target="#deleteModal${s.count}"> <span
+								</a> <a id="alb${s.count}" data-toggle="modal" onclick="openModal('${albVO.alb_no}','${albVO.name}')"> <span
 									class='fa fa-trash' style='font-size: 20px;'></span>
 								</a>
 							</div>
@@ -193,5 +157,38 @@
 		</div>
 		</c:if>
 		</c:forEach>
+		</div>
 	</div>
+<script type="text/javascript">
+	function doAjax(action,alb_no){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/album/album.do',
+			type:'POST',
+			data:{
+				alb_no :alb_no,
+				action : action
+			},
+			success:function success(){
+				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp #changeContent",{
+					alb_no :alb_no
+				});
+			},
+			error:function(xhr){
+				alert('Ajax request error!');
+			}
+		});
+	}
+	function openModal(alb_no,name){
+		$("#deleteAlbumModal").modal();
+		$('input[name=alb_no]').val(alb_no);
+		$('.modal-body p').html("你確定想刪除「"+name+" 」嗎？在這本相簿中的相片也會被刪除。");
+	}
+	function deleteAlb(){
+		$("#cancel").click();
+		var alb_no = $('input[name=alb_no]').val();
+		doAjax('delete_Album',alb_no);
+		
+	}
+	
+</script>
 	<%@ include file="page/album_footer.file"%>

@@ -38,9 +38,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="homepage.html">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/Album/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -52,8 +52,8 @@
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <li >
-                        <a  href="<%= request.getContextPath() %>/Front_end/mem/index.jsp">
-                          ${memVO.name}&nbsp&nbsp&nbsp<img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp">
+                          <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp<span style="font-size:19px;">${memVO.name}</span>
                         </a>
                     </li>
                     <li>
@@ -211,7 +211,7 @@
                 </ol>
             </li>
             <li class="wd-drop-wrapper">
-                <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
+                <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" ><h3>線上商城</h3></a>
                 <!--RWD-->
                 <div class="mobile-main-choice visible-xs">
                     <a href="#">手機1</a><span> / </span>
@@ -258,7 +258,7 @@
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Album/img/banner1.jpg');"></div>
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/mem/img/banner1.jpg');"></div>
                 <!--banner圖放這裡-->
             </div>
         </div>
@@ -300,15 +300,21 @@
              <br><br><br> 
                 <ul class="list-group">
                     <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a><br>
-                    <a href="#" class="list-group-item menua">密碼修改</a><br>
+
+                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a><br>
+
                     <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
                     <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">我的相簿</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
+
+                    <a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a><br>
+
                     <a href="#" class="list-group-item menua">我的最愛</a><br>
-                    <a href="#" class="list-group-item menua">商城專區</a><br>
+                    <a href="#" class="list-group-item menua">實景預覽</a><br>
+                    <a href="<%=request.getContextPath()%>/Front_end/mall/mallIndexAJAX.jsp" class="list-group-item menua">商城專區</a><br>
                 </ul>
 
 																				
                 <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default">查看個人資料</a>
             </div>
+            

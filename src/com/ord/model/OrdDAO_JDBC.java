@@ -21,9 +21,9 @@ import com.product.model.ProductVO;
 
 public class OrdDAO_JDBC implements OrdDAO_Interface {
     private static final String INSERT                 = "insert into ORD (ORD_NO, SELLER_NO, CUST_NO, ADDRESS,ORD_DATE,TOTAL,SCORE,STATUS)" + "values(ORD_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE                 = "delete from ORD where ORD_NO = ?";
+    private static final String DELETE_BY_PK           = "delete from ORD where ORD_NO = ?";
     private static final String UPDATE                 = "update ORD set ADDRESS = ? ,TOTAL = ? ,SCORE = ?,STATUS = ? where ORD_NO = ?";
-    private static final String GET_BY_PK              = "select * from ORD where ORD_NO = ?";
+    private static final String GET_ONE_BY_PK          = "select * from ORD where ORD_NO = ?";
     private static final String GET_ALL                = "select * from ORD order by ORD_NO asc";
     private static final String GET_ALL_BY_CUST        = "select * from ORD where CUST_NO = ? and STATUS = ? order by ORD_DATE desc";
     private static final String GET_ALL_BY_SELLER      = "select * from ORD where SELLER_NO = ? and STATUS = ? order by ORD_DATE desc";
@@ -140,10 +140,10 @@ public class OrdDAO_JDBC implements OrdDAO_Interface {
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(DELETE);
+            preparedStatement = connection.prepareStatement(DELETE_BY_PK);
             preparedStatement.setString(1, ord_no);
             preparedStatement.execute();
-            Order_detailDAO order_detailDAO=new Order_detailDAO();
+            Order_detailDAO order_detailDAO = new Order_detailDAO();
             order_detailDAO.delete(ord_no, connection);
             connection.commit();
         }
@@ -203,7 +203,7 @@ public class OrdDAO_JDBC implements OrdDAO_Interface {
     public OrdVO getOneByPK(String ord_no) {
         try {
             connection = dataSource.getConnection();
-            preparedStatement = connection.prepareStatement(GET_BY_PK);
+            preparedStatement = connection.prepareStatement(GET_ONE_BY_PK);
             preparedStatement.setString(1, ord_no);
             resultSet = preparedStatement.executeQuery();
             OrdVO ordVO = new OrdVO();
@@ -406,27 +406,27 @@ public class OrdDAO_JDBC implements OrdDAO_Interface {
 
     @Override
     public List<OrdVO> getPageByCust(int start, int itemsCount, String cust_no, String status, String orderMethod) {
-        String GET_PAGE_BY_CUST = "select * from (select rownum bRn, b.* from (select rownum aRn, a.* from ORD a where CUST_NO = ? and STATUS = ? order by "+orderMethod+") b) where bRn between ? and ?";
+        String GET_PAGE_BY_CUST = "select * from (select rownum bRn, b.* from (select rownum aRn, a.* from ORD a where CUST_NO = ? and STATUS = ? order by " + orderMethod + ") b) where bRn between ? and ?";
         try {
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_PAGE_BY_CUST);
             preparedStatement.setString(1, cust_no);
             preparedStatement.setString(2, status);
             preparedStatement.setInt(3, start);
-            int end=start+itemsCount;
+            int end = start + itemsCount;
             preparedStatement.setInt(4, end);
             resultSet = preparedStatement.executeQuery();
             List<OrdVO> list = new ArrayList<>();
             while (resultSet.next()) {
                 OrdVO ordVO = new OrdVO();
-                ordVO.setOrd_no(resultSet.getString(1));
-                ordVO.setSeller_no(resultSet.getString(2));
-                ordVO.setCust_no(resultSet.getString(3));
-                ordVO.setAddress(resultSet.getString(4));
-                ordVO.setOrd_date(resultSet.getTimestamp(5));
-                ordVO.setTotal(resultSet.getInt(6));
-                ordVO.setScore(resultSet.getInt(7));
-                ordVO.setStatus(resultSet.getString(8));
+                ordVO.setOrd_no(resultSet.getString(3));
+                ordVO.setSeller_no(resultSet.getString(4));
+                ordVO.setCust_no(resultSet.getString(5));
+                ordVO.setAddress(resultSet.getString(6));
+                ordVO.setOrd_date(resultSet.getTimestamp(7));
+                ordVO.setTotal(resultSet.getInt(8));
+                ordVO.setScore(resultSet.getInt(9));
+                ordVO.setStatus(resultSet.getString(10));
                 list.add(ordVO);
             }
             return list;
@@ -447,27 +447,27 @@ public class OrdDAO_JDBC implements OrdDAO_Interface {
 
     @Override
     public List<OrdVO> getPageBySeller(int start, int itemsCount, String seller_no, String status, String orderMethod) {
-        String GET_PAGE_BY_CUST = "select * from (select rownum bRn, b.* from (select rownum aRn, a.* from ORD a where SELLER_NO = ? and STATUS = ? order by "+orderMethod+") b) where bRn between ? and ?";
+        String GET_PAGE_BY_CUST = "select * from (select rownum bRn, b.* from (select rownum aRn, a.* from ORD a where SELLER_NO = ? and STATUS = ? order by " + orderMethod + ") b) where bRn between ? and ?";
         try {
             connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(GET_PAGE_BY_CUST);
             preparedStatement.setString(1, seller_no);
             preparedStatement.setString(2, status);
             preparedStatement.setInt(3, start);
-            int end=start+itemsCount;
+            int end = start + itemsCount;
             preparedStatement.setInt(4, end);
             resultSet = preparedStatement.executeQuery();
             List<OrdVO> list = new ArrayList<>();
             while (resultSet.next()) {
                 OrdVO ordVO = new OrdVO();
-                ordVO.setOrd_no(resultSet.getString(1));
-                ordVO.setSeller_no(resultSet.getString(2));
-                ordVO.setCust_no(resultSet.getString(3));
-                ordVO.setAddress(resultSet.getString(4));
-                ordVO.setOrd_date(resultSet.getTimestamp(5));
-                ordVO.setTotal(resultSet.getInt(6));
-                ordVO.setScore(resultSet.getInt(7));
-                ordVO.setStatus(resultSet.getString(8));
+                ordVO.setOrd_no(resultSet.getString(3));
+                ordVO.setSeller_no(resultSet.getString(4));
+                ordVO.setCust_no(resultSet.getString(5));
+                ordVO.setAddress(resultSet.getString(6));
+                ordVO.setOrd_date(resultSet.getTimestamp(7));
+                ordVO.setTotal(resultSet.getInt(8));
+                ordVO.setScore(resultSet.getInt(9));
+                ordVO.setStatus(resultSet.getString(10));
                 list.add(ordVO);
             }
             return list;

@@ -2,9 +2,11 @@ package com.reservation.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.calendar.model.*;
 import com.mem.model.*;
@@ -162,16 +167,23 @@ public class ReservationServlet extends HttpServlet {
 			ReservationService resService = new ReservationService();
 			resService.updateStatus("1", res_no);
 			
-			res.sendRedirect(RedirectURL);
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("resCompleted")){
 			String RedirectURL = req.getParameter("RedirectURL");
 			String res_no = req.getParameter("res_no");
-			ReservationService resService = new ReservationService();
-			resService.updateStatus("2", res_no);
 			
-			res.sendRedirect(RedirectURL);
+			// 判斷是一般服務或是詢價服務
+			ReservationService resService = new ReservationService();
+			ReservationVO resVO =  resService.getOneReservation(res_no);
+			
+			if(resVO.getServ_no().startsWith("7")){
+				resService.updateStatus("4", res_no);
+			}else{
+				resService.updateStatus("2", res_no);
+			}
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("rating")){
@@ -181,10 +193,50 @@ public class ReservationServlet extends HttpServlet {
 			
 			ReservationService resService = new ReservationService();
 			resService.updateScore("3", score, res_no);
-			res.sendRedirect(RedirectURL);
+//			res.sendRedirect(RedirectURL);
 		}
 		
 		if(action.equals("searchServiceByCompositeQuery")){
+			
+			String requestURL = req.getParameter("requestURL");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String cal_date = req.getParameter("cal_date");
+			
+			Date date = null;
+			Integer bottomPrice = null;
+			Integer topPrice = null;
+			try{
+				date = Date.valueOf(cal_date);
+
+			}catch(IllegalArgumentException e){
+				errorMsgs.add("請輸入正確的日期格式!");
+			}
+			
+			if(!req.getParameter("bottomPrice").trim().equals("")){
+				try{
+					bottomPrice = new Integer(req.getParameter("bottomPrice"));
+				}catch (NumberFormatException e) {
+					errorMsgs.add("請輸入正確的金額格式!");
+				}
+			}
+			if(!req.getParameter("topPrice").trim().equals("")){
+				try{
+					topPrice = new Integer(req.getParameter("topPrice"));
+				}catch (NumberFormatException e) {
+					errorMsgs.add("請輸入正確的金額格式!");
+				}
+			}
+			
+			if (!errorMsgs.isEmpty()) {
+				List<ServVO> list = new ArrayList<ServVO>();
+				req.setAttribute("list", list);
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
+				return;
+			}
+			
 			Map<String, String[]> map = req.getParameterMap();
 
 			ServService servService = new ServService();
@@ -192,10 +244,102 @@ public class ReservationServlet extends HttpServlet {
 			req.setAttribute("list", list);
 			req.setAttribute("map", map);
 			
-			String requestURL = req.getParameter("requestURL");
+			
 			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
 			successView.forward(req, res);
 		}
+		
+		if(action.equals("checkNum")){
+			PrintWriter out = res.getWriter();
+			String type = req.getParameter("type");
+			if(type.equals("cardNum") || type.equals("threeNum")){
+				String cardNum = null;
+				
+				if(type.equals("cardNum")){
+					cardNum = req.getParameter("cardNum");
+				}else{
+					cardNum = req.getParameter("threeNum");
+				}
+				
+				JSONObject result = new JSONObject();
+				
+				Integer num = null;
+				try{
+					num = new Integer(cardNum);
+				}catch(NumberFormatException e){
+					try {
+						result.put("r", "請輸入正確卡號");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				if((type.equals("cardNum") && cardNum.trim().length() != 4) || (type.equals("threeNum") && cardNum.trim().length() != 3)){
+					try {
+						result.put("r", "卡號長度不符");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				try {
+					result.put("r", "卡號正確");
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			
+			}
+		}
+		
+		if(action.equals("checkForm")){
+			PrintWriter out = res.getWriter();
+			String cardNum1 = req.getParameter("cardNum1");
+			String cardNum2 = req.getParameter("cardNum2");
+			String cardNum3 = req.getParameter("cardNum3");
+			String cardNum4 = req.getParameter("cardNum4");
+			String threeNum = req.getParameter("threeNum");
+			JSONObject result = new JSONObject();
+			
+			if(cardNum1.trim().length() == 4 && cardNum2.trim().length() == 4 &&
+				cardNum3.trim().length() == 4 && cardNum4.trim().length() == 4 && threeNum.length() == 3){
+				
+				try{
+					Integer cardNum5 = new Integer(cardNum1);
+					Integer cardNum6 = new Integer(cardNum2);
+					Integer cardNum7 = new Integer(cardNum3);
+					Integer cardNum8 = new Integer(cardNum4);
+					Integer cardNum9 = new Integer(threeNum);
+				}catch(NumberFormatException e){
+					try {
+						result.put("r", "請輸入正確卡號");
+						out.print(result);
+						return;
+					} catch (JSONException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				try {
+					result.put("r", "卡號正確");
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					result.put("r", "請輸入正確卡號");
+					out.print(result);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		
 	}
 

@@ -32,11 +32,13 @@ public class OrdDAO_Hibernate implements OrdDAO_Interface{
         try {
             session.beginTransaction();
             session.saveOrUpdate(ordVO);
-            Order_detailDAO order_detailDAO=new Order_detailDAO();
-            for (Order_detailVO order_detailVO : list) {
-                order_detailDAO.insert(order_detailVO);
-            }
-            session.getTransaction().commit();
+            String ord_no=ordVO.getOrd_no();
+            System.out.println(ord_no);
+//            Order_detailDAO order_detailDAO=new Order_detailDAO();
+//            for (Order_detailVO order_detailVO : list) {
+//                order_detailDAO.insert(order_detailVO);
+//            }
+//            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();

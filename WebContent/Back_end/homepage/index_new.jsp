@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,9 +49,10 @@
 	rel="stylesheet" />
 <!-- Fav and touch icons -->
 
-<link rel="icon"
-	href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico"
+<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico"
 	type="image/png">
+ <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+
 <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
 <meta name="msapplication-TileColor" content="#3399cc" />
 </head>
@@ -62,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="navbar">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html"> <span
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp"> <span
 						class="text-logo"> She Said Yes!</span>
 					</a>
 				</div>
@@ -90,15 +90,15 @@
 			<!-- Start #sideNav -->
 			<ul id="sideNav" class="nav nav-pills nav-stacked">
 
-				<li><a href="#"><i class="en-users"></i>一般會員管理 </a></li>
-				<li><a href="#"><i class="en-users"></i>廠商管理 </a></li>
-				<li><a href="#"><i class="en-users"> </i>管理者設定 </a></li>
-				<li><a href="#"><i class="im-table2"></i>廣告刊登管理 </a></li>
-				<li><a href="#"><i class="br-location"></i>景點管理 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
+				<li><a href="#" class='active'><i class="en-users"></i>廠商管理 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp"><i class="br-location"></i>景點管理 </a></li>
 				<li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
-				<li><a href="#"><i class="fa-shopping-cart"></i>商城管理</a></li>
-				<li><a href="#"><i class="ec-mail"></i> 聯絡我們管理 </a></li>
-				<li><a href="#"><i class="im-question"></i>常見問題管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp"><i class="im-question"></i>常見問題管理</a></li>
 				<li><a href="#"><i class="br-warning"></i>檢舉管理</a></li>
 			</ul>
 			<!-- End #sideNav -->

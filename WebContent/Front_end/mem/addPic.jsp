@@ -1,41 +1,26 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.mem.model.*"%>
-<%
-MemVO memVO = (MemVO) request.getAttribute("memVO");
-%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
+<title>會員塞圖片</title>
 </head>
 <body>
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
+ 
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1"  enctype="multipart/form-data">
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
-
-
- <FORM ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post name="form1" enctype="multipart/form-data">
-        
-        <tr>
-		<td>帳號:</td>
-		<td><input type="TEXT" name="mem_no" size="45" 
-			value="<%= (memVO==null)? "1001" : memVO.getMem_no()%>" /></td>
-	</tr>
-        <input type="file" name="picture" value="<%= (memVO==null)? "" : memVO.getPicture()%>">
-        <br>
-        <input type="hidden" name="action" value="updatePic">
-        <input type="submit" value="上傳">
-  </FORM>
+       <b>選擇會員編號:</b></td>
+      <td> <select style="width: 223px;" name="mem_no">
+         <c:forEach var="memVO" items="${memSvc.all}" > 
+          <option value="${memVO.mem_no}">${memVO.mem_no}
+         </c:forEach>   
+       </select></td>
+<input type="file" name="picture">
+<input type="hidden" name="action" value="updatePic">
+<input type="submit" class="btn btn-info" value="送出"></FORM>
+</FORM>
 </body>
 </html>

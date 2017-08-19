@@ -21,7 +21,7 @@
 		</div>
 		<div class="panel-body">
 		       <div class="form col-md-offset-1 col-md-10">
-		           <form method="post" action="<%= request.getContextPath() %>/rfq/rfq.do">
+		           <form method="post" action="<%= request.getContextPath() %>/rfq/rfq.do" id="addRFQForm">
 		               <div class="form-group">
 		                   <label class="checkbox-inline">
 		                     <input type="checkbox" name="type" value="0" id="0001" checked="true" onchange="toggle(this)">拍婚紗
@@ -159,3 +159,19 @@
 <%@ include file="page/footer.file"%>
 </body>
 </html>
+<script>
+
+	function checkForm(e){
+		var type = document.getElementsByName("type");
+		if( type[0].checked===false && type[1].checked===false && type[2].checked===false){
+		   window.alert("請勾選想詢價的服務類型再送出表單，謝謝!");
+		   e?e.preventDefault() : event.returnValue = false;
+		   return;   
+		}	
+	}
+	
+	window.onload = function (){
+	  //註冊表單被送出時檢驗資料
+	  document.getElementById("addRFQForm").onsubmit = checkForm;
+	};
+</script>

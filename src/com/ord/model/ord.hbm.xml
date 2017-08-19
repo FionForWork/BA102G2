@@ -6,15 +6,13 @@
     <class name="com.ord.model.OrdVO" table="ORD" >
         
         <id name="ord_no" column="ORD_NO">
-            <generator class="sequence" >
-              <param name="sequence">ORD_NO_SEQ</param>
-            </generator>  
+            <generator class="com.ord.model.OrderIdentifierGenerator" />
         </id>
         
         <property name="seller_no" column="SELLER_NO" />
         <property name="cust_no" column="CUST_NO" />
         <property name="address" column="ADDRESS" />
-        <property name="ord_date" column="ORD_DATE" />
+        <property name="ord_date" column="ORD_DATE"/>
         <property name="total" column="TOTAL" />
         <property name="score" column="SCORE" />
         <property name="status" column="STATUS" />

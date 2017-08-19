@@ -27,17 +27,84 @@ public class ServDAO implements ServDAO_Interface {
 			e.printStackTrace();
 		}
 	}
-
-	private static final String INSERT_STMT = "INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0)";
-
-	private static final String GET_ALL_STMT = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times FROM service order by serv_no";
-	private static final String GET_ONE_STMT = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times  FROM service where serv_no = ?";
-	private static final String DELETE = "DELETE FROM service where serv_no = ?";
-	private static final String UPDATE = "UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
-	private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
-	private static final String GET_COM_STMT = "SELECT * FROM SERVICE WHERE COM_NO = ?";
-	private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
-
+	
+		private static final String INSERT_STMT = 
+			"INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times,status) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0,?)";
+		private static final String GET_ALL_STMT = 
+			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service order  by score desc";
+		private static final String GET_ONE_STMT = 
+			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status  FROM service where serv_no = ?";
+		private static final String DELETE = 
+			"DELETE FROM service where serv_no = ?";
+		private static final String UPDATE = 
+			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?,status=?  where serv_no = ?";
+		private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
+		private static final String GET_COM_STMT = 
+				"SELECT * FROM SERVICE WHERE COM_NO = ?";
+		private static final String GET_search_STMT = 
+				"SELECT * FROM service where title like ?";
+		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
+		private static final String GET_COM_SERVTYPE = 
+				"SELECT DISTINCT stype_no FROM SERVICE WHERE COM_NO = ?";
+		@Override
+		public List<ServVO> findBysh(String sh) {
+			// TODO Auto-generated method stub
+			List<ServVO> list = new ArrayList<ServVO>();
+			ServVO servVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_search_STMT);
+				pstmt.setString(1, sh);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					// empVO 也稱為 Domain objects
+					servVO = new ServVO();
+					servVO.setServ_no(rs.getString("serv_no"));
+					servVO.setStype_no(rs.getString("stype_no"));
+					servVO.setCom_no(rs.getString("com_no"));
+					servVO.setDeposit(rs.getInt("deposit"));
+					servVO.setPrice(rs.getInt("price"));
+					servVO.setTitle(rs.getString("title"));
+					servVO.setContent(rs.getString("content"));
+					servVO.setTimes(rs.getInt("times"));
+					servVO.setScore(rs.getDouble("score"));
+					servVO.setStatus(rs.getString("status"));
+					list.add(servVO); // Store the row in the list
+				} 
+			}catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+		
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -52,6 +119,7 @@ public class ServDAO implements ServDAO_Interface {
 			pstmt.setInt(4, servVO.getPrice());
 			pstmt.setString(5, servVO.getTitle());
 			pstmt.setString(6, servVO.getContent());
+			pstmt.setString(7,servVO.getStatus());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -93,6 +161,7 @@ public class ServDAO implements ServDAO_Interface {
 			pstmt.setString(5, servVO.getTitle());
 			pstmt.setString(6, servVO.getContent());
 			pstmt.setString(7, servVO.getServ_no());
+			pstmt.setString(8, servVO.getStatus());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -184,6 +253,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 			}
 
 		} catch (SQLException se) {
@@ -242,6 +312,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 				list.add(servVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
@@ -343,6 +414,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 				list.add(servVO); // Store the row in the list
 			} 
 		}catch (SQLException se) {
@@ -458,6 +530,49 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setScore(rs.getDouble("avg(score)"));
 				servVO.setPrice(rs.getInt("avg(price)"));
 				list.add(servVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<String> getComStype(String com_no) {
+		List<String> list = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_COM_SERVTYPE);
+			pstmt.setString(1, com_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				list.add(rs.getString("stype_no"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

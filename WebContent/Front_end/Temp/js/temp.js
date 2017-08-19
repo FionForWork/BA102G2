@@ -47,25 +47,25 @@ $(document).ready(function(){
         
     });  
     
-    
-    // lightbox img
-    $(".aa").each(function(){
-    	$(this).click(function(){
-    		$("#lightboxImgModal").css("display","block");
-    		$("#lightboxImg").attr("src",this.src);
-    		
-    	});
-    });
-    // close lightbox img
-    $(".closeImg").each(function(){
-    	$(this).click(function(){
-        	$("#lightboxImgModal").css("display","none");
-        	
-        });
-    });
-    $("#lightboxImgModal").on("click",function(){
-    	$(this).css("display","none");
-    });
+//    
+//    // lightbox img
+//    $(".aa").each(function(){
+//    	$(this).click(function(){
+//    		$("#lightboxImgModal").css("display","block");
+//    		$("#lightboxImg").attr("src",this.src);
+//    		
+//    	});
+//    });
+//    // close lightbox img
+//    $(".closeImg").each(function(){
+//    	$(this).click(function(){
+//        	$("#lightboxImgModal").css("display","none");
+//        	
+//        });
+//    });
+//    $("#lightboxImgModal").on("click",function(){
+//    	$(this).css("display","none");
+//    });
 
 
 });
@@ -80,6 +80,21 @@ function preview_images() {
     	 }
       
      }
+}
+function openLightBox(img){
+	// lightbox img
+    var src = $(img).attr("src");
+    $("#lightboxImgModal").css("display","block");
+    $("#lightboxImg").attr("src",src);
+    $("#lightboxImgModal").on("click",function(){
+    	$(this).css("display","none");
+    });
+}
+function closeLightBox(){
+	// close lightbox img
+    
+    $("#lightboxImgModal").css("display","none");
+    
 }
 
 

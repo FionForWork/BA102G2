@@ -6,39 +6,46 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.channels.ScatteringByteChannel;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.jni.Local;
+import org.apache.commons.collections.map.HashedMap;
+import org.hibernate.engine.SessionImplementor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-import com.mysql.jdbc.Buffer;
+import com.com.model.ComService;
+import com.com.model.ComVO;
 import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
 import com.placeview.model.PlaceViewService;
 import com.placeview.model.PlaceViewVO;
-import com.sun.org.apache.xml.internal.security.utils.UnsyncBufferedOutputStream;
-import com.sun.xml.internal.bind.Locatable;
+import com.sun.javafx.collections.MappingChange.Map;
+import com.sun.javafx.geom.PickRay;
+
+import sun.nio.cs.ext.MacArabic;
+import sun.tools.jar.resources.jar;
 
 @WebServlet("/place/PlaceServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 3 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -47,40 +54,71 @@ public class PlaceServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if ("AJAX".equals(action)) {
+        if ("MAP_CHANGE".equals(action)) {
             String south = request.getParameter("south");
             String west = request.getParameter("west");
             String north = request.getParameter("north");
             String east = request.getParameter("east");
 
             PlaceService placeService = new PlaceService();
-            PlaceViewService placeViewService = new PlaceViewService();
             List<PlaceVO> placeList = placeService.getRange(south, west, north, east);
-            List<String> viewnoList = new ArrayList<String>();
-            if (placeList != null) {
-                for (int i = 0; i < placeList.size(); i++) {
-                    List<String> viewnoListOrigin = placeViewService.getAllByFk(placeList.get(i).getPla_no());
-                    viewnoList.add(viewnoListOrigin.get(0));
+            JSONArray placeArray=new JSONArray();
+            for (PlaceVO placeVO : placeList) {
+                Set<PlaceViewVO> placeViewSet = placeVO.getPlaceViewSet();
+                if(placeViewSet.size()!=0){
+                    Iterator<PlaceViewVO> iterator = placeViewSet.iterator();
+                    PlaceViewVO placeViewVO = (PlaceViewVO) iterator.next();
+                    HashMap<String, String> map=new HashMap<String, String>();
+                    map.put("pla_no", placeVO.getPla_no());
+                    map.put("name", placeVO.getName());
+                    map.put("lat", placeVO.getLat());
+                    map.put("lng", placeVO.getLng());
+                    map.put("view_no", placeViewVO.getView_no());
+                    placeArray.put(map);
                 }
             }
-            Gson gson = new Gson();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.add("placeList", gson.toJsonTree(placeList));
-            jsonObject.add("viewnoList", gson.toJsonTree(viewnoList));
+            ComService comService=new ComService();
+            List<ComVO> comList=comService.getLocation(west, east, south, north);
+            JSONArray comArray=new JSONArray();
+            for (ComVO comVO : comList) {
+                HashMap<String, String> map=new HashMap<String, String>();
+                map.put("com_no", comVO.getCom_no());
+                map.put("name", comVO.getName());
+                map.put("lat", comVO.getLat());
+                map.put("lng", comVO.getLon());
+                map.put("desc", comVO.getCom_desc());
+                map.put("phone", comVO.getPhone());
+                map.put("loc", comVO.getLoc());
+                comArray.put(map);
+            }
             response.setContentType("text/html;charset=utf-8");
+            JSONObject jsonObject=new JSONObject();
+            try {
+                jsonObject.put("placeArray", placeArray);
+                jsonObject.put("comArray", comArray);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
             PrintWriter printWriter = response.getWriter();
-            printWriter.println(gson.toJson(jsonObject));
+            printWriter.print(jsonObject);
             printWriter.close();
         }
-        else if ("CHANGE_AJAX".equals(action)) {
+        else if ("MANAGEMENT_CHANGE".equals(action)) {
             int nowPage = Integer.valueOf(request.getParameter("nowPage"));
             int itemsCount = Integer.valueOf(request.getParameter("itemsCount"));
             PlaceService placeService = new PlaceService();
             List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
-            Gson gson = new Gson();
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter = response.getWriter();
-            printWriter.println(gson.toJson(placeList));
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("placeList", placeList);
+                printWriter.println(jsonObject);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
             printWriter.close();
         }
         else if ("ADD_PLACE".equals(action)) {
@@ -89,20 +127,22 @@ public class PlaceServlet extends HttpServlet {
             String name = new String(request.getParameter("addName").getBytes("ISO-8859-1"), "utf-8");
             String addr = new String(request.getParameter("addAddr").getBytes("ISO-8859-1"), "utf-8");
             String desc = new String(request.getParameter("addDesc").getBytes("ISO-8859-1"), "utf-8");
+            PlaceService placeService = new PlaceService();
+            PlaceVO placeVO = new PlaceVO();
             Collection<Part> parts = request.getParts();
-            List<PlaceViewVO> viewList = new ArrayList<PlaceViewVO>();
+            Set<PlaceViewVO> viewSet = new LinkedHashSet<PlaceViewVO>();
             for (Part part : parts) {
                 if (part.getContentType() != null) {
                     if (part.getName().equals("addImg")) {
                         InputStream inputStream = part.getInputStream();
                         PlaceViewVO placeViewVO = new PlaceViewVO();
+                        placeViewVO.setPlaceVO(placeVO);
                         placeViewVO.setImg(toByteArray(inputStream));
-                        viewList.add(placeViewVO);
+                        viewSet.add(placeViewVO);
                     }
                 }
             }
-            PlaceVO placeVO = new PlaceVO();
-            PlaceService placeService = new PlaceService();
+            placeVO.setPlaceViewSet(viewSet);
             placeVO.setName(name);
             placeVO.setAddr(addr);
             placeVO.setPla_desc(desc);
@@ -131,40 +171,43 @@ public class PlaceServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            placeService.addPlace(placeVO, viewList);
+            placeService.insertPlace(placeVO);
             request.getRequestDispatcher("/Back_end/place/placeManagement.jsp").forward(request, response);
         }
         else if ("DELETE".equals(action)) {
             request.setCharacterEncoding("utf-8");
-            response.setCharacterEncoding("text/html; charset=utf-8");
+            response.setContentType("text/html;charset=utf-8");
             String pla_no = request.getParameter("pla_no");
             PlaceService placeService = new PlaceService();
+            System.out.println(pla_no);
             placeService.deletePlace(pla_no);
-            request.getRequestDispatcher("/Back_end/place/placeManagement.jsp").forward(request, response);
+            PrintWriter printWriter=response.getWriter();
+            printWriter.print("ok");
+            printWriter.close();
         }
         else if ("UPDATE_PLACE".equals(action)) {
             request.setCharacterEncoding("utf-8");
             response.setCharacterEncoding("text/html; charset=utf-8");
             String pla_no = request.getParameter("pla_no");
+            PlaceService placeService=new PlaceService();
+            PlaceVO placeVO=placeService.getOnePlace(pla_no);
             Collection<Part> parts = null;
-            PlaceViewService placeViewService = new PlaceViewService();
+            Set<PlaceViewVO>placeViewSet=placeVO.getPlaceViewSet();
             if (request.getParts() != null) {
                 parts = request.getParts();
                 for (Part part : parts) {
                     if (part.getContentType() != null) {
-                        if (part.getName().equals("updateImg")&&part.getSize()!=0) {
+                        if (part.getName().equals("updateImg") && part.getSize() != 0) {
                             InputStream inputStream = part.getInputStream();
                             PlaceViewVO placeViewVO = new PlaceViewVO();
-                            placeViewVO.setPla_no(pla_no);
+                            placeViewVO.setPlaceVO(placeVO);
                             placeViewVO.setImg(toByteArray(inputStream));
-                            placeViewService.insert(placeViewVO);
+                            placeViewSet.add(placeViewVO);
                         }
                     }
                 }
             }
-
-            PlaceService placeService = new PlaceService();
-            PlaceVO placeVO = placeService.getOnePlace(pla_no);
+            placeVO.setPlaceViewSet(placeViewSet);
             if (!request.getParameter("updateName").equals("")) {
                 String name = new String(request.getParameter("updateName").getBytes("ISO-8859-1"), "utf-8");
                 placeVO.setName(name);
@@ -189,6 +232,7 @@ public class PlaceServlet extends HttpServlet {
                     JSONArray jsonArray = jsonObject.getJSONArray("results");
                     String lng = jsonArray.getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lng").toString();
                     String lat = jsonArray.getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lat").toString();
+                    placeVO.setAddr(addr);
                     placeVO.setLat(lat);
                     placeVO.setLng(lng);
 
@@ -205,21 +249,28 @@ public class PlaceServlet extends HttpServlet {
             placeService.updatePlace(placeVO);
             request.getRequestDispatcher("/Back_end/place/placeUpdate.jsp?pla_no=" + pla_no).forward(request, response);
         }
+        else if("DELETE_PLACEVIEW".equals(action)){
+            PlaceViewService placeViewService=new PlaceViewService();
+            placeViewService.deleteByFK(request.getParameter("pla_no"));
+            PrintWriter printWriter=response.getWriter();
+            printWriter.println("OK");
+            printWriter.close();
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
-    private byte[] toByteArray(InputStream is) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private byte[] toByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         int length = 0;
         byte[] bytes = new byte[1024];
-        while ((length = is.read(bytes)) != -1) {
-            baos.write(bytes, 0, length);
+        while ((length = inputStream.read(bytes)) != -1) {
+            byteArrayOutputStream.write(bytes, 0, length);
         }
-        baos.close();
-        return baos.toByteArray();
+        byteArrayOutputStream.close();
+        return byteArrayOutputStream.toByteArray();
     }
 
 }

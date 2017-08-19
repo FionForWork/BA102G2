@@ -15,7 +15,9 @@ public interface ServDAO_Interface {
     public List<ServVO> getAll();
     public List<ServVO> getAll(Map<String, String[]> map);
     public List<String> findByStype_no(String stype_no);
+    public List<String> getComStype(String com_no);
     public List<ServVO> getCom(String com_no);
     public List<ServVO> getAllAvg();
 	
+    public List<ServVO> findBysh(String sh);
 }

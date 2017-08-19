@@ -35,7 +35,7 @@ $(document).ready(function(){
     });   
     
     $("#inputFile").fileinput({
-        maxFileCount: 100,
+        maxFileCount: 50,
         allowedFileTypes: ["image", "video"],
         language: 'zh-TW', //设置语言
         showUpload: false,
@@ -43,7 +43,7 @@ $(document).ready(function(){
        
         
     });  
-    // lightbox img
+   /* // lightbox img
     $(".aa").each(function(){
     	$(this).click(function(){
     		$("#lightboxImgModal").css("display","block");
@@ -60,7 +60,7 @@ $(document).ready(function(){
     });
     $("#lightboxImgModal").on("click",function(){
     	$(this).css("display","none");
-    });
+    });*/
 });
 function preview_images() {
 	
@@ -73,5 +73,21 @@ function preview_images() {
     	 }
       
      }
+}
+
+function openLightBox(img){
+	// lightbox img
+    var src = $(img).attr("src");
+    $("#lightboxImgModal").css("display","block");
+    $("#lightboxImg").attr("src",src);
+    $("#lightboxImgModal").on("click",function(){
+    	$(this).css("display","none");
+    });
+}
+function closeLightBox(){
+	// close lightbox img
+    
+    $("#lightboxImgModal").css("display","none");
+    
 }
 

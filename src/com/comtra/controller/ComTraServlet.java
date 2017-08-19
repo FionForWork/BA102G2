@@ -34,11 +34,8 @@ public class ComTraServlet extends HttpServlet {
 			ComTraVO comtra = comtraSvc.getComTraByComNoAndMemNo(com_no, mem_no);
 			String comtra_no = comtra.getComtra_no();
 			try {
-				
 				comtraSvc.deleteComTra(comtra_no);
 				System.out.println("success");
-				
-
 			} catch (Exception e) {
 				System.out.println("error");
 			}
@@ -49,21 +46,14 @@ public class ComTraServlet extends HttpServlet {
 		/********* 刪除我的最愛 (會員專區)*********/
 		if ("delete_ComTra".equals(action)) {
 			String comtra_no = request.getParameter("comtra_no");
-			String nowPage = request.getParameter("nowPage");
-			String requestURL = request.getParameter("requestURL");
 			try {
-				
 				System.out.println("comtra_no   " + comtra_no);
 				comtraSvc.deleteComTra(comtra_no);
-				String url = requestURL+"?nowPage=" + nowPage;
-				request.getRequestDispatcher(url).forward(request, response);
+//				String url = requestURL+"?nowPage=" + nowPage;
+//				request.getRequestDispatcher(url).forward(request, response);
 				System.out.println("success");
-				
-
 			} catch (Exception e) {
 				System.out.println("error");
-				String url = requestURL;
-				request.getRequestDispatcher(url).forward(request, response);
 			}
 		}
 

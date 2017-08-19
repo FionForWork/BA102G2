@@ -25,7 +25,7 @@
     String pro_no;
     int mine = 0;
     if (request.getParameter("pro_no") == null) {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("mallIndexAJAX.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
         return;
     }
@@ -55,34 +55,35 @@
     
     session.setAttribute("carTotal", new Integer(carTotal));
 %>
-<%@include file="pages/ProductHeader.file"%>
+<%@include file="pages/indexHeader.file"%>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
+<div class="text-center" style="height:50px;margin-top:50px"></div>
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-xs-2 col-md-2">
             <ul class="list-group">
-                <a class="list-group-item menua"  href="${preLocation}/mallIndexAJAX.jsp?nowPage=1&&now_Pro_Type=0"><h4>全部類型</h4></a>
+                <a class="list-group-item menua"  href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=0"><h4>全部類型</h4></a>
                 <c:forEach var="typeVO" items="${typeList}" varStatus="s">
                      <c:choose>
                        <c:when test="${productVO.protype_no==s.count}">
-                           <a class="list-group-item menua active" href="${preLocation}/mallIndexAJAX.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
+                           <a class="list-group-item menua active" href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
                        </c:when>
                        <c:otherwise>
-                           <a class="list-group-item menua" href="${preLocation}/mallIndexAJAX.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
+                           <a class="list-group-item menua" href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
                        </c:otherwise>
                    </c:choose>
                 </c:forEach>
             </ul>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-xs-10 col-md-10">
             <div class="row">
                 <div class="col-md-10">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-xs-5 col-md-5">
                             <img style="width:300px;"class="img-responsive" src="<%=request.getContextPath() %>/image/ShowImage?pro_no=${productVO.pro_no}">
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-xs-7 col-md-7">
                             <div class="row">
                                 <dl>
                                     <dt>商品名稱</dt>
@@ -115,9 +116,10 @@
                                             <label>數量</label>
                                             <input id="productCount" type="number" required="required" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
                                             <a href="javascript:add(${productVO.pro_no})" class="btn btn-primary">加入購物車</a>
+                                            <a href="#" class="btn btn-danger">檢舉</a>
                                             </c:if>
                                             <div id="protracking">
-                                                <c:choose>
+                                            <c:choose>
                                                 <c:when test="${tracing}">
                                                         <a href="javascript:protracking('DELETE_AJAX')" class="btn btn-danger">取消追蹤</a>
                                                 </c:when>
@@ -198,4 +200,4 @@
             });
     }
 </script>
-<%@include file="pages/mallIndexFooter.file"%>
+<%@include file="pages/indexFooter.file"%>

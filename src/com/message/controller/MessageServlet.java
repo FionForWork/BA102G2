@@ -58,11 +58,10 @@ public class MessageServlet extends HttpServlet {
 	}
 
 	@OnOpen
-	public void onOpen(Session userSession)
-			throws IOException {
+	public void onOpen(Session userSession) throws IOException {
 		allSessions.add(userSession);
-		// System.out.println(userSession.getId() + ": 已連線");
-//		System.out.println(no + ": 已連線");
+		System.out.println(userSession.getId() + ": 已連線");
+		// System.out.println(no + ": 已連線");
 		// userSession.getBasicRemote().sendText("WebSocket 連線成功");
 	}
 
@@ -71,10 +70,7 @@ public class MessageServlet extends HttpServlet {
 		JSONObject j = new JSONObject(message);
 		String com_no = (String) j.get("comNo");
 		String mem_no = (String) j.get("memNo");
-		
-		
-		
-		
+
 		MessageService messageSvc = new MessageService();
 		MessageVO messageVO = new MessageVO();
 		if (message.length() != 0) {

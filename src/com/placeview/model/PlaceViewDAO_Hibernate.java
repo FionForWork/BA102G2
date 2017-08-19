@@ -19,8 +19,9 @@ public class PlaceViewDAO_Hibernate implements PlaceViewDAO_Interface{
     public void insert(PlaceViewVO placeViewVO) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
+            session.beginTransaction();
             session.saveOrUpdate(placeViewVO);
+            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();
@@ -35,7 +36,16 @@ public class PlaceViewDAO_Hibernate implements PlaceViewDAO_Interface{
 
     @Override
     public void delete(String view_no) {
-     // TODO Auto-generated method stub
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            PlaceViewVO placeViewVO=(PlaceViewVO)session.get(PlaceViewVO.class, view_no);
+            session.delete(placeViewVO);
+            session.getTransaction().commit();
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -47,9 +57,10 @@ public class PlaceViewDAO_Hibernate implements PlaceViewDAO_Interface{
     public void deleteByFK(String pla_no) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
-            Query query=session.createQuery("from PlaceViewVO where PLA_NO = :pla_no");
+            session.beginTransaction();
+            Query query=session.createQuery("delete from PlaceViewVO where PLA_NO = :pla_no");
             query.setParameter("pla_no", pla_no);
+            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             throw e;

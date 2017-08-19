@@ -1,11 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.com.model.*"%>
+<%@ page import="java.util.*"%>
 <%
 ComVO comVO = (ComVO) request.getAttribute("comVO");
+
+Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="/Front_end/mem/page/register_header.file"%>
+
+<link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="<%=request.getContextPath()%>/Front_end/Album/js/piexif.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Album/js/purify.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Album/js/fileinput.min.js"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.js"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
+
+ <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+
+
+
 <title>廠商註冊</title>
 
 	
@@ -17,11 +36,7 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li>${message}</li>
-			</c:forEach>
-		</ul>
+		
 		</font>
 	</c:if>
 	
@@ -30,8 +45,8 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 
 
 	<div class="form-group">
-				<span>廠商帳號 :</span>
-				<input type="email" name="id" class="form-control"
+				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到</span>
+				<input type="email" placeholder="請填電子郵件" name="id" class="form-control"
 			value="<%= (comVO==null)? "lf21@gmail.com" : comVO.getId()%>" />
 	</div>
 	<div class="form-group">
@@ -43,30 +58,13 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
           <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (comVO==null)? "asdqqw" : comVO.getPwd()%>">
     </div>
 	<div class="form-group">
-           <span>廠商名稱:</span>
+           <span>廠商名稱:<font color='red'>${errorMsgs.get("name")}</font></span>    
            <input type="text" class="form-control"  name="name" value="<%= (comVO==null)? "美美婚紗" : comVO.getName()%> ">
      </div>
 	<br>
 	<div class="form-group">
-		<span>廠商地址: </span>
-		<input type="text" class="form-control"  name="loc" value="<%= (comVO==null)? "(32001)桃園市中壢區中大路300號 " : comVO.getLoc()%> ">
-		</div>
-	<br>
-	<div class="form-group">
-			<span>地址經度:</span>
-	<input type="text" name="lon" class="form-control"   value="<%= (comVO==null)? "121.213231" : comVO.getLon()%>">
-		
-	</div>
-	
-	<div class="form-group">
-		<span>地址緯度 :</span>
-		<input type="TEXT" class="form-control"name="lat" 
-			value="<%= (comVO==null)? "23.123123" : comVO.getLat()%>" />
-	</div>
-	<div class="form-group">
-		<span>廠商介紹 :</span><br>
-		<input type="TEXT" name="com_desc"  class="form-control"
-			value="<%= (comVO==null)? "好廠商" : comVO.getCom_desc()%>" />
+		<span>廠商地址:<font color='red'>${errorMsgs.get("loc")}</font></span>
+		<input type="TEXT" name="loc" class="form-control" value="<%= (comVO==null)? "(32001)桃園市中壢區中大路300號" : comVO.getLoc()%>" />
 	</div>
 	
 	<div class="form-group">
@@ -76,23 +74,29 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 	</div>
 	
 	<div class="form-group">
-		<span>廠商帳戶:</span>
+		<span>廠商帳戶:<font color='red'>${errorMsgs.get("account")}</font></span>
 		<input type="TEXT" name="account"  class="form-control"
 			value="<%= (comVO==null)? "222-222-222222" : comVO.getAccount()%>" />
 	</div>
 	
 	
-	<div class="form-group">
-		<span>LOGO:</span>
+	<div >
+		<span>LOGO:<font color='red'>${errorMsgs.get("logo")}</font><br></span>
 	
-		<input type="file" name="logo" class="form-control
-			value="<%= (comVO==null)? "" : comVO.getLogo()%>" />
+			<label class="control-label">選擇圖片</label>
+			<input id="input-1" type="file" name="logo" class="file">
+	</div>
+	<div class="form-group">
+		<span>廠商介紹 :<font color='red'>${errorMsgs.get("com_desc")}</font></span><br>
+		
+		<textarea name=com_desc  class="form-control" rows=8 >好廠商</textarea>
+		
 	</div>
 	
-
+<center><br><div id="recaptcha_box">請驗證</div>
 		<input type="hidden" name=com_no" value="${comVO.com_no}">
 		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
+		<input type="submit" class="btn btn-info " id="submit" style="display:none" value="送出新增"></center>
 	</FORM>
 	</div>
 	</div>
@@ -106,4 +110,17 @@ ComVO comVO = (ComVO) request.getAttribute("comVO");
 	} 
 	return true; 
 	} 
+	
+	
+	$("#input-1").fileinput({
+	        maxFileCount: 1,
+	        allowedFileTypes: ["image"],
+	        language: 'zh-TW', //设置语言
+	        dropZoneEnabled: false,//是否显示拖拽区域
+	        showUpload: false,
+	        theme: "fa",
+	        
+	    }); 
+
+
 </script> 

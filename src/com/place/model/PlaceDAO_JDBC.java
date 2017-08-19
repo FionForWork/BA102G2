@@ -20,9 +20,9 @@ import com.placeview.model.PlaceViewVO;
 
 public class PlaceDAO_JDBC implements PlaceDAO_Interface {
     private static final String INSERT        = "insert into PLACE(PLA_NO, NAME, LNG,LAT,ADDR,PLA_DESC)" + "values(PLA_NO_SEQ.NEXTVAL, ?, ?, ? , ?,?)";
-    private static final String DELETE        = "delete from PLACE where PLA_NO = ?";
+    private static final String DELETE_BY_PK        = "delete from PLACE where PLA_NO = ?";
     private static final String UPDATE        = "update PLACE set NAME = ? ,LNG = ?,LAT = ?,ADDR = ? ,PLA_DESC = ? where PLA_NO = ?";
-    private static final String FIND_BY_PK    = "select * from PLACE where PLA_NO = ?";
+    private static final String GET_ONE_BY_PK    = "select * from PLACE where PLA_NO = ?";
     private static final String GET_ALL_COUNT = "select count(rownum) from PLACE ";
     private static final String GET_PAGE      = "select * from (select rownum bRn, b.*from (select rownum aRn, a.* from PLACE a order by a.PLA_NO) b) where bRn between ? and ?";
     private static final String GET_RANGE     = "select * from place where lat between ? and ? and lng between ? and ?";
@@ -71,10 +71,10 @@ public class PlaceDAO_JDBC implements PlaceDAO_Interface {
             resultSet.next();
             String pla_no = resultSet.getString(1);
             PlaceViewService placeViewService = new PlaceViewService();
-            for (PlaceViewVO view : viewList) {
-                view.setPla_no(pla_no);
-                placeViewService.insert(view, connection);
-            }
+//            for (PlaceViewVO view : viewList) {
+//                view.setPla_no(pla_no);
+//                placeViewService.insert(view, connection);
+//            }
             connection.commit();
         }
         catch (Exception e) {
@@ -105,7 +105,7 @@ public class PlaceDAO_JDBC implements PlaceDAO_Interface {
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(DELETE);
+            preparedStatement = connection.prepareStatement(DELETE_BY_PK);
             preparedStatement.setString(1, pla_no);
             PlaceViewDAO placeViewDAO = new PlaceViewDAO();
             preparedStatement.execute();
@@ -169,7 +169,7 @@ public class PlaceDAO_JDBC implements PlaceDAO_Interface {
     public PlaceVO getOneByPK(String pla_no) {
         try {
             connection = dataSource.getConnection();
-            preparedStatement = connection.prepareStatement(FIND_BY_PK);
+            preparedStatement = connection.prepareStatement(GET_ONE_BY_PK);
             preparedStatement.setString(1, pla_no);
             resultSet = preparedStatement.executeQuery();
             PlaceVO placeVO = new PlaceVO();

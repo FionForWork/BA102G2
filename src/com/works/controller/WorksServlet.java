@@ -50,8 +50,8 @@ public class WorksServlet extends HttpServlet {
 			String com_no = request.getParameter("com_no");
 			System.out.println("works_no=========" + works_no);
 			worksSvc.deleteWorks(works_no);
-			String location = requestURL + "?com_no=" + com_no;
-			request.getRequestDispatcher(location).forward(request, response);
+//			String location = requestURL + "?com_no=" + com_no;
+//			request.getRequestDispatcher(location).forward(request, response);
 			return;
 		}
 

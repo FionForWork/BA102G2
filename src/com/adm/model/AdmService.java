@@ -2,6 +2,8 @@ package com.adm.model;
 
 import java.util.List;
 
+
+
 public class AdmService {
 
 	private AdmDAO_Interface dao;
@@ -9,7 +11,13 @@ public class AdmService {
 	public AdmService(){
 		dao = new AdmDAO();
 	}
-	
+	public  AdmVO getOneAdmById(String id){
+		return dao.findById(id);
+	}
+	public List<AdmVO> loginid(){
+		
+		return dao.loginid();
+	}
 	public AdmVO addAdm(String id,String pwd,String name,String job,String status){
 		AdmVO admVO = new AdmVO();
 		admVO.setId(id);

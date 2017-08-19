@@ -12,20 +12,26 @@
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-//  MemVO memVO=(MemVO)session.getAttribute("memVO");
-    MemService memService=new MemService();
-	MemVO memVO =memService.getOneMem("1010");
+	//  MemVO memVO=(MemVO)session.getAttribute("memVO");
+	MemService memService = new MemService();
+	MemVO memVO = memService.getOneMem("1010");
 	ProductService productService = new ProductService();
-	List<ProductVO> productList = productService.getAllBySeller(memVO.getMem_no());
+	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
+	int itemsCount = 8;
+	int allCount = productService.getAllCountBySeller(memVO.getMem_no());
+	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+	List<ProductVO> productList = productService.getPageBySeller(nowPage, itemsCount, memVO.getMem_no());
 	Product_typeService product_typeService = new Product_typeService();
 	List<Product_typeVO> typeList = product_typeService.getAll();
 	pageContext.setAttribute("typeList", typeList);
 
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 	pageContext.setAttribute("preLocation", preLocation);
+	pageContext.setAttribute("totalPages", totalPages);
+	pageContext.setAttribute("nowPage", nowPage);
 	session.setAttribute("productList", productList);
 %>
-<%@include file="pages/mallIndexHeader.file"%>
+<%@include file="pages/indexHeader.file"%>
 <style>
 .addImg, .updateImg {
 	width: 200px;
@@ -45,11 +51,11 @@ img {
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div id="content" class="row">
                 <%@include file="pages/mallAreaSidebar.file"%>
-                <div class="col-md-1"></div>
-                <div class="col-md-7">
+                <div class="col-xs-1 col-md-1"></div>
+                <div class="col-xs-7 col-md-7">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -62,7 +68,7 @@ img {
                         </thead>
                         <tbody>
                             <c:forEach var="productVO" items="${productList}" varStatus="s">
-                                <tr>
+                                <tr class="animated fadeInLeft" style="animation-duration: ${s.index*0.4}s;">
                                     <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">${productVO.pro_name}</a></td>
                                     <td>${productVO.price}</td>
                                     <c:choose>
@@ -75,53 +81,7 @@ img {
                                     </c:choose>
                                     <td>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#${productVO.pro_no}">商品資料修改</button>
-                                        <div class="modal fade" id="${productVO.pro_no}">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">商品資料修改</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="<%=request.getContextPath()%>/product/ProductServlet" method="post" enctype="multipart/form-data">
-                                                            <table class="table table-hover table-striped">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>商品名稱</td>
-                                                                        <td><input id="updateName${s.index}" name="pro_name" class="form-control " type="text" placeholder="${productVO.pro_name}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>商品描述</td>
-                                                                        <td><textarea id="updateDesc${s.index}" name="pro_desc" class="form-control " style="width: 300px; height: 100px;" placeholder="${productVO.pro_desc}"></textarea></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>價格</td>
-                                                                        <td><input id="updatePrice${s.index}" name="price" class="form-control " type="number" placeholder="${productVO.price}" min="1"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>庫存</td>
-                                                                        <td><input id="updateAmount${s.index}" name="amount" class="form-control " type="number" placeholder="${productVO.amount}" min="1"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>修改圖片(若以拖拉上傳圖片，將自動修改商品資料，請填寫詳細，大小上限為3MB)</td>
-                                                                        <td>
-                                                                            <div id="${s.index}" class="updateImg">
-                                                                                <img class="updatePreview${s.index}">
-                                                                            </div> <input type="file" class="update" id="${s.index}" name="img">
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <input type="hidden" id="updateNo${s.index}" name="pro_no" value="${productVO.pro_no}">
-                                                            <input type="hidden" name="action" value="UPDATE">
-                                                            <input type="submit" class="btn btn-default" value="確認修改">
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <%@include file="pages/productUpdate.file"%>
                                     </td>
                                     <c:choose>
                                         <c:when test="${productVO.status=='0'}">
@@ -133,14 +93,18 @@ img {
                                                 </div></td>
                                         </c:when>
                                         <c:when test="${productVO.status=='2'}">
-                                            <td><div id="status${productVO.pro_no}">
+                                            <td>
+                                                <div id="status${productVO.pro_no}">
                                                     <a class="btn btn-info" href="javascript:onOrOff(${productVO.pro_no})">商品上架</a>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td><div id="status${productVO.pro_no}">
+                                            <td>
+                                                <div id="status${productVO.pro_no}">
                                                     <p>審核未過，3天後刪除資料</p>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                         </c:otherwise>
                                     </c:choose>
                                 </tr>
@@ -148,68 +112,88 @@ img {
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2 col-md-2">
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#NewProduct">申請新商品上架</button>
-                    <div class="modal fade" id="NewProduct">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">申請新商品上架</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="addForm" action="<%=request.getContextPath()%>/product/ProductServlet" method="post" enctype="multipart/form-data">
-                                        <table class="table table-hover table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td>商品名稱</td>
-                                                    <td><input id="addName" name="pro_name" type="text" placeholder="必須輸入商品名稱"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>商品描述</td>
-                                                    <td><textarea id="addDesc" name="pro_desc" class="form-control" style="width: 300px; height: 100px;"></textarea></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>價格</td>
-                                                    <td><input id="addPrice" name="price" type="number" value="1" min="1" placeholder="1"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>庫存</td>
-                                                    <td><input id="addAmount" name="amount" type="number" value="1" min="1" placeholder="1"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>商品種類</td>
-                                                    <td><select id="addType" name="protype_no">
-                                                            <c:forEach var="proType" items="${typeList}">
-                                                                <option value="${proType.protype_no}">${proType.type_name}</option>
-                                                            </c:forEach>
-                                                        </select></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>商品圖片(若拖拉上傳圖片，將自動申請上架，商品資料請填寫詳細，大小上限為3MB)</td>
-                                                    <td>
-                                                        <div id="${s.index}" class="addImg">
-                                                            <img class="addPreview">
-                                                        </div><input type="file" id="add" name="img">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <input type="hidden" name="action" value="ADD">
-                                        <input type="button" class="btn btn-success" onclick="addCheck()" value="確認申請">
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <%@include file="pages/productAdd.file"%>
                 </div>
             </div>
+            <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
+            <div class="text-center ">
+                <nav aria-label="Page navigation ">
+                    <ul class="pagination pagination-lg ">
+                        <c:choose>
+                            <c:when test="${totalPages<=5}">
+                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:when test="${nowPage<5}">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:when>
+                            <c:when test="${totalPages-nowPage<5}">
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </ul>
+                </nav>
+            </div>
         </div>
+        <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
 </div>
 <script>
+    function change(nowPage){
+        $(".pagination").load("/BA102G2/Front_end/mall/productManagement.jsp .pagination",{"nowPage":nowPage});
+        $("#content").load("/BA102G2/Front_end/mall/productManagement.jsp #content",{"nowPage":nowPage});
+        $(window).scrollLeft("0");
+        $(window).scrollTop("0");
+    }
+    
     function addCheck() {
         var pro_name = $("#addName").val();
         if (pro_name == "") {
@@ -235,26 +219,27 @@ img {
         if (!files[0].type.match("image")) {
             var name = files[0].name;
             alert(name + "請上傳圖片!!!!");
+            return;
         }
         else {
             form.append("img", files[0]);
-        }
-        form.append("action", "UPDATE_AJAX");
-        form.append("pro_no", $("#updateNo" + count).val());
-        form.append("pro_name", $("#updateName" + count).val());
-        form.append("pro_desc", $("#updateDesc" + count).val());
-        form.append("price", $("#updatePrice" + count).val());
-        form.append("amount", $("#updateAmount" + count).val());
-        xhr.send(form);
-        xhr.onreadystatechange = function() {
-            if (xhr.responseText == "OK") {
-                alert("已更新資料");
-                var reader = new FileReader();
-                reader.readAsDataURL(files[0]);
-                reader.onload = function(e) {
-                    $(".updatePreview" + count).attr("src", e.target.result);
+            form.append("action", "UPDATE_AJAX");
+            form.append("pro_no", $("#updateNo" + count).val());
+            form.append("pro_name", $("#updateName" + count).val());
+            form.append("pro_desc", $("#updateDesc" + count).val());
+            form.append("price", $("#updatePrice" + count).val());
+            form.append("amount", $("#updateAmount" + count).val());
+            xhr.send(form);
+            xhr.onreadystatechange = function() {
+                if (xhr.responseText == "OK") {
+                    alert("已更新資料");
+                    var reader = new FileReader();
+                    reader.readAsDataURL(files[0]);
+                    reader.onload = function(e) {
+                        $(".updatePreview" + count).attr("src", e.target.result);
+                        }
+                    }
                 }
-            }
         }
     });
 
@@ -344,4 +329,4 @@ img {
         });
     }
 </script>
-<%@include file="pages/mallIndexFooter.file"%>
+<%@include file="pages/indexFooter.file"%>

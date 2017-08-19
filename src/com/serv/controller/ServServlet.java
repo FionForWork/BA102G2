@@ -1,8 +1,10 @@
 package com.serv.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,20 +32,33 @@ public class ServServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new HashMap<String,String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String stype_no = req.getParameter("stype_no").trim();
-				String com_no = req.getParameter("com_no").trim();
-				Integer deposit = new Integer(req.getParameter("deposit").trim());
-				Integer price = new Integer(req.getParameter("price").trim());
-				String title = req.getParameter("title").trim();
-				String content = req.getParameter("content").trim();
 				
+				String com_no = req.getParameter("com_no").trim();
+				
+				Integer deposit = new Integer(req.getParameter("deposit").trim());
+				if (deposit == null || deposit < 1) {
+					errorMsgs.put("deposit","請大於0");
+				}
+				Integer price = new Integer(req.getParameter("price").trim());
+				if (price == null || price <1) {
+					errorMsgs.put("price","請大於0");
+				}
+				String title = req.getParameter("title").trim();
+				if (title == null || (title.trim()).length() == 0) {
+					errorMsgs.put("title","標題請勿空白");
+				}
+				String content = req.getParameter("content").trim();
+				if (content == null || (content.trim()).length() == 0) {
+					errorMsgs.put("content","內容請勿空白");
+				}
+				String status = req.getParameter("status").trim();
 				ServVO servVO = new ServVO();
 				servVO.setStype_no(stype_no);
 				servVO.setCom_no(com_no);
@@ -51,11 +66,18 @@ public class ServServlet extends HttpServlet {
 				servVO.setPrice(price);
 				servVO.setTitle(title);
 				servVO.setContent(content);
-			
-			
+				servVO.setStatus(status);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("servVO",servVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Front_end/serv/addServ.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
 				/***************************2.開始新增資料***************************************/
 				ServService servSvc = new ServService();
-				servVO = servSvc.addServ(stype_no,com_no,deposit,price,title,content);
+				servVO = servSvc.addServ(stype_no,com_no,deposit,price,title,content,status);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/Front_end/serv/listAllServ.jsp";
@@ -63,12 +85,7 @@ public class ServServlet extends HttpServlet {
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/serv/addServ.jsp");
-				failureView.forward(req, res);
-			}
+			
 		
 			
 		}
