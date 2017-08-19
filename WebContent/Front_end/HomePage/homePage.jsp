@@ -7,296 +7,22 @@
     <title>ＨomePage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/homepage.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Sacramento' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <style>
-    /*body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}*/
-    
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+	h1,h2,h3,h4,h5,h6 {
         font-family: "Sacramento", Arial, serif;
         font-style: bold;
         color: #F14195;
     }
-    
-    body,
-    html {
-/*        font-family: "Work Sans", Arial, sans-serif;*/
-        font-family: 'Hind', sans-serif;
-        background-color: #f5f5f5;
-        height: 100%;
-        color: #454B4F;
-        font-size: 14px;
-        /*    color: #F14195;*/
-        line-height: 1.8;
-        vertical-align: middle;
-    }
-    
-    .w3-top {
-        font-family: 'Hind', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        color: #454b4f;
-    }
-    
-    .clearfix{
-        font-family: 'Hind', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-    }
-    
-    .clearfix h4{
-        font-family: 'Hind', sans-serif;
-    }
-    
-    #img1 {
-        z-index: -1
-    }
-    
-    #s1 {
-        z-index: 1;
-        color: #ffffff;
-        background-color: #F596AA;
-    }
-    /*
-    #myNavbar{
-        color: #000000;
-        background-color: #ffffff;
-    }
-*/
-    
-    .w3-button:hover {
-        color: #454B4F!important;
-        background-color: #ffecec!important;
-    }
-    /* Create a Parallax Effect */
-    
-    .bgimg-1,
-    .bgimg-2,
-    .bgimg-3 {
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    /* First image (Logo. Full height) */
-    
-    .bgimg-1 {
-        background-image: url("img/sayyes2.jpg");
-        min-height: 100%;
-    }
-    /* Second image (Portfolio) */
-    
-    .bgimg-2 {
-        background-image: url("img/isaidYes.jpg");
-        min-height: 400px;
-    }
-    /* Third image (Contact) */
-    
-    .bgimg-3 {
-        background-image: url("img/flower.jpg");
-        min-height: 400px;
-    }
-    
-    .w3-wide {
-        letter-spacing: 10px;
-    }
-    
-    .w3-hover-opacity {
-        cursor: pointer;
-    }
-    /* Turn off parallax scrolling for tablets and phones */
-    
-    @media only screen and (max-device-width: 1024px) {
-        .bgimg-1,
-        .bgimg-2,
-        .bgimg-3 {
-            background-attachment: scroll;
-        }
-    }
-    /*show2*/
-    
-    .wrapper {
-        width: 100%;
-        position: relative;
-        background-color: #fff;
-    }
-    
-    .wrapper:after {
-        padding-top: 60%;
-        display: block;
-        content: '';
-    }
-    
-    .wrapper .column {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 20%;
-        float: left;
-        padding: 6px;
-        box-sizing: border-box;
-    }
-    
-    .wrapper .column .inner {
-        width: 100%;
-        position: relative;
-    }
-    
-    .wrapper .column .inner:after {
-        padding-top: 100%;
-        /* ratio 1:1 */
-        display: block;
-        content: '';
-    }
-    /*
-.wrapper .column .inner:before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  -webkit-transition: 300ms ease-in-out;
-  transition: 300ms ease-in-out;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-*/
-    
-    .wrapper .column .inner:hover:before {
-        background-color: rgba(0, 0, 0, 0);
-    }
-    
-    .wrapper .column:nth-child(1) {
-        width: 40%;
-    }
-    
-    .wrapper .column:nth-child(2) {
-        left: 40%;
-    }
-    
-    .wrapper .column:nth-child(3) {
-        left: 40%;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-    
-    .wrapper .column:nth-child(4) {
-        width: 40%;
-        left: 60%;
-        top: 0;
-    }
-    
-    .wrapper .column:nth-child(4) .inner:after {
-        padding-top: 48.7%;
-    }
-    /*
-.wrapper .column:nth-child(8) {
-  left: auto;
-  right: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-*/
-    
-    .wrapper .column:nth-child(5) {
-        width: 40%;
-        top: auto;
-        left: 0;
-        bottom: 0;
-    }
-    
-    .wrapper .column:nth-child(5) .inner:after {
-        padding-top: 48.7%;
-    }
-    
-    .wrapper .column:nth-child(6) {
-        left: 40%;
-        top: auto;
-        bottom: 0;
-        width: 20%;
-    }
-    
-    .wrapper .column:nth-child(7) {
-        left: 60%;
-        top: auto;
-        bottom: 0;
-        width: 40%;
-    }
-    /* BEAUTY */
-    
-    body,
-    html {
-        background-color: #fff;
-        padding: 0;
-    }
-    
-    .wrapper .column .inner {
-        background-size: cover;
-        background-position: center;
-    }
-    
-    .wrapper .column:nth-child(1) .inner {
-        background-image: url('img/wedding5.jpg');
-    }
-    
-    .wrapper .column:nth-child(2) .inner {
-        background-image: url('img/wedding3.jpg');
-    }
-    
-    .wrapper .column:nth-child(3) .inner {
-        background-image: url('img/sweet.jpg');
-    }
-    
-    .wrapper .column:nth-child(4) .inner {
-        background-image: url('img/wedding7.jpg');
-    }
-    
-    .wrapper .column:nth-child(5) .inner {
-        background-image: url('img/wee.jpg');
-    }
-    
-    .wrapper .column:nth-child(6) .inner {
-        background-image: url('img/style.jpg');
-    }
-    
-    .wrapper .column:nth-child(7) .inner {
-        background-image: url('img/forum.jpg');
-    }
-    
-    .servicetopleft{
-        font-family: 'Hind', sans-serif;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: rgba(69, 75, 79, 1);
-        color: aliceblue;
-        padding: 5px;
-    }
-    
-    #footer {
-        background-color: #ffecec;
-    }
-
 </style>
-
 <body>
 
     <!-- Navbar (sit on top) -->
@@ -306,7 +32,7 @@
                 <i class="fa fa-bars"></i>
             </a>
             <a href="#home" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
-            <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> 熱門作品</a>
+            <a href="#company" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> 熱門廠商</a>
             <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> 服務</a>
             <a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-gift"></i> 線上商城</a>
             <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
@@ -405,7 +131,7 @@
 
     <!--ad==========================================================================-->
     <br>
-    <div class="container" style="width:90%">
+    <div id="company" class="container" style="width:90%">
         <div class="row">
             <div class="col-xs-12 col-md-4">
                 <!--婚攝item-->
@@ -731,25 +457,25 @@
                         <div class="col-xs-4 text-center">
                             <h4><b>婚禮服務</b></h4>
                             <ul class="list-unstyled">
-                                <li itemprop="department"><a href="#" itemprop="url">拍婚紗</a></li>
-                                <li itemprop="department"><a href="#" itemprop="url">婚攝婚錄</a></li>
-                                <li itemprop="department"><a href="#" itemprop="url">新秘</a></li>
+                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001" itemprop="url">拍婚紗</a></li>
+                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0002" itemprop="url">婚攝婚錄</a></li>
+                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0003" itemprop="url">新秘</a></li>
                             </ul>
                         </div>
 
                         <div class="col-xs-4 text-center">
                             <h4><b>婚禮周邊</b></h4>
                             <ul class="list-unstyled">
-                                <li itemprop="department"><a href="#" itemprop="url">實景預覽</a></li>
-                                <li itemprop="department"><a href="#" itemprop="url">線上商城</a></li>
+                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" itemprop="url">實景預覽</a></li>
+                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" itemprop="url">線上商城</a></li>
                             </ul>
                         </div>
 
                         <div class="col-xs-4 text-center">
                             <h4><b>新娘專屬</b></h4>
                             <ul class="list-unstyled">
-                                <li class=""><a href="#" itemprop="url">討論版</a></li>
-                                <li class=""><a href="#" target="_blank" itemprop="url">會員專區</a></li>
+                                <li class=""><a href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp" itemprop="url">討論版</a></li>
+                                <li class=""><a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" target="_blank" itemprop="url">會員專區</a></li>
                             </ul>
                         </div>
 
@@ -765,7 +491,6 @@
             <i class="fa fa-snapchat w3-hover-opacity"></i>
             <i class="fa fa-pinterest-p w3-hover-opacity"></i>
             <i class="fa fa-twitter w3-hover-opacity"></i>
-            <i class="fa fa-linkedin w3-hover-opacity"></i>
         </div>
     </footer>
 
