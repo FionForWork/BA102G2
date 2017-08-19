@@ -1,93 +1,158 @@
-﻿<!DOCTYPE html>
-<html lang="zh-TW">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Dashboard</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/bootstrap.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/company.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/custom.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/custom-landing.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/icons.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/landing.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/main.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/plugins.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>
+<meta charset="utf-8">
+<title>She Said Yes!</title>
+<!-- Mobile specific metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- Force IE9 to render in normal mode -->
+<!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+<!-- Import google fonts - Heading first/ text second -->
+<!-- <link rel='stylesheet' type='text/css' <!--[if lt IE 9]> -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery-3.1.1.min.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/bootstrap.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/top.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexisel.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexslider.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/memenu.js" ></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/plugins/sortable.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/fileinput.js" ></script>
-    <script src="<%=request.getContextPath()%>/Front_end/res/bootstrap-fileinput/js/locales/zh-TW.js" ></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-    <meta name="msapplication-TileColor" content="#3399cc" />
+    <link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/icons.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/plugins.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/main.css" rel="stylesheet" />
+    <link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/custom.css" rel="stylesheet" />
+    
+    <link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico" type="image/png">
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/notosanstc.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento.css" rel="stylesheet">
+    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans.css' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/animate.css" rel="stylesheet">
+    <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/index.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/jqueryui/jquery-ui.theme.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/jqueryui/jquery-ui.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Temp/css/temp.css" rel="stylesheet">
+  
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+    
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Temp/js/temp.js" type="text/javascript"></script>
+
+
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+    
+    <script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
+
+<!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+<meta name="msapplication-TileColor" content="#3399cc" />
 </head>
 <body>
+    <!-- Start #header -->
     <div id="header">
         <div class="container-fluid">
             <div class="navbar">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="backIndex.jsp">
-                        <span class="text-logo"> SHE SAID YES!</span>
+                    <a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp">
+                        <span class="text-logo"> She Said Yes!</span>
                     </a>
                 </div>
                 <nav class="top-nav" role="navigation">
                     <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
-                            <ul class="dropdown-menu notification-menu right" role="menu">
-                                <li class="clearfix">
-                                    <i class="ec-chat"></i>
-                                    <a href="#" class="notification-user"> Ric Jones </a>
-                                    <span class="notification-action"> replied to your </span>
-                                    <a href="#" class="notification-link"> comment</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown"><!--${administratorVO.name}--!>管理者</a>
+
+                        <li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
                             <ul class="dropdown-menu right" role="menu">
-                                <li><a href="profile.html"><i class="st-user"></i> Profile</a></li>
-                                <li><a href="file.html"><i class="st-cloud"></i> Files</a></li>
-                                <li><a href="#"><i class="st-settings"></i> Settings</a></li>
-                                <li><a href="login.html"><i class="im-exit"></i> Logout</a></li>
-                            </ul>
-                        </li>
+                                <li><a href="profile.html">
+                                        <i class="st-user"></i>
+                                        Profile
+                                    </a></li>
+                                <li><a href="login.html">
+                                        <i class="im-exit"></i>
+                                        Logout
+                                    </a></li>
+                            </ul></li>
                     </ul>
                 </nav>
             </div>
         </div>
+        <!-- Start .header-inner -->
     </div>
+    <!-- End #header -->
+    <!-- Start #sidebar -->
     <div id="sidebar">
+        <!-- Start .sidebar-inner -->
         <div class="sidebar-inner">
+            <!-- Start #sideNav -->
             <ul id="sideNav" class="nav nav-pills nav-stacked">
-                <li class="top-search">
-                    <form>
-                        <input type="text" name="search" placeholder="Search ...">
-                        <button type="submit"><i class="ec-search s20"></i></button>
-                    </form>
-                </li>
-                <li><a href="#"><i class="en-users"></i>一般會員管理</a></li>
-                <li><a href="#"><i class="en-users"></i>廠商管理</a></li>
-                <li><a href="#"><i class="en-users"></i>管理者設定</a></li>
-                <li><a href="#"><i class="im-table2"></i>廣告刊登管理</a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp""><i class="br-location"></i>景點管理</a></li>
-                <li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
-                <li><a href="#"><i class="im-list2"></i>參數管理</a></li>
-                <li><a href="#"><i class="ec-mail"></i>聯絡我們管理</a></li>
-                <li><a href="#"><i class="im-question"></i>常見問題管理</a></li>
-                <li><a href="#"><i class="br-warning"></i>檢舉管理 </a></li>
+
+                <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp">
+                        <i class="en-users"></i>
+                        一般會員管理
+                    </a></li>
+                <li><a href="#" class='active'>
+                        <i class="en-users"></i>
+                        廠商管理
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp">
+                        <i class="en-users"> </i>
+                        管理者設定
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp">
+                        <i class="im-table2"></i>
+                        廣告刊登管理
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp">
+                        <i class="br-location"></i>
+                        景點管理
+                    </a></li>
+                <li><a href="#">
+                        <i class="im-newspaper"></i>
+                        熱門資訊管理
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp">
+                        <i class="fa-shopping-cart"></i>
+                        商城管理
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp">
+                        <i class="im-list2"></i>
+                        婚禮習俗管理
+                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp">
+                        <i class="im-question"></i>
+                        常見問題管理
+                    </a></li>
+                <li><a href="#">
+                        <i class="br-warning"></i>
+                        檢舉管理
+                    </a></li>
             </ul>
+            <!-- End #sideNav -->
         </div>
+        <!-- End .sidebar-inner -->
     </div>
+    <!-- End #sidebar -->
+
+    <div id="content">
+        <div class="content-wrapper">
+            <br>
+            <br>
+        </div>
+        <div class="outlet">
+            <!-- Start content ===================================================================================================== -->

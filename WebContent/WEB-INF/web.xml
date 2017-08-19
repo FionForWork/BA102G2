@@ -38,6 +38,7 @@
 	<filter-mapping>
 		<filter-name>loginMemFilter</filter-name>
 		<url-pattern>/Front_end/mem/index.jsp</url-pattern>
+		<url-pattern>/Front_end/mall/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
