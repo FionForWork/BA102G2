@@ -34,11 +34,10 @@ ComVO comVO=comService.getOneCom("2001");
 				value="<%=(articleVO == null) ? " " : articleVO.getTitle()%>">
 		</div>
 
-		<jsp:useBean id="art_type_Svc" scope="page"
-			class="com.art_type.model.Art_Type_Service" />
+		<jsp:useBean id="art_type_Svc" scope="page" class="com.art_type.model.Art_Type_Service" />
 		<div class="form-group">
-			<label for="sel1">類型</label> <select class="form-control" id="sel1"
-				name="art_type_no">
+			<label for="sel1">類型</label> 
+			<select class="form-control" id="sel1" name="art_type_no">
 				<c:forEach var="art_typeVO" items="${art_type_Svc.all}">
 					<option value="${art_typeVO.art_type_no }">
 						${art_typeVO.type }</option>

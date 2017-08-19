@@ -62,4 +62,7 @@ public class AdvertisingService {
 	public List<AdvertisingVO> getOneAll(String com_no) {
 		return dao.getOneAll(com_no);
 	}
+	public List<AdvertisingVO> getOneSatus() {
+		return dao.getOneSatus();
+	}
 }

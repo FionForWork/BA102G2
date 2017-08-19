@@ -23,9 +23,9 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
-	<link href="css/advertising.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Front_end/Advertising/css/advertising.css" rel="stylesheet">
 
-    <script src="js/advertising.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
 
     
 
@@ -33,7 +33,7 @@
  <script>
   $(function() {
      $( "#startDay" ).datepicker({
-      defaultDate: "+1w",
+      minDate: 1,
       changeMonth: true,
       numberOfMonths: 1,
       onClose: function( selectedDate ) {

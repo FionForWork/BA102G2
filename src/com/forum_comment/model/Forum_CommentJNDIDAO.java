@@ -28,7 +28,7 @@ public class Forum_CommentJNDIDAO implements Forum_Comment_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO FORUM_COMMENT (FMC_NO,ART_NO,SPEAKER_NO,CONT,FMC_DATE) VALUES (fmc_no_sq.NEXTVAL, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO FORUM_COMMENT (FMC_NO,ART_NO,SPEAKER_NO,CONT,FMC_DATE) VALUES ('6'||lpad(fmc_no_sq.NEXTVAL,3,'0'), ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM FORUM_COMMENT order by FMC_NO";
 	private static final String GET_ONE_STMT = "SELECT * FROM FORUM_COMMENT where FMC_NO = ?";
 	private static final String DELETE = "DELETE FROM FORUM_COMMENT where FMC_NO = ?";

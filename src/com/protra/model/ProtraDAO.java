@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 import com.product.model.ProductVO;
 
-public class ProtraDAO implements ProtraDAO_Interface {
+public class ProTraDAO implements ProtraDAO_Interface {
     private static final String INSERT                = "insert into PROTRA (PROTRA_NO, PRO_NO,MEM_NO)" + "values(PROTRA_SQ.NEXTVAL, ?,?)";
     private static final String DELETE_BY_NO          = "delete from PROTRA where PRO_NO = ?";
     private static final String FIND_BY_PK            = "select * from PROTRA where PROTRA_NO = ?";

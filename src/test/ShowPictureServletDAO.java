@@ -98,7 +98,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				MemVO memVO = memSvc.getOneMem(pk);
 				tempcont = memVO.getPicture();
 				
-				out.write(tempcont);
+//				out.write(tempcont);
 				out.close(); 
 				return;
 				
@@ -110,7 +110,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				
 				logo = comVO.getLogo();
 				
-				out.write(logo);
+//				out.write(logo);
 				out.close(); 
 				return;
 			}

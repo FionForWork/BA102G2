@@ -100,12 +100,10 @@
 							</form>
 						</div>
 						<div class="text-center" style="float: right">
-						<input type="submit" class="btn btn-danger" data-toggle="modal" onclick="action();" data-target="#myModal"
-									value="檢舉">
+						<input type="submit" class="btn btn-danger" data-toggle="modal" onclick="showmodel('article',${article.art_no},${article.poster_no},'/Front_end/Article/Discuss.jsp?art_no='+${article.art_no});" data-target="#myModal" value="檢舉">
 						</div>
 						 <div class="modal fade" id="myModal" role="dialog">
-    						<div class="modal-dialog">
-    						</div>
+    						
     					</div>
 						<c:choose>
 							<c:when test="${(memVO.mem_no)==(article.poster_no)}">
@@ -323,10 +321,15 @@
 
 
 <script type="text/javascript">
-function action(){
+function showmodel(action,rep_ob_no,reproter_no,position){
+	if(action=='article'){
+		$('#myModal').load("<%=request.getContextPath()%>/Front_end/Report/Report.jsp?",{"rep_ob_no":rep_ob_no,"reproter_no":reproter_no,"position":position},
+		function(){$("#myModal").modal('slow');}
+		)}
 	
-	
-}
+};
+
+
 
 </script>
 

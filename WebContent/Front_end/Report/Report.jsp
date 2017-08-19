@@ -20,16 +20,44 @@
     <script src="js/top.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="container">
-  <h2>Modal Example</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="com_Svc" scope="page" class="com.com.model.ComService" />
+<jsp:useBean id="mem_Svc" scope="page" class="com.mem.model.MemService" />
+<jsp:useBean id="rep_type_Svc" scope="page" class="com.report_type.model.Report_type_Service" />
+<%@ page import="com.article.model.*"%>
+<%@page import="com.com.model.ComVO"%>
+<%@page import="com.com.model.ComService"%>
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
+<%
+// rep_ob_no  =  art_no     =  5001
+// reproter_no=  poster_no  =  1003
+Integer reproter_no =new Integer(request.getParameter("reproter_no"));
+String position = request.getParameter("position");
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+String rep_ob_no = request.getParameter("rep_ob_no");
+
+System.out.println(rep_ob_no.charAt(0));
+if((rep_ob_no.charAt(0))=='5'){
+	Article_Service art_Svc=new Article_Service();
+	ArticleVO articleVO = art_Svc.getOneArt(Integer.valueOf(rep_ob_no));
+	pageContext.setAttribute("articleVO", articleVO);
+	System.out.println(rep_ob_no);
+}
+
+session.getAttribute("memVO");
+
+
+  session.getAttribute("comVO");
+
+
+// Integer reproter_no = new Integer(request.getParameter("reproter_no"));
+%>
+ 
+ 
     <div class="modal-dialog">
     
-      <!-- Modal content-->
+      <form METHOD="post" ACTION="<%=request.getContextPath()%>/report/report.do" name="form1">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -37,11 +65,23 @@
         </div>
         <div class="modal-body">
         <label for="inputdefault">檢舉對象</label>
-         <input class="form-control" id="inputdefault" type="text" name="reproted_no">
+         <input class="form-control" id="inputdefault" type="hidden" name="reported_no" value="<%=request.getParameter("reproter_no")%>">
+        <c:choose>
+			<c:when test="${com_Svc.getOneCom(articleVO.poster_no)!=null }">
+				<div class="name">${com_Svc.getOneCom(articleVO.poster_no).name }</div>
+			</c:when>
+			<c:otherwise>
+				<div class="name">${mem_Svc.getOneMem(articleVO.poster_no).name }</div>
+			</c:otherwise>
+		</c:choose>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">標題</label> 
-        <input class="form-control" id="inputdefault" type="text" name="title">
+        <label for="inputdefault">檢舉類型</label> 
+        <select class="form-control" id="sel1" name="rep_type_no">
+	        <c:forEach var="rep_typeVO" items="${rep_type_Svc.all}">
+					<option value="${rep_typeVO.rep_type_no }"> ${rep_typeVO.type }</option>
+			</c:forEach>
+		</select>
         </div>
         <div class="modal-body">
         <label for="inputdefault">內容</label>
@@ -51,12 +91,20 @@
         	<input	type="submit" class="btn btn-info" value="檢舉">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
+        
       </div>
       
+      <input type="hidden" name="action" value="insert">
+      <input type="hidden" name="reporter_no" value="${(comVO.com_no!=null)?comVO.com_no:memVO.mem_no}">
+      <input type="hidden" name="status" value="0">
+      <input type="hidden" name="rep_ob_no" value="<%=request.getParameter("rep_ob_no")%>">
+      <input type="hidden" name="position" value="<%=request.getParameter("position")%>">
+      </form>
+      
     </div>
-  </div>
+ 
   
-</div>
+
 
 </body>
 </html>

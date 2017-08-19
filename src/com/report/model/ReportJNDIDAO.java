@@ -31,7 +31,7 @@ public class ReportJNDIDAO implements Report_interface {
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO REPORT (rep_no,reproter_no,reproted_no,title,content,rep_date,status) VALUES (REP_NO_sq.NEXTVAL, ?, ?, ?, ?,?,?)";
+			"INSERT INTO REPORT (rep_no,rep_ob_no,reporter_no,reported_no,rep_type_no,content,rep_date,status) VALUES (REP_NO_sq.NEXTVAL, ?, ?, ?, ?,?,?,?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM REPORT order by rep_no";
 		private static final String GET_ONE_STMT = 
@@ -39,7 +39,7 @@ public class ReportJNDIDAO implements Report_interface {
 		private static final String DELETE = 
 			"DELETE FROM REPORT where rep_no = ?";
 		private static final String UPDATE = 
-				"UPDATE REPORT set reproter_no=?, reproted_no=?,title=?,content=?,rep_date=?,status=? where REP_NO = ?";
+				"UPDATE REPORT set rep_ob_no=?,reporter_no=?, reported_no=?,rep_type_no=?,content=?,rep_date=?,status=? where REP_NO = ?";
 		
 		
 	@Override
@@ -53,12 +53,13 @@ public class ReportJNDIDAO implements Report_interface {
 
 			
 			
-			pstmt.setInt(1, reportVO.getReproter_no());
-			pstmt.setInt(2, reportVO.getReproted_no());
-			pstmt.setString(3, reportVO.getTitle());
-			pstmt.setString(4, reportVO.getContent());
-			pstmt.setDate(5, reportVO.getRep_date());
-			pstmt.setInt(6, reportVO.getStatus());
+			pstmt.setInt(1, reportVO.getRep_ob_no());
+			pstmt.setInt(2, reportVO.getReporter_no());
+			pstmt.setInt(3, reportVO.getReported_no());
+			pstmt.setInt(4, reportVO.getRep_type_no());
+			pstmt.setString(5, reportVO.getContent());
+			pstmt.setDate(6, reportVO.getRep_date());
+			pstmt.setInt(7, reportVO.getStatus());
 			pstmt.executeUpdate();
 
 			
@@ -94,13 +95,14 @@ public class ReportJNDIDAO implements Report_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			
-			pstmt.setInt(1, reportVO.getReproter_no());
-			pstmt.setInt(2, reportVO.getReproted_no());
-			pstmt.setString(3, reportVO.getTitle());
-			pstmt.setString(4, reportVO.getContent());
-			pstmt.setDate(5, reportVO.getRep_date());
-			pstmt.setInt(6, reportVO.getStatus());
-			pstmt.setInt(7, reportVO.getRep_no());
+			pstmt.setInt(1, reportVO.getRep_ob_no());
+			pstmt.setInt(2, reportVO.getReporter_no());
+			pstmt.setInt(3, reportVO.getReported_no());
+			pstmt.setInt(4, reportVO.getRep_type_no());
+			pstmt.setString(6, reportVO.getContent());
+			pstmt.setDate(7, reportVO.getRep_date());
+			pstmt.setInt(8, reportVO.getStatus());
+			pstmt.setInt(9, reportVO.getRep_no());
 			
 			pstmt.executeUpdate();
 
@@ -184,9 +186,10 @@ public class ReportJNDIDAO implements Report_interface {
 				
 				reportVO = new ReportVO();
 				reportVO.setRep_no(rs.getInt("rep_no"));
-				reportVO.setReproter_no(rs.getInt("reproter_no"));
-				reportVO.setReproted_no(rs.getInt("reproted_no"));
-				reportVO.setTitle(rs.getString("title"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
 				reportVO.setContent(rs.getString("content"));
 				reportVO.setRep_date(rs.getDate("rep_date"));
 				reportVO.setStatus(rs.getInt("status"));
@@ -241,9 +244,10 @@ public class ReportJNDIDAO implements Report_interface {
 			while (rs.next()) {
 				reportVO = new ReportVO();
 				reportVO.setRep_no(rs.getInt("rep_no"));
-				reportVO.setReproter_no(rs.getInt("reproter_no"));
-				reportVO.setReproted_no(rs.getInt("reproted_no"));
-				reportVO.setTitle(rs.getString("title"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
 				reportVO.setContent(rs.getString("content"));
 				reportVO.setRep_date(rs.getDate("rep_date"));
 				reportVO.setStatus(rs.getInt("status"));

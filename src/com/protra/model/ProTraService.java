@@ -10,7 +10,7 @@ public class ProtraService {
     private ProtraDAO_Interface dao;
 
     public ProtraService() {
-        dao = new ProtraDAO();
+        dao = new ProTraDAO();
     }
 
     public void addProtracking_list(String pro_no, String mem_no) {
