@@ -12,6 +12,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -167,7 +169,7 @@ public class PreviewServlet extends HttpServlet {
 			int intcropWidth= 0;
 			int intcropHeight = 0;
 			
-			String imageWidth = request.getParameter("imageWidth");
+			String imageWidth = request.getParameter("imageWidth").trim();
 			String cropCont_no = request.getParameter("cropCont_no");
 			System.out.println("cropCont_no=="+cropCont_no);
 			System.out.println("backgroundImage=="+placeview_no);
@@ -214,12 +216,24 @@ public class PreviewServlet extends HttpServlet {
 						BufferedImage originalimg = img;
 						System.out.println("img----" + img);
 						
-						int resizeWidth = Integer.parseInt(imageWidth);
-						int ratio = originalimg.getWidth() / resizeWidth;
-						int resizeHeight = originalimg.getHeight() / ratio;
-						img = new BufferedImage(resizeWidth,resizeHeight,BufferedImage.TYPE_INT_RGB);
+//						int resizeWidth = Integer.parseInt(imageWidth);
+//						System.out.println("resizeWidth----" + resizeWidth);
+//						double ratio = originalimg.getWidth() / resizeWidth;
+//						System.out.println("ratio----" + ratio);
+//						double resizeHeight = (double)(originalimg.getHeight() / ratio);
+//						System.out.println("resizeHeight----" + resizeHeight);
+						
+						BigDecimal originalWidth = new BigDecimal(originalimg.getWidth());
+						BigDecimal originalHeight = new BigDecimal(originalimg.getHeight());
+						BigDecimal resizeWidth = new BigDecimal(imageWidth);
+						System.out.println("resizeWidth----" + resizeWidth);
+						BigDecimal ratio =  originalWidth.divide(resizeWidth,3,RoundingMode.HALF_EVEN) ;
+						System.out.println("ratio----" + ratio);
+						BigDecimal resizeHeight = originalHeight.divide(ratio,3,RoundingMode.HALF_EVEN);
+						System.out.println("resizeHeight----" + resizeHeight);
+						img = new BufferedImage(resizeWidth.intValue(),resizeHeight.intValue(),BufferedImage.TYPE_INT_RGB);
 						Graphics tempg = img.getGraphics();
-						tempg.drawImage(originalimg, 0,0,resizeWidth, resizeHeight, null);
+						tempg.drawImage(originalimg, 0,0,resizeWidth.intValue(),resizeHeight.intValue(), null);
 						
 					}
 					g = img.getGraphics();
@@ -239,8 +253,13 @@ public class PreviewServlet extends HttpServlet {
 				intcropHeight = doublecropHeight.intValue();
 				Image cropImageTmp = cropImage.getScaledInstance(intcropWidth, intcropHeight, Image.SCALE_AREA_AVERAGING);
 				g.drawImage(cropImageTmp, xPoint, yPoint, null);
+				System.out.println("xPoint"+xPoint);
+				System.out.println("yPoint"+yPoint);
+
 			}else{
 				g.drawImage(cropImage, xPoint, yPoint,null);
+				System.out.println("xPoint"+xPoint);
+				System.out.println("yPoint"+yPoint);
 			}
 			g.dispose();
 			

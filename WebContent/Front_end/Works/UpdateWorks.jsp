@@ -1,14 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.com.model.*" %>
 
 <jsp:useBean id="worksSvc" scope="page"
 	class="com.works.model.WorksService"></jsp:useBean>
 
 <%
-	String com_no = (String) request.getParameter("com_no");
+	ComVO comVO = (ComVO)session.getAttribute("comVO");
+	System.out.println("comVO"+comVO);
+	//String com_no = (String) session.getAttribute("com_no");
 	//String com_no = "2001";
-	pageContext.setAttribute("com_no", com_no);
+	//pageContext.setAttribute("com_no", com_no);
 %>
 
 <%@ include file="page/works_header.file"%>
@@ -19,40 +22,7 @@ $(document).ready(function(){
 });
 </script>
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-	<div class="col-md-offset-1">
-		<ul class="breadcrumb">
-			<li><a href="#">首頁</a></li>
-			<li><a href="#">廠商專區</a></li>
-			<li><a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp">作品管理</a></li>
-			<li class="active">編輯作品</li>
 
-		</ul>
-	</div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-
-<div class="container">
-	<div class="row">
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-		<div class="col-md-offset-1 col-md-2">
-			<ul class="list-group">
-				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
-                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua active">作品管理</a><br>
-			</ul>
-
-
-			<a href="#" class="btn btn-block btn-default">查看廠商資料</a>
-		</div>
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-		<!--這裡開始===========================================================================-->
 
 		<div class="col-md-8 col-offset-1">
 			<!-- Photo Start Here -->
@@ -144,7 +114,7 @@ $(document).ready(function(){
 
 
 			<div id='changeContent'>
-			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(com_no)}"
+			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(comVO.com_no)}"
 				varStatus="s">
 				
 				<c:if test="${(s.count % 3) == 1}">
@@ -161,7 +131,7 @@ $(document).ready(function(){
 					
 						<form name="updateForms" action="<%=request.getContextPath()%>/works/works.do" method="post">
 						<input type='hidden' name='action' value='update_Works'>
-						<input type='hidden' name='com_no' value='${com_no}'>
+						<input type='hidden' name='com_no' value='${comVO.com_no}'>
 						<input type='hidden' name='works_no' value='${worksVO.works_no}'>
 						<c:if test="${worksVO.img == null}">
 
@@ -258,7 +228,7 @@ $("document").ready(function(){
 	    uploadAsync: true,
 	    browseOnZoneClick: true ,
 	    uploadExtraData: {
-	        com_no: "<%=com_no%>",
+	        com_no: "${comVO.com_no}",
 	        action: "upload_Works",
 	    }
 	});
@@ -266,7 +236,7 @@ $("document").ready(function(){
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
 		$("#cancelUpload").click();
 		$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp #changeContent",{
-			com_no :'<%=com_no%>'
+			com_no :'${comVO.com_no}'
 		});
 	});
 	
@@ -274,7 +244,7 @@ $("document").ready(function(){
 		$("[name~='updateForms']").each(function(){
 			$(this).ajaxSubmit();
 		});
-		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=<%=com_no%>";
+		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}";
 	});
 	
 });
@@ -284,13 +254,13 @@ function doAjax(action,works_no){
 		url:'<%=request.getContextPath()%>/works/works.do',
 		type:'POST',
 		data:{
-			com_no :'<%=com_no%>',
+			com_no :'${comVO.com_no}',
 			works_no : works_no,
 			action : action
 		},
 		success:function success(){
 			$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp #changeContent",{
-				com_no :'<%=com_no%>'
+				com_no :'${comVO.com_no}'
 			});
 		},
 		error:function(xhr){

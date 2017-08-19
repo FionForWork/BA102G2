@@ -1,51 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.com.model.*" %>
 
 <jsp:useBean id="worksSvc" scope="page"
 	class="com.works.model.WorksService"></jsp:useBean>
 
 <%
+	ComVO comVO = (ComVO)session.getAttribute("comVO");
+	System.out.println("comVO"+comVO);	
 	//String com_no = (String) session.getAttribute("com_no");
-	String com_no = "2003";
-	pageContext.setAttribute("com_no", com_no);
+	//String com_no = "2003";
+	//pageContext.setAttribute("com_no", com_no);
 %>
 
 <%@ include file="page/works_header.file"%>
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-	<div class="col-md-offset-1">
-		<ul class="breadcrumb">
-			<li><a href="#">首頁</a></li>
-			<li><a href="#">廠商專區</a></li>
-			<li class="active">作品管理</li>
 
-		</ul>
-	</div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-
-<div class="container">
-	<div class="row">
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-		<div class="col-md-offset-1 col-md-2">
-			<ul class="list-group">
-				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
-                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua active">作品管理</a><br>
-			</ul>
-
-
-			<a href="#" class="btn btn-block btn-default">查看廠商資料</a>
-		</div>
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-		<!--這裡開始===========================================================================-->
 
 		<div class="col-md-8 col-offset-1">
 			<!-- Photo Start Here -->
@@ -88,7 +59,7 @@
 				<div class="col-xs-12 col-sm-12">
 				<div class='btn-group' style="right:15px; top:15px;position:absolute;">
 				<button type="submit" class="btn btn-info text-right" id="uploadbtn" >新增作品</button>
-				<button class="btn btn-info text-right" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${com_no}'" >編輯作品</button>
+				<button class="btn btn-info text-right" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}'" >編輯作品</button>
 				</div>
 					<br>	
 					<div class="text-center">
@@ -134,7 +105,7 @@
 
 
 			<div id='changeContent'>
-			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(com_no)}"
+			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(comVO.com_no)}"
 				varStatus="s">
 				<c:if test="${(s.count % 3) == 1}">
 					<div class="row">
@@ -207,12 +178,12 @@ $("document").ready(function(){
 	    uploadAsync: true,
 	    browseOnZoneClick: true ,
 	    uploadExtraData: {
-	        com_no: <%=com_no%>,
+	        com_no: '${comVO.com_no}',
 	        action: "upload_Works",
 	    }
 	});
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
-        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=<%=com_no%>";
+        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}";
 	});
 });
 
@@ -221,13 +192,13 @@ function doAjax(action,works_no){
 		url:'<%=request.getContextPath()%>/works/works.do',
 		type:'POST',
 		data:{
-			com_no :'<%=com_no%>',
+			com_no :'${comVO.com_no}',
 			works_no : works_no,
 			action : action
 		},
 		success:function success(){
 			$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp #changeContent",{
-				com_no :'<%=com_no%>'
+				com_no :'${comVO.com_no}'
 			});
 		},
 		error:function(xhr){

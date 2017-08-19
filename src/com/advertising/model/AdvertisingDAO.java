@@ -22,7 +22,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	private static final String GET_ONE_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising where adv_no = ?";
 	private static final String DELETE = "delete from advertising where adv_no = ?";
 	private static final String UPDATE = "update advertising set com_no=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
-	private static final String GET_ALL_UNVERIFIED="select adv_no, com_no, startday, endday, price, text, status from advertising where status = '0' order by adv_no desc";
+	private static final String GET_ALL_UNVERIFIED="select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = '0' order by adv_no desc";
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
 
 	@Override
@@ -301,6 +301,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				advertisingVO = new AdvertisingVO();
 				advertisingVO.setAdv_no(rs.getString("adv_no"));
 				advertisingVO.setCom_no(rs.getString("com_no"));
+				advertisingVO.setTitle(rs.getString("title"));
 				advertisingVO.setStartDay(rs.getTimestamp("startday"));
 				advertisingVO.setEndDay(rs.getTimestamp("endday"));
 				advertisingVO.setPrice(rs.getInt("price"));

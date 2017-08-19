@@ -72,14 +72,14 @@
 		<div class="container-fluid">
 			<div class="navbar">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html"> <span
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp"> <span
 						class="text-logo"> She Said Yes!</span>
 					</a>
 				</div>
 				<nav class="top-nav" role="navigation">
 					<ul class="nav navbar-nav pull-right">
 
-						<li class="dropdown"><a href="#" data-toggle="dropdown">alan</a>
+						<li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
 							<ul class="dropdown-menu right" role="menu">
 								<li><a href="#"><i class="st-user"></i>
 										個人資料</a></li>
@@ -103,13 +103,12 @@
 
 				<li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
 				<li><a href="#"><i class="en-users"></i>廠商管理 </a></li>
-				<li><a href="#"><i class="en-users"> </i>管理者設定 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp"><i class="br-location"></i>景點管理 </a></li>
 				<li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>
-				<li><a href="#"><i class="ec-mail"></i> 聯絡我們管理 </a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp"><i class="im-question"></i>常見問題管理</a></li>
 				<li><a href="#"><i class="br-warning"></i>檢舉管理</a></li>
 			</ul>
@@ -156,7 +155,7 @@
                             <!-- End Carousel -->
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="carousel-tile carousel slide">
+                            <div class="carousel-tile carousel slide" onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/advertising/ad.jsp'">
                                 <div class="carousel-inner">
                                     <div class="item active">
                                         <div class="tile blue">
@@ -176,7 +175,7 @@
                         </div>
                        
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="carousel-tile carousel slide">
+                            <div class="carousel-tile carousel slide" onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp'">
                                 <div class="carousel-inner">
                                     <div class="item active">
                                         <div class="tile teal">
@@ -198,20 +197,15 @@
                     </div>
                     <!-- End .row -->
                     
-                    
-                    
-                    
-                    
-                    
-                    
                     <div class="row">
                         <!-- Start .row -->
                         <div class="col-xs-12 col-sm-12 text-center">
                             <!-- Start col-lg-6 -->
-                            <div class="panel panel-danger toggle ">
+                            <div class="panel panel-danger toggle">
                                 <!-- Start .panel -->
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><i class="im-warning"></i> 待處理檢舉 </h4>
+                                    <span style='float:right;margin-top:4px'><button class='btn btn-default'>more</button></span>
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-hover">
@@ -254,6 +248,8 @@
                                 <!-- Start .panel -->
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><i class="im-table2"></i> 待處理廣告申請 </h4>
+                                	<span style='float:right;margin-top:4px'><button class='btn btn-default' onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/advertising/ad.jsp'">more</button></span>
+                                	
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-hover">
@@ -270,7 +266,7 @@
                                         </thead>
                                         <tbody>
                                          <c:forEach var="advertisingVO" items="${advertisingList}" varStatus="s"
-												begin="1" end="2">
+												begin="1" end="3">
                                             <tr>
                                                 <td>${comSvc.getOneCom(advertisingVO.com_no).name}</td>
                                                 <td>${advertisingVO.title}</td>
@@ -296,6 +292,8 @@
                                 <!-- Start .panel -->
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><i class="fa-shopping-cart"></i> 待處理商品上架申請 </h4>
+                                    <span style='float:right;margin-top:4px'><button class='btn btn-default' onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp'">more</button></span>
+                                
                                 </div>
                                 <div class="panel-body">
                                     <table class="table table-hover">
@@ -309,7 +307,7 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach var="productVO" items="${unpreviewProductList}" varStatus="s"
-												begin="1" end="2">
+												begin="1" end="3">
                                             <tr>
                                                 
                                                 <td>${memSvc.getOneMem(productVO.seller_no).name}</td>

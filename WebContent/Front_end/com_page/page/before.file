@@ -15,7 +15,7 @@
     <link href="<%=request.getContextPath()%>/Front_end/com_page/css/pnotify.custom.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/com_page/css/index.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/com_page/css/company_page.css" rel="stylesheet">
-	<link href="css/comtra.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Front_end/com_page/css/comtra.css" rel="stylesheet">
 	
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/bootstrap.min.js" type="text/javascript"></script>
@@ -24,7 +24,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/jquery.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/top.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
-	<script src="js/comtra.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/comtra.js" type="text/javascript"></script>
 </head>
 
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">

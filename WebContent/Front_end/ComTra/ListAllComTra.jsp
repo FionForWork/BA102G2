@@ -1,15 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.comtra.model.*"%>
 <%@ page import="java.util.*"%>
-
+<%@ page import="com.mem.model.*" %>
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
 <%
 	//String mem_no = (String)session.getAttribute("mem_no");
-	String mem_no = "1001";	
+	//String mem_no = "1001";	
+	MemVO memVO = (MemVO)session.getAttribute("memVO");  
+	System.out.println("MemVO"+memVO);
 	ComTraService comtraSvc = new ComTraService();
-	List<ComTraVO> comtraList = comtraSvc.getComTraByMemNo(mem_no);
+	List<ComTraVO> comtraList = comtraSvc.getComTraByMemNo(memVO.getMem_no());
 	pageContext.setAttribute("comtraList", comtraList);
 %>
 
@@ -18,49 +20,7 @@
 
 <% pageContext.setAttribute("nowPage", nowPage); %>
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-	<div class="col-md-offset-1">
-		<ul class="breadcrumb">
-			<li><a href="#">首頁</a></li>
-			<li><a href="#">會員專區</a></li>
-			<li class="active">我的最愛</li>
-		</ul>
-	</div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
 
-<div class="container">
-	<div class="row">
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-		<div class="col-md-offset-1 col-md-2">
-			<ul class="list-group">
-				<a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp" class="list-group-item menua active">我的最愛</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
-				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
-				<br>
-			</ul>
-
-
-			<a href="#" class="btn btn-block btn-default">查看個人資料</a>
-		</div>
-		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-		<!--這裡開始===========================================================================-->
 
 		<div class="col-md-8 col-offset-1">
 			<div class="clearfix">

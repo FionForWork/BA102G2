@@ -1,6 +1,6 @@
 
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.temp.model.*"%>
 
@@ -25,41 +25,8 @@ $("document").ready(function(){
 });
 </script>
 
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-    <div class="col-md-offset-1">
-        <ul class="breadcrumb">
-            <li><a href="#">首頁</a></li>
-            <li><a href="#">廠商專區</a></li>
-            <li><a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp">作品挑選管理</a></li>
-            <li class="active">修改挑選作品 ${temp.name}</li>        
-        </ul>
-    </div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-   
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua active">作品挑選管理</a><br>
-                    <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
-                </ul>
 
-
-                <a href="#" class="btn btn-block btn-default">查看廠商資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-
-<!--這裡開始===========================================================================-->
-
-            <div class="col-md-8 col-offset-1">
+<div class="col-md-8 col-offset-1">
 
 
 		<!-- Modal addContent -->
