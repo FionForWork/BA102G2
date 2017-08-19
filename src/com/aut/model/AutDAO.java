@@ -219,5 +219,61 @@ public class AutDAO implements AutDAO_Interface{
 		return list;
 	}
 
+
+	@Override
+	public List<AutVO> getOneAll() {
+		List<AutVO> list =new ArrayList<AutVO>();
+		AutVO autVO = null;
+				
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			rs = pstmt.executeQuery();
+			
+		
+				autVO = new AutVO();
+				autVO.setAdm_no(rs.getString("adm_no"));
+				while (rs.next()) {
+				autVO.setId(rs.getString("id"));
+				
+				list.add(autVO); 
+			}
+			
+			
+		}catch(SQLException se){
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
+		return list;
+	}
+
 	
 }

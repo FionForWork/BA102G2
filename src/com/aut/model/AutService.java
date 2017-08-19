@@ -35,5 +35,7 @@ public class AutService {
 	public List<AutVO> getAll(){
 		return dao.getAll();
 	}
-	
+	public List<AutVO> getOneAll(){
+		return dao.getOneAll();
+	}
 }

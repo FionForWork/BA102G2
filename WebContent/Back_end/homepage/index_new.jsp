@@ -5,14 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title>She Said Yes!</title>
-<!-- Mobile specific metas -->
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<!-- Force IE9 to render in normal mode -->
-<!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
-<!-- Import google fonts - Heading first/ text second -->
-<!-- <link rel='stylesheet' type='text/css' <!--[if lt IE 9]> -->
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,43 +16,33 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!--[endif]-->
-<!-- Css files -->
-<!-- Icons -->
+
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/icons.css"
 	rel="stylesheet" />
-<!-- jQueryUI -->
+
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/sprflat-theme/jquery.ui.all.css"
 	rel="stylesheet" />
-<!-- Bootstrap stylesheets (included template modifications) -->
+
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/bootstrap.css"
 	rel="stylesheet" />
-<!-- Plugins stylesheets (all plugin custom css) -->
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/plugins.css"
 	rel="stylesheet" />
-<!-- Main stylesheets (template main css file) -->
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/main.css"
 	rel="stylesheet" />
-<!-- Custom stylesheets ( Put your own changes here ) -->
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/custom.css"
 	rel="stylesheet" />
-<!-- Fav and touch icons -->
-
 <link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico"
 	type="image/png">
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
-
-<!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
 <meta name="msapplication-TileColor" content="#3399cc" />
 </head>
 <body>
-	<!-- Start #header -->
 	<div id="header">
 		<div class="container-fluid">
 			<div class="navbar">

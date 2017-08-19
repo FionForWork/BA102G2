@@ -9,4 +9,5 @@ public interface AutDAO_Interface {
 	public void delete(String adm_no,String id);
 	public AutVO findByPrimaryKey(String adm_no);
 	public List<AutVO> getAll();
+	public List<AutVO> getOneAll();
 }

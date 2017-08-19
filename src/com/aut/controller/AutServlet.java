@@ -28,6 +28,9 @@ public class AutServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+	
+		
+		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
