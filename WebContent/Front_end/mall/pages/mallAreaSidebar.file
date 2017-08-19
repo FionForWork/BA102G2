@@ -1,0 +1,11 @@
+﻿<div class="col-xs-2 col-md-2">
+    <ul class="list-group">
+        <a class="list-group-item menua active" disabled="disabled">我是買家</a>
+        <a href="${preLocation}/mallArea.jsp?role=0" class="list-group-item menua">訂單管理</a><br>
+        <a href="${preLocation}/memberScore.jsp" class="list-group-item menua">評價查看</a><br>
+        <a href="${preLocation}/protra.jsp" class="list-group-item menua">追蹤商品</a><br>
+        <a class="list-group-item menua active" disabled="disabled">我是賣家</a>
+        <a href="${preLocation}/mallArea.jsp?role=1" class="list-group-item menua">訂單管理</a><br>
+        <a href="${preLocation}/productManagement.jsp" class="list-group-item menua">商品資料管理</a><br>
+     </ul>
+</div>    
