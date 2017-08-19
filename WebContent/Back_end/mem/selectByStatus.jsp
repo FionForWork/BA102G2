@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
-<jsp:useBean id="selectByReport" scope="request" type="java.util.Set" />
+<jsp:useBean id="selectByStatus" scope="request" type="java.util.Set" />
 
 <title>Insert title here</title>
 <br><br>
@@ -24,7 +24,7 @@
 		
 		<th>刪除</th>
 	</tr>
-	<c:forEach var="memVO" items="${selectByReport}" >
+	<c:forEach var="memVO" items="${selectByStatus}" >
 	<tr>
 		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
 		<td>${memVO.mem_no}</td>

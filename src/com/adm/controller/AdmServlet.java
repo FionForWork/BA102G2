@@ -60,7 +60,7 @@ public class AdmServlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.invalidate();
 			//整個連線拔掉
-			res.sendRedirect(req.getContextPath()+"/Back_end/adm/login.jsp");
+			res.sendRedirect(req.getContextPath()+"/Back_end/login/login.jsp");
 		    return;
 		}
 		
@@ -95,10 +95,19 @@ public class AdmServlet extends HttpServlet {
 
 								
 						      AdmVO admVO = admSvc.getOneAdmById(id);
-						    
+						      String status=admVO.getStatus();
+						      if(status.equals("停權")){
+									res.sendRedirect(req.getContextPath()+"/Back_end/login/statusNotGood.jsp");
+									return;
+								}
 						      session.setAttribute("id", id);
 						      session.setAttribute("admVO", admVO);
-
+						      AutService autSvc = new AutService();
+						      AutVO autVO=autSvc.getOneAut(admVO.getAdm_no());
+						      
+						      session.setAttribute("autVO", autVO);
+						 
+						      System.out.println(autVO.getId().length());
 						      try {
 						    	  String admlocation = (String) session.getAttribute("admlocation");
 						          if (admlocation != null) {

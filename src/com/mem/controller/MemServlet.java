@@ -69,6 +69,9 @@ public class MemServlet extends HttpServlet{
 				memVO.setMem_no(mem_no);
 				memVO.setPicture(picture);
 				
+				
+				
+				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO); 
 					RequestDispatcher failureView = req
@@ -165,7 +168,23 @@ public class MemServlet extends HttpServlet{
 			successView.forward(req, res);
 		}
 		
-		
+		if ("selectByStatus".equals(action)) {
+			/*************************** 1.接收請求參數 ****************************************/
+			String status = req.getParameter("status");
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			MemService memSvc = new MemService();
+			Set<MemVO> set = memSvc.getMemsByStatus(status);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("selectByStatus", set);    // 資料庫取出的set物件,存入request
+			
+			String url = null;
+			url = "/Back_end/mem/selectByStatus.jsp";   
+			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
 		
 		if("change".equals(action)){
 			int passRandom = (int)(Math.random()*99999+1);  
@@ -323,10 +342,15 @@ public class MemServlet extends HttpServlet{
 
 								
 						      MemVO memVO = memSvc.getOneMemById(id);
-						    
+						      String status=memVO.getStatus();
+						      if(status.equals("停權")){
+									res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+									return;
+								}
 						      session.setAttribute("id", id);
 						      session.setAttribute("memVO", memVO);
 
+						      
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");
 						          if (memlocation != null) {
