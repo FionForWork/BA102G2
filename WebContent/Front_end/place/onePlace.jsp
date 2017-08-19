@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="com.mysql.fabric.xmlrpc.base.Array"%>
+<%-- <%@page import="com.mysql.fabric.xmlrpc.base.Array"%> --%>
 <%@page import="com.placeview.model.PlaceViewVO"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.List"%>

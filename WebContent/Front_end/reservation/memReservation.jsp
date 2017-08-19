@@ -212,7 +212,7 @@
 </form>
 <form id="ratingForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 	<input type="hidden" name="action" value="rating">
-	<input type="text" id="ratingStar" name="score" value="1">
+	<input type="hidden" id="ratingStar" name="score" value="1">
 	<input type="hidden" id="res_no_rating" name="res_no" value="">
 	<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
 </form>

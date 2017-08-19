@@ -100,6 +100,9 @@
 		$('#deleteForm').submit();
 	  }
 </script>
+
+<div class="container">
+<div class="text-center col-md-offset-1 col-md-10">
 <c:if test="${not empty errorMsgs}">
 	<c:forEach var="message" items="${errorMsgs}">
 		<div class=" alert alert-danger alert-dismissable fade in">
@@ -108,15 +111,13 @@
 		</div>
 	</c:forEach>
 </c:if>
-<div class="container">
-<div class="text-center col-md-offset-1 col-md-10">
 <table class="table table-bordered ui-widget-head" >
 	<thead>
 		<tr>
-			<th colspan="7" style="background-color:#5BFFEB" class="text-center">
+			<th colspan="7" style="background-color:#587BF1" class="text-center">
 				<form id="changeCalendar" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
-					<h3>
-					<select name="year" onchange="change()">
+					<h3 style="color:white">
+					<select name="year" onchange="change()" style="background-color:#587BF1;border:0">
 						<% for(int i = 0; i < 5; i++){ %>
 						<% if(i+2017 == localDate.getYear()){ %>
 						<option value="<%= i+2017 %>" selected><%= i+2017 %></option>
@@ -125,7 +126,7 @@
 						<% }} %>
 					</select>年
 					 
-					<select name="month" onchange="change()">
+					<select name="month" onchange="change()" style="background-color:#587BF1;border:0">
 						<% for(int i = 0; i < 12; i++){ %>
 						<% if(i+1 == localDate.getMonthValue()){ %>
 						<option value="<%= i+1 %>" selected><%= i+1 %></option>

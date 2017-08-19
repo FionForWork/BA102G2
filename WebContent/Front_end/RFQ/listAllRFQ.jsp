@@ -9,7 +9,7 @@
 <%
 	RFQService rfqService = new RFQService();
 	List<RFQVO> rfqList = rfqService.getAllRFQ();
-	DateFormat df = new SimpleDateFormat("YYYY年M月d日 ah點");
+	DateFormat df = new SimpleDateFormat("YYYY年M月d日");
 	MemService memService = new MemService();
 	
 	pageContext.setAttribute("memService",memService);
