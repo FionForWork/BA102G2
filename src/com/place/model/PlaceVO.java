@@ -1,6 +1,10 @@
 package com.place.model;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import com.placeview.model.PlaceViewVO;
 
 public class PlaceVO implements Serializable {
     private String pla_no;
@@ -9,6 +13,22 @@ public class PlaceVO implements Serializable {
     private String lat;
     private String addr;
     private String pla_desc;
+    private Set<PlaceViewVO> placeViewSet=new LinkedHashSet<PlaceViewVO>();
+    
+    public PlaceVO() {
+        super();
+    }
+    public PlaceVO(String pla_no, String name, String lng, String lat, String addr, String pla_desc, Set<PlaceViewVO> placeViewSet) {
+        super();
+        this.pla_no = pla_no;
+        this.name = name;
+        this.lng = lng;
+        this.lat = lat;
+        this.addr = addr;
+        this.pla_desc = pla_desc;
+        this.placeViewSet = placeViewSet;
+    }
+    
     public String getPla_no() {
         return pla_no;
     }
@@ -45,17 +65,12 @@ public class PlaceVO implements Serializable {
     public void setPla_desc(String pla_desc) {
         this.pla_desc = pla_desc;
     }
-    public PlaceVO(String pla_no, String name, String lng, String lat, String addr, String pla_desc) {
-        super();
-        this.pla_no = pla_no;
-        this.name = name;
-        this.lng = lng;
-        this.lat = lat;
-        this.addr = addr;
-        this.pla_desc = pla_desc;
+    public Set<PlaceViewVO> getPlaceViewSet() {
+        return placeViewSet;
     }
-    public PlaceVO() {
-        super();
+    public void setPlaceViewSet(Set<PlaceViewVO> placeViewVOSet) {
+        this.placeViewSet = placeViewVOSet;
     }
+
     
 }

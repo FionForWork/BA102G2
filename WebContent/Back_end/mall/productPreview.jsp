@@ -10,10 +10,10 @@
 <%
     ProductService productService = new ProductService();
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.valueOf(request.getParameter("nowPage"));
-    int itemCount = 5;
-    int allCount = productService.getAllCountUnPreivew();
-    int totalPages = allCount / itemCount + 1;
-    List<ProductVO> productList = productService.getSomeUnPreview(nowPage, itemCount);
+    int itemsCount = 5;
+    int allCount = productService.getAllCount("0", "0");
+    int totalPages = allCount / itemsCount + 1;
+    List<ProductVO> productList = productService.getPage(nowPage, itemsCount, "0", "0", "0");
     String preLocation = request.getContextPath() + "/Back_end/mall";
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
@@ -47,8 +47,8 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="productVO" items="${productList}">
-                    <tr>
+                <c:forEach var="productVO" items="${productList}" varStatus="s">
+                    <tr class="animated fadeInUp" style="animation-duration: ${s.index*0.3}s">
                         <td>${productVO.pro_name}</td>
                         <td>${productVO.seller_no}</td>
                         <td>${productVO.pro_desc}</td>
@@ -56,73 +56,106 @@
                         <td>${productVO.price}</td>
                         <td>${productVO.amount}</td>
                         <td><img style="height: 80px; width: 80px;" src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}"></td>
-                        <td style="width: 80px;"><a style="width: 100%;" class="btn btn-success" href="<%=request.getContextPath()%>/product/ProductServlet?action=ABLE&&pro_no=${productVO.pro_no}">審核通過</a> <a style="width: 100%;" class="btn btn-danger" href="<%=request.getContextPath()%>/product/ProductServlet?action=DISABLE&&pro_no=${productVO.pro_no}">審核不通過</a></td>
+                        <td style="width: 80px;">
+                            <a style="width: 100%;" class="btn btn-success" href="javascript:able('ABLE',${nowPage},${productVO.pro_no})">審核通過</a> 
+                            <a style="width: 100%;" class="btn btn-danger" href="javascript:able('DISABLE',${nowPage},${productVO.pro_no})">審核不通過</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
         <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
-        <div class="text-center">
-            <nav aria-label="Page navigation ">
-                <ul class="pagination pagination-lg ">
-                    <c:choose>
-                        <c:when test="${totalPages<=5}">
-                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                <li class="">
-                                    <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                        </c:when>
-                        <c:when test="${nowPage<5}">
-                            <c:forEach var="i" begin="1" end="5">
-                                <li>
-                                    <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <li>
-                                <a class="disabled">...</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages}</a>
-                            </li>
-                        </c:when>
-                        <c:when test="${totalPages-nowPage<5}">
-                            <li>
-                                <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a>
-                            </li>
-                            <li>
-                                <a class="disabled">...</a>
-                            </li>
-                            <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                <li>
-                                    <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <li>
-                                <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=1" data-page="1">1</a>
-                            </li>
-                            <li>
-                                <a class="disabled">...</a>
-                            </li>
-                            <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                <li>
-                                    <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${i}" data-page="${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <li>
-                                <a class="disabled">...</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-info" href="${preLocation}/productPreview.jsp?nowPage=${totalPages}" data-page="${totalPages}">${totalPages }</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </nav>
+            <div class="text-center ">
+                <nav aria-label="Page navigation ">
+                    <ul class="pagination pagination-lg ">
+                        <c:choose>
+                            <c:when test="${totalPages<=5}">
+                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:when test="${nowPage<5}">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:when>
+                            <c:when test="${totalPages-nowPage<5}">
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
-</div>
+    <script type="text/javascript">
+    function change(nowPage){ 
+        $(window).scrollTop($(window).scrollTop());
+        $(window).scrollLeft($(window).scrollLeft());
+        $("table").load("<%=preLocation%>/productPreview.jsp table",{"nowPage":nowPage});
+        $(".pagination").load("<%=preLocation%>/productPreview.jsp .pagination", {"nowPage" : nowPage });
+    }
+    
+    function able(able,nowPage,pro_no){ 
+        $.ajax({
+            url : "<%=request.getContextPath()%>/product/ProductServlet",
+            type : "post",
+            data : {
+            action : able,
+            pro_no : pro_no,
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                change(nowPage);
+            }
+        });
+    }
+</script>
 <%@include file="/Back_end/pages/backFooter.file"%>

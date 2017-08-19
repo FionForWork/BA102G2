@@ -17,7 +17,7 @@ public class Order_detailDAO_Hibernate implements Order_detailDAO_Interface{
     public void insert(Order_detailVO order_detailVO) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
+            session.beginTransaction();
             session.saveOrUpdate(order_detailVO);
         }
         catch (RuntimeException e) {
@@ -35,9 +35,10 @@ public class Order_detailDAO_Hibernate implements Order_detailDAO_Interface{
     public void delete(String ord_no) {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
-            session.getTransaction();
+            session.beginTransaction();
             Query query=session.createQuery("from Order_detailVO where ORD_NO = :ord_no");
             query.setParameter("ord_no", ord_no);
+            session.getTransaction().commit();
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();

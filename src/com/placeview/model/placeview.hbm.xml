@@ -6,13 +6,14 @@
     <class name="com.placeview.model.PlaceViewVO" table="PLACEVIEW" >
         
         <id name="view_no" column="VIEW_NO">
-            <generator class="sequence" >
-              <param name="sequence">VIEW_NO_SEQ</param>
-            </generator>  
+            <generator class="com.placeview.model.PlaceViewIdentifierGenerator" /> 
         </id>
         
-        <property name="pla_no" column="PLA_NO" />
         <property name="img" column="IMG" />
+        
+        <many-to-one name="placeVO" class="com.place.model.PlaceVO" lazy="false" >
+            <column name="PLA_NO"/>
+        </many-to-one>
         
     </class>
 </hibernate-mapping>

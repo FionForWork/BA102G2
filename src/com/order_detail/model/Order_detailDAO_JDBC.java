@@ -18,7 +18,7 @@ import com.product.model.ProductVO;
 
 public class Order_detailDAO_JDBC implements Order_detailDAO_Interface {
     private static final String INSERT               = "insert into ORDER_DETAIL (ORD_NO, PRO_NO, PRICE, QTY,ITEMTOT,SCORE,STATUS)" + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE_BY_ORD        = "delete from ORDER_DETAIL where ORD_NO = ?";
+    private static final String DELETE_BY_ORDNO        = "delete from ORDER_DETAIL where ORD_NO = ?";
     private static final String UPDATE               = "update ORDER_DETAIL set PRICE = ?, QTY = ?, ITEMTOT = ?, SCORE = ?, STATUS = ? where ORD_NO = ? and PRO_NO = ?";
     private static final String GET_ONE_BY_COMPOSITE = "select * from ORDER_DETAIL where ORD_NO = ? and PRO_NO = ?";
     private static final String GET_ALL_BY_ORD       = "select * from ORDER_DETAIL where ORD_NO = ?";
@@ -91,7 +91,7 @@ public class Order_detailDAO_JDBC implements Order_detailDAO_Interface {
 
     public void delete(String ord_no, Connection connection) {
         try {
-            preparedStatement = connection.prepareStatement(DELETE_BY_ORD);
+            preparedStatement = connection.prepareStatement(DELETE_BY_ORDNO);
             preparedStatement.setString(1, ord_no);
             preparedStatement.execute();
         }

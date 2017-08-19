@@ -53,14 +53,14 @@
 	
 	// Product
 	ProductService productService = new ProductService();
-	int unpreviewProductCount = productService.getAllCountUnPreivew();
-	List<ProductVO> unpreviewProductList = productService.getSomeUnPreview(1, 5);
+// 	int unpreviewProductCount = productService.getAllCountUnPreivew();
+// 	List<ProductVO> unpreviewProductList = productService.getSomeUnPreview(1, 5);
 	Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     
     pageContext.setAttribute("advertisingList", advertisingList);
-	pageContext.setAttribute("unpreviewProductCount", unpreviewProductCount);
-	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
+// 	pageContext.setAttribute("unpreviewProductCount", unpreviewProductCount);
+// 	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
 	pageContext.setAttribute("typeList", typeList);
 %>
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>

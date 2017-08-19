@@ -1,0 +1,25 @@
+﻿<div class="modal fade" id="${ordVO.ord_no}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">評分</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="<%=request.getContextPath()%>/order/OrderServlet" method="post">
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>評分</td>
+                                                                        <input type="hidden" name="ord_no" value="${ordVO.ord_no}">
+                                                                        <td><input type="number" min="0" max="5" name="score" class="form-control" placeholder="請輸入評分0-5之間"></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <input type="hidden" name="action" value="EVALUATION_TO_MEM">
+                                                                <input type="submit" class="btn btn-success" value="確認">
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>

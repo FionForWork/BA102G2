@@ -6,9 +6,7 @@
     <class name="com.place.model.PlaceVO" table="PLACE" >
         
         <id name="pla_no" column="PLA_NO">
-            <generator class="sequence" >
-              <param name="sequence">PLA_NO_SEQ</param>
-            </generator>  
+            <generator class="com.place.model.PlaceIdentifierGenerator" />  
         </id>
         
         <property name="name" column="NAME" />
@@ -16,6 +14,11 @@
         <property name="lat" column="LAT" />
         <property name="addr" column="ADDR" />
         <property name="pla_desc" column="PLA_DESC" />
+        
+        <set name="PlaceViewSet" table="PLACEVIEW" cascade="all" inverse="true" >
+            <key><column name="PLA_NO"/></key>
+            <one-to-many class="com.placeview.model.PlaceViewVO"/>
+        </set>
         
     </class>
 </hibernate-mapping>

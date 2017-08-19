@@ -40,25 +40,25 @@ public class ProtraServlet extends HttpServlet {
 
         if ("ADD".equals(action)) {
             String pro_no = productVO.getPro_no();
-            ProtraVO protracking_listVO = new ProtraVO();
-            protracking_listVO.setPro_no(pro_no);
-            protracking_listVO.setMem_no(mem_no);
-            protraService.addProtracking_list(protracking_listVO);
+            ProtraVO protraVO = new ProtraVO();
+            protraVO.setPro_no(pro_no);
+            protraVO.setMem_no(mem_no);
+            protraService.insert(protraVO);
             request.getRequestDispatcher("/front_end/mall/product.jsp?pro_no=" + pro_no).forward(request, response);
         }
         else if ("DELETE".equals(action)) {
             String pro_no = productVO.getPro_no();
-            protraService.deleteProductTracking(pro_no);
+            protraService.deleteByFK(pro_no);
             request.getRequestDispatcher("/front_end/mall/product.jsp?pro_no=" + pro_no).forward(request, response);
         }
         else if("ADD_AJAX".equals(action)){
             String pro_no = request.getParameter("pro_no");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter=response.getWriter();
-            ProtraVO protracking_listVO = new ProtraVO();
-            protracking_listVO.setPro_no(pro_no);
-            protracking_listVO.setMem_no(mem_no);
-            protraService.addProtracking_list(protracking_listVO);
+            ProtraVO protraVO = new ProtraVO();
+            protraVO.setPro_no(pro_no);
+            protraVO.setMem_no(mem_no);
+            protraService.insert(protraVO);
             printWriter.println("<a href=\"javascript:protracking('DELETE_AJAX',"+pro_no+")\" class='btn btn-danger'>取消追蹤</a>");
             printWriter.close();
         }
@@ -66,7 +66,7 @@ public class ProtraServlet extends HttpServlet {
             String pro_no = request.getParameter("pro_no");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter=response.getWriter();
-            protraService.deleteProductTracking(pro_no);
+            protraService.deleteByComposite(pro_no, mem_no);
             printWriter.print("<a href=\"javascript:protracking('ADD_AJAX',"+pro_no+")\" class='btn btn-info'>加入追蹤</a>");
             printWriter.close();
         }

@@ -19,7 +19,7 @@
     String preLocation = request.getContextPath() + "/Front_end/mall";
     pageContext.setAttribute("preLocation", preLocation);
 %>
-<%@include file="pages/mallIndexHeader.file"%>
+<%@include file="pages/indexHeader.file"%>
 
 <style>
     div .vertical-center{
@@ -41,6 +41,7 @@
                             <th>賣家編號</th>
                             <th>描述</th>
                             <th>商品價格</th>
+                            <th>商品庫存</th>
                             <th>購買數量</th>
                             <th>自購物車中刪除</th>
                         </tr>
@@ -49,17 +50,17 @@
                         <c:forEach var="item" items="${carList}" varStatus="s">
                             <tr>
                                 <td><div class="text-center vertical-center">
-                                        <a href="${preLocation}/product.jsp?pro_no=${item.pro_no}">${item.pro_name}</a>
-                                    <div>
-                                </td>
-                                <td>
-                                    <div class="text-center vertical-center">
-                                        ${item.seller_no}</td>
+                                        <a class="pro_name" href="${preLocation}/product.jsp?pro_no=${item.pro_no}">${item.pro_name}</a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="text-center vertical-center">
-                                        ${item.pro_desc}</td>
+                                        ${item.seller_no}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-center vertical-center">
+                                        ${item.pro_desc}
                                     </div>
                                 </td>
                                 <td>
@@ -68,9 +69,14 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <div class="text-center vertical-center">
+                                        ${item.amount}
+                                    </div>
+                                </td>
+                                <td>
                                     <div class="form-group">
                                         <label class="sr-only" for="buyCount">數量</label>
-                                        <input type="number" class="form-control" name="buyCount" placeholder="${countList[s.index]}" value="${countList[s.index]}" min="1" max="${item.amount}">
+                                        <input  type="number" class="form-control amountInput" name="buyCount" placeholder="${countList[s.index]}" value="${countList[s.index]}" min="1" max="${item.amount}">
                                     </div>
                                 <td>
                                     <div class="text-center vertical-center">
@@ -86,7 +92,7 @@
                             <td colspan="6">
                                 <div class="form-group">
                                     <label for="address">寄送地址</label>
-                                    <input type="text" class="form-control" name="address" placeholder="${errorMsg}">
+                                    <input type="text" class="form-control addrInput" name="address" placeholder="${errorMsg}">
                                 </div>
                             </td>
                         </tr>
@@ -94,7 +100,7 @@
                             <td class="text-center" colspan="6">
                                 <p>總金額:${carTotal}</p>
                                 <input type="hidden" name="action" value="BUY">
-                                <button type="submit" class="btn btn-success">確認購買</button>
+                                <input type="button" onclick="addCheck()" class="btn btn-success"value="確認購買">
                                 <a class="btn btn-primary " href="${preLocation}/mallIndexAJAX.jsp">返回</a>
                             </td>
                         </tr>
@@ -104,4 +110,27 @@
         </div>
     </div>
 </div>
-<%@include file="pages/mallIndexFooter.file"%>
+
+<script type="text/javascript">
+    function addCheck(){
+        var flag=true;
+        var errorMessage="";
+        for(var i=0;i<$(".amountInput").length;i++){
+            if(Number($(".amountInput")[i].value)>Number($(".amountInput")[i].max)){
+                errorMessage=errorMessage+$(".pro_name")[i].text+"超過庫存，請減少數量\n";
+            }
+        }
+        if($(".addrInput")[0].value==""){
+            flag=false;
+            errorMessage=errorMessage+"請填寫地址";
+        }
+        if(errorMessage!=""){
+            flag=false;
+            alert(errorMessage);
+        }
+        if(flag){
+            $("form")[0].submit();
+        }
+    }
+</script>
+<%@include file="pages/indexFooter.file"%>

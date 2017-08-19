@@ -29,9 +29,10 @@
 		<mapping resource="com/order_detail/model/order_detail.hbm.xml" />
 		<mapping resource="com/place/model/place.hbm.xml" />
 		<mapping resource="com/placeview/model/placeview.hbm.xml" />
-		<mapping resource="com/album/model/album.hbm.xml" />
-		<mapping resource="com/content/model/content.hbm.xml" />
-		
+		<mapping resource="com/product_type/model/product_type.hbm.xml" />
+		<mapping resource="com/product/model/product.hbm.xml" />
+		<mapping resource="com/protra/model/protra.hbm.xml" />
+
 	</session-factory>
 	
 </hibernate-configuration>

@@ -6,38 +6,39 @@
 <%@page import="com.product.model.ProductService"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="pages/mallIndexHeader.file"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     //MemVO memVO=(MemVO)session.getAttribute("memVO");
-    MemService memService = new MemService();
-    MemVO memVO = memService.getOneMem("1010");
-	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.parseInt((request.getParameter("nowPage")));
+	MemService memService = new MemService();
+	MemVO memVO = memService.getOneMem("1010");
+	int nowPage = (request.getParameter("nowPage") == null)	? 1 : Integer.parseInt((request.getParameter("nowPage")));
 	int itemsCount = 5;
 	ProtraService protraService = new ProtraService();
-	int allCount = protraService.getRowCount(memVO.getMem_no());
+	int allCount = protraService.getAllCount(memVO.getMem_no());
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
 	ProductService productService = new ProductService();
 	List<ProductVO> productList = new ArrayList<ProductVO>();
 
-	List<String> protracking_list = protraService.getSome(memVO.getMem_no(), nowPage, itemsCount);
+	List<String> protracking_list = protraService.getPage(nowPage, itemsCount, memVO.getMem_no());
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 
 	for (int i = 0; i < protracking_list.size(); i++) {
-        productList.add(productService.getOneByPKNoImg(protracking_list.get(i)));
+		productList.add(productService.getOneByPKNoImg(protracking_list.get(i)));
 	}
-    session.setAttribute("memVO", memVO);
-    pageContext.setAttribute("productList", productList);
+	session.setAttribute("memVO", memVO);
+	pageContext.setAttribute("nowPage", nowPage);
+	pageContext.setAttribute("productList", productList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);
 %>
+<%@include file="pages/indexHeader.file"%>
 <style>
-    img{
-        width: 80px;
-        height: 80px;
-    }
+img {
+	width: 80px;
+	height: 80px;
+}
 </style>
 <div class="text-center" style="height: 50px; margin-top: 50px">
     <h2>您正在追蹤的商品</h2>
@@ -48,7 +49,6 @@
             <div class="row">
                 <%@include file="pages/mallAreaSidebar.file"%>
                 <div class="col-md-1"></div>
-
                 <div class="col-md-7">
                     <table class="table table-hover table-striped">
                         <thead>
@@ -60,135 +60,110 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="productVO" items="${productList}">
-                                <tr>
+                            <c:forEach var="productVO" items="${productList}" varStatus="s">
+                                <tr class="animated fadeInUp" style="animation-duration: ${s.index*0.4}s;">
                                     <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}"> ${productVO.pro_name} </a></td>
                                     <td>${productVO.price}</td>
                                     <td>${productVO.amount}</td>
-                                    <td><img src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}"></td>
+                                    <td><img src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}"> <a href="javascript:protraDelete(${productVO.pro_no},${nowPage})" class="btn btn-danger">取消追蹤</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!--//////////////////////////////////////////分頁//////////////////////////////////////////////////////////////// -->
+            <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
             <div class="text-center ">
                 <nav aria-label="Page navigation ">
                     <ul class="pagination pagination-lg ">
-                        <li>
-                            <a class="btn btn-info active" href="javascript:change(1,${itemsCount},${totalPages})" data-page="1">1</a>
-                        </li>
-                        <c:forEach var="i" begin="2" end="5">
-                            <li>
-                                <a class="btn btn-info" href="javascript:change(${i},${itemsCount},${totalPages})" data-page="${i}">${i}</a>
-                            </li>
-                        </c:forEach>
-                        <li>
-                            <a class="disabled">...</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-info" href="javascript:change(${totalPages},${itemsCount},${totalPages})">${totalPages}</a>
-                        </li>
+                        <c:choose>
+                            <c:when test="${totalPages<=5}">
+                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:when test="${nowPage<5}">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:when>
+                            <c:when test="${totalPages-nowPage<5}">
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                <li><a class="disabled">...</a></li>
+                                <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                    <c:choose>
+                                        <c:when test="${nowPage==i}">
+                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li><a class="disabled">...</a></li>
+                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                 </nav>
             </div>
-            <!--//////////////////////////////////////////分頁//////////////////////////////////////////////////////////////// -->
         </div>
+        <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
-</div>
-<script type="text/javascript">
-    function change(nowPage, itemsCount,totalPages) {
+    <script type="text/javascript">
+    function change(nowPage){ 
+        $(window).scrollTop($(window).scrollTop());
+        $(window).scrollLeft($(window).scrollLeft());
+        $("table").load("<%=preLocation%>/protra.jsp table",{"nowPage":nowPage});
+        $(".pagination").load("<%=preLocation%>/protra.jsp .pagination", {"nowPage" : nowPage });
+    }
+    
+    function protraDelete(pro_no,nowPage){ 
         $.ajax({
-        url : "/BA102G2/protra/ProtracServlet",
-        type : "post",
-        data : {
-        action : "CHANGE_AJAX",
-        nowPage : nowPage,
-        itemsCount : itemsCount,
-        },
-        error : function(xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-        },
-        success : function(response) {
-            var productList = JSON.parse(response).productList;
-            pageChange(itemsCount, totalPages, nowPage);
-            tableChange(productList);
-        }
+            url : "<%=request.getContextPath()%>/protra/ProtracServlet",
+            type : "post",
+            data : {
+                action : "DELETE_AJAX",
+                pro_no : pro_no,
+            },
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                },
+            success : function(response) {
+                change(nowPage);
+            }
         });
     }
-
-    function pageChange(itemsCount, totalPages, nowPage) {
-        var preHref = "javascript:change(" + 1 + "," + itemsCount +","+ totalPages +")";
-        var afterHref = "javascript:change(" + totalPages + "," + itemsCount +","+ totalPages +")";
-        var nothing = "<li><a class='disabled'>...</a></li>";
-        if (totalPages <= 5) {
-            var page = "";
-            for (var i = 0; i < totalPages; i++) {
-                var href = "javascript:change(" + (i + 1) + "," + itemsCount +","+ totalPages +")";
-                var active = "";
-                if ((i + 1) == nowPage) {
-                    active = "active";
-                }
-                page = page + "<li><a class='btn btn-info " + active + "' href='" + href + "'" + "data-page='" + (i + 1) + "'" + ">" + (i + 1) + "</a></li>"
-            }
-        }
-        else {
-            if (nowPage < 5) {
-                var page = "";
-                for (var i = 0; i < 5; i++) {
-                    var href = "javascript:change(" + (i + 1) + "," + itemsCount +","+ totalPages + ")";
-                    var active = "";
-                    if ((i + 1) == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info " + active + "' href='" + href + "'" + "data-page='" + (i + 1) + "'" + ">" + (i + 1) + "</a></li>";
-                }
-                page = page + nothing;
-                page = page + "<li><a class='btn btn-info' href='" + afterHref + "''" + "data-page='" + (totalPages) + "'" + ">" + (totalPages) + "</a></li>";
-            }
-            else if (totalPages - nowPage < 5) {
-                var page = "<li><a class='btn btn-info' href='" + preHref + "'" + "data-page='" + (1) + "'" + ">" + (1) + "</a></li>";
-                page = page + "<li><a class='disabled'>...</a></li>";
-                for (var i = totalPages - 5; i <= totalPages; i++) {
-                    var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount + "," + totalPages + ")";
-                    if (i == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info "+ active+"' href='" + href + "'" + "data-page='" + i + "'" + ">" + i + "</a></li>";
-                }
-            }
-            else {
-                var page = "<li><a class='btn btn-info' href='"+preHref+"'"+"data-page='"+1+"'"+">" + 1 + "</a></li>";
-                page = page + nothing;
-                for (var i = nowPage - 2; i <= nowPage + 2; i++) {
-                    var active = "";
-                    var href = "javascript:change(" + i + "," + itemsCount +","+totalPages +")";
-                    if (i == nowPage) {
-                        active = "active";
-                    }
-                    page = page + "<li><a class='btn btn-info "+ active+"' href='" + href + "'" + "data-page='" + i + "'" + ">" + i + "</a></li>"
-                }
-                page = page + nothing;
-                page = page + "<li><a class='btn btn-info' href='"+afterHref+"'"+"data-page='"+totalPages+"'"+">" + totalPages + "</a></li>";
-            }
-        }
-        $("ul.pagination-lg").html(page);
-    }
-
-    function tableChange(productList) {
-        var tbody = "";
-        for (var i = 0; i < productList.length; i++) {
-            tbody = tbody + "<tr>"+
-                   "<td><a target='_blank' href='/BA102G2/Front_end/mall/product.jsp?pro_no=" + productList[i].pro_no + "'>" + productList[i].pro_name + "</a></td>" + 
-                   "<td>" + productList[i].price + "</td>"+
-                   "<td>" + productList[i].amount + "</td>"+
-                   "<td>"+"<img src='/BA102G2/image/ShowImage?pro_no="+productList[i].pro_no+"'>"+
-                   "</tr>";
-        }
-        $("tbody").html(tbody);
-    }
 </script>
-<%@include file="pages/mallIndexFooter.file"%>
+<%@include file="pages/indexFooter.file"%>

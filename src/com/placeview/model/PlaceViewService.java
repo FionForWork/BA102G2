@@ -16,6 +16,9 @@ public class PlaceViewService {
     public void delete(String view_no){
         dao.delete(view_no);
     }
+    public void deleteByFK(String pla_no){
+        dao.deleteByFK(pla_no);
+    }
     public void deleteByFK(String pla_no,Connection connection){
         dao.deleteByFK(pla_no,connection);
     }

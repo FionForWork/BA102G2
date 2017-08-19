@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.product_type.model.Product_typeVO" table="PRODUCT_TYPE" >
+        
+        <id name="protype_no" column="PROTYPE_NO">
+            <generator class="sequence" >
+              <param name="sequence">PROTYPE_NO_SEQ</param>
+            </generator>  
+        </id>
+        
+        <property name="type_name" column="TYPE_NAME" />
+        
+    </class>
+</hibernate-mapping>

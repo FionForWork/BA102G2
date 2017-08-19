@@ -11,7 +11,7 @@ public class PlaceService {
         dao = new PlaceDAO();
     }
 
-    public void addPlace(String name, String lng, String lat, String addr,String pla_desc) {
+    public void insertPlace(String name, String lng, String lat, String addr,String pla_desc) {
         PlaceVO placeVO = new PlaceVO();
         placeVO.setName(name);
         placeVO.setLng(lng);
@@ -21,10 +21,10 @@ public class PlaceService {
         dao.insert(placeVO);
     }
 
-    public void addPlace(PlaceVO placeVO) {
+    public void insertPlace(PlaceVO placeVO) {
         dao.insert(placeVO);
     }
-    public void addPlace(PlaceVO placeVO,List<PlaceViewVO> list) {
+    public void insertPlace(PlaceVO placeVO,List<PlaceViewVO> list) {
         dao.insert(placeVO,list);
     }
 
@@ -62,4 +62,5 @@ public class PlaceService {
     public List<PlaceVO>getRange(String south,String west,String north,String east){
         return dao.getRange( south, west, north, east);
     }
+    
 }
