@@ -1,0 +1,272 @@
+  body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Sacramento", Arial, serif;
+        font-style: bold;
+        color: #F14195;
+    }
+    
+    body,
+    html {
+/*        font-family: "Work Sans", Arial, sans-serif;*/
+        font-family: 'Hind', sans-serif;
+        background-color: #f5f5f5;
+        height: 100%;
+        color: #454B4F;
+        font-size: 14px;
+        /*    color: #F14195;*/
+        line-height: 1.8;
+        vertical-align: middle;
+    }
+    
+    .w3-top {
+        font-family: 'Hind', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: #454b4f;
+    }
+    
+    .clearfix{
+        font-family: 'Hind', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    
+    .clearfix h4{
+        font-family: 'Hind', sans-serif;
+    }
+    
+    #img1 {
+        z-index: -1
+    }
+    
+    #s1 {
+        z-index: 1;
+        color: #ffffff;
+        background-color: #F596AA;
+    }
+    /*
+    #myNavbar{
+        color: #000000;
+        background-color: #ffffff;
+    }
+*/
+    
+    .w3-button:hover {
+        color: #454B4F!important;
+        background-color: #ffecec!important;
+    }
+    /* Create a Parallax Effect */
+    
+    .bgimg-1,
+    .bgimg-2,
+    .bgimg-3 {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    /* First image (Logo. Full height) */
+    
+    .bgimg-1 {
+        background-image: url("img/sayyes2.jpg");
+        min-height: 100%;
+    }
+    /* Second image (Portfolio) */
+    
+    .bgimg-2 {
+        background-image: url("img/isaidYes.jpg");
+        min-height: 400px;
+    }
+    /* Third image (Contact) */
+    
+    .bgimg-3 {
+        background-image: url("img/flower.jpg");
+        min-height: 400px;
+    }
+    
+    .w3-wide {
+        letter-spacing: 10px;
+    }
+    
+    .w3-hover-opacity {
+        cursor: pointer;
+    }
+    /* Turn off parallax scrolling for tablets and phones */
+    
+    @media only screen and (max-device-width: 1024px) {
+        .bgimg-1,
+        .bgimg-2,
+        .bgimg-3 {
+            background-attachment: scroll;
+        }
+    }
+    /*show2*/
+    
+    .wrapper {
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+    }
+    
+    .wrapper:after {
+        padding-top: 60%;
+        display: block;
+        content: '';
+    }
+    
+    .wrapper .column {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20%;
+        float: left;
+        padding: 6px;
+        box-sizing: border-box;
+    }
+    
+    .wrapper .column .inner {
+        width: 100%;
+        position: relative;
+    }
+    
+    .wrapper .column .inner:after {
+        padding-top: 100%;
+        /* ratio 1:1 */
+        display: block;
+        content: '';
+    }
+    /*
+.wrapper .column .inner:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: 300ms ease-in-out;
+  transition: 300ms ease-in-out;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+*/
+    
+    .wrapper .column .inner:hover:before {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    
+    .wrapper .column:nth-child(1) {
+        width: 40%;
+    }
+    
+    .wrapper .column:nth-child(2) {
+        left: 40%;
+    }
+    
+    .wrapper .column:nth-child(3) {
+        left: 40%;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    
+    .wrapper .column:nth-child(4) {
+        width: 40%;
+        left: 60%;
+        top: 0;
+    }
+    
+    .wrapper .column:nth-child(4) .inner:after {
+        padding-top: 48.7%;
+    }
+    /*
+.wrapper .column:nth-child(8) {
+  left: auto;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+*/
+    
+    .wrapper .column:nth-child(5) {
+        width: 40%;
+        top: auto;
+        left: 0;
+        bottom: 0;
+    }
+    
+    .wrapper .column:nth-child(5) .inner:after {
+        padding-top: 48.7%;
+    }
+    
+    .wrapper .column:nth-child(6) {
+        left: 40%;
+        top: auto;
+        bottom: 0;
+        width: 20%;
+    }
+    
+    .wrapper .column:nth-child(7) {
+        left: 60%;
+        top: auto;
+        bottom: 0;
+        width: 40%;
+    }
+    /* BEAUTY */
+    
+    body,
+    html {
+        background-color: #fff;
+        padding: 0;
+    }
+    
+    .wrapper .column .inner {
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .wrapper .column:nth-child(1) .inner {
+        background-image: url('img/wedding5.jpg');
+    }
+    
+    .wrapper .column:nth-child(2) .inner {
+        background-image: url('img/wedding3.jpg');
+    }
+    
+    .wrapper .column:nth-child(3) .inner {
+        background-image: url('img/sweet.jpg');
+    }
+    
+    .wrapper .column:nth-child(4) .inner {
+        background-image: url('img/wedding7.jpg');
+    }
+    
+    .wrapper .column:nth-child(5) .inner {
+        background-image: url('img/wee.jpg');
+    }
+    
+    .wrapper .column:nth-child(6) .inner {
+        background-image: url('img/style.jpg');
+    }
+    
+    .wrapper .column:nth-child(7) .inner {
+        background-image: url('img/forum.jpg');
+    }
+    
+    .servicetopleft{
+        font-family: 'Hind', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        background-color: rgba(69, 75, 79, 1);
+        color: aliceblue;
+        padding: 5px;
+    }
+    
+    #footer {
+        background-color: #ffecec;
+    }
