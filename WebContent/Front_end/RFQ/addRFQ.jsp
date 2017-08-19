@@ -17,7 +17,7 @@
 <div class="container">
 	<div class="panel panel-default col-md-offset-2 col-md-8">
 		<div class="panel-heading">
-			<h1>徵求店家報價</h1>
+			<h1>徵求店家報價1</h1>
 		</div>
 		<div class="panel-body">
 		       <div class="form col-md-offset-1 col-md-10">

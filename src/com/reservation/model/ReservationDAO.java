@@ -56,7 +56,9 @@ public class ReservationDAO implements ReservationDAO_Interface {
 	private static final String GET_COM_MONTH_STMT = 
 			"SELECT * FROM RESERVATION WHERE serv_date >= ? and serv_date <= ? and COM_NO = ?;";
 	private static final String GET_COM_DISTINCT_MEM_NO_STMT = "SELECT DISTINCT MEM_NO FROM RESERVATION WHERE COM_NO = ?";
-
+	
+	private static final String GETDELETERES =
+			"select res_no from reservation where sysdate-res_date > 3 and status = '0'";
 	@Override
 	public void insert(ReservationVO reservationVO, CalendarVO calendarVO) {
 		Connection con = null;
@@ -802,6 +804,55 @@ public class ReservationDAO implements ReservationDAO_Interface {
 				reservationVO.setStatus(rs.getString("status"));
 				reservationVO.setScore(rs.getInt("score"));
 				list.add(reservationVO);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<String> getDeleteRes() {
+		List<String> list = new ArrayList<String>();
+		ReservationVO reservationVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETDELETERES);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				reservationVO = new ReservationVO();
+				list.add(rs.getString("res_no"));
 			}
 			
 		} catch (SQLException e) {

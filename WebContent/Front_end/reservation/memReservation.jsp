@@ -44,6 +44,7 @@
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,2)">尚未評價</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,3)">服務完成</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,5)">訂單取消</a></li>
 <br>
 </ul>
 <div id="allRes">
