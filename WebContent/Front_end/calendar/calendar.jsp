@@ -232,7 +232,7 @@
 				</div>
 				<div class="modal-body form-group">
 					<label>日期 : </label>
-					<input type="text" id="datepicker" class="form-control" name="cal_date" value="">
+					<input type="text" id="datepicker" class="form-control" name="cal_date" value="" disabled>
 					<br>
 					<label>活動內容 :</label>
 					<textarea rows="3" class="form-control" name="content"></textarea>

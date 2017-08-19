@@ -56,11 +56,12 @@ public class ReservationService {
 		dao.update(reservationVO);
 	}
 	
-	public void updateScore(String status,Integer score,String res_no){
+	public void updateScore(String status,Integer score,String res_no,String serv_no){
 		ReservationVO reservationVO = new ReservationVO();
 		reservationVO.setRes_no(res_no);
 		reservationVO.setScore(score);
 		reservationVO.setStatus(status);
+		reservationVO.setServ_no(serv_no);
 		
 		dao.updateScore(reservationVO);
 	}

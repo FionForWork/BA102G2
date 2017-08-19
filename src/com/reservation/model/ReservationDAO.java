@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import com.calendar.model.*;
 import com.rfq_detail.model.*;
+import com.serv.model.*;
 
 public class ReservationDAO implements ReservationDAO_Interface {
 
@@ -563,7 +564,13 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			pstmt.setString(3, reservationVO.getRes_no());
 
 			pstmt.executeUpdate();
-
+			
+			ServDAO servDAO = new ServDAO();
+			ServVO servVO = servDAO.findByPrimaryKey(reservationVO.getServ_no());
+			servVO.setTimes(servVO.getTimes()+1); 
+			servVO.setScore(servVO.getScore()+reservationVO.getScore());
+			servDAO.updateScore(servVO);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
