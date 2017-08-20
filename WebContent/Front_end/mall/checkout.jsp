@@ -6,9 +6,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-//MemVO memVO=(MemVO)session.getAttribute("memVO");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+    MemVO memVO=(MemVO)session.getAttribute("memVO");
     MemService memService=new MemService();
-    MemVO memVO =memService.getOneMem("1010");
+//     MemVO memVO =memService.getOneMem("1010");
     List<ProductVO> carList = (session.getAttribute("carList") == null) ? new ArrayList<ProductVO>() : (List<ProductVO>) session.getAttribute("carList");
     List<Integer> countList = (session.getAttribute("countList") == null) ? new ArrayList<Integer>() : (List<Integer>) session.getAttribute("countList");
     int totalPrice = 0;

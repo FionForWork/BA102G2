@@ -12,10 +12,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-    int carTotal = (session.getAttribute("carTotal") == null) ? 0 : Integer.valueOf(String.valueOf((session.getAttribute("carTotal"))));
-//MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemVO memVO=(MemVO)session.getAttribute("memVO");
     MemService memService=new MemService();
-    MemVO memVO =memService.getOneMem("1010");
+//     MemVO memVO =memService.getOneMem("1010");
+    int carTotal = (session.getAttribute("carTotal") == null) ? 0 : Integer.valueOf(String.valueOf((session.getAttribute("carTotal"))));
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     ProtraService protraService = new ProtraService();
