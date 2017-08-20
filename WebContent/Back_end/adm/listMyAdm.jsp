@@ -40,5 +40,7 @@ Object admVO = session.getAttribute("admVO");
 			
 		</tr>
 </table>
+	<a href="<%=request.getContextPath()%>/Back_end/adm/updatePwd.jsp
+">修改密碼</a>
 </div>
 <%@ include file="/Back_end/pages/backFooter.file"%>

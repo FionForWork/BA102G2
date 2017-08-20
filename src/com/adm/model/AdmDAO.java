@@ -217,6 +217,7 @@ public class AdmDAO implements AdmDAO_Interface{
 					admVO.setId(rs.getString("id"));
 					admVO.setPwd(rs.getString("pwd"));
 					admVO.setName(rs.getString("name"));
+					admVO.setJob(rs.getString("job"));
 					admVO.setStatus(rs.getString("status"));
 				
 					

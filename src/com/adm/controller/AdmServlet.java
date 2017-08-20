@@ -82,14 +82,14 @@ public class AdmServlet extends HttpServlet {
 					}
 				 if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/Back_end/login/updatePwd.jsp");
+								.getRequestDispatcher("/Back_end/adm/updatePwd.jsp");
 						failureView.forward(req, res);
 						return;//程式中斷
 					}
 				 
 				 if(!oldpwd.equals(a.getPwd())){//對比輸入的舊密碼
 					 errorMsgs.add("舊密碼錯誤更改失敗");
-					 String url = "/Back_end/login/updatePwd.jsp";
+					 String url = "/Back_end/adm/updatePwd.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); 
 						successView.forward(req, res);	
 				}else{
