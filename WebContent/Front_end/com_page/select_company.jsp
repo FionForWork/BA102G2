@@ -27,10 +27,6 @@
 	List<ServVO> servList = servSvc2.getAllAvg();
 	pageContext.setAttribute("servList", servList);
 	
-	Service_TypeService service_TypeSvc = new Service_TypeService();
-	List<Service_TypeVO> service_TypeList = service_TypeSvc.getAllServiceType();
-	pageContext.setAttribute("service_TypeList", service_TypeList);
-	
 	DecimalFormat df = new DecimalFormat("#,##0.0"); 
 	pageContext.setAttribute("df", df);
 %>
@@ -43,12 +39,11 @@
 	<div class="container">
         <div class="col-md-offset-1">
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">所有廠商</a></li>
-            <c:forEach var="service_TypeList" items="${service_TypeList}">
-            <c:if test="${service_TypeList.stype_no==param.stype_no}">
-                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${param.stype_no}">${service_TypeList.name}</a></li>
-            </c:if>    
-			</c:forEach>
+                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp" style="color: black;text-decoration:none;">所有廠商</a></li>
+            <jsp:useBean id="service_TypeSvc"  scope="page" class="com.service_type.model.Service_TypeService"/>
+                <li>
+                <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${service_TypeSvc.getOneServiceType(param.stype_no).stype_no}" style="color: black;text-decoration:none;">${service_TypeSvc.getOneServiceType(param.stype_no).name}</a>
+                </li>
             </ul>
         </div>
     </div>

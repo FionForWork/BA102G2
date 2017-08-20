@@ -48,7 +48,7 @@ public class ContactUs extends HttpServlet {
 		if (!errorMsgs.isEmpty()) {
 			String requestURL = new String(req.getParameter("requestURL"));
 			req.setAttribute("map", map);
-			req.getRequestDispatcher("/Front_end/com_page/Index.jsp").forward(req, res);
+			req.getRequestDispatcher("/Front_end/homepage/homePage.jsp").forward(req, res);
 			return;
 			
 		}
@@ -62,7 +62,7 @@ public class ContactUs extends HttpServlet {
 		MailService mailService = new MailService();
 	    mailService.sendMail(to, subject, messageText);
 	    
-		req.getRequestDispatcher("/Front_end/com_page/Index.jsp").forward(req, res);
+		req.getRequestDispatcher("/Front_end/homepage/homePage.jsp").forward(req, res);
 	}
 
 }

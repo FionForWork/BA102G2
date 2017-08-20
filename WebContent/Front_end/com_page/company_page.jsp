@@ -188,7 +188,7 @@
 		</span>
 	</div>
 	<div class="container">
-<!-- 		<div class="row"> -->
+		<div class="row">
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
@@ -205,10 +205,10 @@
 					</ul>
 				</div>				
 			</c:forEach>
-<!-- 			</div> -->
+			</div>
 		</div>	
 		<div class="container">
-<!-- 			<div class="row"> -->
+			<div class="row">
 			<div id="more_works" style="display: none;">
 			<c:forEach var="worksVO" items="${worksList}" begin="11">
 				<div class="col-xs-12 col-sm-4">
@@ -227,7 +227,7 @@
 				</div>
 			</c:forEach>
 			</div>
-<!-- 		</div> -->
+		</div>
 	</div>
 
 
@@ -315,9 +315,11 @@
 	<div class="container">
 		<div class="row com_intro">
 
-			<div class="col-xs-12 col-sm-4"></div>
-			<div class="col-xs-12 col-sm-4">${comVO.com_desc}</div>
-			<div class="col-xs-12 col-sm-4"></div>
+			<div class="col-xs-12 col-sm-4">
+			<img class="com_logo center-block" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" alt="She Said Yes">
+			</div>
+			<div class="col-xs-12 col-sm-8" style="margin-top:30px;">${comVO.com_desc}</div>
+			
 		</div>
 	</div>
 

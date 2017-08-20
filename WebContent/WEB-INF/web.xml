@@ -107,7 +107,6 @@
     <servlet-name>MessageServlet</servlet-name>
     <url-pattern>/message/message.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ContactUs</servlet-name>
     <servlet-class>wang.test.ContactUs</servlet-class>
@@ -116,4 +115,13 @@
     <servlet-name>ContactUs</servlet-name>
     <url-pattern>/ContactUs</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CompanyCompositeQuery</servlet-name>
+    <servlet-class>wang.test.CompanyCompositeQuery</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompanyCompositeQuery</servlet-name>
+    <url-pattern>/CompanyCompositeQuery</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
