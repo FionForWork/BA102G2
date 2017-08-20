@@ -13,9 +13,9 @@
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-	//     MemVO memVO=(MemVO)session.getAttribute("memVO");
+	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": request.getParameter("now_Pro_Type");
 	String now_Order_Type = (request.getParameter("now_Order_Type") == null)? "0": request.getParameter("now_Order_Type");
 	ProductService productService = new ProductService();
@@ -47,6 +47,14 @@
 <%@include file="pages/indexHeader.file"%>
 <div class="text-center" style="height: 50px; margin-top: 50px"></div>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
+<style>
+    #pro_name {
+  overflow : hidden;
+  text-overflow : ellipsis;
+  white-space : nowrap;
+}
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-2 col-md-2">
@@ -89,9 +97,8 @@
                                 <a class="thumbnail thumbnail-service mod-shadow img-label animated flipInX" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">
                                     <div class="caption">
                                         <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}">
-                                        <h5 style="height: 5px;">${productVO.pro_name}</h5>
-                                        <span class="text-pink price">NT </span>
-                                        <b class="text-pink price " style="font-size: 2em;">${productVO.price}</b>
+                                        <div id="pro_name"><h5>${productVO.pro_name}</h5></div>
+                                        <b class="text-pink price " style="font-size: 2em;">NT${productVO.price}</b>
                                     </div>
                                 </a>
                             </div>
