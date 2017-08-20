@@ -56,6 +56,63 @@ public class AdmServlet extends HttpServlet {
 		
 		
 		
+		if ("updatePwd".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+		
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				AdmVO admVO = new AdmVO();
+				String	adm_no = req.getParameter("adm_no").trim();
+				String old = req.getParameter("oldpwd").trim();  //s管理員輸入的舊密碼
+				String news = req.getParameter("pwd").trim(); // 管理員輸入的新的密碼
+				
+				int	var2 = Integer.valueOf(news)*36+77;//新密碼轉乘INT 加密
+				String pwd=	Integer.toString(var2);//加密過新密碼轉回字串
+				
+				AdmService admSvc =new AdmService();
+				AdmVO a =admSvc.oldPwd(adm_no);//資料庫拉出來資料的舊密碼
+				int	var =Integer.valueOf(old)*36+77; //s管理員輸入的加密
+				String oldpwd=	Integer.toString(var);//轉成字串
+				
+				 if (oldpwd ==null|| (oldpwd.trim()).length() == 0 ||pwd == null || (pwd.trim()).length() == 0 ) {
+						errorMsgs.add("新舊密碼請勿空白或是少於5碼");
+					}
+				 if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/Back_end/login/updatePwd.jsp");
+						failureView.forward(req, res);
+						return;//程式中斷
+					}
+				 
+				 if(!oldpwd.equals(a.getPwd())){//對比輸入的舊密碼
+					 errorMsgs.add("舊密碼錯誤更改失敗");
+					 String url = "/Back_end/login/updatePwd.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); 
+						successView.forward(req, res);	
+				}else{
+					admVO =admSvc.updatePwd(adm_no, pwd);//對的話就存入管理員加密新密碼
+				}
+				
+				
+	
+
+			/***************************3.新增完成,準備轉交(Send the Success view)***********/
+		
+				String url = "/Back_end/adm/listOneAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);	
+				/***************************其他可能的錯誤處理**********************************/
+
+		}
+		
+		
+		
+		
+		
+		
 		if ("logout".equals(action)) {
 			HttpSession session = req.getSession();
 			session.invalidate();
@@ -108,7 +165,7 @@ public class AdmServlet extends HttpServlet {
 								 
 						      System.out.println("oneAll---"+oneAll);
 								 System.out.println("oneAll.size()---"+oneAll.size());
-								
+								 System.out.println( oneAll.values().iterator().next().contains("01"));
 										for(int a = 0;a<oneAll.values().iterator().next().size();a++){
 											 System.out.println(oneAll.values().iterator().next().get(a));
 											 System.out.println(oneAll.values().iterator().next());
@@ -274,7 +331,7 @@ public class AdmServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("admVO", admVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/Back_end/adm/listOneAdm.jsp";
+				String url = "/Back_end/adm/listAllAdm.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 

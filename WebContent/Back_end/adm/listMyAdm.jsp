@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%
-AdmVO admVO = (AdmVO) request.getAttribute("admVO"); 
+Object admVO = session.getAttribute("admVO");     
 %>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
 
@@ -13,7 +13,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 
 	
 		<td>
-		<h3>管理員資料 - ListOneAmd.jsp</h3>
+		<h3>我的資料</h3>
 				<a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp
 ">回首頁</a>
 		</td>

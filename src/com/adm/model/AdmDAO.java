@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.com.model.ComVO;
+import com.mem.model.MemVO;
 
 public class AdmDAO implements AdmDAO_Interface{
 
@@ -28,7 +29,10 @@ public class AdmDAO implements AdmDAO_Interface{
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO adminstrator (adm_no,id,pwd,name,job,status) VALUES (ltrim(TO_CHAR(admid_sq.NEXTVAL,'0009')), ?, ?, ?, ?, ?)";
-	
+	private static final String OLDPWD = 
+			"SELECT pwd from adminstrator where adm_no = ?";
+	private static final String UPDATEPWD = 
+			"UPDATE adminstrator set pwd=? where adm_no = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT adm_no,id,pwd,name,job,status FROM adminstrator order by adm_no";
 		private static final String GET_ONE_STMT = 
@@ -40,6 +44,108 @@ public class AdmDAO implements AdmDAO_Interface{
 		private static final String LOGINID ="SELECT id FROM adminstrator";
 		private static final String findById = "SELECT adm_no,id,pwd,name,job,status from adminstrator where id= ?";
 	
+		
+		
+		@Override
+		public void updatePwd(AdmVO admVO) {
+			// TODO Auto-generated method stub
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATEPWD);
+				pstmt.setString(1, admVO.getPwd());
+				pstmt.setString(2, admVO.getAdm_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		}
+		
+		
+		@Override
+		public AdmVO oldPwd(String adm_no) {
+			AdmVO admVO =null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(OLDPWD);
+
+				pstmt.setString(1,adm_no);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+				
+					admVO = new AdmVO();
+					admVO.setPwd(rs.getString("pwd"));
+				
+					
+				}
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return admVO;
+		}
+		
+		
+		
+		
+		
+		
 		@Override
 		public List<AdmVO> loginid() {
 			List<AdmVO> list = new ArrayList<AdmVO>();
