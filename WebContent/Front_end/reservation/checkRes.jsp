@@ -19,20 +19,6 @@
 		font-size:18px
 	}
 </style>
-<script type="text/javascript">
-$(document).ready(function(){
-	var num = 3;
-	var timeId = setInterval(countDown , 1000);
-
-	function countDown(){
-		num--;
-		if(num == 0){
-			clearInterval(timeId);
-		}
-		document.getElementById("divNum").innerHTML = num;
-	}
-});
-</script>
 <body>
 <%@ include file="page/checkedHeader.file" %>
 <div class="container text-center">

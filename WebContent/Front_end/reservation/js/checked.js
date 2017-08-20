@@ -36,3 +36,16 @@ for (i = mid; i < end; i++) {
     }, 1 + (i * animationSpeed) / 3);
 }
 });
+
+$(document).ready(function(){
+	var num = 3;
+	var timeId = setInterval(countDown , 1000);
+
+	function countDown(){
+		num--;
+		if(num == 0){
+			clearInterval(timeId);
+		}
+		document.getElementById("divNum").innerHTML = num;
+	}
+});

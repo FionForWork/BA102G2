@@ -37,8 +37,6 @@
 		</div>
 	</div>
 </div>
-
-
 <%	int rowsPerPage = 4; // 每頁的筆數
 	int rowsNumber = 0;	// 總筆數
 	int pageNumber = 0; // 總頁數

@@ -166,4 +166,4 @@
     
     <%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
 
-    </div><br>
+    <br>

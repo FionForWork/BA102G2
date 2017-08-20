@@ -6,6 +6,15 @@
 		color:black;
 		cursor:pointer;
 	}
+	
+		.busy-td{
+		position:relative;
+		width:90px;
+		height:115px;
+		padding: 0px;
+		color:black;
+	}
+	
 /* 	td a { */
 /* 	    display: block; */
 /* 	    margin: -10em; */
