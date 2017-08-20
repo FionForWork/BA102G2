@@ -6,10 +6,10 @@
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
-<title>登入錯誤</title>
+<title>您被停權</title>
 <br><br><br><br><br><br>
 
-<center> <h1>您的帳號錯誤請先登出後登入對的帳號!</h1></center>
+<center> <h1>你的帳號因被檢舉過多 ,被系統停權!</h1></center>
 
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
@@ -17,4 +17,4 @@
 <br><br><br><br>
 
 
-<%@ include file="/Front_end/mem/page/register_footer.file" %>
+<%@ include file="/Front_end/mem/page/register_footer.file"%>

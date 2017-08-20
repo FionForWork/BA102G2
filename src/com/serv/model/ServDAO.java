@@ -27,9 +27,11 @@ public class ServDAO implements ServDAO_Interface {
 			e.printStackTrace();
 		}
 	}
+
 	
-		private static final String INSERT_STMT = 
+	private static final String INSERT_STMT = 
 			"INSERT INTO service (serv_no,stype_no,com_no,deposit,price,title,content,score,times,status) VALUES (ltrim(TO_CHAR(SERVNO_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?,0,0,?)";
+
 		private static final String GET_ALL_STMT = 
 			"SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service order  by score desc";
 		private static final String GET_ONE_STMT = 
@@ -44,8 +46,7 @@ public class ServDAO implements ServDAO_Interface {
 		private static final String GET_search_STMT = 
 				"SELECT * FROM service where title like ?";
 		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
-		private static final String GET_COM_SERVTYPE = 
-				"SELECT DISTINCT stype_no FROM SERVICE WHERE COM_NO = ?";
+
 		@Override
 		public List<ServVO> findBysh(String sh) {
 			// TODO Auto-generated method stub
@@ -105,6 +106,8 @@ public class ServDAO implements ServDAO_Interface {
 			return list;
 		}
 		
+
+	
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -478,6 +481,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
 				servVO.setScore(rs.getDouble("score"));
+				servVO.setStatus(rs.getString("status"));
 				list.add(servVO); // Store the row in the list
 			} 
 		}catch (SQLException se) {
@@ -530,49 +534,6 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setScore(rs.getDouble("avg(score)"));
 				servVO.setPrice(rs.getInt("avg(price)"));
 				list.add(servVO);
-			}
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
-
-	@Override
-	public List<String> getComStype(String com_no) {
-		List<String> list = new ArrayList<String>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_COM_SERVTYPE);
-			pstmt.setString(1, com_no);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				list.add(rs.getString("stype_no"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

@@ -60,7 +60,7 @@ public class AdmServlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.invalidate();
 			//整個連線拔掉
-			res.sendRedirect(req.getContextPath()+"/Back_end/adm/login.jsp");
+			res.sendRedirect(req.getContextPath()+"/Back_end/login/login.jsp");
 		    return;
 		}
 		
@@ -73,32 +73,50 @@ public class AdmServlet extends HttpServlet {
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
-			
+			AutService autSvc = new AutService();
 			 AdmService admSvc = new AdmService();
 			 List<AdmVO> list = admSvc.loginid();
+			 
 			
-	
+			
 			 for(int i=0;i<list.size();i++){
 				 if (list.get(i).getId().equals(id)) {
 					 
-					AdmVO list2= admSvc.getOneAdmById(id);
-					String notRealPwd =list2.getPwd();
+					AdmVO pp= admSvc.getOneAdmById(id);
+					String notRealPwd =pp.getPwd();
 					int var=(Integer.valueOf(notRealPwd)-77)/36;
 					String RealPwd =Integer.toString(var);
 					System.out.println("notRealPwd : "+notRealPwd);
 					System.out.println("RealPwd : "+RealPwd);
 					System.out.println();
-						 if (RealPwd.equals(pwd)) {
+					if (RealPwd.equals(pwd)) {
 							HttpSession session = req.getSession();
 							 session.removeAttribute("id");
 							 session.removeAttribute("admVO");
 
 								
-						      AdmVO admVO = admSvc.getOneAdmById(id);
-						    
+							AdmVO admVO = admSvc.getOneAdmById(id);
+						      String status=admVO.getStatus();
+						      if(status.equals("停權")){
+									res.sendRedirect(req.getContextPath()+"/Back_end/login/statusNotGood.jsp");
+									return;
+								}
+						   
 						      session.setAttribute("id", id);
 						      session.setAttribute("admVO", admVO);
-
+						      Map<String,List> oneAll =autSvc.getOneAll(admVO.getAdm_no());
+								 
+						      System.out.println("oneAll---"+oneAll);
+								 System.out.println("oneAll.size()---"+oneAll.size());
+								
+										for(int a = 0;a<oneAll.values().iterator().next().size();a++){
+											 System.out.println(oneAll.values().iterator().next().get(a));
+											 System.out.println(oneAll.values().iterator().next());
+											 session.setAttribute("aut", oneAll.values().iterator().next());
+										}
+									
+								
+						      System.out.println("sssssssssss");
 						      try {
 						    	  String admlocation = (String) session.getAttribute("admlocation");
 						          if (admlocation != null) {

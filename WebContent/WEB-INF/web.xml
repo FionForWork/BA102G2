@@ -50,7 +50,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>loginAdmFilter</filter-name>
-		<url-pattern>/Back_end/adm/*</url-pattern>
+		<url-pattern></url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

@@ -118,8 +118,12 @@ public List<MemVO> loginpwd(){
 	public List<MemVO> getAll() {
 		return dao.getAll();
 	}
+
 	public Set<MemVO> getMemsByReport(Integer report) {
 		return dao.getMemsByReport(report);
+	}
+	public Set<MemVO> getMemsByStatus(String status) {
+		return dao.getMemsByStatus(status);
 	}
 	
 }

@@ -8,6 +8,9 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <%@ include file="page/register_header.file"%>
+
+	
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/mem/css/dcalendar.picker.css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/piexif.min.js" type="text/javascript"></script>
@@ -60,16 +63,16 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<div>	<input type="radio" name="sex" size="45" value="<%= (memVO==null)? "MALE" : memVO.getSex()%>" />男</div>
 	</div>
 	<br>
+	
 	<div class="form-group">
 		<%java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());%>
-		<span>生日 :<font color='red'>${errorMsgs.get("bday")}</font></span>
-	<input type="date" name="bday" class="form-control" value="<%= (memVO==null)? date_SQL : memVO.getBday()%>">
-		
+		<span>生日 :<font color='red'>${errorMsgs.get("bday")}</font><br></span>
+		<input id='mydatepicker2' size="100" class="form-control"  name="bday"  type='text' value="" />
 	</div>
 	
 	<div class="form-group">
 		<span>連絡電話 :<font color='red'>${errorMsgs.get("phone")}</font></span>
-		<input type="TEXT" class="form-control"name="phone" required title="只能輸入數字,如為市話請加上區碼" pattern="^[0-9]*$" 
+		<input type="TEXT" class="form-control" name="phone" required title="只能輸入數字,如為市話請加上區碼" pattern="^[0-9]*$" 
 			value="<%= (memVO==null)? "0912345678" : memVO.getPhone()%>" />
 	</div>
 	<div class="form-group">
@@ -99,7 +102,13 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 
 <%@ include file="page/register_footer.file"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/Front_end/mem/js/dcalendar.picker.js"></script>
+<script language="javascript"> 
+		$('#mydatepicker2').dcalendarpicker({
+			format:'yyyy-mm-dd'
+		}); 
 
+	</script>
 <script language="javascript"> 
 	function check() 
 	{ 
@@ -120,6 +129,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	        showUpload: false,
 	        theme: "fa",
 	        
-	    }); s
+	    });
 
-</script> 
+	</script>
+	

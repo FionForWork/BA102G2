@@ -41,6 +41,7 @@ public class ComServlet extends HttpServlet {
 	}
 
 	 
+	
 	public String[] latlng(String loc)
 	{
 	        String xx="",yy="";
@@ -372,7 +373,7 @@ public class ComServlet extends HttpServlet {
 							 session.removeAttribute("comVO");
 							 
 						      ComVO comVO = comSvc.getOneComById(id);
-					
+						      String status=comVO.getStatus();
 						 
 						     String ststus=  comVO.getStatus();
 						     System.out.println(ststus);
@@ -380,7 +381,11 @@ public class ComServlet extends HttpServlet {
 									 
 						    	  res.sendRedirect(req.getContextPath()+"/Front_end/com/notConfirmCom.jsp");
 							      return;
+								 }else if(status.equals("停權")){
+									 res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+										return;
 								 }else{
+									 
 									 session.setAttribute("id", id);
 								     session.setAttribute("comVO", comVO);
 								     
@@ -490,8 +495,8 @@ public class ComServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				comVO = comSvc.getOneComById(id);
 				
-			      session.setAttribute("id", id);
-			      session.setAttribute("comVO", comVO);
+//			      session.setAttribute("id", id);
+//			      session.setAttribute("comVO", comVO);
 			      
 			     
 			     //管理員可用 int passRandom = (int)(Math.random()*999+1);  

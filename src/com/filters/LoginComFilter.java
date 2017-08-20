@@ -43,7 +43,7 @@ public class LoginComFilter implements Filter {
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
 	
-	
+		
 		
 		
 		if (id == null) {
@@ -54,8 +54,9 @@ public class LoginComFilter implements Filter {
 			try{
 				ComVO comVO =(ComVO)session.getAttribute("comVO");
 				comVO.getCom_no();
+				
 			}catch(Exception e){
-				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorlogin.jsp");
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
 				 return;
 			}
 				chain.doFilter(request, response);

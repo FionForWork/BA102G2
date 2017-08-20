@@ -8,6 +8,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <title>修改會員</title>
 <%@ include file="page/member_header.file"%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/mem/css/dcalendar.picker.css"/>
 
 <link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
@@ -60,9 +61,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 			
 		</div>
 		<div class="form-group">
-           <span>生日:<font color='red'>${errorMsgs.get("bday")}</font></span>
-           <input type="date" class="form-control"  name="bday" value="${memVO.bday}">
-    	</div>
+           <span>生日:<font color='red'>${errorMsgs.get("bday")}</font><br></span>
+  			 <input id='mydatepicker2' size="85" class="form-control"   name="bday"  type='text' value="" />
+        </div>
     	<div class="form-group">
            <span >電話:<font color='red'>${errorMsgs.get("phone")}</font></span>
            <input type="text" class="form-control"  name="phone" value="${memVO.phone}">
@@ -103,5 +104,11 @@ $("#input-1").fileinput({
         
     }); 
 </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/Front_end/mem/js/dcalendar.picker.js"></script>
+<script language="javascript"> 
+		$('#mydatepicker2').dcalendarpicker({
+			format:'yyyy-mm-dd'
+		}); 
 
+	</script>
 <%@ include file="page/register_footer.file"%>

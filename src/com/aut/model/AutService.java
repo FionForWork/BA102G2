@@ -1,8 +1,10 @@
 package com.aut.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.aut.model.AutDAO_Interface;
+import com.com.model.ComVO;
 
 public class AutService {
 
@@ -12,7 +14,9 @@ public class AutService {
 		dao = new AutDAO();
 		
 	}
-	
+	public  AutVO getOneAut(String adm_no){
+		return dao.findByPrimaryKey(adm_no);
+	}
 	public AutVO addAut(String adm_no,String id){
 		AutVO autVO=new AutVO();
 		autVO.setAdm_no(adm_no);
@@ -32,5 +36,8 @@ public class AutService {
 	public List<AutVO> getAll(){
 		return dao.getAll();
 	}
-	
+	public Map<String, List> getOneAll(String adm_no){
+		
+		return dao.getOneAll(adm_no);
+	}
 }

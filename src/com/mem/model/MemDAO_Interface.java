@@ -17,6 +17,7 @@ public interface MemDAO_Interface {
      public MemVO findByPrimaryKey(String mem_no);
      public List<MemVO> getAll();
      public Set<MemVO> getMemsByReport(Integer report);
+     public Set<MemVO> getMemsByStatus(String status);
      public List<MemVO> loginid();
      public List<MemVO> loginpwd();
      public MemVO findById(String id);

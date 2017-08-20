@@ -16,8 +16,8 @@ public class ServJDBCDAO implements ServDAO_Interface{
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "group2";
-	String passwd = "group2";
+	String userid = "yes";
+	String passwd = "123";
 	
 	
 	
@@ -34,9 +34,8 @@ public class ServJDBCDAO implements ServDAO_Interface{
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
 		private static final String GET_COM_STMT = 
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
-		private static final String GET_COM_SERVTYPE = 
-				"SELECT DISTINCT stype_no FROM SERVICE WHERE COM_NO = ?";
 		
+	
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;
@@ -243,7 +242,37 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		
 		return servVO;
 	}
+	@Override
+	public List<String> findByStype_no(String stype_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+
+	@Override
+	public List<ServVO> getCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<ServVO> findBysh(String sh) {
+		return null;
+	}
+
+	@Override
+	public List<ServVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<ServVO> getAllAvg() {
+
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<ServVO> getAll() {
 		List<ServVO> list = new ArrayList<ServVO>();
@@ -309,126 +338,63 @@ public class ServJDBCDAO implements ServDAO_Interface{
 	}
 	
 	
-	@Override
-	public List<String> getComStype(String com_no) {
-		List<String> list = new ArrayList<String>();
-		ServVO servVO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			
-			pstmt = con.prepareStatement(GET_COM_SERVTYPE);
-			pstmt.setString(1, com_no);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				// empVO 也稱為 Domain objects
-				servVO = new ServVO();
-				list.add(rs.getString("stype_no")); // Store the row in the list
-			}
-			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
-	
-	
-	
 	
 	public static void main(String[] args) {
 		
 		ServJDBCDAO dao =new ServJDBCDAO();
 		//新增
-//		ServVO servVO01 =new ServVO();
-//		servVO01.setStype_no("0001");
-//		servVO01.setCom_no("2001");
-//		servVO01.setDeposit(2000);
-//		servVO01.setPrice(15000);
-//		servVO01.setTitle("測試資料");
-//		servVO01.setContent("測試內榮");
-//		dao.insert(servVO01);
-//		
-//		//修改
-//		ServVO servVO02=new ServVO();
-//	
-//		servVO02.setStype_no("0001");
-//		servVO02.setCom_no("2001");
-//		servVO02.setDeposit(2000);
-//		servVO02.setPrice(15000);
-//		servVO02.setTitle("測試資料");
-//		servVO02.setContent("測試內榮");
-//		dao.insert(servVO02);
-//		
-//		// 刪除
-//		dao.delete("0010");
-//		
-//		// 查詢一個
-//		ServVO servVO03 = dao.findByPrimaryKey("0001");
-//		
-//		System.out.print(servVO03.getServ_no() + ",");
-//		System.out.print(servVO03.getStype_no() + ",");
-//		System.out.print(servVO03.getCom_no() + ",");
-//		System.out.print(servVO03.getDeposit() + ",");
-//		System.out.print(servVO03.getPrice() + ",");
-//		System.out.print(servVO03.getTitle() + ",");
-//		System.out.print(servVO03.getContent()+",");
-//		System.out.print(servVO03.getTimes()+",");
-//		System.out.println(servVO03.getScore());
-//		System.out.println("---------------------");
-//		
-//		
-//		// 查詢
-//		List<ServVO> list = dao.getAll();
-//		for (ServVO aserv : list) {
-//			System.out.print(aserv.getServ_no() + ",");
-//			System.out.print(aserv.getStype_no() + ",");
-//			System.out.print(aserv.getCom_no() + ",");
-//			System.out.print(aserv.getDeposit() + ",");
-//			System.out.print(aserv.getPrice() + ",");
-//			System.out.print(aserv.getTitle() + ",");
-//			System.out.print(aserv.getContent()+",");
-//			System.out.print(aserv.getTimes()+",");
-//			System.out.print(aserv.getScore());
-//
-//			System.out.println();
-//		}
+		ServVO servVO01 =new ServVO();
+		servVO01.setStype_no("0001");
+		servVO01.setCom_no("2001");
+		servVO01.setDeposit(2000);
+		servVO01.setPrice(15000);
+		servVO01.setTitle("測試資料");
+		servVO01.setContent("測試內榮");
+		dao.insert(servVO01);
 		
-		List<String> list = dao.getComStype("2001");
-		for(String s : list){
-			System.out.println(s);
+		//修改
+		ServVO servVO02=new ServVO();
+	
+		servVO02.setStype_no("0001");
+		servVO02.setCom_no("2001");
+		servVO02.setDeposit(2000);
+		servVO02.setPrice(15000);
+		servVO02.setTitle("測試資料");
+		servVO02.setContent("測試內榮");
+		dao.insert(servVO02);
+		
+		// 刪除
+		dao.delete("0010");
+		
+		// 查詢一個
+		ServVO servVO03 = dao.findByPrimaryKey("0001");
+		
+		System.out.print(servVO03.getServ_no() + ",");
+		System.out.print(servVO03.getStype_no() + ",");
+		System.out.print(servVO03.getCom_no() + ",");
+		System.out.print(servVO03.getDeposit() + ",");
+		System.out.print(servVO03.getPrice() + ",");
+		System.out.print(servVO03.getTitle() + ",");
+		System.out.print(servVO03.getContent()+",");
+		System.out.print(servVO03.getTimes()+",");
+		System.out.println(servVO03.getScore());
+		System.out.println("---------------------");
+		
+		
+		// 查詢
+		List<ServVO> list = dao.getAll();
+		for (ServVO aserv : list) {
+			System.out.print(aserv.getServ_no() + ",");
+			System.out.print(aserv.getStype_no() + ",");
+			System.out.print(aserv.getCom_no() + ",");
+			System.out.print(aserv.getDeposit() + ",");
+			System.out.print(aserv.getPrice() + ",");
+			System.out.print(aserv.getTitle() + ",");
+			System.out.print(aserv.getContent()+",");
+			System.out.print(aserv.getTimes()+",");
+			System.out.print(aserv.getScore());
+
+			System.out.println();
 		}
 		
 		
@@ -437,38 +403,8 @@ public class ServJDBCDAO implements ServDAO_Interface{
 	}
 
 
-	@Override
-	public List<String> findByStype_no(String stype_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<ServVO> getCom(String com_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ServVO> getAll(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-
-	@Override
-	public List<ServVO> findBysh(String sh) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<ServVO> getAllAvg() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }
 
