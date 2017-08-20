@@ -1,6 +1,6 @@
 package com.com.model;
 
-import java.util.List;
+import java.util.*;
 
 import com.com.model.ComDAO;
 import com.com.model.ComDAO_Interface;
@@ -75,5 +75,8 @@ public class ComService {
 	
 	public List<ComVO> getAll(){
 		return dao.getAll();
-	}	
+	}
+	public List<ComVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

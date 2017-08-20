@@ -9,5 +9,5 @@ public interface ComDAO_Interface {
     public void delete(String com_no);
     public ComVO findByPrimaryKey(String com_no);
     public List<ComVO> getAll();
-
+    public List<ComVO> getAll(Map<String, String[]> map);
 }

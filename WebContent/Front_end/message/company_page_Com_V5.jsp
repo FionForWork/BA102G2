@@ -59,7 +59,7 @@
 					<div class="panel-heading">
 						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
 
-						<div class="col-md-8 chat-header-name">${comVO.name}</div>
+						<h3 style="text-align:center;">${comVO.name}</h3>
 
 <!-- 						<div id="statusOutput"></div> -->
 					</div>

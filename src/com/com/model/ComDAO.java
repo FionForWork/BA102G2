@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.companycompositequery.controller.jdbcUtil_CompositeQuery_Com;
 
 
 
@@ -251,7 +254,7 @@ public class ComDAO implements ComDAO_Interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO 銋迂� Domain objects
+
 				comVO = new ComVO();
 
 				comVO.setCom_no(rs.getString("com_no"));
@@ -300,4 +303,69 @@ public class ComDAO implements ComDAO_Interface {
 		return list;
 	}
 
+	@Override
+	public List<ComVO> getAll(Map<String, String[]> map) {
+		List<ComVO> list = new ArrayList<ComVO>();
+		ComVO comVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from company "
+		          + jdbcUtil_CompositeQuery_Com.get_WhereCondition(map)
+		          + "order by com_no";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				comVO = new ComVO();
+				comVO.setCom_no(rs.getString("com_no"));
+				comVO.setId(rs.getString("id"));
+				comVO.setPwd(rs.getString("pwd"));
+				comVO.setName(rs.getString("name"));
+				comVO.setLoc(rs.getString("loc"));
+				comVO.setLon(rs.getString("lon"));
+				comVO.setLat(rs.getString("lat"));
+				comVO.setCom_desc(rs.getString("com_desc"));
+				comVO.setPhone(rs.getString("phone"));
+				comVO.setAccount(rs.getString("account"));
+				comVO.setLogo(rs.getBytes("logo"));
+				comVO.setStatus(rs.getString("status"));
+				list.add(comVO);
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }

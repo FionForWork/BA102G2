@@ -1,3 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.works.model.*"%>
+<%@ page import="com.com.model.*"%>
+<%@ page import="com.serv.model.*"%>
+<%@ page import="com.mem.model.*"%>
+<%@ page import="com.message.model.*"%>
+<%@ page import= "org.json.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
+	
+		
+	<!--即時訊息-->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="chat_box panel panel" id="chatbox">
+					<div class="panel-heading">
+						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
+
+<%-- 						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div> --%>
+							<h3 style="text-align:center;">${comVO.name}</h3>
+<!-- 						<div id="statusOutput"></div> -->
+					</div>
+					<div class="panel-body">
+					<ul id="textArea"></ul>
+					</div>
+					<div class="panel-footer">							
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
+																																							  '${memVO != null? memVO.name : comVO.name}');" />	
+							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
+							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
+												 '${memVO != null? memVO.name : comVO.name}')" />	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--即時訊息-->
+	
+	
 ﻿<script type="text/javascript">
 
 var MyPoint = "/MessageServlet/${memVO.mem_no}${comVO.com_no}/${memVO==null?comVO.com_no:memVO.mem_no}";
@@ -143,3 +191,6 @@ var memNo;
 
  						
 </script>
+
+</body>
+</html>

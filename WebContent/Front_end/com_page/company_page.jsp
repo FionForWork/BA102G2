@@ -18,49 +18,18 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
-	
-	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
+
 %>
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body onload="connect('${memVO != null? memVO.mem_no : comVO.com_no}');" onunload="disconnect();">
-	
-	<!--聯絡我們 -->
-	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
-	<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"></button>
-          <h4 class="modal-title text-center">聯絡我們</h4>
-        </div>
-        <div class="modal-body">
-         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(map.name==null)?'':map.name}">
-         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(map.email==null)?'':map.email}"> 
-         	要說的話:<font color='red'>${errorMsgs.messagesArea}</font><br>
-         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(map.messagesArea==null)?'':map.messagesArea}</textarea>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
-          <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  </form>
-	<!--聯絡我們 -->
+<body>
 
-
-
-
-	<%@ include file="page/before.file"%>
+	<%@ include file="contact_us.jsp"%>
+	<%@ include file="page/header.file"%>
+	<%@ include file="message.jsp"%>
 
 
 	<!--banner -->
@@ -141,45 +110,13 @@
 			<p class="text-center">
 				<a class="btn btn-reservation btn-lg" id="open_chat">立即連絡我們 <i class="fa fa-comment"></i></a>
 				<br><br>
-				<a class="btn btn-reservation btn-lg" href="">預約 </a>
+				<a class="btn btn-reservation btn-lg" href="<%=request.getContextPath()%>/Front_end/reservation/resCalendar.jsp">我要預約 </a>
 			</p>
 		</div>
 	</div>
 	<!--預約+即時訊息按鈕-->
 	
-	
-	<!--即時訊息-->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="chat_box panel panel" id="chatbox">
-					<div class="panel-heading">
-						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
 
-<%-- 						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div> --%>
-						<div class="col-md-8 col-md-offset-3 chat-header-name"><h3 style="margin-top:0px;">${comVO.name}</h3></div>
-<!-- 						<div id="statusOutput"></div> -->
-					</div>
-					<div class="panel-body">
-					<ul id="textArea"></ul>
-					</div>
-					<div class="panel-footer">							
-							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
-																																							  '${memVO != null? memVO.name : comVO.name}');" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
-							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-												 '${memVO != null? memVO.name : comVO.name}')" />	
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--即時訊息-->
-	
-	<%@ include file="page/message_script.file"%>
-	
-	
-	
 
 	<!--廠商相簿-->
 	<div class="text-center" id="works">
@@ -188,7 +125,7 @@
 		</span>
 	</div>
 	<div class="container">
-<!-- 		<div class="row"> -->
+		<div class="row">
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
@@ -205,10 +142,10 @@
 					</ul>
 				</div>				
 			</c:forEach>
-<!-- 			</div> -->
+			</div>
 		</div>	
 		<div class="container">
-<!-- 			<div class="row"> -->
+			<div class="row">
 			<div id="more_works" style="display: none;">
 			<c:forEach var="worksVO" items="${worksList}" begin="11">
 				<div class="col-xs-12 col-sm-4">
@@ -227,7 +164,7 @@
 				</div>
 			</c:forEach>
 			</div>
-<!-- 		</div> -->
+		</div>
 	</div>
 
 
@@ -315,16 +252,18 @@
 	<div class="container">
 		<div class="row com_intro">
 
-			<div class="col-xs-12 col-sm-4"></div>
-			<div class="col-xs-12 col-sm-4">${comVO.com_desc}</div>
-			<div class="col-xs-12 col-sm-4"></div>
+			<div class="col-xs-12 col-sm-4">
+			<img class="com_logo center-block" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" alt="She Said Yes">
+			</div>
+			<div class="col-xs-12 col-sm-8" style="margin-top:30px;">${comVO.com_desc}</div>
+			
 		</div>
 	</div>
 
 	<!--廠商自介-->
 
 
-	<%@ include file="page/after.file"%>
+	<%@ include file="page/footer.file"%>
 
 
 </body>
