@@ -32,7 +32,7 @@ public class ServDAO implements ServDAO_Interface {
 	private static final String DELETE = "DELETE FROM service where serv_no = ?";
 	private static final String UPDATE = "UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
 	private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
-	private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
+	private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by avg(score/times) desc";
 
 	@Override
 	public void insert(ServVO servVO) {
@@ -179,7 +179,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 			}
 
 		} catch (SQLException se) {
@@ -237,7 +237,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO.setTitle(rs.getString("title"));
 				servVO.setContent(rs.getString("content"));
 				servVO.setTimes(rs.getInt("times"));
-				servVO.setScore(rs.getInt("score"));
+				servVO.setScore(rs.getDouble("score"));
 				list.add(servVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
@@ -330,7 +330,7 @@ public class ServDAO implements ServDAO_Interface {
 				servVO = new ServVO();
 				servVO.setCom_no(rs.getString("com_no"));
 				servVO.setTimes(rs.getInt("avg(times)"));
-				servVO.setScore(rs.getInt("avg(score)"));
+				servVO.setScore(rs.getDouble("avg(score)"));
 				servVO.setPrice(rs.getInt("avg(price)"));
 				list.add(servVO);
 			}

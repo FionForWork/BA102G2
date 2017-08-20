@@ -100,19 +100,16 @@ public class MessageServlet extends HttpServlet {
 			}
 		}
 		
-		//找出廠商Session加入會員房間
-		Set set = sessionUsername.keySet();
-		Iterator it = set.iterator();
-		while (it.hasNext()) {
-			Object mykey = it.next();
-			if (mykey.toString().equals(myRoom.substring(4))) {
-				sessionMap.get(myRoom).add((Session) sessionUsername.get(mykey));
-				}
-			}
-			
-		if(myRoom.length()<5)
+		//設定廠商進入房間
+		if(myName.indexOf("2")==0)
 		{
+			
 		  myRoom=toname+myName;
+		  
+		  //會員登入房間
+		}else {
+			myRoom=myName+toname;
+			sessionMap.get(myRoom).add((Session) sessionUsername.get(toname));
 		}
 		
 		for (Session session : sessionMap.get(myRoom)) {

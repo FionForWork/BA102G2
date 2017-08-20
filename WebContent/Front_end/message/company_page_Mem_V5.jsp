@@ -121,21 +121,24 @@ var memNo;
  						var who = jsonObj.who;
  						var userName = jsonObj.userName;
  						var message = jsonObj.message + "\r\n";
- 						memNo = jsonObj.name;
+	 					if(${comVO.com_no}!= jsonObj.name) {
+	 						memNo = jsonObj.name;
+	 					}
+ 						
  						console.log(memNo);
  						
  						var me = {};
  						var you = {};
  						if(no.indexOf("1")==0) {
  							me.img = "";
-
- 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
+ 							
+ 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
  						}
  						
  						if(no.indexOf("1")!=0) {
  							me.img = "";
 
- 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
+ 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
  						}
  						
  						if (who==no){

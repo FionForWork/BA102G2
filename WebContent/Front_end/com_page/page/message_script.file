@@ -1,6 +1,6 @@
-<script type="text/javascript">
+﻿<script type="text/javascript">
 
-var MyPoint = "/MessageServlet/";
+var MyPoint = "/MessageServlet/${memVO.mem_no}${comVO.com_no}/${memVO==null?comVO.com_no:memVO.mem_no}";
 console.log(MyPoint);
 var host = window.location.host;
 console.log(host);
@@ -13,7 +13,7 @@ var endPointURL = "ws://" + window.location.host + webCtx
 console.log(endPointURL);
 var statusOutput = document.getElementById("statusOutput");
 var webSocket;
-var memNo;	
+var memNo;
 			
 
  				function connect(no) {
@@ -22,7 +22,7 @@ var memNo;
  					webSocket = new WebSocket(endPointURL);
 
  					webSocket.onopen = function(event) {
-						updateStatus("成功連線");
+
  						document.getElementById('sendMessage').disabled = false;				
  						
  					};
@@ -35,30 +35,33 @@ var memNo;
  						var jsonObj = JSON.parse(event.data);
  						var messagesArea = document.getElementById("messagesArea");
  						var who = jsonObj.who;
- 						var comNo = jsonObj.comNo;
  						var userName = jsonObj.userName;
  						var message = jsonObj.message + "\r\n";
- 						memNo = jsonObj.memNo;
+	 					if(${comVO.com_no}!= jsonObj.name) {
+	 						memNo = jsonObj.name;
+	 					}
+ 						
+ 						console.log(memNo);
  						
  						var me = {};
  						var you = {};
- 						if(no==comNo) {
+ 						if(no.indexOf("1")==0) {
  							me.img = "";
-
- 							you.img = "https://a11.t26.net/taringa/avatares/9/1/2/F/7/8/Demon_King1/48x48_5C5.jpg";
+ 							
+ 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
  						}
  						
- 						if(no==memNo) {
+ 						if(no.indexOf("1")!=0) {
  							me.img = "";
 
- 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}";
+ 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
  						}
  						
  						if (who==no){
  					        control = '<li style="width:100%;">' +
- 					                            '<div class="msg_logo_r">' +
- 					                                '<img class="img-circle" src="'+ me.img +'" />' +
- 					                            '</div>' +
+//  					                            '<div class="msg_logo_r">' +
+//  					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ me.img +'" />' +
+//  					                            '</div>' +
  					                        '<div class="msg-r">' +
  					                            '<div class="msg_text text-r">' +
  					                                '<p>' + message + '</p>' +
@@ -68,7 +71,7 @@ var memNo;
  					    }else{
  					        control = '<li style="width:100%;">' +
  					                            '<div class="msg_logo_l">' +
- 					                                '<img class="img-circle" src="'+ you.img +'" />' +
+ 					                                '<img class="img-circle" style="width:45px;height:45px;" src="'+ you.img +'" />' +
  					                            '</div>' +
  					                        '<div class="msg-l">' +
  					                       		'<div class="msg_text text-l">' +
@@ -85,11 +88,12 @@ var memNo;
  						 						
  					};
  					webSocket.onclose = function(event) {
- 						updateStatus("已離線");
+ 						console.log("已離線");
  					};
  				}
 
  				function sendMessage(no, userName) {
+ 					console.log('memNo:'+memNo);
 					console.log('NO:'+no);
 					console.log(userName);
  					var inputMessage = document.getElementById("message");
@@ -106,9 +110,10 @@ var memNo;
  					} else {
  						if(no.indexOf("1")==0){
  							var jsonObj = {
+ 								"action" : "message",
  								"who" : no,
- 								"comNo" : "<%=request.getParameter("com_no")%>",
- 	 							"memNo" : no,
+ 	 							"name" : no,
+ 								"toname" : "${param.com_no}",
  	 							"userName" : userName,
  	 							"message" : message,
  	 							"time" : nowdate
@@ -118,9 +123,10 @@ var memNo;
  						inputMessage.focus();
  						}else {
  							var jsonObj = {
+ 								"action" : "message",
  								"who" : no,
- 								"comNo" : no,
- 	 	 						"memNo" : memNo,
+ 								"name" : no,
+ 	 	 						"toname" : memNo,
  	 	 						"userName" : userName,
  	 	 						"message" : message,
  	 	 						"time" : nowdate
@@ -135,8 +141,5 @@ var memNo;
  					webSocket.close();
  				}
 
- 				function updateStatus(newStatus) {
- 					statusOutput.innerHTML = newStatus;
- 				}
  						
 </script>

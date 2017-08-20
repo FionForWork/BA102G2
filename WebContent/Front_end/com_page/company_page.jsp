@@ -148,7 +148,7 @@
 	<!--預約+即時訊息按鈕-->
 	
 	
-	<!--立即聯絡我們-->
+	<!--即時訊息-->
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
@@ -156,8 +156,8 @@
 					<div class="panel-heading">
 						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
 
-						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div>
-						<div class="col-md-8 chat-header-name">${comVO.name}</div>
+<%-- 						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div> --%>
+						<div class="col-md-8 col-md-offset-3 chat-header-name"><h3 style="margin-top:0px;">${comVO.name}</h3></div>
 <!-- 						<div id="statusOutput"></div> -->
 					</div>
 					<div class="panel-body">
@@ -174,7 +174,7 @@
 			</div>
 		</div>
 	</div>
-	<!--立即聯絡我們-->
+	<!--即時訊息-->
 	
 	<%@ include file="page/message_script.file"%>
 	
@@ -188,7 +188,7 @@
 		</span>
 	</div>
 	<div class="container">
-		<div class="row">
+<!-- 		<div class="row"> -->
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
@@ -205,17 +205,17 @@
 					</ul>
 				</div>				
 			</c:forEach>
-			</div>
+<!-- 			</div> -->
 		</div>	
 		<div class="container">
-			<div class="row">
+<!-- 			<div class="row"> -->
 			<div id="more_works" style="display: none;">
 			<c:forEach var="worksVO" items="${worksList}" begin="11">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<a data-lightbox="lightbox">
+								<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								</a>
 								<div class="overlay">
@@ -227,7 +227,7 @@
 				</div>
 			</c:forEach>
 			</div>
-		</div>
+<!-- 		</div> -->
 	</div>
 
 

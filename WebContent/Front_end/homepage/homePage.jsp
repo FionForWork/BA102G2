@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%@ page import="java.util.*"%>    
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>    
 <%@ page import="com.serv.model.*"%>
-<%@ page import="com.works.model.*"%>    
+<%@ page import="com.works.model.*"%>   
+<%@ page import="com.com.model.*"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,15 +22,12 @@
     <script src="js/homepage.js"></script>
     <script src="js/bootstrap.min.js"></script>
 <%
-	WorksService worksSvc = new WorksService();
-	List<WorksVO> worksList = worksSvc.getAll();
-	pageContext.setAttribute("worksList", worksList);
-
 	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAll();
+	List<ServVO> servList = servSvc.getAllAvg();
 	pageContext.setAttribute("servList", servList);
 
-
+	DecimalFormat df = new DecimalFormat("#,##0.0"); 
+	pageContext.setAttribute("df", df);
 
 
 %>    
@@ -150,31 +149,36 @@
     <br>
     <div id="company" class="container" style="width:90%">
         <div class="row">
-    <c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
+    <c:forEach var="servVO" items="${servList}" begin="1" end="9">
+            
             <div class="col-xs-12 col-md-4">
                 <!--婚攝item-->
-                <a href="#" class="thumbnail">
-
+                <a href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${servVO.com_no}" class="thumbnail">
+				
                     <div class="caption">
                         <div class="media" style="margin-bottom:0px;">
+                            <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
+                            <c:set var="comVO" value="${comSvc.getOneCom(servVO.com_no)}"/>
                             <div class="media-left">
-                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                                <img class="img-circle media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
                             </div>
                             <div class="media-body media-middle">
-                                <b>J-Love婚禮攝影團隊</b> &nbsp;
+                                <b>${comVO.name}</b> &nbsp;
                             </div>
                         </div>
                     </div>
                     
-                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');background-position:50% 50%;">
+                    <jsp:useBean id="workSvc" scope="page" class="com.works.model.WorksService"/>
+                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="1" end="1">
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${workVO.works_no}');background-position:50% 50%;">
+                    </c:forEach>
                     
                     </div>
                     <div class="caption clearfix">
 
-                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
                         <div class="text-right">
                             <span class="small">評價</span>
-                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>${df.format(servVO.score/servVO.times)}</span>
                             </b>
                             <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
                         </div>
