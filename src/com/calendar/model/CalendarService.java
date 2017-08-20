@@ -37,6 +37,10 @@ public class CalendarService {
 		dao.delete(cal_no);
 	}
 	
+	public void deleteReservation(String res_no){
+		dao.deleteRes(res_no);
+	}
+	
 	public CalendarVO getOneCalendar(String cal_no){
 		return dao.findByPK(cal_no);
 	}

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.calendar.model.CalendarService;
 import com.reservation.model.*;
 
 /**
@@ -48,12 +49,14 @@ public class DeleteResServlet extends HttpServlet {
 
 		@Override
 		public void run() {
+			CalendarService calService = new CalendarService();
 			ReservationService resService = new ReservationService();
 			ReservationVO resVO = null;
 			List<String> list = resService.getDeleteRes();
 			for(String res_no : list){
 //				System.out.println(res_no);
 				resService.updateStatus("5", res_no);
+				calService.deleteReservation(res_no);
 			}
 		}
 		
