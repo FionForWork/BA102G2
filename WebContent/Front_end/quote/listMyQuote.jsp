@@ -11,7 +11,7 @@
 	pageContext.setAttribute("list", list);
 	DecimalFormat nf = new DecimalFormat("$#,##0"); 
 	pageContext.setAttribute("nf", nf);
-	DateFormat df = new SimpleDateFormat("YYYY年M月d日 ah點");
+	DateFormat df = new SimpleDateFormat("YYYY年M月d日");
 	pageContext.setAttribute("df", df);
 %>
 <jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>

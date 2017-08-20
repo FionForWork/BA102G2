@@ -322,5 +322,8 @@
 		statusOutput.innerHTML = newStatus;
 	}
     
+	$(document).ready(function() {
+		$('[type=radio]:first').attr("checked","checked");
+	});
 </script>
 </html>

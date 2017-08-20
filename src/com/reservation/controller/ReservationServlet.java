@@ -29,6 +29,7 @@ import com.reservation.model.*;
 import com.rfq_detail.model.*;
 import com.serv.model.*;
 import com.service_type.model.*;
+import com.ssy.tools.SortingHat;
 
 public class ReservationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,38 +55,40 @@ public class ReservationServlet extends HttpServlet {
 		
 		// 報價預約
 		if(action.equals("reservationFromQuote")){
+			// 查詢報價VO
 			String quo_no = req.getParameter("quo_no");
 			QuoteService quoteService = new QuoteService();
 			QuoteVO quoteVO = quoteService.getOneQuote(quo_no);
-			
-			int price = Integer.valueOf(req.getParameter("price"));
-			Timestamp serv_date = Timestamp.valueOf(req.getParameter("serv_date"));
-			String com_no = req.getParameter("com_no");
-			String stype_no = req.getParameter("stype_no");
-			String requestURL = req.getParameter("requestURL");
-			
+			// 查詢詢價VO
+			String rfqdetail_no = req.getParameter("rfqdetail_no");
 			RFQ_DetailService rfq_DetailService = new RFQ_DetailService();
+			RFQ_DetailVO rfqdetailVO = rfq_DetailService.getOneRFQDetail(rfqdetail_no);
+			
+			int price = Integer.valueOf(quoteVO.getPrice());
+			Timestamp serv_date = rfqdetailVO.getSer_date();
+			String com_no = quoteVO.getCom_no();
+			String stype_no = rfqdetailVO.getStype_no();
+			
+			SortingHat sortingHat = new SortingHat();
+			
 			MemService memService = new MemService();
-			Service_TypeService stypeService = new Service_TypeService();
 			// 會員名稱寫死
 			String content = memService.getOneMem("1001").getName() + "-" 
-					+ stypeService.getOne(stype_no).getName()+"服務";
+					+ sortingHat.getServType(stype_no)+"服務";
 			
 			CalendarVO calendarVO = new CalendarVO();
 			calendarVO.setCom_no(com_no);
 			calendarVO.setContent(content);
 			calendarVO.setCal_date(serv_date);
-			
+			// 關閉需求
 			RFQ_DetailVO rfq_detailVO = new RFQ_DetailVO();
 			rfq_detailVO.setStatus("0");
 			rfq_detailVO.setRfqdetail_no(rfq_DetailService.getOneFromQuote(quo_no).getRfqdetail_no());
-			
+			// 預約以及加到廠商行事曆
 			ReservationService reservationService = new ReservationService();
 			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price, "1", calendarVO, rfq_detailVO);
-		
-			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
-			successView.forward(req, res);
 			
+			res.sendRedirect("/BA102G2/Front_end/reservation/memReservation.jsp");
 		}
 		
 		// 服務預約
@@ -115,11 +118,6 @@ public class ReservationServlet extends HttpServlet {
 			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0",calendarVO);
 			
-			
-//			forward會再預約一次
-//			RequestDispatcher successView = req.getRequestDispatcher(requestURL); 
-//			successView.forward(req, res);
-			
 			res.sendRedirect(requestURI);
 		}
 		
@@ -127,7 +125,6 @@ public class ReservationServlet extends HttpServlet {
 		if(action.equals("resFromSearchService")){
 			String serv_no = req.getParameter("serv_no");
 			String serv_date = req.getParameter("serv_date");
-//			String requestURI = req.getParameter("requestURI");
 			
 			ServService servService = new ServService();
 			ServVO servVO = servService.getOneServ(serv_no);
@@ -190,9 +187,12 @@ public class ReservationServlet extends HttpServlet {
 			String RedirectURL = req.getParameter("RedirectURL");
 			String res_no = req.getParameter("res_no");
 			Integer score = new Integer(req.getParameter("score"));
-			
+						
 			ReservationService resService = new ReservationService();
-			resService.updateScore("3", score, res_no);
+			String serv_no = resService.getOneReservation(res_no).getServ_no();
+			resService.updateScore("3", score, res_no,serv_no);
+			
+			
 //			res.sendRedirect(RedirectURL);
 		}
 		

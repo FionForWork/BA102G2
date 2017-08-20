@@ -39,7 +39,7 @@
 		</thead>
 		<c:forEach var="rfq_detailVO" items="${list}">
 			<tr>
-				<td>${datedf.format(rfq_detailVO.ser_date)}<br>${timedf.format(rfq_detailVO.ser_date)}</td>
+				<td>${datedf.format(rfq_detailVO.ser_date)}</td>
 				<td>
 					${rfq_detailVO.location}${sortingHat.getServType(rfq_detailVO.stype_no)}服務<br>
 					${rfq_detailVO.content}

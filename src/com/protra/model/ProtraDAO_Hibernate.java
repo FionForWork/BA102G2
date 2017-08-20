@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.classic.Session;
 import org.infinispan.factories.annotations.Start;
 
-import com.mysql.jdbc.EscapeTokenizer;
+//import com.mysql.jdbc.EscapeTokenizer;
 import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 
 import hibernate.util.HibernateUtil;
