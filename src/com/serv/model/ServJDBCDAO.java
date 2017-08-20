@@ -469,6 +469,13 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void updateScore(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 

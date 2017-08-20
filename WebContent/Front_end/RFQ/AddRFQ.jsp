@@ -17,7 +17,7 @@
 <div class="container">
 	<div class="panel panel-default col-md-offset-2 col-md-8">
 		<div class="panel-heading">
-			<h1>徵求店家報價</h1>
+			<h1>徵求店家報價1</h1>
 		</div>
 		<div class="panel-body">
 		       <div class="form col-md-offset-1 col-md-10">
@@ -43,14 +43,6 @@
 		                        <label>需求日期</label>
 		                        <input type="date" class="form-control" name="ser_date" 
 		                        value=<%= new Timestamp(System.currentTimeMillis()) %>>
-		                    </div>
-		                    <div class="form-group">
-		                        <label>需求時間</label>
-		                        <select class="form-control" name="time">
-		                        <% for(int i = 0; i < 10; i++){ %>
-		                        	<option value="<%= i+9 %>:00:00"><%= i+9 %>:00</option>
-		                        <% } %>
-		                        </select>
 		                    </div>
 		                    <div class="form-group">
 		                        <label>地點</label>
@@ -83,14 +75,6 @@
 		                            name="ser_date">
 		                    </div>
 		                    <div class="form-group">
-		                        <label>需求時間</label>
-		                        <select class="form-control" name="time">
-		                        <% for(int i = 0; i < 10; i++){ %>
-		                        	<option value="<%= i+9 %>:00:00"><%= i+9 %>:00</option>
-		                        <% } %>
-		                        </select>
-		                    </div>
-		                    <div class="form-group">
 		                        <label>地點</label>
 		                        <select name="location" class="form-control">
 		                            <option value="台北市">台北市</option>
@@ -119,14 +103,6 @@
 		                        <label>需求日期</label>
 		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
-		                    </div>
-		                    <div class="form-group">
-		                        <label>需求時間</label>
-		                        <select class="form-control" name="time">
-		                        <% for(int i = 0; i < 10; i++){ %>
-		                        	<option value="<%= i+9 %>:00:00"><%= i+9 %>:00</option>
-		                        <% } %>
-		                        </select>
 		                    </div>
 		                    <div class="form-group">
 		                        <label>地點</label>

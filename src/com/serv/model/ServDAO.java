@@ -38,6 +38,8 @@ public class ServDAO implements ServDAO_Interface {
 			"DELETE FROM service where serv_no = ?";
 		private static final String UPDATE = 
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?,status=?  where serv_no = ?";
+		private static final String UPDATESCORE = 
+				"UPDATE service set times=?, score=?  where serv_no = ?";
 		private static final String GET_ALL_COMNO_BY_STYPENO = "select com_no from service where stype_no=? group by com_no order by com_no";
 		private static final String GET_COM_STMT = 
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
@@ -600,5 +602,41 @@ public class ServDAO implements ServDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void updateScore(ServVO servVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESCORE);
+
+			pstmt.setInt(1, servVO.getTimes());
+			pstmt.setDouble(2, servVO.getScore());
+			pstmt.setString(3, servVO.getServ_no());
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }
