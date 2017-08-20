@@ -17,7 +17,7 @@
 <jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
 <jsp:useBean id="rfqService" class="com.rfq.model.RFQService"/>
 <jsp:useBean id="memService" class="com.mem.model.MemService"/>
-<<jsp:useBean id="rfq_detailService" class="com.rfq_detail.model.RFQ_DetailService"/>
+<jsp:useBean id="rfq_detailService" class="com.rfq_detail.model.RFQ_DetailService"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

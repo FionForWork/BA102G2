@@ -199,7 +199,7 @@
 					</c:if>
 				</c:forEach>
 				<%if(flag == 0){ %>
-						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#calModal" onclick="add(this)">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 						</td>
 					<% } %>
@@ -219,7 +219,7 @@
 </div>
 <!-- 新增Schedule -->
 <form  id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
-	<div id="myModal" class="modal fade" role="dialog" >
+	<div id="calModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
 			<div class="modal-content">

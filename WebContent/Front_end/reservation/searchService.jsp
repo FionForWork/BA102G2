@@ -71,7 +71,7 @@
 		<div class="input-group">
 		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 		<input type="hidden" name="action" value="searchServiceByCompositeQuery">
-		<button class="btn btn-block btn-danger">送出查詢</button>
+		<input type="submit" class="btn btn-block btn-danger" value="送出查詢">
 		</div>
 	</div>
 </div>

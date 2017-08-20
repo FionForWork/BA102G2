@@ -34,7 +34,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		String pk = null;
 		if(file.startsWith("alb_no")){
 			pk = request.getParameter("alb_no");
-			System.out.println(pk);
+//			System.out.println(pk);
 			AlbumService albSvc = new AlbumService();
 			AlbumVO alb = albSvc.getOneAlbum(pk);
 			byte[] cover = alb.getCover();
@@ -45,7 +45,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("cont_no")){
 			pk = request.getParameter("cont_no");
 			byte[] cont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			ContentService contSvc = new ContentService();
 			ContentVO contVO = contSvc.getOneContent(pk);
 			if(contVO.getImg() == null){
@@ -60,7 +60,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("tcont_no")){
 			pk = request.getParameter("tcont_no");
 			byte[] tempcont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			TempContService contSvc = new TempContService();
 			TempContVO tempcontVO = contSvc.getOneTempCont(pk);
 			if(tempcontVO.getImg() == null){
@@ -75,7 +75,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("works_no")){
 			pk = request.getParameter("works_no");
 			byte[] workcont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			WorksService worksSvc = new WorksService();
 			WorksVO worksVO = worksSvc.getOneWork(pk);
 			if(worksVO.getImg() == null){
@@ -93,7 +93,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			
 			if((pk.substring(0,1)).equals("1")){
 				byte[] tempcont =null;
-				System.out.println("memPicture"+pk);
+//				System.out.println("memPicture"+pk);
 				MemService memSvc = new MemService();
 				MemVO memVO = memSvc.getOneMem(pk);
 				tempcont = memVO.getPicture();
@@ -151,7 +151,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("adv_no")){
 			pk = request.getParameter("adv_no");
 			byte[] advcont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			AdvertisingService advertisingSvc = new AdvertisingService();
 			AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(pk);
 			advcont = advertisingVO.getImg();
@@ -163,7 +163,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("mem_no")){
 			pk = request.getParameter("mem_no");
 			byte[] memcont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			MemService memSvc = new MemService();
 			MemVO memVO = memSvc.getOneMem(pk);
 			memcont = memVO.getPicture();
@@ -177,7 +177,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 			response.setContentType("application/octet-stream");
 			
 			byte[] cont =null;
-			System.out.println(pk);
+//			System.out.println(pk);
 			ContentService contSvc = new ContentService();
 			ContentVO contVO = contSvc.getOneContent(pk);
 			if(contVO.getImg() == null){
@@ -194,7 +194,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("adv_no")){
 			pk = request.getParameter("adv_no");
 			byte[] cont =null;
-			System.out.println("adv_no"+pk);
+//			System.out.println("adv_no"+pk);
 			AdvertisingService advSvc=new AdvertisingService();
 			AdvertisingVO advertisingVO=advSvc.getOneAdvertising(pk);
 			
