@@ -68,6 +68,7 @@
 									<span class="glyphicon glyphicon-remove"></span> Cancel
 								</button>
 								<input type='hidden' name='action' value='create_Album'>
+								<input type='hidden' name='mem_no' value='${memVO.mem_no}'>
 							</div>
 						</div>
 

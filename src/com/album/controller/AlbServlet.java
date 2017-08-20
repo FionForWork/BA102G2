@@ -106,9 +106,8 @@ public class AlbServlet extends HttpServlet {
 						}
 					}
 				
-				HttpSession session = request.getSession();
 				String name = request.getParameter("name").trim();
-				String mem_no = (String) session.getAttribute("mem_no");
+				String mem_no = request.getParameter("mem_no");
 				byte[] cover = null;
 				Timestamp create_date = new Timestamp(System.currentTimeMillis());
 				String alb_no = null;
