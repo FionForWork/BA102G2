@@ -32,6 +32,7 @@
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);
+    System.out.println("1");
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
