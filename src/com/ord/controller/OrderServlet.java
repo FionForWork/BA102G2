@@ -111,7 +111,7 @@ public class OrderServlet extends HttpServlet {
                 // MailService mailService = new MailService();
                 // mailService.sendMail(to, subject, messageText);
             }
-            request.getRequestDispatcher("/Front_end/mall/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp").forward(request, response);
         }
         else if ("CHECK_GET_ITEM".equals(action)) {
             response.setCharacterEncoding("utf-8");
