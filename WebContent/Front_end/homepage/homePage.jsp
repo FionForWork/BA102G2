@@ -1,37 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%@ page import="java.util.*"%>
-<%@ page import="java.text.*"%>    
-<%@ page import="com.serv.model.*"%>
-<%@ page import="com.works.model.*"%>   
-<%@ page import="com.com.model.*"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ＨomePage</title>
+    <title>HomePage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/w3.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/fonts.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/bootstrap.css" rel="stylesheet">
-    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/jquery-3.2.1.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/contact_us.js"></script>
-<%
-	ServService servSvc = new ServService();
-	List<ServVO> servList = servSvc.getAllAvg();
-	pageContext.setAttribute("servList", servList);
-
-	DecimalFormat df = new DecimalFormat("#,##0.0"); 
-	pageContext.setAttribute("df", df);
-
-	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
-%>    
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <style>
 	h1,h2,h3,h4,h5,h6 {
@@ -150,43 +133,264 @@
     <br>
     <div id="company" class="container" style="width:90%">
         <div class="row">
-    <c:forEach var="servVO" items="${servList}" begin="1" end="9">
-            
             <div class="col-xs-12 col-md-4">
                 <!--婚攝item-->
-                <a href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${servVO.com_no}" class="thumbnail">
-				
+                <a href="#" class="thumbnail">
+
                     <div class="caption">
                         <div class="media" style="margin-bottom:0px;">
-                            <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
-                            <c:set var="comVO" value="${comSvc.getOneCom(servVO.com_no)}"/>
                             <div class="media-left">
-                                <img class="img-circle media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
                             </div>
                             <div class="media-body media-middle">
-                                <b>${comVO.name}</b> &nbsp;
+                                <b>J-Love婚禮攝影團隊</b> &nbsp;
                             </div>
                         </div>
                     </div>
-                    
-                    <jsp:useBean id="workSvc" scope="page" class="com.works.model.WorksService"/>
-                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="1" end="1">
-                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${workVO.works_no}');background-position:50% 50%;">
-                    </c:forEach>
-                    
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/ask2.jpg');background-position:50% 50%;">
                     </div>
                     <div class="caption clearfix">
 
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
                         <div class="text-right">
                             <span class="small">評價</span>
-                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>${df.format(servVO.score/servVO.times)}</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
                             </b>
                             <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
                         </div>
                     </div>
                 </a>
             </div>
-            </c:forEach>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>H-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/wedding2.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>A-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/wedding3.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br>
+                <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>J-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/photography.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>H-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/ask.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>A-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/banner3.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br>
+                <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>J-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/banner4.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>H-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/wedding_2.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <!--婚攝item-->
+                <a href="#" class="thumbnail">
+
+                    <div class="caption">
+                        <div class="media" style="margin-bottom:0px;">
+                            <div class="media-left">
+                                <img class="img-circle media-object" src="img/LOGO.png" style="height:35px;width:35">
+                            </div>
+                            <div class="media-body media-middle">
+                                <b>A-Love婚禮攝影團隊</b> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('img/banner2.jpg');background-position:50% 50%;">
+                    </div>
+                    <div class="caption clearfix">
+
+                        <span class="pull-left small" style="margin-top: 4px;margin-left: 3px;"><i class="fa fa-ellipsis-h" aria-hidden="true"></i> 成員共19人</span>
+                        <div class="text-right">
+                            <span class="small">評價</span>
+                            <span class="" style="border-radius: 30px;"><b class="a-rating text-warning" style="font-size: 1.3em;"><span>5</span>
+                            </b>
+                            <i class="fa fa-star text-warning" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
     <!--ad===========================================================================-->
@@ -227,20 +431,19 @@
                     <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@gmail.com<br>
                 </div>
                 <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
-                <form method="post" action="<%=request.getContextPath()%>/ContactUs">
+                <form action="/action_page.php" target="_blank">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="name" value="${(map.name==null)?'':map.name}"><font color='red'>${errorMsgs.name}</font>
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email" value="${(map.email==null)?'':map.email}"><font color='red'>${errorMsgs.email}</font>
+                            <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
                         </div>
                     </div>
-                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea" value="${(map.messagesArea==null)?'':map.messagesArea}"><font color='red'>${errorMsgs.messagesArea}</font>
-                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                    <button class="w3-button w3-black w3-right w3-section" type="submit" onClick="validateForm(this.form)">
-         			 <i class="fa fa-paper-plane"></i> SEND MESSAGE
-        			</button>
+                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+                    <button class="w3-button w3-black w3-right w3-section" type="submit">
+          <i class="fa fa-paper-plane"></i> SEND MESSAGE
+        </button>
                 </form>
             </div>
         </div>

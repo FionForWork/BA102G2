@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rfq_detail.model.RFQ_DetailVO;
+
 public class RFQJDBCDAO implements RFQDAO_Interface {
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -26,9 +28,13 @@ public class RFQJDBCDAO implements RFQDAO_Interface {
 			"SELECT * FROM RFQ where RFQ_NO = ?";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM RFQ order by RFQ_NO ";
+	private static final String GET_MEM_NO =
+			"Select * From RFQ where RFQ_NO = "
+			+ "(select RFQ_NO from Rfq_Detail where Rfqdetail_No = "
+			+ "(select RFQdetail_no from quote where quo_no = ?))";
 	
 	@Override
-	public void insert(RFQVO rfqVO) {
+	public void insertWithDetail(RFQVO rfqVO, List<RFQ_DetailVO> list) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -248,15 +254,69 @@ public class RFQJDBCDAO implements RFQDAO_Interface {
 		return list;
 	}
 	
+	@Override
+	public RFQVO findFromQuote(String quo_no) {
+		RFQVO rfqVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_MEM_NO);
+
+			pstmt.setString(1, quo_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				rfqVO = new RFQVO();
+				rfqVO.setRfq_no(rs.getString("rfq_no"));
+				rfqVO.setMem_no(rs.getString("mem_no"));
+				rfqVO.setRfq_date(rs.getTimestamp("rfq_date"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return rfqVO;
+	}
+	
 public static void main(String args[]){
 		
 		RFQJDBCDAO dao = new RFQJDBCDAO();
 		
-		RFQVO rfqVO = new RFQVO();
-		rfqVO.setMem_no("1001");
-		Timestamp t = new Timestamp(System.currentTimeMillis());
-		rfqVO.setRfq_date(t);
-		dao.insert(rfqVO);
+//		RFQVO rfqVO = new RFQVO();
+//		rfqVO.setMem_no("1001");
+//		Timestamp t = new Timestamp(System.currentTimeMillis());
+//		rfqVO.setRfq_date(t);
+//		dao.insert(rfqVO);
 		
 		
 //		RFQVO rfqVO = new RFQVO();
@@ -281,5 +341,7 @@ public static void main(String args[]){
 		
 
 	}
+
+
 	
 }

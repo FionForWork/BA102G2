@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.product.model.ProductVO" table="PRODUCT" >
+        
+        <id name="pro_no" column="PRO_NO">
+            <generator class="com.product.model.ProductIdentifierGenerator" />
+        </id>
+        
+        <property name="pro_name" column="PRO_NAME" />
+        <property name="seller_no" column="SELLER_NO" />
+        <property name="pro_desc" column="PRO_DESC" />
+        <property name="price" column="PRICE" />
+        <property name="amount" column="AMOUNT" />
+        <property name="img" column="IMG" />
+        <property name="pro_date" column="PRO_DATE" />
+        <property name="protype_no" column="PROTYPE_NO" />
+        <property name="status" column="STATUS" />
+        <property name="times" column="TIMES" />
+        <property name="score" column="SCORE" />
+        
+    </class>
+</hibernate-mapping>

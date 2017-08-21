@@ -48,4 +48,7 @@ public class TempContService {
 	public List<TempContVO> getAll(){
 		return dao.findAll();
 	} 
+	public int countTempContsInSingleTemp(String temp_no){
+		return dao.countTempContsInSingleTemp(temp_no);
+	}
 }

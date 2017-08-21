@@ -36,7 +36,7 @@ public class Service_TypeService {
 		dao.delete(stype_no);
 	}
 	
-	public Service_TypeVO getOneServiceType(String stype_no){
+	public Service_TypeVO getOne(String stype_no){
 		return dao.findByPK(stype_no);
 	}
 	

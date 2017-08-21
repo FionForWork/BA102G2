@@ -384,3 +384,4 @@ public class AdvertisingServlet extends HttpServlet {
 		return mimetype != null && mimetype.startsWith("image");
 	}
 }
+

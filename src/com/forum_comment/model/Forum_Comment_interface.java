@@ -10,4 +10,6 @@ public interface Forum_Comment_interface {
     public void delete(Integer fmc_no);
     public Forum_CommentVO findByPrimaryKey(Integer fmc_no);
     public List<Forum_CommentVO> getAll();
+	public Forum_CommentVO getOneAll( Integer art_no);
+	public Forum_CommentVO getArt_no_All(Integer art_no);
 }

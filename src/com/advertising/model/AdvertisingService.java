@@ -53,12 +53,18 @@ public class AdvertisingService {
 	}
 
 	public AdvertisingVO getOneAdvertising(String adv_no) {
+		System.out.println("adv_no"+adv_no);
 		return dao.findByPrimaryKey(adv_no);
 	}
 
 	public void deleteAdvertising(String adv_no) {
 		dao.delete(adv_no);
 	}
+
+	public List<AdvertisingVO> getAllUnverified(){
+		return dao.getAllUnverified();
+	}
+
 	public List<AdvertisingVO> getOneAll(String com_no) {
 		return dao.getOneAll(com_no);
 	}

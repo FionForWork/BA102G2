@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.place.model.PlaceVO" table="PLACE" >
+        
+        <id name="pla_no" column="PLA_NO">
+            <generator class="com.place.model.PlaceIdentifierGenerator" />  
+        </id>
+        
+        <property name="name" column="NAME" />
+        <property name="lng" column="LNG" />
+        <property name="lat" column="LAT" />
+        <property name="addr" column="ADDR" />
+        <property name="pla_desc" column="PLA_DESC" />
+        
+        <set name="PlaceViewSet" table="PLACEVIEW" cascade="all" inverse="true" >
+            <key><column name="PLA_NO"/></key>
+            <one-to-many class="com.placeview.model.PlaceViewVO"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

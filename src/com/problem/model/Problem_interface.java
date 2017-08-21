@@ -10,4 +10,5 @@ public interface Problem_interface {
     public void delete(Integer prob_no);
     public ProblemVO findByPrimaryKey(Integer prob_no);
     public List<ProblemVO> getAll();
+    public List<ProblemVO> getOneAll(Integer problem_type_no);
 }

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 public class ContactUs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -67,3 +65,4 @@ public class ContactUs extends HttpServlet {
 	}
 
 }
+

@@ -18,43 +18,47 @@ public class Tradition_Service {
 	public Tradition_Service(){
 		dao=new TraditionJNDIDAO();
 	}
-	public TraditionVO addTradition(String title,String article,Byte[] img) throws IOException{
+	public TraditionVO addTradition(Integer tra_type_no,Integer tra_order,String title,String article) throws IOException{
 		TraditionVO traditionVO=new TraditionVO();
+		traditionVO.setTra_type_no(tra_type_no);
+		traditionVO.setTra_order(tra_order);
 		traditionVO.setTitle(title);
 		traditionVO.setArticle(article);
 		
-		FileInputStream fis = new FileInputStream(new File("items/b03.jpg"));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
-		baos.close();
-		fis.close();
-		
-		traditionVO.setImg(baos.toByteArray());
+//		FileInputStream fis = new FileInputStream(new File("items/b03.jpg"));
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[8192];
+//		int i;
+//		while ((i = fis.read(buffer)) != -1) {
+//			baos.write(buffer, 0, i);
+//		}
+//		baos.close();
+//		fis.close();
+//		
+//		traditionVO.setImg(baos.toByteArray());
 		
 		dao.insert(traditionVO);
 		return traditionVO;
 	}
-	public TraditionVO updateTradition(String title,String article,Byte[] img) throws IOException{
+	public TraditionVO updateTradition(Integer tra_no,Integer tra_type_no,Integer tra_order,String title,String article) throws IOException{
 		TraditionVO traditionVO=new TraditionVO();
+		traditionVO.setTra_type_no(tra_type_no);
+		traditionVO.setTra_order(tra_order);
 		traditionVO.setTitle(title);
 		traditionVO.setArticle(article);
 		
-		FileInputStream fis = new FileInputStream(new File("items/b03.jpg"));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
-		baos.close();
-		fis.close();
-		
-		traditionVO.setImg(baos.toByteArray());
-		traditionVO.setTra_no(3);
+//		FileInputStream fis = new FileInputStream(new File("items/b03.jpg"));
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[8192];
+//		int i;
+//		while ((i = fis.read(buffer)) != -1) {
+//			baos.write(buffer, 0, i);
+//		}
+//		baos.close();
+//		fis.close();
+//		
+//		traditionVO.setImg(baos.toByteArray());
+		traditionVO.setTra_no(tra_order);
 		
 		dao.update(traditionVO);
 		return traditionVO;
@@ -64,12 +68,17 @@ public class Tradition_Service {
 		return dao.getAll();
 	}
 
-	public TraditionVO getOneDept(Integer tra_no) {
+	public TraditionVO getOneTradition(Integer tra_no) {
 		return dao.findByPrimaryKey(tra_no);
 	}
 
-	public void deleteDept(Integer tra_no) {
+	public void deleteTradition(Integer tra_no) {
 		dao.delete(tra_no);
+	}
+	public List<TraditionVO> getOneAll(Integer tra_type_no){
+		
+		
+		return dao.getOneAll(tra_type_no);
 	}
 	
 	

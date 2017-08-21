@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.com.model.ComVO;
+
 public class AdmDAO implements AdmDAO_Interface{
 
 	private static DataSource ds = null;
@@ -34,11 +36,118 @@ public class AdmDAO implements AdmDAO_Interface{
 		private static final String DELETE = 
 			"DELETE FROM adminstrator where adm_no = ?";
 		private static final String UPDATE = 
-			"UPDATE adminstrator set id=?, pwd=?, name=?, job=?, status=?,  where adm_no = ?";
+			"UPDATE adminstrator set id=?, pwd=?, name=?, job=?, status=?  where adm_no = ?";
+		private static final String LOGINID ="SELECT id FROM adminstrator";
+		private static final String findById = "SELECT adm_no,id,pwd,name,job,status from adminstrator where id= ?";
+	
+		@Override
+		public List<AdmVO> loginid() {
+			List<AdmVO> list = new ArrayList<AdmVO>();
+			AdmVO admVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try{
+				
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(LOGINID);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					admVO =new AdmVO();
+				
+					admVO.setId(rs.getString("id"));
+					list.add(admVO); 
+				}
+				
+				
+				
+				
+			}catch(SQLException se){
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+				
+			}finally{
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				
+			}
+			return list;
+		}
 
-	
-	
-	
+		@Override
+		public AdmVO findById(String id) {
+			AdmVO admVO =null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(findById);
+
+				pstmt.setString(1, id);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+				
+					admVO = new AdmVO();
+					
+					admVO.setAdm_no(rs.getString("adm_no"));
+					admVO.setId(rs.getString("id"));
+					admVO.setPwd(rs.getString("pwd"));
+					admVO.setName(rs.getString("name"));
+					admVO.setStatus(rs.getString("status"));
+				
+					
+				}
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return admVO;
+			
+		}
 	
 	@Override
 	public void insert(AdmVO admVO) {
@@ -264,6 +373,8 @@ public class AdmDAO implements AdmDAO_Interface{
 		
 		return list;
 	}
+
+
 
 	
 	

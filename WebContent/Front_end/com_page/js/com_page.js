@@ -9,7 +9,6 @@ function change(c) {
 	}
 }
 
-
 function validateForm(form){
 	if (!checkName(form.name.value)){
 		return(false);	

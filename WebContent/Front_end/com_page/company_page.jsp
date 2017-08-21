@@ -58,8 +58,23 @@
 	<!--廠商名稱-->
 	<div class="text-center">
 		<h1>${comVO.name}</h1>
-		<a href="#"><i class="fa fa-heart" style="color:deeppink">加入最愛</i></a>
+		<div id="comTracking">
+			<c:choose>
+			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
+			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
+		
+			</c:when>
+			<c:otherwise>
+				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+			</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
+		<input type='hidden' name='mem_no' value='${mem_no}'>
+		<input type='hidden' name='path' value='<%= request.getContextPath()%>/comtra/comtra.do'>
 	</div>
+<div id="snackbar">請先登入會員...</div>
 	<!--廠商名稱-->
 	
 	<!--麵包削-->
@@ -192,7 +207,7 @@
 	<div class="container">
 		<div class="row">
 
-			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
+			<c:forEach var="servVO" items="${servList}">
 			<c:if test="${servVO.com_no==comVO.com_no}">
 				<div class="service col-xs-12 col-sm-3">
 					<ul class="service_box">
@@ -204,38 +219,7 @@
 				</div>
 			</c:if>	
 			</c:forEach>
-			
-			<div id="more_services" style="display: none;">
-			<c:forEach var="servVO" items="${servList}" begin="5">
-			<c:if test="${servVO.com_no==comVO.com_no}">
-				<div class="service col-xs-12 col-sm-3">
-					<ul class="service_box">
-						<li class="service_title"><div>${servVO.title}</div></li>
-						<div class="text"><li>${servVO.content}</li></div>
-						<li class="cost"><div>價格<b class="price text-pink" >${servVO.price}</b>元</div>
-						</li>
-					</ul>
-				</div>
-			</c:if>		
-			</c:forEach>
-			</div>
-
 		</div>
-	</div>
-	
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-xs-12 col-sm-3"></div>
-			<div class="col-xs-12 col-sm-6">
-				<a class="btn btn-info btn-lg" onclick="change(2)" id="more_services_btn"> 看更多方案
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-				
-			</div>
-			<div class="col-xs-12 col-sm-3"></div>
-		</div>
-	</div>
-	
 	</div>
 	<!--廠商方案-->
 	

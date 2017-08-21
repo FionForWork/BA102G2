@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.rfq_detail.model.*;
+
 public class RFQDAO implements RFQDAO_Interface {
 	
 	private static DataSource ds = null;
@@ -34,21 +36,44 @@ public class RFQDAO implements RFQDAO_Interface {
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM RFQ where RFQ_NO = ?";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM RFQ order by RFQ_NO ";
+			"SELECT * FROM RFQ order by RFQ_DATE DESC ";
+	private static final String GET_MEM_NO =
+			"Select * From RFQ where RFQ_NO = "
+			+ "(select RFQ_NO from Rfq_Detail where Rfqdetail_No = "
+			+ "(select RFQdetail_no from quote where quo_no = ?))";
 	
 	@Override
-	public void insert(RFQVO rfqVO) {
+	public void insertWithDetail(RFQVO rfqVO, List<RFQ_DetailVO> list) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT);
+			con.setAutoCommit(false);
+			
+			String cols[] = {"RFQ_NO"};
+			pstmt = con.prepareStatement(INSERT, cols);
 			
 			pstmt.setString(1,rfqVO.getMem_no());
 			pstmt.setTimestamp(2, rfqVO.getRfq_date());
 			pstmt.executeUpdate();
+			
+			String next_RFQ_NO = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_RFQ_NO = rs.getString(1);
+			}
+			rs.close();
+			
+			RFQ_DetailDAO rfq_DetailDAO = new RFQ_DetailDAO();
+			
+			for(RFQ_DetailVO rfq_DetailVO : list){
+				rfq_DetailVO.setRfq_no(next_RFQ_NO);
+				rfq_DetailDAO.insert(rfq_DetailVO, con);
+			}
+			con.commit();
+			con.setAutoCommit(true);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -240,6 +265,57 @@ public class RFQDAO implements RFQDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public RFQVO findFromQuote(String quo_no) {
+		RFQVO rfqVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_MEM_NO);
+
+			pstmt.setString(1, quo_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				rfqVO = new RFQVO();
+				rfqVO.setRfq_no(rs.getString("rfq_no"));
+				rfqVO.setMem_no(rs.getString("mem_no"));
+				rfqVO.setRfq_date(rs.getTimestamp("rfq_date"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return rfqVO;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.serv.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ServService {
 	private ServDAO_Interface dao;
@@ -9,7 +10,7 @@ public class ServService {
 		dao = new ServDAO();
 	}
 	
-	public ServVO addServ(String stype_no,String com_no,Integer deposit,Integer price,String title,String content){
+	public ServVO addServ(String stype_no,String com_no,Integer deposit,Integer price,String title,String content,String status){
 		
 		ServVO servVO=new ServVO();
 		servVO.setStype_no(stype_no);
@@ -18,6 +19,7 @@ public class ServService {
 		servVO.setPrice(price);
 		servVO.setTitle(title);
 		servVO.setContent(content);
+		servVO.setStatus(status);
 		dao.insert(servVO);
 		return servVO;
 	}
@@ -36,6 +38,16 @@ public class ServService {
 		return servVO;
 	}
 	
+	public ServVO updateScore(int times, double score, String serv_no){
+		ServVO servVO=new ServVO();
+		
+		servVO.setServ_no(serv_no);
+		servVO.setTimes(times);;
+		servVO.setServ_no(serv_no);;
+		dao.updateScore(servVO);
+		return servVO;
+	}
+	
 	public void deleteServ(String serv_no){
 		dao.delete(serv_no);
 		
@@ -51,11 +63,22 @@ public class ServService {
 		
 	}
 	
-	
+	public List<ServVO> getAll(Map<String, String[]> map){
+		return dao.getAll(map);
+		
+	}
 	
 	public List<String> getComnoByStypeno(String stype_no){
 		return dao.findByStype_no(stype_no);
 		
+	}
+	
+	public List<ServVO> getCom(String com_no){
+		return dao.getCom(com_no);
+		
+	}
+	public List<ServVO> getSearch(String sh){
+		return dao.findBysh(sh);	
 	}
 	
 	public List<ServVO> getAllAvg(){

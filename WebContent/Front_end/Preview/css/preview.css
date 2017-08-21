@@ -1,0 +1,52 @@
+/*** ImageCropper ***/
+#canvas-bg {
+	float: left;
+	text-align: left;
+	height: 70px;
+}
+
+#canvas-wrapper {
+	position: relative;
+	width: auto;
+	margin: auto;
+}
+
+canvas {
+	border: dashed 1px #808080;
+}
+
+#canvas-background {
+	display: block;
+	width: 100%;
+	margin-top: 5px;
+}
+
+/*** ImageLayover ***/
+
+.image-container {
+	width: 100%;
+	min-height: 10em;
+	border: 1px solid lightgray;
+	margin-top:15px;
+}
+
+.custom-state-active {
+	background: #eee;
+}
+
+.image-container img {
+	width: 100%;
+	cursor: move;
+	height: auto;
+}
+
+#dropZone {
+	border: 2px solid gray;
+	width: auto;
+	height: 500px;
+}
+
+#dropZone h4 {
+	line-height: 16px;
+	/* 	margin: 0 0 0.4em; */
+}

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -31,6 +32,9 @@ public class ServJDBCDAO implements ServDAO_Interface{
 			"DELETE FROM service where serv_no = ?";
 		private static final String UPDATE = 
 			"UPDATE service set stype_no=?, com_no=?, deposit=?, price=?, title=?, content=?  where serv_no = ?";
+		private static final String GET_COM_STMT = 
+				"SELECT * FROM SERVICE WHERE COM_NO = ?";
+		
 	
 	@Override
 	public void insert(ServVO servVO) {
@@ -238,7 +242,37 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		
 		return servVO;
 	}
+	@Override
+	public List<String> findByStype_no(String stype_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+
+	@Override
+	public List<ServVO> getCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<ServVO> findBysh(String sh) {
+		return null;
+	}
+
+	@Override
+	public List<ServVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<ServVO> getAllAvg() {
+
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<ServVO> getAll() {
 		List<ServVO> list = new ArrayList<ServVO>();
@@ -369,22 +403,15 @@ public class ServJDBCDAO implements ServDAO_Interface{
 	}
 
 
-	@Override
-	public List<String> findByStype_no(String stype_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<ServVO> getAllAvg() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+
+	@Override
+	public void updateScore(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
-
 
 
 

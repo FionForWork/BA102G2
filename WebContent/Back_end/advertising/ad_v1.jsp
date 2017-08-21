@@ -231,4 +231,3 @@
 	<font color=blue>status:</font><%=request.getParameter("whichPage")%><br>
 <%@ include file="page/after.file"%>
 </body>
-</html>

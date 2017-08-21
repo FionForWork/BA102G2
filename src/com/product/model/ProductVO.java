@@ -1,8 +1,12 @@
 package com.product.model;
 
+import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
-public class ProductVO {
+import sun.misc.BASE64Encoder;
+
+public class ProductVO implements Serializable{
     private String pro_no;
     private String pro_name;
     private String seller_no;
@@ -10,6 +14,7 @@ public class ProductVO {
     private Integer price;
     private Integer amount;
     private byte[] img;
+//    private Date pro_date;
     private Timestamp pro_date;
     private String protype_no;
     private String status;
@@ -19,9 +24,8 @@ public class ProductVO {
     public ProductVO() {
         super();
     }
-
-    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount,
-            byte[] img, Timestamp pro_date, String protype_no, String status, Integer times, Integer score) {
+    
+    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount, byte[] img, Timestamp pro_date, String protype_no, String status, Integer times, Integer score) {
         super();
         this.pro_no = pro_no;
         this.pro_name = pro_name;
@@ -31,6 +35,35 @@ public class ProductVO {
         this.amount = amount;
         this.img = img;
         this.pro_date = pro_date;
+        this.protype_no = protype_no;
+        this.status = status;
+        this.times = times;
+        this.score = score;
+    }
+    
+    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount, Timestamp pro_date, String protype_no, String status, Integer times, Integer score) {
+        super();
+        this.pro_no = pro_no;
+        this.pro_name = pro_name;
+        this.seller_no = seller_no;
+        this.pro_desc = pro_desc;
+        this.price = price;
+        this.amount = amount;
+        this.pro_date = pro_date;
+        this.protype_no = protype_no;
+        this.status = status;
+        this.times = times;
+        this.score = score;
+    }
+    
+    public ProductVO(String pro_no, String pro_name, String seller_no, String pro_desc, Integer price, Integer amount, String protype_no, String status, Integer times, Integer score) {
+        super();
+        this.pro_no = pro_no;
+        this.pro_name = pro_name;
+        this.seller_no = seller_no;
+        this.pro_desc = pro_desc;
+        this.price = price;
+        this.amount = amount;
         this.protype_no = protype_no;
         this.status = status;
         this.times = times;
@@ -133,4 +166,24 @@ public class ProductVO {
         this.score = score;
     }
     
+    public String getImgBase64(){
+        BASE64Encoder base64Encoder=new BASE64Encoder();
+        return base64Encoder.encode(this.img);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ProductVO) {
+            if(((ProductVO) obj).getPro_no().equals(this.pro_no)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Integer.valueOf(this.pro_no);
+    }
+
 }

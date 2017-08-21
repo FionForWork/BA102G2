@@ -13,6 +13,7 @@
 	AdvertisingService advertisingSvc = new AdvertisingService();
 	List<AdvertisingVO> advertisingList = advertisingSvc.getAll();
 	pageContext.setAttribute("advertisingList", advertisingList);
+	
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
@@ -269,4 +270,3 @@
 
 	<%@ include file="page/after.file"%>
 </body>
-</html>
