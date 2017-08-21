@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.protra.model.ProtraVO" table="PROTRA" >
+        
+        <id name="protra_no" column="PROTRA_NO">
+            <generator class="sequence" >
+              <param name="sequence">PROTRA_SQ</param>
+            </generator>  
+        </id>
+        
+        <property name="pro_no" column="PRO_NO" />
+        <property name="mem_no" column="MEM_NO" />
+        
+    </class>
+</hibernate-mapping>

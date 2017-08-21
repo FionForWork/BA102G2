@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	$("#open_chat").click(function(){
 		$("#chatbox").slideToggle();
@@ -10,3 +9,4 @@ $(document).ready(function(){
 		$("#chatbox").slideToggle();
 	 });
 });
+

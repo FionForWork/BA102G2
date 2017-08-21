@@ -321,13 +321,12 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "1");
-
-				req.setAttribute("advertisingVO", advertisingVO);
 				
 				String url = requestURL+"?whichPage="+whichPage;
 				
 				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
+				
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
@@ -384,3 +383,4 @@ public class AdvertisingServlet extends HttpServlet {
 		return mimetype != null && mimetype.startsWith("image");
 	}
 }
+

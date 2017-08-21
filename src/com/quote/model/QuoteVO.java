@@ -7,7 +7,6 @@ public class QuoteVO {
 	private String com_no;
 	private String rfqdetail_no;
 	private Integer price;
-	private String title;
 	private String content;
 	private Timestamp quo_date;
 	
@@ -38,12 +37,6 @@ public class QuoteVO {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
 	public String getContent() {
 		return content;
 	}
@@ -56,6 +49,5 @@ public class QuoteVO {
 	public void setQuo_date(Timestamp quo_date) {
 		this.quo_date = quo_date;
 	}
-	
 	
 }

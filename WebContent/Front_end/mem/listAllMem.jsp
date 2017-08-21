@@ -7,6 +7,7 @@
     MemService memSvc = new MemService();
     List<MemVO> list = memSvc.getAll();
     pageContext.setAttribute("list",list);
+   
 %>
 
 <html>
@@ -63,7 +64,7 @@
 			<td>${memVO.phone}</td>
 			<td>${memVO.email}</td>
 			<td>${memVO.account}</td>
-			<td>${memVO.picture}</td>
+			<td><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no }" /></td>
 			<td>${memVO.report}</td>
 			<td>${memVO.status}</td>
 			<td>

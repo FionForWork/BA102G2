@@ -1,0 +1,55 @@
+﻿<div class="modal fade" id="NewProduct">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">申請新商品上架</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addForm" action="<%=request.getContextPath()%>/product/ProductServlet" method="post" enctype="multipart/form-data">
+                                        <table class="table table-hover table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>商品名稱</td>
+                                                    <td><input id="addName" name="pro_name" type="text" placeholder="必須輸入商品名稱"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>商品描述</td>
+                                                    <td><textarea id="addDesc" name="pro_desc" class="form-control" style="width: 300px; height: 100px;"></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>價格</td>
+                                                    <td><input id="addPrice" name="price" type="number" value="1" min="1" placeholder="1"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>庫存</td>
+                                                    <td><input id="addAmount" name="amount" type="number" value="1" min="1" placeholder="1"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>商品種類</td>
+                                                    <td><select id="addType" name="protype_no">
+                                                            <c:forEach var="proType" items="${typeList}">
+                                                                <option value="${proType.protype_no}">${proType.type_name}</option>
+                                                            </c:forEach>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>商品圖片(若拖拉上傳圖片，將自動申請上架，商品資料請填寫詳細，大小上限為3MB)</td>
+                                                    <td>
+                                                        <div id="${s.index}" class="addImg">
+                                                            <img class="addPreview">
+                                                        </div>
+                                                        <input type="file" id="add" name="img">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <input type="hidden" name="action" value="ADD">
+                                        <input type="button" class="btn btn-success" onclick="addCheck()" value="確認申請">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

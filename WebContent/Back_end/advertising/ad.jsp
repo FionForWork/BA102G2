@@ -51,7 +51,7 @@
 					<thead>
 						<tr>
 							<th>廠商名稱</th>
-<!-- 							<th>廣告標題</th> -->
+							<th>廣告標題</th>
 							<th>刊登日期</th>
 							<th>刊登天數</th>
 							<th>狀態</th>
@@ -68,7 +68,7 @@
 											<td>${comVO.name}</td>
 										</c:if>
 									</c:forEach>
-
+									<td>${advertisingVO.title}</td>
 									<fmt:formatDate value="${advertisingVO.startDay}"
 										var="startDayFormat" pattern="yyyy-MM-dd" />
 									<td>${startDayFormat}</td>
@@ -88,18 +88,18 @@
 									<td>
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
+													<button class="btn btn-info" data-toggle="collapse" data-target="#0${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
+													<button class="btn btn-info" data-toggle="collapse" data-target="#0${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
 									</td>	
 								</tr>
 								
 								<tr>
-									<td colspan="5">
-										<div class="row collapse" id="${advertisingVO.adv_no}">
+									<td colspan="6">
+										<div class="row collapse" id="0${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
 										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 											<img style="width:50%"
@@ -157,6 +157,7 @@
 					<thead>
 						<tr>
 							<th>廠商名稱</th>
+							<th>廣告標題</th>
 							<th>刊登日期</th>
 							<th>刊登天數</th>
 							<th>狀態</th>
@@ -172,7 +173,7 @@
 											<td>${comVO.name}</td>
 										</c:if>
 									</c:forEach>
-
+									<td>${advertisingVO.title}</td>
 									<fmt:formatDate value="${advertisingVO.startDay}"
 										var="startDayFormat" pattern="yyyy-MM-dd" />
 									<td>${startDayFormat}</td>
@@ -191,21 +192,21 @@
 									<td>
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
+													<button class="btn btn-info" data-toggle="collapse" data-target="#1${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
+													<button class="btn btn-info" data-toggle="collapse" data-target="#1${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
 									</td>
 								</tr>
 								
 								<tr>
-									<td colspan="5">
-										<div class="row collapse" id="${advertisingVO.adv_no}">
+									<td colspan="6">
+										<div class="row collapse" id="1${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
 										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
-											<img style="width:50%"
+											<img style="width:100%;"
 											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 										</a>
 										</div>
@@ -260,6 +261,7 @@
 					<thead>
 						<tr>
 							<th>廠商名稱</th>
+							<th>廣告標題</th>
 							<th>刊登日期</th>
 							<th>刊登天數</th>
 							<th>狀態</th>
@@ -275,7 +277,7 @@
 											<td>${comVO.name}</td>
 										</c:if>
 									</c:forEach>
-
+									<td>${advertisingVO.title}</td>
 									<fmt:formatDate value="${advertisingVO.startDay}"
 										var="startDayFormat" pattern="yyyy-MM-dd" />
 									<td>${startDayFormat}</td>
@@ -296,18 +298,18 @@
 									<td>
 											<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
+													<button class="btn btn-info" data-toggle="collapse" data-target="#2${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
-													<button class="btn btn-info" data-toggle="collapse" data-target="#${advertisingVO.adv_no}">審核廣告</button>
+													<button class="btn btn-info" data-toggle="collapse" data-target="#2${advertisingVO.adv_no}">審核廣告</button>
 												</c:otherwise>
 											</c:choose>
 									</td>
 								</tr>
 								
 								<tr>
-									<td colspan="5">
-										<div class="row collapse in" id="${advertisingVO.adv_no}">
+									<td colspan="6">
+										<div class="row collapse" id="2${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
 										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 											<img style="width:50%"
@@ -361,18 +363,6 @@
 		</div>
 	</div>
 
-
-
-
-
-
-	<%
-		if (request.getAttribute("listOneAdContent") != null) {
-	%>
-	<jsp:include page="listOneAdContent.jsp" />
-	<%
-		}
-	%>
 	<div class="col-xs-12 col-sm-1"></div>
 	
 	<%@ include file="page/after.file"%>

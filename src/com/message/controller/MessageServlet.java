@@ -117,7 +117,7 @@ public class MessageServlet extends HttpServlet {
 				session.getAsyncRemote().sendText(message);
 		}
 		System.out.println("發送訊息");
-		System.out.println("myRoom" + myRoom+"myName"+myName+"myRoomsize"+myRoom.length());	
+		System.out.println("myRoom: " + myRoom+"myName: "+myName+"myRoomsize: "+myRoom.length());	
 		System.out.println("Message received: " + message);
 	}
 
@@ -140,3 +140,4 @@ public class MessageServlet extends HttpServlet {
 	}
 
 }
+

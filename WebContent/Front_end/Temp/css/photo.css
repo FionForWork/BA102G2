@@ -76,3 +76,7 @@ div button {
 .dropdown:hover .dropdownContent {
     display: block;
 }
+.errorMsgs {
+	color:red;
+	
+}

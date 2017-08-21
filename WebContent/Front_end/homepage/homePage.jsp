@@ -13,14 +13,15 @@
     <title>ＨomePage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/w3.css">
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/w3.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/fonts.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/homepage.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
+    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/jquery-3.2.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/homepage/js/contact_us.js"></script>
 <%
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();
@@ -29,7 +30,7 @@
 	DecimalFormat df = new DecimalFormat("#,##0.0"); 
 	pageContext.setAttribute("df", df);
 
-
+	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
 %>    
 </head>
 <style>
@@ -226,17 +227,17 @@
                     <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@gmail.com<br>
                 </div>
                 <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
-                <form action="/action_page.php" target="_blank">
+                <form method="post" action="<%=request.getContextPath()%>/ContactUs" target="_blank">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name" value="${(map.name==null)?'':map.name}"><font color='red'>${errorMsgs.name}</font>
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email" value="${(map.email==null)?'':map.email}"><font color='red'>${errorMsgs.email}</font>
                         </div>
                     </div>
-                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
-                    <button class="w3-button w3-black w3-right w3-section" type="submit">
+                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea" value="${(map.messagesArea==null)?'':map.messagesArea}"><font color='red'>${errorMsgs.messagesArea}</font><br>
+                    <button class="w3-button w3-black w3-right w3-section" type="submit"  onClick="validateForm(this.form)">
           <i class="fa fa-paper-plane"></i> SEND MESSAGE
         </button>
                 </form>

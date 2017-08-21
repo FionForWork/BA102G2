@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 public class ContactUs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -46,9 +44,9 @@ public class ContactUs extends HttpServlet {
 		}
 		
 		if (!errorMsgs.isEmpty()) {
-			String requestURL = new String(req.getParameter("requestURL"));
+//			String requestURL = new String(req.getParameter("requestURL"));
 			req.setAttribute("map", map);
-			req.getRequestDispatcher("/Front_end/homepage/homePage.jsp").forward(req, res);
+			res.sendRedirect("/BA102G2/Front_end/homepage/homePage.jsp");
 			return;
 			
 		}
@@ -61,8 +59,11 @@ public class ContactUs extends HttpServlet {
 		
 		MailService mailService = new MailService();
 	    mailService.sendMail(to, subject, messageText);
-	    
-		req.getRequestDispatcher("/Front_end/homepage/homePage.jsp").forward(req, res);
+
+//	    String requestURL = new String(req.getParameter("requestURL"));
+	    res.sendRedirect("/BA102G2/Front_end/homepage/homePage.jsp");
+//		req.getRequestDispatcher(requestURL).forward(req, res);
 	}
 
 }
+

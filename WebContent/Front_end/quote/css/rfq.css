@@ -1,0 +1,30 @@
+    .mem_img {
+        width: 80px;
+        height: 80px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .com_img {
+        width: 80px;
+        height: 80px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top:20px;
+    }
+    
+    .step-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .step-container {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .rfq-row{
+        margin-bottom: 20px;
+    }

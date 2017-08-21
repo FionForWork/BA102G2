@@ -1,0 +1,71 @@
+﻿<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>She Said Yes!</title>
+<!-- Mobile specific metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="<%=request.getContextPath()%>/Back_end/com/assets/css/icons.css" rel="stylesheet" />
+<%-- <link href="<%=request.getContextPath()%>/Back_end/com/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" /> --%>
+<link href="<%=request.getContextPath()%>/Back_end/com/assets/css/bootstrap.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/com/assets/css/plugins.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/com/assets/css/main.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/com/assets/css/custom.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico" type="image/png">
+<!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
+<meta name="msapplication-TileColor" content="#3399cc" />
+</head>
+<body>
+	<!-- Start #header -->
+	<div id="header">
+		<div class="container-fluid">
+			<div class="navbar">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"> <span
+						class="text-logo"> She Said Yes!</span>
+					</a>
+				</div>
+				<nav class="top-nav" role="navigation">
+					<ul class="nav navbar-nav pull-right">
+
+						<li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
+							<ul class="dropdown-menu right" role="menu">
+								<li><a href="profile.html"><i class="st-user"></i>
+										Profile</a></li>
+								<li><a href="login.html"><i class="im-exit"></i> Logout</a>
+								</li>
+							</ul></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- Start .header-inner -->
+	</div>
+	<!-- End #header -->
+	<!-- Start #sidebar -->
+	<div id="sidebar">
+		<!-- Start .sidebar-inner -->
+		<div class="sidebar-inner">
+			<!-- Start #sideNav -->
+			<ul id="sideNav" class="nav nav-pills nav-stacked">
+
+				<li><a href="#"><i class="en-users"></i>一般會員管理 </a></li>
+				<li><a href="#"><i class="en-users"></i>廠商管理 </a></li>
+				<li><a href="#"><i class="en-users"> </i>管理者設定 </a></li>
+				<li><a href="#"><i class="im-table2"></i>廣告刊登管理 </a></li>
+				<li><a href="#"><i class="br-location"></i>景點管理 </a></li>
+				<li><a href="#"><i class="im-newspaper"></i>熱門資訊管理</a></li>
+				<li><a href="#"><i class="fa-shopping-cart"></i>商城管理</a></li>
+				<li><a href="#"><i class="ec-mail"></i> 聯絡我們管理 </a></li>
+				<li><a href="#"><i class="im-question"></i>常見問題管理</a></li>
+				<li><a href="#"><i class="br-warning"></i>檢舉管理</a></li>
+			</ul>
+			<!-- End #sideNav -->
+		</div>
+		<!-- End .sidebar-inner -->
+	</div>
+	<!-- End #sidebar -->

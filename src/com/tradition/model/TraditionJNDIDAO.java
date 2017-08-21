@@ -29,7 +29,7 @@ public class TraditionJNDIDAO implements Tradition_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO Tradition (tra_no,Title,Article,Img) VALUES (tra_no_sq.NEXTVAL, ?, ?, ?)";
+			"INSERT INTO Tradition (tra_no,tra_type_no,tra_order,title,Article,Img) VALUES (lpad(tra_no_sq.NEXTVAL,4,'0'), ?, ?,?, ?,?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM Tradition order by tra_no";
 		private static final String GET_ONE_STMT = 
@@ -37,8 +37,8 @@ public class TraditionJNDIDAO implements Tradition_interface{
 		private static final String DELETE = 
 			"DELETE FROM Tradition where tra_no = ?";
 		private static final String UPDATE = 
-				"UPDATE Tradition set Title=?, Article=?, Img=? where tra_no=?";
-			
+			"UPDATE Tradition set tra_type_no=?,tra_order=?, title=?,Article=?, Img=? where tra_no=?";
+		private static final String GET_ONE_ALL = "SELECT * FROM Tradition where tra_type_no = ?";
 		
 		
 		
@@ -53,14 +53,16 @@ public class TraditionJNDIDAO implements Tradition_interface{
 				pstmt = con.prepareStatement(INSERT_STMT);
 
 				
-				pstmt.setString(1, traditionVO.getTitle());
-				pstmt.setString(2, traditionVO.getArticle());
+				pstmt.setInt(1, traditionVO.getTra_type_no());
+				pstmt.setInt(2, traditionVO.getTra_order());
+				pstmt.setString(3, traditionVO.getTitle());
+				pstmt.setString(4, traditionVO.getArticle());
+				
 				
 				Blob blob = con.createBlob();
 				blob.setBytes(1, traditionVO.getImg());
 				
-				pstmt.setBlob(3, blob);
-				
+				pstmt.setBlob(5, blob);
 				
 				pstmt.executeUpdate();
 
@@ -97,17 +99,20 @@ public class TraditionJNDIDAO implements Tradition_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 
-				pstmt.setString(1, traditionVO.getTitle());
-				pstmt.setString(2, traditionVO.getArticle());
+				pstmt.setInt(1, traditionVO.getTra_type_no());
+				pstmt.setInt(2, traditionVO.getTra_order());
+				pstmt.setString(3, traditionVO.getTitle());
+				pstmt.setString(4, traditionVO.getArticle());
 				
 				Blob blob = con.createBlob();
 				blob.setBytes(1, traditionVO.getImg());
 				
-				pstmt.setBlob(3, blob);
-				pstmt.setInt(4, traditionVO.getTra_no());
+				pstmt.setBlob(5, blob);
+				pstmt.setInt(6, traditionVO.getTra_no());
 				
 				
 				pstmt.executeUpdate();
+
 
 				
 			} catch (SQLException se) {
@@ -191,13 +196,15 @@ public class TraditionJNDIDAO implements Tradition_interface{
 					
 					traditionVO = new TraditionVO();
 					traditionVO.setTra_no(rs.getInt("tra_no"));
+					traditionVO.setTra_type_no(rs.getInt("tra_type_no"));
+					traditionVO.setTra_order(rs.getInt("tra_order"));
 					traditionVO.setTitle(rs.getString("title"));
 					traditionVO.setArticle(rs.getString("article"));
 					
 
-					Blob blob = rs.getBlob("img");
-					int blobLength = (int) blob.length();
-					traditionVO.setImg(blob.getBytes(1, blobLength));
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
 					
 				}
@@ -250,12 +257,14 @@ public class TraditionJNDIDAO implements Tradition_interface{
 				while (rs.next()) {
 					traditionVO = new TraditionVO();
 					traditionVO.setTra_no(rs.getInt("tra_no"));
+					traditionVO.setTra_type_no(rs.getInt("tra_type_no"));
+					traditionVO.setTra_order(rs.getInt("tra_order"));
 					traditionVO.setTitle(rs.getString("title"));
 					traditionVO.setArticle(rs.getString("article"));
 
-					Blob blob = rs.getBlob("img");
-					int blobLength = (int) blob.length();
-					traditionVO.setImg(blob.getBytes(1, blobLength));
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
 					
 				
 					list.add(traditionVO); // Store the row in the list
@@ -291,6 +300,73 @@ public class TraditionJNDIDAO implements Tradition_interface{
 			}
 
 			return list;
+		}
+		@Override
+		public List<TraditionVO> getOneAll(Integer tra_type_no) {
+			
+			List<TraditionVO> list = new ArrayList<TraditionVO>();
+			TraditionVO traditionVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ONE_ALL);
+
+				pstmt.setInt(1, tra_type_no);
+
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					
+					traditionVO = new TraditionVO();
+					traditionVO.setTra_no(rs.getInt("tra_no"));
+					traditionVO.setTra_type_no(rs.getInt("tra_type_no"));
+					traditionVO.setTra_order(rs.getInt("tra_order"));
+					traditionVO.setTitle(rs.getString("title"));
+					traditionVO.setArticle(rs.getString("article"));
+					
+					
+//					Blob blob = rs.getBlob("img");
+//					int blobLength = (int) blob.length();
+//					traditionVO.setImg(blob.getBytes(1, blobLength));
+					
+					list.add(traditionVO); 
+				}
+
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return list;
+		
 		}
 		
 	

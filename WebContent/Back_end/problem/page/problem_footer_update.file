@@ -1,0 +1,32 @@
+﻿ </div>
+ </div>
+</div>
+                    <!-- End .page-header -->
+                </div>
+                <!-- End .row -->
+        </div>               
+            <!-- End .content-wrapper -->
+            <div class="clearfix"></div>
+  <!-- End #content -->
+  
+  
+  
+  
+  <script type="text/javascript">
+        
+        CKEDITOR.replace('comment') ;
+        
+    </script>
+  
+  
+  
+  
+  
+  
+  
+        <!-- Javascripts -->
+        <!-- Load pace first -->
+       
+    </body>
+</html>
+    

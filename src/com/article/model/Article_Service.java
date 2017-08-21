@@ -13,6 +13,8 @@ public Article_Service(){
 
 public ArticleVO addArt(Integer poster_no,Integer art_type_no,String title,
 		String content,Date art_date){
+	
+	
 	ArticleVO articleVO=new ArticleVO();
 	articleVO.setPoster_no(poster_no);
 	articleVO.setArt_type_no(art_type_no);
@@ -44,15 +46,21 @@ public List<ArticleVO> getAll() {
 	return dao.getAll();
 }
 
-public ArticleVO getOneDept(Integer art_no) {
+public ArticleVO getOneArt(Integer art_no) {
+//					
 	return dao.findByPrimaryKey(art_no);
+	
 }
 
-public void deleteDept(Integer art_no) {
+public void deleteArt(Integer art_no) {
 	dao.delete(art_no);
 }
-
-
+public List<ArticleVO> getOneAll(Integer art_type_no) {
+	return dao.getOneAll(art_type_no);
+}
+public void deleteArtAll(Integer art_no) {
+	dao.deleteAll(art_no);
+}
 
 
 }

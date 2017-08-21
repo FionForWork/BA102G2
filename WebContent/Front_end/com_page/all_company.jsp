@@ -24,7 +24,7 @@
 %>
 </head>
 <body>
-	<%@ include file="page/before.file"%>
+	<%@ include file="page/header.file"%>
 	<br>
 	<br>
 
@@ -63,6 +63,6 @@
 
 
 
-	<%@ include file="page/after.file"%>
+	<%@ include file="page/footer.file"%>
 </body>
 </html>

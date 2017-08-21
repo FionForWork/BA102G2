@@ -1,0 +1,20 @@
+	<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
+	<tr>
+		<td>廠商:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="com_no">
+			<c:forEach var="comVO" items="${comSvc.all}">
+				<option value="${comVO.com_no}" ${(servVO.com_no==comVO.com_no)? 'selected':'' } >${comVO.com_no}${comVO.name}
+			</c:forEach>
+		</select></td>
+	</tr
+	
+	
+	<jsp:useBean id="service_typeSvc" scope="page" class="com.service_type.model.Service_TypeService" />
+	<tr>
+		<td>服務類型:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="stype_no">
+			<c:forEach var="service_typeVO" items="${service_typeSvc.all}">
+				<option value="${service_typeVO.stype_no}" ${(servVO.stype_no==service_typeVO.stype_no)? 'selected':'' } >${service_typeVO.name}
+			</c:forEach>
+		</select></td>
+	</tr>

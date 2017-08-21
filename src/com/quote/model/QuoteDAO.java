@@ -26,7 +26,7 @@ public class QuoteDAO implements QuoteDAO_Interface {
 	}
 	
 	private static final String INSERT = 
-			"INSERT INTO QUOTE VALUES (LTRIM(TO_CHAR(QUOTE_SQ.NEXTVAL,'0009')), ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO QUOTE VALUES ('7'||LTRIM(TO_CHAR(QUOTE_SQ.NEXTVAL,'009')), ?, ?, ?, ?, ?)";
 	private static final String UPDATE = 
 			"UPDATE QUOTE SET PRICE=?, QUO_DATE=? where QUO_NO = ?";
 	private static final String DELETE = 
@@ -34,7 +34,9 @@ public class QuoteDAO implements QuoteDAO_Interface {
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM QUOTE where QUO_NO = ?";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM QUOTE order by QUO_NO ";
+			"SELECT * FROM QUOTE WHERE RFQDETAIL_NO = ? order by QUO_DATE DESC ";
+	private static final String GET_COM_STMT = 
+			"SELECT * FROM QUOTE WHERE COM_NO = ? order by QUO_DATE DESC ";
 	
 	@Override
 	public void insert(QuoteVO quoteVO) {
@@ -48,9 +50,8 @@ public class QuoteDAO implements QuoteDAO_Interface {
 			pstmt.setString(1, quoteVO.getCom_no());
 			pstmt.setString(2, quoteVO.getRfqdetail_no());
 			pstmt.setInt(3, quoteVO.getPrice());
-			pstmt.setString(4, quoteVO.getTitle());
-			pstmt.setString(5, quoteVO.getContent());
-			pstmt.setTimestamp(6, quoteVO.getQuo_date());
+			pstmt.setString(4, quoteVO.getContent());
+			pstmt.setTimestamp(5, quoteVO.getQuo_date());
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -74,7 +75,7 @@ public class QuoteDAO implements QuoteDAO_Interface {
 	}
 
 	@Override
-	public void updateStatus(QuoteVO quoteVO) {
+	public void update(QuoteVO quoteVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -159,7 +160,6 @@ public class QuoteDAO implements QuoteDAO_Interface {
 				quoteVO.setCom_no(rs.getString("com_no"));
 				quoteVO.setRfqdetail_no(rs.getString("rfqdetail_no"));
 				quoteVO.setPrice(rs.getInt("price"));
-				quoteVO.setTitle(rs.getString("title"));
 				quoteVO.setContent(rs.getString("content"));
 				quoteVO.setQuo_date(rs.getTimestamp("quo_date"));
 			}
@@ -187,7 +187,7 @@ public class QuoteDAO implements QuoteDAO_Interface {
 	}
 
 	@Override
-	public List<QuoteVO> getAll() {
+	public List<QuoteVO> getAll(String rfqdetail_no) {
 		List<QuoteVO> list = new ArrayList<QuoteVO>();
 		QuoteVO quoteVO = null;
 		Connection con = null;
@@ -198,6 +198,7 @@ public class QuoteDAO implements QuoteDAO_Interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			
+			pstmt.setString(1, rfqdetail_no);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -206,7 +207,54 @@ public class QuoteDAO implements QuoteDAO_Interface {
 				quoteVO.setCom_no(rs.getString("com_no"));
 				quoteVO.setRfqdetail_no(rs.getString("rfqdetail_no"));
 				quoteVO.setPrice(rs.getInt("price"));
-				quoteVO.setTitle(rs.getString("title"));
+				quoteVO.setContent(rs.getString("content"));
+				quoteVO.setQuo_date(rs.getTimestamp("quo_date"));
+				list.add(quoteVO);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<QuoteVO> getCom(String com_no) {
+		List<QuoteVO> list = new ArrayList<QuoteVO>();
+		QuoteVO quoteVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_COM_STMT);
+			
+			pstmt.setString(1, com_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				quoteVO = new QuoteVO();
+				quoteVO.setQuo_no(rs.getString("quo_no"));
+				quoteVO.setCom_no(rs.getString("com_no"));
+				quoteVO.setRfqdetail_no(rs.getString("rfqdetail_no"));
+				quoteVO.setPrice(rs.getInt("price"));
 				quoteVO.setContent(rs.getString("content"));
 				quoteVO.setQuo_date(rs.getTimestamp("quo_date"));
 				list.add(quoteVO);

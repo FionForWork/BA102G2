@@ -1,20 +1,35 @@
 package com.product.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface ProductDAO_Interface {
-	void add(ProductVO productVO);
+    
+    void insert(ProductVO productVO);
 
-	void delete(String pro_no);
+    void delete(String pro_no);
 
-	void update(ProductVO productVO);
+    void deleteByFK(String protype_no);
 
-	ProductVO getOneByPK(String pro_no);
+    void deleteByFK(String protype_no,Connection connection);
 
-	List<ProductVO> getAllBySeller(String seller_no);
+    void update(ProductVO productVO);
+    
+    ProductVO getOneByPK(String pro_no);
 
-	List<ProductVO> getAll();
-	
-	
+    ProductVO getOneByPKNoImg(String pro_no);
 
+    List<ProductVO> getAllNoImg(String status);
+
+    int getAllCount(String status);
+
+    int getAllCount(String protype_no,String status);
+
+    List<ProductVO> getPage(int start, int itemsCount, String orderMethod,String status);
+
+    List<ProductVO> getPage(int start, int itemsCount, String protype_no, String orderMethod,String status);
+    
+    int getAllCountBySeller(String seller_no);
+    
+    List<ProductVO> getPageBySeller(int start, int itemsCount,String seller_no);
 }

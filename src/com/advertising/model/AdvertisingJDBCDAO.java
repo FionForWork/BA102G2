@@ -290,6 +290,12 @@ public class AdvertisingJDBCDAO implements AdvertisingDAO_Interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<AdvertisingVO> getAllUnverified() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<AdvertisingVO> getOneAll(String com_no) {
 		List<AdvertisingVO> list = new ArrayList<AdvertisingVO>();

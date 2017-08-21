@@ -28,9 +28,16 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM article where art_no = ?";
 		private static final String DELETE = 
+				"DELETE FROM article where ART_NO = ?";
+		private static final String DELETE_ART = 
 			"DELETE FROM article where ART_NO = ?";
+		private static final String DELETE_Forum = 
+				"DELETE FROM FORUM_COMMENT where ART_NO = ?";
 		private static final String UPDATE = 
 			"UPDATE article set poster_no=?, art_type_no=?, title=?, content=?, art_date=? where art_no=?";
+		private static final String GET_ONE_ALL = 
+				"SELECT * FROM article where art_type_no =?";
+		
 	
 	
 	
@@ -276,6 +283,130 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 
 		return list;
 	}
+	@Override
+	public List<ArticleVO> getOneAll(Integer art_type_no) {
+		List<ArticleVO> list = new ArrayList<ArticleVO>();
+		ArticleVO articleVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_ALL);
+			pstmt.setInt(1, art_type_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				articleVO = new ArticleVO();
+				articleVO.setArt_no(rs.getInt("art_no"));
+				articleVO.setPoster_no(rs.getInt("poster_no"));
+				articleVO.setArt_type_no(rs.getInt("art_type_no"));
+				articleVO.setTitle(rs.getString("title"));
+				articleVO.setContent(rs.getString("content"));
+				articleVO.setArt_date(rs.getDate("art_date"));
+			
+				list.add(articleVO); 
+			}
+
+		
+		} catch (SQLException | ClassNotFoundException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
+	
+	@Override
+	public void deleteAll(Integer art_no) {
+		
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先刪除員工
+			pstmt = con.prepareStatement(DELETE_Forum);
+			pstmt.setInt(1, art_no);
+			 pstmt.executeUpdate();
+			// 再刪除部門
+			pstmt = con.prepareStatement(DELETE_ART);
+			pstmt.setInt(1, art_no);
+			pstmt.executeUpdate();
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			
+			
+			// Handle any SQL errors
+		} catch (SQLException | ClassNotFoundException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+	}
+	
 	
 	public static void main(String[] args) {
 
@@ -295,20 +426,20 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 //		dao.insert(articleVO1);
 
 //		// 修改
-		ArticleVO articleVO2 = new ArticleVO();
-		articleVO2.setArt_no(5002);
-		articleVO2.setPoster_no(123);
-		articleVO2.setArt_type_no(20);
-		articleVO2.setTitle("標題3");
-		articleVO2.setContent("內文");
-		articleVO2.setArt_date(new Date(date.getTime()));
-		dao.update(articleVO2);
+//		ArticleVO articleVO2 = new ArticleVO();
+//		articleVO2.setArt_no(5002);
+//		articleVO2.setPoster_no(123);
+//		articleVO2.setArt_type_no(20);
+//		articleVO2.setTitle("標題3");
+//		articleVO2.setContent("內文");
+//		articleVO2.setArt_date(new Date(date.getTime()));
+//		dao.update(articleVO2);
 //
 //		// 刪除
 //		dao.delete(2);
 //
 //		// 查詢
-//		ArticleVO articleVO3 = dao.findByPrimaryKey(4);
+//		ArticleVO articleVO3 = dao.findByPrimaryKey(5001);
 //		System.out.print(articleVO3.getArt_no() + ",");
 //		System.out.print(articleVO3.getPoster_no()+ ",");
 //		System.out.print(articleVO3.getArt_type_no()+ ",");
@@ -330,8 +461,24 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 //			
 //			System.out.println();
 //		}
-
+		
+		// 查詢
+//		List<ArticleVO> list = dao.getOneAll(10);
+//		for (ArticleVO articleVO5 : list) {
+//			System.out.print(articleVO5.getArt_no() + ",");
+//			System.out.print(articleVO5.getPoster_no()+ ",");
+//			System.out.print(articleVO5.getArt_type_no()+ ",");
+//			System.out.print(articleVO5.getTitle()+ ",");
+//			System.out.print(articleVO5.getContent() + ",");
+//			System.out.print(articleVO5.getArt_date()+ ",");
+//			
+//			System.out.println();
+//		}
+		// 刪除
+//		dao.deleteAll(5001);
 	
 }
+	
+	
 }
 

@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>She Said Yes!</title>
+    <meta charset="UTF-8">
+    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/index.css" rel="stylesheet">
+
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/top.js" type="text/javascript"></script>
+    
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	
+	<link href="css/advertising.css" rel="stylesheet">
+
+    <script src="js/advertising.js" type="text/javascript"></script>
+
+    
+
+</head>
+ <script>
+  $(function() {
+     $( "#startDay" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $( "#endDay" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#endDay" ).datepicker();
+  });
+  $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+  </script>
+
+<script language=javascript>
+//計算日期相差天數
+function Date_substr()
+{
+//定義起始 年月日
+    var StartDate=$( "#startDay" ).val();
+//定義結束 年月日
+    var EndDate=$( "#endDay" ).val();
+
+    aa=(DateDifference(StartDate,EndDate));
+		document.getElementById("datetotal").innerHTML=("共"+aa+"天"+"&nbsp&nbsp&nbsp&nbsp&nbsp")+("總金額:"+(aa*1000));
+		
+
+
+}
+// 算出日期與日期間的差距有幾天
+function DateDifference(StartDate,EndDate)
+{
+
+   var myStartDate = new Date(StartDate);
+   var myEndDate = new Date(EndDate);
+
+   // 天數，86400000是24*60*60*1000，除以86400000就是有幾天
+     return (myEndDate - myStartDate)/ 86400000 ; 
+}
+</script>
+
+
+<body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
+    <div class="navbar navbar-wd">
+        <div class="container" style="position: relative;">
+            <div class="navbar-header" style="margin-bottom:10px;">
+                <!--RWD-->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".wd-menu" aria-expanded="false" style="margin-top: 15px;">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--RWD-->
+                <a class="navbar-brand" href="#">
+
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/Advertising/img/ring_64.png">
+                    <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
+                        <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
+                            She Said Yes!</b></span>
+                        </h3>
+                    </div>
+                </a>
+            </div>
+
+            <div class="navbar-collapse collapse wd-menu">
+                <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
+                    
+                    <li>
+                        <a class="hidden" href="" role="login">
+                            廠商專區
+                        </a>
+                    </li>
+                    <li>
+                        <a class="hidden" href="" role="login">
+                            登出
+                        </a>
+                    </li>
+                     <li >
+                        <a class="" href="" role="login">
+                            登入
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" role="join" title="註冊會員">註冊會員</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 從這邊找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    </div>
+    <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
+        <div class="container">
+            <ul class="nav navbar-nav" class="collapse navbar-collapse">
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#">
+                        <h3>
+                            拍婚紗
+                        </h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a class="" href="#">婚紗手機1</a>
+                    </div>
+                    <!--RWD-->
+                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="#"><b>找店家</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看作品</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看方案</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>店家地圖</b></a>
+                        </li>
+                    </ol>
+                </li>
+
+                <li class="wd-drop-wrapper">
+                    <a href="#">
+                        <h3>新秘</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">新秘手機1</a><span> / </span>
+                        <a href="#">新秘手機2</a>
+                    </div>
+                    <!--RWD-->
+                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="#"><b>找店家</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看作品</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看方案</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>店家地圖</b></a>
+                        </li>
+                    </ol>
+                </li>
+                <li class="wd-drop-wrapper">
+                    <a href="#">
+                        <h3>婚攝/婚錄</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">婚攝婚錄手機1</a> <span> / </span>
+                        <a href="#">婚攝婚錄手機2</a>
+                    </div>
+                    <!--RWD-->
+                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="#"><b>找店家</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看作品</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>看方案</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>店家地圖</b></a>
+                        </li>
+                    </ol>
+                </li>
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#">
+                        <h3>新人問報價</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">手機1</a> <span> / </span>
+                        <a href="#">手機2</a>
+                    </div>
+                    <!--RWD-->
+                    <ol class="wd-drop_submenu list-unstyled  hidden-xs">
+                        <li>
+                            <a href="#"><b><span class="text-pink">新人</span>詢價</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>廠商回覆</b></a>
+                        </li>
+                        <li>
+                            <a href="#"><b>歷史報價</b></a>
+                        </li>
+                    </ol>
+                </li>
+
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#">
+                        <h3>實景預覽</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">手機1</a><span> / </span>
+                        <a href="#">手機2</a>
+                    </div>
+                    <!--RWD-->
+                </li>
+
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#">
+                        <h3>婚禮習俗</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">手機1</a><span>
+                </div>
+                <!--RWD-->
+            </li>
+            <li class="wd-drop-wrapper">
+                <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
+                <!--RWD-->
+                <div class="mobile-main-choice visible-xs">
+                    <a href="#">手機1</a><span> / </span>
+                        <a href="#">手機2</a>
+                    </div>
+                    <!--RWD-->
+                </li>
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#">
+                        <h3>討論版</h3>
+                    </a>
+                    <!--RWD-->
+                    <div class="mobile-main-choice visible-xs">
+                        <a href="#">手機1</a>
+                    </div>
+                    <!--RWD-->
+                </li>
+
+
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="#" target="_blank">
+                        <h3>客服專區</h3>
+                    </a>
+                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="#"><b>聯絡我們</b></a>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    
+    
+
+<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
+
+
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+
+    <br>
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+<div class="container">
+    <div class="col-md-offset-1">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Private</a></li>
+            <li><a href="#">Pictures</a></li>
+            <li class="active">Vacation</li>        
+        </ul>
+    </div>
+</div>
+<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
+   
+    <div class="container">
+        <div class="row">
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+            <div class="col-md-offset-1 col-md-2">
+                 <ul class="list-group">
+                    <a href="#" class="list-group-item menua">編輯廠商資料</a><br>
+                    <a href="#" class="list-group-item menua">修改密碼</a><br>
+                    <a href="#" class="list-group-item menua">預約紀錄查詢</a><br>
+                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
+                    <a href="#" class="list-group-item menua">作品挑選管理</a><br>
+                    <a href="#" class="list-group-item menua">行事曆</a><br>
+                    <a href="#" class="list-group-item menua">作品管理</a><br>
+                    <a href="#" class="list-group-item menua">廣告申請</a><br>
+                </ul>
+
+
+                <a href="#" class="btn btn-block btn-default">查看廠商資料</a>
+            </div>
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+
+<!--這裡開始===========================================================================-->
