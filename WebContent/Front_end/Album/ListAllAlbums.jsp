@@ -15,7 +15,6 @@
 // 	session.setAttribute("mem_no", "1001");
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
-	Map<String, String> errorMsgs = (Map) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="page/album_header_v2.file"%>
@@ -30,7 +29,7 @@
 
 			<!--start Modal create album-->
 			<form action="<%=request.getContextPath()%>/album/album.do"
-				method="post" enctype="multipart/form-data">
+				method="post" enctype="multipart/form-data" id='createAlbForm'>
 				<div class="modal fade" id="albumModal" role="dialog">
 					<div class="modal-dialog modal-lg">
 
@@ -50,20 +49,27 @@
 									<label class="input-group-addon">相簿名稱 </label> <input
 										type="text" name="name" class="form-control">
 								</div>
-								<br> <span class='errorMsgs'>
-									${errorMsgs.get("file")}</span> 
-									<input id="inputFile"
-									name="inputFile[]" type="file" multiple class="file-loading"> <br>
+								<br> 
+								
+								
+								
+								
+								<div class="form-group">
+									<label for="inputFile"> 選擇照片 <span id='emptyFile' style='color:red'></span></label> 
+									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
+								</div>
+								<br>
+								
 								<!-- 								<div class="form-group"> -->
 								<!-- 									<input type="file" class="form-control" name="uploadPic" -->
 								<!-- 										id="upload" onchange="preview_images()" multiple> -->
 								<!-- 								</div> -->
 								<!-- 								<div id="showPanel"></div> -->
-								<span class="glyphicon glyphicon-off"></span> <input
-									type='submit' class="btn btn-info btn-block" value="建立">
+								<span class="glyphicon glyphicon-off"></span> 
+								<input id='createBtn'  class="btn btn-info btn-block" value="建立">
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-default pull-left"
+								<button type="button" class="btn btn-default pull-left"
 									data-dismiss="modal">
 									<span class="glyphicon glyphicon-remove"></span> Cancel
 								</button>

@@ -204,6 +204,31 @@ public class PreviewServlet extends HttpServlet {
 				
 				PlaceViewVO placeview = placeviewSvc.getOneByPK(placeview_no);
 				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(placeview.getImg()));
+				
+				if(imageWidth.length() != 0){
+					BufferedImage originalimg = img;
+					System.out.println("img----" + img);
+					
+//					int resizeWidth = Integer.parseInt(imageWidth);
+//					System.out.println("resizeWidth----" + resizeWidth);
+//					double ratio = originalimg.getWidth() / resizeWidth;
+//					System.out.println("ratio----" + ratio);
+//					double resizeHeight = (double)(originalimg.getHeight() / ratio);
+//					System.out.println("resizeHeight----" + resizeHeight);
+					
+					BigDecimal originalWidth = new BigDecimal(originalimg.getWidth());
+					BigDecimal originalHeight = new BigDecimal(originalimg.getHeight());
+					BigDecimal resizeWidth = new BigDecimal(imageWidth);
+					System.out.println("resizeWidth----" + resizeWidth);
+					BigDecimal ratio =  originalWidth.divide(resizeWidth,3,RoundingMode.HALF_EVEN) ;
+					System.out.println("ratio----" + ratio);
+					BigDecimal resizeHeight = originalHeight.divide(ratio,3,RoundingMode.HALF_EVEN);
+					System.out.println("resizeHeight----" + resizeHeight);
+					img = new BufferedImage(resizeWidth.intValue(),resizeHeight.intValue(),BufferedImage.TYPE_INT_RGB);
+					Graphics tempg = img.getGraphics();
+					tempg.drawImage(originalimg, 0,0,resizeWidth.intValue(),resizeHeight.intValue(), null);
+					
+				}
 				g = img.getGraphics();
 			}else{
 				
@@ -239,6 +264,11 @@ public class PreviewServlet extends HttpServlet {
 					g = img.getGraphics();
 				}
 			}
+			
+			
+			System.out.println("img.getWidth()"+img.getWidth());
+			System.out.println("img.getHeight()"+img.getHeight());
+			
 			// 取得裁剪過的圖
 			cropCont = contSvc.getOneContent(cropCont_no);
 			BufferedImage cropImage = javax.imageio.ImageIO.read(new ByteArrayInputStream(cropCont.getImg()));
@@ -265,6 +295,8 @@ public class PreviewServlet extends HttpServlet {
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(img, "jpeg", baos);
+			System.out.println("img.getWidth()"+img.getWidth());
+			System.out.println("img.getHeight()"+img.getHeight());
 			resultCont = contSvc.addContent(alb_no, new Timestamp(System.currentTimeMillis()),baos.toByteArray(), null);
 			albSvc.updateAlbum(alb_no, mem_no, name, resultCont.getImg(), new Timestamp(System.currentTimeMillis()));
 			request.setAttribute("mergeCont_no",resultCont.getCont_no());
