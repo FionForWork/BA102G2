@@ -25,7 +25,6 @@
 <jsp:useBean id="quoteService" class="com.quote.model.QuoteService" />
 <html>
 <head>
-<title>ListRFQ.jsp</title>
 </head>
 <%@ include file="page/header.file" %>
 <div class="container step-container">

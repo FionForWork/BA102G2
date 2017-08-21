@@ -7,7 +7,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <% 
 	ReservationService reservationService = new ReservationService();
 	String status = request.getParameter("status");
@@ -35,7 +35,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <%@ include file="page/memHeader.file" %>
 
