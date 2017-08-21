@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.adm.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%
 AdmVO admVO = (AdmVO) request.getAttribute("admVO"); 
 %>
@@ -21,7 +23,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 	<tr>
 		<th>管理員編號</th>
 		<th>管理員帳號</th>
-		<th>管理員密碼</th>
+
 		<th>管理員姓名</th>
 		<th>管理員職位</th>
 		<th>管理員狀態</th>
@@ -30,7 +32,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 	<tr align='center' valign='middle'>
 			<td>${admVO.adm_no}</td>
 			<td>${admVO.id}</td>
-			<td>${admVO.pwd}</td>
+
 			<td>${admVO.name}</td>
 			<td>${admVO.job}</td>
 			<td>${admVO.status}</td>

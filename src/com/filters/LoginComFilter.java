@@ -48,7 +48,7 @@ public class LoginComFilter implements Filter {
 		
 		if (id == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
+			res.sendRedirect(req.getContextPath()+"/Front_end/login/login2.jsp");
 			return;
 		} else {
 			try{

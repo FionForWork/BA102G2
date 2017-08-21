@@ -48,6 +48,13 @@ public class MemService {
 		return memVO;
 	}
 	
+	public MemVO updateStatusForReport(String mem_no){
+		MemVO memVO = new MemVO();
+		memVO.setMem_no(mem_no);
+		dao.updateStatus(memVO);
+		return memVO;
+	}
+	
 	public MemVO  addMem(String id,String pwd,String name,String sex,Date bday,String phone,
 			String email,String account,byte[] picture){
 		
