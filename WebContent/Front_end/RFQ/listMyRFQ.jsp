@@ -39,7 +39,7 @@
 		</thead>
 		<c:forEach var="rfq_detailVO" items="${list}">
 			<tr>
-				<td>${datedf.format(rfq_detailVO.ser_date)}</td>
+				<td><p>${datedf.format(rfq_detailVO.ser_date)}</p></td>
 				<td>
 					${rfq_detailVO.location}${sortingHat.getServType(rfq_detailVO.stype_no)}服務<br>
 					${rfq_detailVO.content}
@@ -53,12 +53,12 @@
 					<div class="dropdown">
 					<c:if test="${rfq_detailVO.status == '1'}">
 						<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-						${sortingHat.getRFQStatus(rfq_detailVO.status)}
+						<p>${sortingHat.getRFQStatus(rfq_detailVO.status)}</p>
 						<span class="caret"></span></button>
 					</c:if>
 					<c:if test="${rfq_detailVO.status == '0'}">
 						<button class="btn btn-danger dropdown-toggle disabled" type="button" data-toggle="dropdown">
-						${sortingHat.getRFQStatus(rfq_detailVO.status)}
+						<p>${sortingHat.getRFQStatus(rfq_detailVO.status)}</p>
 						<span class="caret"></span></button>
 					</c:if>
 						<ul class="dropdown-menu">

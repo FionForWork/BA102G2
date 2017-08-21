@@ -171,14 +171,14 @@
 						<td id="<%= localDate.getYear() %><%=localDate.getMonthValue()%>${date}" style="background-color:#D9D9D9;cursor:not-allowed;">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p>
 							<br>
-							<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#myModal" class="menua" style="display:none">馬上預約</a>
+							<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#resModal" class="menua" style="display:none">馬上預約</a>
 						</td>
 <!-- 行事曆沒行程，可以預約 -->
 					<% } else{ %>
 					<td id="<%= localDate.getYear() %><%=localDate.getMonthValue()%>${date}">
 						<p class="day"><%= i-firstDayOfWeek+2 %></p>
 						<br>
-						<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#myModal" class="menua">馬上預約</a>
+						<a id="<%= localDate.getYear() %>-<%=localDate.getMonthValue()%>-${date}" href="" onclick="addRes(this)" data-toggle="modal" data-target="#resModal" class="menua">馬上預約</a>
 					</td>
 					<% } %>
 			<% } %>
@@ -201,7 +201,7 @@
 
 <!-- 預約單 -->
 <form id="resForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
-<div id="myModal" class="modal fade" role="dialog">
+<div id="resModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 <!-- Modal content-->
 		<div class="modal-content">

@@ -23,6 +23,9 @@
 
 </head>
 
+<form name="form3" ACTION="<%= request.getContextPath() %>/com/com.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
         <div class="container" style="position: relative;">
@@ -35,9 +38,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
 
-                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/quote/img/ring_64.png">
+                    <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
                         <h3 id="ssy" class="text-default" style="color:#f14195;letter-spacing: .1em;font-size: 2em;margin-top: 6px;"><span><b>
                             She Said Yes!</b></span>
@@ -48,25 +51,20 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
+                    <li>
+                        <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp" >
+                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
+                        </a>
+                    </li>
+                    
                     
                     <li>
-                        <a class="hidden" href="" role="login">
-                            廠商專區
-                        </a>
+                   
+                        <a href="javascript:document.form3.submit();">
+                     <h4>登出</h4>
+                        </a> 
                     </li>
-                    <li>
-                        <a class="hidden" href="" role="login">
-                            登出
-                        </a>
-                    </li>
-                     <li >
-                        <a class="" href="" role="login">
-                            登入
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" role="join" title="註冊會員">註冊會員</a>
-                    </li>
+                  
                 </ul>
             </div>
         </div>
@@ -75,184 +73,141 @@
     <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
-                <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
-                        <h3>
-                            拍婚紗
-                        </h3>
+               <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001">
+                        <h3>拍婚紗</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a class="" href="#">婚紗手機1</a>
-                    </div>
-                    <!--RWD-->
                     <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>
-                            <a href="#"><b>找店家</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
                         </li>
                         <li>
-                            <a href="#"><b>看作品</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>店家地圖</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
                         </li>
                     </ol>
                 </li>
 
                 <li class="wd-drop-wrapper">
-                    <a href="#">
+                    <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0003">
                         <h3>新秘</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">新秘手機1</a><span> / </span>
-                        <a href="#">新秘手機2</a>
-                    </div>
-                    <!--RWD-->
                     <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>
-                            <a href="#"><b>找店家</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
                         </li>
                         <li>
-                            <a href="#"><b>看作品</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>店家地圖</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
                         </li>
                     </ol>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a href="#">
+                    <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0002">
                         <h3>婚攝/婚錄</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">婚攝婚錄手機1</a> <span> / </span>
-                        <a href="#">婚攝婚錄手機2</a>
-                    </div>
-                    <!--RWD-->
                     <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>
-                            <a href="#"><b>找店家</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
                         </li>
                         <li>
-                            <a href="#"><b>看作品</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>店家地圖</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
                         </li>
                     </ol>
                 </li>
-                <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                 <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/RFQ/listAllRFQ.jsp">
                         <h3>新人問報價</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">手機1</a> <span> / </span>
-                        <a href="#">手機2</a>
-                    </div>
-                    <!--RWD-->
                     <ol class="wd-drop_submenu list-unstyled  hidden-xs">
                         <li>
-                            <a href="#"><b><span class="text-pink">新人</span>詢價</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>廠商回覆</b></a>
-                        </li>
-                        <li>
-                            <a href="#"><b>歷史報價</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/RFQ/addRFQ.jsp"><b><span class="text-pink">新人</span>詢價</b></a>
                         </li>
                     </ol>
                 </li>
 
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp">
                         <h3>實景預覽</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">手機1</a><span> / </span>
-                        <a href="#">手機2</a>
-                    </div>
-                    <!--RWD-->
                 </li>
 
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Tradition/TraditionAll.jsp">
                         <h3>婚禮習俗</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">手機1</a><span>
-                </div>
-                <!--RWD-->
-            </li>
+           	 	</li>
             <li class="wd-drop-wrapper">
-                <a itemprop="url" href="mallIndex.html" ><h3>線上商城</h3></a>
-                <!--RWD-->
-                <div class="mobile-main-choice visible-xs">
-                    <a href="#">手機1</a><span> / </span>
-                        <a href="#">手機2</a>
-                    </div>
-                    <!--RWD-->
-                </li>
+                <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" ><h3>線上商城</h3></a>
+            </li>
                 <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp">
                         <h3>討論版</h3>
                     </a>
-                    <!--RWD-->
-                    <div class="mobile-main-choice visible-xs">
-                        <a href="#">手機1</a>
-                    </div>
-                    <!--RWD-->
                 </li>
 
 
-                <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="#" target="_blank">
-                        <h3>客服專區</h3>
+                 <li class="wd-drop-wrapper">
+                    <a data-toggle="modal" data-target="#myModal" id="contact_us_btn" style='cursor:pointer;'>
+                    <h3>聯絡我們</h3>
                     </a>
-                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
-                        <!--下拉選單-->
-                        <li>
-                            <a href="#"><b>聯絡我們</b></a>
-                        </li>
-                    </ol>
                 </li>
             </ul>
         </div>
     </nav>
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    
+    <!--聯絡我們 -->
+	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">聯絡我們</h4>
+        </div>
+        <div class="modal-body">
+         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(map.name==null)?'':map.name}">
+         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(map.email==null)?'':map.email}"> 
+         	要說的話:<font color='red'>${errorMsgs.messagesArea}</font><br>
+         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(map.messagesArea==null)?'':map.messagesArea}</textarea>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
+          <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  </form>
+	<!--聯絡我們 -->
+    
+    
+    
+    
     <div class="fade-carousel">
         <div class="home-banner fade-carousel" style="overflow: hidden;">
             <div class="item slides">
                 <div class="overlay"></div>
                 <!-- Overlay 暗化效果 -->
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/quote/img/banner1.jpg');"></div>
-                <!--banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 banner改自己的 -->
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Resource/img/5.jpg');"></div>
+                <!--banner圖放這裡-->
             </div>
         </div>
 
         <div class="banner_hero text-center">
             <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
                 <b class="hello_word">
-            妳需要的婚禮廠商，我們幫妳嚴選
+           
             </b>
             </h1>
             <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
+          
         </div>
 
     </div>
@@ -261,43 +216,24 @@
     <!--這裡開始-->
     <!--這裡開始-->
     <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-
-    <br>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-<div class="container">
-    <div class="col-md-offset-1">
-        <ul class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Private</a></li>
-            <li><a href="#">Pictures</a></li>
-            <li class="active">Vacation</li>        
-        </ul>
-    </div>
-</div>
-<!--麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑麵包屑-->
-   
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="#" class="list-group-item menua">編輯廠商資料</a><br>
-                    <a href="#" class="list-group-item menua">修改密碼</a><br>
-                    <a href="#" class="list-group-item menua active">預約紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="#" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="#" class="list-group-item menua">行事曆</a><br>
-                    <a href="#" class="list-group-item menua">作品管理</a><br>
-                </ul>
+      <br>
+      <br>
+ <div class="container">
+	<div class="row">
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+		<div class="col-md-offset-1 col-md-2">
+			<ul class="list-group">
+				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua active">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
+                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
+			</ul>
 
 
-                <a href="#" class="btn btn-block btn-default">查看廠商資料</a>
-            </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+			<a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" class="btn btn-block btn-default">查看廠商資料</a>
+		</div>
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 <div class="col-md-8 col-offset-1">

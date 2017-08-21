@@ -17,7 +17,7 @@
 <div class="container">
 	<div class="panel panel-default col-md-offset-2 col-md-8">
 		<div class="panel-heading">
-			<h1>徵求店家報價1</h1>
+			<h1>徵求店家報價</h1>
 		</div>
 		<div class="panel-body">
 		       <div class="form col-md-offset-1 col-md-10">
@@ -39,22 +39,38 @@
 		                   <label><h3 style="color:#f14195">為您的拍婚紗服務填寫客製化需求</h3></label>
 		                    <input type="hidden" name="stype_no" value="0001">
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
 		                        <input type="date" class="form-control" name="ser_date" 
 		                        value=<%= new Timestamp(System.currentTimeMillis()) %>>
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
 		                        <select name="location" class="form-control">
 		                            <option value="台北市">台北市</option>
+		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
 		                            <option value="台中市">台中市</option>
 		                            <option value="台南市">台南市</option>
 		                            <option value="高雄市">高雄市</option>
+		                            <option value="基隆市">基隆市</option>
+		                            <option value="新竹市">新竹市</option>
+		                            <option value="新竹縣">新竹縣</option>
+		                            <option value="嘉義市">嘉義市</option>
+		                            <option value="嘉義縣">嘉義縣</option>
+		                            <option value="苗栗縣">苗栗縣</option>
+		                            <option value="彰化縣">彰化縣</option>
+		                            <option value="南投縣">南投縣</option>
+		                            <option value="雲林縣">雲林縣</option>
+		                            <option value="屏東縣">屏東縣</option>
+		                            <option value="宜蘭縣">宜蘭縣</option>
+		                            <option value="花蓮縣">花蓮縣</option>
+		                            <option value="台東縣">台東縣</option>
+		                            <option value="澎湖縣">澎湖縣</option>
+		                            <option value="國外">國外</option>
 		                        </select>
 		                    </div>
-		                    <div class="from-group">
+		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
 		                        <textarea rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
@@ -66,25 +82,41 @@
 		                    </div>
 		                    <div id="form2" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求...</h3></label>
+		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求</h3></label>
 		                        <input type="hidden" name="stype_no" value="0002">
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
 		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
 		                        <select name="location" class="form-control">
-		                            <option value="台北市">台北市</option>
+		                             <option value="台北市">台北市</option>
+		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
 		                            <option value="台中市">台中市</option>
 		                            <option value="台南市">台南市</option>
 		                            <option value="高雄市">高雄市</option>
+		                            <option value="基隆市">基隆市</option>
+		                            <option value="新竹市">新竹市</option>
+		                            <option value="新竹縣">新竹縣</option>
+		                            <option value="嘉義市">嘉義市</option>
+		                            <option value="嘉義縣">嘉義縣</option>
+		                            <option value="苗栗縣">苗栗縣</option>
+		                            <option value="彰化縣">彰化縣</option>
+		                            <option value="南投縣">南投縣</option>
+		                            <option value="雲林縣">雲林縣</option>
+		                            <option value="屏東縣">屏東縣</option>
+		                            <option value="宜蘭縣">宜蘭縣</option>
+		                            <option value="花蓮縣">花蓮縣</option>
+		                            <option value="台東縣">台東縣</option>
+		                            <option value="澎湖縣">澎湖縣</option>
+		                            <option value="國外">國外</option>
 		                        </select>
 		                    </div>
-		                    <div class="from-group">
+		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
 		                        <textarea rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
@@ -96,31 +128,47 @@
 		                    </div>
 		                    <div id="form3" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求...</h3></label>
+		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求</h3></label>
 		                        <input type="hidden" name="stype_no" value="0003">
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
 		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
-		                    <div class="form-group">
+		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
 		                        <select name="location" class="form-control">
-		                            <option value="台北市">台北市</option>
+		                             <option value="台北市">台北市</option>
+		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
 		                            <option value="台中市">台中市</option>
 		                            <option value="台南市">台南市</option>
 		                            <option value="高雄市">高雄市</option>
+		                            <option value="基隆市">基隆市</option>
+		                            <option value="新竹市">新竹市</option>
+		                            <option value="新竹縣">新竹縣</option>
+		                            <option value="嘉義市">嘉義市</option>
+		                            <option value="嘉義縣">嘉義縣</option>
+		                            <option value="苗栗縣">苗栗縣</option>
+		                            <option value="彰化縣">彰化縣</option>
+		                            <option value="南投縣">南投縣</option>
+		                            <option value="雲林縣">雲林縣</option>
+		                            <option value="屏東縣">屏東縣</option>
+		                            <option value="宜蘭縣">宜蘭縣</option>
+		                            <option value="花蓮縣">花蓮縣</option>
+		                            <option value="台東縣">台東縣</option>
+		                            <option value="澎湖縣">澎湖縣</option>
+		                            <option value="國外">國外</option>
 		                        </select>
 		                    </div>
-		                    <div class="from-group">
+		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
 		                        <textarea rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
-		            </textarea>
+		            </textarea><br>
 		                    </div>
 		                    </div>
 		                    <div>

@@ -31,6 +31,8 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			"UPDATE CALENDAR SET cal_date=? where CAL_NO = ?";
 	private static final String DELETE = 
 			"DELETE FROM CALENDAR where CAL_NO = ?";
+	private static final String DELETERES = 
+			"DELETE FROM CALENDAR where STATUS = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT * FROM CALENDAR where CAL_NO = ?";
 	private static final String GET_ALL_STMT = 
@@ -395,6 +397,40 @@ public class CalendarDAO implements CalendarDAO_Interface {
 			}
 		}
 		return calendarVO;
+	}
+
+	@Override
+	public void deleteRes(String res_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETERES);
+
+			pstmt.setString(1, res_no);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

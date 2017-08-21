@@ -1,31 +1,40 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--以登入 且 會員頁面-->
 <head>
-    <title>She Said Yes!</title>
-    <meta charset="UTF-8">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/bootstrap-multiselect.css" rel="stylesheet">
+    
+     <meta charset="UTF-8">
+     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/notosanstc.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento.css" rel="stylesheet">
+    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans.css' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/pnotify.custom.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/index.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/reservation/css/rfq.css" rel="stylesheet">
-	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/advertising.css" rel="stylesheet">
-	
-	<script src="<%=request.getContextPath()%>/Front_end/reservation/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/reservation/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/reservation/js/top.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/advertising.js" type="text/javascript"></script>
-</head>
+    
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/index.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/Front_end/Temp/css/temp.css" rel="stylesheet">
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+    
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
 
+ 	<script src="<%=request.getContextPath()%>/Front_end/Temp/js/mem_temp.js" type="text/javascript"></script>
+	
+	<link href="<%=request.getContextPath()%>/Front_end/Advertising/css/advertising.css" rel="stylesheet">
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
+
+<script src="js/advertising.js" type="text/javascript"></script>
+</head>
 <form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
                     <input type="hidden"  name="action" value="logout"/>
                           </form>
+                          
+
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
         <div class="container" style="position: relative;">
@@ -51,29 +60,27 @@
 
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
-                    <li>
-                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp" >
-                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${memVO.name}
+                    <li >
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp">
+                          <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp<span style="font-size:19px;">${memVO.name}</span>
                         </a>
                     </li>
-                    
-                    
                     <li>
                    
-                        <a href="javascript:document.form3.submit();">
-                     <h4>登出</h4>
+                        <a href="javascript:document.logout.submit();">
+                           <h4>登出</h4>
                         </a> 
                     </li>
-                  
+                    
                 </ul>
             </div>
         </div>
         <!-- 從這邊找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     </div>
-    <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
+   <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
-               <li class="wd-drop-wrapper">
+                <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001">
                         <h3>拍婚紗</h3>
                     </a>
@@ -116,7 +123,7 @@
                         </li>
                     </ol>
                 </li>
-               <li class="wd-drop-wrapper">
+                <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/RFQ/listAllRFQ.jsp">
                         <h3>新人問報價</h3>
                     </a>
@@ -137,14 +144,17 @@
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Tradition/TraditionAll.jsp">
                         <h3>婚禮習俗</h3>
                     </a>
-           	 	</li>
+            </li>
             <li class="wd-drop-wrapper">
                 <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" ><h3>線上商城</h3></a>
-            </li>
+               
+                    <!--RWD-->
+                </li>
                 <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp">
                         <h3>討論版</h3>
                     </a>
+                    
                 </li>
 
 
@@ -156,10 +166,7 @@
             </ul>
         </div>
     </nav>
-    <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    
-    
-      <!--聯絡我們 -->
+        <!--聯絡我們 -->
 	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
 	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -187,11 +194,37 @@
   </div>
   </form>
 	<!--聯絡我們 -->
+  
     
-    <%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
+    <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    <div class="fade-carousel">
+        <div class="home-banner fade-carousel" style="overflow: hidden;">
+            <div class="item slides">
+                <div class="overlay"></div>
+                <!-- Overlay 暗化效果 -->
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/mem/img/banner1.jpg');"></div>
+                <!--banner圖放這裡-->
+            </div>
+        </div>
 
-    </div><br>
+        <div class="banner_hero text-center">
+            <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
+                <b class="hello_word">
+           歡迎加入,成功加入後就可以使用所有功能!
+            </b>
+            </h1>
+            <h2 style="font-family: 'Hind';text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">80,118位新娘找到了命定廠商</h2>
+          
+        </div>
+
+    </div>
+
+
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+
    
-    <div class="container">
-        <div class="row">
-<div class="col-offset-1 col-md-10 ">
+  
+   
+            
