@@ -47,11 +47,11 @@
             <div class="col-md-6">
                 <c:choose>
                     <c:when test="${role==0}">
-                        <img src="<%=request.getContextPath()%>/ShowImage?mem_no=${seller.mem_no}" class="img-circle" style="width: 30px; height: 30px">
+                        <img src="<%=request.getContextPath()%>/image/ShowImage?mem_no=${seller.mem_no}" class="img-circle" style="width: 30px; height: 30px">
                         <label>賣家名稱:${seller.name}</label>
                     </c:when>
                     <c:otherwise>
-                        <img src="<%=request.getContextPath()%>/ShowImage?mem_no=${cust.mem_no}" class="img-circle" style="width: 30px; height: 30px">
+                        <img src="<%=request.getContextPath()%>/image/ShowImage?mem_no=${cust.mem_no}" class="img-circle" style="width: 30px; height: 30px">
                         <label>買家名稱:${cust.name}</label>
                     </c:otherwise>
                 </c:choose>
