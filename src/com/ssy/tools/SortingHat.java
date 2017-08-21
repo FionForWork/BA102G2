@@ -54,6 +54,8 @@ public class SortingHat {
 		iconMap.put("1", "fa fa-check-square-o");
 		iconMap.put("2", "fa fa-pencil-square-o");
 		iconMap.put("3", "fa fa-star");
+		iconMap.put("4", "fa fa-star");
+		iconMap.put("5", "fa fa-calendar-times-o");
 		
 		return iconMap.get(status);
 	}

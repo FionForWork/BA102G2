@@ -8,6 +8,7 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.temporal.TemporalAdjusters" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	// 廠商資料
 	ComVO comVO = new ComVO();
@@ -35,71 +36,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
 </head>
 
 <body onload="connect();" onunload="disconnect();">
 <%@ include file="page/headerWithoutSidebar.file" %>
-<script>
-	$( function() {
-	
-	    $( ".draggable" ).draggable({scope:"calendar",containment: "#box",revert: true,
-	            drag:function (event, ui) {
-	                $("#dragid").val($(this).attr("id"));
-	                $("#thisDate").val($(this).parent('td').attr("id").replace(/-/g,""));
-	            }
-	        });
-	
-	    $(".calendar").droppable({
-	            scope: "calendar",            
-	            drop: function (event, ui) {
-	                $(this).css("background-color", "lightgreen");
-	                $("#dropid").val($(this).attr("id"));
-	                $("#toDate").val($(this).attr("id").replace(/-/g,""));
-	                changeSchedule();
-	                $("#updateDateForm").submit();
-	            },
-	            over: function (event, ui) {
-	                $(this).css("background-color", "lightgreen")
-	            },
-	            out: function (event, ui) {
-	                $(this).css("background-color", "")
-	            }
-	        });
-	  } );
-	
-	function change(){
-		
-		$('#changeCalendar').submit();
-	}
-	
-	function add(y){
-	  var obj = $(y);
-		$("#datepicker").val($(obj).attr("id"));
-	}
-	
-	$( function() {
-	    $( "#datepicker" ).datepicker({dateFormat: 'yy-m-dd'});
-	  } );
-	
-	function show(y){
-	$(y).children("button").show();
-	}
-	
-	function hide(y){
-		$(y).children("button").hide();
-	  }
-	
-	function deleteSchedule(y){
-	  	var j = $(y).parent('div').attr("id");
-	  	var thisDate = $(y).parent('div').parent('td').attr("id").replace(/-/g,"");
-	  	$('#cal_no').val(j);
-	  	$('#thisDate').val(thisDate);
-	  	onDeleteSchedule();
-		$('#deleteForm').submit();
-	  }
-</script>
 
 <div class="container">
 <div class="text-center col-md-offset-1 col-md-10">
@@ -177,9 +117,9 @@
 					<c:if test="${calendarVO.cal_date.getDate() == date}">
 <!-- 行事曆行程 -->
 						<c:if test="${calendarVO.status == '0'}">
-						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+						<td class="ui-widget-head busy-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
-							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#BDE7FF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
+							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#58F4CF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
 								<button type="button" class="close" display="none" onclick="deleteSchedule(this)" style="display:none">&times;</button>
 								<p style="margin-top:3px">${calendarVO.content}</p>
 								<% flag = 1; %>
@@ -188,10 +128,12 @@
 						</c:if>
 <!-- 預約行程 -->
 						<c:if test="${calendarVO.status != '0'}">
-						<td class="ui-widget-head cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
+						<td class="ui-widget-head busy-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
-							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:pink;">
-								<p style="margin-top:3px"><a style="color:black;">${calendarVO.content}</a></p>
+							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:#FFA0C4;">
+								<p style="margin-top:3px">
+									<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">${calendarVO.content}</a>
+								</p>
 								<% flag = 1; %>
 							</div>
 						</td>
@@ -199,7 +141,7 @@
 					</c:if>
 				</c:forEach>
 				<%if(flag == 0){ %>
-						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#myModal" onclick="add(this)">
+						<td class="ui-widget-head calendar cal-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}" data-toggle="modal" data-target="#calModal" onclick="add(this)">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 						</td>
 					<% } %>
@@ -219,7 +161,7 @@
 </div>
 <!-- 新增Schedule -->
 <form  id="addScheduleForm" method="post" action="<%= request.getContextPath() %>/calendar/calendar.do">
-	<div id="myModal" class="modal fade" role="dialog" >
+	<div id="calModal" class="modal fade" role="dialog" >
 		<div class="modal-dialog">
 		<!-- Modal content-->
 			<div class="modal-content">
@@ -232,7 +174,7 @@
 				</div>
 				<div class="modal-body form-group">
 					<label>日期 : </label>
-					<input type="text" id="datepicker" class="form-control" name="cal_date" value="" disabled>
+					<input type="text" id="date" class="form-control" name="cal_date" value="" readonly>
 					<br>
 					<label>活動內容 :</label>
 					<textarea rows="3" class="form-control" name="content"></textarea>
@@ -267,9 +209,7 @@
 <input type="hidden" id="thisDate" value="">
 <input type="hidden" id="toDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
-
 </body >
-
 <script>
     
     var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
@@ -299,8 +239,9 @@
 	        var action = jsonObj.action;
 	        if(action == "onRes"){
 	        	var thisDate = document.getElementById(jsonObj.thisDate);
-	        	var name = jsonObj.name;
-				var content = $("<div style='background-color:pink'>").text(name);
+	        	var name = jsonObj.name+"預約了新服務!";
+	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">').text(name);
+				var content = $("<div style='background-color:pink'>").html(a);
 	        	$(thisDate).append(content);
 	        }
 		};
@@ -331,7 +272,7 @@
 	
 	function addSchedule() {
 
-		$('#thisDate').val($('#datepicker').val().replace(/-/g,""));
+		$('#thisDate').val($('#date').val().replace(/-/g,""));
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
 						"action" : "addSchedule"};
