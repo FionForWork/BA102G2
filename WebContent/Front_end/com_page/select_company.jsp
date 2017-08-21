@@ -42,7 +42,7 @@
                 <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp" style="color: black;text-decoration:none;">所有廠商</a></li>
             <jsp:useBean id="service_TypeSvc"  scope="page" class="com.service_type.model.Service_TypeService"/>
                 <li>
-                <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${service_TypeSvc.getOneServiceType(param.stype_no).stype_no}" style="color: black;text-decoration:none;">${service_TypeSvc.getOneServiceType(param.stype_no).name}</a>
+                <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${service_TypeSvc.getOne(param.stype_no).stype_no}" style="color: black;text-decoration:none;">${service_TypeSvc.getOne(param.stype_no).name}</a>
                 </li>
             </ul>
         </div>
