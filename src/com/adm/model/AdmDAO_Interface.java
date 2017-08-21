@@ -2,7 +2,6 @@ package com.adm.model;
 
 import java.util.List;
 
-import com.com.model.ComVO;
 
 
 public interface AdmDAO_Interface {
@@ -13,4 +12,6 @@ public interface AdmDAO_Interface {
 	public List<AdmVO> getAll();
 	public List<AdmVO> loginid();
 	public AdmVO findById(String id);
+    public AdmVO oldPwd(String adm_no);
+    public void updatePwd(AdmVO admVO);
 }

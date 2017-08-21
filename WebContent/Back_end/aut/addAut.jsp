@@ -42,7 +42,7 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 			 <input TYPE="checkbox" name="id" VALUE="01">員工資料管理<BR>
 			 <input TYPE="checkbox" name="id" VALUE="02">會員資料管理<BR>
 			 <input TYPE="checkbox" name="id" VALUE="03">廠商資料管理<BR>
-			 <input TYPE="checkbox" name="id" VALUE="04">討論區資料管理<BR>
+			 <input TYPE="checkbox" name="id" VALUE="04">其他資料管理<BR>
 			 <input TYPE="checkbox" name="id" VALUE="05">客服資料管理<BR>
 			 <input TYPE="checkbox" name="id" VALUE="06">商城資料管理<BR>
 			 <input TYPE="checkbox" name="id" VALUE="07">景點資料管理<BR>

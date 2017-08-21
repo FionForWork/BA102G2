@@ -7,7 +7,7 @@
     </script>
     <script>
     	$(document).ready(function(){
-    	$('#mem').modal('show');
+    	$('#com').modal('show');
     		
     	});
     </script>
