@@ -16,6 +16,7 @@
     <link href="<%=request.getContextPath()%>/Front_end/reservation/css/index.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/reservation/css/rfq.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/advertising.css" rel="stylesheet">
+	<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 	
 	<script src="<%=request.getContextPath()%>/Front_end/reservation/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/reservation/js/bootstrap.min.js" type="text/javascript"></script>

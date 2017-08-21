@@ -8,6 +8,7 @@
 <%@ page import="com.mem.model.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.DateFormat" %>
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	MemVO memVO = (MemVO)session.getAttribute("memVO"); // 假會員
 	RFQ_DetailService rfq_detailService = new RFQ_DetailService();
@@ -24,7 +25,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>List My RFQ</title>
 </head>
 <body>
 <%@ include file="page/memHeader.file" %>

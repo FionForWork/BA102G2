@@ -38,7 +38,7 @@ for (i = mid; i < end; i++) {
 });
 
 $(document).ready(function(){
-	var num = 3;
+	var num = 5;
 	var timeId = setInterval(countDown , 1000);
 
 	function countDown(){
