@@ -10,17 +10,15 @@
 </head>
 <%Map<String,String> map =(LinkedHashMap) request.getAttribute("map"); %>
 <body>
-	<%@ include file="page/before.file"%>
-	
-
-    <form method="post" action="<%=request.getContextPath()%>/ContactUs">
+	<!--聯絡我們 -->
+	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
 	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"></button>
           <h4 class="modal-title text-center">聯絡我們</h4>
         </div>
         <div class="modal-body">
@@ -39,8 +37,6 @@
     </div>
   </div>
   </form>
-
-
-	<%@ include file="page/after.file"%>
+	<!--聯絡我們 -->
 </body>
 </html>
