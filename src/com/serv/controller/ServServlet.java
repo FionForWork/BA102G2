@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,6 +33,46 @@ public class ServServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+		
+		if ("selectByStype".equals(action)) {
+			/*************************** 1.接收請求參數 ****************************************/
+			String stype_no = req.getParameter("stype_no");
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			ServService servSvc = new ServService();
+			Set<ServVO> set = servSvc.getServByStype(stype_no);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
+			
+			String url = null;
+			url = "/Back_end/serv/selectByStype.jsp";   
+			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		if ("selectByCom".equals(action)) {
+			/*************************** 1.接收請求參數 ****************************************/
+			String com_no = req.getParameter("com_no");
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			ServService servSvc = new ServService();
+			Set<ServVO> set = servSvc.getServByCom(com_no);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("selectByCom", set);    // 資料庫取出的set物件,存入request
+			
+			String url = null;
+			url = "/Back_end/serv/selectByCom.jsp";   
+			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		
+		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			Map<String,String> errorMsgs = new HashMap<String,String>();
@@ -102,7 +143,7 @@ public class ServServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String serv_no = req.getParameter("serv_no");
 				
@@ -110,30 +151,30 @@ public class ServServlet extends HttpServlet {
 				/***************************2.開始查詢資料*****************************************/
 				ServService servSvc = new ServService();
 				ServVO servVO = servSvc.getOneServ(serv_no);
-				if (servVO == null) {
-					errorMsgs.add("查無資料");
-				}
+//				if (servVO == null) {
+//					errorMsgs.add("查無資料");
+//				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Back_end/serv/select_Serv.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/Back_end/serv/select_Serv.jsp");
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("servVO", servVO); // 資料庫取出的empVO物件,存入req
-				String url = "/Back_end/serv/listAllServ.jsp";
+				String url = "/Back_end/serv/listOneServ.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Back_end/mem/listAllMem.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/Back_end/serv/select_Serv.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		
 		

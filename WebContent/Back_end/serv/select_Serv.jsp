@@ -9,75 +9,63 @@
 <div id="content">
 <a href='<%=request.getContextPath()%>/Back_end/mem/listAllServ.jsp'>觀看全部服務</a>  <br><br>
 <table class="table table-striped">
+
 	<tr>
 		<td>
-		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-        <b>輸入會員編號 (如1001):</b></td>
-        <td><input type="text" size="30" name="mem_no"></td>
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do" >
+        <b>根據分類 :</b></td>
+        <td>
+        	<select style="width: 223px;"  name="stype_no">
+        	 	<option value="0001">拍婚紗</option>
+        	 	<option value="0002">婚設婚錄</option>
+        	 	<option value="0003">新娘秘書</option>
+        </td>
         <td><input type="submit" class="btn btn-info" value="送出"></td>
-        <input type="hidden" name="action" value="getOne_For_Display">
+        <input type="hidden" name="action" value="selectByStype">
 		</FORM>
 		
 	</tr>
 
 
-<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
+<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
    
 	<tr>
 	<td>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-       <b>選擇會員編號:</b></td>
-      <td> <select style="width: 223px;" id="select1" name="mem_no">
-         <c:forEach var="memVO" items="${memSvc.all}" > 
-          <option value="${memVO.mem_no}">${memVO.mem_no}</option>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do" >
+       <b>根據廠商:</b></td>
+      <td> <select style="width: 223px;" id="select1" name="com_no">
+         <c:forEach var="comVO" items="${comSvc.all}" > 
+          <option value="${comVO.com_no}">${comVO.com_no}-${comVO.name}</option>
          </c:forEach>   
        </select></td>
       <td><input type="submit" class="btn btn-info" value="送出"></td>
       	<input type="hidden" value="activate selectator" id="activate_selectator1" type="button">
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="selectByCom">
     </FORM>
 
 	</tr>
 	
-	<tr><td>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-       <b>選擇會員姓名:</b></td>
-       <td><select style="width: 223px;" id="select2" name="mem_no">
-         <c:forEach var="memVO" items="${memSvc.all}" > 
-          <option value="${memVO.mem_no}">${memVO.name}
+
+     <jsp:useBean id="servSvc" scope="page" class="com.serv.model.ServService" />
+   
+	<tr>
+	<td>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do" >
+       <b>根據編號:</b></td>
+      <td> <select style="width: 223px;" id="select2" name="serv_no">
+         <c:forEach var="servVO" items="${servSvc.all}" > 
+          <option value="${servVO.serv_no}">${servVO.com_no}-${servVO.title}</option>
          </c:forEach>   
        </select></td>
-       <td><input type="submit" class="btn btn-info" value="送出"></td>
-       <input type="hidden" value="activate selectator" id="activate_selectator2" type="button">
-       <input type="hidden" name="action" value="bgetOne_For_Display">
-     </FORM></td>
-     </tr>
-     
-   
-     
-     <tr><td>
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-        <b>根據被檢舉多少次以上:</b></td>
-      <td>  <input type="text" size="30" name="report"></td>
-     <td>   <input type="submit" class="btn btn-info" value="送出"></td>
-        <input type="hidden" name="action" value="selectByReport">
-	</FORM>
-	</tr>
-	
-	
+      <td><input type="submit" class="btn btn-info" value="送出"></td>
+ <input type="hidden" value="activate selectator" id="activate_selectator2" type="button">
+       <input type="hidden" name="action" value="getOne_For_Display">
+    </FORM>
 
-	<tr><td>
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-       <b>狀態停權者</b></td>
-      <td> <select style="width: 223px;" name="status">
-        
-          <option value="停權">停權
-          <option value="正常">正常
-       </select></td>
-     <td>  <input type="submit" class="btn btn-info" value="送出"></td>
-       <input type="hidden" name="action" value="selectByStatus">
-     </FORM></td>
 	</tr>
+   
+    
+
 	
 </table>
 </div>

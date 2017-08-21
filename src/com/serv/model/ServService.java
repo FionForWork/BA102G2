@@ -2,6 +2,9 @@ package com.serv.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.mem.model.MemVO;
 
 public class ServService {
 	private ServDAO_Interface dao;
@@ -70,7 +73,12 @@ public class ServService {
 	public List<ServVO> getSearch(String sh){
 		return dao.findBysh(sh);	
 	}
-	
+	public Set<ServVO> getServByStype(String stype_no) {
+		return dao.getServByStype(stype_no);
+	}
+	public Set<ServVO> getServByCom(String com_no) {
+		return dao.getServByCom(com_no);
+	}
 	public List<ServVO> getAllAvg(){
 		return dao.getAllAvg();
 		
