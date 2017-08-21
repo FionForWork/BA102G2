@@ -33,6 +33,7 @@
 </head>
 <body>
 	<%@ include file="page/header.file"%>
+	<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
 	<br>
 	<br>
 	

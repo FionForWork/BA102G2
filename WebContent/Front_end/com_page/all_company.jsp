@@ -25,8 +25,47 @@
 </head>
 <body>
 	<%@ include file="page/header.file"%>
+	<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
 	<br>
 	<br>
+
+<!--複合查詢-->	
+	<div class="container text-center">
+<form method="post">
+<div class="form-group row">
+	<div class="col-md-3"></div>
+	<div class="col-md-2">
+		<div class="input-group">
+			<a class="btn btn-black btn-xs round" style="margin-bottom:5px;"></i>新 &gt; 舊</a>
+			<a class="btn btn-black btn-xs round" style="margin-bottom:5px;"></i>人氣排序</a>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="input-group">
+			<span class="input-group-addon">服務類型</span>
+			<select class="form-control" id="sel1">
+				<option value="0000">所有類型</option>
+				<option value="0001">拍婚紗</option>
+				<option value="0002">婚攝/婚錄</option>
+				<option value="0003">新娘秘書</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="input-group">
+			<span class="input-group-addon">廠商名稱</span>
+			<input id="msg" type="text" class="form-control" name="msg" placeholder="請輸入關鍵字">
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="input-group">
+		<button class="btn btn-block btn-danger">送出查詢</button>
+		</div>
+	</div>
+</div>
+</form>
+</div>
+<!--複合查詢-->	
 
 	<div class="container">
 		<div class="row">
@@ -37,18 +76,15 @@
 
 					<div class="col-xs-12 col-sm-3">
 						<ul class="com_box">
-							<li class="list-unstyled"><a
-								href="company_page.jsp?com_no=${comVO.com_no}"
-								class="thumbnail thumbnail-service mod-shadow img-label"> <img
-									class="works_image img-thumbnail"
-									src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
+							<li class="list-unstyled">
+							<a href="company_page.jsp?com_no=${comVO.com_no}" class="thumbnail thumbnail-service mod-shadow img-label">
+								 <img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
 									${comVO.name} 
 									<c:forEach var="servVO" items="${servList}">
 										<c:if test="${comVO.com_no==servVO.com_no}">
 											<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
 										</c:if>
-									</c:forEach>
-
+									</c:forEach>						
 							</a></li>
 						</ul>
 					</div>

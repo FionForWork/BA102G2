@@ -38,12 +38,12 @@ public class jdbcUtil_CompositeQuery_Com {
 	public static void main(String argv[]) {
 
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("com_no", new String[] { "2001" });
+//		map.put("com_no", new String[] { "2001" });
 		map.put("loc", new String[] { "桃園" });
 		map.put("name", new String[] { "好" });
 
 		String finalSQL = "select * from company "
-				          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+				          + jdbcUtil_CompositeQuery_Com.get_WhereCondition(map)
 				          + "order by com_no";
 		System.out.println("●●finalSQL = " + finalSQL);
 
