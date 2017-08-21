@@ -27,9 +27,9 @@
 </head>
 <body>
 
-	<%@ include file="contact_us.jsp"%>
 	<%@ include file="page/header.file"%>
 	<%@ include file="message.jsp"%>
+	<%@ include file="contact_us.jsp"%>
 
 
 	<!--banner -->
@@ -38,8 +38,8 @@
 			<div class="home-banner fade-carousel" style="overflow: hidden;">
 				<div class="item slides">
 					<div class="slide-1 bg-cover lazy"
-						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
-
+						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -189,8 +189,7 @@
 			<div class="col-xs-12 col-sm-6">
 				<a class="btn btn-info btn-lg" onclick="change(1)" id="more_works_btn"> 看更多作品
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-
+				</a>				
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>

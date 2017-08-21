@@ -302,13 +302,13 @@ public class AdvertisingServlet extends HttpServlet {
 		}
 
 		if ("approved".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			String requestURL = req.getParameter("requestURL");
-			System.out.println("requestURL:" + requestURL);
-			String whichPage = req.getParameter("whichPage");
-			req.setAttribute("whichPage", whichPage);
-			try {
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			String requestURL = req.getParameter("requestURL");
+//			System.out.println("requestURL:" + requestURL);
+//			String whichPage = req.getParameter("whichPage");
+//			req.setAttribute("whichPage", whichPage);
+//			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
 				System.out.println("ADV_NO:" + adv_no);
@@ -321,18 +321,19 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "1");
-
-				req.setAttribute("advertisingVO", advertisingVO);
 				
-				String url = requestURL+"?whichPage="+whichPage;
+//				req.setAttribute("advertisingVO", advertisingVO);
 				
-				RequestDispatcher failureView = req.getRequestDispatcher(url);
-				failureView.forward(req, res);
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
-				failureView.forward(req, res);
-			}
+//				String url = requestURL+"?whichPage="+whichPage;
+//				
+//				RequestDispatcher failureView = req.getRequestDispatcher(url);
+//				failureView.forward(req, res);
+				
+//			} catch (Exception e) {
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+//				failureView.forward(req, res);
+//			}
 		}
 		
 		if("disapproved".equals(action)) {

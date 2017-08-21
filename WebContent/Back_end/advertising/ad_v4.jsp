@@ -74,7 +74,7 @@
 									<td>${startDayFormat}</td>
 									
 									<td>${df.format((advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24))}</td>
-									<td><c:choose>
+									<td id="${advertisingVO.adv_no}"><c:choose>
 											<c:when test="${advertisingVO.status=='0'}">
 												<span style="color: black">未審核</span>
 											</c:when>
@@ -108,24 +108,22 @@
 										</div>
 										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
 										<div class="col-xs-12 col-sm-4">
-												<form method="post"
-												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<form>
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
-												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+<%-- 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>"> --%>
+<%-- 												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="submit" class="btn btn-info" value="通過" disabled="disabled">	
+<!-- 													<input type="submit" class="btn btn-info" value="通過" disabled="disabled" >	 -->
 												</c:when>
 												<c:otherwise>
-													<input type="submit" class="btn btn-info" value="通過">
+													<button class="btn btn-info" value="${advertisingVO.adv_no}" onclick="approved(this);">通過</button>
 												</c:otherwise>
 												</c:choose>			
 												</form>
 				
-												<form method="post"
-												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<form>
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">					
@@ -154,4 +152,28 @@
 	
 	<%@ include file="page/after.file"%>
 </body>
+<script type="text/javascript">
+
+function approved(btn){
+	
+	var id = $(btn).val();
+
+	$.ajax({
+		url : "<%=request.getContextPath()%>/advertising/advertising.do",
+		data : {	action : "approved",
+			adv_no : $(btn).siblings("input[name='adv_no']").val(),
+				
+		},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$("#"+id).children().html("sucess");
+		}
+	});
+	
+}
+	
+</script>
 </html>
