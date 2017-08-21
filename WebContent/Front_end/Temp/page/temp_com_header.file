@@ -93,50 +93,30 @@
     <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
+              <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">
+                        <h3>尋找服務</h3>
+                    </a>
+                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001"><b>拍婚紗</b></a>
+                        </li>
+                        <li>
+                            <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0002"><b>婚攝/婚錄</b></a>
+                        </li>
+                        <li>
+                            <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0003"><b>新娘秘書</b></a>
+                        </li>
+                        <li>
+                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
+                        </li>
+                        <li>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/comView.jsp"><b>店家地圖</b></a>
+                        </li>
+                    </ol>
+                </li>
                <li class="wd-drop-wrapper">
-                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001">
-                        <h3>拍婚紗</h3>
-                    </a>
-                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
-                        <!--下拉選單-->
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
-                        </li>
-                    </ol>
-                </li>
-
-                <li class="wd-drop-wrapper">
-                    <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0003">
-                        <h3>新秘</h3>
-                    </a>
-                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
-                        <!--下拉選單-->
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
-                        </li>
-                    </ol>
-                </li>
-                <li class="wd-drop-wrapper">
-                    <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0002">
-                        <h3>婚攝/婚錄</h3>
-                    </a>
-                    <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
-                        <!--下拉選單-->
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
-                        </li>
-                        <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
-                        </li>
-                    </ol>
-                </li>
-                 <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/RFQ/listAllRFQ.jsp">
                         <h3>新人問報價</h3>
                     </a>
@@ -146,7 +126,11 @@
                         </li>
                     </ol>
                 </li>
-
+                <li class="wd-drop-wrapper">
+                    <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp">
+                        <h3>熱門景點地圖</h3>
+                    </a>
+                </li>
                 <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp">
                         <h3>實景預覽</h3>
@@ -166,11 +150,14 @@
                         <h3>討論版</h3>
                     </a>
                 </li>
-
-
-                 <li class="wd-drop-wrapper">
+                <li class="wd-drop-wrapper">
                     <a data-toggle="modal" data-target="#myModal" id="contact_us_btn" style='cursor:pointer;'>
                     <h3>聯絡我們</h3>
+                    </a>
+                </li>
+                <li class="wd-drop-wrapper">
+                    <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Problem/ProblemAll.jsp">
+                    <h3>常見問題</h3>
                     </a>
                 </li>
             </ul>

@@ -53,14 +53,12 @@
 	
 	// Product
 	ProductService productService = new ProductService();
-// 	int unpreviewProductCount = productService.getAllCountUnPreivew();
-// 	List<ProductVO> unpreviewProductList = productService.getSomeUnPreview(1, 5);
+	List<ProductVO> unpreviewProductList = productService.getAllNoImg("0");
 	Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     
     pageContext.setAttribute("advertisingList", advertisingList);
-// 	pageContext.setAttribute("unpreviewProductCount", unpreviewProductCount);
-// 	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
+	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
 	pageContext.setAttribute("typeList", typeList);
 %>
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
@@ -184,7 +182,7 @@
                                                 <i class="fa-shopping-cart s64"></i>
                                             </div>
                                             <div class="tile-content">
-                                                <div class="number">${unpreviewProductCount}</div>
+                                                <div class="number">${unpreviewProductList.size()}</div>
                                                 <h3>商品</h3>
                                             </div>
                                         </div>
