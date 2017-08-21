@@ -15,8 +15,6 @@
 %>
 
 <%@ include file="page/photo_header.file"%>
-
-
 		<div class="col-md-8 col-offset-1">
 
 		
@@ -25,7 +23,7 @@
 
 			<!-- Modal addContent -->
 			<form action="<%=request.getContextPath()%>/content/content.do"
-				method="post" enctype="multipart/form-data">
+				method="post" enctype="multipart/form-data" id='insertContForm'>
 				<div class="modal fade" id="uploadModal" role="dialog">
 					<div class="modal-dialog modal-lg">
 
@@ -34,18 +32,23 @@
 							<div class="modal-header" style="padding: 20px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
-									<span class="glyphicon glyphicon-picture"></span> 上傳照片
+									<span class="glyphicon glyphicon-picture"></span> 為您的相簿新增相片或影片!
 								</h4>
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
 								<div class="form-group">
-									<!-- 									<label for="inputFile"> 選擇照片</label> 									 -->
-									<input id="inputFile" name="inputFile[]" type="file" multiple
-										class="file-loading">
-
+									<!-- 									<label for="inputFile"> 選擇照片</label> 
+																		 -->
+									
+								<div class="form-group">
+									<label for="inputFile"> 選擇照片 <span id='emptyFile' style='color:red'></span></label> 
+									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
+								</div>
+								
+								
 								</div>
 
-								<input type='submit' class="btn btn-info btn-block" value="新增">
+								<input type='button' id='insertBtn' class="btn btn-info btn-block" value="新增">
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default pull-left"
@@ -61,10 +64,13 @@
 			</form>
 			<!-- End Modal addContent -->
 			<div class="jumbotron " style="position:relative" >
+				<div class="btn-group" style="right:15px; top:15px;position:absolute;">
+					<button type="submit" class="btn btn-info" id="uploadbtn">新增相片</button>
+					<button type="submit" class="btn btn-info" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp?alb_no=<%=alb_no%>'">編輯相簿</button>
+				</div>
 				<div class="row">
-					<button type="submit" class="btn btn-info" id="uploadbtn"
-						style="right:15px; top:15px;position:absolute;">新增相片</button>
-					<div class="col-xs-12 col-sm-12">
+				
+					<div class="col-xs-6 col-sm-6 col-sm-offset-3">
 						<div class="text-center">
 						<br>
 							<h2>${albSvc.getOneAlbum(alb_no).name}</h2>

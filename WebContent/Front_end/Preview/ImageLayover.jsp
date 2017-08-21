@@ -6,11 +6,11 @@
 <%@ page import="com.mem.model.*" %>
 <%
 	//String mem_no = (String) session.getAttribute("mem_no");
-	session.setAttribute("mem_no", "1001");
+	//session.setAttribute("mem_no", "1001");
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
-	//String cropCont_no = (String) request.getAttribute("cropCont_no");
-	String cropCont_no = "0115";
+	String cropCont_no = (String) request.getAttribute("cropCont_no");
+	//String cropCont_no = "0115";
 	String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
@@ -98,7 +98,7 @@
 		<div class='col-sm-12 col-xs-12'>
 			<div id="dropZone">
 				<div id='dragCrop' style="display: inline-block">
-					<img id='resizable' style='max-width: 500px'
+					<img id='resizable'
 						src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
 				</div>
 			</div>
@@ -175,27 +175,27 @@
 	}
 	function dropped(e){
 		e.preventDefault();
-		
-// 		dropZone = $('#dropZone');
-// 		image = new Image();
-		
-// 		image.onload = function() {
-// 			 console.log(image.height);
-// 			 console.log("image.width "+image.width);
-// 		    if(image.width > 840){
-// 		    	//dropZone.css("height",image.height);
-// 		    	dropZone.css("background-size",dropZoneWidth);
-// 		    	//dropZone.css("background-size","contain");
-// 		    	var imageWidth = dropZoneWidth.substring(0,dropZoneWidth.length-2);
-// 		    	$("input[name=imageWidth]").val(imageWidth);
-// 		    }
-// 		 };
-		
-		
-		
 		var placeview_no = e.dataTransfer.getData('data');
 		console.log("placeview_no "+placeview_no);
-		$("#dropZone").css("background-image","url('<%=request.getContextPath()%>/image/ShowImage?view_no="+ placeview_no + "')")
+		dropZone = $('#dropZone');
+		var dropZoneWidth = dropZone.css("width");
+		console.log(dropZoneWidth);
+		image = new Image();
+		console.log("image "+image);
+		
+		image.onload = function() {
+			 console.log(image.height);
+			 console.log("image.width "+image.width);
+		    if(image.width > 840){
+		    	//dropZone.css("height",image.height);
+		    	dropZone.css("background-size",dropZoneWidth);
+		    	//dropZone.css("background-size","contain");
+		    	var imageWidth = dropZoneWidth.substring(0,dropZoneWidth.length-2);
+		    	$("input[name=imageWidth]").val(imageWidth);
+		    }
+		 };
+		 image.setAttribute("src","<%=request.getContextPath()%>/image/ShowImage?view_no="+placeview_no);
+		$("#dropZone").css("background-image","url(<%=request.getContextPath()%>/image/ShowImage?view_no="+placeview_no+")")
 					.css("background-repeat","no-repeat").css("background-size", "auto");
 		
 		$("input[name=placeview_no]").val(placeview_no);
@@ -227,8 +227,8 @@
 					var thisPos = $this.position();
 					console.log("thisPos : " + thisPos);
 
-					xPoint = thisPos.left - 12;
-					yPoint = thisPos.top - 2;
+					xPoint = thisPos.left -12 ;
+					yPoint = thisPos.top-2;
 
 					console.log("xPoint : " + xPoint);
 					console.log("yPoint : " + yPoint);

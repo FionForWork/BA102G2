@@ -147,8 +147,8 @@ $(document).ready(function(){
 								
 								<div class="caption">
 									<div class='form-group'>
-										<label for='name'>作品名稱</label> <input type='text' id='name'
-											name='name' class='form-control' value='${worksVO.name}'
+										<label for='name'>作品名稱</label> 
+										<input type='text' id='name' name='name' class='form-control' value='${worksVO.name}'
 											placeholder='未命名的作品'>
 									</div>
 									<div class='form-group'>
@@ -229,7 +229,7 @@ $("document").ready(function(){
 	    browseOnZoneClick: true ,
 	    uploadExtraData: {
 	        com_no: "${comVO.com_no}",
-	        action: "upload_Works",
+	        action: "insert_Works",
 	    }
 	});
 	// 上傳完轉頁面
@@ -245,7 +245,15 @@ $("document").ready(function(){
 			$(this).ajaxSubmit();
 		});
 		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}";
+		
 	});
+	
+	
+// 	$("#updateWorks").click(function(){
+// 		$("[name~='updateForms']").each(function(){
+// 			$(this).submit();
+// 		});
+// 	});
 	
 });
 
