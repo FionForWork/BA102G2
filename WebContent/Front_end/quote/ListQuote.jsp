@@ -6,6 +6,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <% 
 	DateFormat df = new SimpleDateFormat("YYYY年M月d日");
 	DateFormat checkdf = new SimpleDateFormat("YYYY-MM-dd");
@@ -20,7 +21,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <script type="text/javascript">
 	function fsubmit(obj) {
@@ -100,7 +100,7 @@
 <!--馬上預約-->
 						<input type="hidden" class="quotePrice" value="${quoteVO.price}">
 						<input type="hidden" class="comName" value="${comService.getOneCom(quoteVO.com_no).name}">
-						<button id="${quoteVO.quo_no}" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal" onclick="showModal(this)">馬上預約</button>
+						<button id="${quoteVO.quo_no}" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#resModal" onclick="showModal(this)">馬上預約</button>
 					</div>
 					</c:if>
 				</div>
@@ -116,7 +116,7 @@
 
 <!-- Modal -->
 <form method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
-	<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal fade" id="resModal" role="dialog">
 		<div class="modal-dialog">
 <!-- Modal content-->
 			<div class="modal-content col-md-offset-1 col-md-10">

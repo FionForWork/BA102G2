@@ -11,7 +11,7 @@
 <html>
 <%@ include file="page/backEnd_Header.file" %>
 	<!-- Start content ===================================================================================================== -->
-<div >
+<div>
 <Style>
 	th{
 		text-align:center;

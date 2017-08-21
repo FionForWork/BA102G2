@@ -25,7 +25,6 @@
 <jsp:useBean id="quoteService" class="com.quote.model.QuoteService" />
 <html>
 <head>
-<title>ListRFQ.jsp</title>
 </head>
 <%@ include file="page/header.file" %>
 <div class="container step-container">
@@ -37,8 +36,6 @@
 		</div>
 	</div>
 </div>
-
-
 <%	int rowsPerPage = 4; // 每頁的筆數
 	int rowsNumber = 0;	// 總筆數
 	int pageNumber = 0; // 總頁數

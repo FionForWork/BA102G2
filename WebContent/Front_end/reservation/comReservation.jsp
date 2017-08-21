@@ -8,6 +8,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	ReservationService resService = new ReservationService();
 	String status = request.getParameter("status");
@@ -36,7 +37,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>Insert title here</title>
 </head>
 <body>
 <%@ include file="page/comHeader.file" %>

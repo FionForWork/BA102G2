@@ -88,7 +88,10 @@ public class ReservationServlet extends HttpServlet {
 			ReservationService reservationService = new ReservationService();
 			reservationService.addReservation(memVO.getMem_no(), com_no, new Timestamp(System.currentTimeMillis()), serv_date, quo_no, stype_no, price, "1", calendarVO, rfq_detailVO);
 			
-			res.sendRedirect("/BA102G2/Front_end/reservation/memReservation.jsp");
+			req.setAttribute("toLocation", "/BA102G2/Front_end/RFQ/listAllRFQ.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/reservation/checkRes.jsp");
+			successView.forward(req, res);
+//			res.sendRedirect("/BA102G2/Front_end/reservation/memReservation.jsp");
 		}
 		
 		// 服務預約
@@ -118,7 +121,10 @@ public class ReservationServlet extends HttpServlet {
 			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0",calendarVO);
 			
-			res.sendRedirect(requestURI);
+			req.setAttribute("toLocation", requestURI);
+			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/reservation/checkRes.jsp");
+			successView.forward(req, res);
+//			res.sendRedirect(requestURI);
 		}
 		
 		// 查詢預約
@@ -145,7 +151,10 @@ public class ReservationServlet extends HttpServlet {
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0", calendarVO);
 			
 			String requestURI = req.getParameter("requestURI");
-			res.sendRedirect(requestURI);
+			req.setAttribute("toLocation", requestURI);
+			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/reservation/checkRes.jsp");
+			successView.forward(req, res);
+//			res.sendRedirect(requestURI);
 		}
 		
 		if(action.equals("changeCalendar")){
