@@ -77,11 +77,33 @@ public class WorksServlet extends HttpServlet {
 			}
 			String works_desc = request.getParameter("works_desc");
 			worksSvc.updateWorks(works_no, com_no, name, works_desc,works.getImg(),works.getVdo(), upload_date);
+//			String url = "/Front_end/Works/ListAllWorks.jsp?com_no="+com_no;
+//			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
-
+		
+		if ("update_Single_Work".equals(action)) {
+			String works_no = request.getParameter("works_no");
+			String com_no = request.getParameter("com_no");
+			WorksVO works = worksSvc.getOneWork(works_no);
+			String name = request.getParameter("name");
+			
+			// ===== 檢查日期是否為空值 ===== //
+			Timestamp upload_date = null;
+			try {
+				upload_date = covertToTimestamp(request.getParameter("upload_date"));
+			} catch (NullPointerException e) {
+				upload_date = works.getUpload_date();
+			}
+			String works_desc = request.getParameter("works_desc");
+			worksSvc.updateWorks(works_no, com_no, name, works_desc,works.getImg(),works.getVdo(), upload_date);
+			return;
+		}
+		
+		
+		
 		/********** 新增作品 **********/
-		if ("upload_Works".equals(action)) {
+		if ("insert_Works".equals(action)) {
 			String com_no = request.getParameter("com_no");
 			ServletContext context = request.getServletContext();
 			Collection<Part> parts = request.getParts();
