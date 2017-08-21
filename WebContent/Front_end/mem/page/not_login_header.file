@@ -62,7 +62,7 @@ function callback2() {
     	}
    
     </script>
-      
+
 </div>	
 		 <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">
@@ -74,15 +74,15 @@ function callback2() {
           <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
         </div> 
         <div class="modal-body" style="padding:40px 50px;">
-          <form   action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+          <form name="sss"  action="<%= request.getContextPath() %>/mem/mem.do" method="post">
 
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
-              <input type="text" class="form-control" name="id" placeholder="Enter email">
+              <input type="text" class="form-control" name="id" placeholder="Enter email"  onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
-              <input type="password" class="form-control" name="pwd" placeholder="Enter password">
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password"  onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="checkbox">
              
@@ -111,7 +111,7 @@ function callback2() {
           <h4><span class="glyphicon glyphicon-lock"></span> 廠商登入</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form action="<%= request.getContextPath() %>/com/com.do" method="post">
+          <form name="aaa" action="<%= request.getContextPath() %>/com/com.do" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
               <input type="text" class="form-control" name="id" placeholder="Enter email">
@@ -196,7 +196,7 @@ $(document).ready(function(){
                             <a href="#" id="logincom"><b>廠商登入</b></a>
                        </li>
                     </ol>
-                </li>
+                	</li>
                            
                         
                     </li>

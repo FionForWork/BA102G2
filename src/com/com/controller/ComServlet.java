@@ -388,7 +388,7 @@ public class ComServlet extends HttpServlet {
 									 
 									 session.setAttribute("id", id);
 								     session.setAttribute("comVO", comVO);
-								     
+								     session.setAttribute("role","com");
 								      try {
 								    	  String comlocation = (String) session.getAttribute("comlocation");
 								          if (comlocation != null) {

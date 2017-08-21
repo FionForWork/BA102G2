@@ -56,7 +56,7 @@
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" value="修改狀態">
+			    <input type="submit" class="btn btn-info " value="修改狀態">
 			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
 			    <input type="hidden" name="action" value="getOne_For_Update"></FORM>
 			</td>

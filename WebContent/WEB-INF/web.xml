@@ -24,6 +24,20 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>loginComFilter</filter-name>
+		<url-pattern></url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>loginMemComFilter</filter-name>
+		<filter-class>com.filters.LoginMemComFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginMemComFilter</filter-name>
 		<url-pattern>/Front_end/com/index.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -31,6 +45,7 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
 	<filter>
 		<filter-name>loginMemFilter</filter-name>
 		<filter-class>com.filters.LoginMemFilter</filter-class>

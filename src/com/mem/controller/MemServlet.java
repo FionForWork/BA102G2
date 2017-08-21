@@ -349,7 +349,7 @@ public class MemServlet extends HttpServlet{
 								}
 						      session.setAttribute("id", id);
 						      session.setAttribute("memVO", memVO);
-
+						      session.setAttribute("role","mem");
 						      
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");

@@ -161,6 +161,7 @@ public class AdmServlet extends HttpServlet {
 						   
 						      session.setAttribute("id", id);
 						      session.setAttribute("admVO", admVO);
+						      session.setAttribute("role","adm");
 						      Map<String,List> oneAll =autSvc.getOneAll(admVO.getAdm_no());
 								 
 						      System.out.println("oneAll---"+oneAll);

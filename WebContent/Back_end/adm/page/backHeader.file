@@ -54,21 +54,13 @@
                 </div>
                 <nav class="top-nav" role="navigation">
                     <ul class="nav navbar-nav pull-right">
-                        
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification"></span></a>
-                            
-                        </li>
-                        <li class="dropdown">
-                         <a href="javascript:document.logout.submit();">登出</a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp" data-toggle="dropdown">${admVO.name}</a>
-                            <ul class="dropdown-menu right" role="menu">
-                                <li><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp"><i class="st-user"></i>我的資料</a></li>
-
-                            </ul>
-                        </li>
+                 <li class="dropdown"><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp" data-toggle="dropdown">喬治</a>
+							<ul class="dropdown-menu right" role="menu">
+								<li><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp"><i class="st-user"></i>
+										我的資料</a></li>
+								<li><a href="javascript:document.logout.submit();"><i class="im-exit"></i> Logout</a>
+								</li>
+							</ul></li>
                     </ul>
                 </nav>
             </div>

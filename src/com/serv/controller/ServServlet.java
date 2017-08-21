@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 import com.serv.model.ServService;
 import com.serv.model.ServVO;
 
@@ -93,7 +95,46 @@ public class ServServlet extends HttpServlet {
 		
 		
 		
-		
+		if ("getOne_For_Display".equals(action)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String serv_no = req.getParameter("serv_no");
+				
+				
+				/***************************2.開始查詢資料*****************************************/
+				ServService servSvc = new ServService();
+				ServVO servVO = servSvc.getOneServ(serv_no);
+				if (servVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Back_end/serv/select_Serv.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("servVO", servVO); // 資料庫取出的empVO物件,存入req
+				String url = "/Back_end/serv/listAllServ.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Back_end/mem/listAllMem.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
 		
 		
