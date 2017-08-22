@@ -121,5 +121,12 @@ public List<MemVO> loginpwd(){
 	public Set<MemVO> getMemsByReport(Integer report) {
 		return dao.getMemsByReport(report);
 	}
-	
+	public MemVO updateReport(String mem_no,Integer report) {
+		MemVO memVO=new MemVO();
+		memVO.setMem_no(mem_no);
+		memVO.setReport(report);
+		dao.updateReport(memVO);
+		
+		return memVO;
+	}
 }

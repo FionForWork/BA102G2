@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+ï»¿<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,34 +23,26 @@
 <jsp:useBean id="com_Svc" scope="page" class="com.com.model.ComService" />
 <jsp:useBean id="mem_Svc" scope="page" class="com.mem.model.MemService" />
 <jsp:useBean id="rep_type_Svc" scope="page" class="com.report_type.model.Report_type_Service" />
-<%@ page import="com.article.model.*"%>
+<jsp:useBean id="product_Svc" scope="page" class="com.product.model.ProductService" />
+<%@page import="com.article.model.*"%>
 <%@page import="com.com.model.ComVO"%>
 <%@page import="com.com.model.ComService"%>
 <%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%
-// rep_ob_no  =  art_no     =  5001
-// reproter_no=  poster_no  =  1003
-Integer reproter_no =new Integer(request.getParameter("reproter_no"));
+Integer reported_no =new Integer(request.getParameter("reported_no"));
 String position = request.getParameter("position");
-
 String rep_ob_no = request.getParameter("rep_ob_no");
-
-System.out.println(rep_ob_no.charAt(0));
 if((rep_ob_no.charAt(0))=='5'){
 	Article_Service art_Svc=new Article_Service();
 	ArticleVO articleVO = art_Svc.getOneArt(Integer.valueOf(rep_ob_no));
 	pageContext.setAttribute("articleVO", articleVO);
 	System.out.println(rep_ob_no);
 }
-
 session.getAttribute("memVO");
-
-
-  session.getAttribute("comVO");
-
-
+session.getAttribute("comVO");
 // Integer reproter_no = new Integer(request.getParameter("reproter_no"));
+
 %>
  
  
@@ -61,22 +52,22 @@ session.getAttribute("memVO");
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ÀËÁ|</h4>
+          <h4 class="modal-title">æª¢èˆ‰</h4>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">ÀËÁ|¹ï¶H</label>
-         <input class="form-control" id="inputdefault" type="hidden" name="reported_no" value="<%=request.getParameter("reproter_no")%>">
+        <label for="inputdefault">æª¢èˆ‰å°è±¡</label>
+         <input class="form-control" id="inputdefault" type="hidden" name="reported_no" value="<%=request.getParameter("reported_no")%>">
         <c:choose>
-			<c:when test="${com_Svc.getOneCom(articleVO.poster_no)!=null }">
-				<div class="name">${com_Svc.getOneCom(articleVO.poster_no).name }</div>
+			<c:when test="${com_Svc.getOneCom(param.reported_no)!=null }">
+				<div class="name">${com_Svc.getOneCom(param.reported_no).name }</div>
 			</c:when>
 			<c:otherwise>
-				<div class="name">${mem_Svc.getOneMem(articleVO.poster_no).name }</div>
+				<div class="name">${mem_Svc.getOneMem(param.reported_no).name }</div>
 			</c:otherwise>
 		</c:choose>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">ÀËÁ|Ãş«¬</label> 
+        <label for="inputdefault">æª¢èˆ‰é¡å‹</label> 
         <select class="form-control" id="sel1" name="rep_type_no">
 	        <c:forEach var="rep_typeVO" items="${rep_type_Svc.all}">
 					<option value="${rep_typeVO.rep_type_no }"> ${rep_typeVO.type }</option>
@@ -84,11 +75,21 @@ session.getAttribute("memVO");
 		</select>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">¤º®e</label>
+        <label for="inputdefault">å…§å®¹</label>
          <input class="form-control" id="inputdefault" type="text" name="content">
         </div>
+        
+        <c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no!=null}">
+         <div class="modal-body">
+        <label for="inputdefault">ç…§ç‰‡</label>
+        <div>
+        <img style="width:300px;"class="img-responsive" src="<%=request.getContextPath() %>/image/ShowImage?pro_no=${param.rep_ob_no}">
+        </div>
+        </div>
+        </c:if>
+        
         <div class="modal-footer">
-        	<input	type="submit" class="btn btn-info" value="ÀËÁ|">
+        	<input	type="submit" class="btn btn-info" value="æª¢èˆ‰">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
         

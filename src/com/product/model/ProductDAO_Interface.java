@@ -32,4 +32,6 @@ public interface ProductDAO_Interface {
     int getAllCountBySeller(String seller_no);
     
     List<ProductVO> getPageBySeller(int start, int itemsCount,String seller_no);
+    
+    void update_status(ProductVO productVO);
 }

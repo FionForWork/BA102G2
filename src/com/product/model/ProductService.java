@@ -117,4 +117,11 @@ public class ProductService {
         }
         return orderMethod;
     }
+    public void update_Status(String status,String pro_no) {
+    	ProductVO productVO = new ProductVO();
+        
+        productVO.setStatus(status);
+        productVO.setPro_no(pro_no);
+        dao.update_status(productVO);
+        }
 }

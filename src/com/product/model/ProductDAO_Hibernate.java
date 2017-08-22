@@ -272,4 +272,10 @@ public class ProductDAO_Hibernate implements ProductDAO_Interface {
         return list;
     }
 
+	@Override
+	public void update_status(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

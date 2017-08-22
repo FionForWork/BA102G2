@@ -102,7 +102,7 @@ public class ArticleServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+				e.printStackTrace();
 				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/dddArticle_add.jsp");
 				failureView.forward(req, res);
 			}

@@ -39,7 +39,7 @@ public class ReportJNDIDAO implements Report_interface {
 		private static final String DELETE = 
 			"DELETE FROM REPORT where rep_no = ?";
 		private static final String UPDATE = 
-				"UPDATE REPORT set rep_ob_no=?,reporter_no=?, reported_no=?,rep_type_no=?,content=?,rep_date=?,status=? where REP_NO = ?";
+				"UPDATE REPORT set status=? where REP_NO = ?";
 		
 		
 	@Override
@@ -95,14 +95,9 @@ public class ReportJNDIDAO implements Report_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			
-			pstmt.setInt(1, reportVO.getRep_ob_no());
-			pstmt.setInt(2, reportVO.getReporter_no());
-			pstmt.setInt(3, reportVO.getReported_no());
-			pstmt.setInt(4, reportVO.getRep_type_no());
-			pstmt.setString(6, reportVO.getContent());
-			pstmt.setDate(7, reportVO.getRep_date());
-			pstmt.setInt(8, reportVO.getStatus());
-			pstmt.setInt(9, reportVO.getRep_no());
+			
+			pstmt.setInt(1, reportVO.getStatus());
+			pstmt.setInt(2, reportVO.getRep_no());
 			
 			pstmt.executeUpdate();
 

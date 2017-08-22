@@ -29,7 +29,7 @@ public class ReportJDBCDAO implements Report_interface {
 		private static final String DELETE = 
 			"DELETE FROM REPORT where rep_no = ?";
 		private static final String UPDATE = 
-				"UPDATE REPORT set rep_ob_no=?,reporter_no=?, reported_no=?,rep_type_no=?,content=?,rep_date=?,status=? where REP_NO = ?";
+				"UPDATE REPORT set status=? where REP_NO = ?";
 		
 		
 	@Override
@@ -86,14 +86,9 @@ public class ReportJDBCDAO implements Report_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			
-			pstmt.setInt(1, reportVO.getRep_ob_no());
-			pstmt.setInt(2, reportVO.getReporter_no());
-			pstmt.setInt(3, reportVO.getReported_no());
-			pstmt.setInt(4, reportVO.getRep_type_no());
-			pstmt.setString(5, reportVO.getContent());
-			pstmt.setDate(6, reportVO.getRep_date());
-			pstmt.setInt(7, reportVO.getStatus());
-			pstmt.setInt(8, reportVO.getRep_no());
+			
+			pstmt.setInt(1, reportVO.getStatus());
+			pstmt.setInt(2, reportVO.getRep_no());
 			
 			pstmt.executeUpdate();
 
@@ -302,17 +297,13 @@ public class ReportJDBCDAO implements Report_interface {
 //		dao.insert(reportVO1);
 
 //		// 修改
-//		 ReportVO reportVO2 = new ReportVO();
-//		 reportVO2.setRep_no(2);
-//		 reportVO2.setRep_ob_no(5002);
-//		 reportVO2.setReporter_no(2001);
-//		 reportVO2.setReported_no(1003);
-//		 reportVO2.setRep_type_no(20);
-//		 reportVO2.setContent("檢舉內文");
-//		 reportVO2.setRep_date(new Date(date.getTime()));
-//		 reportVO2.setStatus(10);
-//		
-//		dao.update(reportVO2);
+		 ReportVO reportVO2 = new ReportVO();
+		 
+		
+		 reportVO2.setStatus(2);
+		 reportVO2.setRep_no(1);
+		
+		dao.update(reportVO2);
 //
 //		// 刪除
 //		dao.delete(1);
@@ -330,18 +321,18 @@ public class ReportJDBCDAO implements Report_interface {
 //		System.out.println("---------------------");
 //
 //		// 查詢
-		List<ReportVO> list = dao.getAll();
-		for (ReportVO report4 : list) {
-		System.out.print(report4.getRep_no() + ",");
-		System.out.print(report4.getRep_ob_no() + ",");
-		System.out.print(report4.getReporter_no()+ ",");
-		System.out.print(report4.getReported_no()+ ",");
-		System.out.print(report4.getRep_type_no() + ",");
-		System.out.print(report4.getContent()+ ",");
-		System.out.print(report4.getRep_date()+ ",");
-		System.out.println(report4.getStatus());
-		System.out.println();
-	}
+//		List<ReportVO> list = dao.getAll();
+//		for (ReportVO report4 : list) {
+//		System.out.print(report4.getRep_no() + ",");
+//		System.out.print(report4.getRep_ob_no() + ",");
+//		System.out.print(report4.getReporter_no()+ ",");
+//		System.out.print(report4.getReported_no()+ ",");
+//		System.out.print(report4.getRep_type_no() + ",");
+//		System.out.print(report4.getContent()+ ",");
+//		System.out.print(report4.getRep_date()+ ",");
+//		System.out.println(report4.getStatus());
+//		System.out.println();
+//	}
 
 	
 }

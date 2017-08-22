@@ -127,13 +127,13 @@
 			<c:choose>
 
 				<c:when test="${traditionlist!=null}">
-					<c:forEach var="TraditionVO" items="${traditionlist}"
+					<c:forEach var="TraditionVO" items="${traditionlist}" 
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="panel-group" id="accordion">
 							<div class="panel " style="background-color: #f5f5f5;">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion"  
-										href="#${TraditionVO.tra_no }">${TraditionVO.tra_no }.${TraditionVO.title}</a>
+										href="#${TraditionVO.tra_no }">${TraditionVO.tra_order}.${TraditionVO.title}</a>
 
 								</h4>
 							</div>

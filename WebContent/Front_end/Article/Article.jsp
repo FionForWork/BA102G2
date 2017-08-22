@@ -17,14 +17,14 @@
 %>
 
 <%
-	int rowsPerPage = 4; //每頁的筆數    
+	int rowsPerPage = 5; //每頁的筆數    
 	int rowNumber = 0; //總筆數
 	int pageNumber = 0; //總頁數      
 	int whichPage = 1; //第幾頁
 	int pageIndexArray[] = null;
 	int pageIndex = 0;
 %>
-
+   
 <%
 	if (articlelist != null) {
 		rowNumber = articlelist.size();
@@ -50,8 +50,7 @@
 
 	}
 
-System.out.println(rowsPerPage);
-System.out.println(rowNumber);
+
 %>
 
 

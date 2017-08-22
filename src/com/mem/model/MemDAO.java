@@ -55,6 +55,8 @@ public class MemDAO implements MemDAO_Interface{
 		private static final String GET_Mems_ByReport_STMT = "SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status FROM member where report >= ? order by report";
 		private static final String UPDATESTATUS = 
 				"UPDATE member set status=? where mem_no = ?";
+		private static final String UPDATEREPORT = 
+				"UPDATE member set report=? where mem_no = ?";
 		
 		@Override
 		public void updatePic(MemVO memVO) {
@@ -694,6 +696,40 @@ public class MemDAO implements MemDAO_Interface{
 			}
 		}
 		return set;
+	}
+
+	@Override
+	public void updateReport(MemVO memVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEREPORT);
+			pstmt.setInt(1, memVO.getReport());
+			pstmt.setString(2, memVO.getMem_no());
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 
