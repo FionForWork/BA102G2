@@ -55,6 +55,10 @@
 	<filter-mapping>
 		<filter-name>loginMemFilter</filter-name>
 		<url-pattern>/Front_end/mem/index.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/listOneMem.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/updatemember.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/updatPwd.jsp</url-pattern>
+
 		<url-pattern>/Front_end/mall/*</url-pattern>
 		<url-pattern>/Front_end/RFQ/addRFQ.jsp</url-pattern>
 		<url-pattern>/Front_end/RFQ/listMyRFQ.jsp</url-pattern>
@@ -97,7 +101,11 @@
 		<url-pattern>/Front_end/Temp/ComPage_CreateTemp.jsp</url-pattern>
 		<url-pattern>/Front_end/Temp/ComPage_ListAllTempConts.jsp</url-pattern>
 		<url-pattern>/Front_end/Temp/ComPage_ListAllTemps.jsp</url-pattern>
-
+		<url-pattern>/Front_end/com/listOneCom.jsp</url-pattern>
+		<url-pattern>/Front_end/com/updatecompany.jsp</url-pattern>
+		<url-pattern>/Front_end/com/updatePwd.jsp</url-pattern>
+		<url-pattern>/Front_end/serv/addServ.jsp</url-pattern>
+		<url-pattern>/Front_end/com/index.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

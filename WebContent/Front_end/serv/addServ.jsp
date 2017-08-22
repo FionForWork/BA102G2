@@ -14,7 +14,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 <div class="container">
 	<div class="row">
 	
-		<div class="col-md-offset-1 col-md-2">
+		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua active">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
@@ -38,9 +38,9 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 <div class="container">
 <div class="col-md-offset-1 col-md-7" id="big">
-<h3>新增廠商服務:</h3>
 
-
+<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">新增廠商服務:</h1>
+<br>
 <%--錯誤處理 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:

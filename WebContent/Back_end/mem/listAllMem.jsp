@@ -16,7 +16,7 @@
 
 <div id="content">
 
-${aut}
+
 			 
 
 <table class="table table-striped">

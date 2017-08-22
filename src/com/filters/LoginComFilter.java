@@ -52,7 +52,11 @@ public class LoginComFilter implements Filter {
 			try{
 				ComVO comVO =(ComVO)session.getAttribute("comVO");
 				comVO.getCom_no();
-				
+				String status=comVO.getStatus();
+				if(status.equals("停權")){
+					res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+					return;
+				}
 			}catch(Exception e){
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
 				 return;

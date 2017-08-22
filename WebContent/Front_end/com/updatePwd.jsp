@@ -16,7 +16,7 @@
 <div class="container">
 	<div class="row">
 	
-		<div class="col-md-offset-1 col-md-2">
+		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua active">修改密碼</a><br>

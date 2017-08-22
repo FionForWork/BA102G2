@@ -324,6 +324,7 @@ public class MemServlet extends HttpServlet{
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
+			 HttpSession session = req.getSession();
 			 String memslocation = req.getParameter("comslocation");
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
@@ -336,7 +337,7 @@ public class MemServlet extends HttpServlet{
 					 for(int j=0;j<list1.size();j++){
 						
 						 if (pwd.equals(list1.get(j).getPwd())) {
-							HttpSession session = req.getSession();
+							
 							 session.removeAttribute("id");
 							 session.removeAttribute("memVO");
 
@@ -373,6 +374,7 @@ public class MemServlet extends HttpServlet{
 				 }
 
 			 }
+			  session.setAttribute("login","mem");
 			 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
 		      return;
 			

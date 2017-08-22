@@ -355,7 +355,7 @@ public class ComServlet extends HttpServlet {
 			 String pwd = req.getParameter("pwd");
 			 String comslocation = req.getParameter("comslocation");
 			  // 【檢查該帳號 , 密碼是否有效】
-			 
+			 HttpSession session = req.getSession();
 
 			 ComService comSvc = new ComService();
 			 List<ComVO> list = comSvc.loginid();
@@ -368,7 +368,7 @@ public class ComServlet extends HttpServlet {
 					 for(int j=0;j<list1.size();j++){
 						
 						 if (list1.get(j).getPwd().equals(pwd)) {
-							 HttpSession session = req.getSession();
+							
 							 session.removeAttribute("id");
 							 session.removeAttribute("comVO");
 							 
@@ -416,7 +416,7 @@ public class ComServlet extends HttpServlet {
 				 }
 
 			 }
-			 
+			  session.setAttribute("login","com");
 		 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
 		      return;
 	 
