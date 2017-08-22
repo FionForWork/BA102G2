@@ -18,7 +18,22 @@
 %>
 
 <%@ include file="page/album_header_v2.file"%>
+<script>
 
+$("document").ready(function(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	if(dd<10){dd='0'+dd} 
+	if(mm<10){mm='0'+mm} 
+	today = yyyy+'-'+mm+'-'+dd;
+	$('input[name=name]').attr('placeholder', today); 
+	
+});
+
+
+</script>
 
 
 		<div class="col-md-8 col-offset-1">
@@ -55,7 +70,7 @@
 								
 								
 								<div class="form-group">
-									<label for="inputFile"> 選擇照片 <span id='emptyFile' style='color:red'></span></label> 
+									<label for="inputFile"> 選擇照片或影片 <span id='emptyFile' style='color:red'></span></label> 
 									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
 								</div>
 								<br>
@@ -71,7 +86,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default pull-left"
 									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> Cancel
+									<span class="glyphicon glyphicon-remove"></span> 取消
 								</button>
 								<input type='hidden' name='action' value='create_Album'>
 								<input type='hidden' name='mem_no' value='${memVO.mem_no}'>
@@ -94,7 +109,7 @@
 								<h4 class="modal-title">刪除相簿</h4>
 							</div>
 							<div class="modal-body">
-								<p>你確定想刪除「 ${albVO.name} 」嗎？在這本相簿中的相片也會被刪除。</p>
+								<p>你確定想刪除「 ${albVO.name} 」嗎？在這本相簿中的相片及影片也會被刪除。</p>
 							</div>
 							<input type='hidden' name='alb_no' value=''>
 							<div class="modal-footer">
@@ -188,7 +203,7 @@
 	function openModal(alb_no,name){
 		$("#deleteAlbumModal").modal();
 		$('input[name=alb_no]').val(alb_no);
-		$('.modal-body p').html("你確定想刪除「"+name+" 」嗎？在這本相簿中的相片也會被刪除。");
+		$('.modal-body p').html("你確定想刪除「"+name+" 」嗎？在這本相簿中的相片及影片也會被刪除。");
 	}
 	function deleteAlb(){
 		$("#cancel").click();

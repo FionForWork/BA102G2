@@ -77,7 +77,7 @@
 				<nav class="top-nav" role="navigation">
 					<ul class="nav navbar-nav pull-right">
 
-						<li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
+						<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>&nbsp喬治</a>
 							<ul class="dropdown-menu right" role="menu">
 								<li><a href="#"><i class="st-user"></i>
 										個人資料</a></li>
@@ -308,7 +308,7 @@
 												begin="1" end="3">
                                             <tr>
                                                 
-                                                <td>${memSvc.getOneMem(productVO.seller_no).name}</td>
+                                                <td>${memSvc.getOneMem(productVO.seller_no).name}&nbsp(${productVO.seller_no})</td>
                                                 <td>${productVO.pro_name}</td>
                                                 <td>${typeList.get(productVO.protype_no-1).type_name}</td>
                                                 <td>$ ${productVO.price}</td>

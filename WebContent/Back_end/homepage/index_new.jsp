@@ -51,15 +51,14 @@
 				<nav class="top-nav" role="navigation">
 					<ul class="nav navbar-nav pull-right">
 
-                        <li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
+                        <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>&nbsp喬治</a>
                             <ul class="dropdown-menu right" role="menu">
                                 <li><a href="profile.html">
-                                        <i class="st-user"></i>
-                                        Profile
+                                        <i class="st-user"></i>個人資料
                                     </a></li>
                                 <li><a href="login.html">
                                         <i class="im-exit"></i>
-                                        Logout
+                                        登出
                                     </a></li>
                             </ul></li>
                     </ul>

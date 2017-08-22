@@ -36,12 +36,12 @@ $("document").ready(function(){
 							<div class="modal-header" style="padding: 20px 50px;">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4>
-									<span class="glyphicon glyphicon-picture"></span> 上傳照片
+									<span class="glyphicon glyphicon-picture"></span> 上傳照片或影片
 								</h4>
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
 								<div class="form-group">
-									<label for="inputFile"> 選擇照片 <span id='emptyFile' style='color:red'></span></label> 
+									<label for="inputFile"> 選擇照片或影片 <span id='emptyFile' style='color:red'></span></label> 
 									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
 								</div>
 								<input type='button' id='insertBtn' class="btn btn-info btn-block" value="新增">
@@ -49,7 +49,7 @@ $("document").ready(function(){
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default pull-left"
 									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> Cancel
+									<span class="glyphicon glyphicon-remove"></span> 取消
 								</button>
 								<input type='hidden' name='action' value='insert_Content'>
 								<input type='hidden' name='alb_no' value='<%=alb_no%>'>
@@ -71,7 +71,7 @@ $("document").ready(function(){
 							<h4 class="modal-title">刪除相簿</h4>
 						</div>
 						<div class="modal-body">
-							<p>你確定想刪除「 ${alb.name} 」嗎？在這本相簿中的相片也會被刪除。</p>
+							<p>你確定想刪除「 ${alb.name} 」嗎？在這本相簿中的相片及影片也會被刪除。</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
@@ -104,10 +104,10 @@ $("document").ready(function(){
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">刪除相片</h4>
+								<h4 class="modal-title">刪除相片或影片</h4>
 							</div>
 							<div class="modal-body">
-								<p>刪除相片後將無法復原，確定刪除嗎?</p>
+								<p>刪除後將無法復原，確定刪除嗎?</p>
 							</div>
 							<input type='hidden' name='cont_no' value=''>
 							<div class="modal-footer">

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.placeview.model.*"%>
+<%@ page import="com.place.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mem.model.*" %>
 <%
@@ -11,7 +12,15 @@
 	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
 	//String cropCont_no = "0115";
-	String place_no = "1";
+	
+	PlaceService placeSvc = new PlaceService();
+	int placeCount = placeSvc.getAllCount();
+	System.out.println("placeCount "+placeCount);
+	double doubleplace_no = (placeCount * Math.random()+1);
+	System.out.println("doubleplace_no "+doubleplace_no);
+	String place_no = String.valueOf((int)Math.floor(doubleplace_no));
+	System.out.println("place_no "+place_no);
+	//String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
 	List<String> placeviewNoList = placeViewSvc.getAllByFk(place_no);

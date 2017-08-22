@@ -6,7 +6,7 @@
 
 <%
 	//String mem_no = (String)session.getAttribute("mem_no");
-	session.setAttribute("mem_no","1001");
+	//session.setAttribute("mem_no","1001");
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getParameter("cropCont_no");
@@ -36,8 +36,7 @@
 
 						<input type='hidden' id='xPoints' name='xPoints' value=''>
 						<input type='hidden' id='yPoints' name='yPoints' value=''>
-<%-- 						<input type='hidden' name='mem_no' value='${memVO.mem_no}'>  --%>
-						<input type='hidden' name='mem_no' value='${mem_no}'> 
+						<input type='hidden' name='mem_no' value='${memVO.mem_no}'> 
 						<input type='hidden' name='action' value='cropImage'> 
 						<input
 							type="file" name="imageRemove" id='imgfile'
@@ -149,6 +148,7 @@
 			xPoints=[];
 			yPoints=[];
 			hasImage = false;
+			canvas.removeEventListener("mousewheel",wheelImage,false);
 		}
 		
 		$(document).ready(function(e) {

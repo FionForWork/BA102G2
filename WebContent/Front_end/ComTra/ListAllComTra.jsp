@@ -32,7 +32,7 @@
 			<!--table table table table table table table table table -->
 			<div id='changeContent'>
 			<table class="table table-hover table-striped" id='comtraList'>
-
+				<div id="snackbar">成功取消收藏...</div>
 				<thead>
 					<tr>
 						<th>#</th>
@@ -130,6 +130,8 @@ function doAjax(action,comtra_no,nowPage){
 			action : action,
 		},
 		success:function success(){
+			$("#snackbar").addClass("show");
+			setTimeout('$("#snackbar").removeClass("show")',5000);
 			
 			$("#changeContent").load("<%=request.getContextPath()%>/Front_end/ComTra/ListAllComTra.jsp #changeContent",{
 				"nowPage":nowPage
