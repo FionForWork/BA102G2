@@ -44,11 +44,11 @@ public class RFQServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		HttpSession session = req.getSession();
-		MemVO memVO = (MemVO)session.getAttribute("memVO");
 		
 //	新人詢價
 		if(action.equals("add")){
 			
+			MemVO memVO = (MemVO)session.getAttribute("memVO");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -86,11 +86,6 @@ public class RFQServlet extends HttpServlet {
 				
 			RFQ_DetailService rfq_DetailService = new RFQ_DetailService();
 			rfq_DetailService.updateRFQDetailStatus(status, rfqdetail_no);
-			
-			// 重導無法點擊
-//			String url = "/Front_end/RFQ/listMyRFQ.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url);
-//			successView.forward(req, res);
 			
 			res.sendRedirect(req.getContextPath()+"/Front_end/RFQ/listMyRFQ.jsp");
 		

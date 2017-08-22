@@ -13,8 +13,7 @@
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	// 廠商資料
-	ComVO comVO = new ComVO();
-	comVO.setCom_no("2001");
+	String com_no = request.getParameter("com_no");
 	
 	int dayOfWeek = 0;int week = 1;int flag = 0; int beforeToday = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
@@ -29,14 +28,12 @@
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
 	
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1001");
-	session.setAttribute("memVO", memVO);
 	
 	CalendarService calerdarService = new CalendarService();
-	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
+	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, com_no);
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
-	List<ServVO> servList = new ServService().getCom(comVO.getCom_no());
+	List<ServVO> servList = new ServService().getCom(com_no);
 	pageContext.setAttribute("servList", servList);
 %>
 
@@ -72,7 +69,7 @@
 	
 </style>
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="page/headerWithoutSidebar.file" %>
+<%@ include file="page/searchServiceHeader.file" %>
 <style>
 	.table{
 		border: 1px solid #404040;
@@ -245,7 +242,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
+    var MyPoint = "/ResServer/SSY/<%= com_no %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));

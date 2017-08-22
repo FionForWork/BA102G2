@@ -4,11 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.quote.model.*" %>
+<%@ page import="com.com.model.*" %>
 <%@ page import="java.text.*" %>
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
+	ComVO comVO = (ComVO)session.getAttribute("comVO");
 	QuoteService quoteService = new QuoteService();
-	List<QuoteVO> list = quoteService.getComQuote("2001");
+	List<QuoteVO> list = quoteService.getComQuote(comVO.getCom_no());
 	pageContext.setAttribute("list", list);
 	DecimalFormat nf = new DecimalFormat("$#,##0"); 
 	pageContext.setAttribute("nf", nf);

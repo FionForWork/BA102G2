@@ -8,17 +8,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <% 
+	MemVO memVO = (MemVO)session.getAttribute("memVO");
 	ReservationService reservationService = new ReservationService();
 	String status = request.getParameter("status");
 	List<ReservationVO> list = null;
 	if(status != null){
 		if(status.equals("3")){
-			list = reservationService.getMemRes("1001",status,"4");
+			list = reservationService.getMemRes(memVO.getMem_no(),status,"4");
 		}else{
-			list = reservationService.getMemRes("1001",status);
+			list = reservationService.getMemRes(memVO.getMem_no(),status);
 		}
 	}else{
-		list = reservationService.getMemRes("1001","0");
+		list = reservationService.getMemRes(memVO.getMem_no(),"0");
 	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("YYYY年M月d日");

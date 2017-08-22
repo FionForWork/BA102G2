@@ -4,7 +4,6 @@
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	String toLocation = (String)request.getAttribute("toLocation");
-	System.out.print(toLocation);
 	String URL = "/BA102G2/Front_end/reservation/memReservation.jsp";
 	response.setHeader("Refresh", "5;URL="+URL);
 %>

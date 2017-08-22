@@ -12,11 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.calendar.model.*;
+import com.com.model.ComVO;
+import com.mem.model.MemVO;
 
 /**
  * Servlet implementation class CalendarServlet
@@ -69,6 +72,9 @@ public class CalendarServlet extends HttpServlet {
 //		新增行程
 		if("addSchedule".equals(action)){
 			
+			HttpSession session = req.getSession();
+			ComVO comVO = (ComVO)session.getAttribute("comVO");
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -95,7 +101,7 @@ public class CalendarServlet extends HttpServlet {
 			}
 			System.out.println(cal_date);
 			CalendarService calendarService = new CalendarService();
-			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
+			calendarService.addCalendar(comVO.getCom_no(), content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
 
 //			JSONObject j = new JSONObject();
 //			try {
@@ -133,6 +139,9 @@ public class CalendarServlet extends HttpServlet {
 		
 		if("addScheduleAjax".equals(action)){
 			
+			HttpSession session = req.getSession();
+			ComVO comVO = (ComVO)session.getAttribute("comVO");
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -148,7 +157,7 @@ public class CalendarServlet extends HttpServlet {
 //			}
 			
 			CalendarService calendarService = new CalendarService();
-			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
+			calendarService.addCalendar(comVO.getCom_no(), content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
 			
 //			String[] date = cal_date.split("-");
 //			LocalDate localDate = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));

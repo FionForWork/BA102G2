@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.com.model.ComVO;
 import com.mem.model.MemVO;
 import com.quote.model.QuoteService;
 import com.quote.model.QuoteVO;
@@ -32,14 +33,15 @@ public class QuoteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 		// 會員帳號假定
-		HttpSession session = req.getSession();
-		MemVO memVO = (MemVO)session.getAttribute("memVO");
 		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
 		
 		if(action.equals("quote")){
+			
+			HttpSession session = req.getSession();
+			ComVO comVO = (ComVO)session.getAttribute("comVO");
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -65,7 +67,7 @@ public class QuoteServlet extends HttpServlet {
 			Timestamp t = new Timestamp(System.currentTimeMillis());
 			
 			QuoteService quoteService = new QuoteService();
-			quoteService.addQuote("2001", rfqdetail_no, price, content, t);
+			quoteService.addQuote(comVO.getCom_no(), rfqdetail_no, price, content, t);
 			
 			String url = "/Front_end/RFQ/listAllRFQ.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -74,7 +76,7 @@ public class QuoteServlet extends HttpServlet {
 		
 //		查看報價
 		if(action.equals("listQuote")){
-			// session效率問題
+
 			String rfqMem_no = req.getParameter("rfqMem_no");
 			String sort = req.getParameter("sort");
 			

@@ -49,12 +49,15 @@ public class ReservationServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
-		HttpSession session = req.getSession();
-		MemVO memVO = (MemVO)session.getAttribute("memVO");
 		String action = req.getParameter("action");
 		
 		// 報價預約
 		if(action.equals("reservationFromQuote")){
+			
+			HttpSession session = req.getSession();
+			MemVO memVO = (MemVO)session.getAttribute("memVO");
+			
+			
 			// 查詢報價VO
 			String quo_no = req.getParameter("quo_no");
 			QuoteService quoteService = new QuoteService();
@@ -73,7 +76,7 @@ public class ReservationServlet extends HttpServlet {
 			
 			MemService memService = new MemService();
 			// 會員名稱寫死
-			String content = memService.getOneMem("1001").getName() + "-" 
+			String content = memService.getOneMem(memVO.getMem_no()).getName() + "-" 
 					+ sortingHat.getServType(stype_no)+"服務";
 			
 			CalendarVO calendarVO = new CalendarVO();
@@ -96,6 +99,10 @@ public class ReservationServlet extends HttpServlet {
 		
 		// 服務預約
 		if(action.equals("resFromCalendar")){
+			
+			HttpSession session = req.getSession();
+			MemVO memVO = (MemVO)session.getAttribute("memVO");
+			
 			String serv_no = req.getParameter("serv_no");
 			String serv_date = req.getParameter("serv_date");
 			String requestURI = req.getParameter("requestURI");
@@ -106,8 +113,8 @@ public class ReservationServlet extends HttpServlet {
 			
 			MemService memService = new MemService();
 			Service_TypeService stypeService = new Service_TypeService();
-			// 會員名稱寫死
-			String content = memService.getOneMem("1001").getName() + "-" 
+
+			String content = memService.getOneMem(memVO.getMem_no()).getName() + "-" 
 					+ stypeService.getOne(servVO.getStype_no()).getName()+"服務";
 			
 			
@@ -118,7 +125,7 @@ public class ReservationServlet extends HttpServlet {
 			
 			// 將訂單和行事曆一起送進Service
 			ReservationService reservationService = new ReservationService();
-			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
+			reservationService.addReservation(memVO.getMem_no(), servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0",calendarVO);
 			
 			req.setAttribute("toLocation", requestURI);
@@ -129,6 +136,10 @@ public class ReservationServlet extends HttpServlet {
 		
 		// 查詢預約
 		if(action.equals("resFromSearchService")){
+			
+			HttpSession session = req.getSession();
+			MemVO memVO = (MemVO)session.getAttribute("memVO");
+			
 			String serv_no = req.getParameter("serv_no");
 			String serv_date = req.getParameter("serv_date");
 			
@@ -138,7 +149,7 @@ public class ReservationServlet extends HttpServlet {
 			MemService memService = new MemService();
 			Service_TypeService stypeService = new Service_TypeService();
 			
-			String content = memService.getOneMem("1001").getName() + "-" 
+			String content = memService.getOneMem(memVO.getMem_no()).getName() + "-" 
 					+ stypeService.getOne(servVO.getStype_no()).getName()+"服務";
 			
 			CalendarVO calendarVO = new CalendarVO();
@@ -147,7 +158,7 @@ public class ReservationServlet extends HttpServlet {
 			calendarVO.setCal_date(Timestamp.valueOf(serv_date+" 00:00:00"));
 			
 			ReservationService reservationService = new ReservationService();
-			reservationService.addReservation("1001", servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
+			reservationService.addReservation(memVO.getMem_no(), servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0", calendarVO);
 			
 			String requestURI = req.getParameter("requestURI");

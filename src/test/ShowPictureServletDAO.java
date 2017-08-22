@@ -104,7 +104,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				
 			}else{
 				byte[] logo =null;
-				System.out.println("comPicture"+pk);
+//				System.out.println("comPicture"+pk);
 				ComService comSvc = new ComService();
 				ComVO comVO = comSvc.getOneCom(pk);
 				

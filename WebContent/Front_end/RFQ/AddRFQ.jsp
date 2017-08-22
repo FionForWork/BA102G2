@@ -6,14 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<style>
-/* input { */
-/* 	width: 300px; */
-/* } */
-</style>
-<%@ include file="page/header.file"%>
-
+<%@ include file="page/share_header_v2.file"%>
 <div class="container">
+<br>
 	<div class="panel panel-default col-md-offset-2 col-md-8">
 		<div class="panel-heading">
 			<h1>徵求店家報價</h1>

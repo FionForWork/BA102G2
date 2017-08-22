@@ -590,5 +590,11 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 		return list;
 	}
 
+	@Override
+	public List<ReservationVO> getMenMonthCal(int year, int month, int dayNum, String men_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

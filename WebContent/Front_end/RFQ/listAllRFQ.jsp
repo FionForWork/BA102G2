@@ -15,9 +15,6 @@
 	pageContext.setAttribute("memService",memService);
     pageContext.setAttribute("rfqList",rfqList);
 	pageContext.setAttribute("df", df);
-    // 假定MemVO
-	MemVO memVO = new MemService().getOneMem("1001");
-	session.setAttribute("memVO", memVO);
 %>
 <jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat" />
 <jsp:useBean id="rfqDetailSvc" class="com.rfq_detail.model.RFQ_DetailService" />
@@ -26,7 +23,7 @@
 <html>
 <head>
 </head>
-<%@ include file="page/share_header.file" %>
+<%@ include file="page/share_header_v2.file" %>
 <div class="container step-container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">

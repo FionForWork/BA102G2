@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.reservation.model.*" %>
+<%@ page import="com.com.model.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -10,17 +11,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
+	ComVO comVO = (ComVO)session.getAttribute("comVO");
 	ReservationService resService = new ReservationService();
 	String status = request.getParameter("status");
 	List<ReservationVO> list = null;
 	if(status != null){
 		if(status.equals("3")){
-			list = resService.getComRes("2001",status,"4");
+			list = resService.getComRes(comVO.getCom_no(),status,"4");
 		}else{
-			list = resService.getComRes("2001",status);
+			list = resService.getComRes(comVO.getCom_no(),status);
 		}
 	}else{
-		list = resService.getComRes("2001","0");
+		list = resService.getComRes(comVO.getCom_no(),"0");
 	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("yyyy年M月d日 ahh時");
@@ -28,7 +30,7 @@
 	NumberFormat nf = NumberFormat.getInstance();
 	pageContext.setAttribute("nf", nf);
 %>
-<<jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
+<jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
 <jsp:useBean id="memService" class="com.mem.model.MemService"/>
 <jsp:useBean id="comService" class="com.com.model.ComService"/>
 <jsp:useBean id="rfq_dateilService" class="com.rfq_detail.model.RFQ_DetailService"/>
