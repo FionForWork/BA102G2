@@ -46,7 +46,8 @@ public class ProtraService {
 
     public List<String> getPage(int nowPage, int itemsCount,String mem_no) {
         List<String> list = new ArrayList<String>();
-        List<ProtraVO> protraList = dao.getPage(nowPage, itemsCount,mem_no);
+        int start=(nowPage-1)*itemsCount+1;
+        List<ProtraVO> protraList = dao.getPage(start, itemsCount,mem_no);
         for (int i = 0; i < protraList.size(); i++) {
             list.add(protraList.get(i).getPro_no());
         }
