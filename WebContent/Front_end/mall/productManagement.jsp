@@ -100,10 +100,17 @@
                                                 </div>
                                             </td>
                                         </c:when>
+                                        <c:when test="${productVO.status=='3'}">
+                                            <td>
+                                                <div id="status${productVO.pro_no}">
+                                                    <p>審核未通過</p>
+                                                </div>
+                                            </td>
+                                        </c:when>
                                         <c:otherwise>
                                             <td>
                                                 <div id="status${productVO.pro_no}">
-                                                    <p>審核未過，3天後刪除資料</p>
+                                                    <p>被檢舉下架</p>
                                                 </div>
                                             </td>
                                         </c:otherwise>
