@@ -114,7 +114,6 @@
 		<filter-name>loginMemComFilter</filter-name>
 		<url-pattern>/src/com/reservation/controller/ReservationServlet</url-pattern>
 		<url-pattern>/Front_end/reservation/searchService.jsp</url-pattern>
-		<url-pattern>/Front_end/reservation/searchService.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
