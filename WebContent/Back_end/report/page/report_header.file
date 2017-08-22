@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/icons.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/bootstrap.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/plugins.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/main.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/custom.css" rel="stylesheet" />
-<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico" type="image/png">
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/icons.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/bootstrap.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/plugins.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/main.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/Back_end/report/assets/css/custom.css" rel="stylesheet" />
+<link rel="icon" href="<%=request.getContextPath()%>/Back_end/report/assets/img/ico/favicon.ico" type="image/png">
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <meta name="msapplication-TileColor" content="#3399cc" />
 </head>
@@ -27,7 +27,7 @@
 		<div class="container-fluid">
 			<div class="navbar">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp"> <span
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/report/homepage.jsp"> <span
 						class="text-logo"> She Said Yes!</span>
 					</a>
 				</div>
@@ -59,7 +59,7 @@
 				<li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>
 				<li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp"><i class="im-question"></i>常見問題管理</a></li>
-				<li><a href="#"><i class="br-warning"></i>檢舉管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/report/Report.jsp"><i class="br-warning"></i>檢舉管理</a></li>
 			</ul>
 		</div>
 	</div>

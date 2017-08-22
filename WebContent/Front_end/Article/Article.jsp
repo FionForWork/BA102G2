@@ -229,25 +229,18 @@
 				</c:otherwise>
 			</c:choose>
 <div align="center">
-<tr >
 
-<% if (rowsPerPage < rowNumber) {%>
-
-	<%	if (pageIndex >= rowsPerPage) {		%>				
-		<td><A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage - 1%>">上一頁
-						</A>&nbsp;</td>
-						<%	}	%>	
-<%	if (pageIndex < pageIndexArray[pageNumber - 1]) {	%>					
-		<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage + 1%>">下一頁
-						</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;</td>			
-						<%}%>
-	<%	}	%>				
-</tr>						
+   
+ <tr>
+    <div align="center">
+    <ul class="pagination">
+    <%for (int i=1; i<=pageNumber; i++){%>
+           <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+        <%}%> 
+  	</ul>
+  	</div>
+ </tr>
+					
 </div>
 						
 							
