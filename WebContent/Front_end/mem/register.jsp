@@ -8,9 +8,6 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <%@ include file="page/register_header.file"%>
-<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-
-	
 <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/mem/css/dcalendar.picker.css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
 <link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
@@ -21,8 +18,6 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
 
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>   </script>
 <title>會員註冊</title>
 		
 <div class="col-xs-12 col-sm-7">
@@ -51,7 +46,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     </div>
 	<div class="form-group">
                     <label for="pwd">確認密碼:</label>
-                    <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="" onkeypress="if (window.event.keyCode==13) return false;">
+                    <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd2" value="" onkeypress="if (window.event.keyCode==13) return false;">
     </div>
 	<div class="form-group">
            <label >姓名:<font color='red'>${errorMsgs.get("name")}</font></label>
@@ -139,8 +134,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		$("#fast").click(function() {
 			$("#name").attr("value",'黃家家');
 			$("#pwd").attr("value",'123123');
+			$("#pwd2").attr("value",'123123');
 			$("#id").attr("value",'lf2lf2111@gmail.com');
-			
 			$("#phone").attr("value",'0922333444');
 			$("#account").attr("value",'822-223121-2124455');
 			$("#email").attr("value",'lf2lf211@hotmail.com');

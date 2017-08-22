@@ -353,7 +353,7 @@ public class ComServlet extends HttpServlet {
 		    // 【取得使用者 帳號(account) 密碼(password)】
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
-			
+			 String comslocation = req.getParameter("comslocation");
 			  // 【檢查該帳號 , 密碼是否有效】
 			 
 
@@ -384,23 +384,31 @@ public class ComServlet extends HttpServlet {
 								 }else if(status.equals("停權")){
 									 res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
 										return;
-								 }else{
+								 }
+						      		
 									 
 									 session.setAttribute("id", id);
 								     session.setAttribute("comVO", comVO);
 								     session.setAttribute("role","com");
 								      try {
 								    	  String comlocation = (String) session.getAttribute("comlocation");
-								          if (comlocation != null) {
+								    	 	      
+								    	  System.out.println("我是過過濾器的~~~~~"+comlocation);
+								          if (comlocation!=null) {
+								        	
 								            session.removeAttribute("comlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 								            res.sendRedirect(comlocation);            
 								            return;
+								          }else if(comslocation!=null){
+								        	  System.out.println("我是沒經過過濾器的"+comslocation);
+								        	 res.sendRedirect(comslocation);            
+									         return;
 								          }
 								      }catch(Exception ignored){}
 								      
 								      res.sendRedirect(req.getContextPath()+"/Front_end/com/listOneCom.jsp");
 								      return;
-								 }
+								 
 						 }
 
 					 }

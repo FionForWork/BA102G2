@@ -7,7 +7,7 @@
 <title>服務資料</title>
 <br><br>
 <div id="content">
-
+<a href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'>返回搜尋</a>
 <table class="table table-striped">
 	<tr>
 		<th>服務編號</th>

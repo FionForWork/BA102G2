@@ -4,7 +4,7 @@
 <%
 Object comVO = session.getAttribute("comVO");     
 %>
-<%@ include file="page/company_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <div class="container">
 	<div class="row">
 	
@@ -30,6 +30,7 @@ Object comVO = session.getAttribute("comVO");
 			h1{font-weight:600;}
 		</style>
 <title>廠商資料</title>
+
 <div class="container" id="big">
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">

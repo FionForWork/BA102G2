@@ -324,7 +324,7 @@ public class MemServlet extends HttpServlet{
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
-			
+			 String memslocation = req.getParameter("comslocation");
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
 			 List<MemVO> list1 = memSvc.loginpwd();
@@ -357,6 +357,10 @@ public class MemServlet extends HttpServlet{
 						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						            res.sendRedirect(memlocation);            
 						            return;
+						          }else if(memslocation != null){
+						        	  System.out.println("我是沒經過過濾器的"+memslocation);
+							        	 res.sendRedirect(memslocation);            
+								         return;
 						          }
 						      }catch(Exception ignored){}
 						      

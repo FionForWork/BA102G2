@@ -19,9 +19,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
 
- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-    </script>
+ 
 
 
 
@@ -56,7 +54,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
     </div>
 	<div class="form-group">
           <label >確認密碼:</label>
-          <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="" onkeypress="if (window.event.keyCode==13) return false;">
+          <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd2" value="" onkeypress="if (window.event.keyCode==13) return false;">
     </div>
 	<div class="form-group">
            <span>廠商名稱:<font color='red'>${errorMsgs.get("name")}</font></span>    
@@ -90,7 +88,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	<div class="form-group">
 		<span>廠商介紹 :<font color='red'>${errorMsgs.get("com_desc")}</font></span><br>
 		
-		<textarea name="com_desc" id="com_desc"  class="form-control" rows=8 onkeypress="if (window.event.keyCode==13) return false;" >好廠商</textarea>
+		<textarea name="com_desc" id="com_desc"  class="form-control" rows=8 onkeypress="if (window.event.keyCode==13) return false;" ></textarea>
 		
 	</div>
 	
@@ -128,10 +126,11 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 		$("#fast").click(function() {
 			$("#name").attr("value",'美美麗麗');
 			$("#pwd").attr("value",'123123');
+			$("#pwd2").attr("value",'123123');
 
 			$("#id").attr("value",'lf2lf2111@gmail.com');
-			$("#com_desc").attr("value",'我們賣最好的東西');
-			
+
+			$("#com_desc").val('我們賣最好的東西');
 			$("#phone").attr("value",'0922333444');
 			$("#account").attr("value",'822-223121-2124455');
 			$("#loc").attr("value",'桃園市中壢區中大路300號');

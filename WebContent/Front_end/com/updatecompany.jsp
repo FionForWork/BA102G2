@@ -6,8 +6,9 @@
 ComVO comVO =(ComVO) request.getAttribute("comVO");
 Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
+
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <title>修改廠商</title>
-<%@ include file="page/company_header.file"%>
 <div class="container">
 	<div class="row">
 	

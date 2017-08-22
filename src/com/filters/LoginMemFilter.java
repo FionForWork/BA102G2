@@ -44,16 +44,16 @@ public class LoginMemFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
-		MemVO memVO = (MemVO)session.getAttribute("memVO");
-	
-		String status=memVO.getStatus();
 
 		if (id == null) {
-			session.setAttribute("location", req.getRequestURI());
+			session.setAttribute("memlocation", req.getRequestURI());
 			res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
 			return;
 		} else {
 			try{
+				MemVO memVO = (MemVO)session.getAttribute("memVO");
+				
+				String status=memVO.getStatus();
 				 memVO =(MemVO)session.getAttribute("memVO");
 				memVO.getMem_no();
 				

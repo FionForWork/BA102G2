@@ -52,15 +52,20 @@ public class LoginMemComFilter implements Filter {
 		
 		
 		if (id == null) {
-			session.setAttribute("location", req.getRequestURI());
+		
 			System.out.println(req.getRequestURI());
 			if(req.getRequestURI().contains("com")){
+	
+				session.setAttribute("comlocation", req.getRequestURI());
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/login2.jsp");
 				return;
 			}else if(req.getRequestURI().contains("mem")){
+				session.setAttribute("memlocation", req.getRequestURI());
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
 				return;
 			}else{
+				session.setAttribute("memlocation", req.getRequestURI());
+				session.setAttribute("comlocation", req.getRequestURI());
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/login3.jsp");
 				return;	
 			}
@@ -70,7 +75,7 @@ public class LoginMemComFilter implements Filter {
 		} else {
 			if(role=="mem"){
 				MemVO memVO = (MemVO)session.getAttribute("memVO");
-				
+				session.setAttribute("memlocation", req.getRequestURI());
 				String status=memVO.getStatus();
 			
 				
@@ -79,6 +84,7 @@ public class LoginMemComFilter implements Filter {
 					return;
 				}
 			}else if(role=="com"){
+				session.setAttribute("comlocation", req.getRequestURI());
 				ComVO comVO = (ComVO)session.getAttribute("comVO");
 				String status=comVO.getStatus();
 				if(status.equals("停權")){
