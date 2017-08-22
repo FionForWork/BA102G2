@@ -13,8 +13,8 @@
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	// 廠商資料
-	String com_no = request.getParameter("com_no");
-	
+	String com_no = request.getParameter("com_no");	
+
 	int dayOfWeek = 0;int week = 1;int flag = 0; int beforeToday = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
@@ -96,6 +96,7 @@
 			<th colspan="7" style="background-color:#FB7291" class="text-center">
 				<form id="changeCalendar" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 					<h3 style="color:white">
+					<input type="hidden" name="com_no" value="<%= com_no %>">
 					<select name="year" onchange="change()"  style="background-color:#FB7291;border:0">
 						<% for(int i = 0; i < 5; i++){ %>
 						<% if(i+2017 == localDate.getYear()){ %>

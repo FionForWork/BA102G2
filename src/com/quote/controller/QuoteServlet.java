@@ -38,6 +38,7 @@ public class QuoteServlet extends HttpServlet {
 		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
 		
+//		報價
 		if(action.equals("quote")){
 			
 			HttpSession session = req.getSession();
@@ -54,14 +55,19 @@ public class QuoteServlet extends HttpServlet {
 			}
 			
 			if(!errorMsgs.isEmpty()){
-				String url = "/Front_end/RFQ/listAllRFQ.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/Front_end/RFQ/listAllRFQ.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				res.getWriter().print("金額請填入數字");
 				return;
 			}
 			
 			String rfqdetail_no = req.getParameter("rfqdetail_no");
 			String content = req.getParameter("content");
+			if(content.trim().length() == 0){
+				res.getWriter().print("請問您的報價加上備註!");
+				return;
+			}
 			content = content.replace("\n","<br>");
 			
 			Timestamp t = new Timestamp(System.currentTimeMillis());
@@ -69,9 +75,9 @@ public class QuoteServlet extends HttpServlet {
 			QuoteService quoteService = new QuoteService();
 			quoteService.addQuote(comVO.getCom_no(), rfqdetail_no, price, content, t);
 			
-			String url = "/Front_end/RFQ/listAllRFQ.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+//			String url = "/Front_end/RFQ/listAllRFQ.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
 		}
 		
 //		查看報價
@@ -138,6 +144,7 @@ public class QuoteServlet extends HttpServlet {
 				
 		}
 		
+		// 修改報價
 		if(action.equals("updateQuote")){
 			String quo_no = req.getParameter("quo_no");
 			
@@ -149,21 +156,22 @@ public class QuoteServlet extends HttpServlet {
 				price = new Integer(req.getParameter("price").trim());
 			} catch (NumberFormatException e) {
 				price = 0;
-				errorMsgs.add("修改金額請填入數字.");
+				errorMsgs.add("修改金額請填入數字");
 			}
 			
 			if(!errorMsgs.isEmpty()){
-				RequestDispatcher failureView = req.getRequestDispatcher(req.getParameter("requestURL"));
-				failureView.forward(req, res);
-				return;
+				res.getWriter().print("修改金額請填入數字");
+//				RequestDispatcher failureView = req.getRequestDispatcher(req.getParameter("requestURL"));
+//				failureView.forward(req, res);
+//				return;
 			}
 			
 			QuoteService quoteService = new QuoteService();
 			quoteService.updateQuote(quo_no, price, new Timestamp(System.currentTimeMillis()) );
 			
-			String url = "/Front_end/quote/listMyQuote.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+//			String url = "/Front_end/quote/listMyQuote.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
 		}
 		
 		

@@ -128,7 +128,7 @@ public class ReservationServlet extends HttpServlet {
 			reservationService.addReservation(memVO.getMem_no(), servVO.getCom_no(), new Timestamp(System.currentTimeMillis())
 					, Timestamp.valueOf(serv_date+" 00:00:00"), serv_no, servVO.getStype_no(), servVO.getPrice(), "0",calendarVO);
 			
-			req.setAttribute("toLocation", requestURI);
+			req.setAttribute("toLocation", requestURI+"?com_no="+servVO.getCom_no());
 			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/reservation/checkRes.jsp");
 			successView.forward(req, res);
 //			res.sendRedirect(requestURI);
@@ -169,6 +169,7 @@ public class ReservationServlet extends HttpServlet {
 		}
 		
 		if(action.equals("changeCalendar")){
+			
 			int month = Integer.valueOf(req.getParameter("month"));
 			int year = Integer.valueOf(req.getParameter("year"));
 			LocalDate localDate = LocalDate.of(year, month, 1);

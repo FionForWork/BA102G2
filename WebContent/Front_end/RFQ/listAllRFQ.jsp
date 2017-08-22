@@ -97,7 +97,7 @@
 							-${rfqDetailVO.location}找${servTypeService.getOne(rfqDetailVO.stype_no).name}服務</h3>
 							${rfqDetailVO.content}<br><br>
 							${memService.getOneMem(rfqVO.mem_no).name}於${df.format(rfqVO.rfq_date)}詢價<br><br>
-							${sortingHat.getQuoteNum(quoteService.getAllQuote(rfqDetailVO.rfqdetail_no).size())}
+							<p id="${rfqDetailVO.rfqdetail_no}">${sortingHat.getQuoteNum(quoteService.getAllQuote(rfqDetailVO.rfqdetail_no).size())}</p>
 							<hr>
 						</div>
 						<div class="col-md-2">
@@ -110,7 +110,7 @@
 							<input type="submit" class="btn btn-block btn-default" value="查看內容">
 							</form>
 <!-- 廠商資料寫死 會員無法報價 -->
-							<c:if test="${rfqDetailVO.status.equals('1')}">
+							<c:if test="${rfqDetailVO.status.equals('1') && comVO != null}">
 							<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal${rfqDetailVO.rfqdetail_no}">我要報價</button>
 						<!-- Quote -->
 							<div class="modal fade" id="myModal${rfqDetailVO.rfqdetail_no}" role="dialog">
@@ -121,7 +121,7 @@
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 											<h4 class="modal-title">我有檔期，提交報價!</h4>
 										</div>
-										<form method="post" action="<%= request.getContextPath() %>/quote/quote.do">
+										<form class="test">
 										<div class="modal-body form-group">
 											<label>服務說明</label>
 											<textarea rows="8" class="form-control" name="content">
@@ -130,11 +130,12 @@
 3.備註:
 											</textarea>
 											<br>
-											<label>服務金額</label>
+											<label >服務金額</label>
 											<input type="text" class="form-control" name="price"  placeholder="請輸入報價金額">
 										</div>
 										<div class="modal-footer">
-											<input type="submit" class="btn btn-danger" value="提交報價">
+<!-- 											<input type="submit" class="btn btn-danger" value="提交報價"> -->
+											<input type="button" class="btn btn-danger" value="提交報價" onclick="quote(this)">
 											<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 											<input type="hidden" name="action" value="quote">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -144,7 +145,7 @@
 								</div>
 							</div>
 							</c:if>
-							<c:if test="${rfqDetailVO.status.equals('0')}">
+							<c:if test="${rfqDetailVO.status.equals('0') && comVO != null}">
 								<button type="button" class="btn btn-danger btn-block" disabled>已關閉</button>
 							</c:if>
 						</div>
@@ -164,7 +165,31 @@
 		<% } %>
 	</ul>
 </div> 
-
 <%@ include file="page/footer.file" %>
 </body>
+<script type="text/javascript">
+	function quote(btn){
+		var form = $(btn).parent().parent("form");
+		var showResult = $("#"+$(btn).siblings("input[name='rfqdetail_no']").val());
+		$.ajax({
+			url : "<%= request.getContextPath() %>/quote/quote.do",
+			data : $(form).serialize(),
+			type : 'POST',
+			error : function() {
+				alert('Ajax request 發生錯誤');
+			},
+			success : function(result) {
+				
+				if(result == "金額請填入數字"){
+					$(btn).parent().prev().children("label:last").html("服務"+result).css("color","red");
+				}else if(result == "請問您的報價加上備註!"){
+					$(btn).parent().prev().children("label:first").html(result).css("color","red");
+				}else{
+					$(showResult).html("您為這筆詢價新增了報價!").css("color","#f14195");
+					$(btn).siblings("button").click();
+				}
+			}
+		});
+	}
+</script>
 </html>
