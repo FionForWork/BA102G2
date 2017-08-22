@@ -11,9 +11,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
-	ComService comSvc = new ComService();
-	List<ComVO> comList = comSvc.getAll();
-	pageContext.setAttribute("comList", comList);
+
+	if(request.getAttribute("listCom_ByCompositeQuery")==null) {
+		ComService comSvc = new ComService();
+		List<ComVO> listCom_ByCompositeQuery = comSvc.getAll();
+		pageContext.setAttribute("listCom_ByCompositeQuery", listCom_ByCompositeQuery);		
+	}
 
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();
@@ -31,7 +34,6 @@
 
 <!--複合查詢-->	
 	<div class="container text-center">
-<form method="post">
 <div class="form-group row">
 	<div class="col-md-3"></div>
 	<div class="col-md-2">
@@ -40,11 +42,15 @@
 			<a class="btn btn-black btn-xs round" style="margin-bottom:5px;"></i>人氣排序</a>
 		</div>
 	</div>
+	
+	
+
+<form method="post" action="<%=request.getContextPath()%>/CompanyCompositeQuery.do">
 	<div class="col-md-3">
 		<div class="input-group">
 			<span class="input-group-addon">服務類型</span>
-			<select class="form-control" id="sel1">
-				<option value="0000">所有類型</option>
+			<select class="form-control" name="stype_no">
+				<option  value="">所有類型</option>
 				<option value="0001">拍婚紗</option>
 				<option value="0002">婚攝/婚錄</option>
 				<option value="0003">新娘秘書</option>
@@ -54,25 +60,27 @@
 	<div class="col-md-2">
 		<div class="input-group">
 			<span class="input-group-addon">廠商名稱</span>
-			<input id="msg" type="text" class="form-control" name="msg" placeholder="請輸入關鍵字">
+			<input type="text" class="form-control" name="name" placeholder="請輸入關鍵字" value="">
 		</div>
 	</div>
 	<div class="col-md-2">
 		<div class="input-group">
+		<input type="hidden" class="form-control" name="action" value="listEmps_ByCompositeQuery">
 		<button class="btn btn-block btn-danger">送出查詢</button>
 		</div>
 	</div>
-</div>
 </form>
 </div>
-<!--複合查詢-->	
+</div>
+<!--複合查詢-->
+	
 
 	<div class="container">
 		<div class="row">
-			<!--圖===========================================================================-->
+			<!--圖=========================================================================== -->
 			<div class="col-xs-12 col-md-12">
 
-				<c:forEach var="comVO" items="${comList}">
+				<c:forEach var="comVO" items="${listCom_ByCompositeQuery}">
 
 					<div class="col-xs-12 col-sm-3">
 						<ul class="com_box">
@@ -91,13 +99,11 @@
 				</c:forEach>
 
 			</div>
-			<!--圖===========================================================================-->
+			<!--圖=========================================================================== -->
 		</div>
 	</div>
 	<br>
 	<br>
-
-
 
 	<%@ include file="page/footer.file"%>
 </body>

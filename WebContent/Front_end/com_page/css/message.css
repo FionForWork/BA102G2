@@ -10,9 +10,20 @@
 	z-index: 10;
 	background-color:white;
 }
+
+a#close_chat {
+	color: black;
+	padding: 0px;
+	text-decoration: none;
+	text-align:center;
+	cursor: pointer;
+	width:29px;
+	height:29px;	
+}
+
 .panel-footer {
 	background:#ffffff;
-	height: 70px;
+	height: 60px;
 	width: 100%;
 	position:absolute;
 	bottom: 0;
@@ -25,9 +36,7 @@
 	 margin-top:5px;
 }
 
-.chat-header-name {
-	 font-size: 16px;
-	 width:150px;
+#chat-header-name {
 	 text-align:center;
 	 margin-top:20px;
 }
@@ -72,12 +81,12 @@
     bottom:32px;
     display:flex;
     flex-direction: column;
+
 }
 
 .msg-l {
 	float:left;
 	background: #c0c0c0;
-	margin-top: 10px;
     width: auto;
     border-radius: 5px;
     padding: 5px;
@@ -97,7 +106,6 @@
 .msg-r {
 	float:right;
 	background: #c0c0c0;
-	margin-top: 10px;
     width: auto;
     border-radius: 5px;
     padding: 5px;
@@ -126,17 +134,17 @@
 /*     border-color: transparent #c0c0c0 transparent transparent;             */
 /* } */
 
-/* .msg-r:after{ */
-/*     width: 0; */
-/*     height: 0; */
-/*     content: ""; */
-/*     top: -5px; */
-/*     left: 35px; */
-/*     position: relative; */
-/*     border-style: solid; */
-/*     border-width: 13px 13px 0 0; */
-/*     border-color: #c0c0c0 transparent transparent transparent;      */
-/* } */
+.msg-r:after{
+    width: 0;
+    height: 0;
+    content: "";
+    top: -5px;
+    left: 14px;
+    position: relative;
+    border-style: solid;
+    border-width: 13px 13px 0 0;
+    border-color: #c0c0c0 transparent transparent transparent;     
+}
 
 
 .text-field {
@@ -145,20 +153,35 @@
 	left:5px;
 	bottom: 10px;
 	padding: 0px;
+	border:0px;
 }
-.sendMessage_btn {
+input::placeholder {
+  color: #C9C9C9;
+}
+input:focus {
+    outline:none;
+}
+a.sendMessage_btn {
+	text-decoration: none;
+	border-radius: 4px;
 	background-color: #fd77a3;
-	padding: 0px;
+	color: white;
+	padding: 5px;
 	width: 60px;
+	height: 30px;
 	position:absolute;
-	bottom: 10px;
+	bottom: 5px;
 	right: 5px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 14px;
+	margin: 7px 0px;
 }
 
 .msg_text{
 	height: 0px;
 	padding:0px;
-    width:75%;
+    width:100%;
     flex-direction:column;
 }
 
@@ -173,8 +196,7 @@
 .msg_text > p:last-of-type{
     width:100%;
     color:black;
-    margin-bottom:-7px;
-    margin-top:auto;
+    margin:5px 7px -7px 7px ;
     border:1px;
 }
 .text-r > p {
@@ -184,6 +206,9 @@
 }
 .text-r {
 	float: right;
+}
+.text-l {
+	float: left;
 }
 .text-l > p {
 	float: left;

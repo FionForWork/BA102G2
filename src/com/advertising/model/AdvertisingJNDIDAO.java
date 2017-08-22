@@ -356,5 +356,17 @@ public class AdvertisingJNDIDAO implements AdvertisingDAO_Interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<AdvertisingVO> getAllByStatus(String status_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AdvertisingVO> getAllByStatus(String status1, String status2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

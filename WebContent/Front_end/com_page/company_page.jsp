@@ -28,8 +28,6 @@
 <body>
 
 	<%@ include file="page/header.file"%>
-	<%@ include file="message.jsp"%>
-	<%@ include file="contact_us.jsp"%>
 
 
 	<!--banner -->
@@ -54,6 +52,8 @@
 			alt="She Said Yes">
 	</div>
 	<!--廠商大頭照-->
+	<%@ include file="message.jsp"%>
+	<%@ include file="contact_us.jsp"%>
 
 	<!--廠商名稱-->
 	<div class="text-center">
@@ -62,12 +62,14 @@
 			<c:choose>
 			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
 			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
-		
+			<a href="#" onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>加入收藏</a>
 			</c:when>
 			<c:otherwise>
 				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+				<a href="#" onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>取消收藏</a>
 			</c:otherwise>
 			</c:choose>
+			<a href="#" class="btn btn-xs btn-warning"><i class="fa fa-exclamation-circle"></i>檢舉</a>
 		</div>
 		
 		<input type='hidden' name='com_no' value='${comVO.com_no}'> 

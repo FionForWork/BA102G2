@@ -284,7 +284,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CompanyCompositeQuery</servlet-name>
-    <url-pattern>/CompanyCompositeQuery</url-pattern>
+    <url-pattern>/CompanyCompositeQuery.do</url-pattern>
   </servlet-mapping>
   
     <servlet>

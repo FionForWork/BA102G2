@@ -6,10 +6,11 @@ public class jdbcUtil_CompositeQuery_Com {
 
 		String aCondition = null;
 
-		if ("logo".equals(columnName))
-			aCondition = columnName + "=" + value;
-		else if ("com_no".equals(columnName) || "name".equals(columnName) || "loc".equals(columnName))
+		if ("com_no".equals(columnName) || "name".equals(columnName) || "loc".equals(columnName)) {
 			aCondition = columnName + " like '%" + value + "%'";
+		} else if ("stype_no".equals(columnName)) {
+			aCondition = " com_no in (select com_no from service where stype_no = '"+ value +"')";
+		}
 		return aCondition + " ";
 	}
 
@@ -39,8 +40,9 @@ public class jdbcUtil_CompositeQuery_Com {
 
 		Map<String, String[]> map = new TreeMap<String, String[]>();
 //		map.put("com_no", new String[] { "2001" });
-		map.put("loc", new String[] { "桃園" });
-		map.put("name", new String[] { "好" });
+//		map.put("loc", new String[] { "桃園" });
+//		map.put("name", new String[] { "v" });
+		map.put("stype_no", new String[] { "0001" });
 
 		String finalSQL = "select * from company "
 				          + jdbcUtil_CompositeQuery_Com.get_WhereCondition(map)

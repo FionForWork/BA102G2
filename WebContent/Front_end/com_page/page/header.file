@@ -30,6 +30,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/message.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/com_page/js/comtra.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/advertising.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/contact_us.js" type="text/javascript"></script>
 </head>
 
 
