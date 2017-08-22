@@ -46,6 +46,7 @@ public class RFQServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		MemVO memVO = (MemVO)session.getAttribute("memVO");
 		
+//	新人詢價
 		if(action.equals("add")){
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -54,16 +55,14 @@ public class RFQServlet extends HttpServlet {
 			String[] type = req.getParameterValues("type");
 			String[] stype_no = req.getParameterValues("stype_no");
 			String[] ser_date = req.getParameterValues("ser_date");
-			String[] time = req.getParameterValues("time");
 			String[] location = req.getParameterValues("location");
 			String[] content = req.getParameterValues("content");
 			
 			List<RFQ_DetailVO> list = new ArrayList<RFQ_DetailVO>();
 			
-			RFQ_DetailService rfqDetailService = new RFQ_DetailService();
 			for(int i = 0; i < type.length ; i++){
 				int formNum = Integer.valueOf(type[i]);
-				Timestamp t = Timestamp.valueOf(ser_date[formNum]+" "+time[formNum]);
+				Timestamp t = Timestamp.valueOf(ser_date[formNum]+" 00:00:00");
 				RFQ_DetailVO rfq_DetailVO = new RFQ_DetailVO();
 				rfq_DetailVO.setStype_no(stype_no[formNum]);
 				rfq_DetailVO.setLocation(location[formNum]);
@@ -71,7 +70,6 @@ public class RFQServlet extends HttpServlet {
 				rfq_DetailVO.setContent(content[formNum].trim().replace("\n", "<br>"));
 				rfq_DetailVO.setStatus("1");
 				list.add(rfq_DetailVO);
-//				rfqDetailService.addRFQDetail( stype_no[formNum], location[formNum], t, content[formNum].trim().replace("\n", "<br>"), "1");
 			}
 			
 			RFQService rfqService = new RFQService();

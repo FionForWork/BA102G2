@@ -20,13 +20,13 @@ public class UpdateAdsIMG {
 			con = DriverManager.getConnection(url, userid, passwd);
 			for (int i = 1; i < 21; i++) {
 				pstmt = con.prepareStatement(UPDATE);
-				InputStream in = new FileInputStream(new File("C:\\Users\\WANG\\Desktop\\拍婚紗工作和服務\\2000-" + (i-1) + ".jpg"));
+				InputStream in = new FileInputStream(new File("C:\\Users\\cuser\\Desktop\\works_picture\\2002-" + (i+1) + ".jpg"));
 				byte[] pic = new byte[in.available()];
 				in.read(pic);
 				in.close();
 				pstmt.setBytes(1, pic);
-				pstmt.setString(2, String.valueOf(2000 + i));
-				System.out.println(String.valueOf(2000 + i));
+				pstmt.setString(2, String.valueOf(2013 + i));
+				System.out.println(String.valueOf(2014 + i));
 				pstmt.executeUpdate();
 			}
 			System.out.println("done");
@@ -56,3 +56,4 @@ public class UpdateAdsIMG {
 
 	}
 }
+

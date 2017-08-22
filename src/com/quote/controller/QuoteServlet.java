@@ -72,14 +72,22 @@ public class QuoteServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
+//		查看報價
 		if(action.equals("listQuote")){
 			// session效率問題
 			String rfqMem_no = req.getParameter("rfqMem_no");
 			String sort = req.getParameter("sort");
+			
+			String rfqdetail_no = req.getParameter("rfqdetail_no");
+			
+			RFQ_DetailService rfqDetailService = new RFQ_DetailService();
+			RFQ_DetailVO rfqDetailVO = rfqDetailService.getOneRFQDetail(rfqdetail_no);
+			
+			QuoteService quoteService = new QuoteService();
+			List<QuoteVO> list = quoteService.getAllQuote(rfqdetail_no);
+			
 			// 日期、金額排序
 			if(sort != null){
-				RFQ_DetailVO rfqDetailVO = (RFQ_DetailVO)session.getAttribute("rfqDetailVO");
-				List<QuoteVO> list =  (List<QuoteVO>)session.getAttribute("list");
 				
 				if(sort.startsWith("date")){
 					Collections.sort(list, new Comparator<QuoteVO>(){
@@ -116,21 +124,11 @@ public class QuoteServlet extends HttpServlet {
 			}
 			
 			//第一次進來
-			String rfqdetail_no = req.getParameter("rfqdetail_no");
-			
-			RFQ_DetailService rfqDetailService = new RFQ_DetailService();
-			RFQ_DetailVO rfqDetailVO = rfqDetailService.getOneRFQDetail(rfqdetail_no);
-			
-			QuoteService quoteService = new QuoteService();
-			List<QuoteVO> list = quoteService.getAllQuote(rfqdetail_no);
 			
 			req.setAttribute("rfqMem_no", rfqMem_no);
 			req.setAttribute("rfqDetailVO", rfqDetailVO);
+			req.setAttribute("rfqdetail_no", rfqdetail_no);
 			req.setAttribute("list", list);
-			
-			// 把詢價資訊及報價List存到session中，以供後續排序
-			session.setAttribute("rfqDetailVO", rfqDetailVO);
-			session.setAttribute("list", list);
 			
 			String url = "/Front_end/quote/ListQuote.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

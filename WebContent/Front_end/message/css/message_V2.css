@@ -1,0 +1,135 @@
+.msg_box_wrap {
+    position: fixed;
+    bottom: 0;
+    right: 80px;
+    z-index: 998;
+    display: flex;
+    align-items: flex-end;
+}
+
+.add_ask_view {
+	background-color:pink;
+    bottom: 0;
+    z-index: 998;
+    float: right;
+    display: table-cell;
+    vertical-align: bottom;
+    margin-right: 12px;
+}
+
+.chats_wrap {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 999;
+    height: 100%;
+    top: 0;
+}
+
+.chats_wrap table {
+    box-shadow: 2px 6px 6px 1px rgba(111, 111, 111, 0.5);
+    border: 5px solid #e2e2e2;
+    border-collapse: inherit;
+    border-radius: 8px 8px 0 0;
+    border-spacing: 0;
+}
+
+.chat_title {
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    color: #4b4b4b;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    width: 100%;
+    padding: 10px 0px;
+    top: 0;
+    text-align: center;
+    z-index: 999;
+}
+
+.v_chat_room {
+    background: #fff;
+    border-top: 1px solid #e2e2e2;
+    overflow: hidden;
+    overflow-y: auto;
+    text-align: left;
+    padding: 15px 15px 0;
+    z-index: 999;
+    height: 240px;
+    max-height: 300px;
+}
+
+.chat_time {
+    color: #333;
+    clear: both;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.7px;
+    margin: 0 0 15px;
+    font-family: Arial;
+    text-align: center;
+}
+
+.business_chat {
+    display: block;
+    float: left;
+    margin-bottom: 20px;
+    position: relative;
+    width: 90%;
+    z-index: 999;
+}
+
+.business_chat p {
+    background: #e9e9e9;
+    max-width: calc(80% - 40px);
+    float: left;
+    margin-left: 10px;
+}
+
+.box_chat {
+    background: #fff;
+    border-top: solid 1px #dedede;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    padding: 0 10px;
+    max-height: 100px;
+    position: relative;
+}
+
+.box_chat div.send_btn, .box_chat textarea.send_btn {
+    border-style: none;
+    color: #404040;
+    font-size: 14px;
+    float: left;
+    letter-spacing: 0.7px;
+    width: calc(100% - 70px);
+    word-wrap: break-word;
+    word-break: break-all;
+    z-index: 999;
+    text-align: left;
+}
+
+.box_chat a.btn_send {
+    border-radius: 4px;
+    background-color: #fd77a3;
+    color: #fff;
+    float: right;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    width: 60px;
+    margin: 7px 0px;
+    padding: 6px 0px;
+    text-decoration: none;
+    text-align:center;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

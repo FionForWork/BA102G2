@@ -15,9 +15,9 @@
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-	//MemVO memVO=(MemVO)session.getAttribute("memVO");
+	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	session.setAttribute("memVO", memVO);
 	String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
 	String status = (request.getParameter("status") == null) ? "0" : request.getParameter("status");

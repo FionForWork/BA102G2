@@ -8,6 +8,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	ReservationService resService = new ReservationService();
 	String status = request.getParameter("status");
@@ -36,15 +37,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>Insert title here</title>
 </head>
 <body>
 <%@ include file="page/comHeader.file" %>
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a id="0" class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
-	<li class="pointer"><a id="1" class="menua" onclick="showRes(this,1)">訂單確認</a></li>
-	<li class="pointer"><a id="2" class="menua" onclick="showRes(this,2)">尚未評價</a></li>
-	<li class="pointer"><a id="3" class="menua" onclick="showRes(this,3)">服務完成</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,2)">尚未評價</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,3)">服務完成</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,5)">訂單取消</a></li>
 <br>
 </ul>
 <div id="allRes">

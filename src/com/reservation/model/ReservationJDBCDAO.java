@@ -36,7 +36,9 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 	private static final String GET_COM_STMT = 
 			"SELECT * FROM RESERVATION WHERE COM_NO = ?";
 	private static final String GET_COM_DISTINCT_MEM_NO_STMT = "SELECT DISTINCT MEM_NO FROM RESERVATION WHERE COM_NO = ?";
-
+	private static final String GETDELETERES =
+			"select res_no from reservation where sysdate-res_date > 3 and status = '0'";
+	
 	@Override
 	public void insert(ReservationVO reservationVO,CalendarVO calendarVO) {
 		Connection con = null;
@@ -443,19 +445,10 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 //		System.out.println(reservationVO.getStatus());
 //		System.out.println(reservationVO.getScore());
 		
-//		List<ReservationVO> list = dao.getComRes("2001");
-//		for(ReservationVO reservationVO : list){
-//			System.out.println(reservationVO.getRes_no());
-//			System.out.println(reservationVO.getMem_no());
-//			System.out.println(reservationVO.getCom_no());
-//			System.out.println(reservationVO.getRes_date());
-//			System.out.println(reservationVO.getServ_date());
-//			System.out.println(reservationVO.getServ_no());
-//			System.out.println(reservationVO.getStype_no());
-//			System.out.println(reservationVO.getPrice());
-//			System.out.println(reservationVO.getStatus());
-//			System.out.println(reservationVO.getScore());
-//		}
+		List<String> list = dao.getDeleteRes();
+		for(String res_no : list){
+			System.out.println(res_no);
+		}
 
 		
 	}
@@ -513,6 +506,58 @@ public class ReservationJDBCDAO implements ReservationDAO_Interface {
 			while (rs.next()) {
 				
 				list.add(rs.getString(1));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<String> getDeleteRes() {
+		List<String> list = new ArrayList<String>();
+		ReservationVO reservationVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GETDELETERES);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				list.add(rs.getString("res_no"));
 			}
 			
 		} catch (ClassNotFoundException e) {

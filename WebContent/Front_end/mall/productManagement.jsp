@@ -12,9 +12,9 @@
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-	//  MemVO memVO=(MemVO)session.getAttribute("memVO");
+	 MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	ProductService productService = new ProductService();
 	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
 	int itemsCount = 8;

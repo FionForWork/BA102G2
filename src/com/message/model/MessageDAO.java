@@ -22,7 +22,7 @@ public class MessageDAO implements MessageDAO_Interface {
 	private static final String GET_ONE_STMT = "select msg_no, mem_no, com_no, content from message where msg_no = ?";
 	private static final String DELETE = "delete from message where msg_no = ?";
 	private static final String UPDATE = "update message set mem_no=?, com_no=?, content=? where msg_no = ?";
-	private static final String GET_MSG_BY_MEMNO_STMT = "select content from message where mem_no=?";
+	private static final String GET_MSG_BY_MEMNO_STMT = "select * from message where mem_no=?";
 
 	@Override
 	public void insert(MessageVO messageVO) {

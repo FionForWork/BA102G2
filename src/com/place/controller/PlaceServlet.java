@@ -44,6 +44,7 @@ import com.placeview.model.PlaceViewVO;
 import com.sun.javafx.collections.MappingChange.Map;
 import com.sun.javafx.geom.PickRay;
 
+import oracle.net.aso.i;
 import sun.nio.cs.ext.MacArabic;
 import sun.tools.jar.resources.jar;
 
@@ -59,49 +60,44 @@ public class PlaceServlet extends HttpServlet {
             String west = request.getParameter("west");
             String north = request.getParameter("north");
             String east = request.getParameter("east");
-
-            PlaceService placeService = new PlaceService();
-            List<PlaceVO> placeList = placeService.getRange(south, west, north, east);
-            JSONArray placeArray=new JSONArray();
-            for (PlaceVO placeVO : placeList) {
-                Set<PlaceViewVO> placeViewSet = placeVO.getPlaceViewSet();
-                if(placeViewSet.size()!=0){
-                    Iterator<PlaceViewVO> iterator = placeViewSet.iterator();
-                    PlaceViewVO placeViewVO = (PlaceViewVO) iterator.next();
-                    HashMap<String, String> map=new HashMap<String, String>();
-                    map.put("pla_no", placeVO.getPla_no());
-                    map.put("name", placeVO.getName());
-                    map.put("lat", placeVO.getLat());
-                    map.put("lng", placeVO.getLng());
-                    map.put("view_no", placeViewVO.getView_no());
-                    placeArray.put(map);
+            JSONArray resultArray=new JSONArray();
+            if("place".equals(request.getParameter("type"))){
+                PlaceService placeService = new PlaceService();
+                List<PlaceVO> placeList = placeService.getRange(south, west, north, east);
+                for (PlaceVO placeVO : placeList) {
+                    Set<PlaceViewVO> placeViewSet = placeVO.getPlaceViewSet();
+                    if(placeViewSet.size()!=0){
+                        Iterator<PlaceViewVO> iterator = placeViewSet.iterator();
+                        PlaceViewVO placeViewVO = (PlaceViewVO) iterator.next();
+                        HashMap<String, String> map=new HashMap<String, String>();
+                        map.put("pla_no", placeVO.getPla_no());
+                        map.put("name", placeVO.getName());
+                        map.put("lat", placeVO.getLat());
+                        map.put("lng", placeVO.getLng());
+                        map.put("view_no", placeViewVO.getView_no());
+                        resultArray.put(map);
+                    }
                 }
             }
-            ComService comService=new ComService();
-            List<ComVO> comList=comService.getLocation(west, east, south, north);
-            JSONArray comArray=new JSONArray();
-            for (ComVO comVO : comList) {
-                HashMap<String, String> map=new HashMap<String, String>();
-                map.put("com_no", comVO.getCom_no());
-                map.put("name", comVO.getName());
-                map.put("lat", comVO.getLat());
-                map.put("lng", comVO.getLon());
-                map.put("desc", comVO.getCom_desc());
-                map.put("phone", comVO.getPhone());
-                map.put("loc", comVO.getLoc());
-                comArray.put(map);
+            else if("com".equals(request.getParameter("type"))){
+                ComService comService=new ComService();
+                List<ComVO> comList=comService.getLocation(west, east, south, north);
+                for (ComVO comVO : comList) {
+                    HashMap<String, String> map=new HashMap<String, String>();
+                    map.put("com_no", comVO.getCom_no());
+                    map.put("name", comVO.getName());
+                    map.put("lat", comVO.getLat());
+                    map.put("lng", comVO.getLon());
+                    map.put("desc", comVO.getCom_desc());
+                    map.put("phone", comVO.getPhone());
+                    map.put("loc", comVO.getLoc());
+                    resultArray.put(map);
+                }
             }
+            
             response.setContentType("text/html;charset=utf-8");
-            JSONObject jsonObject=new JSONObject();
-            try {
-                jsonObject.put("placeArray", placeArray);
-                jsonObject.put("comArray", comArray);
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
             PrintWriter printWriter = response.getWriter();
-            printWriter.print(jsonObject);
+            printWriter.print(resultArray.toString());
             printWriter.close();
         }
         else if ("MANAGEMENT_CHANGE".equals(action)) {
@@ -179,7 +175,6 @@ public class PlaceServlet extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             String pla_no = request.getParameter("pla_no");
             PlaceService placeService = new PlaceService();
-            System.out.println(pla_no);
             placeService.deletePlace(pla_no);
             PrintWriter printWriter=response.getWriter();
             printWriter.print("ok");
@@ -214,7 +209,6 @@ public class PlaceServlet extends HttpServlet {
             }
             if (!request.getParameter("updateAddr").equals("")) {
                 String addr = new String(request.getParameter("updateAddr").getBytes("ISO-8859-1"), "utf-8");
-                System.out.println(addr);
                 String preUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=";
                 String endUrl = "&sensor=false&language=zh-TW&key=AIzaSyBzbntmAuGW16US8FK_QIoDNXOPlspRjNw";
                 URL url = null;

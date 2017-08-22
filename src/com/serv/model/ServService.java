@@ -41,6 +41,16 @@ public class ServService {
 		return servVO;
 	}
 	
+	public ServVO updateScore(int times, double score, String serv_no){
+		ServVO servVO=new ServVO();
+		
+		servVO.setServ_no(serv_no);
+		servVO.setTimes(times);;
+		servVO.setServ_no(serv_no);;
+		dao.updateScore(servVO);
+		return servVO;
+	}
+	
 	public void deleteServ(String serv_no){
 		dao.delete(serv_no);
 		

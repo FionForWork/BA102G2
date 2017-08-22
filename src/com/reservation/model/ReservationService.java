@@ -56,11 +56,12 @@ public class ReservationService {
 		dao.update(reservationVO);
 	}
 	
-	public void updateScore(String status,Integer score,String res_no){
+	public void updateScore(String status,Integer score,String res_no,String serv_no){
 		ReservationVO reservationVO = new ReservationVO();
 		reservationVO.setRes_no(res_no);
 		reservationVO.setScore(score);
 		reservationVO.setStatus(status);
+		reservationVO.setServ_no(serv_no);
 		
 		dao.updateScore(reservationVO);
 	}
@@ -100,9 +101,12 @@ public class ReservationService {
 		return dao.getMemRes(mem_no, status,status2);
 	}
 	public List<ReservationVO> getComRes(String mem_no, String status, String status2){
-		return dao.getMemRes(mem_no, status,status2);
+		return dao.getComRes(mem_no, status,status2);
 	}
 	public List<String> getComResDistinctMemNO(String com_no){
 		return dao.getComResDistinctMemNO(com_no);
+	}
+	public List<String> getDeleteRes(){
+		return dao.getDeleteRes();
 	}
 }

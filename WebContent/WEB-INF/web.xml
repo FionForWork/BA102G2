@@ -218,84 +218,98 @@
     <servlet-name>AdvertisingServlet</servlet-name>
     <url-pattern>/advertising/advertising.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<display-name>RFQServlet</display-name>
-  	<servlet-name>RFQServlet</servlet-name>
-  	<servlet-class>com.rfq.controller.RFQServlet</servlet-class>
+    <display-name>RFQServlet</display-name>
+    <servlet-name>RFQServlet</servlet-name>
+    <servlet-class>com.rfq.controller.RFQServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>RFQServlet</servlet-name>
-  	<url-pattern>/rfq/rfq.do</url-pattern>
+    <servlet-name>RFQServlet</servlet-name>
+    <url-pattern>/rfq/rfq.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<display-name>QuoteServlet</display-name>
-  	<servlet-name>QuoteServlet</servlet-name>
-  	<servlet-class>com.quote.controller.QuoteServlet</servlet-class>
+    <display-name>QuoteServlet</display-name>
+    <servlet-name>QuoteServlet</servlet-name>
+    <servlet-class>com.quote.controller.QuoteServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>QuoteServlet</servlet-name>
-  	<url-pattern>/quote/quote.do</url-pattern>
+    <servlet-name>QuoteServlet</servlet-name>
+    <url-pattern>/quote/quote.do</url-pattern>
   </servlet-mapping>
-  
-	<servlet>
-		<display-name>ReservationServlet</display-name>
-		<servlet-name>ReservationServlet</servlet-name>
-		<servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReservationServlet</servlet-name>
-		<url-pattern>/reservation/reservation.do</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<description>
+  <servlet>
+    <display-name>ReservationServlet</display-name>
+    <servlet-name>ReservationServlet</servlet-name>
+    <servlet-class>com.reservation.controller.ReservationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationServlet</servlet-name>
+    <url-pattern>/reservation/reservation.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>
 		</description>
-		<display-name>CalendarServlet</display-name>
-		<servlet-name>CalendarServlet</servlet-name>
-		<servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CalendarServlet</servlet-name>
-		<url-pattern>/calendar/calendar.do</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Forum_commentServlet</servlet-name>
-		<servlet-class>com.forum_comment.controller.Forum_commentServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Forum_commentServlet</servlet-name>
-		<url-pattern>/Forum_comment/Forum_commentServlet.do</url-pattern>
-	</servlet-mapping>
+    <display-name>CalendarServlet</display-name>
+    <servlet-name>CalendarServlet</servlet-name>
+    <servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CalendarServlet</servlet-name>
+    <url-pattern>/calendar/calendar.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Forum_commentServlet</servlet-name>
+    <servlet-class>com.forum_comment.controller.Forum_commentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Forum_commentServlet</servlet-name>
+    <url-pattern>/Forum_comment/Forum_commentServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UploadPhotoToDBDAO</servlet-name>
+    <servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadPhotoToDBDAO</servlet-name>
+    <url-pattern>/UploadPhotoToDBDAO</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
+    <param-value>307200</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>MessageServlet</servlet-name>
+    <servlet-class>com.message.controller.MessageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MessageServlet</servlet-name>
+    <url-pattern>/message/message.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ContactUs</servlet-name>
+    <servlet-class>wang.test.ContactUs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactUs</servlet-name>
+    <url-pattern>/ContactUs</url-pattern>
+  </servlet-mapping>
 
-	<servlet>
-		<servlet-name>UploadPhotoToDBDAO</servlet-name>
-		<servlet-class>com.fion.albumupload.UploadPhotoToDBDAO</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UploadPhotoToDBDAO</servlet-name>
-		<url-pattern>/UploadPhotoToDBDAO</url-pattern>
-	</servlet-mapping>
-	<context-param>
-		<param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
-		<param-value>307200</param-value>
-	</context-param>
-	<servlet>
-		<servlet-name>MessageServlet</servlet-name>
-		<servlet-class>com.message.controller.MessageServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MessageServlet</servlet-name>
-		<url-pattern>/message/message.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ContactUs</servlet-name>
-		<servlet-class>wang.test.ContactUs</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ContactUs</servlet-name>
-		<url-pattern>/ContactUs</url-pattern>
-	</servlet-mapping>
+  <servlet>
+    <servlet-name>CompanyCompositeQuery</servlet-name>
+    <servlet-class>com.companycompositequery.controller.CompanyCompositeQuery</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompanyCompositeQuery</servlet-name>
+    <url-pattern>/CompanyCompositeQuery</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>DeleteResServlet</servlet-name>
+    <servlet-class>com.reservation.controller.DeleteResServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteResServlet</servlet-name>
+    <url-pattern>/reservation/deleteRes.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>

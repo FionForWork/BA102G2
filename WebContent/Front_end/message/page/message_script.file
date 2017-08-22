@@ -1,4 +1,4 @@
-﻿<script type="text/javascript">
+<script type="text/javascript">
 
 var MyPoint = "/MessageServlet/";
 console.log(MyPoint);
@@ -48,20 +48,18 @@ var memNo;
  						if (who==no){
  					        control = '<li style="width:100%;">' +
  					                        '<div class="msg-r">' +
- 					                            '<div class="text text-r">' +
- 					                                '<p>' + message + ":" + userName+ '</p>' +
+ 					                            '<div class="msg_text text-r">' +
+ 					                                '<p>' + message + '</p>' +
  					                            '</div>' +
- 					                            '<div class="image"><img class="img-circle" style="width:100%;" src="'+ me.img +'" /></div>' +
- 					                        	'</div>' +
+ 					                        '</div>' +    
  					                    '</li>'+'<br>';                    
  					    }else{
  					        control = '<li style="width:100%;">' +
- 					                        '<div class="msg-l">' +
- 					                        	'<div class="image"><img class="img-circle" style="width:100%;" src="'+ you.img +'" /></div>' +    
- 					                            '<div class="text text-l">' +
- 					                                '<p>' + userName+ ":" + message + '</p>' +
+ 					                        '<div class="msg-l">' +   
+ 					                            '<div class="msg_text text-l">' +
+ 					                                '<p>' + message + '</p>' +
  					                            '</div>' +
- 					                        	'</div>' +    
+ 					                        '</div>' +    
  					                  '</li>'+'<br>';
  					    }   
  					

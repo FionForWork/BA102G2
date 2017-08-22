@@ -50,7 +50,6 @@ public class TempServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		TempService tempSvc = new TempService();
 		TempContService tcontSvc = new TempContService();
-		HttpSession session = request.getSession();
 
 
 		/********* 刪除成品與成品內容 *********/
@@ -77,7 +76,7 @@ public class TempServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new Hashtable<String, String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 
-			String com_no = (String) request.getParameter("com_no");
+			String com_no = request.getParameter("com_no");
 			String status = request.getParameter("status");
 			String temp_no = request.getParameter("temp_no");
 			String mem_no = request.getParameter("mem_no");
@@ -181,7 +180,7 @@ public class TempServlet extends HttpServlet {
 			}
 
 			String status = "未挑選";
-			String com_no = (String) session.getAttribute("com_no");
+			String com_no = request.getParameter("com_no");
 
 			ServletContext context = getServletContext();
 			TempVO temp = new TempVO();

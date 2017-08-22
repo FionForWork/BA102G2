@@ -135,6 +135,7 @@ $("document").ready(function(){
 					<input type='hidden' name='action' value='update_Temp'> 
 					<input type='hidden' name='temp_no' value='${temp.temp_no}'> 
 					<input type='hidden' name='mem_no' value='${temp.mem_no}'>
+					<input type='hidden' name='com_no' value='${comVO.com_no }'>
 					
 				</form>
 				<br>

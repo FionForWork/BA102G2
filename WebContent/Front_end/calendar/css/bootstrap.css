@@ -5115,7 +5115,8 @@ hr.store-preferential-block {
     color: #ff8901; }
 
 .alert-danger {
-  background-color: #a94442;
+/*   background-color: #a94442; */
+  background-color: #f14195;
   border-color: #ff90b6;
   color: white; }
   .alert-danger hr {

@@ -7,11 +7,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-    //MemVO memVO=(MemVO)session.getAttribute("memVO");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+    MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	OrdService ordService = new OrdService();
-	//     List<OrdVO> ordList = ordService.getAllByRole("0", memVO.getMem_no(), "3");
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 	//////////////////////分頁需求參數//////////////////////////////////
 	int itemsCount = 5;

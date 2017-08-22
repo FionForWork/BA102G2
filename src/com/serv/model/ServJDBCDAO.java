@@ -419,7 +419,12 @@ public class ServJDBCDAO implements ServDAO_Interface{
 
 
 	
-	
+
+	@Override
+	public void updateScore(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 

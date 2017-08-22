@@ -147,8 +147,6 @@
             </li>
             <li class="wd-drop-wrapper">
                 <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" ><h3>線上商城</h3></a>
-               
-                    <!--RWD-->
                 </li>
                 <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp">
@@ -226,5 +224,4 @@
 
    
   
-   
             

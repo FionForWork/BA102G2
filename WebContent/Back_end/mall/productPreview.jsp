@@ -1,3 +1,6 @@
+<%@page import="com.adm.model.AdmVO"%>
+<%@page import="com.adm.model.AdmService"%>
+<%@page import="org.logicalcobwebs.proxool.admin.Admin"%>
 <%@page import="com.product_type.model.Product_typeVO"%>
 <%@page import="com.product_type.model.Product_typeService"%>
 <%@page import="com.product.model.ProductVO"%>
@@ -8,6 +11,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
+//     AdmVO admVO=(AdmVO)session.getAttribute("admVO");
     ProductService productService = new ProductService();
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.valueOf(request.getParameter("nowPage"));
     int itemsCount = 5;
@@ -25,13 +29,6 @@
     pageContext.setAttribute("totalPages", totalPages);
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
-<div id="content">
-    <div class="content-wrapper">
-        <div class="row">
-            <ul id="crumb" class="breadcrumb">
-            </ul>
-        </div>
-    </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <table class="table">
             <thead>
@@ -131,7 +128,6 @@
             </div>
         </div>
         <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
-    </div>
     <script type="text/javascript">
     function change(nowPage){ 
         $(window).scrollTop($(window).scrollTop());

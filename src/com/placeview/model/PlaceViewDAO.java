@@ -95,7 +95,7 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
         List<String> list=null;
         try {
             session.beginTransaction();
-            Query query=session.createQuery("select VIEW_NO from PlaveViewVO where PLA_NO = :pla_no");
+            Query query=session.createQuery("select view_no from PlaceViewVO where pla_no =:pla_no");
             query.setParameter("pla_no", pla_no);
             list=query.list();
         }

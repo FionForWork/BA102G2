@@ -18,7 +18,11 @@
 	AlbumVO alb = albSvc.getOneAlbum(alb_no);
 	pageContext.setAttribute("alb", alb);
 %>
-
+<script type="text/javascript">
+$("document").ready(function(){
+	$("#datePicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
+});
+</script>
 		<div class="col-md-8 col-offset-1">
 
 			<!-- Modal addContent -->
@@ -37,12 +41,10 @@
 							</div>
 							<div class="modal-body" style="padding: 40px 50px;">
 								<div class="form-group">
-									<label for="upload"> 選擇照片</label> <input id="inputFile"
-										name="inputFile[]" type="file" multiple class="file-loading">
-
+									<label for="inputFile"> 選擇照片 <span id='emptyFile' style='color:red'></span></label> 
+									<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading">
 								</div>
-
-								<input type='submit' class="btn btn-info btn-block" value="新增">
+								<input type='button' id='insertBtn' class="btn btn-info btn-block" value="新增">
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-default pull-left"
@@ -139,11 +141,10 @@
 						</h2>
 						<h4>
 							<div class="input-group">
-								<label for="create_date" class="input-group-addon"> 建立日期
+								<label for="datePicker" class="input-group-addon"> 建立日期
 									<span class='errorMsgs'> ${errorMsgs.get("create_date")}</span>
-								</label> <input type='date' name='create_date' class="form-control"
-									id="create_date"
-									value='${alb.create_date.toString().substring(0,10)}'>
+								</label> <input type='text' name='create_date' class="form-control"
+									id="datePicker" value='${alb.create_date.toString().substring(0,10)}'>
 							</div>
 						</h4>
 						<input type='hidden' name='action' value='update_Album'> <input
@@ -198,6 +199,7 @@
 								<i class="fa fa-cog" aria-hidden="true"></i>
 							</button>
 							<div class='dropdownContent' id='dropdownContent${s.count}'>
+									<a href='<%=request.getContextPath()%>/ShowPictureServletDAO?downloadCont_no=${contVO.cont_no}' id='download'>下載</a>
 									<a href='#' id='setCover' onclick="doAjax('setCover','${contVO.cont_no}');">設成封面</a>
 									<a data-toggle="modal" onclick="javascript:openDeleteContModal('${contVO.cont_no}')">刪除相片</a>
 							</div>
