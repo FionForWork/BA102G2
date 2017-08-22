@@ -23,3 +23,4 @@ public interface ServDAO_Interface {
     public List<ServVO> getAllAvg();
 
 }
+

@@ -47,7 +47,7 @@ public class ServDAO implements ServDAO_Interface {
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
 		private static final String GET_search_STMT = 
 				"SELECT * FROM service where title like ?";
-		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
+		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by avg(score/times) desc";
 
 		@Override
 		public List<ServVO> findBysh(String sh) {
@@ -107,9 +107,7 @@ public class ServDAO implements ServDAO_Interface {
 			}
 			return list;
 		}
-		
 
-	
 	@Override
 	public void insert(ServVO servVO) {
 		Connection con = null;

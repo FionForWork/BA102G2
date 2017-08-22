@@ -21,7 +21,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising order by adv_no";
 	private static final String GET_ONE_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising where adv_no = ?";
 	private static final String DELETE = "delete from advertising where adv_no = ?";
-	private static final String UPDATE = "update advertising set com_no=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
+	private static final String UPDATE = "update advertising set com_no=?,title=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
 	private static final String GET_ALL_UNVERIFIED="select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = '0' order by adv_no desc";
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
 
@@ -83,24 +83,25 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, advertisingVO.getCom_no());
-			pstmt.setTimestamp(2, advertisingVO.getStartDay());
-			pstmt.setTimestamp(3, advertisingVO.getEndDay());
-			pstmt.setInt(4, advertisingVO.getPrice());
+			pstmt.setString(2, advertisingVO.getTitle());
+			pstmt.setTimestamp(3, advertisingVO.getStartDay());
+			pstmt.setTimestamp(4, advertisingVO.getEndDay());
+			pstmt.setInt(5, advertisingVO.getPrice());
 
 			Clob clob = con.createClob();
 			String str = advertisingVO.getText();
 			clob.setString(1, str);
-			pstmt.setClob(5, clob);
+			pstmt.setClob(6, clob);
 
 			Blob blob1 = con.createBlob();
 			blob1.setBytes(1, advertisingVO.getImg());
-			pstmt.setBlob(6, blob1);
+			pstmt.setBlob(7, blob1);
 
 			Blob blob2 = con.createBlob();
 			blob2.setBytes(1, advertisingVO.getVdo());
-			pstmt.setBlob(7, blob2);
-			pstmt.setString(8, advertisingVO.getStatus());
-			pstmt.setString(9, advertisingVO.getAdv_no());
+			pstmt.setBlob(8, blob2);
+			pstmt.setString(9, advertisingVO.getStatus());
+			pstmt.setString(10, advertisingVO.getAdv_no());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {

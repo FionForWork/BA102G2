@@ -1,6 +1,6 @@
 package com.com.model;
 
-import java.util.List;
+import java.util.*;
 
 import com.com.model.ComDAO;
 import com.com.model.ComDAO_Interface;
@@ -128,8 +128,14 @@ public List<ComVO> loginpwd(){
 	
 	public List<ComVO> getAll(){
 		return dao.getAll();
+
+	}
+	public List<ComVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+
 	}	
 	public List<ComVO> getLocation(String lon1, String lon2, String lat1, String lat2){
 		return dao.findBylocation(lon1, lon2, lat1, lat2);
+
 	}
 }
