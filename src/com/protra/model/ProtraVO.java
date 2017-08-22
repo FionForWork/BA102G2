@@ -1,5 +1,6 @@
 package com.protra.model;
 
+
 import java.io.Serializable;
 
 public class ProtraVO implements Serializable {

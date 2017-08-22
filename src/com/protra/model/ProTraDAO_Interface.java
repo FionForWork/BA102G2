@@ -3,7 +3,7 @@ package com.protra.model;
 import java.sql.Connection;
 import java.util.List;
 
-public interface ProTraDAO_Interface {
+public interface ProtraDAO_Interface {
 
     void insert(ProtraVO protraVO);
 

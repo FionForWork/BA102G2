@@ -1,6 +1,6 @@
 <%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
-<%@page import="com.protra.model.ProTraService"%>
+<%@page import="com.protra.model.ProtraService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="com.product.model.ProductService"%>
@@ -14,7 +14,7 @@
 	MemVO memVO = memService.getOneMem("1010");
 	int nowPage = (request.getParameter("nowPage") == null)	? 1 : Integer.parseInt((request.getParameter("nowPage")));
 	int itemsCount = 5;
-	ProTraService protraService = new ProTraService();
+	ProtraService protraService = new ProtraService();
 	int allCount = protraService.getAllCount(memVO.getMem_no());
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
 	ProductService productService = new ProductService();

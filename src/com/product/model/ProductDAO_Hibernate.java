@@ -8,7 +8,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
-import com.protra.model.ProTraDAO;
+import com.protra.model.ProtraDAO;
 
 import hibernate.util.HibernateUtil;
 
@@ -35,7 +35,7 @@ public class ProductDAO_Hibernate implements ProductDAO_Interface {
             session.beginTransaction();
             ProductVO productVO=(ProductVO)session.get(ProductVO.class, pro_no);
             session.delete(productVO);
-            ProTraDAO protraDAO =new ProTraDAO();
+            ProtraDAO protraDAO =new ProtraDAO();
             protraDAO.deleteByFK(pro_no);
             session.getTransaction().commit();
         }
@@ -55,7 +55,7 @@ public class ProductDAO_Hibernate implements ProductDAO_Interface {
             Query deleteQuery=session.createQuery("delete from ProductVO where PROTYPE_NO = :protype_no");
             deleteQuery.setParameter("protype_no", protype_no);
             deleteQuery.executeUpdate();
-            ProTraDAO protraDAO =new ProTraDAO();
+            ProtraDAO protraDAO =new ProtraDAO();
             for (String pro_no : proNolist) {
                 protraDAO.deleteByFK(pro_no);
             }

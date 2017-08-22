@@ -13,7 +13,7 @@ import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 import hibernate.util.HibernateUtil;
 import oracle.net.aso.q;
 
-public class ProtraDAO_Hibernate implements ProTraDAO_Interface {
+public class ProtraDAO_Hibernate implements ProtraDAO_Interface {
 
     @Override
     public void insert(ProtraVO protraVO) {
