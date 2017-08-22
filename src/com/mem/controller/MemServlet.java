@@ -230,7 +230,7 @@ public class MemServlet extends HttpServlet{
 					 String to = id;
 					 String subject = "忘記密碼";
 						
-				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+"http://localhost:8081/BA102G2/mem/mem.do?action=change&&id="+id;
+				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getRequestURI()+"?action=change&&id="+id;
 				      
 				    
 				       
@@ -340,7 +340,7 @@ public class MemServlet extends HttpServlet{
 							
 							 session.removeAttribute("id");
 							 session.removeAttribute("memVO");
-
+							 session.removeAttribute("comVO");
 								
 						      MemVO memVO = memSvc.getOneMemById(id);
 						      String status=memVO.getStatus();
@@ -355,6 +355,7 @@ public class MemServlet extends HttpServlet{
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");
 						          if (memlocation != null) {
+						        	  System.out.println("我是經過濾器的"+memlocation);
 						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						            res.sendRedirect(memlocation);            
 						            return;

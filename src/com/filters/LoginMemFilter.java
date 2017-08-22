@@ -62,6 +62,10 @@ public class LoginMemFilter implements Filter {
 					return;
 				}
 			}catch(Exception e){
+				session.setAttribute("login","mem");
+				session.setAttribute("memlocation", req.getRequestURI());
+				String s=(String)session.getAttribute("memlocation");
+				System.out.println("ssss"+s);
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
 				return;
 			}

@@ -58,6 +58,10 @@ public class LoginComFilter implements Filter {
 					return;
 				}
 			}catch(Exception e){
+				session.setAttribute("login","com");
+				session.setAttribute("comlocation", req.getRequestURI());
+				String s=(String)session.getAttribute("memlocation");
+				System.out.println(s);
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
 				 return;
 			}
