@@ -26,7 +26,7 @@
 <html>
 <head>
 </head>
-<%@ include file="page/header.file" %>
+<%@ include file="page/share_header.file" %>
 <div class="container step-container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">

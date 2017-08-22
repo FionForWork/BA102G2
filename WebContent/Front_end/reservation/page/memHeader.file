@@ -191,8 +191,8 @@
   </form>
 	<!--聯絡我們 -->
     
-    <%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
-
+    <%--<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>---%>
+	<jsp:include page="/Front_end/Advertising/Advertising_Demo.jsp" flush="true"/> 
     <!--這裡開始-->
     <!--這裡開始-->
      <br>
