@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+Ôªø<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,43 +19,93 @@
     <script src="js/top.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="container">
-  <h2>Modal Example</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="com_Svc" scope="page" class="com.com.model.ComService" />
+<jsp:useBean id="mem_Svc" scope="page" class="com.mem.model.MemService" />
+<jsp:useBean id="rep_type_Svc" scope="page" class="com.report_type.model.Report_type_Service" />
+<jsp:useBean id="product_Svc" scope="page" class="com.product.model.ProductService" />
+<%@page import="com.article.model.*"%>
+<%@page import="com.com.model.ComVO"%>
+<%@page import="com.com.model.ComService"%>
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
+<%
+Integer reported_no =new Integer(request.getParameter("reported_no"));
+String position = request.getParameter("position");
+String rep_ob_no = request.getParameter("rep_ob_no");
+if((rep_ob_no.charAt(0))=='5'){
+	Article_Service art_Svc=new Article_Service();
+	ArticleVO articleVO = art_Svc.getOneArt(Integer.valueOf(rep_ob_no));
+	pageContext.setAttribute("articleVO", articleVO);
+	System.out.println(rep_ob_no);
+}
+session.getAttribute("memVO");
+session.getAttribute("comVO");
+// Integer reproter_no = new Integer(request.getParameter("reproter_no"));
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+%>
+ 
+ 
     <div class="modal-dialog">
     
-      <!-- Modal content-->
+      <form METHOD="post" ACTION="<%=request.getContextPath()%>/report/report.do" name="form1">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">¿À¡|</h4>
+          <h4 class="modal-title">Ê™¢Ëàâ</h4>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">¿À¡|πÔ∂H</label>
-         <input class="form-control" id="inputdefault" type="text" name="reproted_no">
+        <label for="inputdefault">Ê™¢ËàâÂ∞çË±°</label>
+         <input class="form-control" id="inputdefault" type="hidden" name="reported_no" value="<%=request.getParameter("reported_no")%>">
+        <c:choose>
+			<c:when test="${com_Svc.getOneCom(param.reported_no)!=null }">
+				<div class="name">${com_Svc.getOneCom(param.reported_no).name }</div>
+			</c:when>
+			<c:otherwise>
+				<div class="name">${mem_Svc.getOneMem(param.reported_no).name }</div>
+			</c:otherwise>
+		</c:choose>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">º–√D</label> 
-        <input class="form-control" id="inputdefault" type="text" name="title">
+        <label for="inputdefault">Ê™¢ËàâÈ°ûÂûã</label> 
+        <select class="form-control" id="sel1" name="rep_type_no">
+	        <c:forEach var="rep_typeVO" items="${rep_type_Svc.all}">
+					<option value="${rep_typeVO.rep_type_no }"> ${rep_typeVO.type }</option>
+			</c:forEach>
+		</select>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">§∫Æe</label>
+        <label for="inputdefault">ÂÖßÂÆπ</label>
          <input class="form-control" id="inputdefault" type="text" name="content">
         </div>
+        
+        <c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no!=null}">
+         <div class="modal-body">
+        <label for="inputdefault">ÁÖßÁâá</label>
+        <div>
+        <img style="width:300px;"class="img-responsive" src="<%=request.getContextPath() %>/image/ShowImage?pro_no=${param.rep_ob_no}">
+        </div>
+        </div>
+        </c:if>
+        
         <div class="modal-footer">
-        	<input	type="submit" class="btn btn-info" value="¿À¡|">
+        	<input	type="submit" class="btn btn-info" value="Ê™¢Ëàâ">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
+        
       </div>
       
+      <input type="hidden" name="action" value="insert">
+      <input type="hidden" name="reporter_no" value="${(comVO.com_no!=null)?comVO.com_no:memVO.mem_no}">
+      <input type="hidden" name="status" value="0">
+      <input type="hidden" name="rep_ob_no" value="<%=request.getParameter("rep_ob_no")%>">
+      <input type="hidden" name="position" value="<%=request.getParameter("position")%>">
+      </form>
+      
     </div>
-  </div>
+ 
   
-</div>
+
 
 </body>
 </html>

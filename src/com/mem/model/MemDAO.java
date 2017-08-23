@@ -57,6 +57,9 @@ public class MemDAO implements MemDAO_Interface{
 		
 		private static final String UPDATESTATUS = 
 				"UPDATE member set status=? where mem_no = ?";
+		private static final String UPDATEREPORT = 
+				"UPDATE member set report=? where mem_no = ?";
+		
 		private static final String UPDATESTATUSFORREPORT = 
 				"UPDATE member set status='停權' where mem_no = ?";
 		@Override
@@ -732,6 +735,39 @@ public class MemDAO implements MemDAO_Interface{
 	}
 
 	@Override
+	public void updateReport(MemVO memVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEREPORT);
+			pstmt.setInt(1, memVO.getReport());
+			pstmt.setString(2, memVO.getMem_no());
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
 	public Set<MemVO> getMemsByStatus(String status) {
 		Set<MemVO> set = new LinkedHashSet<MemVO>();
 		MemVO memVO = null;
@@ -796,13 +832,14 @@ public class MemDAO implements MemDAO_Interface{
 		return set;
 	}
 
-	
-
-
-	
-
-	
-
-	
-
 }
+	
+
+
+	
+
+	
+
+	
+
+

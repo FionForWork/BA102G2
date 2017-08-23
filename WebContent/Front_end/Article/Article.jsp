@@ -2,7 +2,7 @@
 <%@page import="com.forum_comment.model.Forum_Comment_Service"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -17,14 +17,14 @@
 %>
 
 <%
-	int rowsPerPage = 4; //每頁的筆數    
+	int rowsPerPage = 5; //每頁的筆數    
 	int rowNumber = 0; //總筆數
 	int pageNumber = 0; //總頁數      
 	int whichPage = 1; //第幾頁
 	int pageIndexArray[] = null;
 	int pageIndex = 0;
 %>
-
+   
 <%
 	if (articlelist != null) {
 		rowNumber = articlelist.size();
@@ -50,8 +50,7 @@
 
 	}
 
-System.out.println(rowsPerPage);
-System.out.println(rowNumber);
+
 %>
 
 
@@ -230,25 +229,18 @@ System.out.println(rowNumber);
 				</c:otherwise>
 			</c:choose>
 <div align="center">
-<tr >
 
-<% if (rowsPerPage < rowNumber) {%>
-
-	<%	if (pageIndex >= rowsPerPage) {		%>				
-		<td><A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage - 1%>">上一頁
-						</A>&nbsp;</td>
-						<%	}	%>	
-<%	if (pageIndex < pageIndexArray[pageNumber - 1]) {	%>					
-		<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage + 1%>">下一頁
-						</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;</td>			
-						<%}%>
-	<%	}	%>				
-</tr>						
+   
+ <tr>
+    <div align="center">
+    <ul class="pagination">
+    <%for (int i=1; i<=pageNumber; i++){%>
+           <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+        <%}%> 
+  	</ul>
+  	</div>
+ </tr>
+					
 </div>
 						
 							

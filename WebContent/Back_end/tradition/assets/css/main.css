@@ -1134,12 +1134,11 @@ body.full-screen #header {
   opacity: 1;
 }
 #sidebar #sideNav li a.active {
-  background: #ffffff;
+  
   font-weight: bold;
   border-right: 1px solid transparent;
   margin-right: -1px;
-  border-top: 1px solid #e0e0da;
-  border-bottom: 1px solid #e0e0da;
+ 
 }
 #sidebar #sideNav li a:hover i,
 #sidebar #sideNav li a.active i {

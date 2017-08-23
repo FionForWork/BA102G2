@@ -4,7 +4,7 @@
 <%@page import="com.mem.model.MemService"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="page/add_header.file"%>
@@ -12,13 +12,13 @@
 <%
    MemService memService=new MemService();
 MemVO memVO=memService.getOneMem("1003");
-session.setAttribute("memVO", memVO);
+// session.setAttribute("memVO", memVO);
 
 %>
 <%
 ComService comService=new ComService();
 ComVO comVO=comService.getOneCom("2001");
-//  session.setAttribute("comVO", comVO);
+ session.setAttribute("comVO", comVO);
 
 %>
 
@@ -27,6 +27,15 @@ ComVO comVO=comService.getOneCom("2001");
 	<div class="container-fluid">
 		<h2>新增文章</h2>
 		<p></p>
+	<c:if test="${not empty errorMsgs}">
+	<font color='red'>請修正以下錯誤:
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li>${message}</li>
+		</c:forEach>
+	</ul>
+	</font>
+</c:if>
 
 		<div class="form-group">
 			<label for="inputdefault">主題</label> <input class="form-control"
@@ -34,11 +43,10 @@ ComVO comVO=comService.getOneCom("2001");
 				value="<%=(articleVO == null) ? " " : articleVO.getTitle()%>">
 		</div>
 
-		<jsp:useBean id="art_type_Svc" scope="page"
-			class="com.art_type.model.Art_Type_Service" />
+		<jsp:useBean id="art_type_Svc" scope="page" class="com.art_type.model.Art_Type_Service" />
 		<div class="form-group">
-			<label for="sel1">類型</label> <select class="form-control" id="sel1"
-				name="art_type_no">
+			<label for="sel1">類型</label> 
+			<select class="form-control" id="sel1" name="art_type_no">
 				<c:forEach var="art_typeVO" items="${art_type_Svc.all}">
 					<option value="${art_typeVO.art_type_no }">
 						${art_typeVO.type }</option>

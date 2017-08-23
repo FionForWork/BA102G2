@@ -73,8 +73,16 @@ public class ArticleServlet extends HttpServlet {
 
 				Integer poster_no = new Integer(req.getParameter("poster_no").trim());
 				Integer art_type_no = new Integer(req.getParameter("art_type_no").trim());
-				String title = req.getParameter("title").trim();
+//				String title = req.getParameter("title").trim();
 				String content = req.getParameter("content").trim();
+				
+				String title=null;
+				try {
+					title = new String(req.getParameter("title").trim());
+				} catch (NumberFormatException e) {
+					title = "";
+					errorMsgs.add("請輸入標題");
+				}
 
 				ArticleVO articleVO = new ArticleVO();
 				java.util.Date date = new java.util.Date();
@@ -88,6 +96,14 @@ public class ArticleServlet extends HttpServlet {
 				articleVO.setContent(content);
 				// articleVO.setArt_date(new Date(date.getTime()));
 				articleVO.setArt_date(art_date);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("articleVO", articleVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				Article_Service articleSvc = new Article_Service();
@@ -102,8 +118,10 @@ public class ArticleServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
+				
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/dddArticle_add.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -318,6 +318,7 @@
   <servlet>
     <description>
 		</description>
+
     <display-name>CalendarServlet</display-name>
     <servlet-name>CalendarServlet</servlet-name>
     <servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
@@ -381,5 +382,15 @@
     <servlet-name>DeleteResServlet</servlet-name>
     <url-pattern>/reservation/deleteRes.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>ReportServlet</servlet-name>
+    <servlet-class>com.report.controller.ReportServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReportServlet</servlet-name>
+    <url-pattern>/report/report.do</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>

@@ -9,6 +9,7 @@
   AdvertisingService advSvc1=new AdvertisingService();
 List<AdvertisingVO> list1=advSvc1.getAll();
 request.setAttribute("list1", list1);
+int count=1;
 
 
 %>
@@ -19,7 +20,8 @@ request.setAttribute("list1", list1);
             <li data-target="#main_ad" data-slide-to="0" class="active"></li>
             <c:forEach var="advertisingVO" items="${list1}" varStatus="ddt">
             <c:if test="${advertisingVO. status==1 }">
-            <li data-target="#main_ad" data-slide-to="${ddt.count }"></li>
+            <li data-target="#main_ad" data-slide-to="<%=count %>"></li>
+            <%count++;%>
             </c:if>
             </c:forEach>
             
