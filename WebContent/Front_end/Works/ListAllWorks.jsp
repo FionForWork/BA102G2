@@ -172,7 +172,7 @@
 		</c:forEach>
 		</div>
 		<br>
-	</div>
+	
 	
 <script type="text/javascript">
 $("document").ready(function(){

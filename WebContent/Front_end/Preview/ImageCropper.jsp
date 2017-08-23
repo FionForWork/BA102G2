@@ -79,7 +79,7 @@
 			</div>
 
 			<div class="modal-body"
-				style="padding: 40px 50px; height: 250px; overflow-y: auto;">
+				style="padding: 40px 50px; height: 500px; overflow-y: auto;">
 				<div class="input-group">
 					<label class="input-group-addon" for="status">相簿</label> <select
 						id="selectAlbum" name="selectAlbum" class="form-control"

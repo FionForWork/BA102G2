@@ -139,10 +139,11 @@
                 <div class="outlet">
                     <!-- Start .outlet -->
                    
-                   
+                   <div class='container'>
                     <!-- Page start here ( usual with .row ) -->
                     <div class="row">
                         <!-- Start .row -->
+                        
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <div class="carousel-tile carousel vertical slide">
                                 <div class="carousel-inner">
@@ -203,7 +204,8 @@
                         </div>
                     </div>
                     <!-- End .row -->
-                    
+                    </div>
+                    <div class='container'>
                     <div class="row">
                         <!-- Start .row -->
                         <div class="col-xs-12 col-sm-12 text-center">
@@ -248,6 +250,8 @@
                         <!-- End col-lg-6 -->
                     </div>
                     <!-- End .row -->
+                    </div>
+                    <div class='container'>
                     <div class="row">
                         <!-- Start .row -->
                         <div class="col-xs-12 col-sm-12 text-center">
@@ -294,6 +298,8 @@
                         <!-- End col-lg-6 -->
                     </div>
                     <!-- End .row -->
+                    </div>
+                    <div class='container'>
                     <div class="row">
                         <!-- Start .row -->
                         <div class="col-xs-12 col-sm-12 text-center">
@@ -337,6 +343,7 @@
                         <!-- End col-lg-6 -->
                     </div>
                     <!-- End .row -->
+                    </div>
                     <!-- Page End here -->
                 </div>
                 <!-- End .outlet -->
