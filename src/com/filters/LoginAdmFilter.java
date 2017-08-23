@@ -45,7 +45,6 @@ public class LoginAdmFilter implements Filter {
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
 		
-	
 		
 		
 		if (id == null) {
@@ -55,9 +54,12 @@ public class LoginAdmFilter implements Filter {
 		} else {
 			try{
 				AdmVO admVO =(AdmVO)session.getAttribute("admVO");
+				
+		
 				admVO.getAdm_no();
+				
 			}catch(Exception e){
-				res.sendRedirect(req.getContextPath()+"/Back_end/login/errorlogin2.jsp");
+				res.sendRedirect(req.getContextPath()+"/Back_end/login/errorLogin2.jsp");
 				return;
 			}
 				chain.doFilter(request, response);

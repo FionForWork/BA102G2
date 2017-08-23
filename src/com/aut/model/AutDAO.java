@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -218,6 +220,126 @@ public class AutDAO implements AutDAO_Interface{
 		
 		return list;
 	}
+	
+	@Override
+	public Map<String,List> getOneAll(String adm_no) {
+		Map<String,List> coll = new HashMap<String,List>();
+		List<String> list = new ArrayList<String>();
+		
+		AutVO autVO = null;
+				
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try{
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setString(1, adm_no);
+			rs = pstmt.executeQuery();
+			
+		
+				autVO = new AutVO();
+				while (rs.next()) {
+				autVO.setAdm_no(rs.getString("adm_no"));
+				
+				String id=rs.getString("id");
+				
+				list.add(id);
+			}
+				coll.put("id",list);
+			
+		}catch(SQLException se){
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		
+		return coll;
+	}
+	
+	
+	
+	
+
+
+//	@Override
+//	public List<AutVO> getOneAll(String adm_no) {
+//		List<AutVO> list =new ArrayList<AutVO>();
+//		AutVO autVO = null;
+//				
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		try{
+//			con = ds.getConnection();
+//			pstmt = con.prepareStatement(GET_ONE_STMT);
+//			pstmt.setString(1, adm_no);
+//			rs = pstmt.executeQuery();
+//			
+//		
+//				autVO = new AutVO();
+//				autVO.setAdm_no(rs.getString("adm_no"));
+//				while (rs.next()) {
+//				autVO.setId(rs.getString("id"));
+//				
+//				list.add(autVO); 
+//			}
+//			
+//			
+//		}catch(SQLException se){
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//		}finally{
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		
+//		
+//		return list;
+//	}
 
 	
 }

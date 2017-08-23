@@ -41,6 +41,7 @@ public class ComServlet extends HttpServlet {
 	}
 
 	 
+	
 	public String[] latlng(String loc)
 	{
 	        String xx="",yy="";
@@ -258,7 +259,7 @@ public class ComServlet extends HttpServlet {
 					 String to = id;
 					 String subject = "忘記密碼";
 						
-				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+"http://localhost:8081/BA102G2/com/com.do?action=change&&id="+id;
+				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getRequestURI()+"?action=change&&id="+id;
 				      
 				    
 				       
@@ -352,9 +353,9 @@ public class ComServlet extends HttpServlet {
 		    // 【取得使用者 帳號(account) 密碼(password)】
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
-			
+			 String comslocation = req.getParameter("comslocation");
 			  // 【檢查該帳號 , 密碼是否有效】
-			 
+			 HttpSession session = req.getSession();
 
 			 ComService comSvc = new ComService();
 			 List<ComVO> list = comSvc.loginid();
@@ -367,12 +368,12 @@ public class ComServlet extends HttpServlet {
 					 for(int j=0;j<list1.size();j++){
 						
 						 if (list1.get(j).getPwd().equals(pwd)) {
-							 HttpSession session = req.getSession();
+							
 							 session.removeAttribute("id");
 							 session.removeAttribute("comVO");
-							 
+							 session.removeAttribute("memVO");
 						      ComVO comVO = comSvc.getOneComById(id);
-					
+						      String status=comVO.getStatus();
 						 
 						     String ststus=  comVO.getStatus();
 						     System.out.println(ststus);
@@ -380,22 +381,34 @@ public class ComServlet extends HttpServlet {
 									 
 						    	  res.sendRedirect(req.getContextPath()+"/Front_end/com/notConfirmCom.jsp");
 							      return;
-								 }else{
+								 }else if(status.equals("停權")){
+									 res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+										return;
+								 }
+						      		
+									 
 									 session.setAttribute("id", id);
 								     session.setAttribute("comVO", comVO);
-								     
+								     session.setAttribute("role","com");
 								      try {
 								    	  String comlocation = (String) session.getAttribute("comlocation");
-								          if (comlocation != null) {
+								    	 	      
+								    	  System.out.println("我是過過濾器的~~~~~"+comlocation);
+								          if (comlocation!=null) {
+								        	
 								            session.removeAttribute("comlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 								            res.sendRedirect(comlocation);            
 								            return;
+								          }else if(comslocation!=null){
+								        	  System.out.println("我是沒經過過濾器的"+comslocation);
+								        	 res.sendRedirect(comslocation);            
+									         return;
 								          }
 								      }catch(Exception ignored){}
 								      
 								      res.sendRedirect(req.getContextPath()+"/Front_end/com/listOneCom.jsp");
 								      return;
-								 }
+								 
 						 }
 
 					 }
@@ -403,7 +416,7 @@ public class ComServlet extends HttpServlet {
 				 }
 
 			 }
-			 
+			  session.setAttribute("login","com");
 		 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
 		      return;
 	 
@@ -490,8 +503,8 @@ public class ComServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				comVO = comSvc.getOneComById(id);
 				
-			      session.setAttribute("id", id);
-			      session.setAttribute("comVO", comVO);
+//			      session.setAttribute("id", id);
+//			      session.setAttribute("comVO", comVO);
 			      
 			     
 			     //管理員可用 int passRandom = (int)(Math.random()*999+1);  
@@ -501,8 +514,8 @@ public class ComServlet extends HttpServlet {
 			      
 			      String ch_name = name;
 			      String messageText = "你好!" + ch_name +"歡迎加入she said yes! \n"+
-			      
-			     "請點選網址完成驗證 http://localhost:8081/BA102G2/Confirm?action=conFirmCom&&com_no="+comVO.getCom_no() + " \n" ; 
+			    		  
+			     "請點選網址完成驗證"+req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/Confirm?action=conFirmCom&&com_no="+comVO.getCom_no() + " \n" ; 
 			       
 			      MailService mailService = new MailService();
 			      mailService.sendMail(to, subject, messageText);

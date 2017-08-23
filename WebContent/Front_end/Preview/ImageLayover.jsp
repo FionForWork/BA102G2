@@ -10,7 +10,7 @@
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0142";
+	//String cropCont_no = "0115";
 	String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
@@ -29,7 +29,8 @@
 			<input type='hidden' id='placeview_no' name='placeview_no' value=''>
 			<input type='hidden' name='imageWidth' value=''> <input
 				type='hidden' name='cropCont_no' value='<%=cropCont_no%>'> <input
-				type='hidden' name='mem_no' value='${memVO.mem_no}'> <input
+<%-- 				type='hidden' name='mem_no' value='${memVO.mem_no}'> <input --%>
+				type='hidden' name='mem_no' value='${mem_no}'> <input
 				type='hidden' id='xPoint' name='xPoint' value=''> <input
 				type='hidden' id='yPoint' name='yPoint' value=''> <input
 				type='hidden' name='cropWidth' value=''> <input
@@ -97,7 +98,7 @@
 		<div class='col-sm-12 col-xs-12'>
 			<div id="dropZone">
 				<div id='dragCrop' style="display: inline-block">
-					<img id='resizable' style='max-width: 500px'
+					<img id='resizable'
 						src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
 				</div>
 			</div>
@@ -176,10 +177,27 @@
 		e.preventDefault();
 		var placeview_no = e.dataTransfer.getData('data');
 		console.log("placeview_no "+placeview_no);
-		$("#dropZone").css("background-image","url('<%=request.getContextPath()%>/image/ShowImage?view_no="
-						+ placeview_no + "')").css("background-repeat",
-				"no-repeat").css("background-size", "auto");
-		;
+		dropZone = $('#dropZone');
+		var dropZoneWidth = dropZone.css("width");
+		console.log(dropZoneWidth);
+		image = new Image();
+		console.log("image "+image);
+		
+		image.onload = function() {
+			 console.log(image.height);
+			 console.log("image.width "+image.width);
+		    if(image.width > 840){
+		    	//dropZone.css("height",image.height);
+		    	dropZone.css("background-size",dropZoneWidth);
+		    	//dropZone.css("background-size","contain");
+		    	var imageWidth = dropZoneWidth.substring(0,dropZoneWidth.length-2);
+		    	$("input[name=imageWidth]").val(imageWidth);
+		    }
+		 };
+		 image.setAttribute("src","<%=request.getContextPath()%>/image/ShowImage?view_no="+placeview_no);
+		$("#dropZone").css("background-image","url(<%=request.getContextPath()%>/image/ShowImage?view_no="+placeview_no+")")
+					.css("background-repeat","no-repeat").css("background-size", "auto");
+		
 		$("input[name=placeview_no]").val(placeview_no);
 		//document.getElementById("placeview_no").setAttribute("value",placeview_no);
 		hasBackgroundImage = true;
@@ -209,8 +227,8 @@
 					var thisPos = $this.position();
 					console.log("thisPos : " + thisPos);
 
-					xPoint = thisPos.left - 12;
-					yPoint = thisPos.top - 2;
+					xPoint = thisPos.left -12 ;
+					yPoint = thisPos.top-2;
 
 					console.log("xPoint : " + xPoint);
 					console.log("yPoint : " + yPoint);

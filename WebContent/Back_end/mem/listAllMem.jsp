@@ -7,6 +7,7 @@
     MemService memSvc = new MemService();
     List<MemVO> list = memSvc.getAll();
     pageContext.setAttribute("list",list);
+    List aut = (List)session.getAttribute("aut");   
 %>
 
 <%@ include file="/Back_end/adm/page/backHeader.file"%>

@@ -9,9 +9,9 @@
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
      <link href="<%=request.getContextPath()%>/Front_end/Resource/css/notosanstc.css" rel="stylesheet" type="text/css">
-    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento" rel="stylesheet">
-    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento.css" rel="stylesheet">
+    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans.css' rel='stylesheet' type='text/css'>
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     
@@ -225,7 +225,7 @@
 				<br>
 				<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 				<br>
-				<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
+				<a href="<%=request.getContextPath()%>/Front_end/mall/mallArea.jsp" class="list-group-item menua">商城專區</a>
 				<br>
 			</ul>
 

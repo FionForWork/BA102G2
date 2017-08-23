@@ -48,4 +48,9 @@
 }
 
 </style>
+<script>
+var image = $(".img-thumbnail")[0];
+console.log("image.height"+image.height);
+console.log("image.width"+image.width);
+</script>
 <%@ include file="page/preview_footer.file"%>

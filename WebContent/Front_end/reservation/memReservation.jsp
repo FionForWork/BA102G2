@@ -7,7 +7,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <% 
 	ReservationService reservationService = new ReservationService();
 	String status = request.getParameter("status");
@@ -35,7 +35,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <%@ include file="page/memHeader.file" %>
 
@@ -44,6 +43,7 @@
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,2)">尚未評價</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,3)">服務完成</a></li>
+	<li class="pointer"><a class="menua" onclick="showRes(this,5)">訂單取消</a></li>
 <br>
 </ul>
 <div id="allRes">
@@ -90,7 +90,7 @@
 					</div><hr>
 					<h4 class="text-right">
 					<c:if test="${reservationVO.status.equals('0')}">
-					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#myModal">
+					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#payModal">
 						刷卡支付訂金 :<i class="fa fa-usd" aria-hidden="true"></i>${nf.format(servService.getOneServ(reservationVO.serv_no).deposit)}
 					</button>
 
@@ -136,7 +136,7 @@
 <%@ include file="page/memFooter.file" %>
 <form id="payForm" class="form-group" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="payModal" role="dialog">
 	<div class="modal-dialog">  
 <!-- Modal content-->
 		<div class="modal-content">
@@ -212,7 +212,7 @@
 </form>
 <form id="ratingForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 	<input type="hidden" name="action" value="rating">
-	<input type="text" id="ratingStar" name="score" value="1">
+	<input type="hidden" id="ratingStar" name="score" value="1">
 	<input type="hidden" id="res_no_rating" name="res_no" value="">
 	<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
 </form>

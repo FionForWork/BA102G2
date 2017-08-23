@@ -28,12 +28,10 @@ public class CalendarServlet extends HttpServlet {
 		doPost(req,res);
 	}
 
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("servletAction : " + action);
 		PrintWriter out = res.getWriter();
 		
 		// 更改行程時間
@@ -77,18 +75,25 @@ public class CalendarServlet extends HttpServlet {
 			String cal_date = req.getParameter("cal_date");
 			String content = req.getParameter("content");
 			String requestURL = req.getParameter("requestURL");
+			System.out.println(cal_date);
+			if(content.trim().length() == 0){
+				errorMsgs.add("請為您的行程輸入內容");
+			}
 			
 			Timestamp t = null;
 			try{
 				t.valueOf(cal_date+" 00:00:00");
 			}catch(IllegalArgumentException e){
 				errorMsgs.add("請輸入正確的日期格式!");
+				
+			}
+			
+			if(errorMsgs.size() != 0){
 				RequestDispatcher successView = req.getRequestDispatcher(requestURL);
 				successView.forward(req, res);
 				return;
 			}
-			
-			
+			System.out.println(cal_date);
 			CalendarService calendarService = new CalendarService();
 			calendarService.addCalendar("2001", content, Timestamp.valueOf(cal_date+" 00:00:00"),"0");
 

@@ -36,18 +36,15 @@ public class testSchedule extends HttpServlet {
                     String pro_no = String.valueOf(Math.round((Math.random() * 100) + 4001));
                     int score = (int) Math.round((Math.random() * 5));
                     ProductVO productVO = productService.getOneByPK(pro_no);
-                    try {
-                        if (productVO.getStatus().equals("1")) {
-                            productVO.setTimes(productVO.getTimes() + 1);
-                            productVO.setScore(productVO.getScore() + score);
-                            productService.update(productVO);
-                            itemsCount--;
-                        }
+                    try{
+                        productVO.setTimes(productVO.getTimes() + 1);
+                        productVO.setScore(productVO.getScore() + score);
+                        productService.update(productVO);
                     }
                     catch (NullPointerException e) {
-//                        System.out.println(pro_no + " is null");
+                        System.out.println(productVO.getPro_no()+" is null");
                     }
-
+                    itemsCount--;
                 }
             }
         };

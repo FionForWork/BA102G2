@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -68,11 +67,15 @@
 			<div class="jumbotron" style="position:relative">
 				<div class="row">
 					<c:if test='${temp.status.equals("未挑選")}'>
-						<button type="submit" class="btn btn-info" id="uploadbtn"
-							style="right:15px; top:15px;position:absolute">新增成品</button>
+						<div class="btn-group" style="right:15px; top:15px;position:absolute;">
+							<button type="submit" class="btn btn-info" id="uploadbtn">新增成品</button>
+							<button type="submit" class="btn btn-info" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp?temp_no=<%=temp_no%>'">編輯成品</button>
+						</div>
+						
+						
 
 					</c:if>
-					<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-6 col-sm-6 col-sm-offset-3">
 						<div class="text-center">
 							<h2>${temp.name}</h2>
 							<br>
