@@ -14,12 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import com.com.model.ComVO;
+import com.mem.model.MemVO;
 
-
-@WebFilter("/LoginComFilter")
-public class LoginComFilter implements Filter {
+/**
+ * Servlet Filter implementation class MemRoCom
+ */
+@WebFilter("/LoginMemFilter")
+public class LoginMemComFilter implements Filter {
 	private FilterConfig config;
 
 	public void init(FilterConfig config) {
@@ -37,40 +39,66 @@ public class LoginComFilter implements Filter {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
+	
 		// 【取得 session】
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
+		Object role = session.getAttribute("role");
+
+
+	
+		
+		
 		
 		if (id == null) {
+		
+			System.out.println(req.getRequestURI());
+			if(req.getRequestURI().contains("com")){
 	
-			session.setAttribute("comlocation", req.getRequestURI());
+				session.setAttribute("comlocation", req.getRequestURI());
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/login2.jsp");
+				return;
+			}else if(req.getRequestURI().contains("mem")){
+				session.setAttribute("memlocation", req.getRequestURI());
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/login.jsp");
+				return;
+			}else{
+				session.setAttribute("memlocation", req.getRequestURI());
+				session.setAttribute("comlocation", req.getRequestURI());
+				res.sendRedirect(req.getContextPath()+"/Front_end/login/login3.jsp");
+				return;	
+			}
+				
 			
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/login2.jsp");
-			return;
+			
 		} else {
-			try{
-				ComVO comVO =(ComVO)session.getAttribute("comVO");
-				comVO.getCom_no();
+			if(role=="mem"){
+				MemVO memVO = (MemVO)session.getAttribute("memVO");
+				session.setAttribute("memlocation", req.getRequestURI());
+				String status=memVO.getStatus();
+			
+				
+				if(status.equals("停權")){
+					res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+					return;
+				}
+			}else if(role=="com"){
+				session.setAttribute("comlocation", req.getRequestURI());
+				ComVO comVO = (ComVO)session.getAttribute("comVO");
 				String status=comVO.getStatus();
 				if(status.equals("停權")){
 					res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
 					return;
 				}
-			}catch(Exception e){
-				session.setAttribute("login","com");
-				session.setAttribute("comlocation", req.getRequestURI());
-				String s=(String)session.getAttribute("memlocation");
-				System.out.println(s);
+			}else{
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
-				 return;
+				return;
 			}
-				chain.doFilter(request, response);
-			}
-
 			
+				chain.doFilter(request, response);
+
 		}
 	}
 
-	
-
+}

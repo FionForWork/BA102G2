@@ -28,6 +28,7 @@
 	<tr>
 		<th>服務編號</th>
 		<th>服務型態</th>
+		<th>廠商編號</th>
 		<th>訂金</th>
 		<th>價錢</th>
 		<th>服務標題</th>
@@ -45,6 +46,7 @@
 		
 			<td>${servVO.serv_no}</td>
 			<td>${servVO.stype_no}</td>
+			<td>${servVO.com_no}</td>
 			<td>${servVO.deposit}</td>
 			<td>${servVO.price}</td>
 			<td>${servVO.title}</td>
@@ -56,7 +58,7 @@
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" value="修改狀態">
+			    <input type="submit" class="btn btn-info " value="修改狀態">
 			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
 			    <input type="hidden" name="action" value="getOne_For_Update"></FORM>
 			</td>

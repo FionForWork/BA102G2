@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 
@@ -400,6 +401,20 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		
 		
 		
+	}
+
+
+	@Override
+	public Set<ServVO> getServByStype(String stype_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Set<ServVO> getServByCom(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

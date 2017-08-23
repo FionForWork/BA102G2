@@ -5,15 +5,13 @@
 
 Object memVO = session.getAttribute("memVO");     
 %>
-<%@ include file="page/member_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
  
-
-
 
     <div class="container">
         <div class="row">
 
-            <div class="col-md-offset-1 col-md-2 col-xs-0">
+            <div class="col-md-offset-1 col-md-2 col-xs-0"><br><br>
              <br><br><br> 
                 <ul class="list-group">
                    <ul class="list-group">
