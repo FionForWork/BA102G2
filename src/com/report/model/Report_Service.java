@@ -48,5 +48,8 @@ public ReportVO getOneReport(Integer rep_no) {
 public void deleteReport(Integer rep_no) {
 	dao.delete(rep_no);
 }
+public List<ReportVO> getOneStatus() {
+	return dao.getOneStatus();
+}
 
 }

@@ -30,6 +30,8 @@ public class ReportJDBCDAO implements Report_interface {
 			"DELETE FROM REPORT where rep_no = ?";
 		private static final String UPDATE = 
 				"UPDATE REPORT set status=? where REP_NO = ?";
+		private static final String GET_ONE_STATUS= 
+				"SELECT * FROM REPORT where status=0";
 		
 		
 	@Override
@@ -275,6 +277,67 @@ public class ReportJDBCDAO implements Report_interface {
 
 		return list;
 	}
+	@Override
+	public List<ReportVO> getOneStatus() {
+		List<ReportVO> list = new ArrayList<ReportVO>();
+		ReportVO reportVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STATUS);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				reportVO = new ReportVO();
+				reportVO.setRep_no(rs.getInt("rep_no"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
+				reportVO.setContent(rs.getString("content"));
+				reportVO.setRep_date(rs.getDate("rep_date"));
+				reportVO.setStatus(rs.getInt("status"));
+			
+				list.add(reportVO); 
+			}
+
+			
+		} catch (SQLException | ClassNotFoundException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
 	
 	public static void main(String[] args) {
 
@@ -333,7 +396,20 @@ public class ReportJDBCDAO implements Report_interface {
 //		System.out.println(report4.getStatus());
 //		System.out.println();
 //	}
+//		List<ReportVO> list = dao.getOneStatus();
+//		for (ReportVO report4 : list) {
+//		System.out.print(report4.getRep_no() + ",");
+//		System.out.print(report4.getRep_ob_no() + ",");
+//		System.out.print(report4.getReporter_no()+ ",");
+//		System.out.print(report4.getReported_no()+ ",");
+//		System.out.print(report4.getRep_type_no() + ",");
+//		System.out.print(report4.getContent()+ ",");
+//		System.out.print(report4.getRep_date()+ ",");
+//		System.out.println(report4.getStatus());
+//		System.out.println();
+//	}
 
 	
 }
+	
 }
