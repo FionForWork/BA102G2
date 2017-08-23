@@ -44,8 +44,7 @@ public class LoginAdmFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
-		AdmVO admVO =(AdmVO)session.getAttribute("admVO");
-		String status = admVO.getStatus();
+		
 		
 		
 		if (id == null) {
@@ -54,12 +53,11 @@ public class LoginAdmFilter implements Filter {
 			return;
 		} else {
 			try{
-				admVO =(AdmVO)session.getAttribute("admVO");
+				AdmVO admVO =(AdmVO)session.getAttribute("admVO");
+				
+		
 				admVO.getAdm_no();
-				if(status.equals("停權")){
-					res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
-					return;
-				}
+				
 			}catch(Exception e){
 				res.sendRedirect(req.getContextPath()+"/Back_end/login/errorLogin2.jsp");
 				return;

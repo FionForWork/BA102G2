@@ -59,7 +59,7 @@
 					</thead>
 					<%@ include file="page/page1.file"%>
 					<tbody>
-						<c:if test="${param.status==null}">
+						
 							<c:forEach var="advertisingVO" items="${advertisingList}"
 								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
@@ -146,7 +146,7 @@
 										
 							</c:forEach>
 							<%@ include file="page/page2.file"%>
-						</c:if>
+						
 					</tbody>
 				</table>
 			</div>

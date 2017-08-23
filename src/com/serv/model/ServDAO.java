@@ -5,14 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.mem.model.MemVO;
 import com.ssy.tools.jdbcUtil_CompositeQuery_Serv;
 
 public class ServDAO implements ServDAO_Interface {
@@ -47,8 +50,140 @@ public class ServDAO implements ServDAO_Interface {
 				"SELECT * FROM SERVICE WHERE COM_NO = ?";
 		private static final String GET_search_STMT = 
 				"SELECT * FROM service where title like ?";
-		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by avg(score/times) desc";
+		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
+		private static final String getServByStype = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where stype_no = ? order by score";
+		private static final String getServByCom = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where com_no = ? order by com_no";
+		
+		@Override
+		public Set<ServVO> getServByStype(String stype_no) {
+			Set<ServVO> set = new LinkedHashSet<ServVO>();
+			ServVO servVO = null;
+		
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+		
+			try {
+		
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(getServByStype);
+				pstmt.setString(1, stype_no);
+				rs = pstmt.executeQuery();
+		
+				while (rs.next()) {
+					servVO = new ServVO();
+					
+					servVO.setServ_no(rs.getString("serv_no"));
+					servVO.setCom_no(rs.getString("com_no"));
+					servVO.setContent(rs.getString("content"));
+					servVO.setDeposit(rs.getInt("deposit"));
+					servVO.setPrice(rs.getInt("price"));
+					servVO.setScore(rs.getDouble("score"));
+					servVO.setStype_no(rs.getString("stype_no"));
+					servVO.setTimes(rs.getInt("times"));
+					servVO.setTitle(rs.getString("title"));
+					servVO.setStatus(rs.getString("status"));
+					
+					set.add(servVO); // Store the row in the vector
+				}
+		
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return set;
+		}
 
+		@Override
+		public Set<ServVO> getServByCom(String com_no) {
+			Set<ServVO> set = new LinkedHashSet<ServVO>();
+			ServVO servVO = null;
+		
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+		
+			try {
+		
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(getServByCom);
+				pstmt.setString(1, com_no);
+				rs = pstmt.executeQuery();
+		
+				while (rs.next()) {				
+					servVO = new ServVO();
+					
+					servVO.setServ_no(rs.getString("serv_no"));
+					servVO.setCom_no(rs.getString("com_no"));
+					servVO.setContent(rs.getString("content"));
+					servVO.setDeposit(rs.getInt("deposit"));
+					servVO.setPrice(rs.getInt("price"));
+					servVO.setScore(rs.getDouble("score"));
+					servVO.setStype_no(rs.getString("stype_no"));
+					servVO.setTimes(rs.getInt("times"));
+					servVO.setTitle(rs.getString("title"));
+					servVO.setStatus(rs.getString("status"));
+					
+					set.add(servVO); // Store the row in the vector
+				}
+		
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return set;
+		}
+		
+		
+		
+		
+		
 		@Override
 		public List<ServVO> findBysh(String sh) {
 			// TODO Auto-generated method stub

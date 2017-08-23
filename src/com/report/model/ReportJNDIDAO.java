@@ -31,7 +31,7 @@ public class ReportJNDIDAO implements Report_interface {
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO REPORT (rep_no,reproter_no,reproted_no,title,content,rep_date,status) VALUES (REP_NO_sq.NEXTVAL, ?, ?, ?, ?,?,?)";
+			"INSERT INTO REPORT (rep_no,rep_ob_no,reporter_no,reported_no,rep_type_no,content,rep_date,status) VALUES (REP_NO_sq.NEXTVAL, ?, ?, ?, ?,?,?,?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM REPORT order by rep_no";
 		private static final String GET_ONE_STMT = 
@@ -39,7 +39,9 @@ public class ReportJNDIDAO implements Report_interface {
 		private static final String DELETE = 
 			"DELETE FROM REPORT where rep_no = ?";
 		private static final String UPDATE = 
-				"UPDATE REPORT set reproter_no=?, reproted_no=?,title=?,content=?,rep_date=?,status=? where REP_NO = ?";
+				"UPDATE REPORT set status=? where REP_NO = ?";
+		private static final String GET_ONE_STATUS= 
+				"SELECT * FROM REPORT where status=0";
 		
 		
 	@Override
@@ -53,12 +55,13 @@ public class ReportJNDIDAO implements Report_interface {
 
 			
 			
-			pstmt.setInt(1, reportVO.getReproter_no());
-			pstmt.setInt(2, reportVO.getReproted_no());
-			pstmt.setString(3, reportVO.getTitle());
-			pstmt.setString(4, reportVO.getContent());
-			pstmt.setDate(5, reportVO.getRep_date());
-			pstmt.setInt(6, reportVO.getStatus());
+			pstmt.setInt(1, reportVO.getRep_ob_no());
+			pstmt.setInt(2, reportVO.getReporter_no());
+			pstmt.setInt(3, reportVO.getReported_no());
+			pstmt.setInt(4, reportVO.getRep_type_no());
+			pstmt.setString(5, reportVO.getContent());
+			pstmt.setDate(6, reportVO.getRep_date());
+			pstmt.setInt(7, reportVO.getStatus());
 			pstmt.executeUpdate();
 
 			
@@ -94,13 +97,9 @@ public class ReportJNDIDAO implements Report_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			
-			pstmt.setInt(1, reportVO.getReproter_no());
-			pstmt.setInt(2, reportVO.getReproted_no());
-			pstmt.setString(3, reportVO.getTitle());
-			pstmt.setString(4, reportVO.getContent());
-			pstmt.setDate(5, reportVO.getRep_date());
-			pstmt.setInt(6, reportVO.getStatus());
-			pstmt.setInt(7, reportVO.getRep_no());
+			
+			pstmt.setInt(1, reportVO.getStatus());
+			pstmt.setInt(2, reportVO.getRep_no());
 			
 			pstmt.executeUpdate();
 
@@ -184,9 +183,10 @@ public class ReportJNDIDAO implements Report_interface {
 				
 				reportVO = new ReportVO();
 				reportVO.setRep_no(rs.getInt("rep_no"));
-				reportVO.setReproter_no(rs.getInt("reproter_no"));
-				reportVO.setReproted_no(rs.getInt("reproted_no"));
-				reportVO.setTitle(rs.getString("title"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
 				reportVO.setContent(rs.getString("content"));
 				reportVO.setRep_date(rs.getDate("rep_date"));
 				reportVO.setStatus(rs.getInt("status"));
@@ -241,9 +241,70 @@ public class ReportJNDIDAO implements Report_interface {
 			while (rs.next()) {
 				reportVO = new ReportVO();
 				reportVO.setRep_no(rs.getInt("rep_no"));
-				reportVO.setReproter_no(rs.getInt("reproter_no"));
-				reportVO.setReproted_no(rs.getInt("reproted_no"));
-				reportVO.setTitle(rs.getString("title"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
+				reportVO.setContent(rs.getString("content"));
+				reportVO.setRep_date(rs.getDate("rep_date"));
+				reportVO.setStatus(rs.getInt("status"));
+			
+				list.add(reportVO); 
+			}
+
+			
+		} catch (SQLException  se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	@Override
+	public List<ReportVO> getOneStatus() {
+		List<ReportVO> list = new ArrayList<ReportVO>();
+		ReportVO reportVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STATUS);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				reportVO = new ReportVO();
+				reportVO.setRep_no(rs.getInt("rep_no"));
+				reportVO.setRep_ob_no(rs.getInt("rep_ob_no"));
+				reportVO.setReporter_no(rs.getInt("reporter_no"));
+				reportVO.setReported_no(rs.getInt("reported_no"));
+				reportVO.setRep_type_no(rs.getInt("rep_type_no"));
 				reportVO.setContent(rs.getString("content"));
 				reportVO.setRep_date(rs.getDate("rep_date"));
 				reportVO.setStatus(rs.getInt("status"));

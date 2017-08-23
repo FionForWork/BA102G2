@@ -23,21 +23,20 @@
 			<div class="col-md-12">
 				<div class="chat_box panel panel" id="chatbox">
 					<div class="panel-heading">
-						<button id=close_chat class="chat-header-button pull-right" type="button"><i class="fa fa-times"></i></button>
+						<a id=close_chat class="chat-header-button pull-right">x</a>
 
 <%-- 						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div> --%>
-							<h3 style="text-align:center;">${comVO.name}</h3>
-<!-- 						<div id="statusOutput"></div> -->
+							<h4 id="chat-header-name">${comVO.name}</h4>
 					</div>
 					<div class="panel-body">
 					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">							
-							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
+							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" placeholder="請輪入訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
 																																							  '${memVO != null? memVO.name : comVO.name}');" />	
-							<input type="submit" id="sendMessage" class="col-md-3 button sendMessage_btn" value="送出" 
+							<a id="sendMessage" class="col-md-3 sendMessage_btn" 
 							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
-												 '${memVO != null? memVO.name : comVO.name}')" />	
+												 '${memVO != null? memVO.name : comVO.name}')" >送出</a>	
 					</div>
 				</div>
 			</div>

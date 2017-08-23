@@ -4,11 +4,11 @@
 <%
 Object comVO = session.getAttribute("comVO");     
 %>
-<%@ include file="page/company_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <div class="container">
 	<div class="row">
 	
-		<div class="col-md-offset-1 col-md-2">
+		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
@@ -30,6 +30,7 @@ Object comVO = session.getAttribute("comVO");
 			h1{font-weight:600;}
 		</style>
 <title>廠商資料</title>
+
 <div class="container" id="big">
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
@@ -79,14 +80,15 @@ Object comVO = session.getAttribute("comVO");
 				<div ></div>
 				 <pre style="border:0;font-size:19px;font-weight:900;">${comVO.com_desc}</pre>
 		</div>
-
+		
 		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
 			 <input type="submit" class="btn btn-info " value="修改">
 			 <input type="hidden" name="com_no"value="${comVO.com_no}" >
 			 <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-	
-		
+	<br><br>
+		<a href="<%=request.getContextPath()%>/Front_end/serv/addServ.jsp">新增服務</a>
 		</div>
+		
 	</div>
 </div>
 

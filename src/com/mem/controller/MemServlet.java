@@ -230,7 +230,7 @@ public class MemServlet extends HttpServlet{
 					 String to = id;
 					 String subject = "忘記密碼";
 						
-				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+"http://localhost:8081/BA102G2/mem/mem.do?action=change&&id="+id;
+				     String messageText = "你好!請點選網址會發送一組新密碼給您!"+req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getRequestURI()+"?action=change&&id="+id;
 				      
 				    
 				       
@@ -324,7 +324,8 @@ public class MemServlet extends HttpServlet{
 			 String id = req.getParameter("id");//使用者輸入
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
-			
+			 HttpSession session = req.getSession();
+			 String memslocation = req.getParameter("comslocation");
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
 			 List<MemVO> list1 = memSvc.loginpwd();
@@ -336,10 +337,10 @@ public class MemServlet extends HttpServlet{
 					 for(int j=0;j<list1.size();j++){
 						
 						 if (pwd.equals(list1.get(j).getPwd())) {
-							HttpSession session = req.getSession();
+							
 							 session.removeAttribute("id");
 							 session.removeAttribute("memVO");
-
+							 session.removeAttribute("comVO");
 								
 						      MemVO memVO = memSvc.getOneMemById(id);
 						      String status=memVO.getStatus();
@@ -349,14 +350,19 @@ public class MemServlet extends HttpServlet{
 								}
 						      session.setAttribute("id", id);
 						      session.setAttribute("memVO", memVO);
-
+						      session.setAttribute("role","mem");
 						      
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");
 						          if (memlocation != null) {
+						        	  System.out.println("我是經過濾器的"+memlocation);
 						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						            res.sendRedirect(memlocation);            
 						            return;
+						          }else if(memslocation != null){
+						        	  System.out.println("我是沒經過過濾器的"+memslocation);
+							        	 res.sendRedirect(memslocation);            
+								         return;
 						          }
 						      }catch(Exception ignored){}
 						      
@@ -369,6 +375,7 @@ public class MemServlet extends HttpServlet{
 				 }
 
 			 }
+			  session.setAttribute("login","mem");
 			 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
 		      return;
 			

@@ -18,19 +18,36 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+	
+	
 	<filter>
-		<filter-name>loginComFilter</filter-name>
-		<filter-class>com.filters.LoginComFilter</filter-class>
+		<filter-name>loginAdmFilter</filter-name>
+		<filter-class>com.filters.LoginAdmFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>loginComFilter</filter-name>
-		<url-pattern>/Front_end/com/index.jsp</url-pattern>
+		<filter-name>loginAdmFilter</filter-name>
+		<url-pattern>/Back_end/com/*</url-pattern>
+		<url-pattern>/Back_end/mall/ProductPreview.jsp</url-pattern>
+		<url-pattern>/Back_end/tradition/Traditionall.jsp</url-pattern>
+		<url-pattern>/Back_end/problem/Problemall.jsp</url-pattern>
+		<url-pattern>/Back_end/advertising/*</url-pattern>
+		<url-pattern>/Back_end/adm/*</url-pattern>
+		<url-pattern>/Back_end/aut/*</url-pattern>
+		<url-pattern>/Back_end/mem/*</url-pattern>
+		<url-pattern>/Back_end/place/*</url-pattern>
+		<url-pattern>/Back_end/problem/*</url-pattern>
+		<url-pattern>/Back_end/serv/*</url-pattern>
+		<url-pattern>/Back_end/tradition/*</url-pattern>
+		
+
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
+	
 	<filter>
 		<filter-name>loginMemFilter</filter-name>
 		<filter-class>com.filters.LoginMemFilter</filter-class>
@@ -38,25 +55,82 @@
 	<filter-mapping>
 		<filter-name>loginMemFilter</filter-name>
 		<url-pattern>/Front_end/mem/index.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/listOneMem.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/updatemember.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/updatPwd.jsp</url-pattern>
+
+		<url-pattern>/Front_end/mall/*</url-pattern>
+		<url-pattern>/Front_end/RFQ/addRFQ.jsp</url-pattern>
+		<url-pattern>/Front_end/RFQ/listMyRFQ.jsp</url-pattern>
+		
+		<url-pattern>/Front_end/reservation/memReservation.jsp</url-pattern>
+		<url-pattern>/Front_end/reservation/resCalendar.jsp</url-pattern>
+		<url-pattern>/Front_end/ComTra/ListAllComTra.jsp</url-pattern>
+		<url-pattern>/Front_end/Preview/ShowResult.jsp</url-pattern>
+		<url-pattern>/Front_end/Preview/ImageLayover.jsp</url-pattern>
+		<url-pattern>/Front_end/Preview/ImageCropper.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/MemPage_ListAllTempConts.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/MemPage_ListAllTemps.jsp</url-pattern>
+		<url-pattern>/Front_end/Album/UpdateAlbum.jsp</url-pattern>
+		<url-pattern>/Front_end/Album/ListAllContents.jsp</url-pattern>
+		<url-pattern>/Front_end/Album/ListAllAlbums.jsp</url-pattern>
+
+		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
+	
 	<filter>
-		<filter-name>loginAdmFilter</filter-name>
-		<filter-class>com.filters.LoginAdmFilter</filter-class>
+		<filter-name>loginComFilter</filter-name>
+		<filter-class>com.filters.LoginComFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>loginAdmFilter</filter-name>
-		<url-pattern></url-pattern>
+		<filter-name>loginComFilter</filter-name>
+		<url-pattern>/Front_end/com/index.jsp</url-pattern>
+		<url-pattern>/Front_end/quote/listMyQuote.jsp</url-pattern>
+		<url-pattern>/Front_end/reservation/comReservation.jsp</url-pattern>
+		<url-pattern>/Front_end/calendar/calendar.jsp</url-pattern>
+		<url-pattern>/Front_end/Advertising/Advertising.jsp</url-pattern>
+		<url-pattern>/Front_end/Works/UpdateWorks.jsp</url-pattern>
+		<url-pattern>/Front_end/Works/ListAllWorks.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/ComPage_UpdateTemp.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/ComPage_CreateTemp.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/ComPage_ListAllTempConts.jsp</url-pattern>
+		<url-pattern>/Front_end/Temp/ComPage_ListAllTemps.jsp</url-pattern>
+		<url-pattern>/Front_end/com/listOneCom.jsp</url-pattern>
+		<url-pattern>/Front_end/com/updatecompany.jsp</url-pattern>
+		<url-pattern>/Front_end/com/updatePwd.jsp</url-pattern>
+		<url-pattern>/Front_end/serv/addServ.jsp</url-pattern>
+		<url-pattern>/Front_end/com/index.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
+	<filter>
+		<filter-name>loginMemComFilter</filter-name>
+		<filter-class>com.filters.LoginMemComFilter</filter-class>
+		
+	</filter>
+	<filter-mapping>
+		<filter-name>loginMemComFilter</filter-name>
+		<url-pattern>/src/com/reservation/controller/ReservationServlet</url-pattern>
+		<url-pattern>/Front_end/reservation/searchService.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
+	
+	
 	<servlet>
 		<servlet-name>ComServlet</servlet-name>
 		<servlet-class>com.com.controller.ComServlet</servlet-class>
@@ -195,6 +269,17 @@
 	</servlet-mapping>
 
 
+
+<!--   <servlet> -->
+<!--     <servlet-name>testSchedule</servlet-name> -->
+<!--     <servlet-class>com.schedule.testSchedule</servlet-class> -->
+<!--         <load-on-startup>10</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>testSchedule</servlet-name> -->
+<!--       <url-pattern>/testSchedule</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
   <servlet>
     <servlet-name>AdvertisingServlet</servlet-name>
     <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>
@@ -233,6 +318,7 @@
   <servlet>
     <description>
 		</description>
+
     <display-name>CalendarServlet</display-name>
     <servlet-name>CalendarServlet</servlet-name>
     <servlet-class>com.calendar.controller.CalendarServlet</servlet-class>
@@ -277,14 +363,14 @@
     <servlet-name>ContactUs</servlet-name>
     <url-pattern>/ContactUs</url-pattern>
   </servlet-mapping>
-
+  
   <servlet>
     <servlet-name>CompanyCompositeQuery</servlet-name>
     <servlet-class>com.companycompositequery.controller.CompanyCompositeQuery</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CompanyCompositeQuery</servlet-name>
-    <url-pattern>/CompanyCompositeQuery</url-pattern>
+    <url-pattern>/CompanyCompositeQuery.do</url-pattern>
   </servlet-mapping>
   
     <servlet>
@@ -296,5 +382,15 @@
     <servlet-name>DeleteResServlet</servlet-name>
     <url-pattern>/reservation/deleteRes.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>ReportServlet</servlet-name>
+    <servlet-class>com.report.controller.ReportServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReportServlet</servlet-name>
+    <url-pattern>/report/report.do</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>

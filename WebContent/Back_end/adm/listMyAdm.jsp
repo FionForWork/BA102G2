@@ -14,8 +14,7 @@ Object admVO = session.getAttribute("admVO");
 	 
 		<td>
 		<h3>我的資料</h3>
-				<a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp
-">回首頁</a>
+				<a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp">回首頁</a>
 		</td>
 	
 

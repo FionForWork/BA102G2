@@ -53,7 +53,7 @@ public class AdvertisingService {
 	}
 
 	public AdvertisingVO getOneAdvertising(String adv_no) {
-		System.out.println("adv_no"+adv_no);
+		
 		return dao.findByPrimaryKey(adv_no);
 	}
 
@@ -67,5 +67,14 @@ public class AdvertisingService {
 
 	public List<AdvertisingVO> getOneAll(String com_no) {
 		return dao.getOneAll(com_no);
+	}
+	public List<AdvertisingVO> getOneSatus() {
+		return dao.getOneSatus();
+	}
+	public List<AdvertisingVO> getAllByStatus(String status) {
+		return dao.getAllByStatus(status);
+	}
+	public List<AdvertisingVO> getAllByStatus(String status1, String status2) {
+		return dao.getAllByStatus(status1, status2);
 	}
 }

@@ -6,7 +6,7 @@
 ComVO comVO = (ComVO) request.getAttribute("comVO");
 %>
 
-<%@ include file="page/company_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>

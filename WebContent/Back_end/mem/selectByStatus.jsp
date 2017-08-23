@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <br><br>
 <div id="content">
-
+<a href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'>返回搜尋</a>
 <table class="table table-striped">
 	<tr>
 		<th>照片</th>

@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<%Map<String,String> map =(LinkedHashMap) request.getAttribute("map"); %>
+<%Map<String,String> contact_us_map =(LinkedHashMap) request.getAttribute("contact_us_map"); %>
 <body>
 	<!--聯絡我們 -->
 	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
@@ -22,14 +22,15 @@
           <h4 class="modal-title text-center">聯絡我們</h4>
         </div>
         <div class="modal-body">
-         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(map.name==null)?'':map.name}">
-         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(map.email==null)?'':map.email}"> 
+         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(contact_us_map.name==null)?'':contact_us_map.name}">
+         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(contact_us_map.email==null)?'':contact_us_map.email}"> 
          	要說的話:<font color='red'>${errorMsgs.messagesArea}</font><br>
-         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(map.messagesArea==null)?'':map.messagesArea}</textarea>
+         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(contact_us_map.messagesArea==null)?'':contact_us_map.messagesArea}</textarea>
         </div>
         <div class="modal-footer">
           <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
           <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+          <input type="hidden" name="com_no" value="${param.com_no}">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
         </div>
       </div>

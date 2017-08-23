@@ -6,12 +6,13 @@
 ComVO comVO =(ComVO) request.getAttribute("comVO");
 Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
+
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <title>修改廠商</title>
-<%@ include file="page/company_header.file"%>
 <div class="container">
 	<div class="row">
 	
-		<div class="col-md-offset-1 col-md-2">
+		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua active">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>

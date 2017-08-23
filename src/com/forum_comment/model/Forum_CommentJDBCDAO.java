@@ -29,7 +29,7 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 	private static final String UPDATE = "UPDATE FORUM_COMMENT set  ART_NO=?, SPEAKER_NO=?,CONT=?,FMC_DATE=? where fmc_no=?";
 	private static final String GET_ONE_ALL = "select * from ( select * from forum_comment where ART_no = ? order by fmc_no desc ) where  rownum <=1";
 	private static final String GET_art_no_ALL ="SELECT count(art_no) FROM forum_comment where art_no=?";
-	
+	private static final String GET_ONE_ART_NO = "SELECT * FROM FORUM_COMMENT where ART_NO = ?";
 	
 	@Override
 	public void insert(Forum_CommentVO forum_CommentVO) {
@@ -360,6 +360,65 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 		}
 		return forum_CommentVO;
 	}
+	@Override
+	public List<Forum_CommentVO> getOne_art_no(Integer art_no) {
+		List<Forum_CommentVO> list = new ArrayList<Forum_CommentVO>();
+		Forum_CommentVO forum_CommentVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_ART_NO);
+			pstmt.setInt(1, art_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				forum_CommentVO = new Forum_CommentVO();
+				forum_CommentVO.setFmc_no(rs.getInt("fmc_no"));
+				forum_CommentVO.setArt_no(rs.getInt("art_no"));
+				forum_CommentVO.setSpeaker_no(rs.getInt("speaker_no"));
+				forum_CommentVO.setCont(rs.getString("cont"));
+				forum_CommentVO.setFmc_date(rs.getTimestamp("fmc_date"));
+
+				list.add(forum_CommentVO);
+			}
+
+		} catch (SQLException | ClassNotFoundException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+	
 
 	public static void main(String[] args) {
 
@@ -415,15 +474,15 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 		// }
 
 		// 個別查詢
-		Forum_CommentVO forum_CommentVO4 = dao.getOneAll(5016);
-
-		System.out.print(forum_CommentVO4.getFmc_no() + ",");
-		System.out.print(forum_CommentVO4.getArt_no() + ",");
-		System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
-		System.out.print(forum_CommentVO4.getCont() + ",");
-		System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date()) + ",");
-
-		System.out.println("---------------------");
+//		Forum_CommentVO forum_CommentVO4 = dao.getOneAll(5010);
+//
+//		System.out.print(forum_CommentVO4.getFmc_no() + ",");
+//		System.out.print(forum_CommentVO4.getArt_no() + ",");
+//		System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
+//		System.out.print(forum_CommentVO4.getCont() + ",");
+//		System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date()) + ",");
+//
+//		System.out.println("---------------------");
 
 		
 		// 查詢
@@ -431,8 +490,20 @@ public class Forum_CommentJDBCDAO implements Forum_Comment_interface {
 //				 System.out.print(forum_CommentVO5.getArt_no() + ",");
 //				
 //				 System.out.println("---------------------");
-	}
+//	}
+		 List<Forum_CommentVO> list = dao.getOne_art_no(5001);
+				 for (Forum_CommentVO forum_CommentVO4 : list) {
+				 System.out.print(forum_CommentVO4.getFmc_no() + ",");
+				 System.out.print(forum_CommentVO4.getArt_no() + ",");
+				 System.out.print(forum_CommentVO4.getSpeaker_no() + ",");
+				 System.out.print(forum_CommentVO4.getCont() + ",");
+				
+				 System.out.print(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(forum_CommentVO4.getFmc_date() ) + ",");
+				
+				 System.out.println("---------------------");
+				 }
 
 	
-
+	
+	}
 }

@@ -10,4 +10,5 @@ public interface Report_interface {
     public void delete(Integer rep_no);
     public ReportVO findByPrimaryKey(Integer rep_no);
     public List<ReportVO> getAll();
+    public List<ReportVO> getOneStatus();
 }

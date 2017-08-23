@@ -178,6 +178,7 @@
 								</tr>
 							</c:if>
 						</c:forEach>
+						
 					</tbody>
 
 				</table>

@@ -59,4 +59,9 @@ body {
     }
     .list-group li{
   border: 0 none;
+  
+}
+.list-group li, .list-group a {
+   
+    border: 0 none;
 }

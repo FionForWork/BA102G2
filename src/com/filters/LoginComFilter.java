@@ -37,25 +37,31 @@ public class LoginComFilter implements Filter {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		
-	
 		// 【取得 session】
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object id = session.getAttribute("id");
-	
-		
-		
 		
 		if (id == null) {
-			session.setAttribute("location", req.getRequestURI());
+	
+			session.setAttribute("comlocation", req.getRequestURI());
+			
 			res.sendRedirect(req.getContextPath()+"/Front_end/login/login2.jsp");
 			return;
 		} else {
 			try{
 				ComVO comVO =(ComVO)session.getAttribute("comVO");
 				comVO.getCom_no();
-				
+				String status=comVO.getStatus();
+				if(status.equals("停權")){
+					res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+					return;
+				}
 			}catch(Exception e){
+				session.setAttribute("login","com");
+				session.setAttribute("comlocation", req.getRequestURI());
+				String s=(String)session.getAttribute("memlocation");
+				System.out.println(s);
 				res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin2.jsp");
 				 return;
 			}
