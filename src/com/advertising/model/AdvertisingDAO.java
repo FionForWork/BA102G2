@@ -18,7 +18,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	}
 
 	private static final String INSERT_STMT = "insert into advertising (adv_no, com_no,title, startday, endday, price, text, img, vdo, status) values (ltrim(to_char(adv_no_seq.nextval,'0009')), ?, ?, ?, ?, ?, ?, ?, ?,?)";
-	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising order by adv_no";
+	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, status from advertising order by adv_no";
 	private static final String GET_ONE_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising where adv_no = ?";
 	private static final String DELETE = "delete from advertising where adv_no = ?";
 	private static final String UPDATE = "update advertising set com_no=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
@@ -250,8 +250,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				br.close();
 				advertisingVO.setText(sb.toString());
 
-				advertisingVO.setImg(rs.getBytes("img"));
-				advertisingVO.setVdo(rs.getBytes("vdo"));
+				
 				advertisingVO.setStatus(rs.getString("status"));
 				list.add(advertisingVO);
 			}

@@ -30,7 +30,7 @@ public class AdvertisingServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("ACTION=" + action);
+		
 		if ("getOne_For_Update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -39,12 +39,11 @@ public class AdvertisingServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(adv_no);
-				System.out.print("CONTROLLER getOne_For_Update:advertisingVO is null?");
-				System.out.println(advertisingVO == null);
+				
 				/****************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
@@ -117,8 +116,7 @@ public class AdvertisingServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 *****************************************/
 				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(), startday, endday,
 						price, text, oldAdvertisingVO.getImg(), oldAdvertisingVO.getVdo(), status);
-				System.out.print("CONTROLLER update:");
-				System.out.println(advertisingVO == null);
+				
 				/*****************************
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
@@ -213,7 +211,7 @@ public class AdvertisingServlet extends HttpServlet {
 				Collection<Part> parts = req.getParts();
 				for (Part part : parts) {
 					String filename = getFileNameFromPart(part);
-					System.out.println("ContentType=" + part.getContentType());
+					
 					byte[] file = null;
 					InputStream in = part.getInputStream();
 					file = new byte[in.available()];
@@ -252,7 +250,7 @@ public class AdvertisingServlet extends HttpServlet {
 			String requestURL = req.getParameter("requestURL");
 			try {
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				
 				String whichPage = req.getParameter("whichPage");
 				req.setAttribute("whichPage", whichPage);
@@ -280,8 +278,7 @@ public class AdvertisingServlet extends HttpServlet {
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO=" + adv_no);
-
+				
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				advertisingSvc.deleteAdvertising(adv_no);
 
@@ -298,13 +295,11 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-			System.out.println("requestURL:" + requestURL);
 			String whichPage = req.getParameter("whichPage");
 			req.setAttribute("whichPage", whichPage);
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
 				
 				AdvertisingVO advertisingVO = new AdvertisingVO();
 				AdvertisingService advertisingSvc = new AdvertisingService();
@@ -330,13 +325,13 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-			System.out.println("requestURL:" + requestURL);
+			
 			String whichPage = req.getParameter("whichPage");
 			req.setAttribute("whichPage", whichPage);
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				
 				AdvertisingVO advertisingVO = new AdvertisingVO();
 				AdvertisingService advertisingSvc = new AdvertisingService();
@@ -362,9 +357,7 @@ public class AdvertisingServlet extends HttpServlet {
 		}
 		
 		if ("add".equals(action)) {
-			System.out.println("add"+action);
-			System.out.println(req.getParameter("date"));
-			System.out.println(req.getParameter("com_no"));
+		
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			Timestamp startDay = null;

@@ -52,7 +52,7 @@ public class AdvertisingService {
 	}
 
 	public AdvertisingVO getOneAdvertising(String adv_no) {
-		System.out.println("adv_no"+adv_no);
+		
 		return dao.findByPrimaryKey(adv_no);
 	}
 

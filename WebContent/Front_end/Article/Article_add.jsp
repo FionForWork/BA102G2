@@ -27,6 +27,15 @@ ComVO comVO=comService.getOneCom("2001");
 	<div class="container-fluid">
 		<h2>新增文章</h2>
 		<p></p>
+	<c:if test="${not empty errorMsgs}">
+	<font color='red'>請修正以下錯誤:
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li>${message}</li>
+		</c:forEach>
+	</ul>
+	</font>
+</c:if>
 
 		<div class="form-group">
 			<label for="inputdefault">主題</label> <input class="form-control"

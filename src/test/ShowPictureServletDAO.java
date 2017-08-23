@@ -194,7 +194,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 		if(file.startsWith("adv_no")){
 			pk = request.getParameter("adv_no");
 			byte[] cont =null;
-			System.out.println("adv_no"+pk);
+			
 			AdvertisingService advSvc=new AdvertisingService();
 			AdvertisingVO advertisingVO=advSvc.getOneAdvertising(pk);
 			
