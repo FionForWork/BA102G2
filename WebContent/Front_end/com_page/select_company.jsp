@@ -49,6 +49,58 @@
 <!--         </div> -->
 <!--     </div> -->
 
+
+<!--複合查詢	 -->
+<!-- <div class="container text-center"> -->
+<!-- <div class="form-group row"> -->
+<!-- 	<div class="col-md-3"></div> -->
+	
+	
+
+<%-- <form method="post" action="<%=request.getContextPath()%>/CompanyCompositeQuery.do"> --%>
+<!-- 	<div class="col-md-2"> -->
+<!-- 		<div class="input-group"> -->
+<%-- 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAll&sort=dateDesc"  --%>
+<!-- 			style="margin-bottom:5px;" name="com_no" value="">新 &gt; 舊</a> -->
+<%-- 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAll&sort=date"  --%>
+<!-- 			style="margin-bottom:5px;" name="com_no" value="">舊 &gt; 新</a> -->
+<%-- 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAllByScore&sort=score" --%>
+<!-- 			style="margin-bottom:5px; "name="orderbyscore"></i>人氣排序:高 &gt; 低</a> -->
+<%-- 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAllByScore&sort=scoreDesc" --%>
+<!-- 			style="margin-bottom:5px; "name="orderbyscore"></i>人氣排序:低 &gt; 高</a> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-md-3"> -->
+<!-- 		<div class="input-group"> -->
+<!-- 			<span class="input-group-addon">服務類型</span> -->
+<!-- 			<select class="form-control" name="stype_no"> -->
+<!-- 				<option value="">所有類型</option> -->
+<%-- 				<option value="0001" ${com_map.get('stype_no')[0].equals('0001')? 'selected' : ''}>拍婚紗</option> --%>
+<%-- 				<option value="0002" ${com_map.get('stype_no')[0].equals('0002')? 'selected' : ''}>婚攝/婚錄</option> --%>
+<%-- 				<option value="0003" ${com_map.get('stype_no')[0].equals('0003')? 'selected' : ''}>新娘秘書</option> --%>
+<!-- 			</select> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-md-2"> -->
+<!-- 		<div class="input-group"> -->
+<!-- 			<span class="input-group-addon">廠商名稱</span> -->
+<!-- 			<input type="text" class="form-control" name="name" placeholder="請輸入關鍵字" value=""> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-md-2"> -->
+<!-- 		<div class="input-group"> -->
+<!-- 		<input type="hidden" class="form-control" name="action" value="listcoms_ByCompositeQuery"> -->
+<!-- 		<button class="btn btn-block btn-danger">送出查詢</button> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </form> -->
+<!-- </div> -->
+<!-- </div> -->
+<!--複合查詢 -->
+
+
+
+
 	<div class="container">
 		<div class="row">
 			<!--圖===========================================================================-->

@@ -45,13 +45,17 @@
 	<div class="col-md-2">
 		<div class="input-group">
 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAll&sort=dateDesc" 
-			style="margin-bottom:5px;" name="com_no" value="">新 &gt; 舊</a>
+			style="margin-bottom:5px; "id="sortCom_no" onclick="changeSort(0);">新 &gt; 舊</a>
+			
 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAll&sort=date" 
-			style="margin-bottom:5px;" name="com_no" value="">舊 &gt; 新</a>
+			style="margin-bottom:5px;display:none; "id="sortCom_noDesc" onclick="changeSort(1);">舊 &gt; 新</a>
+			
 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAllByScore&sort=score"
-			style="margin-bottom:5px; "name="orderbyscore"></i>人氣排序:高 &gt; 低</a>
+			style="margin-bottom:5px;" id="sortScore" onclick="changeSort(2);">人氣排序:高 &gt; 低</a>
+			
 			<a class="btn btn-black btn-xs round" href="<%=request.getContextPath()%>/CompanyCompositeQuery.do?action=listAllByScore&sort=scoreDesc"
-			style="margin-bottom:5px; "name="orderbyscore"></i>人氣排序:低 &gt; 高</a>
+			style="margin-bottom:5px;display:none;" id="sortScoreDesc" onclick="changeSort(3);">人氣排序:低 &gt; 高</a>
+		
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -95,14 +99,13 @@
 							<li class="list-unstyled">
 							<a href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${comVO.com_no}" class="thumbnail thumbnail-service mod-shadow img-label">
 								 <img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}">
-<%-- 									<c:if test="${comVO.name==null}"> --%>
-<%-- 										${comSvc.getOneCom(comVO.com_no).name} --%>
-<%-- 									</c:if> --%>
-									<c:forEach var="servVO" items="${servList}">
-										<c:if test="${comVO.com_no==servVO.com_no}">
-											<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
-										</c:if>
-									</c:forEach>						
+									<div class="com_box_name">${comSvc.getOneCom(comVO.com_no).name}
+										<c:forEach var="servVO" items="${servList}">
+											<c:if test="${comVO.com_no==servVO.com_no}">
+												<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
+											</c:if>
+										</c:forEach>
+									</div>						
 							</a></li>
 						</ul>
 					</div>

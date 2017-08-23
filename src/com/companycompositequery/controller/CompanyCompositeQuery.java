@@ -98,17 +98,8 @@ public class CompanyCompositeQuery extends HttpServlet {
 			ServService servSvc = new ServService();
 			List<ServVO> servList  = servSvc.getAllAvg();
 			
-			if(sort.startsWith("score")){
-				Collections.sort(servList, new Comparator<ServVO>(){
-					@Override
-					public int compare(ServVO servVO1, ServVO servCO2) {
-						int index = servVO1.getScore().compareTo(servCO2.getScore());
-						return index;
-					}	
-				});
-				if(sort.equals("scoreDesc")){
-					Collections.reverse(servList);
-				}
+			if(sort.startsWith("scoreDesc")){
+				Collections.reverse(servList);
 			}
 			req.setAttribute("listCom_ByCompositeQuery", servList);
 			

@@ -9,49 +9,22 @@ function change(c) {
 	}
 }
 
-function validateForm(form){
-	if (!checkName(form.name.value)){
-		return(false);	
+function changeSort(a) {
+	if (a == '0') {
+		$("#sortCom_noDesc").show();
+		$("#sortCom_no").hide();
 	}
-	if (!checkEmail(form.email.value)){
-		return(false);	
+	if (a == '1') {
+		$("#sortCom_no").show();
+		$("#sortCom_noDesc").hide();
 	}
-	if (!checkMessage(form.messagesArea.value)){
-		return(false);	
+	
+	if (a == '2') {
+		$("#sortScoreDesc").show();
+		$("#sortScore").hide();
 	}
-	alert("已成功送出！");
-	form.submit();
-	return(true);
-}
-function checkEmail(email){
-	index = email.indexOf ('@', 0);		// 尋找 @ 的位置，0 代表開始尋找的起始位置
-	if (email.length==0) {
-		alert("請輸入電子郵件地址！");
-		return (false);
-	} else if (index==-1) {
-		alert("錯誤：必須包含「@」。");
-		return (false);
-	} else if (index==0) {
-		alert("錯誤：「@」之前不可為空字串。");
-		return (false);
-	} else if (index==email.length-1) {
-		alert("錯誤：「@」之後不可為空字串。");
-		return (false);
-	} else
-		return (true);
-}
-
-function checkName(name){
-	if (name.length==0) {
-		alert("請輸入姓名！");
-		return (false);
-	} else
-		return (true);
-}
-function checkMessage(messagesArea){
-	if (messagesArea.length==0) {
-		alert("請輸入內容！");
-		return (false);
-	} else
-		return (true);	
+	if (a == '3') {
+		$("#sortScore").show();
+		$("#sortScoreDesc").hide();
+	}
 }
