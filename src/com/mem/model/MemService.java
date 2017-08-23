@@ -48,6 +48,13 @@ public class MemService {
 		return memVO;
 	}
 	
+	public MemVO updateStatusForReport(String mem_no){
+		MemVO memVO = new MemVO();
+		memVO.setMem_no(mem_no);
+		dao.updateStatus(memVO);
+		return memVO;
+	}
+	
 	public MemVO  addMem(String id,String pwd,String name,String sex,Date bday,String phone,
 			String email,String account,byte[] picture){
 		
@@ -118,6 +125,7 @@ public List<MemVO> loginpwd(){
 	public List<MemVO> getAll() {
 		return dao.getAll();
 	}
+
 	public Set<MemVO> getMemsByReport(Integer report) {
 		return dao.getMemsByReport(report);
 	}
@@ -129,4 +137,8 @@ public List<MemVO> loginpwd(){
 		
 		return memVO;
 	}
+	public Set<MemVO> getMemsByStatus(String status) {
+		return dao.getMemsByStatus(status);
+	}
+	
 }

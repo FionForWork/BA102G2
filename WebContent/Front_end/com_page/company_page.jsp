@@ -5,16 +5,11 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
-<jsp:useBean id="comtraSvc" scope="page" class="com.comtra.model.ComTraService"/>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <%
-
-ComService comSvc = new ComService();
-String com_no = request.getParameter("com_no");
-ComVO comVO = comSvc.getOneCom(com_no);
-pageContext.setAttribute("comVO", comVO);
+	ComService comSvc = new ComService();
+	ComVO comVO = comSvc.getOneCom(request.getParameter("com_no"));
+	pageContext.setAttribute("comVO", comVO);
 
 	WorksService worksSvc = new WorksService();
 	List<WorksVO> worksList = worksSvc.getAllByComNo(request.getParameter("com_no"));
@@ -23,12 +18,7 @@ pageContext.setAttribute("comVO", comVO);
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
-	String mem_no = (String)session.getAttribute("mem_no");
-	List<String> comNoList = comtraSvc.getComNoListByMemNo(mem_no);
-	pageContext.setAttribute("comNoList", comNoList);
 
-	
-	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
 %>
 
 <html>
@@ -36,40 +26,8 @@ pageContext.setAttribute("comVO", comVO);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-	
-	<!--聯絡我們 -->
-	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
-	<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">聯絡我們</h4>
-        </div>
-        <div class="modal-body">
-         	 姓名:<font color='red'>${errorMsgs.name}</font><input type="text" class="form-control" name="name" value="${(map.name==null)?'':map.name}">
-         	Email:<font color='red'>${errorMsgs.email}</font><input type="email" class="form-control" name="email" value="${(map.email==null)?'':map.email}"> 
-         	要說的話:<font color='red'>${errorMsgs.messagesArea}</font><br>
-         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;">${(map.messagesArea==null)?'':map.messagesArea}</textarea>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
-          <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  </form>
-	<!--聯絡我們 -->
 
-
-
-
-	<%@ include file="page/before.file"%>
+	<%@ include file="page/header.file"%>
 
 
 	<!--banner -->
@@ -78,8 +36,8 @@ pageContext.setAttribute("comVO", comVO);
 			<div class="home-banner fade-carousel" style="overflow: hidden;">
 				<div class="item slides">
 					<div class="slide-1 bg-cover lazy"
-						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
-
+						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -94,30 +52,31 @@ pageContext.setAttribute("comVO", comVO);
 			alt="She Said Yes">
 	</div>
 	<!--廠商大頭照-->
+	<%@ include file="message.jsp"%>
+	<%@ include file="contact_us.jsp"%>
 
 	<!--廠商名稱-->
 	<div class="text-center">
-	
 		<h1>${comVO.name}</h1>
 		<div id="comTracking">
 			<c:choose>
 			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
 			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
-		
+			<a href="#" onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>加入收藏</a>
 			</c:when>
 			<c:otherwise>
 				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+				<a href="#" onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>取消收藏</a>
 			</c:otherwise>
 			</c:choose>
+			<a href="#" class="btn btn-xs btn-warning"><i class="fa fa-exclamation-circle"></i>檢舉</a>
 		</div>
 		
 		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
 		<input type='hidden' name='mem_no' value='${mem_no}'>
 		<input type='hidden' name='path' value='<%= request.getContextPath()%>/comtra/comtra.do'>
 	</div>
-	
 <div id="snackbar">請先登入會員...</div>
-	
 	<!--廠商名稱-->
 	
 	<!--麵包削-->
@@ -166,13 +125,15 @@ pageContext.setAttribute("comVO", comVO);
 		<!--預約+即時訊息按鈕-->
 		<div class="col-sm-3">
 			<p class="text-center">
-				<a class="btn btn-reservation btn-lg">立即連絡我們 <i class="fa fa-comment"></i></a>
+				<a class="btn btn-reservation btn-lg" id="open_chat">立即連絡我們 <i class="fa fa-comment"></i></a>
 				<br><br>
-				<a class="btn btn-reservation btn-lg" href="">預約 </a>
+				<a class="btn btn-reservation btn-lg" href="<%=request.getContextPath()%>/Front_end/reservation/resCalendar.jsp">我要預約 </a>
 			</p>
 		</div>
 	</div>
 	<!--預約+即時訊息按鈕-->
+	
+
 
 	<!--廠商相簿-->
 	<div class="text-center" id="works">
@@ -182,14 +143,12 @@ pageContext.setAttribute("comVO", comVO);
 	</div>
 	<div class="container">
 		<div class="row">
-
-
 			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<a href="#">
+								<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								</a>	
 								<div class="overlay">
@@ -198,16 +157,19 @@ pageContext.setAttribute("comVO", comVO);
 							</div>
 						</li>
 					</ul>
-				</div>
+				</div>				
 			</c:forEach>
-			
+			</div>
+		</div>	
+		<div class="container">
+			<div class="row">
 			<div id="more_works" style="display: none;">
 			<c:forEach var="worksVO" items="${worksList}" begin="11">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
 							<div class="works_a thumbnail thumbnail thumbnail-service mod-shadow img-label">
-								<a href="#">
+								<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 									<img class="works_image img-thumbnail" src="<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}">
 								</a>
 								<div class="overlay">
@@ -219,8 +181,6 @@ pageContext.setAttribute("comVO", comVO);
 				</div>
 			</c:forEach>
 			</div>
-			
-			
 		</div>
 	</div>
 
@@ -231,8 +191,7 @@ pageContext.setAttribute("comVO", comVO);
 			<div class="col-xs-12 col-sm-6">
 				<a class="btn btn-info btn-lg" onclick="change(1)" id="more_works_btn"> 看更多作品
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-
+				</a>				
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>
@@ -249,7 +208,7 @@ pageContext.setAttribute("comVO", comVO);
 	<div class="container">
 		<div class="row">
 
-			<c:forEach var="servVO" items="${servList}" begin="1" end="4">
+			<c:forEach var="servVO" items="${servList}">
 			<c:if test="${servVO.com_no==comVO.com_no}">
 				<div class="service col-xs-12 col-sm-3">
 					<ul class="service_box">
@@ -261,38 +220,7 @@ pageContext.setAttribute("comVO", comVO);
 				</div>
 			</c:if>	
 			</c:forEach>
-			
-			<div id="more_services" style="display: none;">
-			<c:forEach var="servVO" items="${servList}" begin="5">
-			<c:if test="${servVO.com_no==comVO.com_no}">
-				<div class="service col-xs-12 col-sm-3">
-					<ul class="service_box">
-						<li class="service_title"><div>${servVO.title}</div></li>
-						<div class="text"><li>${servVO.content}</li></div>
-						<li class="cost"><div>價格<b class="price text-pink" >${servVO.price}</b>元</div>
-						</li>
-					</ul>
-				</div>
-			</c:if>		
-			</c:forEach>
-			</div>
-
 		</div>
-	</div>
-	
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-xs-12 col-sm-3"></div>
-			<div class="col-xs-12 col-sm-6">
-				<a class="btn btn-info btn-lg" onclick="change(2)" id="more_services_btn"> 看更多方案
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-				
-			</div>
-			<div class="col-xs-12 col-sm-3"></div>
-		</div>
-	</div>
-	
 	</div>
 	<!--廠商方案-->
 	
@@ -309,16 +237,18 @@ pageContext.setAttribute("comVO", comVO);
 	<div class="container">
 		<div class="row com_intro">
 
-			<div class="col-xs-12 col-sm-4"></div>
-			<div class="col-xs-12 col-sm-4">${comVO.com_desc}</div>
-			<div class="col-xs-12 col-sm-4"></div>
+			<div class="col-xs-12 col-sm-4">
+			<img class="com_logo center-block" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" alt="She Said Yes">
+			</div>
+			<div class="col-xs-12 col-sm-8" style="margin-top:30px;">${comVO.com_desc}</div>
+			
 		</div>
 	</div>
 
 	<!--廠商自介-->
 
 
-	<%@ include file="page/after.file"%>
+	<%@ include file="page/footer.file"%>
 
 
 </body>

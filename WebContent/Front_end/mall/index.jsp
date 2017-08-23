@@ -13,9 +13,9 @@
     response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires", 0);
-	//     MemVO memVO=(MemVO)session.getAttribute("memVO");
+	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": request.getParameter("now_Pro_Type");
 	String now_Order_Type = (request.getParameter("now_Order_Type") == null)? "0": request.getParameter("now_Order_Type");
 	ProductService productService = new ProductService();
@@ -24,15 +24,15 @@
 	List<Product_typeVO> typeList = product_typeService.getAll();
 	String[] orderTypeList = {"預設", "依商品名稱", "依上架日期(舊>>新)", "依上架日期(新>>舊)", "依價格(低>>高)", "依價格(高>>低)", "依賣家"};
 	String preLocation = request.getContextPath() + "/Front_end/mall";
-
+    String[] animated={"slideInUp","slideInDown","slideInRight","slideInLeft","fadeInLeft","fadeInRight","fadeInDown","fadeInUp"};
 	session.setAttribute("carTotal", new Integer(carTotal));
-	session.setAttribute("memVO", memVO);
 	//////////////////////分頁需求參數//////////////////////////////////
 	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
     int itemsCount = 8;
 	int allCount = productService.getAllCount(now_Pro_Type, "1");
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
 	List<ProductVO> productList = productService.getPage(nowPage, itemsCount, now_Pro_Type, now_Order_Type,	"1");
+	pageContext.setAttribute("animated", animated);
 	pageContext.setAttribute("productList", productList);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("nowPage", nowPage);
@@ -47,6 +47,14 @@
 <%@include file="pages/indexHeader.file"%>
 <div class="text-center" style="height: 50px; margin-top: 50px"></div>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
+<style>
+    #pro_name {
+  overflow : hidden;
+  text-overflow : ellipsis;
+  white-space : nowrap;
+}
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-2 col-md-2">
@@ -86,12 +94,11 @@
                     <div id="imgDiv">
                         <c:forEach var="productVO" items="${productList}" varStatus="s">
                             <div class="col-xs-3 col-md-3 btn-like-wrapper">
-                                <a class="thumbnail thumbnail-service mod-shadow img-label animated flipInX" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">
+                                <a class="thumbnail thumbnail-service mod-shadow img-label animated flipInY" style="animation-duration: <%=Math.random()*3%>s;" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">
                                     <div class="caption">
                                         <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}">
-                                        <h5 style="height: 5px;">${productVO.pro_name}</h5>
-                                        <span class="text-pink price">NT </span>
-                                        <b class="text-pink price " style="font-size: 2em;">${productVO.price}</b>
+                                        <div id="pro_name"><h5>${productVO.pro_name}</h5></div>
+                                        <b class="text-pink price " style="font-size: 2em;">NT${productVO.price}</b>
                                     </div>
                                 </a>
                             </div>
@@ -196,27 +203,27 @@
         $(window).scrollTop( $(window).scrollTop());
         $(window).scrollLeft($(window).scrollLeft());
         $("#imgDiv").load("index.jsp #imgDiv", {
-        "nowPage" : nowPage,
-        "now_Pro_Type" : now_Pro_Type,
-        "now_Order_Type" : now_Order_Type
+        nowPage : nowPage,
+        now_Pro_Type : now_Pro_Type,
+        now_Order_Type : now_Order_Type
         });
         
         $("#pagination").load("index.jsp #pagination", {
-        "nowPage" : nowPage,
-        "now_Pro_Type" : now_Pro_Type,
-        "now_Order_Type" : now_Order_Type
+        nowPage : nowPage,
+        now_Pro_Type : now_Pro_Type,
+        now_Order_Type : now_Order_Type
         });
         
         $("#orderType").load("index.jsp #orderType", {
-        "nowPage" : nowPage,
-        "now_Pro_Type" : now_Pro_Type,
-        "now_Order_Type" : now_Order_Type
+        nowPage : nowPage,
+        now_Pro_Type : now_Pro_Type,
+        now_Order_Type : now_Order_Type
         });
         
         $("#proType").load("index.jsp #proType", {
-        "nowPage" : nowPage,
-        "now_Pro_Type" : now_Pro_Type,
-        "now_Order_Type" : now_Order_Type
+        nowPage : nowPage,
+        now_Pro_Type : now_Pro_Type,
+        now_Order_Type : now_Order_Type
         });
         
     }

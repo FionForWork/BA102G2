@@ -43,6 +43,7 @@ public class SortingHat {
 		resMap.put("2", "尚未評價");
 		resMap.put("3", "評價完成");
 		resMap.put("4", "服務完成");
+		resMap.put("5", "訂單取消");
 		
 		return resMap.get(status);
 	}
@@ -53,6 +54,8 @@ public class SortingHat {
 		iconMap.put("1", "fa fa-check-square-o");
 		iconMap.put("2", "fa fa-pencil-square-o");
 		iconMap.put("3", "fa fa-star");
+		iconMap.put("4", "fa fa-star");
+		iconMap.put("5", "fa fa-calendar-times-o");
 		
 		return iconMap.get(status);
 	}

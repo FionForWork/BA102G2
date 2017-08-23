@@ -111,7 +111,7 @@ public class OrderServlet extends HttpServlet {
                 // MailService mailService = new MailService();
                 // mailService.sendMail(to, subject, messageText);
             }
-            request.getRequestDispatcher("/Front_end/mall/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/mallArea.jsp").forward(request, response);
         }
         else if ("CHECK_GET_ITEM".equals(action)) {
             response.setCharacterEncoding("utf-8");
@@ -180,7 +180,7 @@ public class OrderServlet extends HttpServlet {
                 ProductService productService = new ProductService();
                 for (int i = 0; i < pro_noList.length; i++) {
                     Order_detailVO order_detailVO = order_detailService.getOneByComposite(ord_no, pro_noList[i]);
-                    int score = (scoreList[i].equals("")) ? 0 : Integer.valueOf(scoreList[i]);
+                    int score = (scoreList[i].equals("")) ? 3 : Integer.valueOf(scoreList[i]);
                     order_detailVO.setScore(score);
                     order_detailVO.setStatus("1");
                     order_detailService.updateOrder_detail(order_detailVO);
@@ -197,7 +197,7 @@ public class OrderServlet extends HttpServlet {
             String ord_no = request.getParameter("ord_no");
             String orderType =  request.getParameter("orderType");
             String nowPage =  request.getParameter("nowPage");
-            int score = (request.getParameter("score") == null) ? 0 : Integer.valueOf(request.getParameter("score"));
+            int score = (request.getParameter("score") == null) ? 3 : Integer.valueOf(request.getParameter("score"));
             OrdVO ordVO = ordService.getOneByPK(ord_no);
             ordVO.setScore(score);
             ordVO.setStatus("3");

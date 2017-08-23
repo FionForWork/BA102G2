@@ -371,6 +371,12 @@ public CalendarVO findByNoandDate(String com_no, String cal_date) {
 	return null;
 }
 
+@Override
+public void deleteRes(String res_no) {
+	// TODO Auto-generated method stub
+	
+}
+
 
 
 }

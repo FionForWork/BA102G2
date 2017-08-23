@@ -2,6 +2,9 @@ package com.serv.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.mem.model.MemVO;
 
 public class ServService {
 	private ServDAO_Interface dao;
@@ -38,6 +41,16 @@ public class ServService {
 		return servVO;
 	}
 	
+	public ServVO updateScore(int times, double score, String serv_no){
+		ServVO servVO=new ServVO();
+		
+		servVO.setServ_no(serv_no);
+		servVO.setTimes(times);;
+		servVO.setServ_no(serv_no);;
+		dao.updateScore(servVO);
+		return servVO;
+	}
+	
 	public void deleteServ(String serv_no){
 		dao.delete(serv_no);
 		
@@ -63,11 +76,6 @@ public class ServService {
 		
 	}
 	
-	public List<String> getComStype(String com_no){
-		return dao.getComStype(com_no);
-		
-	}
-	
 	public List<ServVO> getCom(String com_no){
 		return dao.getCom(com_no);
 		
@@ -75,7 +83,12 @@ public class ServService {
 	public List<ServVO> getSearch(String sh){
 		return dao.findBysh(sh);	
 	}
-	
+	public Set<ServVO> getServByStype(String stype_no) {
+		return dao.getServByStype(stype_no);
+	}
+	public Set<ServVO> getServByCom(String com_no) {
+		return dao.getServByCom(com_no);
+	}
 	public List<ServVO> getAllAvg(){
 		return dao.getAllAvg();
 		

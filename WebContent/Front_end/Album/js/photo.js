@@ -1,8 +1,18 @@
 $(document).ready(function(){
     $("#uploadbtn").click(function(){
         $("#uploadModal").modal();
+        $("#emptyFile").html("");
     });
     
+    $("#insertBtn").click(function(){
+    	
+    	if($("#inputFile").val() != ""){
+    		$("#insertContForm").submit();
+    	}else{
+    		$("#emptyFile").html(" (您尚未選擇照片或影片喔!)");
+    	}
+    
+    });
     $(".overlay").on("click",function(){
     	$(this).toggleClass("checked");
     	$(this).find("i").toggleClass("fa-4x");

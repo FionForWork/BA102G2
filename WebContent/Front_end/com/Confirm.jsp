@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ include file="/Front_end/mem/page/register_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 
 <title>帳號驗證正確</title>
 <br><br><br><br><br><br>

@@ -53,11 +53,15 @@ public class MemDAO implements MemDAO_Interface{
 		private static final String UPDATEPWD = 
 				"UPDATE member set pwd=? where mem_no = ?";
 		private static final String GET_Mems_ByReport_STMT = "SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status FROM member where report >= ? order by report";
+		private static final String GET_Mems_ByStatus_STMT = "SELECT mem_no,id,pwd,name,sex,to_char(bday,'yyyy-mm-dd') bday,phone,email,account,picture,report,status FROM member where status = ? order by report";
+		
 		private static final String UPDATESTATUS = 
 				"UPDATE member set status=? where mem_no = ?";
 		private static final String UPDATEREPORT = 
 				"UPDATE member set report=? where mem_no = ?";
 		
+		private static final String UPDATESTATUSFORREPORT = 
+				"UPDATE member set status='停權' where mem_no = ?";
 		@Override
 		public void updatePic(MemVO memVO) {
 			// TODO Auto-generated method stub
@@ -93,6 +97,38 @@ public class MemDAO implements MemDAO_Interface{
 			}
 			
 			
+		}
+		@Override
+		public void updateStatusForReport(MemVO memVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATESTATUSFORREPORT);
+				pstmt.setString(1, memVO.getMem_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+				
 		}
 		
 		@Override
@@ -732,13 +768,78 @@ public class MemDAO implements MemDAO_Interface{
 		
 	}
 
-
+	public Set<MemVO> getMemsByStatus(String status) {
+		Set<MemVO> set = new LinkedHashSet<MemVO>();
+		MemVO memVO = null;
 	
-
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 	
-
+		try {
 	
-
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Mems_ByStatus_STMT);
+			pstmt.setString(1, status);
+			rs = pstmt.executeQuery();
 	
+			while (rs.next()) {
+				memVO = new MemVO();
+				
+				memVO.setMem_no(rs.getString("mem_no"));
+				memVO.setId(rs.getString("id"));
+				memVO.setPwd(rs.getString("pwd"));
+				memVO.setName(rs.getString("name"));
+				memVO.setSex(rs.getString("sex"));
+				memVO.setBday(rs.getDate("bday"));
+				memVO.setPhone(rs.getString("phone"));
+				memVO.setEmail(rs.getString("email"));
+				memVO.setAccount(rs.getString("account"));
+				memVO.setPicture(rs.getBytes("picture"));
+				memVO.setReport(rs.getInt("report"));
+				memVO.setStatus(rs.getString("status"));
+				
+				set.add(memVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
 
 }
+	
+
+
+	
+
+	
+
+	
+
+

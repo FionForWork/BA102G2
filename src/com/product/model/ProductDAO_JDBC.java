@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.sun.javafx.collections.MappingChange.Map;
 
 public class ProductDAO_JDBC implements ProductDAO_Interface {
     private static final String INSERT                  = "insert into PRODUCT (PRO_NO, PRO_NAME, SELLER_NO,PRO_DESC,PRICE,AMOUNT,IMG,PRO_DATE,PROTYPE_NO,STATUS,TIMES,SCORE)" + "values('4'||lpad(PRO_NO_SEQ.NEXTVAL,3,'0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -538,4 +541,9 @@ public class ProductDAO_JDBC implements ProductDAO_Interface {
 		
 	}
 
+    @Override
+    public List<HashMap<String, Double>> getAllAvgSorce() {
+        List<HashMap<String, Double>> score=null;
+        return score;
+    }
 }

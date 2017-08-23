@@ -305,4 +305,16 @@ public AdmVO findById(String id) {
 	// TODO Auto-generated method stub
 	return null;
 }
+
+@Override
+public AdmVO oldPwd(String adm_no) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public void updatePwd(AdmVO admVO) {
+	// TODO Auto-generated method stub
+	
+}
 }

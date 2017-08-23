@@ -9,9 +9,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-    //MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1010");
+// 	MemVO memVO = memService.getOneMem("1010");
 	int nowPage = (request.getParameter("nowPage") == null)	? 1 : Integer.parseInt((request.getParameter("nowPage")));
 	int itemsCount = 5;
 	ProTraService protraService = new ProTraService();
@@ -32,10 +32,11 @@
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);
+    System.out.println("nowPage: "+nowPage);
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
-img {
+.img {
 	width: 80px;
 	height: 80px;
 }
@@ -65,7 +66,7 @@ img {
                                     <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}"> ${productVO.pro_name} </a></td>
                                     <td>${productVO.price}</td>
                                     <td>${productVO.amount}</td>
-                                    <td><img src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}"> <a href="javascript:protraDelete(${productVO.pro_no},${nowPage})" class="btn btn-danger">取消追蹤</a></td>
+                                    <td><img class="img" src="<%=request.getContextPath()%>/image/ShowImage?pro_no=${productVO.pro_no}"> <a href="javascript:protraDelete(${productVO.pro_no},${nowPage})" class="btn btn-danger">取消追蹤</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

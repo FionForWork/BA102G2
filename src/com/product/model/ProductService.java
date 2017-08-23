@@ -1,6 +1,10 @@
+
 package com.product.model;
 
+import java.util.HashMap;
 import java.util.List;
+
+import com.sun.org.apache.regexp.internal.recompile;
 
 public class ProductService {
     private ProductDAO_Interface dao;
@@ -116,6 +120,10 @@ public class ProductService {
                 break;
         }
         return orderMethod;
+    }
+    
+    public List<HashMap<String, Double>> getAllAvgSorce () {
+        return dao.getAllAvgSorce();
     }
     public void update_Status(String status,String pro_no) {
     	ProductVO productVO = new ProductVO();

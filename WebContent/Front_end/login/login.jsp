@@ -5,7 +5,12 @@
  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
-    
+    <script>
+    	$(document).ready(function(){
+    	$('#mem').modal('show');
+    		
+    	});
+    </script>
     
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	

@@ -6,12 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.sun.javafx.collections.MappingChange.Map;
+
+import sun.print.DocumentPropertiesUI;
 
 public class ProductDAO implements ProductDAO_Interface {
     private static final String INSERT                  = "insert into PRODUCT (PRO_NO, PRO_NAME, SELLER_NO,PRO_DESC,PRICE,AMOUNT,IMG,PRO_DATE,PROTYPE_NO,STATUS,TIMES,SCORE)" + "values('4'||lpad(PRO_NO_SEQ.NEXTVAL,3,'0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -507,7 +512,34 @@ public class ProductDAO implements ProductDAO_Interface {
         return list;
     }
 
-	@Override
+    @Override
+    public List<HashMap<String, Double>> getAllAvgSorce() {
+        List<HashMap<String, Double>> avgScoreList=new ArrayList<HashMap<String,Double>>();
+        try {
+            connection = dataSource.getConnection();
+            Statement statement=connection.createStatement();
+            resultSet=statement.executeQuery("select PRO_NO , SCORE/TIMES as avgScore from PRODUCT where SCORE>0 order by avgScore desc");
+            while(resultSet.next()){
+                HashMap<String, Double> map=new HashMap<String, Double>();
+                map.put(resultSet.getString(1), resultSet.getDouble(2));
+                avgScoreList.add(map);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return avgScoreList;
+    }
+    @Override
 	public void update_status(ProductVO productVO) {
 		try {
             connection = dataSource.getConnection();

@@ -28,12 +28,13 @@
 	<td>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
        <b>選擇會員編號:</b></td>
-      <td> <select style="width: 223px;" name="mem_no">
+      <td> <select style="width: 223px;" id="select1" name="mem_no">
          <c:forEach var="memVO" items="${memSvc.all}" > 
-          <option value="${memVO.mem_no}">${memVO.mem_no}
+          <option value="${memVO.mem_no}">${memVO.mem_no}</option>
          </c:forEach>   
        </select></td>
       <td><input type="submit" class="btn btn-info" value="送出"></td>
+      	<input type="hidden" value="activate selectator" id="activate_selectator1" type="button">
        <input type="hidden" name="action" value="bgetOne_For_Display">
     </FORM>
 
@@ -42,30 +43,18 @@
 	<tr><td>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
        <b>選擇會員姓名:</b></td>
-       <td><select style="width: 223px;" name="mem_no">
+       <td><select style="width: 223px;" id="select2" name="mem_no">
          <c:forEach var="memVO" items="${memSvc.all}" > 
           <option value="${memVO.mem_no}">${memVO.name}
          </c:forEach>   
        </select></td>
        <td><input type="submit" class="btn btn-info" value="送出"></td>
+       <input type="hidden" value="activate selectator" id="activate_selectator2" type="button">
        <input type="hidden" name="action" value="bgetOne_For_Display">
      </FORM></td>
      </tr>
      
-     <tr><td>
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-       <b>根據被檢舉次數:</b></td>
-       <td><select style="width: 223px;" name="mem_no">
-         <c:forEach var="memVO" items="${memSvc.all}" > 
-
-          <option value="${memVO.mem_no}">${memVO.name}:檢舉次數:${memVO.report}
-
-         </c:forEach>   
-       </select></td>
-     <td>  <input type="submit" class="btn btn-info" value="送出"></td>
-       <input type="hidden" name="action" value="bgetOne_For_Display">
-     </FORM>
-     </tr>
+   
      
      <tr><td>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
@@ -76,37 +65,68 @@
 	</FORM>
 	</tr>
 	
-	<tr><td>
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-       <b>檢舉三次以上:</b></td>
-      <td> <select style="width: 223px;"  name="mem_no">
-         <c:forEach var="memVO" items="${memSvc.all}" > 
-         <c:if test="${memVO.report>=3}">
-          <option value="${memVO.mem_no}">${memVO.name}:檢舉次數:${memVO.report}
-         </c:if>
-         </c:forEach>   
-       </select></td>
-      <td> <input type="submit" class="btn btn-info" value="送出"></td>
-       <input type="hidden" name="action" value="bgetOne_For_Display">
-     </FORM>
-	</tr>
+	
 
 	<tr><td>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
        <b>狀態停權者</b></td>
-      <td> <select style="width: 223px;" name="mem_no">
-         <c:forEach var="memVO" items="${memSvc.all}" > 
-         <c:if test="${memVO.status==\"停權\"}">
-          <option value="${memVO.mem_no}">${memVO.name}◆狀態:${memVO.status}
-         </c:if>
-         </c:forEach>   
+      <td> <select style="width: 223px;" name="status">
+        
+          <option value="停權">停權
+          <option value="正常">正常
        </select></td>
      <td>  <input type="submit" class="btn btn-info" value="送出"></td>
-       <input type="hidden" name="action" value="bgetOne_For_Display">
+       <input type="hidden" name="action" value="selectByStatus">
      </FORM></td>
 	</tr>
 	
 </table>
 </div>
 
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Back_end/mem/assets/css/fm.selectator.jquery.css"/>
+	<style>
+	
+		#wrapper {
+			padding: 15px;
+		}
+		#select1 {
+			width: 250px;
+			padding: 7px 10px;
+		}
+		
+	</style>
+	<script src="<%=request.getContextPath()%>/Back_end/mem/assets/JS/jquery-1.11.0.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Back_end/mem/assets/JS/fm.selectator.jquery.js"></script>
+	<script>
+		$(function () {
+			var $activate_selectator1 = $('#activate_selectator1');
+			$activate_selectator1.click(function () {
+				var $select1 = $('#select1');
+				
+					$select1.selectator({
+						labels: {
+							search: 'Search here...'
+						}
+					});
+					
+			});
+			$activate_selectator1.trigger('click');
+
+		});
+		$(function () {
+			var $activate_selectator2 = $('#activate_selectator2');
+			$activate_selectator2.click(function () {
+				var $select2 = $('#select2');
+				
+					$select2.selectator({
+						labels: {
+							search: 'Search here...'
+						}
+					});
+					
+			});
+			$activate_selectator2.trigger('click');
+
+		});
+	</script>
 <%@ include file="/Back_end/pages/backFooter.file"%>

@@ -41,7 +41,7 @@
 
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/aut/aut.do">
-			    <input type="submit" value="刪除">
+			    <input type="submit" class="btn btn-info " value="刪除">
 			    <input type="hidden" name="adm_no" value="${autVO.adm_no}">
 			    <input type="hidden" name="id" value="${autVO.id}">
 			    <input type="hidden" name="action" value="delete"></FORM>

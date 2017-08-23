@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $("#createAlb").click(function(){
         $("#albumModal").modal();
+        $("#emptyFile").html("");
+        $("#inputFile").removeClass("form-control");
     });
     
     $("#inputFile").fileinput({
@@ -13,7 +15,14 @@ $(document).ready(function(){
         
     });  
     
-    
+    $("#createBtn").click(function(){
+    	if($("#inputFile").val() != ""){
+    		$("#createAlbForm").submit();
+    	}else{
+    		$("#emptyFile").html(" (您尚未選擇照片或影片喔!)");
+    	}
+    	
+    });
         
 });
 

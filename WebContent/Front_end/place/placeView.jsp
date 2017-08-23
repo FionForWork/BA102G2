@@ -1,3 +1,7 @@
+<%@page import="com.placeview.model.PlaceViewVO"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="org.apache.commons.collections.map.HashedMap"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="javax.script.ScriptContext"%>
 <%@page import="com.place.model.PlaceVO"%>
@@ -6,21 +10,130 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+    String south = (request.getParameter("south") == null) ? "24.96" : request.getParameter("south");
+    String west = (request.getParameter("west") == null) ? "121.18" : request.getParameter("west");
+    String north = (request.getParameter("north") == null) ? "24.90" : request.getParameter("north");
+    String east = (request.getParameter("east") == null) ? "121.20" : request.getParameter("east");
+    int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.parseInt((request.getParameter("nowPage")));
+    int itemsCount = 4;
+    PlaceService placeService = new PlaceService();
+    List<PlaceVO> originList = placeService.getRange(south, west, north, east);
+    List<HashMap<String,String>>placeList=new ArrayList<HashMap<String,String>>();
+    for(PlaceVO placeVO:originList){
+        Iterator<PlaceViewVO> iterator = placeVO.getPlaceViewSet().iterator();
+        PlaceViewVO placeViewVO=null;
+        HashMap<String, String> map=new HashMap<String, String>();
+        if(iterator.hasNext()){
+            placeViewVO = (PlaceViewVO) iterator.next();
+            map.put("pla_no", placeVO.getPla_no());
+            map.put("name", placeVO.getName());
+            map.put("lat", placeVO.getLat());
+            map.put("lng", placeVO.getLng());
+            placeList.add(map);
+            map.put("view_no", placeViewVO.getView_no());
+        }
+    }
+    int allCount = placeList.size();
+    int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    int start = (nowPage - 1) * itemsCount;
+    int end = start + itemsCount - 1;
+    pageContext.setAttribute("nowPage", nowPage);
+    pageContext.setAttribute("totalPages", totalPages);
+    pageContext.setAttribute("placeList", placeList);
+    pageContext.setAttribute("start", start);
+    pageContext.setAttribute("end", end);
+%>
 
 <%@include file="/Front_end/place/pages/frontHeader.file"%>
 <style>
 #map {
-	height: 800px;
+	height: 600px;
 	width: 100%;
 }
 </style>
 <div class="container">
     <div class="row">
-        <div  class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <div id="placeImg" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            </div>
-            <hr>
-            <div id="comImg" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="placeImg">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <c:forEach var="placeVO" items="${placeList}" begin="${start}" end="${end}">
+                    <div class="col-xs-6 col-md-6 btn-like-wrapper">
+                        <a target="_blank" class="thumbnail thumbnail-service mod-shadow img-label animated fadeInUp" style="animation-duration: <%=Math.random() * 3%>s;" href="<%=request.getContextPath()%>/Front_end/place/onePlace.jsp?pla_no=${placeVO.pla_no}">
+                            <div class="caption">
+                                <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?view_no=${placeVO.view_no}">
+                                <div id="name">
+                                    <h5>${placeVO.name}</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
+                <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
+                <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <nav aria-label="Page navigation ">
+                        <ul class="pagination pagination-lg ">
+                            <c:choose>
+                                <c:when test="${totalPages<=5}">
+                                    <c:forEach var="i" begin="1" end="${totalPages}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </c:when>
+                                <c:when test="${nowPage<5}">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <li><a class="disabled">...</a></li>
+                                    <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                                </c:when>
+                                <c:when test="${totalPages-nowPage<5}">
+                                    <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                    <li><a class="disabled">...</a></li>
+                                    <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                    <li><a class="disabled">...</a></li>
+                                    <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <li><a class="disabled">...</a></li>
+                                    <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </nav>
+                </div>
+                <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -32,7 +145,9 @@
 <script>
     var map;
     var initialLocation;
-
+    var i = 0;
+    var south = [];
+    var west = [];
     function initMap() {
         var g = window.navigator.geolocation;
         g.getCurrentPosition(succ, fail);
@@ -44,8 +159,8 @@
         lat : 24.9694,
         lng : 121.1925
         };
-        var map = new google.maps.Map(document.getElementById("map"), {
-        minZoom : 15,
+        map = new google.maps.Map(document.getElementById("map"), {
+        minZoom : 10,
         zoom : 15,
         center : position
         });
@@ -56,26 +171,7 @@
         label : '現在位置',
         map : map
         });
-        var i = 0;
-        var south = [];
-        var west = [];
-        map.addListener('bounds_changed', function() {
-            var range = map.getBounds().toJSON();
-            south.push(range.south);
-            west.push(range.west);
-            if (Math.abs(south[0] - south[1]) < 0.008 && Math.abs(west[0] - west[1]) < 0.008) {
-                south.pop();
-                west.pop();
-            }
-            else if (i > 1 && (Math.abs(south[0] - south[1]) > 0.008 || Math.abs(west[0] - west[1]) > 0.008)) {
-                south[0] = south[1];
-                west[0] = west[1];
-                south.pop();
-                west.pop();
-                loadMark(range.south, range.west, range.north, range.east, map);
-            }
-            i++;
-        })
+        map.addListener('bounds_changed',boundsChanged);
     }
 
     function succ(event) {
@@ -85,7 +181,7 @@
         lng : event.coords.longitude
         };
         map = new google.maps.Map(document.getElementById("map"), {
-        minZoom : 15,
+        minZoom : 10,
         zoom : 15,
         center : initialLocation
         });
@@ -98,107 +194,88 @@
         var i = 0;
         var south = [];
         var west = [];
-        map.addListener('bounds_changed', function() {
-            var range = map.getBounds().toJSON();
-            south.push(range.south);
-            west.push(range.west);
-            if (Math.abs(south[0] - south[1]) < 0.008 && Math.abs(west[0] - west[1]) < 0.008) {
-                south.pop();
-                west.pop();
-            }
-            else if (i > 1 && (Math.abs(south[0] - south[1]) > 0.008 || Math.abs(west[0] - west[1]) > 0.008)) {
-                south[0] = south[1];
-                west[0] = west[1];
-                south.pop();
-                west.pop();
-                loadMark(range.south, range.west, range.north, range.east, map);
-            }
-            i++;
-        })
+        map.addListener('bounds_changed',boundsChanged);
     }
 
-    function loadMark(south, west, north, east, map) {
-        var originView = [];
-        $.ajax({
-            url : '/BA102G2/place/PlaceServlet',
-            type : "post",
-            data : {
-                action : 'MAP_CHANGE',
-                south : south - 0.003,
-                west : west - 0.003,
-                north : north - 0.003,
-                east : east - 0.003
-                },
-            timeout : 5000,
-            error : function(xhr, ajaxOptions, thrownError) {
-                console.log("xhr.status " + xhr.status);
-                console.log("thrownError " + thrownError);
-            },
-            success : function(response) {
-                var placeArray = JSON.parse(response).placeArray;
-                var comArray = JSON.parse(response).comArray;
-                showPlace(placeArray);
-                showCom(comArray);
-            }
-        })
+    function boundsChanged() {
+        var range = map.getBounds().toJSON();
+        south.push(range.south);
+        west.push(range.west);
+        if (Math.abs(south[0] - south[1]) < 0.008 && Math.abs(west[0] - west[1]) < 0.008) {
+            south.pop();
+            west.pop();
+        }
+        else if (i > 1 && (Math.abs(south[0] - south[1]) > 0.008 || Math.abs(west[0] - west[1]) > 0.008)) {
+            south[0] = south[1];
+            west[0] = west[1];
+            south.pop();
+            west.pop();
+            loadMark(range.south, range.west, range.north, range.east);
+        }
+        i++;
+    }
+    
+    function loadMark(south, west, north, east) {
+        console.log("Changed");
+        $("#placeImg").load("<%=request.getContextPath()%>/Front_end/place/placeView.jsp #placeImg",{
+            south:south,
+            west:west,
+            north:north,
+            east:east,
+            nowPage:'${nowPage}'
+        });
+        var placeArray=<%=placeList%>;
+        showPlace(south, west, north, east);
     }
     
     var placeMarkers = [];
-    function showPlace(placeArray){
-        var position;
-        var marker;
-        placeMarkers=[];
-        for (var i = 0; i < placeArray.length; i++) {
-            position = {
-            lat : parseFloat(placeArray[i].lat),
-            lng : parseFloat(placeArray[i].lng)
-            };
-            marker = new google.maps.Marker({
-            position : position,
-            title : placeArray[i].name,
-            label : placeArray[i].name,
-            map : map
-            });
-            placeMarkers.push(marker);
-        }
-        var imgDiv = "";
-        for (var i = 0; i < placeArray.length; i++) {
-            var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label animated fadeInUp' style='animation-duration:" + i * 0.4 + "s' href='/BA102G2/Front_end/place/onePlace.jsp?pla_no=" + placeArray[i].pla_no + "'>";
-            var img = "<img style='width:100%; height:200px;' src='<%=request.getContextPath()%>/image/ShowImage?view_no=" + placeArray[i].view_no + "'>"
-            var h5 = "<h5>" + placeArray[i].name + "</h5>";
-            var caption = "<div class='col-xs-3 col-md-6 btn-like-wrapper'><div class='caption'>" + a + img + h5 + "</a></div></div>"
-            imgDiv = imgDiv + caption;
-        }
-        $("#placeImg").html(imgDiv);
+    function showPlace(south, west, north, east){
+        $.ajax({
+            url:"/BA102G2/place/PlaceServlet",
+            type : "post",
+            data:{
+                action:"MAP_CHANGE",
+                type:"place",
+                south:south,
+                west:west,
+                north:north,
+                east:east,
+                nowPage:<%=nowPage%>
+            }, 
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                var placeList=JSON.parse(response);
+                var position;
+                var marker;
+                comMarkers=[];
+                for(var i=0;i<placeList.length;i++){
+                    position = {
+                    lat : parseFloat(placeList[i].lat),
+                    lng : parseFloat(placeList[i].lng)
+                    };
+                    marker = new google.maps.Marker({
+                    position : position,
+                    title : placeList[i].name,
+                    label : placeList[i].name,
+                    map : map
+                    });
+                    placeMarkers.push(marker);
+                }
+            }
+        });  
     }
     
-    var comMarkers = [];
-    function showCom(comArray){
-        var position;
-        var marker;
-        comMarkers=[];
-        for (var i = 0; i < comArray.length; i++) {
-            position = {
-            lat : parseFloat(comArray[i].lat),
-            lng : parseFloat(comArray[i].lng)
-            };
-            marker = new google.maps.Marker({
-            position : position,
-            title : comArray[i].name,
-            label : comArray[i].name,
-            map : map
-            });
-            comMarkers.push(marker);
-        }
-        var imgDiv = "";
-        for (var i = 0; i < comArray.length; i++) {
-            var a = "<a target='_blank' class='thumbnail thumbnail-service mod-shadow img-label animated fadeInUp' style='animation-duration:" + i * 0.4 + "s' href='<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp?com_no="+ comArray[i].com_no + "'>";
-            var img = "<img style='width:100%; height:200px;' src='<%=request.getContextPath()%>/image/ShowImage?com_no=" + comArray[i].com_no + "'>"
-            var h5 = "<h5>" + comArray[i].name + "</h5>";
-            var caption = "<div class='col-xs-3 col-md-6 btn-like-wrapper'><div class='caption'>" + a + img + h5 + "</a></div></div>"
-            imgDiv = imgDiv + caption;
-        }
-        $("#comImg").html(imgDiv);
+    function change(nowPage) {
+        $("#placeImg").load("<%=request.getContextPath()%>/Front_end/place/placeView.jsp #placeImg", {
+        south : comRange[0],
+        west : comRange[1],
+        north : comRange[2],
+        east : comRange[3],
+        nowPage : nowPage
+        });
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzbntmAuGW16US8FK_QIoDNXOPlspRjNw&callback=initMap"></script>

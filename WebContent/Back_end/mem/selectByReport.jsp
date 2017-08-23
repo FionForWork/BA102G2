@@ -4,7 +4,8 @@
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
 <jsp:useBean id="selectByReport" scope="request" type="java.util.Set" />
 
-<title>Insert title here</title>
+<title>會員資料</title>
+<br><br>
 <div id="content">
 
 <table class="table table-striped">
@@ -20,8 +21,7 @@
 		<th>銀行帳戶</th>
 		<th>被檢舉次數</th>
 		<th>狀態</th>
-		
-		<th>刪除</th>
+	
 	</tr>
 	<c:forEach var="memVO" items="${selectByReport}" >
 	<tr>

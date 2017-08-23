@@ -8,6 +8,7 @@
 <%@ page import="com.mem.model.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.DateFormat" %>
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	MemVO memVO = (MemVO)session.getAttribute("memVO"); // 假會員
 	RFQ_DetailService rfq_detailService = new RFQ_DetailService();
@@ -24,7 +25,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>List My RFQ</title>
 </head>
 <body>
 <%@ include file="page/memHeader.file" %>
@@ -39,7 +39,7 @@
 		</thead>
 		<c:forEach var="rfq_detailVO" items="${list}">
 			<tr>
-				<td>${datedf.format(rfq_detailVO.ser_date)}<br>${timedf.format(rfq_detailVO.ser_date)}</td>
+				<td><p>${datedf.format(rfq_detailVO.ser_date)}</p></td>
 				<td>
 					${rfq_detailVO.location}${sortingHat.getServType(rfq_detailVO.stype_no)}服務<br>
 					${rfq_detailVO.content}
@@ -53,12 +53,12 @@
 					<div class="dropdown">
 					<c:if test="${rfq_detailVO.status == '1'}">
 						<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-						${sortingHat.getRFQStatus(rfq_detailVO.status)}
+						<p>${sortingHat.getRFQStatus(rfq_detailVO.status)}</p>
 						<span class="caret"></span></button>
 					</c:if>
 					<c:if test="${rfq_detailVO.status == '0'}">
 						<button class="btn btn-danger dropdown-toggle disabled" type="button" data-toggle="dropdown">
-						${sortingHat.getRFQStatus(rfq_detailVO.status)}
+						<p>${sortingHat.getRFQStatus(rfq_detailVO.status)}</p>
 						<span class="caret"></span></button>
 					</c:if>
 						<ul class="dropdown-menu">

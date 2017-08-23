@@ -3,12 +3,14 @@ package com.product.model;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
 import com.protra.model.ProtraDAO;
+import com.sun.javafx.collections.MappingChange.Map;
 
 import hibernate.util.HibernateUtil;
 
@@ -277,5 +279,10 @@ public class ProductDAO_Hibernate implements ProductDAO_Interface {
 		// TODO Auto-generated method stub
 		
 	}
+    @Override
+    public List<HashMap<String, Double>> getAllAvgSorce() {
+        List<HashMap<String, Double>> score=null;
+        return score;
+    }
 
 }

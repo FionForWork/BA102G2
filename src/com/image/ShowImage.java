@@ -56,15 +56,13 @@ public class ShowImage extends HttpServlet {
             buf=memVO.getPicture();
         }
         else if(request.getParameter("com_no") != null){
-            System.out.println(request.getParameter("com_no"));
             ComService comService=new ComService();
             String com_no=request.getParameter("com_no");
             ComVO comVO=comService.getOneCom(com_no);
             buf=comVO.getLogo();
-            System.out.println(buf);
         }
         if(buf==null){
-            String noImgPath="/Front_end/Resource/img/noImg.jpg";
+            String noImgPath="/Front_end/Resource/img/noImg.gif";
             FileInputStream fileInputStream=new FileInputStream(getServletContext().getRealPath(noImgPath));
             buf=toByteArray(fileInputStream);
         }

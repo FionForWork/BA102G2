@@ -32,10 +32,6 @@ a.thumbnail:hover {
 	border: 1px solid #e2e2e2;
 }
 
-.works_image {
-	width: 100%;
-	height: 100%;
-}
 
 li {
 	list-style: none;
@@ -115,8 +111,14 @@ li {
 .table td {
 	word-break: break-all;
 }
+.works_image {
+	width: 100%;
+	height: 100%;
+}
 
 .works_box {
+	width: 400px;
+	height: 270px;
 	padding-left:0px;
 }
 
@@ -154,6 +156,6 @@ li {
 	-ms-transform: translate(-50%, -50%);
 }
 
-.btn {
+.btn-lg {
 	 width:200px;
 }

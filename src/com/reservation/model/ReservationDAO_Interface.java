@@ -20,4 +20,5 @@ public interface ReservationDAO_Interface {
 	List<ReservationVO> getMemRes(String mem_no, String status, String status2);
 	List<ReservationVO> getComRes(String com_no, String status);
 	List<ReservationVO> getComRes(String com_no, String status, String status2);
+	List<String> getDeleteRes();
 }

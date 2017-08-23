@@ -28,6 +28,9 @@ public class AutServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+	
+		
+		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -36,13 +39,20 @@ public class AutServlet extends HttpServlet{
 			
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				
+				
+				String[] aut=req.getParameterValues("id");
 				String adm_no = req.getParameter("adm_no").trim();
-				String id = req.getParameter("id").trim();
-				
-				
 				AutVO autVO = new AutVO();
-				autVO.setAdm_no(adm_no);
-				autVO.setId(id);
+				AutService autSvc = new AutService();
+				 for (int i = 0; i < aut.length; i++) {
+					
+					autVO.setAdm_no(adm_no);
+					autVO.setId(aut[i]);
+						
+					autVO = autSvc.addAut(adm_no,aut[i]);
+				 }
+
 				
 				
 
@@ -50,8 +60,7 @@ public class AutServlet extends HttpServlet{
 				
 				
 				/***************************2.開始新增資料***************************************/
-				AutService autSvc = new AutService();
-				autVO = autSvc.addAut(adm_no,id);
+		
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/Back_end/aut/listAllAut.jsp";

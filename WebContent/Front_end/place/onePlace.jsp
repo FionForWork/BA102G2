@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="com.mysql.fabric.xmlrpc.base.Array"%>
+<%-- <%@page import="com.mysql.fabric.xmlrpc.base.Array"%> --%>
 <%@page import="com.placeview.model.PlaceViewVO"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.List"%>
@@ -26,6 +26,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="font-size: 20px;">
             <h3><b>景點名稱:</b>${placeVO.name}</h3>
             <h3><b>景點地址:</b>${placeVO.addr}</h3>
+            <h3><b>景點描述:</b>${placeVO.pla_desc}</h3>
         </div>
         <c:forEach var="view" items="${viewList}">
             <div id="placeImg" class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 20px;">

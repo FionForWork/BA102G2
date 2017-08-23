@@ -2,6 +2,8 @@ package com.adm.model;
 
 import java.util.List;
 
+import com.mem.model.MemVO;
+
 
 
 public class AdmService {
@@ -29,12 +31,22 @@ public class AdmService {
 		return admVO;
 	}
 	
+	public AdmVO oldPwd(String adm_no){
+		return dao.oldPwd(adm_no);
+	}
 	//預留給 Struts 2 用的
 	public void addAmd(AdmVO admVO){
 		dao.insert(admVO);
 		
 	}
-	
+	public AdmVO updatePwd(String adm_no,String pwd){
+		AdmVO admVO = new AdmVO();
+		admVO.setAdm_no(adm_no);
+		admVO.setPwd(pwd);
+		dao.updatePwd(admVO);
+		
+		return admVO;
+	}
 	
 	public AdmVO  updateAdm(String adm_no,String id,String pwd,String name,String job,String status)
 	{

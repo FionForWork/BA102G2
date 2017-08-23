@@ -1,7 +1,10 @@
 package com.product.model;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+
+import com.sun.javafx.collections.MappingChange.Map;
 
 public interface ProductDAO_Interface {
     
@@ -33,5 +36,6 @@ public interface ProductDAO_Interface {
     
     List<ProductVO> getPageBySeller(int start, int itemsCount,String seller_no);
     
+    List<HashMap<String, Double>> getAllAvgSorce();
     void update_status(ProductVO productVO);
 }

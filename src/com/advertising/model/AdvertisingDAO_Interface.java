@@ -11,4 +11,7 @@ public interface AdvertisingDAO_Interface {
 	public List<AdvertisingVO> getAllUnverified();
 	public List<AdvertisingVO> getOneAll(String com_no);
 	public List<AdvertisingVO> getOneSatus();
+	public List<AdvertisingVO> getAllByStatus(String status);
+	public List<AdvertisingVO> getAllByStatus(String status1,String status2);
+	
 }
