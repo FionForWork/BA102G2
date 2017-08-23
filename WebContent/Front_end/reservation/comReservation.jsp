@@ -41,7 +41,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
 </head>
 <body>
-<%@ include file="page/comHeader.file" %>
+<%@ include file="page/comSidebar_header.file" %>
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a id="0" class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
