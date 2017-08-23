@@ -12,6 +12,7 @@ int count=1;
 
 
 %>
+
 <div>
     <section id="main_ad" class="carousel slide" data-ride="carousel">
         <!-- 活動指示器 -->
@@ -41,7 +42,7 @@ int count=1;
         </div>
                 </div>
                 <c:forEach var="advertisingVO" items="${list1}" varStatus="ddt">
-                <c:if test="${advertisingVO. status==1 }">
+                <c:if test="${advertisingVO.status==1 }">
             <div class="item " data-image-lg="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}"  
             data-image-xs="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}" 
             onclick="location.href='<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${advertisingVO.com_no}';">

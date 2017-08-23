@@ -10,7 +10,7 @@
 <%@ page import="java.text.DateFormat" %>
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
-	MemVO memVO = (MemVO)session.getAttribute("memVO"); // 假會員
+	MemVO memVO = (MemVO)session.getAttribute("memVO"); // 會員資料
 	RFQ_DetailService rfq_detailService = new RFQ_DetailService();
 	List<RFQ_DetailVO> list = rfq_detailService.getMyRFQDetail(memVO.getMem_no());
 	DateFormat datedf = new SimpleDateFormat("YYYY年M月d日");

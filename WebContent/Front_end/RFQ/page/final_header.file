@@ -1,32 +1,38 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--以登入 且 會員頁面-->
 <head>
-    <title>She Said Yes!</title>
-    <meta charset="UTF-8">
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/bootstrap-multiselect.css" rel="stylesheet">
+    
+     <meta charset="UTF-8">
+     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/notosanstc.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento.css" rel="stylesheet">
+    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans.css' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/pnotify.custom.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/index.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/quote/css/rfq.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/advertising.css" rel="stylesheet">
-	<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
-
-    <script src="<%=request.getContextPath()%>/Front_end/quote/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/quote/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/quote/js/top.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/advertising.js" type="text/javascript"></script>
-
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/index.css" rel="stylesheet">
     
+    <link href="<%=request.getContextPath()%>/Front_end/com_page/css/message.css" rel="stylesheet">
+
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+    
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
+
+ 
+	<link href="<%=request.getContextPath()%>/Front_end/Advertising/css/advertising.css" rel="stylesheet">
+    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
+	
+    <script src="<%=request.getContextPath()%>/Front_end/com_page/js/message.js" type="text/javascript"></script>
+
+
 <style type="text/css">
 
 a {text-decoration: none}
@@ -343,7 +349,3 @@ function callback2() {
     <!--這裡開始-->
     <!--這裡開始-->
     <!--這裡開始-->
-   
-    <div class="container">
-        <div class="row">
-<div class="col-offset-1 col-md-10 ">
