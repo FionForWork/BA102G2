@@ -84,9 +84,10 @@ Object comVO = session.getAttribute("comVO");
 		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
 			 <input type="submit" class="btn btn-info " value="修改">
 			 <input type="hidden" name="com_no"value="${comVO.com_no}" >
-			 <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-	<br><br>
-		<a href="<%=request.getContextPath()%>/Front_end/serv/addServ.jsp">新增服務</a>
+			 <input type="hidden" name="action"	value="getOne_For_Update">　　　　　<input type="button" class="btn btn-info" value="新增服務" onclick="location.href='<%=request.getContextPath()%>/Front_end/serv/addServ.jsp'" >
+	</FORM>
+		<br><br>
+		
 		</div>
 		
 	</div>

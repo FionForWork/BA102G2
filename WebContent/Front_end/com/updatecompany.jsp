@@ -7,7 +7,20 @@ ComVO comVO =(ComVO) request.getAttribute("comVO");
 Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
+
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
+
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+	
+ 
 <title>修改廠商</title>
 <div class="container">
 	<div class="row">
@@ -39,11 +52,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <div class="col-xs-12 col-sm-7 col-sm-push-1" id="big">
 
 <center><h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">編輯廠商資料</h1></center>
-	<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	</font>
-</c:if>
+
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form1"  enctype="multipart/form-data">
 
 
@@ -95,7 +104,9 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <input type="hidden" name="status" value="${comVO.status}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="com_no" value="${comVO.com_no}">
-<input type="submit" class="btn btn-info" value="送出"></FORM>
+<input type="submit" class="btn btn-info" value="送出">　　　　　　　　　　　　　　　　
+<input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp'" >
+</FORM>
 
 
 

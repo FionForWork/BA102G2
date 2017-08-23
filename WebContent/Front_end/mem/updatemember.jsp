@@ -8,6 +8,18 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <title>修改會員</title>
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
+
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+	
+ 
 <div class="container">
         <div class="row">
 
@@ -59,11 +71,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <div class="col-xs-12 col-sm-7 col-sm-push-1" id="big">
 
 <center><h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">編輯個人資料</h1></center>
-			<%--錯誤處理 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	</font>
-</c:if>
+			
+
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data">
 		
 		
@@ -117,7 +126,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <input type="hidden" name="status" value="${memVO.status}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_no" value="${memVO.mem_no}">
-<input type="submit" class="btn btn-info" value="送出"></FORM>
+<input type="submit" class="btn btn-info" value="送出">　　　　　　　　　　　　　　　　　　　　　
+<input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp'" >
+</FORM>
 
 
 

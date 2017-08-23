@@ -43,13 +43,8 @@
             </div>
 <div class="col-xs-12 col-sm-7 col-sm-push-1" id="big">
 <h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">密碼修改</h1><br>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>
-	請修正錯誤:<br>
-	</font>
-</c:if>
-<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form3" onSubmit="return check();" >
+
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form5" onSubmit="return check();" >
 		<div class="form-group">
            <span >舊密碼:<font color='red'>${errorMsgs.get(0)}</font></span>
            <input type="password" class="form-control"  name="oldpwd" value="">
@@ -72,7 +67,7 @@
 <script language="javascript"> 
 	function check() 
 	{ 
-	if ((document.form3.elements[1].value)!=(document.form3.elements[2].value)){ 
+	if ((document.form5.elements[1].value)!=(document.form5.elements[2].value)){ 
 	alert("確認新密碼不一致"); 
 	return false; 
 	} 

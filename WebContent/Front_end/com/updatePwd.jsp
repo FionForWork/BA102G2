@@ -32,11 +32,6 @@
 		</div>
 <div class="col-xs-12 col-sm-7 col-sm-push-1" id="big">
 <h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">密碼修改</h1><br>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>
-	請修正錯誤:<br>
-	</font>
-</c:if>
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form9" onSubmit="return check();" >
 		<div class="form-group">
