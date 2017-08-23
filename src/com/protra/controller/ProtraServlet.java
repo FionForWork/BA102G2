@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import com.mem.model.MemVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
-import com.protra.model.ProTraService;
+import com.protra.model.ProtraService;
 import com.protra.model.ProtraVO;
 
 /**
@@ -36,7 +36,7 @@ public class ProtraServlet extends HttpServlet {
         MemVO memVO=(MemVO)session.getAttribute("memVO");
         String mem_no = memVO.getMem_no();
         ProductVO productVO=(ProductVO)session.getAttribute("productVO");
-        ProTraService protraService = new ProTraService();
+        ProtraService protraService = new ProtraService();
 
         if ("ADD".equals(action)) {
             String pro_no = productVO.getPro_no();
