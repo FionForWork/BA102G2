@@ -195,6 +195,17 @@
 	</servlet-mapping>
 
 
+
+<!--   <servlet> -->
+<!--     <servlet-name>testSchedule</servlet-name> -->
+<!--     <servlet-class>com.schedule.testSchedule</servlet-class> -->
+<!--         <load-on-startup>10</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>testSchedule</servlet-name> -->
+<!--       <url-pattern>/testSchedule</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
   <servlet>
     <servlet-name>AdvertisingServlet</servlet-name>
     <servlet-class>com.advertising.controller.AdvertisingServlet</servlet-class>

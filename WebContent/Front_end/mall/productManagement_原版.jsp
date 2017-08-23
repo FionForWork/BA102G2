@@ -80,7 +80,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <td>
-                                        <button type="button" class="btn btn-info" onclick="showUpdate('${productVO.pro_no}')">商品資料修改</button>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#${productVO.pro_no}">商品資料修改</button>
+                                        <%@include file="pages/productUpdate.file"%>
                                     </td>
                                     <c:choose>
                                         <c:when test="${productVO.status=='0'}">
@@ -100,17 +101,10 @@
                                                 </div>
                                             </td>
                                         </c:when>
-                                        <c:when test="${productVO.status=='3'}">
-                                            <td>
-                                                <div id="status${productVO.pro_no}">
-                                                    <p>審核未通過</p>
-                                                </div>
-                                            </td>
-                                        </c:when>
                                         <c:otherwise>
                                             <td>
                                                 <div id="status${productVO.pro_no}">
-                                                    <p>被檢舉下架</p>
+                                                    <p>審核未過，3天後刪除資料</p>
                                                 </div>
                                             </td>
                                         </c:otherwise>
@@ -121,7 +115,8 @@
                     </table>
                 </div>
                 <div class="col-xs-2 col-md-2">
-                    <button type="button" class="btn btn-info" onclick="showAdd()">申請新商品上架</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#NewProduct">申請新商品上架</button>
+                    <%@include file="pages/productAdd.file"%>
                 </div>
             </div>
             <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
@@ -193,42 +188,126 @@
         <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
 </div>
-﻿<div class="modal fade" id="productUpdate"></div>
-﻿<div class="modal fade" id="productAdd"></div>
 <script>
-    $("#productUpdate").on("hidden.bs.modal", function() {  
-        $(this).removeData("modal");  
-      });
-
-    $("#productAdd").on("hidden.bs.modal", function() {  
-        $(this).removeData("modal");  
-      });
-    
-    function showUpdate(pro_no) {
-        $("#productUpdate").load("${preLocation}/pages/productUpdate.jsp",{pro_no:pro_no,nowPage:${nowPage}},
-                function () {
-                    $("#productUpdate").modal("show");
-                }
-        );
-    }
-    
-    function showAdd() {
-        $("#productAdd").load("${preLocation}/pages/productAdd.jsp",
-                function () {
-                    $("#productAdd").modal("show");
-                }
-        );
-    }
-    
-    
     function change(nowPage){
-        $(".pagination").load("${preLocation}/productManagement.jsp .pagination",{"nowPage":nowPage});
-        $("#content").load("${preLocation}/productManagement.jsp #content",{"nowPage":nowPage});
+        $(".pagination").load("/BA102G2/Front_end/mall/productManagement.jsp .pagination",{"nowPage":nowPage});
+        $("#content").load("/BA102G2/Front_end/mall/productManagement.jsp #content",{"nowPage":nowPage});
         $(window).scrollLeft("0");
         $(window).scrollTop("0");
     }
-   
     
+    function addCheck() {
+        var pro_name = $("#addName").val();
+        if (pro_name == "") {
+            alert("請輸入商品名稱");
+        }
+        else {
+            $("#addForm").submit();
+        }
+    }
+
+    $(".addImg").on("dragover", function(e) {
+        e.preventDefault();
+    });
+
+    $(".addImg").on("drop", function(e) {
+        e.preventDefault();
+        var files = event.dataTransfer.files;
+        var xhr = new XMLHttpRequest();
+        var url = "/BA102G2/product/ProductServlet?action=ADD_AJAX";
+        xhr.open('POST', url);
+        var form = new FormData();
+        if(files==null){
+            alert("必須上傳圖片");
+            return;
+        }
+        else if (!files[0].type.match("image")) {
+            var name = files[0].name;
+            alert(name + "請上傳圖片!!!!");
+            return;
+        }
+        else if ($("#addName").val() == "") {
+            alert("請輸入商品名稱");
+            return;
+        }
+        else{
+            var reader = new FileReader();
+            form.append("img", files[0]);
+            form.append("pro_name", $("#addName").val());
+            form.append("pro_desc", $("#addDesc").val());
+            form.append("price", $("#addPrice").val());
+            form.append("protype_no", $("#addType").val());
+            form.append("amount", $("#addAmount").val());
+            xhr.send(form);
+            xhr.onreadystatechange = function() {
+                if (xhr.responseText == "OK") {
+                    reader.readAsDataURL(files[0]);
+                    reader.onload = function(e) {
+                        $(".addPreview").attr("src", e.target.result);
+                            alert("已申請上架");
+                    }
+                }
+            }
+        }
+    });
+
+    $("#add").on("change", function() {
+        if (this.files[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+            reader.onload = function(e) {
+                $(".addPreview").attr('src', e.target.result);
+            }
+        }
+    });
+
+    $(".updateImg").on("dragover", function(e) {
+        e.preventDefault();
+    });
+
+    $(".updateImg").on("drop", function(e) {
+        e.preventDefault();
+        var files = event.dataTransfer.files;
+        var xhr = new XMLHttpRequest();
+        var url = "/BA102G2/product/ProductServlet";
+        xhr.open('POST', url);
+        var form = new FormData();
+        if (!files[0].type.match("image")) {
+            var name = files[0].name;
+            alert(name + "請上傳圖片!!!!");
+            return;
+        }
+        else {
+            var reader = new FileReader();
+            form.append("img", files[0]);
+            form.append("action", "UPDATE_AJAX");
+            form.append("pro_no", $("#updateNo").val());
+            form.append("pro_name", $("#updateName").val());
+            form.append("pro_desc", $("#updateDesc").val());
+            form.append("price", $("#updatePrice").val());
+            form.append("amount", $("#updateAmount").val());
+            xhr.send(form);
+            xhr.onreadystatechange = function() {
+                if (xhr.responseText == "OK") {
+                    reader.readAsDataURL(files[0]);
+                    reader.onload = function(e) {
+                        $(".updatePreview").attr("src", e.target.result);
+                        alert("已更新資料");
+                    }
+                }
+            }
+        }
+    });
+    
+    $(".update").on("change", function() {
+        if (this.files[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+            reader.onload = function(e) {
+                $(".updatePreview").attr('src', e.target.result);
+            }
+        }
+    });
     function onOrOff(pro_no) {
         $.ajax({
         url : "/BA102G2/product/ProductServlet",

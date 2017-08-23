@@ -48,14 +48,14 @@
 <%@include file="/Front_end/place/pages/frontHeader.file"%>
 <style>
 #map {
-    height:600px;
+	height: 600px;
 	width: 100%;
 }
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <div id="placeImg" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="placeImg">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <c:forEach var="placeVO" items="${placeList}" begin="${start}" end="${end}">
                     <div class="col-xs-6 col-md-6 btn-like-wrapper">
                         <a target="_blank" class="thumbnail thumbnail-service mod-shadow img-label animated fadeInUp" style="animation-duration: <%=Math.random() * 3%>s;" href="<%=request.getContextPath()%>/Front_end/place/onePlace.jsp?pla_no=${placeVO.pla_no}">
@@ -69,7 +69,7 @@
                     </div>
                 </c:forEach>
                 <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
-                <div class="text-center">
+                <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <nav aria-label="Page navigation ">
                         <ul class="pagination pagination-lg ">
                             <c:choose>
@@ -133,8 +133,8 @@
                         </ul>
                     </nav>
                 </div>
+                <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
             </div>
-            <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div id="map"></div>
