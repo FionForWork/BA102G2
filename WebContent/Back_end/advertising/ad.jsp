@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 		
 
@@ -25,10 +26,10 @@
 	
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>廣告刊登管理</title>
 </head>
 <body>
-	<%@ include file="page/before.file"%>
+	<%@ include file="page/header.file"%>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -89,7 +90,7 @@
 										</c:choose></td>
 									<td>
 											<c:choose>
-												<c:when test="${advertisingVO.status=='1'}">
+												<c:when test="${advertisingVO.status=='1' || advertisingVO.status=='2'}">
 													<button class="btn btn-info" data-toggle="collapse" data-target="#0${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
@@ -117,10 +118,10 @@
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-info" value="通過" disabled="disabled" >	
+													<input type="button" id="button" class="btn btn-info" value="通過" disabled="disabled" >	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-info" value="通過" onclick="approved(this);">
+													<input type="button" id="button" class="btn btn-info" value="通過" onclick="approved(this);">
 												
 												</c:otherwise>
 												</c:choose>			
@@ -133,10 +134,10 @@
 												<input type="hidden" name="action" value="disapproved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-danger" value="未通過" disabled="disabled">	
+													<input type="button" class="btn btn-danger" id="button" value="未通過" disabled="disabled">	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-danger" value="未通過" onclick="disapproved(this);">
+													<input type="button" class="btn btn-danger" id="button" value="未通過" onclick="disapproved(this);">
 												</c:otherwise>
 												</c:choose>				
 												</form>
@@ -165,7 +166,7 @@
 			
 
 	
-	<%@ include file="page/after.file"%>
+	<%@ include file="page/footer.file"%>
 </body>
 <script type="text/javascript">
 
@@ -206,7 +207,7 @@ function disapproved(btn){
 		},
 		success : function() {
 			$("#"+id).children().html("未通過").css("color","red");
-			$("#"+id).next().children().click();
+			$("#"+id).next().children().click().attr("disabled","disabled");
 		}
 	});	
 }

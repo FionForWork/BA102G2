@@ -3,6 +3,7 @@ package com.companycompositequery.controller;
 import java.io.*;
 import java.util.*;
 import com.com.model.*;
+import com.quote.model.QuoteVO;
 import com.serv.model.*;
 
 import javax.servlet.*;
@@ -23,7 +24,7 @@ public class CompanyCompositeQuery extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("listEmps_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+		if ("listcoms_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -51,10 +52,11 @@ public class CompanyCompositeQuery extends HttpServlet {
 				List<ComVO> list  = comSvc.getAll(com_map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("listCom_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-				RequestDispatcher successView = req.getRequestDispatcher("/Front_end/com_page/all_company.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
-				successView.forward(req, res);
 				
+					req.setAttribute("listCom_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+					RequestDispatcher successView = req.getRequestDispatcher("/Front_end/com_page/all_company.jsp");
+					successView.forward(req, res);
+
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -62,6 +64,57 @@ public class CompanyCompositeQuery extends HttpServlet {
 						.getRequestDispatcher("/Front_end/com_page/all_company.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		
+		if ("listAll".equals(action)) {
+			String sort = req.getParameter("sort");
+			System.out.println(sort);
+			
+			ComService comSvc = new ComService();
+			List<ComVO> comList  = comSvc.getAll();
+			
+			if(sort.startsWith("date")){
+				Collections.sort(comList, new Comparator<ComVO>(){
+					@Override
+					public int compare(ComVO comVO1, ComVO comCO2) {
+						int index = comVO1.getCom_no().compareTo(comCO2.getCom_no());
+						return index;
+					}	
+				});
+				if(sort.equals("dateDesc")){
+					Collections.reverse(comList);
+				}
+			}
+			req.setAttribute("listCom_ByCompositeQuery", comList);
+
+			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/com_page/all_company.jsp");
+			successView.forward(req, res);
+
+		}
+		if ("listAllByScore".equals(action)) {
+			String sort = req.getParameter("sort");
+			System.out.println(sort);
+			
+			ServService servSvc = new ServService();
+			List<ServVO> servList  = servSvc.getAllAvg();
+			
+			if(sort.startsWith("score")){
+				Collections.sort(servList, new Comparator<ServVO>(){
+					@Override
+					public int compare(ServVO servVO1, ServVO servCO2) {
+						int index = servVO1.getScore().compareTo(servCO2.getScore());
+						return index;
+					}	
+				});
+				if(sort.equals("scoreDesc")){
+					Collections.reverse(servList);
+				}
+			}
+			req.setAttribute("listCom_ByCompositeQuery", servList);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/Front_end/com_page/all_company.jsp");
+			successView.forward(req, res);
+			
 		}
 	}
 

@@ -134,17 +134,17 @@ a#close_chat {
 /*     border-color: transparent #c0c0c0 transparent transparent;             */
 /* } */
 
-.msg-r:after{
-    width: 0;
-    height: 0;
-    content: "";
-    top: -5px;
-    left: 14px;
-    position: relative;
-    border-style: solid;
-    border-width: 13px 13px 0 0;
-    border-color: #c0c0c0 transparent transparent transparent;     
-}
+/* .msg-r:after{ */
+/*     width: 0; */
+/*     height: 0; */
+/*     content: ""; */
+/*     top: -5px; */
+/*     left: 14px; */
+/*     position: relative; */
+/*     border-style: solid; */
+/*     border-width: 13px 13px 0 0; */
+/*     border-color: #c0c0c0 transparent transparent transparent;      */
+/* } */
 
 
 .text-field {
@@ -196,7 +196,7 @@ a.sendMessage_btn {
 .msg_text > p:last-of-type{
     width:100%;
     color:black;
-    margin:5px 7px -7px 7px ;
+    margin:7px 7px -7px 7px ;
     border:1px;
 }
 .text-r > p {

@@ -28,7 +28,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="page/before.file"%>
+	<%@ include file="page/header.file"%>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -89,7 +89,7 @@
 										</c:choose></td>
 									<td>
 											<c:choose>
-												<c:when test="${advertisingVO.status=='1'}">
+												<c:when test="${advertisingVO.status=='1' || advertisingVO.status=='2'}">
 													<button class="btn btn-info" data-toggle="collapse" data-target="#0${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
@@ -165,7 +165,7 @@
 			
 
 	
-	<%@ include file="page/after.file"%>
+	<%@ include file="page/footer.file"%>
 </body>
 <script type="text/javascript">
 
@@ -206,7 +206,7 @@ function disapproved(btn){
 		},
 		success : function() {
 			$("#"+id).children().html("未通過").css("color","red");
-			$("#"+id).next().children().click();
+			$("#"+id).next().children().click().attr("disabled","disabled");
 		}
 	});	
 }

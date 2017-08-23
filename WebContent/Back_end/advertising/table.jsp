@@ -46,6 +46,7 @@
 						</tr>
 					</thead>
 					<tbody>
+
 							<c:forEach var="advertisingVO" items="${advertisingList}">
 								<tr>
 									<c:forEach var="comVO" items="${comList}">
@@ -72,7 +73,7 @@
 										</c:choose></td>
 									<td>
 											<c:choose>
-												<c:when test="${advertisingVO.status=='1'}">
+												<c:when test="${advertisingVO.status=='1' || advertisingVO.status=='2'}">
 													<button class="btn btn-info" data-toggle="collapse" data-target="#1${advertisingVO.adv_no}" disabled="disabled">審核廣告</button>	
 												</c:when>
 												<c:otherwise>
@@ -99,11 +100,11 @@
 												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
-												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-info" value="通過" disabled="disabled" >	
+												<c:when test="${advertisingVO.status=='1' || advertisingVO.status=='2'}">
+													<input type="button" class="btn btn-info" id="button1" value="通過" disabled="disabled" >	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-info" value="通過" onclick="approved(this);">
+													<input type="button" class="btn btn-info" id="button1" value="通過" onclick="approved(this);">
 												
 												</c:otherwise>
 												</c:choose>			
@@ -116,19 +117,19 @@
 												<input type="hidden" name="action" value="disapproved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-danger" value="未通過" disabled="disabled">	
+													<input type="button" class="btn btn-danger" id="button1" value="未通過" disabled="disabled">	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-danger" value="未通過" onclick="disapproved(this);">
+													<input type="button" class="btn btn-danger" id="button1" value="未通過" onclick="disapproved(this);">
 												</c:otherwise>
 												</c:choose>				
 												</form>
 											</div>
 										</div>
 									</td>
-								</tr>
-										
+								</tr>										
 							</c:forEach>
+
 					</tbody>
 				</table>
 	

@@ -18,47 +18,47 @@ public class ContactUs extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-		req.setAttribute("errorMsgs", errorMsgs);
-		Map<String,String> contact_us_map = new LinkedHashMap<String,String>();
+//		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+//		req.setAttribute("errorMsgs", errorMsgs);
+//		Map<String,String> contact_us_map = new LinkedHashMap<String,String>();
 		String requestURL = new String(req.getParameter("requestURL"));
 		System.out.println(requestURL);
 		
 		String name = new String(req.getParameter("name").trim());
-		if (name == null || name.trim().length() == 0) {
-			errorMsgs.put("name","姓名請勿空白");
-		}else{
-			contact_us_map.put("name",name);			
-		}
-		
+//		if (name == null || name.trim().length() == 0) {
+//			errorMsgs.put("name","姓名請勿空白");
+//		}else{
+//			contact_us_map.put("name",name);			
+//		}
+//		
 		String email = new String(req.getParameter("email").trim());
-		if (email == null || email.trim().length() == 0) {
-			errorMsgs.put("email","信箱請勿空白");
-		}else{
-			contact_us_map.put("email",email);			
-		}
-		
+//		if (email == null || email.trim().length() == 0) {
+//			errorMsgs.put("email","信箱請勿空白");
+//		}else{
+//			contact_us_map.put("email",email);			
+//		}
+//		
 		String messagesArea = new String(req.getParameter("messagesArea"));
-		if (messagesArea == null || messagesArea.trim().length() == 0) { 
-			errorMsgs.put("messagesArea","內容請勿空白");
-		}else{
-			contact_us_map.put("messagesArea",messagesArea);			
-		}
-		
-		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("contact_us_map", contact_us_map);
-			System.out.println("com_no="+req.getParameter("com_no"));
-			if(requestURL != "/Front_end/com_page/company_page.jsp") {
-		    	RequestDispatcher successView = req.getRequestDispatcher(requestURL);
-				successView.forward(req, res);
+//		if (messagesArea == null || messagesArea.trim().length() == 0) { 
+//			errorMsgs.put("messagesArea","內容請勿空白");
+//		}else{
+//			contact_us_map.put("messagesArea",messagesArea);			
+//		}
+//		
+//		if (!errorMsgs.isEmpty()) {
+//			req.setAttribute("contact_us_map", contact_us_map);
+//			System.out.println("com_no="+req.getParameter("com_no"));
+//			if(requestURL != "/Front_end/com_page/company_page.jsp") {
+//		    	RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+//				successView.forward(req, res);
 //		    	res.sendRedirect(requestURL);	    	
-		    } else {
-		    	RequestDispatcher successView = req.getRequestDispatcher(requestURL+"?com_no=" + req.getParameter("com_no"));
-				successView.forward(req, res);
-		    }
-			return;
-			
-		}
+//		    } else {
+//		    	RequestDispatcher successView = req.getRequestDispatcher(requestURL+"?com_no=" + req.getParameter("com_no"));
+//				successView.forward(req, res);
+//		    }
+//			return;
+//			
+//		}
 		
 		String to = "shesaidyesteam@gmail.com";
 	      
@@ -68,14 +68,8 @@ public class ContactUs extends HttpServlet {
 		
 		MailService mailService = new MailService();
 	    mailService.sendMail(to, subject, messageText);
-	    if(requestURL != "/Front_end/com_page/company_page.jsp") {
-	    	RequestDispatcher successView = req.getRequestDispatcher(requestURL);
+	    	RequestDispatcher successView = req.getRequestDispatcher("/Front_end/homepage/homePage.jsp");
 			successView.forward(req, res);
-//	    	res.sendRedirect(requestURL);	    	
-	    } else {
-	    	RequestDispatcher successView = req.getRequestDispatcher(requestURL+"?com_no=" + req.getParameter("com_no"));
-			successView.forward(req, res);
-	    }
 	}
 }
 

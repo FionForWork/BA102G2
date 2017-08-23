@@ -9,6 +9,7 @@
 <%@ page import="com.service_type.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<title>所有店家</title>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
@@ -33,21 +34,20 @@
 </head>
 <body>
 	<%@ include file="page/header.file"%>
-	<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
 	<br>
 	<br>
 	
-	<div class="container">
-        <div class="col-md-offset-1">
-            <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp" style="color: black;text-decoration:none;">所有廠商</a></li>
-            <jsp:useBean id="service_TypeSvc"  scope="page" class="com.service_type.model.Service_TypeService"/>
-                <li>
-                <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${service_TypeSvc.getOne(param.stype_no).stype_no}" style="color: black;text-decoration:none;">${service_TypeSvc.getOne(param.stype_no).name}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<!-- 	<div class="container"> -->
+<!--         <div class="col-md-offset-1"> -->
+<!--             <ul class="breadcrumb"> -->
+<%--                 <li><a href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp" style="color: black;text-decoration:none;">所有廠商</a></li> --%>
+<%--             <jsp:useBean id="service_TypeSvc"  scope="page" class="com.service_type.model.Service_TypeService"/> --%>
+<!--                 <li> -->
+<%--                 <a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=${service_TypeSvc.getOne(param.stype_no).stype_no}" style="color: black;text-decoration:none;">${service_TypeSvc.getOne(param.stype_no).name}</a> --%>
+<!--                 </li> -->
+<!--             </ul> -->
+<!--         </div> -->
+<!--     </div> -->
 
 	<div class="container">
 		<div class="row">
