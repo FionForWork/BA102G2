@@ -110,7 +110,7 @@ public class ShowPictureServletDAO extends HttpServlet {
 				
 				logo = comVO.getLogo();
 				
-//				out.write(logo);
+				out.write(logo);
 				out.close(); 
 				return;
 			}
@@ -126,9 +126,9 @@ public class ShowPictureServletDAO extends HttpServlet {
 			MemService memSvc = new MemService();
 			MemVO memVO = memSvc.getOneMem(pk);
 			
-//			picture = memVO.getPicture();
+			picture = memVO.getPicture();
 			
-//			out.write(picture);
+			out.write(picture);
 			out.close(); 
 			return;
 		}
@@ -140,9 +140,9 @@ public class ShowPictureServletDAO extends HttpServlet {
 			ComService comSvc = new ComService();
 			ComVO comVO = comSvc.getOneCom(pk);
 			
-//			logo = comVO.getLogo();
+			logo = comVO.getLogo();
 			
-//			out.write(logo);
+			out.write(logo);
 			out.close(); 
 			return;
 		}

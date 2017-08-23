@@ -151,7 +151,7 @@ function orderCancel(nowPage,ord_no,role,status,orderType){
         url : "<%=request.getContextPath()%>/order/OrderServlet",
         type : "post",
         data : {
-        action : "CANCEL",
+        action : "CANCEL_AJAX",
         ord_no :ord_no,
         },
         error : function(xhr, ajaxOptions, thrownError) {
