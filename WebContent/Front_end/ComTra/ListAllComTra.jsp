@@ -30,9 +30,11 @@
 			</div>
 			<br>
 			<!--table table table table table table table table table -->
+			<div id="snackbar">成功取消收藏...</div>
 			<div id='changeContent'>
+			
 			<table class="table table-hover table-striped" id='comtraList'>
-				<div id="snackbar">成功取消收藏...</div>
+				
 				<thead>
 					<tr>
 						<th>#</th>

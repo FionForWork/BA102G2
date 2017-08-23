@@ -86,7 +86,7 @@
 						onchange='showContent()'>
 						<option value="defalt">請選擇相簿</option>
 						<%-- 								<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}" varStatus="s"> --%>
-						<c:forEach var="albVO" items="${albSvc.getAllByMemNo(mem_no)}"
+						<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}"
 							varStatus="s">
 							<option value="${albVO.alb_no}">${albVO.name}</option>
 						</c:forEach>

@@ -73,7 +73,7 @@
 		</div>
 		
 		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
-		<input type='hidden' name='mem_no' value='${mem_no}'>
+		<input type='hidden' name='mem_no' value='${memVO.mem_no}'>
 		<input type='hidden' name='path' value='<%= request.getContextPath()%>/comtra/comtra.do'>
 	</div>
 <div id="snackbar">請先登入會員...</div>

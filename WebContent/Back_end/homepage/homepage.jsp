@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.advertising.model.*"%>
-<%@page import="com.product.model.*"%>
-<%@page import="com.product_type.model.*"%>
+<%@ page import="com.advertising.model.*"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="com.product_type.model.*"%>
+<%@ page import="com.report.model.*" %>
+<%@ page import="com.report_type.model.*" %>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,9 +59,16 @@
 	Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     
+    // Report
+    Report_Service reportSvc = new Report_Service();
+    List<ReportVO> reportList = reportSvc.getOneStatus();
+    Report_type_Service repTypeSvc = new Report_type_Service();
+    
     pageContext.setAttribute("advertisingList", advertisingList);
 	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
 	pageContext.setAttribute("typeList", typeList);
+	pageContext.setAttribute("reportList", reportList);
+	
 %>
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService"/>
@@ -143,7 +152,7 @@
                                                 <i class="br-warning s64"></i>
                                             </div>
                                             <div class="tile-content">
-                                                <div class="number">2</div>
+                                                <div class="number">${reportList.size()}</div>
                                                 <h1>檢舉</h1>
                                             </div>
                                         </div>
@@ -210,25 +219,26 @@
                                         
                                         <thead>
                                             <tr>
-                                                <th>項目</th>
-                                                <th>標題</th>
+                                                <th>檢舉編號</th>
+                                                <th>檢舉類型</th>
                                                 <th>檢舉者</th>
-                                                <th>檢舉時間</th>
+                                                <th>檢舉內容</th>
+                                                <th>檢舉日期</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <c:forEach var="reportVO" items="${reportList}" varStatus="s"
+												begin="1" end="3">
                                             <tr>
-                                                <td>資料</td>
-                                                <td>資料</td>
-                                                <td>資料</td>
-                                                <td>資料</td>
+                                                <td>${reportVO.rep_no}</td>
+                                                <td>${reportTypeSvc.getOneRep_Type(reportVO.rep_type_no)}</td>
+                                                <td>${memSvc.getOneMem(reportVO.reporter_no)}</td>
+                                                <td>${reportVO.content}</td>
+                                                <td>${reportVO.rep_date.toString().substring(0,10)}</td>
+                                                
                                             </tr>
-                                            <tr>
-                                                <td>資料</td>
-                                                <td>資料</td>
-                                                <td>資料</td>
-                                                <td>資料</td>
-                                            </tr>
+                                            </c:forEach>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -250,11 +260,12 @@
                                 	
                                 </div>
                                 <div class="panel-body">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover text-left">
                                         
                                         <thead>
                                        
                                             <tr>
+                                           	 	<th>申請廠商編號</th>
                                                 <th>申請廠商</th>
                                                 <th>廣告標題</th>
                                                 <th>刊登日期</th>
@@ -266,6 +277,7 @@
                                          <c:forEach var="advertisingVO" items="${advertisingList}" varStatus="s"
 												begin="1" end="3">
                                             <tr>
+                                            	<td>${advertisingVO.com_no}</td>
                                                 <td>${comSvc.getOneCom(advertisingVO.com_no).name}</td>
                                                 <td>${advertisingVO.title}</td>
                                                 <td>${advertisingVO.startDay.toString().substring(0,10)}</td>
@@ -294,10 +306,11 @@
                                 
                                 </div>
                                 <div class="panel-body">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover text-left">
                                         <thead>
                                             <tr>
-                                                <th>申請賣家</th>
+                                                <th>申請賣家編號</th>
+                                                <th>申請賣家姓名</th>
                                                 <th>商品名稱</th>
                                                 <th>商品類型</th>
                                                 <th>商品價格</th>
@@ -307,8 +320,8 @@
                                         <c:forEach var="productVO" items="${unpreviewProductList}" varStatus="s"
 												begin="1" end="3">
                                             <tr>
-                                                
-                                                <td>${memSvc.getOneMem(productVO.seller_no).name}&nbsp(${productVO.seller_no})</td>
+                                                <td>${productVO.seller_no}</td>
+                                                <td>${memSvc.getOneMem(productVO.seller_no).name}</td>
                                                 <td>${productVO.pro_name}</td>
                                                 <td>${typeList.get(productVO.protype_no-1).type_name}</td>
                                                 <td>$ ${productVO.price}</td>
