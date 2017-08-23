@@ -118,6 +118,7 @@ li {
 
 .works_box {
 	width: 400px;
+	height: 270px;
 	padding-left:0px;
 }
 
@@ -155,6 +156,6 @@ li {
 	-ms-transform: translate(-50%, -50%);
 }
 
-.btn {
+.btn-lg {
 	 width:200px;
 }

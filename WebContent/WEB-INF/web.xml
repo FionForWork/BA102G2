@@ -362,14 +362,14 @@
     <servlet-name>ContactUs</servlet-name>
     <url-pattern>/ContactUs</url-pattern>
   </servlet-mapping>
-
+  
   <servlet>
     <servlet-name>CompanyCompositeQuery</servlet-name>
     <servlet-class>com.companycompositequery.controller.CompanyCompositeQuery</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CompanyCompositeQuery</servlet-name>
-    <url-pattern>/CompanyCompositeQuery</url-pattern>
+    <url-pattern>/CompanyCompositeQuery.do</url-pattern>
   </servlet-mapping>
   
     <servlet>

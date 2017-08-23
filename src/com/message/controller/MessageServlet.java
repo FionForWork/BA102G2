@@ -72,8 +72,8 @@ public class MessageServlet extends HttpServlet {
 		}
 		sessionUsername.put(myName, userSession);
 		
-		System.out.println(myName);
-		System.out.println(myRoom);
+		System.out.println("myName: "+myName);
+		System.out.println("myRoom: "+myRoom);
 		System.out.println(userSession.getId());
 		
 		System.out.println(userSession.getId() + ": 已連線");
@@ -86,7 +86,9 @@ public class MessageServlet extends HttpServlet {
 		JSONObject j = new JSONObject(message);
 		
 		String name = (String) j.get("name");
+		System.out.println("name:"+name);
 		String toname = (String) j.get("toname");
+		System.out.println("toname:"+toname);
 //		String action = (String) j.get("action");
 		
 		//存訊息
@@ -109,15 +111,19 @@ public class MessageServlet extends HttpServlet {
 		  //會員登入房間
 		}else {
 			myRoom=myName+toname;
-			sessionMap.get(myRoom).add((Session) sessionUsername.get(toname));
+			System.out.println("---sessionUsername.get(toname):"+sessionUsername.get(toname));
+			if(sessionUsername.get(toname)!=null){	
+				sessionMap.get(myRoom).add((Session) sessionUsername.get(toname));
+			}
 		}
 		
 		for (Session session : sessionMap.get(myRoom)) {
+			System.out.println("isSessionOpen?"+session.isOpen());
 			if (session.isOpen())
 				session.getAsyncRemote().sendText(message);
 		}
 		System.out.println("發送訊息");
-		System.out.println("myRoom: " + myRoom+"myName: "+myName+"myRoomsize: "+myRoom.length());	
+		System.out.println("myRoom: " + myRoom+"myName: "+myName+"myRoomsize: "+myRoom.length());
 		System.out.println("Message received: " + message);
 	}
 
