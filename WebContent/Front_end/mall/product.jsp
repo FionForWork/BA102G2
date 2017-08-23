@@ -2,7 +2,7 @@
 <%@page import="com.mem.model.MemVO"%>
 <%@page import="com.protra.model.ProtraVO"%>
 <%@page import="com.product.model.ProductService"%>
-<%@page import="com.protra.model.ProtraService"%>
+<%@page import="com.protra.model.ProTraService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.product.model.ProductVO"%>
 <%@page import="java.util.List"%>
@@ -18,7 +18,7 @@
     MemVO memVO =memService.getOneMem("1010");
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
-    ProtraService protraService = new ProtraService();
+    ProTraService protraService = new ProTraService();
     List<String> protrackingProNolist=new ArrayList<String>();;
     List<ProtraVO>protraList=protraService.getAllByMem(memVO.getMem_no());
     String[] productStatus = { "審核中", "上架中", "已下架" };

@@ -6,10 +6,10 @@ import java.util.List;
 import com.sun.corba.se.impl.orbutil.RepositoryIdUtility;
 import com.sun.org.apache.regexp.internal.recompile;
 
-public class ProtraService {
+public class ProTraService {
     private ProtraDAO_Interface dao;
 
-    public ProtraService() {
+    public ProTraService() {
         dao = new ProtraDAO();
     }
 
