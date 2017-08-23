@@ -27,6 +27,10 @@
         async defer>
     </script>
     
+<style type="text/css">
+
+a {text-decoration: none}
+</style>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <script type="text/javascript">
@@ -97,6 +101,8 @@ function callback2() {
             </div>
            <center><div id="recaptcha_box">請驗證</div>
               <input type="hidden" name="action" value="login">
+              <input type="hidden" name="memslocation" value="<%= request.getRequestURI() %>">
+              	
               <button style="display:none" type="submit" id="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
@@ -122,17 +128,18 @@ function callback2() {
           <form name="aaa" action="<%= request.getContextPath() %>/com/com.do" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
-              <input type="text" class="form-control" name="id" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;>
+              <input type="text" class="form-control" name="id" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
-              <input type="password" class="form-control" name="pwd" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="checkbox">
              
             </div>
              <center><div id="recaptcha_box2">請驗證</div>
             <input type="hidden" name="action" value="login">
+            <input type="hidden" name="comslocation" value="<%= request.getRequestURI() %>">
               <button  style="display:none" type="submit" id="submit2" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
         </div>
@@ -145,24 +152,7 @@ function callback2() {
       
     </div>
   </div> 
-  <script>
 
-$(document).ready(function(){
-    $("#logincom").click(function(){
-        $("#com").modal();
-    });
-});
-</script>
-  
-  
-	<script>
-$(document).ready(function(){
-    $("#loginmem").click(function(){
-        $("#mem").modal();
-    });
-});
-
-</script>
 
 </head>
 <form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
@@ -182,7 +172,7 @@ $(document).ready(function(){
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/homepage/homePage.jsp">
 
                     <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
@@ -196,16 +186,16 @@ $(document).ready(function(){
              <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <c:choose>
-                    <c:when test="${comVO!=null}">
+                    <c:when test="${sessionScope.comVO!=null}">
                     <li>
-                        <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp" >
+                        <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"  style="text-decoration:none;">
                             <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
                         </a>
                     </li>
                     </c:when>  
-                     <c:when test="${memVO!=null}">
+                     <c:when test="${sessionScope.memVO!=null}">
                      <li>
-                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp" >
+                        <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"  style="text-decoration:none;" >
                             <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${memVO.name}
                         </a>
                     </li>
@@ -214,37 +204,37 @@ $(document).ready(function(){
                     
                     
                    <c:choose>
-                      <c:when test="${memVO!=null||comVO!=null}">
-                      <li>  <a href="javascript:document.logout.submit();">
+                      <c:when test="${sessionScope.memVO!=null||sessionScope.comVO!=null}">
+                      <li>  <a href="javascript:document.logout.submit();"  style="text-decoration:none;">
                      <h4>登出</h4>
                         </a>  </li>
                       </c:when> 
                        
                        <c:otherwise> 
                        <li class="wd-drop-wrapper"> 
-                         <a class=""  role="login">
+                         <a class=""  role="login"  style="text-decoration:none;">
                          	  登入
                         </a> 
                         <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>
-                            <a href="#" id="loginmem"><b>會員登入</b></a>
+                            <a data-toggle="modal" data-target="#mem"  style="text-decoration:none;"><b>會員登入</b></a>
                        </li>
                        <li>
-                            <a href="#" id="logincom"><b>廠商登入</b></a>
+                           <a data-toggle="modal" data-target="#com"  style="text-decoration:none;"><b>廠商登入</b></a>
                        </li>
                     </ol>
                     </li>
-                    </li>
+                  
                      <li class="wd-drop-wrapper">
-                        <a >註冊</a>
+                        <a  style="text-decoration:none;">註冊</a>
                         <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
                         <!--下拉選單-->
                         <li>
-                            <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"><b>會員註冊</b></a>
+                            <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"  style="text-decoration:none;"><b>會員註冊</b></a>
                        </li>
                        <li>
-                            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"><b>廠商註冊</b></a>
+                            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"  style="text-decoration:none;"><b>廠商註冊</b></a>
                        </li>
                     </ol>
                     </li>
@@ -318,7 +308,7 @@ $(document).ready(function(){
                     </a>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a data-toggle="modal" data-target="#myModal" id="contact_us_btn" style='cursor:pointer;'>
+                    <a href="<%=request.getContextPath()%>/Front_end/homepage/homePage.jsp#contact" id="contact_us_btn" style='cursor:pointer;'>
                     <h3>聯絡我們</h3>
                     </a>
                 </li>
@@ -336,7 +326,7 @@ $(document).ready(function(){
     
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     <c:choose>
-    	<c:when test="${comVO!=null}">
+    	<c:when test="${sessionScope.comVO!=null}">
     		<div class="fade-carousel">
         		<div class="home-banner fade-carousel" style="overflow: hidden;">
             		<div class="item slides">
@@ -352,38 +342,6 @@ $(document).ready(function(){
 	</c:choose>
     <!--這裡開始-->
     <!--這裡開始-->
-    <!--這裡開始-->
-
-   
-  
-             <!--聯絡我們 -->
-	<form method="post" action="<%=request.getContextPath()%>/ContactUs">
-	<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">聯絡我們</h4>
-        </div>
-        <div class="modal-body">
-         	 姓名:<input type="text" class="form-control" name="name" value="">
-         	Email:<input type="email" class="form-control" name="email" value=""> 
-         	要說的話:<br>
-         	<textarea class="message-area" name="messagesArea" style="height:150px;width:100%;"></textarea>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-default" value="送出" onClick="validateForm(this.form)">
-          <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="取消">
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  </form>
-  <!--聯絡我們 --> 
     <!--這裡開始-->
     <!--這裡開始-->
      <br>
@@ -409,7 +367,7 @@ $(document).ready(function(){
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
+					<a href="<%=request.getContextPath()%>/Front_end/mall/mallArea.jsp" class="list-group-item menua">商城專區</a>
 					<br>
                 </ul>
                 <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" class="btn btn-block btn-default">查看個人資料</a>

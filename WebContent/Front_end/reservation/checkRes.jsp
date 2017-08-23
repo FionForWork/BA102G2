@@ -25,7 +25,7 @@
 		<div class="panel-body">
 			<h2>您的服務預約完成囉!</h2>
 			<canvas height="200"></canvas>
-			<a href=""><p>(<span id="divNum">5</span>秒後即將導入預約管理)</p></a>
+			<a href="<%= URL %>"><p>(<span id="divNum">5</span>秒後即將導入預約管理)</p></a>
 			<a href="<%=toLocation%>"><p>(或點擊此處繼續預約其他服務)</p></a>
 		</div>
 	</div>
