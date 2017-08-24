@@ -45,12 +45,10 @@
 
 
 <style type="text/css">
-
 img
 {
 max-width: 500px
 }
-
 </style>
 
 

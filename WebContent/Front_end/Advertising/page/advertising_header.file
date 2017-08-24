@@ -1,23 +1,27 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
-
+<!--以登入 且 會員頁面-->
 <head>
-    <title>She Said Yes!</title>
-    <meta charset="UTF-8">
-    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/bootstrap-multiselect.css" rel="stylesheet">
+    
+     <meta charset="UTF-8">
+     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/notosanstc.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familyHind.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/familySacramento.css" rel="stylesheet">
+    <link href='<%=request.getContextPath()%>/Front_end/Resource/css/familyWorkSans.css' rel='stylesheet' type='text/css'>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/pnotify.custom.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/Advertising/css/index.css" rel="stylesheet">
+     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/pnotify.custom.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Resource/css/index.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/Temp/css/temp.css" rel="stylesheet">
+  
+    <link href="<%=request.getContextPath()%>/Front_end/com_page/css/message.css" rel="stylesheet">
 
-    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/top.js" type="text/javascript"></script>
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrap.min.js" type="text/javascript"></script>
@@ -30,7 +34,6 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
 	<link href="<%=request.getContextPath()%>/Front_end/Advertising/css/advertising.css" rel="stylesheet">
-
     <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath()%>/Front_end/com_page/js/message.js" type="text/javascript"></script>
@@ -84,7 +87,7 @@ function callback2() {
     $(function() {
        $( "#startDay" ).datepicker({
 
-      minDate: 1,
+      	minDate: 1,
         changeMonth: true,
         numberOfMonths: 1,
         onClose: function( selectedDate ) {
@@ -126,54 +129,88 @@ function callback2() {
 </div>	
 		 <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
+        </div> 
+        <div class="modal-body" style="padding:40px 50px;">
+          <form name="sss"  action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email"  onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password"  onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="checkbox">
+             
+            </div>
+           <center><div id="recaptcha_box">請驗證</div>
+              <input type="hidden" name="action" value="login">
+              <input type="hidden" name="memslocation" value="<%= request.getRequestURI() %>">
+              	
+              <button style="display:none" type="submit" id="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button    type="submit"class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+   <div class="modal fade" id="com" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 廠商登入</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form name="aaa" action="<%= request.getContextPath() %>/com/com.do" method="post">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;>
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;>
+            </div>
+            <div class="checkbox">
+             
+            </div>
+             <center><div id="recaptcha_box2">請驗證</div>
+            <input type="hidden" name="action" value="login">
+            <input type="hidden" name="comslocation" value="<%= request.getRequestURI() %>">
+              <button  style="display:none" type="submit" id="submit2" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
 
 </head>
- <script>
-  $(function() {
-     $( "#startDay" ).datepicker({
-      minDate: 1,
-      changeMonth: true,
-      numberOfMonths: 1,
-      onClose: function( selectedDate ) {
-        $( "#endDay" ).datepicker( "option", "minDate", selectedDate );
-      }
-    });
-    $( "#endDay" ).datepicker();
-  });
-  $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
-  </script>
-
-<script language=javascript>
-//計算日期相差天數
-function Date_substr()
-{
-//定義起始 年月日
-    var StartDate=$( "#startDay" ).val();
-//定義結束 年月日
-    var EndDate=$( "#endDay" ).val();
-
-    aa=(DateDifference(StartDate,EndDate));
-		document.getElementById("datetotal").innerHTML=("共"+aa+"天"+"&nbsp&nbsp&nbsp&nbsp&nbsp")+("總金額:"+(aa*1000));
-		
-
-
-}
-// 算出日期與日期間的差距有幾天
-function DateDifference(StartDate,EndDate)
-{
-
-   var myStartDate = new Date(StartDate);
-   var myEndDate = new Date(EndDate);
-
-   // 天數，86400000是24*60*60*1000，除以86400000就是有幾天
-     return (myEndDate - myStartDate)/ 86400000 ; 
-}
-</script>
-
-
 <form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
                     <input type="hidden"  name="action" value="logout"/>
                           </form>
+                          
+
 <body data-spy="scroll" data-target=".wd-navbar" data-offset="50">
     <div class="navbar navbar-wd">
         <div class="container" style="position: relative;">
@@ -197,31 +234,74 @@ function DateDifference(StartDate,EndDate)
                 </a>
             </div>
 
-            <div class="navbar-collapse collapse wd-menu">
+             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
+                    <c:choose>
+                    <c:when test="${sessionScope.comVO!=null}">
                     <li>
+                        <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp" >
+                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
+                        </a>
+                    </li>
+                    </c:when>  
+                     <c:when test="${sessionScope.memVO!=null}">
+                     <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp" >
                             <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${memVO.name}
                         </a>
                     </li>
+                      </c:when> 
+                   </c:choose>
                     
                     
-                    <li>
-                   
-                        <a href="javascript:document.form3.submit();">
+                   <c:choose>
+                      <c:when test="${sessionScope.memVO!=null||sessionScope.comVO!=null}">
+                      <li>  <a href="javascript:document.logout.submit();">
                      <h4>登出</h4>
+                        </a>  </li>
+                      </c:when> 
+                       
+                       <c:otherwise> 
+                       <li class="wd-drop-wrapper"> 
+                         <a class=""  role="login">
+                         	  登入
                         </a> 
+                        <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a data-toggle="modal" data-target="#mem"><b>會員登入</b></a>
+                       </li>
+                       <li>
+                           <a data-toggle="modal" data-target="#com"><b>廠商登入</b></a>
+                       </li>
+                    </ol>
                     </li>
+                    </li>
+                     <li class="wd-drop-wrapper">
+                        <a >註冊</a>
+                        <ol class="wd-drop_submenu list-unstyled text-center hidden-xs">
+                        <!--下拉選單-->
+                        <li>
+                            <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"><b>會員註冊</b></a>
+                       </li>
+                       <li>
+                            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"><b>廠商註冊</b></a>
+                       </li>
+                    </ol>
+                    </li>
+                      </c:otherwise>    
+                   </c:choose>  
+                   
                   
                 </ul>
             </div>
         </div>
         <!-- 從這邊找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     </div>
-    <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
+   <nav class="navbar navbar-wd-storelist collapse navbar-collapse">
         <div class="container">
             <ul class="nav navbar-nav" class="collapse navbar-collapse">
-               <li class="wd-drop-wrapper">
+                <li class="wd-drop-wrapper">
                     <a itemprop="url" href="<%=request.getContextPath()%>/Front_end/com_page/all_company.jsp">
                         <h3>尋找服務</h3>
                     </a>
@@ -240,7 +320,7 @@ function DateDifference(StartDate,EndDate)
                             <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
                         </li>
                         <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/comView.jsp"><b>店家地圖</b></a>
                         </li>
                     </ol>
                 </li>
@@ -255,7 +335,7 @@ function DateDifference(StartDate,EndDate)
                     </ol>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a href="<%=request.getContextPath()%>/Front_end/place/comView.jsp">
+                    <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp">
                         <h3>熱門景點地圖</h3>
                     </a>
                 </li>
@@ -279,7 +359,7 @@ function DateDifference(StartDate,EndDate)
                     </a>
                 </li>
                 <li class="wd-drop-wrapper">
-                    <a data-toggle="modal" data-target="#myModal" id="contact_us_btn" style='cursor:pointer;'>
+                    <a href="<%=request.getContextPath()%>/Front_end/homepage/homePage.jsp#contact" id="contact_us_btn" style='cursor:pointer;'>
                     <h3>聯絡我們</h3>
                     </a>
                 </li>
@@ -291,47 +371,48 @@ function DateDifference(StartDate,EndDate)
             </ul>
         </div>
     </nav>
+       
+	
+  
+    
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    
-    
-      <!--聯絡我們 -->
-
-	<!--聯絡我們 -->
-    
-    <%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
-
-
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-    <!--這裡開始-->
-
-    <br>
-
-   
-    <div class="container">
-        <div class="row">
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
-            <div class="col-md-offset-1 col-md-2">
-                 <ul class="list-group">
-                    <a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" class="list-group-item menua">編輯廠商資料</a><br>
-                    <a href="#" class="list-group-item menua">修改密碼</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
-                    <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
-                    <a href="<%=request.getContextPath()%>/Front_end/Advertising/Advertising.jsp" class="list-group-item menua">廣告申請</a><br>
-                </ul>
-
-
-                <a href="#" class="btn btn-block btn-default">查看廠商資料</a>
+    <c:choose>
+    	<c:when test="${ScopecomVO!=null}">
+    		<div class="fade-carousel">
+        		<div class="home-banner fade-carousel" style="overflow: hidden;">
+            		<div class="item slides">
+                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Resource/img/5.jpg');"></div>
             </div>
-<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+        </div>
+
+    </div>
+   	 	</c:when>
+     	<c:otherwise> 
+    		<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
+ 		</c:otherwise> 
+	</c:choose>
+    <!--這裡開始-->
+    <!--這裡開始-->
+    <!--這裡開始-->
+          <br>
+ <div class="container">
+	<div class="row">
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+		<div class="col-md-offset-1 col-md-2">
+			<ul class="list-group">
+				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Advertising/Advertising.jsp" class="list-group-item menua active">廣告管理</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua ">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
+                <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
+			</ul>
+
+
+			<a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" class="btn btn-block btn-default">查看廠商資料</a>
+		</div>
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 
 <!--這裡開始===========================================================================-->

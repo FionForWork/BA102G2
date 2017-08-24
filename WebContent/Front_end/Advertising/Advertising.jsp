@@ -68,14 +68,11 @@
 						</div>
 
 						<div class="modal-body">
-<<<<<<< HEAD
-							<label for="inputdefault">上傳圖片</label> 
-							<input type="file" id="imgInp" name="img">
-							<img id="blah" src="#"  width="200" height="auto" />
-=======
-							<label for="inputdefault">上傳圖片</label> <input type="file"
-								name="img">
->>>>>>> refs/heads/eric1101105351
+<!-- 							<label for="inputdefault">上傳圖片</label>  -->
+<!-- 							<input type="file" id="imgInp" name="img"> -->
+<!-- 							<img id="blah" src=""  width="200" height="auto" /> -->
+<label class="control-label">Select File</label>
+<input id="input-1" type="file" class="file">
 						</div>
 						<div class="modal-footer">
 
@@ -84,7 +81,7 @@
 								type="hidden" name="status" value="0"> <input
 								type="submit" class="btn btn-info" value="發佈">
 
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
 						</div>
 					</div>
 				</form>
@@ -134,9 +131,22 @@
 	</div>
 
 </div>
-
-
-
+<script type="text/javascript">
+$(function()
+{
+	$("#imgInp").change(function(){
+		if (this.files && this.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function (e) {
+				$('#blah').attr('src', e.target.result);
+			}
+			
+			reader.readAsDataURL(this.files[0]);
+		}
+	});
+}) ;
+</script>
 
 
 
