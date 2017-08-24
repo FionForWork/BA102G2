@@ -288,7 +288,7 @@ public class MemServlet extends HttpServlet{
 						RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
 						successView.forward(req, res);	
 				}else{
-					memVO =memSvc.updatePwd(mem_no, pwd);
+					memSvc.updatePwd(mem_no, pwd);
 				}
 				
 				
@@ -297,7 +297,7 @@ public class MemServlet extends HttpServlet{
 			/***************************3.新增完成,準備轉交(Send the Success view)***********/
 		
 				String url = "/Front_end/mem/listOneMem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/
 
@@ -309,7 +309,7 @@ public class MemServlet extends HttpServlet{
 			HttpSession session = req.getSession();
 			session.invalidate();
 			//整個連線拔掉
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.jsp");
+			res.sendRedirect(req.getContextPath()+"/Front_end/homepage/homePage.jsp");
 		    return;
 		}
 		
@@ -325,7 +325,7 @@ public class MemServlet extends HttpServlet{
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
 			 HttpSession session = req.getSession();
-			 String memslocation = req.getParameter("comslocation");
+			
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
 			 List<MemVO> list1 = memSvc.loginpwd();
@@ -338,12 +338,15 @@ public class MemServlet extends HttpServlet{
 						
 						 if (pwd.equals(list1.get(j).getPwd())) {
 							
-							 session.removeAttribute("id");
-							 session.removeAttribute("memVO");
-							 session.removeAttribute("comVO");
+							 
 								
 						      MemVO memVO = memSvc.getOneMemById(id);
 						      String status=memVO.getStatus();
+						      int report=memVO.getReport();
+						      if(report>=3){
+						    	  res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+									return;  
+						      }
 						      if(status.equals("停權")){
 									res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
 									return;
@@ -354,7 +357,9 @@ public class MemServlet extends HttpServlet{
 						      
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");
-						          if (memlocation != null) {
+						    	  String memslocation = req.getParameter("memslocation");
+						    
+						    	  if (memlocation != null) {
 						        	  System.out.println("我是經過濾器的"+memlocation);
 						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						            res.sendRedirect(memlocation);            
@@ -577,11 +582,14 @@ public class MemServlet extends HttpServlet{
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			MemService memSvc = new MemService();
+			 List<MemVO> list = memSvc.loginid();
 			
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				
+				try{
 				String id = req.getParameter("id").trim();
+				
+				
 				String pwd = req.getParameter("pwd").trim();
 
 				String name = req.getParameter("name").trim();
@@ -650,7 +658,7 @@ public class MemServlet extends HttpServlet{
 				}
 				
 				/***************************2.開始新增資料***************************************/
-				MemService memSvc = new MemService();
+				 memSvc = new MemService();
 				memVO = memSvc.addMem(id, pwd, name, sex, bday, phone,email,account,picture);
 				HttpSession session = req.getSession();
 			     memVO = memSvc.getOneMemById(id);
@@ -667,7 +675,12 @@ public class MemServlet extends HttpServlet{
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
-			
+		} catch (Exception e) {
+			errorMsgs.put("e","帳號重複,請更換一個帳號");
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/Front_end/com/register.jsp");
+			failureView.forward(req, res);
+		}
 			
 		}
 	

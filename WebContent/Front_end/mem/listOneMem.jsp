@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="com.mem.model.*"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ page import="java.util.*"%>
 <%
 
 Object memVO = session.getAttribute("memVO");     
@@ -9,21 +10,19 @@ Object memVO = session.getAttribute("memVO");
  
 
     <div class="container">
-        <div class="row">
-
-            <div class="col-md-offset-1 col-md-2 col-xs-0"><br><br>
-             <br><br><br> 
-                <ul class="list-group">
-                   <ul class="list-group">
+	<div class="row">
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+            <div class="col-md-offset-1 col-md-2"><br><br><br><br><br>
+                 <ul class="list-group">
                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua">編輯個人資料</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
+					<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua ">預約紀錄查詢</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua ">作品挑選管理</a>
+					<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a>
 					<br>
@@ -32,10 +31,9 @@ Object memVO = session.getAttribute("memVO");
 					<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/mall/mallArea.jsp" class="list-group-item menua">商城專區</a>
-					<br></ul>
-
-																				
-                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default ">查看個人資料</a>
+					<br>
+                </ul>
+                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" class="btn btn-block btn-default">查看個人資料</a>
             </div>
 <style type="text/css">
 			#big{
@@ -45,6 +43,7 @@ Object memVO = session.getAttribute("memVO");
 			h1{font-weight:600;}
 		</style>
 <title>會員資料</title>
+
 <div class="container" id="big">
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
@@ -58,7 +57,7 @@ Object memVO = session.getAttribute("memVO");
 			 	
 				
 			</div>
-		
+		<br><br>
 
 
 		<div class="form-group">

@@ -1,61 +1,64 @@
-﻿<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/bootstrap.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/company.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/custom.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/custom-landing.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/icons.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/landing.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/main.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/plugins.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/css/sprflat-theme/jquery.ui.all.css" rel="stylesheet" />
-    <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>
-    
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery-3.1.1.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/top.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexisel.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/jquery.flexslider.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/js/memenu.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/Back_end/res/bootstrap-fileinput/themes/explorer/theme.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-    <meta name="msapplication-TileColor" content="#3399cc" />
+<meta charset="utf-8">
+<title>She Said Yes!</title>
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/icons.css"
+	rel="stylesheet" />
+
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/sprflat-theme/jquery.ui.all.css"
+	rel="stylesheet" />
+
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/bootstrap.css"
+	rel="stylesheet" />
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/plugins.css"
+	rel="stylesheet" />
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/main.css"
+	rel="stylesheet" />
+<link
+	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/custom.css"
+	rel="stylesheet" />
+<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico"
+	type="image/png">
+ <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+<meta name="msapplication-TileColor" content="#3399cc" />
+<form name="logout" ACTION="<%= request.getContextPath() %>/adm/adm.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
 </head>
 <body>
-    <div id="header">
-        <div class="container-fluid">
-            <div class="navbar">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="backIndex.jsp">
-                        <span class="text-logo"> SHE SAID YES!</span>
-                    </a>
-                </div>
-                <nav class="top-nav" role="navigation">
-                    <ul class="nav navbar-nav pull-right">
+	<div id="header">
+		<div class="container-fluid">
+			<div class="navbar">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp"> <span
+						class="text-logo"> She Said Yes!</span>
+					</a>
+				</div>
+				<nav class="top-nav" role="navigation">
+					<ul class="nav navbar-nav pull-right">
+
                       
                     </ul>
                 </nav>
             </div>
         </div>
+        <!-- Start .header-inner -->
     </div>
-    <div id="sidebar">
-        <div class="sidebar-inner">
-            <ul id="sideNav" class="nav nav-pills nav-stacked">
-                <li class="top-search">
-                    
-                </li>
-                </ul>
-        </div>
-    </div>
+    

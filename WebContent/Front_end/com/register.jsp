@@ -13,6 +13,17 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
         async defer>
     </script>
 
+
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+	
  
 
 
@@ -26,12 +37,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	<center><h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">廠商註冊</h1></center>
 	<h3>請輸入資料</h3>
 		<br><center><input  type="button" class="btn btn-info " value="一鍵輸入" id="fast"></center><br>
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font color='red'>請修正以下錯誤:
-		
-		</font>
-	</c:if>
+	
 	
 	<div class="mation">
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
@@ -40,36 +46,36 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	<div class="form-group">
 				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}${errorMsgs.get("id") }</font></span>
 				<input type="email" placeholder="請填電子郵件" id="id" name="id" class="form-control"
-			value="" onkeypress="if (window.event.keyCode==13) return false;"/>
+			value="<%= (comVO==null)? "" : comVO.getId() %>" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>
 	<div class="form-group">
           <label >密碼:</label>
-          <input type="password" name="pwd" required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="" onkeypress="if (window.event.keyCode==13) return false;">
+          <input type="password" name="pwd" required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd" value="<%= (comVO==null)? "" : comVO.getPwd() %>" onkeypress="if (window.event.keyCode==13) return false;">
     </div>
 	<div class="form-group">
           <label >確認密碼:</label>
-          <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd2" value="" onkeypress="if (window.event.keyCode==13) return false;">
+          <input type="password"  required title="只能輸入5~20個英數字" pattern="[A-Z0-9a-z]{5,20}$" class="form-control" id="pwd2" value="<%= (comVO==null)? "" : comVO.getPwd() %>" onkeypress="if (window.event.keyCode==13) return false;">
     </div>
 	<div class="form-group">
            <span>廠商名稱:<font color='red'>${errorMsgs.get("name")}</font></span>    
-           <input type="text" class="form-control" id="name" name="name" value=""onkeypress="if (window.event.keyCode==13) return false;">
+           <input type="text" class="form-control" id="name" name="name" value="<%= (comVO==null)? "" : comVO.getName() %>" onkeypress="if (window.event.keyCode==13) return false;">
      </div>
 	<br>
 	<div class="form-group">
 		<span>廠商地址:<font color='red'>${errorMsgs.get("loc")}</font></span>
-		<input type="TEXT" name="loc" id="loc" class="form-control" value="" onkeypress="if (window.event.keyCode==13) return false;"/>
+		<input type="TEXT" name="loc" id="loc" class="form-control" value="<%= (comVO==null)? "" : comVO.getLoc() %>" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>
 	
 	<div class="form-group">
 		<span>廠商電話:</span>
 		<input type="TEXT" name="phone" class="form-control" required title="只能輸入數字,如為市話請加上區碼" pattern="^[0-9]*$"
-			value="" id="phone"onkeypress="if (window.event.keyCode==13) return false;" />
+			value="<%= (comVO==null)? "" : comVO.getPhone() %>" id="phone"onkeypress="if (window.event.keyCode==13) return false;" />
 	</div>
 	
 	<div class="form-group">
 		<span>廠商帳戶:<font color='red'>${errorMsgs.get("account")}</font></span>
 		<input type="TEXT" name="account"  class="form-control"
-			value="" id="account" onkeypress="if (window.event.keyCode==13) return false;"/>
+			value="<%= (comVO==null)? "" : comVO.getAccount() %>" id="account" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>
 	
 	
@@ -82,7 +88,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 	<div class="form-group">
 		<span>廠商介紹 :<font color='red'>${errorMsgs.get("com_desc")}</font></span><br>
 		
-		<textarea name="com_desc" id="com_desc"  class="form-control" rows=8 onkeypress="if (window.event.keyCode==13) return false;" ></textarea>
+		<textarea name="com_desc" id="com_desc"  class="form-control" rows=8 onkeypress="if (window.event.keyCode==13) return false;" ><%= (comVO==null)? "" : comVO.getCom_desc() %></textarea>
 		
 	</div>
 	
