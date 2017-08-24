@@ -11,8 +11,7 @@
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0115";
-	
+	System.out.println("cropCont_no"+cropCont_no);	
 	PlaceService placeSvc = new PlaceService();
 	int placeCount = placeSvc.getAllCount();
 	System.out.println("placeCount "+placeCount);
@@ -37,9 +36,8 @@
 
 			<input type='hidden' id='placeview_no' name='placeview_no' value=''>
 			<input type='hidden' name='imageWidth' value=''> <input
-				type='hidden' name='cropCont_no' value='<%=cropCont_no%>'> <input
-<%-- 				type='hidden' name='mem_no' value='${memVO.mem_no}'> <input --%>
-				type='hidden' name='mem_no' value='${mem_no}'> <input
+				type='hidden' name='cropCont_no' value='${cropCont_no}'> <input
+				type='hidden' name='mem_no' value='${memVO.mem_no}'>  <input
 				type='hidden' id='xPoint' name='xPoint' value=''> <input
 				type='hidden' id='yPoint' name='yPoint' value=''> <input
 				type='hidden' name='cropWidth' value=''> <input

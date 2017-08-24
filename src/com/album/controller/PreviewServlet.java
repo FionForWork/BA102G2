@@ -205,7 +205,7 @@ public class PreviewServlet extends HttpServlet {
 					break forloop;
 				}
 			}
-			
+			System.out.println("alb_no=="+alb_no);
 			// 判斷使用景點照或是上傳照片
 			if(placeview_no.length() != 0){
 				
