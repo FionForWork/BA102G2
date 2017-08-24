@@ -1,17 +1,18 @@
 <%@page import="com.advertising.model.*"%>
 <%@page import="com.com.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
   AdvertisingService advSvc1=new AdvertisingService();
 List<AdvertisingVO> list1=advSvc1.getAll();
 request.setAttribute("list1", list1);
+int count=1;
 
 
 %>
+
 <div>
     <section id="main_ad" class="carousel slide" data-ride="carousel">
         <!-- 活動指示器 -->
@@ -19,7 +20,8 @@ request.setAttribute("list1", list1);
             <li data-target="#main_ad" data-slide-to="0" class="active"></li>
             <c:forEach var="advertisingVO" items="${list1}" varStatus="ddt">
             <c:if test="${advertisingVO. status==1 }">
-            <li data-target="#main_ad" data-slide-to="${ddt.count }"></li>
+            <li data-target="#main_ad" data-slide-to="<%=count %>"></li>
+            <%count++;%>
             </c:if>
             </c:forEach>
             
@@ -40,7 +42,7 @@ request.setAttribute("list1", list1);
         </div>
                 </div>
                 <c:forEach var="advertisingVO" items="${list1}" varStatus="ddt">
-                <c:if test="${advertisingVO. status==1 }">
+                <c:if test="${advertisingVO.status==1 }">
             <div class="item " data-image-lg="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}"  
             data-image-xs="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}" 
             onclick="location.href='<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${advertisingVO.com_no}';">

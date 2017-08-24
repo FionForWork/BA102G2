@@ -5,13 +5,8 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
-import org.infinispan.factories.annotations.Start;
-
-import com.mysql.jdbc.EscapeTokenizer;
-import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 
 import hibernate.util.HibernateUtil;
-import oracle.net.aso.q;
 
 public class ProtraDAO_Hibernate implements ProtraDAO_Interface {
 

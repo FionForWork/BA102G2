@@ -444,7 +444,10 @@ public class ServJDBCDAO implements ServDAO_Interface{
 	@Override
 	public void updateStatus(ServVO servVO) {
 		// TODO Auto-generated method stub
-		
+	}
+	public List<String> getComStype(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

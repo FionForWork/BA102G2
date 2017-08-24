@@ -61,11 +61,11 @@
     	</div>
     	<div class="form-group">
            <span >新密碼:</span>
-           <input type="password" class="form-control" required title="只能輸入5~12個英數字" pattern="[0-9]{5,12}$"  name="pwd" value="">
+           <input type="password" class="form-control" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  name="pwd" value="">
     	</div>
     	<div class="form-group">
            <span >確認新密碼:</span>
-           <input type="password" class="form-control" required title="只能輸入5~12個英數字" pattern="[0-9]{5,12}$"  value="">
+           <input type="password" class="form-control" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  value="">
     	</div>
     	<input type="hidden" name="adm_no" value="${admVO.adm_no}">
 		<input type="hidden" name="action" value="updatePwd">

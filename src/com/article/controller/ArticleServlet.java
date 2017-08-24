@@ -2,8 +2,10 @@ package com.article.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
@@ -62,11 +64,11 @@ public class ArticleServlet extends HttpServlet {
 
 		if ("insert".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new HashMap<String,String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/***********************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
@@ -75,6 +77,13 @@ public class ArticleServlet extends HttpServlet {
 				Integer art_type_no = new Integer(req.getParameter("art_type_no").trim());
 				String title = req.getParameter("title").trim();
 				String content = req.getParameter("content").trim();
+				if (title == null || (title.trim()).length() == 0) {
+					errorMsgs.put("title","標題請勿空白");
+				}
+				if(content==null||(content.trim()).length()==0){
+					errorMsgs.put("content","文章請勿空白");
+				}
+				
 
 				ArticleVO articleVO = new ArticleVO();
 				java.util.Date date = new java.util.Date();
@@ -88,6 +97,14 @@ public class ArticleServlet extends HttpServlet {
 				articleVO.setContent(content);
 				// articleVO.setArt_date(new Date(date.getTime()));
 				articleVO.setArt_date(art_date);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("articleVO", articleVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				Article_Service articleSvc = new Article_Service();
@@ -101,11 +118,13 @@ public class ArticleServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/dddArticle_add.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("OneAll".equals(action)) {

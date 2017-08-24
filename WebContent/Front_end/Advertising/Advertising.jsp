@@ -1,7 +1,7 @@
 <%@page import="com.advertising.model.*"%>
 <%@page import="com.com.model.*"%>
 <%@ page import="java.util.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -49,8 +49,8 @@
 								id="inputdefault" type="text" name="title">
 						</div>
 						<div class="modal-body">
-							起始日期 <input type="text" id="startDay" name="startDay" /> 結束日期 <input
-								type="text" id="endDay" name="endDay" />
+							起始日期 <input type="text" id="startDay" name="startDay" />
+							 結束日期 <input type="text" id="endDay" name="endDay" />
 
 						</div>
 						<div>
@@ -68,8 +68,9 @@
 						</div>
 
 						<div class="modal-body">
-							<label for="inputdefault">上傳圖片</label> <input type="file"
-								name="img">
+							<label for="inputdefault">上傳圖片</label> 
+							<input type="file" id="imgInp" name="img">
+							<img id="blah" src="#"  width="200" height="auto" />
 						</div>
 						<div class="modal-footer">
 
@@ -78,7 +79,7 @@
 								type="hidden" name="status" value="0"> <input
 								type="submit" class="btn btn-info" value="發佈">
 
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
 						</div>
 					</div>
 				</form>
@@ -128,9 +129,22 @@
 	</div>
 
 </div>
-
-
-
+<script type="text/javascript">
+$(function()
+{
+	$("#imgInp").change(function(){
+		if (this.files && this.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function (e) {
+				$('#blah').attr('src', e.target.result);
+			}
+			
+			reader.readAsDataURL(this.files[0]);
+		}
+	});
+}) ;
+</script>
 
 
 

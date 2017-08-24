@@ -32,7 +32,7 @@ public class AdvertisingServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("ACTION=" + action);
+		
 		if ("getOne_For_Update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -41,12 +41,11 @@ public class AdvertisingServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO advertisingVO = advertisingSvc.getOneAdvertising(adv_no);
-				System.out.print("CONTROLLER getOne_For_Update:advertisingVO is null?");
-				System.out.println(advertisingVO == null);
+				
 				/****************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
@@ -122,8 +121,7 @@ public class AdvertisingServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 *****************************************/
 				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
 						price, text, oldAdvertisingVO.getImg(), oldAdvertisingVO.getVdo(), status);
-				System.out.print("CONTROLLER update:");
-				System.out.println(advertisingVO == null);
+				
 				/*****************************
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
@@ -217,7 +215,7 @@ public class AdvertisingServlet extends HttpServlet {
 				Collection<Part> parts = req.getParts();
 				for (Part part : parts) {
 					String filename = getFileNameFromPart(part);
-					System.out.println("ContentType=" + part.getContentType());
+					
 					byte[] file = null;
 					InputStream in = part.getInputStream();
 					file = new byte[in.available()];
@@ -259,7 +257,7 @@ public class AdvertisingServlet extends HttpServlet {
 			req.setAttribute("active", active);
 			try {
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				
 				String whichPage = req.getParameter("whichPage");
 				req.setAttribute("whichPage", whichPage);
@@ -288,8 +286,7 @@ public class AdvertisingServlet extends HttpServlet {
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO=" + adv_no);
-
+				
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				advertisingSvc.deleteAdvertising(adv_no);
 
@@ -307,13 +304,11 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-			System.out.println("requestURL:" + requestURL);
 			String whichPage = req.getParameter("whichPage");
 			req.setAttribute("whichPage", whichPage);
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
 				
 				AdvertisingVO advertisingVO = new AdvertisingVO();
 				AdvertisingService advertisingSvc = new AdvertisingService();
@@ -340,13 +335,13 @@ public class AdvertisingServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
-			System.out.println("requestURL:" + requestURL);
+			
 			String whichPage = req.getParameter("whichPage");
 			req.setAttribute("whichPage", whichPage);
 			try {
 				
 				String adv_no = new String(req.getParameter("adv_no"));
-				System.out.println("ADV_NO:" + adv_no);
+				
 				
 				AdvertisingVO advertisingVO = new AdvertisingVO();
 				AdvertisingService advertisingSvc = new AdvertisingService();
@@ -377,6 +372,62 @@ public class AdvertisingServlet extends HttpServlet {
 //				failureView.forward(req, res);
 			}
 		}
+		
+		if ("add".equals(action)) {
+		
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			Timestamp startDay = null;
+			Timestamp endDay=null;
+			Integer price = null;
+			byte[] data = null;
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String com_no = new String(req.getParameter("com_no"));
+				String title = new String(req.getParameter("title"));
+				startDay = Timestamp.valueOf(req.getParameter("startDay") + " 00:00:00");
+				endDay = Timestamp.valueOf(req.getParameter("endDay") + " 00:00:00");
+				String text =new String(req.getParameter("text"));
+				price = new Integer((int) (endDay.getTime() - startDay.getTime()) / (100 * 60 * 60 * 24) * 1000);
+				String status = new String(req.getParameter("status").trim());
+				
+				Part part = req.getPart("img");
+				 InputStream inputStream = part.getInputStream();
+	                data = new byte[inputStream.available()];
+	                inputStream.read(data);
+	             
+	              AdvertisingVO  advertisingVO = new AdvertisingVO();
+	              advertisingVO.setCom_no(com_no);
+	              advertisingVO.setTitle(title);
+	              advertisingVO.setStartDay(startDay);
+	              advertisingVO.setEndDay(endDay);
+	              advertisingVO.setText(text);
+	              advertisingVO.setPrice(price);
+	              advertisingVO.setImg(data);
+	              
+				
+			
+				/*************************** 2.開始查詢資料 ****************************************/
+				AdvertisingService advertisingSvc = new AdvertisingService();
+				 advertisingVO = advertisingSvc.addAdvertising(com_no, title, startDay, endDay, price, text, data, null, status);
+				
+				/****************************
+				 * 3.查詢完成,準備轉交(Send the Success view)
+				 ************/
+				
+				String url = "/Front_end/Advertising/Advertising.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Front_end/Advertising/xxxAdvertising.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
 	}
 
 	public String getFileNameFromPart(Part part) {

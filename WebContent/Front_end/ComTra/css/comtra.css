@@ -29,15 +29,16 @@ a:hover {
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #333; /* Black background color */
-    color: #fff; /* White text color */
+    background-color: #fff; /* Black background color */
+    border:2px solid #e5e5e5;
+    color: #000; /* White text color */
     text-align: center; /* Centered text */
     border-radius: 2px; /* Rounded borders */
     padding: 16px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
     left: 50%; /* Center the snackbar */
-    top: 50px; /* 30px from the bottom */
+    top: 30px; /* 30px from the bottom */
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
@@ -53,23 +54,24 @@ However, delay the fade out process for 2.5 seconds */
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
     from {top: 0; opacity: 0;} 
-    to {top: 50px; opacity: 1;}
+    to {top: 30px; opacity: 1;}
 }
 
 @keyframes fadein {
     from {top: 0; opacity: 0;}
-    to {top: 50px; opacity: 1;}
+    to {top: 30px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-    from {top: 50px; opacity: 1;} 
+    from {top: 30px; opacity: 1;} 
     to {top: 0; opacity: 0;}
 }
 
 @keyframes fadeout {
-    from {top: 50px; opacity: 1;}
+    from {top: 30px; opacity: 1;}
     to {top: 0; opacity: 0;}
 }
+
 td a{
 	cursor:pointer;
 }

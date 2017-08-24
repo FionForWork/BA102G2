@@ -104,6 +104,7 @@ public class ServService {
 		return dao.getCom(com_no);
 		
 	}
+	
 	public List<ServVO> getSearch(String sh){
 		return dao.findBysh(sh);	
 	}
@@ -116,5 +117,9 @@ public class ServService {
 	public List<ServVO> getAllAvg(){
 		return dao.getAllAvg();
 		
+	}
+	
+	public List<String> getComStype(String com_no){
+		return dao.getComStype(com_no);
 	}
 }

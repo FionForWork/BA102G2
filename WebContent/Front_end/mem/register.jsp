@@ -35,7 +35,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
 
 	<div class="form-group">
-				<span>帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}</font></span>
+				<span>帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}${errorMsgs.get("id") }</font></span>
 				
 				<input type="email" name="id" id="id" placeholder="請填電子郵件" class="form-control"
 			value="<%= (memVO==null)? "" : memVO.getId() %>" onkeypress="if (window.event.keyCode==13) return false;"/>

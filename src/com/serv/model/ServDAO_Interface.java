@@ -27,5 +27,7 @@ public interface ServDAO_Interface {
     public void upStatus(ServVO servVO);
     public List<ServVO> getAllAvg();
     public void updateStatus(ServVO servVO);
+    public List<String> getComStype(String com_no);
+
 }
 

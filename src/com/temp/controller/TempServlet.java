@@ -66,8 +66,8 @@ public class TempServlet extends HttpServlet {
 
 			/********* 回到成品列表 *********/
 			//String url = request.getRequestURI();
-			String url = "/Front_end/Temp/ComPage_ListAllTemps.jsp";
-			request.getRequestDispatcher(url).forward(request, response);
+//			String url = "/Front_end/Temp/ComPage_ListAllTemps.jsp";
+//			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 

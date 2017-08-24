@@ -1,3 +1,5 @@
+<%@page import="com.mem.model.MemService"%>
+<%@page import="com.com.model.ComService"%>
 <%@page import="com.adm.model.AdmVO"%>
 <%@page import="com.adm.model.AdmService"%>
 <%@page import="org.logicalcobwebs.proxool.admin.Admin"%>
@@ -13,6 +15,7 @@
 <%
 //     AdmVO admVO=(AdmVO)session.getAttribute("admVO");
     ProductService productService = new ProductService();
+    MemService memService=new MemService();
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.valueOf(request.getParameter("nowPage"));
     int itemsCount = 5;
     int allCount = productService.getAllCount("0", "0");
@@ -21,7 +24,7 @@
     String preLocation = request.getContextPath() + "/Back_end/mall";
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
-
+    pageContext.setAttribute("memService", memService);
     pageContext.setAttribute("typeList", typeList);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("productList", productList);
@@ -34,7 +37,7 @@
             <thead>
                 <tr>
                     <th>商品名稱</th>
-                    <th>賣家編號</th>
+                    <th>賣家姓名</th>
                     <th>商品描述</th>
                     <th>商品類型</th>
                     <th>商品價格</th>
@@ -47,7 +50,7 @@
                 <c:forEach var="productVO" items="${productList}" varStatus="s">
                     <tr class="animated fadeInUp" style="animation-duration: ${s.index*0.3}s">
                         <td>${productVO.pro_name}</td>
-                        <td>${productVO.seller_no}</td>
+                        <td>${memService.getOneMem(productVO.seller_no).getName()}(${productVO.seller_no})</td>
                         <td>${productVO.pro_desc}</td>
                         <td>${typeList.get(productVO.protype_no-1).type_name}</td>
                         <td>${productVO.price}</td>

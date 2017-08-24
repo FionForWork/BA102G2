@@ -63,13 +63,13 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 	
 <div class="form-group">
 		<span>訂金:<font color='red'>${errorMsgs.get("deposit")}</font><br></span>
-		<input type="TEXT" name="deposit" 
+		<input type="TEXT" name="deposit" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getDeposit()%>" />
 		</div>
 			
 	<div class="form-group">
 		<span>價錢:<font color='red'>${errorMsgs.get("price")}</font><br></span>
-		<input type="TEXT" name="price"
+		<input type="TEXT" name="price" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getPrice()%>" />
 	</div>
 

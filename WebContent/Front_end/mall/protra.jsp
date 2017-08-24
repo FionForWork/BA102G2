@@ -26,13 +26,14 @@
 	for (int i = 0; i < protracking_list.size(); i++) {
 		productList.add(productService.getOneByPKNoImg(protracking_list.get(i)));
 	}
+	String active="2";
+    pageContext.setAttribute("active", active);
 	session.setAttribute("memVO", memVO);
 	pageContext.setAttribute("nowPage", nowPage);
 	pageContext.setAttribute("productList", productList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);
-    System.out.println("nowPage: "+nowPage);
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>

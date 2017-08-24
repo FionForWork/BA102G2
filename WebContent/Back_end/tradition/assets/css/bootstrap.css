@@ -278,7 +278,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #75b9e6;
+  color: #ffffff;
   text-decoration: none;
 }
 a:hover,
@@ -702,6 +702,7 @@ address {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  border: 1px solid #e4e9eb;
 }
 .row {
   margin-left: -15px;

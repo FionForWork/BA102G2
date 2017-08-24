@@ -33,6 +33,8 @@
 	pageContext.setAttribute("nowPage", nowPage);
 	pageContext.setAttribute("totalPages", totalPages);
 	//////////////////////分頁需求參數//////////////////////////////////
+    String active="1";
+    pageContext.setAttribute("active", active);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("avg", avg);
 %>
@@ -43,7 +45,7 @@
         <fmt:formatNumber value="${avg}" maxFractionDigits="1" />
     </h2>
 </div>
-<div class="container">
+<div class="container" id="container">
     <div class="row">
         <div class="col-md-12">
             <%@include file="pages/mallAreaSidebar.file"%>
@@ -126,10 +128,10 @@
     function change(nowPage){ 
         $(window).scrollTop("0");
         $(window).scrollLeft("0");
-        $("#content").load("<%=preLocation%>/memberScore.jsp #content",{"nowPage":nowPage});
-        $(".pagination").load("<%=preLocation%>/memberScore.jsp .pagination", {
-            "nowPage" : nowPage
-        });
+        $("#container").load("<%=preLocation%>/memberScore.jsp #container",{"nowPage":nowPage});
+<%--         $(".pagination").load("<%=preLocation%>/memberScore.jsp .pagination", { --%>
+//             "nowPage" : nowPage
+//         });
     }
 </script>
 <%@include file="pages/indexFooter.file"%>

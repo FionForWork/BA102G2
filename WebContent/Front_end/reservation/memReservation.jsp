@@ -4,22 +4,22 @@
 <%@ page import="com.reservation.model.*" %>
 <%@ page import="com.mem.model.*" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <% 
+	MemVO memVO = (MemVO)session.getAttribute("memVO");
 	ReservationService reservationService = new ReservationService();
 	String status = request.getParameter("status");
 	List<ReservationVO> list = null;
 	if(status != null){
 		if(status.equals("3")){
-			list = reservationService.getMemRes("1001",status,"4");
+			list = reservationService.getMemRes(memVO.getMem_no(),status,"4");
 		}else{
-			list = reservationService.getMemRes("1001",status);
+			list = reservationService.getMemRes(memVO.getMem_no(),status);
 		}
 	}else{
-		list = reservationService.getMemRes("1001","0");
+		list = reservationService.getMemRes(memVO.getMem_no(),"0");
 	}
 	pageContext.setAttribute("list", list);
 	DateFormat dateDF = new SimpleDateFormat("YYYY年M月d日");
@@ -34,10 +34,8 @@
 <jsp:useBean id="sortingHat" class="com.ssy.tools.SortingHat"/>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <%@ include file="page/memHeader.file" %>
-
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
@@ -71,7 +69,8 @@
 						</div>
 				</div><hr>
 				<div class="row">
-					<c:if test="${reservationVO.serv_no.startsWith('7')}">
+				<c:choose>
+					<c:when test="${reservationVO.serv_no.startsWith('7')}">
 						<div class="col-md-6" style="border-right:2px solid #d5d5d5">
 							<h4>服務內容</h4>
 							${rfq_dateilService.getOneFromQuote(reservationVO.serv_no).content}
@@ -80,25 +79,26 @@
 							<h4>廠商回覆</h4>
 							${quoteService.getOneQuote(reservationVO.serv_no).content}
 						</div>
-					</c:if>
-					<c:if test="${reservationVO.serv_no.startsWith('0')}">
+					</c:when>
+					<c:when test="${reservationVO.serv_no.startsWith('0')}">
 						<div class="col-md-12">
 							<h4>服務內容</h4>
 							${servService.getOneServ(reservationVO.serv_no).content}
 						</div>
-					</c:if>
+					</c:when>
+				</c:choose>
 					</div><hr>
 					<h4 class="text-right">
-					<c:if test="${reservationVO.status.equals('0')}">
+				<c:choose>
+					<c:when test="${reservationVO.status.equals('0')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#payModal">
 						刷卡支付訂金 :<i class="fa fa-usd" aria-hidden="true"></i>${nf.format(servService.getOneServ(reservationVO.serv_no).deposit)}
 					</button>
-
-					</c:if>
-					<c:if test="${reservationVO.status.equals('1')}">
+					</c:when>
+					<c:when test="${reservationVO.status.equals('1')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
-					</c:if>
-					<c:if test="${reservationVO.status.equals('2')}">
+					</c:when>
+					<c:when test="${reservationVO.status.equals('2')}">
 					<div class="col-md-5">
 					<section class='rating-widget'>
 					  <!-- Rating Stars Box -->
@@ -124,8 +124,9 @@
 					</section>
 					</div>
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="rating(this)">給予評價</button>
-					</c:if>
-					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button>
+					</c:when>
+				</c:choose>
+<!-- 					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button> -->
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>
@@ -138,7 +139,7 @@
 <!-- Modal -->
 <div class="modal fade" id="payModal" role="dialog">
 	<div class="modal-dialog">  
-<!-- Modal content-->
+<!-- Modal content -->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button id="close" type="button" class="close" data-dismiss="modal">&times;</button>
@@ -316,6 +317,7 @@ function showRes(x,y){
 	$('#allRes').load("memReservation.jsp #allRes",{"status":y});
 
 	$(document).on('DOMNodeInserted', function(e) {
+		
 		$('li').unbind('mouseover','mouseout');
 		  $('li').on('mouseover', function(){
 			    var onStar = parseInt($(this).data('value'), 10); 
@@ -335,6 +337,7 @@ function showRes(x,y){
 			    });
 			  });
 	});
+	
 }
 
 function changeActive(x){

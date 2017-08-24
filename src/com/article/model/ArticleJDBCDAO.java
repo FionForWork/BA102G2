@@ -24,7 +24,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interfacce{
 	private static final String INSERT_STMT = 
 			"INSERT INTO article (art_no,poster_no,art_type_no,title,content,art_date) VALUES ('5'||lpad(art_no_sq.NEXTVAL,3,'0'), ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT * FROM article order by art_no";
+			"SELECT * FROM article order by art_no DESC";
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM article where art_no = ?";
 		private static final String DELETE = 

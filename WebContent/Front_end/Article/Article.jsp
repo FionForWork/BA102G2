@@ -1,8 +1,9 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.forum_comment.model.Forum_CommentVO"%>
 <%@page import="com.forum_comment.model.Forum_Comment_Service"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -14,17 +15,20 @@
 	Article_Service artSvc = new Article_Service();
 	List<ArticleVO> list = artSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
+	MemVO memVO = (MemVO) session.getAttribute("memVO");
+	ComVO comVO = (ComVO) session.getAttribute("comVO");
 %>
 
 <%
-	int rowsPerPage = 4; //每頁的筆數    
+	int rowsPerPage = 5; //每頁的筆數    
 	int rowNumber = 0; //總筆數
 	int pageNumber = 0; //總頁數      
 	int whichPage = 1; //第幾頁
 	int pageIndexArray[] = null;
 	int pageIndex = 0;
 %>
-
+   
 <%
 	if (articlelist != null) {
 		rowNumber = articlelist.size();
@@ -50,8 +54,7 @@
 
 	}
 
-System.out.println(rowsPerPage);
-System.out.println(rowNumber);
+
 %>
 
 
@@ -100,10 +103,12 @@ System.out.println(rowNumber);
 
 
 			<div class="text-center" style="float: right">
+			<c:if test="${memVO.mem_no!=null||comVO.com_no!=null }">
 				<a
 					href="<%=request.getContextPath()%>/Front_end/Article/Article_add.jsp">
 					<button class="btn btn-info">發表文章</button>
 				</a>
+					</c:if>
 			</div>
 		</ul>
 	</div>
@@ -229,28 +234,30 @@ System.out.println(rowNumber);
 					</div>
 				</c:otherwise>
 			</c:choose>
-<div align="center">
-<tr >
 
-<% if (rowsPerPage < rowNumber) {%>
 
-	<%	if (pageIndex >= rowsPerPage) {		%>				
-		<td><A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage - 1%>">上一頁
-						</A>&nbsp;</td>
-						<%	}	%>	
-<%	if (pageIndex < pageIndexArray[pageNumber - 1]) {	%>					
-		<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=whichPage + 1%>">下一頁
-						</A>&nbsp;</td>
-						<td><A
-							href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;</td>			
-						<%}%>
-	<%	}	%>				
-</tr>						
-</div>
-						
+   
+ <table border="0">    
+ <tr>
+
+    <div align="center">
+    <nav aria-label="Page navigation ">
+         <ul id="pagination" class="pagination pagination-lg">
+         	<%for (int i=1; i<=pageNumber; i++){%>
+         		<%if(whichPage == i) {%>
+ 					<li class=""><a class="btn btn-info active" href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+ 				<%} else {%>
+ 					<li class=""><a class="btn btn-info" href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+ 				<%}%>
+ 			<%}%>
+ 		 </ul>
+ 	</nav>
+  	</div>
+  	
+ </tr>
+</table>
+					
+				
 							
 
 		</div>

@@ -4464,7 +4464,7 @@ body.nav-expanded {
   .pagination > .active > span:focus {
     z-index: 3;
     color: #fff;
-    background-color: #333333;
+    background-color: #209e96;
     border-color: #222222;
     cursor: default; }
   .pagination > .disabled > span,

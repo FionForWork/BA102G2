@@ -44,7 +44,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 
 
 	<div class="form-group">
-				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}</font></span>
+				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}${errorMsgs.get("id") }</font></span>
 				<input type="email" placeholder="請填電子郵件" id="id" name="id" class="form-control"
 			value="<%= (comVO==null)? "" : comVO.getId() %>" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>

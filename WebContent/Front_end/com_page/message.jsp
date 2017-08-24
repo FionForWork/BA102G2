@@ -101,7 +101,8 @@ var memNo;
  						if(no.indexOf("1")!=0) {
  							me.img = "";
 
- 							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
+ 							you.img = "<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no="+memNo;
+//  							you.img = "https://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg";
  						}
  						
  						if (who==no){

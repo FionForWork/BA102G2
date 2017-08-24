@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
  <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">
     
@@ -129,19 +130,21 @@ function callback2() {
     	}
    
     </script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ＨomePage</title>
     <meta charset="UTF-8">
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-    </script>
-        <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/w3.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/fonts.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/jquery-3.2.1.min.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
@@ -165,7 +168,11 @@ function callback2() {
     }
 </style>
 <body>
-
+	
+	
+	
+	
+	
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
         <div class="w3-bar" id="myNavbar">
@@ -177,8 +184,7 @@ function callback2() {
             <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> 服務</a>
             <a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-gift"></i> 線上商城</a>
             <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-            
-            <c:choose>
+             <c:choose>
             <c:when test="${sessionScope.comVO!=null}">
             	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${comVO.name}</a>
            		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
@@ -195,11 +201,8 @@ function callback2() {
       		
       		 </c:otherwise>
       		</c:choose>
-      
         </div>
-		
-	
-	
+
         <!-- Navbar on small screens -->
         <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
             <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
@@ -293,8 +296,7 @@ function callback2() {
     <br>
     <div id="company" class="container" style="width:90%">
         <div class="row">
-    <c:forEach var="servVO" items="${servList}" begin="1" end="9">
-            
+    		<c:forEach var="servVO" items="${servList}" begin="1" end="9">
             <div class="col-xs-12 col-md-4">
                 <!--婚攝item-->
                 <a href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${servVO.com_no}" class="thumbnail">
@@ -304,7 +306,7 @@ function callback2() {
                             <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
                             <c:set var="comVO" value="${comSvc.getOneCom(servVO.com_no)}"/>
                             <div class="media-left">
-                                <img class="img-circle media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
+                                <img class="media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
                             </div>
                             <div class="media-body media-middle">
                                 <b>${comVO.name}</b> &nbsp;
@@ -313,11 +315,11 @@ function callback2() {
                     </div>
                     
                     <jsp:useBean id="workSvc" scope="page" class="com.works.model.WorksService"/>
-                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="1" end="1">
+                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="0" end="0">
                     <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${workVO.works_no}');background-position:50% 50%;">
+                    </div>  
                     </c:forEach>
                     
-                    </div>
                     <div class="caption clearfix">
 
                         <div class="text-right">
@@ -370,19 +372,20 @@ function callback2() {
                     <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@gmail.com<br>
                 </div>
                 <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
-                <form method="post" action="<%=request.getContextPath()%>/ContactUs" target="_blank">
+                <form method="post" action="<%=request.getContextPath()%>/ContactUs">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name" value="${(map.name==null)?'':map.name}"><font color='red'>${errorMsgs.name}</font>
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name">
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email" value="${(map.email==null)?'':map.email}"><font color='red'>${errorMsgs.email}</font>
+                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email">
                         </div>
                     </div>
-                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea" value="${(map.messagesArea==null)?'':map.messagesArea}"><font color='red'>${errorMsgs.messagesArea}</font><br>
-                    <button class="w3-button w3-black w3-right w3-section" type="submit"  onClick="validateForm(this.form)">
-          <i class="fa fa-paper-plane"></i> SEND MESSAGE
-        </button>
+                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea"><br>
+                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                    <button class="w3-button w3-black w3-right w3-section"  onClick="validateForm(this.form)">
+          			<i class="fa fa-paper-plane"></i> SEND MESSAGE
+        			</button>
                 </form>
             </div>
         </div>
@@ -440,6 +443,5 @@ To use this code on your website, get a free API key from Google.
 Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
 -->
 </body>
-		
-</html>
 
+</html>

@@ -97,7 +97,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		</div>
 		<div class="form-group">
            <span>生日:<font color='red'>${errorMsgs.get("bday")}</font><br></span>
-  			 <input id='mydatepicker2' size="85" class="form-control"   name="bday"  type='text' value="" />
+  			${memVO.bday}
         </div>
     	<div class="form-group">
            <span >電話:<font color='red'>${errorMsgs.get("phone")}</font></span>
@@ -117,7 +117,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		
 <input id="input-1" type="file" name="picture" class="file" value="${memVO.picture}">
 	</div><br>
-
+<input type="hidden" name="id" value="${memVO.bday}">
 <input type="hidden" name="id" value="${memVO.id}">
 <input type="hidden" name="report" value="${memVO.report}">
 <input type="hidden" name="status" value="${memVO.status}">

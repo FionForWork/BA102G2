@@ -1,6 +1,5 @@
 package com.album.controller;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,21 +10,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.album.model.AlbumService;
@@ -65,6 +60,7 @@ public class PreviewServlet extends HttpServlet {
 			Timestamp create_date = new Timestamp(System.currentTimeMillis());
 			String alb_no = null;
 			String name = "實景預覽";
+			String cont_no = request.getParameter("cont_no").trim();
 			
 			boolean alreadyCreated = false;
 			
@@ -86,11 +82,17 @@ public class PreviewServlet extends HttpServlet {
 
 			// 取得原照片
 			BufferedImage img = null;
-			Part part = request.getPart("imageRemove");
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				img = javax.imageio.ImageIO.read(part.getInputStream());
-				System.out.println("img----" + img);
+			if(cont_no.length() == 0 ){
+				Part part = request.getPart("imageRemove");
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+					img = javax.imageio.ImageIO.read(part.getInputStream());
+					System.out.println("img----" + img);
+				}
+			}else if(cont_no.length() != 0){
+				ContentVO content = contSvc.getOneContent(cont_no);
+				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(content.getImg()));
 			}
+			
 
 			// 取得x座標
 			String xPoints = request.getParameter("xPoints");
@@ -198,7 +200,7 @@ public class PreviewServlet extends HttpServlet {
 					break forloop;
 				}
 			}
-			
+			System.out.println("alb_no=="+alb_no);
 			// 判斷使用景點照或是上傳照片
 			if(placeview_no.length() != 0){
 				

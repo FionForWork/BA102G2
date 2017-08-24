@@ -37,4 +37,5 @@ public interface ProductDAO_Interface {
     List<ProductVO> getPageBySeller(int start, int itemsCount,String seller_no);
     
     List<HashMap<String, Double>> getAllAvgSorce();
+    void update_status(ProductVO productVO);
 }

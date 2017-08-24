@@ -16,8 +16,8 @@
 	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
 // 	MemVO memVO = memService.getOneMem("1010");
-	String now_Pro_Type = (request.getParameter("now_Pro_Type") == null)? "0": request.getParameter("now_Pro_Type");
-	String now_Order_Type = (request.getParameter("now_Order_Type") == null)? "0": request.getParameter("now_Order_Type");
+	String proType = (request.getParameter("proType") == null)? "0": request.getParameter("proType");
+	String orderType = (request.getParameter("orderType") == null)? "0": request.getParameter("orderType");
 	ProductService productService = new ProductService();
 	int carTotal = (session.getAttribute("carTotal") == null) ? 0 : (Integer) session.getAttribute("carTotal");
 	Product_typeService product_typeService = new Product_typeService();
@@ -29,9 +29,9 @@
 	//////////////////////分頁需求參數//////////////////////////////////
 	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
     int itemsCount = 8;
-	int allCount = productService.getAllCount(now_Pro_Type, "1");
+	int allCount = productService.getAllCount(proType, "1");
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-	List<ProductVO> productList = productService.getPage(nowPage, itemsCount, now_Pro_Type, now_Order_Type,	"1");
+	List<ProductVO> productList = productService.getPage(nowPage, itemsCount, proType, orderType,	"1");
 	pageContext.setAttribute("animated", animated);
 	pageContext.setAttribute("productList", productList);
 	pageContext.setAttribute("itemsCount", itemsCount);
@@ -41,8 +41,8 @@
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("typeList", typeList);
 	pageContext.setAttribute("orderTypeList", orderTypeList);
-	pageContext.setAttribute("now_Pro_Type", now_Pro_Type);
-	pageContext.setAttribute("now_Order_Type", now_Order_Type);
+	pageContext.setAttribute("proType", proType);
+	pageContext.setAttribute("orderType", orderType);
 %>
 <%@include file="pages/indexHeader.file"%>
 <div class="text-center" style="height: 50px; margin-top: 50px"></div>
@@ -55,12 +55,12 @@
 }
 </style>
 
-<div class="container">
+<div class="container" id="container">
     <div class="row">
         <div class="col-xs-2 col-md-2">
             <ul id="proType" class="list-group">
                 <c:choose>
-                    <c:when test="${now_Pro_Type==0}">
+                    <c:when test="${proType==0}">
                         <a id="type0" class="list-group-item menua active" href="javascript:change(1,0,0)">
                             <h4>全部類型</h4>
                         </a>
@@ -73,7 +73,7 @@
                 </c:choose>
                 <c:forEach var="typeVO" items="${typeList}" varStatus="s">
                     <c:choose>
-                        <c:when test="${now_Pro_Type==s.count}">
+                        <c:when test="${proType==s.count}">
                             <a id="type${s.count}" class="list-group-item menua active" href="javascript:change(1,${s.count},0)">
                                 <h4>${typeVO.type_name}</h4>
                             </a>
@@ -114,10 +114,10 @@
                                         <c:forEach var="i" begin="1" end="${totalPages}">
                                             <c:choose>
                                                 <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(1,${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info active" href="javascript:change(1,${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -126,45 +126,45 @@
                                         <c:forEach var="i" begin="1" end="5">
                                             <c:choose>
                                                 <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
                                         <li><a class="disabled">...</a></li>
-                                        <li><a class="btn btn-info" href="javascript:change(${totalPages},${now_Pro_Type},${now_Order_Type})" data-page="${totalPages}">${totalPages}</a></li>
+                                        <li><a class="btn btn-info" href="javascript:change(${totalPages},${proType},${orderType})" data-page="${totalPages}">${totalPages}</a></li>
                                     </c:when>
                                     <c:when test="${totalPages-nowPage<5}">
-                                        <li><a class="btn btn-info" href="javascript:change(1,${now_Pro_Type},${now_Order_Type})" data-page="1">1</a></li>
+                                        <li><a class="btn btn-info" href="javascript:change(1,${proType},${orderType})" data-page="1">1</a></li>
                                         <li><a class="disabled">...</a></li>
                                         <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
                                             <c:choose>
                                                 <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
-                                        <li><a class="btn btn-info" href="javascript:change(1,${now_Pro_Type},${now_Order_Type})" data-page="1">1</a></li>
+                                        <li><a class="btn btn-info" href="javascript:change(1,${proType},${orderType})" data-page="1">1</a></li>
                                         <li><a class="disabled">...</a></li>
                                         <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
                                             <c:choose>
                                                 <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${now_Pro_Type},${now_Order_Type})" data-page="${i}">${i}</a></li>
+                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
                                         <li><a class="disabled">...</a></li>
-                                        <li><a class="btn btn-info" href="javascript:change(${totalPages},${now_Pro_Type},${now_Order_Type})" data-page="${totalPages}">${totalPages}</a></li>
+                                        <li><a class="btn btn-info" href="javascript:change(${totalPages},${proType},${orderType})" data-page="${totalPages}">${totalPages}</a></li>
                                     </c:otherwise>
                                 </c:choose>
                             </ul>
@@ -173,11 +173,11 @@
                 </div>
                 <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
                 <div id="orderType" class="btn-group">
-                    <button id="type" class="btn btn-default" style="width: 150px;">${orderTypeList[now_Order_Type]}</button>
+                    <button id="type" class="btn btn-default" style="width: 150px;">${orderTypeList[orderType]}</button>
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <c:forEach var="orderType" items="${orderTypeList}" varStatus="s">
-                            <li><a href="javascript:change(1,${now_Pro_Type},${s.index})">${orderType}</a></li>
+                            <li><a href="javascript:change(1,${proType},${s.index})">${orderType}</a></li>
                         </c:forEach>
                     </ul>
                 </div>
@@ -199,31 +199,14 @@
     </div>
 </div>
 <script>
-    function change(nowPage, now_Pro_Type, now_Order_Type) {
+    function change(nowPage, proType, orderType) {
         $(window).scrollTop( $(window).scrollTop());
         $(window).scrollLeft($(window).scrollLeft());
-        $("#imgDiv").load("index.jsp #imgDiv", {
-        nowPage : nowPage,
-        now_Pro_Type : now_Pro_Type,
-        now_Order_Type : now_Order_Type
-        });
         
-        $("#pagination").load("index.jsp #pagination", {
+        $("#container").load("index.jsp #container", {
         nowPage : nowPage,
-        now_Pro_Type : now_Pro_Type,
-        now_Order_Type : now_Order_Type
-        });
-        
-        $("#orderType").load("index.jsp #orderType", {
-        nowPage : nowPage,
-        now_Pro_Type : now_Pro_Type,
-        now_Order_Type : now_Order_Type
-        });
-        
-        $("#proType").load("index.jsp #proType", {
-        nowPage : nowPage,
-        now_Pro_Type : now_Pro_Type,
-        now_Order_Type : now_Order_Type
+        proType : proType,
+        orderType : orderType
         });
         
     }

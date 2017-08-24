@@ -14,6 +14,10 @@
 	font-size: 14px;
 }
 
+.com_box_name {
+	margin: 10px;
+}
+
 a.thumbnail {
 	color: black;
 }

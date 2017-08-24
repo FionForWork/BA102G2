@@ -28,7 +28,8 @@ public class ProductDAO_JDBC implements ProductDAO_Interface {
     private static final String GET_ROWCOUNT_BY_PROTYPE = "select count(rownum) from PRODUCT where STATUS = ? and PROTYPE_NO = ?";
     private static final String GET_ROWCOUNT_BY_SELLER  = "select count(rownum) from PRODUCT where SELLER_NO = ?";
     private static final String GET_PAGE_BY_SELLER      = "select PRO_NO, PRO_NAME, SELLER_NO, PRO_DESC ,PRICE, AMOUNT, PRO_DATE, PROTYPE_NO, STATUS, TIMES, SCORE " + "from (select rownum bRn, b.*from (select rownum aRn, a.* from PRODUCT a where SELLER_NO = ? order by a.pro_no) b) where bRn between ? and ?";
-
+    private static final String UPDATE_STATUS           = "update PRODUCT set STATUS = ?  where PRO_NO = ?";
+    
     private Connection        connection;
     private PreparedStatement preparedStatement;
     private ResultSet         resultSet;
@@ -508,6 +509,37 @@ public class ProductDAO_JDBC implements ProductDAO_Interface {
         }
         return list;
     }
+    @Override
+	public void update_status(ProductVO productVO) {
+		try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(UPDATE_STATUS);
+           
+            preparedStatement.setString(1, productVO.getStatus());
+            preparedStatement.setString(2, productVO.getPro_no());
+            preparedStatement.execute();
+            connection.commit();
+        }
+        catch (SQLException e) {
+            try {
+                connection.rollback();
+            }
+            catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                cancelConnection();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+		
+	}
 
     @Override
     public List<HashMap<String, Double>> getAllAvgSorce() {

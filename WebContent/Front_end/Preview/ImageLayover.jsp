@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.placeview.model.*"%>
+<%@ page import="com.place.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mem.model.*" %>
 <%
@@ -10,8 +11,15 @@
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
 	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
-	//String cropCont_no = "0115";
-	String place_no = "1";
+	System.out.println("cropCont_no"+cropCont_no);	
+	PlaceService placeSvc = new PlaceService();
+	int placeCount = placeSvc.getAllCount();
+	System.out.println("placeCount "+placeCount);
+	double doubleplace_no = (placeCount * Math.random()+1);
+	System.out.println("doubleplace_no "+doubleplace_no);
+	String place_no = String.valueOf((int)Math.floor(doubleplace_no));
+	System.out.println("place_no "+place_no);
+	//String place_no = "1";
 	pageContext.setAttribute("place_no", place_no);
 	PlaceViewService placeViewSvc = new PlaceViewService();
 	List<String> placeviewNoList = placeViewSvc.getAllByFk(place_no);
@@ -28,9 +36,8 @@
 
 			<input type='hidden' id='placeview_no' name='placeview_no' value=''>
 			<input type='hidden' name='imageWidth' value=''> <input
-				type='hidden' name='cropCont_no' value='<%=cropCont_no%>'> <input
-<%-- 				type='hidden' name='mem_no' value='${memVO.mem_no}'> <input --%>
-				type='hidden' name='mem_no' value='${mem_no}'> <input
+				type='hidden' name='cropCont_no' value='${cropCont_no}'> <input
+				type='hidden' name='mem_no' value='${memVO.mem_no}'>  <input
 				type='hidden' id='xPoint' name='xPoint' value=''> <input
 				type='hidden' id='yPoint' name='yPoint' value=''> <input
 				type='hidden' name='cropWidth' value=''> <input

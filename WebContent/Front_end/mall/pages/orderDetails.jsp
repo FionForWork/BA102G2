@@ -144,6 +144,7 @@ function showModal(action,ord_no,nowPage) {
                 function () {
                     $("#evalToMem").modal('show');
                 });
+        
     }
 }
 function orderCancel(nowPage,ord_no,role,status,orderType){ 
@@ -151,7 +152,7 @@ function orderCancel(nowPage,ord_no,role,status,orderType){
         url : "<%=request.getContextPath()%>/order/OrderServlet",
         type : "post",
         data : {
-        action : "CANCEL",
+        action : "CANCEL_AJAX",
         ord_no :ord_no,
         },
         error : function(xhr, ajaxOptions, thrownError) {

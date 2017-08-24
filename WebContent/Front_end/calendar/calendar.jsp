@@ -11,8 +11,7 @@
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	// 廠商資料
-	ComVO comVO = new ComVO();
-	comVO.setCom_no("2001");	
+	ComVO comVO = (ComVO)session.getAttribute("comVO");	
 	
 	int dayOfWeek = 0;int week = 1;int flag = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
@@ -27,7 +26,7 @@
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
 	Timestamp t = new Timestamp(System.currentTimeMillis());
 	CalendarService calerdarService = new CalendarService();
-	// 廠商編號寫死
+	// 廠商行事曆查詢
 	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
@@ -40,7 +39,11 @@
 
 <body onload="connect();" onunload="disconnect();">
 <%@ include file="page/headerWithoutSidebar.file" %>
-
+<script type="text/javascript">
+$(document).ready(function(){
+	window.scrollTo(0, 525);
+});
+</script>
 <div class="container">
 <div class="text-center col-md-offset-1 col-md-10">
 <c:if test="${not empty errorMsgs}">
@@ -185,7 +188,7 @@
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 <!-- 					<input type="submit" class="btn btn-info" value="新增活動"> -->
 					<button type="button" class="btn btn-info" onclick="addSchedule()">新增活動</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>

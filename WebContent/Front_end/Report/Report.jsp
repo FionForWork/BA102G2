@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+ï»¿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,49 +13,107 @@
     <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/pnotify.custom.min.css" rel="stylesheet">
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     <link href="css/index.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/top.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="container">
-  <h2>Modal Example</h2>
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="com_Svc" scope="page" class="com.com.model.ComService" />
+<jsp:useBean id="mem_Svc" scope="page" class="com.mem.model.MemService" />
+<jsp:useBean id="rep_type_Svc" scope="page" class="com.report_type.model.Report_type_Service" />
+<jsp:useBean id="product_Svc" scope="page" class="com.product.model.ProductService" />
+<%@page import="com.article.model.*"%>
+<%@page import="com.com.model.ComVO"%>
+<%@page import="com.com.model.ComService"%>
+<%@page import="com.mem.model.MemVO"%>
+<%@page import="com.mem.model.MemService"%>
+<%
+Integer reported_no =new Integer(request.getParameter("reported_no"));
+String position = request.getParameter("position");
+String rep_ob_no = request.getParameter("rep_ob_no");
+if((rep_ob_no.charAt(0))=='5'){
+	Article_Service art_Svc=new Article_Service();
+	ArticleVO articleVO = art_Svc.getOneArt(Integer.valueOf(rep_ob_no));
+	pageContext.setAttribute("articleVO", articleVO);
+	System.out.println(rep_ob_no);
+}
+session.getAttribute("memVO");
+session.getAttribute("comVO");
+// Integer reproter_no = new Integer(request.getParameter("reproter_no"));
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+%>
+ 
+ 
     <div class="modal-dialog">
     
-      <!-- Modal content-->
+      <form METHOD="post" ACTION="<%=request.getContextPath()%>/report/report.do" name="form1">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">ÀËÁ|</h4>
+          <h4 class="modal-title">æª¢èˆ‰</h4>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">ÀËÁ|¹ï¶H</label>
-         <input class="form-control" id="inputdefault" type="text" name="reproted_no">
+        <label for="inputdefault">æª¢èˆ‰å°è±¡</label>
+         <input class="form-control"  type="hidden" name="reported_no" value="<%=request.getParameter("reported_no")%>">
+        <c:choose>
+			<c:when test="${com_Svc.getOneCom(param.reported_no)!=null }">
+				<div class="name">${com_Svc.getOneCom(param.reported_no).name }</div>
+			</c:when>
+			<c:otherwise>
+				<div class="name">${mem_Svc.getOneMem(param.reported_no).name }</div>
+			</c:otherwise>
+		</c:choose>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">¼ĞÃD</label> 
-        <input class="form-control" id="inputdefault" type="text" name="title">
+        <label for="inputdefault">æª¢èˆ‰é¡å‹</label> 
+        <select class="form-control" id="sel1" name="rep_type_no">
+	        <c:forEach var="rep_typeVO" items="${rep_type_Svc.all}">
+					<option value="${rep_typeVO.rep_type_no }"> ${rep_typeVO.type }</option>
+			</c:forEach>
+		</select>
         </div>
         <div class="modal-body">
-        <label for="inputdefault">¤º®e</label>
-         <input class="form-control" id="inputdefault" type="text" name="content">
+        <label for="inputdefault">å…§å®¹</label>
+         <input class="form-control" id="content" type="text" name="content">
         </div>
+        
+        <c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no!=null}">
+         <div class="modal-body">
+        <label for="inputdefault">ç…§ç‰‡</label>
+        <div>
+        <img style="width:300px;"class="img-responsive" src="<%=request.getContextPath() %>/image/ShowImage?pro_no=${param.rep_ob_no}">
+        </div>
+        </div>
+        </c:if>
+        
         <div class="modal-footer">
-        	<input	type="submit" class="btn btn-info" value="ÀËÁ|">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        	<input	type="submit" class="btn btn-info" value="æª¢èˆ‰">
+          <button type="button" class="btn btn-default" data-dismiss="modal">å–æ¶ˆ</button>
+          <input type="button" value="" onclick="ShowAnswer()">
         </div>
+        
       </div>
       
+      <input type="hidden" name="action" value="insert">
+      <input type="hidden" name="reporter_no" value="${(comVO.com_no!=null)?comVO.com_no:memVO.mem_no}">
+      <input type="hidden" name="status" value="0">
+      <input type="hidden" name="rep_ob_no" value="<%=request.getParameter("rep_ob_no")%>">
+      <input type="hidden" name="position" value="<%=request.getParameter("position")%>">
+      </form>
+      
     </div>
-  </div>
-  
-</div>
+ 
+  <script type="text/javascript">
+function ShowAnswer(){
+//     document.getElementById("title").value="2";
+$("#content").val("æœƒçˆ†ç‚¸");
+
+}
+</script>
+
 
 </body>
 </html>
