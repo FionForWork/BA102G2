@@ -2,8 +2,10 @@ package com.article.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
@@ -62,27 +64,26 @@ public class ArticleServlet extends HttpServlet {
 
 		if ("insert".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new HashMap<String,String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/***********************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
 
 				Integer poster_no = new Integer(req.getParameter("poster_no").trim());
 				Integer art_type_no = new Integer(req.getParameter("art_type_no").trim());
-//				String title = req.getParameter("title").trim();
+				String title = req.getParameter("title").trim();
 				String content = req.getParameter("content").trim();
-				
-				String title=null;
-				try {
-					title = new String(req.getParameter("title").trim());
-				} catch (NumberFormatException e) {
-					title = "";
-					errorMsgs.add("請輸入標題");
+				if (title == null || (title.trim()).length() == 0) {
+					errorMsgs.put("title","標題請勿空白");
 				}
+				if(content==null||(content.trim()).length()==0){
+					errorMsgs.put("content","文章請勿空白");
+				}
+				
 
 				ArticleVO articleVO = new ArticleVO();
 				java.util.Date date = new java.util.Date();
@@ -117,13 +118,13 @@ public class ArticleServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/Front_end/Article/Article_add.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("OneAll".equals(action)) {
