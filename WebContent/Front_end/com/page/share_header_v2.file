@@ -178,7 +178,7 @@ function callback2() {
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/homepage/homePage.jsp">
 
                     <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">

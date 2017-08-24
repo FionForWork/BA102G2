@@ -5,7 +5,9 @@
 <%@ include file="/Front_end/mem/page/not_login_header.file"%>
 <title>Insert title here</title>
 
-
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
 
 <title>登入錯誤</title>
 <br><br><br><br><br><br>

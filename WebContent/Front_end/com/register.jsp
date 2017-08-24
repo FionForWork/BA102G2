@@ -9,7 +9,9 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="/Front_end/mem/page/register_header.file"%>
-
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
 
 
 	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>

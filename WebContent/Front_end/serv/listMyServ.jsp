@@ -32,6 +32,7 @@
 	<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">我的服務</h1>
 
 
+
 <table class="table table-striped">
 	<tr>
 		<th>服務編號</th>
@@ -44,13 +45,15 @@
 		<th>服務評價</th>
 		<th>狀態</th>
 		<th>修改</th>
+		<th>修改狀態</th>
 	</tr>
 	
-	
-	
+
 	<c:forEach var="servVO" items="${selectByCom2}" >
-		<tr align='center' valign='middle'>
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
 		
+		<tr align='center' valign='middle'>
+
 			<td>${servVO.serv_no}</td>
 			<td>${servVO.stype_no}</td>
 			<td>${servVO.deposit}</td>
@@ -60,28 +63,25 @@
 			<td>${servVO.times}</td>
 			<td>${servVO.score}</td>
 			<td>${servVO.status}</td>
-			
-			
+			<td><select style="width:150px;" name="status">
+				<option value="正常">正常
+				<option value="下架">下架
+				</select>
+		</td>
 			<td>
-			  <c:if test="${servVO.status==\"正常\"}">
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" class="btn btn-info " value="下架">
-			    <input type="hidden" name="locs" value="/<%= request.getServletPath() %>">
-			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
-			    <input type="hidden" name="action" value="downStatus"></FORM>
-			</c:if>
-			<c:if test="${servVO.status==\"下架\"}">
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
-			    <input type="submit" class="btn btn-info " value="上架">
-			    <input type="hidden" name="locs" value="/<%= request.getServletPath() %>">
-			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
-			    <input type="hidden" name="action" value="upStatus"></FORM>
-			</c:if>
-			</td>
 			
-		</tr>
+			  
+			    <input type="hidden" name="locs" value="/<%= request.getServletPath() %>">
+			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
+			    <input type="hidden" name="com_no" value="${servVO.com_no}">
+			    <input type="submit" class="btn btn-info " value="修改狀態">
+			    <input type="hidden" name="action" value="updateStatus2">
+			 
+			</td>
+		</tr></FORM>
 	</c:forEach>
-</table>
+</table>  
 </div></div></div>
+
 <%@ include file="/Front_end/mem/page/register_footer.file"%>
 
