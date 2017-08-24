@@ -49,8 +49,8 @@
 								id="inputdefault" type="text" name="title">
 						</div>
 						<div class="modal-body">
-							起始日期 <input type="text" id="startDay" name="startDay" /> 結束日期 <input
-								type="text" id="endDay" name="endDay" />
+							起始日期 <input type="text" id="startDay" name="startDay" />
+							 結束日期 <input type="text" id="endDay" name="endDay" />
 
 						</div>
 						<div>
@@ -70,7 +70,7 @@
 						<div class="modal-body">
 							<label for="inputdefault">上傳圖片</label> 
 							<input type="file" id="imgInp" name="img">
-							<img id="blah" src="#"  />
+							<img id="blah" src="#"  width="200" height="auto" />
 						</div>
 						<div class="modal-footer">
 

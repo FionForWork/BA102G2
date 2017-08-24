@@ -28,8 +28,7 @@
 			<label for="inputdefault">圖片:</label>
 			<p>
 				<img
-					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}"
-					class="pull-left xxx">
+					src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}" class="pull-left xxx"  >
 
 			</p>
 
@@ -45,10 +44,14 @@
 </div>
 
 
+<style type="text/css">
 
+img
+{
+max-width: 500px
+}
 
-
-
+</style>
 
 
 

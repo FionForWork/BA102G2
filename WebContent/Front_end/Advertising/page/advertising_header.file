@@ -28,11 +28,16 @@
     <script src="<%=request.getContextPath()%>/Front_end/Resource/js/top.js" type="text/javascript"></script>
 
  	<script src="<%=request.getContextPath()%>/Front_end/Temp/js/mem_temp.js" type="text/javascript"></script>
+ 	
+ 	  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+  	<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
 	<link href="<%=request.getContextPath()%>/Front_end/Advertising/css/advertising.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/Front_end/com_page/js/com_page.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath()%>/Front_end/com_page/js/message.js" type="text/javascript"></script>
+  
 
 <script src="js/advertising.js" type="text/javascript"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -78,6 +83,48 @@ function callback2() {
     	}
    
     </script>
+      <script>
+    $(function() {
+       $( "#startDay" ).datepicker({
+
+      minDate: 1,
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+         $( "#endDay" ).datepicker( "option", "minDate", selectedDate );
+       }
+     });
+     $( "#endDay" ).datepicker();
+   });
+   $.datepicker.setDefaults({ dateFormat: 'yy-mm-dd' });
+   </script>
+ 
+ <script language=javascript>
+ //計算日期相差天數
+ function Date_substr()
+ {
+ //定義起始 年月日
+     var StartDate=$( "#startDay" ).val();
+ //定義結束 年月日
+     var EndDate=$( "#endDay" ).val();
+ 
+     aa=(DateDifference(StartDate,EndDate));
+ 		document.getElementById("datetotal").innerHTML=("共"+aa+"天"+"&nbsp&nbsp&nbsp&nbsp&nbsp")+("總金額:"+(aa*1000));
+ 		
+ 
+ 
+ }
+ // 算出日期與日期間的差距有幾天
+ function DateDifference(StartDate,EndDate)
+ {
+ 
+    var myStartDate = new Date(StartDate);
+    var myEndDate = new Date(EndDate);
+ 
+    // 天數，86400000是24*60*60*1000，除以86400000就是有幾天
+      return (myEndDate - myStartDate)/ 86400000 ; 
+ }
+ </script>
       
 </div>	
 		 <div class="modal fade" id="mem" role="dialog">

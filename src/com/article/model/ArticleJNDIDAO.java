@@ -30,7 +30,7 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 	private static final String INSERT_STMT = 
 			"INSERT INTO article (art_no,poster_no,art_type_no,title,content,art_date) VALUES ('5'||lpad(art_no_sq.NEXTVAL,3,'0'), ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT * FROM article order by art_no";
+			"SELECT * FROM article order by art_no DESC";
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM article where art_no = ?";
 		private static final String DELETE = 
@@ -42,7 +42,7 @@ public class ArticleJNDIDAO implements ArticleDAO_interfacce{
 		private static final String UPDATE = 
 				"UPDATE article set poster_no=?, art_type_no=?, title=?, content=?, art_date=? where art_no=?";
 		private static final String GET_ONE_ALL = 
-				"SELECT * FROM article where art_type_no =?";
+				"SELECT * FROM article where art_type_no =? order by art_no desc";
 	
 	
 	
