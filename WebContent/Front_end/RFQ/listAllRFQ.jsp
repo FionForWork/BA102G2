@@ -68,7 +68,7 @@
 		<c:forEach var="message" items="${errorMsgs}">
 			<div class="alert alert-danger alert-dismissable fade in col-md-offset-3 col-md-6">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>報價失敗!</strong> ${message}
+				<strong>報價失敗QQ!</strong> ${message}
 			</div>
 		</c:forEach>
 	</ul>

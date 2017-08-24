@@ -26,6 +26,15 @@
 <head>
 </head>
 <body>
+<style>
+
+
+th:first-child {
+
+	white-space: nowrap;
+}
+
+</style>
 <%@ include file="page/header.file" %>
 <c:if test="${not empty errorMsgs}">
 	<ul>
@@ -39,7 +48,7 @@
 </c:if>
 <table class="table table-striped"  >
 	<tr>
-		<th>顧客</th>
+		<th>VIP顧客</th>
 		<th>服務內容</th>
 <!-- 		<th>日期</th> -->
 		<th>金額</th>
@@ -100,7 +109,7 @@ function change(obj){
 					alert(result);	
 				}else{
 					var price = $(obj).parent('td').prev().prev().children('input').val();
-					$(obj).parent('td').parent('tr').children('.edit').children('p').html(price);
+					$(obj).parent('td').parent('tr').children('.edit').children('p').html("$" + price);
 				}
 			}
 		});

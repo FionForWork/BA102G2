@@ -28,16 +28,17 @@
 </head>
 <body>
 <%@ include file="page/memHeader.file" %>
+<%@ include file="page/page1.file" %>		
 	<table class="table table-striped">
 		<thead>
 		<tr>
-			<th>服務日期</th>
-			<th>服務內容</th>
-			<th>查看報價</th>
-			<th>需求狀態</th>
+			<th style="width:18%">服務日期</th>
+			<th style="width:52%">服務內容</th>
+			<th style="width:20%">查看報價</th>
+			<th style="width:10%">需求狀態</th>
 		</tr>
 		</thead>
-		<c:forEach var="rfq_detailVO" items="${list}">
+		<c:forEach var="rfq_detailVO" items="${list}"  begin="<%= pageIndex %>" end="<%= pageIndex + rowsPerPage - 1 %>">
 			<tr>
 				<td><p>${datedf.format(rfq_detailVO.ser_date)}</p></td>
 				<td>
@@ -62,13 +63,42 @@
 						<span class="caret"></span></button>
 					</c:if>
 						<ul class="dropdown-menu">
-							<li><a href="<%= request.getContextPath() %>/rfq/rfq.do?action=updateRFQStatus&status=0&rfqdetail_no=${rfq_detailVO.rfqdetail_no}">關閉</a></li>
+							<li><a id="${rfq_detailVO.rfqdetail_no}" onclick="closeRFQ(this)">關閉</a></li>
 						</ul>
 					</div> 
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
+	
+<div class="text-center">
+	<ul class="pagination">
+		<li ><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+		<% for(int i = 0; i < pageNumber; i++){
+			pageContext.setAttribute("i", i+1);%>
+		<li ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<% } %>
+		<li><a href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
+	</ul>
+</div> 
 <%@ include file="page/memFooter.file" %>
 </body>
+<script>
+function closeRFQ(btn){
+	var pk = $(btn).attr("id");
+	$.ajax({
+		url : "<%= request.getContextPath() %>/rfq/rfq.do",
+		data : {action:"updateRFQStatus",
+				status:"0",
+				rfqdetail_no:pk},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(result) {
+			$(btn).parent().parent().siblings("button").attr("class","btn btn-danger dropdown-toggle disabled");
+		}
+	});
+}
+</script>
 </html>
