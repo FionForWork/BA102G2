@@ -118,4 +118,8 @@ public class ServService {
 		return dao.getAllAvg();
 		
 	}
+	
+	public List<String> getComStype(String com_no){
+		return dao.getComStype(com_no);
+	}
 }
