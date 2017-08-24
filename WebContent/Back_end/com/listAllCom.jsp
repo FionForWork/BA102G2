@@ -9,7 +9,7 @@
     pageContext.setAttribute("list",list);
 %>
 <html>
-<%@ include file="page/backEnd_Header.file" %>
+<%@ include file="page/back_end_index.file" %>
 	<!-- Start content ===================================================================================================== -->
 <div>
 <Style>
