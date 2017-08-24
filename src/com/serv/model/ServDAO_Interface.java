@@ -23,11 +23,8 @@ public interface ServDAO_Interface {
     public Set<ServVO> getServByStype(String stype_no);
     public Set<ServVO> getServByCom(String com_no);
     public List<ServVO> findBysh(String sh);
-    public void downStatus(ServVO servVO);
-    public void upStatus(ServVO servVO);
+
     public List<ServVO> getAllAvg();
-    public void updateStatus(ServVO servVO);
-    public List<String> getComStype(String com_no);
 
 }
 

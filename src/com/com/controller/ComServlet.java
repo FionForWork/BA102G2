@@ -345,7 +345,7 @@ public class ComServlet extends HttpServlet {
 //		      out.println("<BODY><h1>你的帳號已登出!<BR>");
 //		      out.println(" <A HREF="+req.getContextPath()+"/Front_end/login/login.jsp>返回</h1></A>");
 //		      out.println("</BODY></HTML>");
-			res.sendRedirect(req.getContextPath()+"/Front_end/homepage/homepage.jsp");
+			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.jsp");
 		    return;
 		}
 	
@@ -417,7 +417,6 @@ public class ComServlet extends HttpServlet {
 
 			 }
 			  session.setAttribute("login","com");
-			 
 		 res.sendRedirect(req.getContextPath()+"/Front_end/login/errorLogin.jsp");
 		      return;
 	 
@@ -430,12 +429,9 @@ public class ComServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String id = req.getParameter("id").trim();
-				if (id == null || (id.trim()).length() == 0) {
-					errorMsgs.put("id","帳號請勿空白");
-				}
 				String pwd = req.getParameter("pwd").trim();
 				String name = req.getParameter("name").trim();
 				if (name == null || (name.trim()).length() == 0) {
@@ -511,7 +507,8 @@ public class ComServlet extends HttpServlet {
 //			      session.setAttribute("comVO", comVO);
 			      
 			     
-			       String to = id;
+			     //管理員可用 int passRandom = (int)(Math.random()*999+1);  
+			      String to = id;
 			      
 			      String subject = "廠商帳號驗證";
 			      
@@ -530,12 +527,12 @@ public class ComServlet extends HttpServlet {
 				
 				/***************************其他可能的錯誤處理**********************************/
 				
-			} catch (Exception e) {
-				errorMsgs.put("e","帳號重複,請更換一個帳號");
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/com/register.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.put(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/Front_end/com/register.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		
         

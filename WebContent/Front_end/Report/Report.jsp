@@ -13,7 +13,6 @@
     <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/pnotify.custom.min.css" rel="stylesheet">
-    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     <link href="css/index.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>

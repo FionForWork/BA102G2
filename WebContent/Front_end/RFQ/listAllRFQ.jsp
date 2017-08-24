@@ -33,7 +33,7 @@
 		</div>
 	</div>
 </div>
-<%	int rowsPerPage = 3; // 每頁的筆數
+<%	int rowsPerPage = 4; // 每頁的筆數
 	int rowsNumber = 0;	// 總筆數
 	int pageNumber = 0; // 總頁數
 	int whichPage = 1; // 當前頁數
@@ -61,7 +61,7 @@
 	}catch(NumberFormatException e){
 		whichPage = 1;
 		pageIndex = 0;
-	}pageContext.setAttribute("whichPage",whichPage); 
+	}
 %>
 <c:if test="${not empty errorMsgs}">
 	<ul>
@@ -138,7 +138,7 @@
 											<input type="button" class="btn btn-danger" value="提交報價" onclick="quote(this)">
 											<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 											<input type="hidden" name="action" value="quote">
-											<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 										</div>
 										</form>
 									</div>
@@ -160,12 +160,9 @@
 </div>
 <div class="text-center">
 	<ul class="pagination">
-		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
-		<% for(int i = 0; i < pageNumber; i++){ 
-			pageContext.setAttribute("i", i+1);%>
-		<li  ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<% for(int i = 0; i < pageNumber; i++){ %>
+		<li><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
 		<% } %>
-		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
 	</ul>
 </div> 
 <%@ include file="page/footer.file" %>

@@ -18,13 +18,14 @@
     <!--這裡結束-->
     <!--這裡結束-->
 
-   <div class="text-right">
+    <div class="text-right">
         <a id="back-to-top" href="#" class="btn btn-black btn-lg round back-to-top" role="button">
             <i class="fa fa-angle-up" aria-hidden="false"></i>
         </a>
     </div>
     <!--FOOTER-->
-    <script type="text/javascript">
+    
+     <script type="text/javascript">
         
         CKEDITOR.replace('comment') ;
         
@@ -38,25 +39,25 @@
                         <div class="col-xs-4 text-center">
                             <h4>婚禮服務</h4>
                             <ul class="list-unstyled">
-                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0001" itemprop="url">拍婚紗</a></li>
-                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0002" itemprop="url">婚攝婚錄</a></li>
-                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/com_page/select_company.jsp?stype_no=0003" itemprop="url">新秘</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">拍婚紗</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">婚攝婚錄</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">新秘</a></li>
                             </ul>
                         </div>
 
                         <div class="col-xs-4 text-center">
                             <h4>婚禮周邊</h4>
                             <ul class="list-unstyled">
-                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" itemprop="url">實景預覽</a></li>
-                                <li itemprop="department"><a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" itemprop="url">線上商城</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">實景預覽</a></li>
+                                <li itemprop="department"><a href="#" itemprop="url">線上商城</a></li>
                             </ul>
                         </div>
 
                         <div class="col-xs-4 text-center">
                             <h4>新娘專屬</h4>
                             <ul class="list-unstyled">
-                                <li class=""><a href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp" itemprop="url">討論版</a></li>
-                                <li class=""><a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" target="_blank" itemprop="url">會員專區</a></li>
+                                <li class=""><a href="#" itemprop="url">討論版</a></li>
+                                <li class=""><a href="#" target="_blank" itemprop="url">會員專區</a></li>
                             </ul>
                         </div>
 
@@ -84,6 +85,7 @@
     </address>
     </div>
     <!--FOOTER-->
+
 </body>
 
 </html>

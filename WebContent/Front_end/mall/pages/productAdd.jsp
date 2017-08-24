@@ -12,7 +12,6 @@
     pageContext.setAttribute("memVO", memVO);
     pageContext.setAttribute("typeList", typeList);
 %>
-<%-- <%@include file="modalHeader.file"%> --%>
 <style>
 .addImg {
 	width: 200px;
@@ -76,6 +75,7 @@
                 <input type="hidden" name="action" value="ADD">
                 <input type="button" class="btn btn-success" onclick="addCheck()" value="確認申請">
             </form>
+                <input type="button" class="btn btn-success" onclick="fakeData()" value="資料">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -84,10 +84,23 @@
 </div>
 </body>
 <script type="text/javascript">
+function fakeData() {
+    $("#addName").val("彩蛋組");
+    $("#addDesc").val("永結同心小彩蛋");
+    $("#addPrice").val("500");
+    $("#addAmount").val("500");
+    $("#addType").val("3");
+}
     function addCheck() {
         var pro_name = $("#addName").val();
+        var pro_desc = $("#addDesc").val();
         if (pro_name == "") {
             alert("請輸入商品名稱");
+            return;
+        }
+        else if (pro_desc == "") {
+            alert("請輸入商品描述");
+            return;
         }
         else {
             $("#addForm").submit();
@@ -118,6 +131,10 @@
             alert("請輸入商品名稱");
             return;
         }
+        else if ($("#addDesc").val() == "") {
+            alert("請輸入商品描述");
+            return;
+        }
         else{
             var reader = new FileReader();
             form.append("img", files[0]);
@@ -128,11 +145,12 @@
             form.append("amount", $("#addAmount").val());
             xhr.send(form);
             xhr.onreadystatechange = function() {
-                if (xhr.responseText == "OK") {
+                if (xhr.responseText !=null) {
+                console.log(xhr.responseText);
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
+                        alert("已申請上架");
                         $(".addPreview").attr("src", e.target.result);
-                            alert("已申請上架");
                     }
                 }
             }
@@ -149,4 +167,3 @@
         }
     });
 </script>
-</html>

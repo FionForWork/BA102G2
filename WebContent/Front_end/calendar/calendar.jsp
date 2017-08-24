@@ -188,7 +188,7 @@ $(document).ready(function(){
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 <!-- 					<input type="submit" class="btn btn-info" value="新增活動"> -->
 					<button type="button" class="btn btn-info" onclick="addSchedule()">新增活動</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>

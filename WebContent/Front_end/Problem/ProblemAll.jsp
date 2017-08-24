@@ -115,7 +115,5 @@
 </div>
  
  </div>
- </div>
- 
 		
 <%@ include file="page/problem_footer.file"%>

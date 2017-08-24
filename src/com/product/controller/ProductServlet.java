@@ -158,7 +158,7 @@ public class ProductServlet extends HttpServlet {
                 productVO.setTimes(0);
                 productVO.setScore(0);
                 ProductService productService = new ProductService();
-                productService.insert(productVO);
+//                productService.insert(productVO);
 
                 PrintWriter printWriter = response.getWriter();
                 printWriter.println("OK");
@@ -346,6 +346,24 @@ public class ProductServlet extends HttpServlet {
                 printWriter.print(0);
             }
             printWriter.close();
+        }
+        ///////////////////////////////////////////////////// 刪除購物車一項物品/////////////////////////////////////////////////////////////////
+        else if ("DELETE_FROM_CAR".equals(action)) {
+            response.setCharacterEncoding("text/html; charset=utf-8");
+            String pro_no = request.getParameter("pro_no");
+            for (int i = 0; i < carList.size(); i++) {
+                if (pro_no.equals(carList.get(i).getPro_no())) {
+                    carList.remove(i);
+                    countList.remove(i);
+                }
+            }
+            for (int i = 0; i < carList.size(); i++) {
+                carTotal += carList.get(i).getPrice() * countList.get(i);
+            }
+            session.setAttribute("carList", carList);
+            session.setAttribute("countList", countList);
+            session.setAttribute("carTotal", new Integer(carTotal));
+            request.getRequestDispatcher("/Front_end/mall/checkout.jsp").forward(request, response);
         }
         ///////////////////////////////////// AJAX上下架/////////////////////////////////////////////////////
         else if ("onOrOff".equals(action)) {

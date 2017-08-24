@@ -154,7 +154,6 @@
 
 
 </div>
-</div>
 
 
 	<%@ include file="page/tradition_footer.file"%>

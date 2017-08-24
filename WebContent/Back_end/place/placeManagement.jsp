@@ -15,6 +15,7 @@
 	int totalPages = allCount / itemsCount + 1;
 	List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
 	String preLocation = request.getContextPath() + "/Back_end/place";
+    String active="0";
 	pageContext.setAttribute("placeList", placeList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("totalPages", totalPages);
@@ -22,8 +23,7 @@
 	pageContext.setAttribute("itemsCount", itemsCount);
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
-<div id="content">
-    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-top: 50px;">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
         <table id="table" class="table">
             <thead>
                 <tr>
@@ -136,7 +136,7 @@
                                     </tr>
                                     <tr>
                                         <td>景點描述</td>
-                                        <td><textarea id="addAddr" class="form-control " name="addDesc" class="form-control" style="width: 300px; height: 100px;" placeholder="必須輸入景點描述"></textarea></td>
+                                        <td><textarea id="addDesc" class="form-control " name="addDesc" class="form-control" style="width: 300px; height: 100px;" placeholder="必須輸入景點描述"></textarea></td>
                                     </tr>
                                     <tr>
                                         <td>景點圖片</td>
@@ -151,6 +151,7 @@
                             <input type="hidden" name="action" value="ADD_PLACE">
                             <button class="btn btn-success" onclick="addCheck()">確認</button>
                         </form>
+                            <button class="btn btn-primary" onclick="fakeDate()">資料</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -159,9 +160,13 @@
             </div>
         </div>
     </div>
-</div>
 
 <script type="text/javascript">
+function fakeDate() {
+    $("#addName").val("中央大學");
+    $("#addAddr").val("320桃園市中壢區中大路300號");
+    $("#addDesc").val("非常好的大學");
+}
     function addCheck() {
         var flag = true;
         var name = $("#addName").val();

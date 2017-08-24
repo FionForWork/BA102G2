@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
@@ -36,150 +35,6 @@ public class ServServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		
-		
-		if ("updateStatus".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-//			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-
-				String serv_no = req.getParameter("serv_no").trim();
-				
-				String status = req.getParameter("status").trim();
-				
-				ServVO servVO = new ServVO();
-				servVO.setServ_no(serv_no);
-				servVO.setStatus(status);
-				
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("servVO", servVO); 
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-				/***************************2.開始新增資料***************************************/
-
-				ServService servSvc = new ServService();
-				servVO = servSvc.updateStatus(serv_no, status);
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				String url = "/Back_end/serv/listAllServ.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
-				successView.forward(req, res);	
-				/***************************其他可能的錯誤處理**********************************/
-
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
-//				failureView.forward(req, res);
-//				
-//				
-//			}
-			
-		}
-		
-		
-		
-		
-		if ("upStatus".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-//			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-
-				String serv_no = req.getParameter("serv_no").trim();
-				String locs =  req.getParameter("locs").trim();
-				
-				System.out.println("1111111");
-				ServVO servVO = new ServVO();
-				servVO.setServ_no(serv_no);
-				
-				
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("servVO", servVO); 
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/Back_end/serv/listOneMem.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-				/***************************2.開始新增資料***************************************/
-				System.out.println("2222222");
-				ServService servSvc = new ServService();
-				servVO = servSvc.upStatus(serv_no);
-
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				System.out.println("33333333");
-				String url = locs;
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
-				successView.forward(req, res);	
-				/***************************其他可能的錯誤處理**********************************/
-
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
-//				failureView.forward(req, res);
-//				
-//				
-//			}
-			
-		}
-		
-		
-		if ("downStatus".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-//			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-
-				String serv_no = req.getParameter("serv_no").trim();
-				String locs =  req.getParameter("locs").trim();
-				
-				
-				ServVO servVO = new ServVO();
-				servVO.setServ_no(serv_no);
-				
-				
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("servVO", servVO); 
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/Back_end/serv/listOneMem.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-				/***************************2.開始新增資料***************************************/
-
-				ServService servSvc = new ServService();
-				servVO = servSvc.downStatus(serv_no);
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				String url = locs;
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);	
-				/***************************其他可能的錯誤處理**********************************/
-
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/Back_end/mem/listOneMem.jsp");
-//				failureView.forward(req, res);
-//				
-//				
-//			}
-			
-		}
-		
 		if ("selectByStype".equals(action)) {
 			/*************************** 1.接收請求參數 ****************************************/
 			String stype_no = req.getParameter("stype_no");
@@ -189,8 +44,6 @@ public class ServServlet extends HttpServlet {
 			Set<ServVO> set = servSvc.getServByStype(stype_no);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			
-			
 			req.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
 			
 			String url = null;
@@ -209,10 +62,8 @@ public class ServServlet extends HttpServlet {
 			Set<ServVO> set = servSvc.getServByCom(com_no);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-		   // 資料庫取出的set物件,存入request
+			req.setAttribute("selectByCom", set);    // 資料庫取出的set物件,存入request
 			
-			
-			req.setAttribute("selectByCom", set); 
 			String url = null;
 			url = "/Back_end/serv/selectByCom.jsp";   
 			
@@ -220,24 +71,7 @@ public class ServServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-		if ("selectByCom2".equals(action)) {
-			/*************************** 1.接收請求參數 ****************************************/
-			String com_no = req.getParameter("com_no");
-
-			/*************************** 2.開始查詢資料 ****************************************/
-			ServService servSvc = new ServService();
-			Set<ServVO> set = servSvc.getServByCom(com_no);
-
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			
-			
-			req.setAttribute("selectByCom", set); 
-			String url = null;
-			url = "/Front_end/serv/listMyServ.jsp";   
-			
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-		}
+		
 		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  

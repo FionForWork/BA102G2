@@ -9,7 +9,7 @@
     pageContext.setAttribute("list",list);
 %>
 <html>
-<%@ include file="page/back_end_index.file" %>
+<%@ include file="page/backEnd_Header.file" %>
 	<!-- Start content ===================================================================================================== -->
 <div>
 <Style>
@@ -55,16 +55,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-<div class="text-center">
-	<ul class="pagination">
-		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
-		<% for(int i = 0; i < pageNumber; i++){
-			pageContext.setAttribute("i", i+1);%>
-		<li ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
-		<% } %>
-		<li><a href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
-	</ul>
-</div> 
+		<%@ include file="page/page2.file" %>
 <!-- 內文 -->		
 		</div>
 	</div>

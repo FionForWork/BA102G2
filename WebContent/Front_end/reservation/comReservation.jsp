@@ -95,7 +95,7 @@
 					<c:if test="${reservationVO.status.equals('1')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
 					</c:if>
-<!-- 					<button class="btn" style="background-color:#ff5722;color:white">與客戶聊聊</button> -->
+					<button class="btn" style="background-color:#ff5722;color:white">與客戶聊聊</button>
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>

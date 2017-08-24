@@ -136,7 +136,7 @@
 					<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<input type="submit" class="btn btn-danger btn-block" value="馬上預約">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>

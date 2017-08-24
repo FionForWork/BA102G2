@@ -126,7 +126,7 @@
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="rating(this)">給予評價</button>
 					</c:when>
 				</c:choose>
-<!-- 					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button> -->
+					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button>
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>

@@ -9,19 +9,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="page/add_header.file"%>
 <%ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); %>
-<%Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs"); %>
 <%
-//    MemService memService=new MemService();
-// MemVO memVO=memService.getOneMem("1003");
+   MemService memService=new MemService();
+MemVO memVO=memService.getOneMem("1003");
 // session.setAttribute("memVO", memVO);
-	MemVO memVO = (MemVO) session.getAttribute("memVO");
 
 %>
 <%
-// ComService comService=new ComService();
-// ComVO comVO=comService.getOneCom("2001");
-//  session.setAttribute("comVO", comVO);
-ComVO comVO = (ComVO) session.getAttribute("comVO");
+ComService comService=new ComService();
+ComVO comVO=comService.getOneCom("2001");
+ session.setAttribute("comVO", comVO);
 
 %>
 
@@ -31,14 +28,19 @@ ComVO comVO = (ComVO) session.getAttribute("comVO");
 		<h2>新增文章</h2>
 		<p></p>
 	<c:if test="${not empty errorMsgs}">
-		<font color='red'>請修正以下錯誤:
-		
-		</font>
-	</c:if>
+	<font color='red'>請修正以下錯誤:
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li>${message}</li>
+		</c:forEach>
+	</ul>
+	</font>
+</c:if>
 
 		<div class="form-group">
-			<label for="inputdefault">主題:<font >${errorMsgs.get("title")}</font></label>
-			 <input class="form-control"  type="text" id="title" name="title"  value="<%=(articleVO == null) ? " " : articleVO.getTitle()%>">
+			<label for="inputdefault">主題</label> <input class="form-control"
+				id="inputdefault" type="text" name="title"
+				value="<%=(articleVO == null) ? " " : articleVO.getTitle()%>">
 		</div>
 
 		<jsp:useBean id="art_type_Svc" scope="page" class="com.art_type.model.Art_Type_Service" />
@@ -53,7 +55,7 @@ ComVO comVO = (ComVO) session.getAttribute("comVO");
 		</div>
 
 		<div class="form-group">
-			<label for="inputlg">文章:<font color='red'>${errorMsgs.get("content")}</font></label>
+			<label for="inputlg">文章</label>
 			<textarea class="form-control" id="comment" name="content"
 				value="<%=(articleVO == null) ? " " : articleVO.getContent()%>"></textarea>
 		</div>
@@ -68,15 +70,7 @@ ComVO comVO = (ComVO) session.getAttribute("comVO");
 </form>
 <input type="submit" class="btn  btn-danger "
 	value="返回" onclick="history.back()">
-	<input type="button" value="" onclick="ShowAnswer()">
 </div>
-<script type="text/javascript">
-function ShowAnswer(){
-//     document.getElementById("title").value="2";
-$("#title").val("請問婚禮上可以同時戴婚戒和求婚戒指嗎?");
-$("#comment").val("因為結婚買的是對戒，但老公求婚時送的鑽戒才是我的真愛XD請問各位水水們，結婚時我可以兩枚都戴嗎?不然平常怕弄丟也不太有機會戴到，而且鑽戒出場的時間太少，心裡一直覺得頗可惜XD")
-}
-</script>
 
 
 
