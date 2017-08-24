@@ -126,7 +126,7 @@
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="rating(this)">給予評價</button>
 					</c:when>
 				</c:choose>
-					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button>
+<!-- 					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button> -->
 					<i class="fa fa-usd" aria-hidden="true"></i>
 						訂單金額 : ${nf.format(reservationVO.price)}
 					</h4>
@@ -153,17 +153,17 @@
 					<label class="col-md-3">請填入信用卡號</label>
 					<div  class="col-md-9" id="showResult"></div>
 				</div>
-				<div class="row col-md-12">
-					<div class="col-md-2">
+				<div class="row col-xs-12">
+					<div class="col-xs-2">
 	        			<input class="form-control" id="cardNum1" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-md-2">
+	      			<div class="col-xs-2">
 	        			<input class="form-control" id="cardNum2" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-md-2">
+	      			<div class="col-xs-2">
 	        			<input class="form-control" id="cardNum3" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
-	      			<div class="col-md-2">
+	      			<div class="col-xs-2">
 	        			<input class="form-control" id="cardNum4" type="text" maxlength="4" onblur="checkCardNum(this)">
 	      			</div>
 	      		</div><br>

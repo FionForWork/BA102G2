@@ -9,7 +9,7 @@
     pageContext.setAttribute("list",list);
 %>
 <html>
-<%@ include file="page/backEnd_Header.file" %>
+<%@ include file="page/back_end_index.file" %>
 	<!-- Start content ===================================================================================================== -->
 <div>
 <Style>
@@ -26,6 +26,7 @@
 <div class="text-center well" >
 	<h2 style="font-weight:900">廠商資料一覽</h3>
 </div>
+	<a class="btn btn-info" href="<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp">廠商服務一覽</a>
 		<%if (request.getAttribute("listComDeatil")!=null){%>
 			<jsp:include page="listComDetail.jsp" />
 		<%} %>
@@ -55,7 +56,18 @@
 					</tr>
 				</c:forEach>
 			</table>
-		<%@ include file="page/page2.file" %>
+
+<div class="text-center">
+	<ul class="pagination">
+		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+		<% for(int i = 0; i < pageNumber; i++){
+			pageContext.setAttribute("i", i+1);%>
+		<li><a  ${whichPage==i?"class='btn btn-info active'":"" } href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<% } %>
+		<li><a href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
+	</ul>
+</div> 
+<%-- 		<%@ include file="page/page2.file" %> --%>
 <!-- 內文 -->		
 		</div>
 	</div>

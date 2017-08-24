@@ -26,14 +26,16 @@
 						<a id=close_chat class="chat-header-button pull-right">x</a>
 
 <%-- 						<div class="col-md-3"><img class="chat-header-logo img-circle" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}"></div> --%>
-							<h4 id="chat-header-name">${comVO.name}</h4>
+							
+							<h4 id="chat-header-name">${memVO != null? comVO.name : ''}</h4>
+							
 					</div>
 					<div class="panel-body">
 					<ul id="textArea"></ul>
 					</div>
 					<div class="panel-footer">							
 							<input id="message" class="col-md-9 text-field" type="text" autofocus="autofocus" placeholder="請輪入訊息" onkeydown="if (event.keyCode == 13) sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',	
-																																							  '${memVO != null? memVO.name : comVO.name}');" />	
+																																							  						'${memVO != null? memVO.name : comVO.name}');" />	
 							<a id="sendMessage" class="col-md-3 sendMessage_btn" 
 							onclick="sendMessage('${memVO != null? memVO.mem_no : comVO.com_no}',
 												 '${memVO != null? memVO.name : comVO.name}')" >送出</a>	
@@ -84,6 +86,7 @@ var memNo;
  						var who = jsonObj.who;
  						var userName = jsonObj.userName;
  						var message = jsonObj.message + "\r\n";
+ 						console.log(message);
 	 					if(${comVO.com_no}!= jsonObj.name) {
 	 						memNo = jsonObj.name;
 	 					}
@@ -127,9 +130,11 @@ var memNo;
 			                            		'</div>' +
  					                        '</div>' +    
  					                  '</li>'+'<br>';
+ 					      		$("#chat-header-name").html(userName);      
  					    }   
  					
  				        		$("#textArea").append(control);
+ 				        		
  				        
 	
  						

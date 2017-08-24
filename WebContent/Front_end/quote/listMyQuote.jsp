@@ -36,6 +36,7 @@ th:first-child {
 
 </style>
 <%@ include file="page/header.file" %>
+<%@ include file="page/page1.file" %>
 <c:if test="${not empty errorMsgs}">
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
@@ -55,7 +56,7 @@ th:first-child {
 		<th>我的回覆</th>
 		<th>修改</th>
 	</tr>
-	<c:forEach var="quoteVO" items="${list}">
+	<c:forEach var="quoteVO" items="${list}"   begin="<%= pageIndex %>" end="<%= pageIndex + rowsPerPage - 1 %>">
 	<tr  class="tr1">
 		<form id="${quoteVO.quo_no}">
 			<td>${memService.getOneMem(rfqService.getMemFromQuote(quoteVO.quo_no).mem_no).name}</td>
@@ -79,6 +80,16 @@ th:first-child {
 	</tr>
 	</c:forEach>
 </table>
+<div class="text-center">
+	<ul class="pagination">
+		<li ><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+		<% for(int i = 0; i < pageNumber; i++){
+			pageContext.setAttribute("i", i+1);%>
+		<li ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<% } %>
+		<li><a href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
+	</ul>
+</div> 
 <%@ include file="page/footer.file" %>
 
 <script type="text/javascript">

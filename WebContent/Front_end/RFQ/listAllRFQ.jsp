@@ -138,7 +138,7 @@
 											<input type="button" class="btn btn-danger" value="提交報價" onclick="quote(this)">
 											<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 											<input type="hidden" name="action" value="quote">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 										</div>
 										</form>
 									</div>

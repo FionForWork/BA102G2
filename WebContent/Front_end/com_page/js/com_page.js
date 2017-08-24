@@ -1,3 +1,4 @@
+
 function change(c) {
 	if (c == '1') {
 		document.getElementById("more_works").style.display = 'block';
@@ -9,22 +10,4 @@ function change(c) {
 	}
 }
 
-function changeSort(a) {
-	if (a == '0') {
-		$("#sortCom_noDesc").show();
-		$("#sortCom_no").hide();
-	}
-	if (a == '1') {
-		$("#sortCom_no").show();
-		$("#sortCom_noDesc").hide();
-	}
-	
-	if (a == '2') {
-		$("#sortScoreDesc").show();
-		$("#sortScore").hide();
-	}
-	if (a == '3') {
-		$("#sortScore").show();
-		$("#sortScoreDesc").hide();
-	}
-}
+

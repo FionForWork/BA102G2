@@ -57,11 +57,11 @@
 	<%@ include file="message.jsp"%>
 
 	<!--廠商名稱-->
-	<div class="text-center">
+<div class="text-center">
 		<h1>${comVO.name}</h1>
 		<div id="comTracking">
 			<c:choose>
-			<c:when test="${memVO.mem_no == null || !comNoList.contains(comVO.com_no)}">
+			<c:when test="${memVO == null || !comNoList.contains(comVO.com_no)}">
 				<a onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
 			</c:when>
 			<c:otherwise>
@@ -76,7 +76,7 @@
 	</div>
 <div id="snackbar">請先登入會員...</div>
 	<!--廠商名稱-->
-	
+		
 	<!--麵包削-->
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">

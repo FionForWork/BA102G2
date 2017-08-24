@@ -188,7 +188,7 @@ $(document).ready(function(){
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 <!-- 					<input type="submit" class="btn btn-info" value="新增活動"> -->
 					<button type="button" class="btn btn-info" onclick="addSchedule()">新增活動</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>
@@ -211,6 +211,8 @@ $(document).ready(function(){
 <!-- For WebSocket -->
 <input type="hidden" id="thisDate" value="">
 <input type="hidden" id="toDate" value="">
+<input type="hidden" id="mobileThisDate" value="">
+<input type="hidden" id="mobileToDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
 </body >
 <script>
@@ -243,8 +245,8 @@ $(document).ready(function(){
 	        if(action == "onRes"){
 	        	var thisDate = document.getElementById(jsonObj.thisDate);
 	        	var name = jsonObj.name+"預約了新服務!";
-	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">').text(name);
-				var content = $("<div style='background-color:pink'>").html(a);
+	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:white;cursor:pointer">').text(name);
+				var content = $("<div style='background-color:#ff5722;height:40px;padding-top:6px'>").html(a);
 	        	$(thisDate).append(content);
 	        }
 		};
@@ -258,7 +260,10 @@ $(document).ready(function(){
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
 						"toDate" : $("#toDate").val(),
-						"action" : "changeSchedule"};
+						"action" : "changeSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"mobileToDate" : $('#mobileToDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		
@@ -267,18 +272,22 @@ $(document).ready(function(){
 	function onDeleteSchedule() {
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
-						"action" : "deleteSchedule"};
+						"action" : "deleteSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		
 	}
 	
 	function addSchedule() {
-
+		$('#mobileThisDate').val($('#date').val());
 		$('#thisDate').val($('#date').val().replace(/-/g,""));
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
-						"action" : "addSchedule"};
+						"action" : "addSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		$('#addScheduleForm').submit();

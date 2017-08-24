@@ -28,7 +28,8 @@
 		};
 		
 		function deleteComtra(){
-				$.ajax({
+			console.log("0000000");
+			$.ajax({
 					url:$('input[name="path"]').val(),
 					type:'POST',
 					data:{

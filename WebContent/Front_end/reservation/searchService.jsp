@@ -31,7 +31,7 @@
 <%@ include file="page/searchServiceHeader.file" %>
   <script>
   $( function() {
-	    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+	    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd', minDate : "0"});
 	  } );
   </script>
 <!-- 複合查詢 -->
@@ -162,7 +162,7 @@
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 				<input type="hidden" name="action" value="resFromSearchService">
 				<input type="submit" class="btn btn-info" value="確認預約">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>

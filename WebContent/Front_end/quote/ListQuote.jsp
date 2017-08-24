@@ -94,15 +94,27 @@
 						<span class="hidden-xs">元</span>
 					</div>
 <!--判斷是否自己的報價才能預約、是否預約過、廠商是否還有空-->
-					<c:if test="${rfqService.getOneRFQ(rfqDetailVO.rfq_no).mem_no.equals(memVO.mem_no) && memVO != null
-					&& rfqDetailVO.status.equals('1') && calService.checkForRes(quoteVO.com_no,checkdf.format(rfqDetailVO.ser_date)) == null}">
-					<div class="col-md-2"><br>
-<!--馬上預約-->
-						<input type="hidden" class="quotePrice" value="${quoteVO.price}">
-						<input type="hidden" class="comName" value="${comService.getOneCom(quoteVO.com_no).name}">
-						<button id="${quoteVO.quo_no}" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#resModal" onclick="showModal(this)">馬上預約</button>
-					</div>
-					</c:if>
+				<c:if test="${rfqService.getOneRFQ(rfqDetailVO.rfq_no).mem_no.equals(memVO.mem_no) && memVO != null}">
+					<c:choose>
+						<c:when test="${rfqDetailVO.status.equals('0')}">
+							<div class="col-md-2"><br>
+								<button type="button" class="btn btn-danger disabled">此詢價已關閉</button>
+							</div>
+						</c:when>
+						<c:when test="${calService.checkForRes(quoteVO.com_no,checkdf.format(rfqDetailVO.ser_date)) == null}">
+						<div class="col-md-2"><br>
+							<input type="hidden" class="quotePrice" value="${quoteVO.price}">
+							<input type="hidden" class="comName" value="${comService.getOneCom(quoteVO.com_no).name}">
+							<button id="${quoteVO.quo_no}" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#resModal" onclick="showModal(this)">馬上預約</button>
+						</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-md-2"><br>
+								<button type="button" class="btn btn-danger disabled">廠商這時段已被預約走囉!</button>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 				</div>
 			<hr>
 			</c:forEach>
@@ -136,7 +148,7 @@
 					<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
 					<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 					<input type="submit" class="btn btn-danger btn-block" value="馬上預約">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>

@@ -89,7 +89,7 @@ public class MessageServlet extends HttpServlet {
 		System.out.println("name:"+name);
 		String toname = (String) j.get("toname");
 		System.out.println("toname:"+toname);
-//		String action = (String) j.get("action");
+		String action = (String) j.get("action");
 		
 		//存訊息
 		MessageService messageSvc = new MessageService();
@@ -103,6 +103,7 @@ public class MessageServlet extends HttpServlet {
 		}
 		
 		//設定廠商進入房間
+		System.out.println("myRoom1: "+myRoom);
 		if(myName.indexOf("2")==0)
 		{
 			
@@ -110,12 +111,14 @@ public class MessageServlet extends HttpServlet {
 		  
 		  //會員登入房間
 		}else {
-			myRoom=myName+toname;
+			System.out.println("myRoom2: "+myRoom);
+//			myRoom=myName+toname;
 			System.out.println("---sessionUsername.get(toname):"+sessionUsername.get(toname));
 			if(sessionUsername.get(toname)!=null){	
 				sessionMap.get(myRoom).add((Session) sessionUsername.get(toname));
 			}
 		}
+		System.out.println("myRoom3: "+myRoom);
 		
 		for (Session session : sessionMap.get(myRoom)) {
 			System.out.println("isSessionOpen?"+session.isOpen());
@@ -123,7 +126,7 @@ public class MessageServlet extends HttpServlet {
 				session.getAsyncRemote().sendText(message);
 		}
 		System.out.println("發送訊息");
-		System.out.println("myRoom: " + myRoom+"myName: "+myName+"myRoomsize: "+myRoom.length());
+		System.out.println(" myRoom: " + myRoom+" myName: "+myName+" myRoomsize: "+myRoom.length());
 		System.out.println("Message received: " + message);
 	}
 

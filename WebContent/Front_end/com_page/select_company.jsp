@@ -9,7 +9,6 @@
 <%@ page import="com.service_type.model.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<title>所有店家</title>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
@@ -32,6 +31,7 @@
 	pageContext.setAttribute("df", df);
 %>
 </head>
+<title>服務類型</title>
 <body>
 	<%@ include file="page/header.file"%>
 	<br>
@@ -89,6 +89,8 @@
 <!-- 	</div> -->
 <!-- 	<div class="col-md-2"> -->
 <!-- 		<div class="input-group"> -->
+<%-- 		<input type="hidden" class="form-control" name="stype_no" value="<%=stype_no%>"> --%>
+<%-- 		<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
 <!-- 		<input type="hidden" class="form-control" name="action" value="listcoms_ByCompositeQuery"> -->
 <!-- 		<button class="btn btn-block btn-danger">送出查詢</button> -->
 <!-- 		</div> -->

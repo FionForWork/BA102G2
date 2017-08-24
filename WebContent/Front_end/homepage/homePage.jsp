@@ -362,8 +362,8 @@ function callback2() {
             <div class="w3-col m8 w3-panel">
                 <div class="w3-large w3-margin-bottom">
                     <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Taoyuan, Taiwan<br>
-                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: (03) 151515<br>
-                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@gmail.com<br>
+                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: (03) 4257387<br>
+                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: publish0@iii.org.tw<br>
                 </div>
                 <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
                 <form method="post" action="<%=request.getContextPath()%>/ContactUs">
@@ -384,8 +384,7 @@ function callback2() {
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
+   
     
                 <div class="clearfix" style="background-color:#333">
                 <div class="wd_footer">

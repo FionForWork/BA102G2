@@ -212,7 +212,7 @@
 			<div class="modal-body">
 			<div class="row">
 			<c:forEach var="servVO" items="${servList}">
-				<div class="col-md-4">
+				<div class="col-xs-4">
 				<div style="border-width:1px;border-style:solid">
 					<input type="radio" name="serv_no" value="${servVO.serv_no}">${servVO.title}<hr>
 					<div style="height:100px">${servVO.content}</div><hr>
@@ -230,7 +230,7 @@
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 <!-- 				<input type="submit" class="btn btn-info" value="送出預約"> -->
 				<button type="button" class="btn btn-info" onclick="onMessage('${memVO.name}')">送出預約</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>
