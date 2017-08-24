@@ -53,6 +53,114 @@ public class ServDAO implements ServDAO_Interface {
 		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
 		private static final String getServByStype = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where stype_no = ? order by score";
 		private static final String getServByCom = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where com_no = ? order by com_no";
+		private static final String downStatus="UPDATE service set status='下架'  where serv_no = ?";
+		private static final String upStatus="UPDATE service set status='正常'  where serv_no = ?";
+		
+		private static final String UPDATESTATUS = 
+				"UPDATE service set status=? where serv_no = ?";
+		
+		
+		@Override
+		public void updateStatus(ServVO servVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATESTATUS);
+				pstmt.setString(1, servVO.getStatus());
+				pstmt.setString(2, servVO.getServ_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+		
+		
+		@Override
+		public void downStatus(ServVO servVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(downStatus);
+				pstmt.setString(1, servVO.getServ_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+		}
+
+		@Override
+		public void upStatus(ServVO servVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try{
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(upStatus);
+				pstmt.setString(1, servVO.getServ_no());
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+		}
+		
+		
 		
 		@Override
 		public Set<ServVO> getServByStype(String stype_no) {
@@ -733,4 +841,8 @@ public class ServDAO implements ServDAO_Interface {
 			}
 		}
 	}
+
+	
+
+	
 }

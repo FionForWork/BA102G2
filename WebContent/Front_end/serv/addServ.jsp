@@ -8,7 +8,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 Object memVO = session.getAttribute("memVO");     
 ServVO servVO = (ServVO) request.getAttribute("servVO");
 %>
-<%@ include file="/Front_end/com/page/company_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <title>新增服務</title>
 
 <div class="container">
@@ -41,11 +41,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 <h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">新增廠商服務:</h1>
 <br>
-<%--錯誤處理 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	</font>
-</c:if>
+
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/serv/serv.do" name="form1">
 
@@ -85,8 +81,9 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 	<div class="form-group">
 		<span>服務介紹:<font color='red'>${errorMsgs.get("content")}</font><br></span>
-		<input type="TEXT" name="content"  
-			value="<%= (servVO==null)? "介紹內容" : servVO.getContent()%>" />
+		<textarea name=content  class="form-control" rows=8 >${servVO.content}</textarea>
+ 
+		
 	</div>
 
 	
@@ -106,6 +103,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 <br>
 <input type="hidden" name="com_no" value="${comVO.com_no}">
 <input type="hidden" name="action" value="insert">
-<input type="submit" class="btn btn-info" value="送出新增"></FORM>
+<input type="submit" class="btn btn-info" value="送出新增">　　　　<input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp'" >
+	</FORM>
 </div></div>
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

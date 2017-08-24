@@ -1,4 +1,5 @@
-﻿<div class="text-right">
+﻿</div></div></div><br>   
+<div class="text-right">
         <a id="back-to-top" href="#" class="btn btn-black btn-lg round back-to-top" role="button">
             <i class="fa fa-angle-up" aria-hidden="false"></i>
         </a>
@@ -32,6 +33,7 @@
                                 <li class=""><a href="<%=request.getContextPath()%>/Front_end/Article/Article.jsp" itemprop="url">討論版</a></li>
                                 <li class=""><a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" target="_blank" itemprop="url">會員專區</a></li>
                             </ul>
+                        </div>
                         </div>
 
                     </div>

@@ -8,22 +8,32 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 <title>修改會員</title>
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
-<div class="container">
-        <div class="row">
 
-            <div class="col-md-offset-1 col-md-2 col-xs-0"><br><br>
-             <br><br><br> 
-                <ul class="list-group">
-                   <ul class="list-group">
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+	
+ 
+<div class="container">
+	<div class="row">
+<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
+            <div class="col-md-offset-1 col-md-2"><br><br><br><br><br>
+                 <ul class="list-group">
                    <a href="<%=request.getContextPath()%>/Front_end/mem/updatemember.jsp" class="list-group-item menua active">編輯個人資料</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/mem/updatePwd.jsp" class="list-group-item menua">密碼修改</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua">預約紀錄查詢</a>
+					<a href="<%=request.getContextPath()%>/Front_end/reservation/memReservation.jsp" class="list-group-item menua ">預約紀錄查詢</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/RFQ/listMyRFQ.jsp" class="list-group-item menua">報價紀錄查詢</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua ">作品挑選管理</a>
+					<a href="<%=request.getContextPath()%>/Front_end/Temp/MemPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a>
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/Album/ListAllAlbums.jsp" class="list-group-item menua">我的相簿</a>
 					<br>
@@ -31,11 +41,10 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
-					<br></ul>
-
-																				
-                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp"  class="btn btn-block btn-default ">查看個人資料</a>
+					<a href="<%=request.getContextPath()%>/Front_end/mall/mallArea.jsp" class="list-group-item menua">商城專區</a>
+					<br>
+                </ul>
+                <a href="<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp" class="btn btn-block btn-default">查看個人資料</a>
             </div>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/mem/css/dcalendar.picker.css"/>
 
@@ -59,11 +68,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <div class="col-xs-12 col-sm-7 col-sm-push-1" id="big">
 
 <center><h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">編輯個人資料</h1></center>
-			<%--錯誤處理 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	</font>
-</c:if>
+			
+
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data">
 		
 		
@@ -117,7 +123,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <input type="hidden" name="status" value="${memVO.status}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_no" value="${memVO.mem_no}">
-<input type="submit" class="btn btn-info" value="送出"></FORM>
+<input type="submit" class="btn btn-info" value="送出">　　　　　　　　　　　　　　　　　　　　　
+<input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp'" >
+</FORM>
 
 
 

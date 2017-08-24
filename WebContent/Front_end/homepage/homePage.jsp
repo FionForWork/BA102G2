@@ -9,6 +9,129 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+ <div class="modal fade" id="mem" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 會員登入</h4>
+        </div> 
+        <div class="modal-body" style="padding:40px 50px;">
+          <form name="sss"  action="<%= request.getContextPath() %>/mem/mem.do" method="post">
+
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email"  onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password"  onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="checkbox">
+             
+            </div>
+           <center><div id="recaptcha_box">請驗證</div>
+              <input type="hidden" name="action" value="login">
+              <input type="hidden" name="memslocation" value="<%= request.getRequestURI() %>">
+              	
+              <button style="display:none" type="submit" id="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button    type="submit"class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+   <div class="modal fade" id="com" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 廠商登入</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form name="aaa" action="<%= request.getContextPath() %>/com/com.do" method="post">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
+              <input type="text" class="form-control" name="id" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
+              <input type="password" class="form-control" name="pwd" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;">
+            </div>
+            <div class="checkbox">
+             
+            </div>
+             <center><div id="recaptcha_box2">請驗證</div>
+            <input type="hidden" name="action" value="login">
+            <input type="hidden" name="comslocation" value="<%= request.getRequestURI() %>">
+              <button  style="display:none" type="submit" id="submit2" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
+          <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
+          <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
+  <script type="text/javascript">
+
+      var onloadCallback = function() {
+        // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
+        // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
+        
+        grecaptcha.render('recaptcha_box', {
+          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
+          'callback' : callback
+        });
+        
+        grecaptcha.render('recaptcha_box2', {
+          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
+     'callback' : callback2
+        });
+        
+        
+      };
+      
+      
+      function callback() {
+    		$(document).ready(function(){
+    			  
+    			$("#recaptcha_box").hide(1000);
+    			  $("#submit").show(1000);
+    			  
+    			});
+
+    	}
+
+function callback2() {
+    		$(document).ready(function(){
+    			  
+    			$("#recaptcha_box2").hide(1000);
+    			  $("#submit2").show(1000);
+    			  
+    			});
+
+    	}
+   
+    </script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ＨomePage</title>
     <meta charset="UTF-8">
@@ -19,6 +142,9 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/jquery-3.2.1.min.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
@@ -42,7 +168,11 @@
     }
 </style>
 <body>
-
+	
+	
+	
+	
+	
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
         <div class="w3-bar" id="myNavbar">
@@ -54,8 +184,23 @@
             <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> 服務</a>
             <a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-gift"></i> 線上商城</a>
             <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i> 註冊</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 登入</a>
+             <c:choose>
+            <c:when test="${sessionScope.comVO!=null}">
+            	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${comVO.name}</a>
+           		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+           </c:when>
+      	   <c:when test="${sessionScope.memVO!=null}">
+      			              <a href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${memVO.name}</a>
+            <a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+      	   </c:when>
+      		 <c:otherwise>
+      		  <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>會員註冊</a>
+            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>廠商註冊</a>
+            <a data-toggle="modal" data-target="#mem" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 會員登入</a>
+            <a data-toggle="modal" data-target="#com" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 廠商登入</a>
+      		
+      		 </c:otherwise>
+      		</c:choose>
         </div>
 
         <!-- Navbar on small screens -->
