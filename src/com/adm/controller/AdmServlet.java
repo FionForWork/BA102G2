@@ -184,7 +184,7 @@ public class AdmServlet extends HttpServlet {
 						          }
 						      }catch(Exception ignored){}
 						      
-						      res.sendRedirect(req.getContextPath()+"/Back_end/mem/listAllMem.jsp");
+						      res.sendRedirect(req.getContextPath()+"/Back_end/homepage/homepage.jsp");
 						      return;
 						 }
 
@@ -193,7 +193,7 @@ public class AdmServlet extends HttpServlet {
 				 }
 
 			 }
-			 res.sendRedirect(req.getContextPath()+"Back_end/adm/errerlogin.jsp");
+			 res.sendRedirect(req.getContextPath()+"/Back_end/login/errorLogin.jsp");
 		      return;
 			
 		}
