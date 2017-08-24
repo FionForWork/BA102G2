@@ -163,7 +163,7 @@ public class AdmServlet extends HttpServlet {
 						      session.setAttribute("admVO", admVO);
 						      session.setAttribute("role","adm");
 						      Map<String,List> oneAll =autSvc.getOneAll(admVO.getAdm_no());
-								 
+						      oneAll.values().iterator().next().get(0);
 						      System.out.println("oneAll---"+oneAll);
 								 System.out.println("oneAll.size()---"+oneAll.size());
 								 System.out.println( oneAll.values().iterator().next().contains("01"));

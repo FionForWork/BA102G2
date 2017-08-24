@@ -28,8 +28,8 @@ int count=1;
         </ol>
         <!-- 輪播項 -->
         <div class="carousel-inner" role="listbox">
-            <div class="item active" data-image-lg="<%=request.getContextPath()%>/Front_end/Article/img/banner1.jpg"
-                data-image-xs="<%=request.getContextPath()%>/Front_end/Article/img/banner1.jpg" >
+            <div class="item active" data-image-lg="<%=request.getContextPath()%>/Front_end/Advertising/img/banner1.jpg"
+                data-image-xs="<%=request.getContextPath()%>/Front_end/Advertising/img/banner1.jpg" >
                     
                     <div class="banner_hero text-center">
             <h1 class="" style="font-family: 'Hind', sans-serif;font-size:26px; text-shadow: 0px 1px 10px rgba(0, 0, 0, 1);">
