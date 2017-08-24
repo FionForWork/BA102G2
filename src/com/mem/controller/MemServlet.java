@@ -309,7 +309,7 @@ public class MemServlet extends HttpServlet{
 			HttpSession session = req.getSession();
 			session.invalidate();
 			//整個連線拔掉
-			res.sendRedirect(req.getContextPath()+"/Front_end/login/homepage.jsp");
+			res.sendRedirect(req.getContextPath()+"/Front_end/homepage/homePage.jsp");
 		    return;
 		}
 		
@@ -325,7 +325,7 @@ public class MemServlet extends HttpServlet{
 			 String pwd = req.getParameter("pwd");
 			  // 【檢查該帳號 , 密碼是否有效】
 			 HttpSession session = req.getSession();
-			 String memslocation = req.getParameter("comslocation");
+			
 			 MemService memSvc = new MemService();
 			 List<MemVO> list = memSvc.loginid();
 			 List<MemVO> list1 = memSvc.loginpwd();
@@ -338,12 +338,15 @@ public class MemServlet extends HttpServlet{
 						
 						 if (pwd.equals(list1.get(j).getPwd())) {
 							
-							 session.removeAttribute("id");
-							 session.removeAttribute("memVO");
-							 session.removeAttribute("comVO");
+							 
 								
 						      MemVO memVO = memSvc.getOneMemById(id);
 						      String status=memVO.getStatus();
+						      int report=memVO.getReport();
+						      if(report>=3){
+						    	  res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
+									return;  
+						      }
 						      if(status.equals("停權")){
 									res.sendRedirect(req.getContextPath()+"/Front_end/login/statusNotGood.jsp");
 									return;
@@ -354,7 +357,9 @@ public class MemServlet extends HttpServlet{
 						      
 						      try {
 						    	  String memlocation = (String) session.getAttribute("memlocation");
-						          if (memlocation != null) {
+						    	  String memslocation = req.getParameter("memslocation");
+						    
+						    	  if (memlocation != null) {
 						        	  System.out.println("我是經過濾器的"+memlocation);
 						            session.removeAttribute("memlocation");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						            res.sendRedirect(memlocation);            

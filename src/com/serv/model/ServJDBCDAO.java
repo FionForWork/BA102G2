@@ -425,6 +425,27 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void downStatus(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void upStatus(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateStatus(ServVO servVO) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 

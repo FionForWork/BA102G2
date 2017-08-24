@@ -8,7 +8,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 Object memVO = session.getAttribute("memVO");     
 ServVO servVO = (ServVO) request.getAttribute("servVO");
 %>
-<%@ include file="/Front_end/com/page/company_header.file"%>
+<%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <title>新增服務</title>
 
 <div class="container">

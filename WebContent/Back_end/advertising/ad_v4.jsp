@@ -10,9 +10,12 @@
 <html>
 <head>
 <%
+		
+
 	AdvertisingService advertisingSvc = new AdvertisingService();
 	List<AdvertisingVO> advertisingList = advertisingSvc.getAll();
 	pageContext.setAttribute("advertisingList", advertisingList);
+	
 	ComService comSvc = new ComService();
 	List<ComVO> comList = comSvc.getAll();
 	pageContext.setAttribute("comList", comList);
@@ -42,12 +45,12 @@
 	<div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs nav-justified">
 			<li class="active"><a href="#all" data-toggle="tab">所有廣告</a></li>
-			<li><a href="#not_audited" data-toggle="tab">未審核廣告</a></li>
-			<li><a href="#audited" data-toggle="tab">已審核廣告</a></li>
+			<li><a href="#not_audited" data-toggle="tab" onclick="changetable(0);">未審核廣告</a></li>
+			<li><a href="#audited" data-toggle="tab" onclick="changetable(1);">已審核廣告</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="all">
-				<table class="table table-hover">
+				<table id="table" class="table table-hover">
 					<thead>
 						<tr>
 							<th>廠商名稱</th>
@@ -59,7 +62,6 @@
 					</thead>
 					<%@ include file="page/page1.file"%>
 					<tbody>
-						<c:if test="${param.status==null}">
 							<c:forEach var="advertisingVO" items="${advertisingList}"
 								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 								<tr>
@@ -74,7 +76,7 @@
 									<td>${startDayFormat}</td>
 									
 									<td>${df.format((advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24))}</td>
-									<td><c:choose>
+									<td id="${advertisingVO.adv_no}"><c:choose>
 											<c:when test="${advertisingVO.status=='0'}">
 												<span style="color: black">未審核</span>
 											</c:when>
@@ -108,34 +110,33 @@
 										</div>
 										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
 										<div class="col-xs-12 col-sm-4">
-												<form method="post"
-												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<form>
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="submit" class="btn btn-info" value="通過" disabled="disabled">	
+													<input type="button" class="btn btn-info" value="通過" disabled="disabled" >	
 												</c:when>
 												<c:otherwise>
-													<input type="submit" class="btn btn-info" value="通過">
+													<input type="button" class="btn btn-info" value="通過" onclick="approved(this);">
+												
 												</c:otherwise>
 												</c:choose>			
 												</form>
 				
-												<form method="post"
-												action="<%=request.getContextPath()%>/advertising/advertising.do">
+												<form>
 												<input type="hidden" name="adv_no" value="${advertisingVO.adv_no}">
 												<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">					
 												<input type="hidden" name="action" value="disapproved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="submit" class="btn btn-danger" value="未通過" disabled="disabled">	
+													<input type="button" class="btn btn-danger" value="未通過" disabled="disabled">	
 												</c:when>
 												<c:otherwise>
-													<input type="submit" class="btn btn-danger" value="未通過">
+													<input type="button" class="btn btn-danger" value="未通過" onclick="disapproved(this);">
 												</c:otherwise>
 												</c:choose>				
 												</form>
@@ -146,12 +147,76 @@
 										
 							</c:forEach>
 							<%@ include file="page/page2.file"%>
-						</c:if>
 					</tbody>
 				</table>
+			
 			</div>
+				<div class="tab-pane" id="not_audited">
+				
+				</div>
+				
+				
+				<div class="tab-pane" id="audited">
+				
+				</div>
+		</div>
+	</div>
+			
+			
 
 	
 	<%@ include file="page/after.file"%>
 </body>
+<script type="text/javascript">
+
+function approved(btn){
+	
+	var id = $(btn).siblings("input[name='adv_no']").val();
+
+	$.ajax({
+		url : "<%=request.getContextPath()%>/advertising/advertising.do",
+		data : {	
+			action : "approved",
+			adv_no : $(btn).siblings("input[name='adv_no']").val(),		
+		},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$("#"+id).children().html("通過").css("color","green");
+			$("#"+id).next().children().click().attr("disabled","disabled");
+		}
+	});	
+}
+
+function disapproved(btn){
+	
+	var id = $(btn).siblings("input[name='adv_no']").val();
+
+	$.ajax({
+		url : "<%=request.getContextPath()%>/advertising/advertising.do",
+		data : {
+			action : "disapproved",
+			adv_no : $(btn).siblings("input[name='adv_no']").val(),		
+		},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$("#"+id).children().html("未通過").css("color","red");
+			$("#"+id).next().children().click();
+		}
+	});	
+}
+
+function changetable(x) {
+	if(x=='0') {
+		$('#not_audited').load("table.jsp #table",{"status":"0"});		
+	} else {
+		$('#audited').load("table.jsp #table",{"status":"1"});	
+	}
+}
+</script>
 </html>

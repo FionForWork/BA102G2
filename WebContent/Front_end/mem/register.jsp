@@ -31,7 +31,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 	<div class="mation">
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
-
+${Session.memVO!=null}-----${memVO!=null}
+${Session.memVO}-----
+${Session.memVO.name}-----
 
 	<div class="form-group">
 				<span>帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}</font></span>

@@ -57,7 +57,6 @@ public class ProductServlet extends HttpServlet {
             String amount = request.getParameter("amount");
             String protype_no = request.getParameter("protype_no");
             String pro_name = request.getParameter("pro_name").trim();
-            System.out.println(pro_name);
             byte[] data = null;
             if (pro_name.equals("")) {
                 error.add("請輸入商品名稱");
@@ -103,7 +102,6 @@ public class ProductServlet extends HttpServlet {
 
                 ProductService productService = new ProductService();
                 productService.insert(productVO);
-                System.out.println("ADD SUCESS");
                 request.getRequestDispatcher("/Front_end/mall/productManagement.jsp").forward(request, response);
             }
         }
@@ -111,8 +109,7 @@ public class ProductServlet extends HttpServlet {
             response.setContentType("text/html; charset=utf-8");
             List<String> error = new ArrayList<String>();
             ProductVO productVO = new ProductVO();
-
-            String seller_no = String.valueOf(session.getAttribute("mem_no"));
+            String seller_no = memVO.getMem_no();
             String pro_desc = request.getParameter("pro_desc");
             String price = request.getParameter("price");
             String amount = request.getParameter("amount");
@@ -172,6 +169,7 @@ public class ProductServlet extends HttpServlet {
             response.setCharacterEncoding("text/html; charset=utf-8");
             ProductService productService = new ProductService();
             String pro_no = request.getParameter("pro_no");
+            String nowPage = request.getParameter("nowPage");
             ProductVO productVO = productService.getOneByPK(pro_no);
             if (!request.getParameter("pro_name").equals("")) {
                 productVO.setPro_name(request.getParameter("pro_name"));
@@ -195,7 +193,7 @@ public class ProductServlet extends HttpServlet {
                 }
             }
             productService.update(productVO);
-            request.getRequestDispatcher("/Front_end/mall/productManagement.jsp").forward(request, response);
+            request.getRequestDispatcher("/Front_end/mall/productManagement.jsp?nowPage="+nowPage).forward(request, response);
         }
         else if ("UPDATE_AJAX".equals(action)) {
             response.setContentType("text/html; charset=utf-8");

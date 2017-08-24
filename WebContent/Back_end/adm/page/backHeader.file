@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    
-   <meta name="viewport"
+<meta charset="utf-8">
+<title>She Said Yes!</title>
+
+<meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <link
@@ -39,31 +39,39 @@
 	type="image/png">
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <meta name="msapplication-TileColor" content="#3399cc" />
-</head>
+
 <form name="logout" ACTION="<%= request.getContextPath() %>/adm/adm.do" method=post >
                     <input type="hidden"  name="action" value="logout"/>
                           </form>
+</head>
 <body>
-    <div id="header">
-        <div class="container-fluid">
-            <div class="navbar">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="backIndex.jsp">
-                        <span class="text-logo"> SHE SAID YES!</span>
-                    </a>
-                </div>
-                <nav class="top-nav" role="navigation">
-                    <ul class="nav navbar-nav pull-right">
-                 <li class="dropdown"><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp" data-toggle="dropdown">${admVO.name}</a>
-							<ul class="dropdown-menu right" role="menu">
-								<li><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp"><i class="st-user"></i>
-										我的資料</a></li>
-								<li><a href="javascript:document.logout.submit();"><i class="im-exit"></i> 登出</a>
-								</li>
-							</ul></li>
+	<div id="header">
+		<div class="container-fluid">
+			<div class="navbar">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="<%=request.getContextPath()%>/Back_end/homepage/homepage.jsp"> <span
+						class="text-logo"> She Said Yes!</span>
+					</a>
+				</div>
+				<nav class="top-nav" role="navigation">
+					<ul class="nav navbar-nav pull-right">
+
+                        <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>${admVO.name}</a>
+                            <ul class="dropdown-menu right" role="menu">
+                                <li><a href="<%=request.getContextPath()%>/Back_end/mem/listMyAdm.jsp">
+                                        <i class="st-user"></i>個人資料
+                                    </a></li>
+                                <li><a href="javascript:document.logout.submit();">
+                                        <i class="im-exit"></i>
+                                        登出
+                                    </a></li>
+                            </ul></li>
                     </ul>
                 </nav>
             </div>
         </div>
+        <!-- Start .header-inner -->
     </div>
-    
+    <!-- End #header -->
+    <!-- Start #sidebar -->
+  

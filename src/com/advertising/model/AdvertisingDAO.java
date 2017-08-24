@@ -24,6 +24,8 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	private static final String UPDATE = "update advertising set com_no=?,title=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
 	private static final String GET_ALL_UNVERIFIED="select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = '0' order by adv_no desc";
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
+	private static final String GET_ALL_BY_STATUS = "select * from advertising where status = ?";
+	private static final String GET_ALL_BY_STATUS_2 = "select * from advertising where status in (?, ?)";
 
 	@Override
 	public void insert(AdvertisingVO advertisingVO) {
@@ -388,6 +390,142 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				list.add(advertisingVO);
 			}
 
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (IOException ie) {
+			System.out.println(ie);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<AdvertisingVO> getAllByStatus(String status) {
+		List<AdvertisingVO> list = new ArrayList<AdvertisingVO>();
+		AdvertisingVO advertisingVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BY_STATUS);
+			pstmt.setString(1, status);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				advertisingVO = new AdvertisingVO();
+				advertisingVO.setAdv_no(rs.getString("adv_no"));
+				advertisingVO.setCom_no(rs.getString("com_no"));
+				advertisingVO.setTitle(rs.getString("title"));
+				advertisingVO.setStartDay(rs.getTimestamp("startday"));
+				advertisingVO.setEndDay(rs.getTimestamp("endday"));
+				advertisingVO.setPrice(rs.getInt("price"));
+
+				Clob clob = rs.getClob("text");
+				StringBuilder sb = new StringBuilder();
+				BufferedReader br = new BufferedReader(clob.getCharacterStream());
+				String str;
+				while ((str = br.readLine()) != null) {
+					sb.append(str);
+					sb.append("\n");
+				}
+				br.close();
+				advertisingVO.setText(sb.toString());
+				advertisingVO.setImg(rs.getBytes("img"));
+				advertisingVO.setVdo(rs.getBytes("vdo"));
+				advertisingVO.setStatus(rs.getString("status"));
+				list.add(advertisingVO);
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (IOException ie) {
+			System.out.println(ie);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	@Override
+	public List<AdvertisingVO> getAllByStatus(String status1, String status2) {
+		List<AdvertisingVO> list = new ArrayList<AdvertisingVO>();
+		AdvertisingVO advertisingVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BY_STATUS_2);
+			pstmt.setString(1, status1);
+			pstmt.setString(2, status2);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				advertisingVO = new AdvertisingVO();
+				advertisingVO.setAdv_no(rs.getString("adv_no"));
+				advertisingVO.setCom_no(rs.getString("com_no"));
+				advertisingVO.setTitle(rs.getString("title"));
+				advertisingVO.setStartDay(rs.getTimestamp("startday"));
+				advertisingVO.setEndDay(rs.getTimestamp("endday"));
+				advertisingVO.setPrice(rs.getInt("price"));
+				
+				Clob clob = rs.getClob("text");
+				StringBuilder sb = new StringBuilder();
+				BufferedReader br = new BufferedReader(clob.getCharacterStream());
+				String str;
+				while ((str = br.readLine()) != null) {
+					sb.append(str);
+					sb.append("\n");
+				}
+				br.close();
+				advertisingVO.setText(sb.toString());
+				advertisingVO.setImg(rs.getBytes("img"));
+				advertisingVO.setVdo(rs.getBytes("vdo"));
+				advertisingVO.setStatus(rs.getString("status"));
+				list.add(advertisingVO);
+			}
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (IOException ie) {

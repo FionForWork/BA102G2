@@ -7,12 +7,13 @@ Object comVO = session.getAttribute("comVO");
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
 <div class="container">
 	<div class="row">
-	
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Advertising/Advertising.jsp" class="list-group-item menua">廣告管理</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua ">預約紀錄查詢</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
                 <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
@@ -22,6 +23,8 @@ Object comVO = session.getAttribute("comVO");
 
 			<a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" class="btn btn-block btn-default">查看廠商資料</a>
 		</div>
+	
+
 <style type="text/css">
 			#big{
 				font-size:19px;
@@ -84,7 +87,12 @@ Object comVO = session.getAttribute("comVO");
 		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/com/com.do">
 			 <input type="submit" class="btn btn-info " value="修改">
 			 <input type="hidden" name="com_no"value="${comVO.com_no}" >
-			 <input type="hidden" name="action"	value="getOne_For_Update">　　　　　<input type="button" class="btn btn-info" value="新增服務" onclick="location.href='<%=request.getContextPath()%>/Front_end/serv/addServ.jsp'" >
+			 <input type="hidden" name="action"	value="getOne_For_Update">　　　　　<input type="button" class="btn btn-info" value="新增服務" onclick="location.href='<%=request.getContextPath()%>/Front_end/serv/addServ.jsp'" >　　　　　　
+	</FORM><br><br>
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
+	<input type="hidden" name="com_no"value="${comVO.com_no}" >
+	<input type="submit" class="btn btn-info " value="查看我的服務" >
+	<input type="hidden" name="action"	value="selectByCom2">
 	</FORM>
 		<br><br>
 		

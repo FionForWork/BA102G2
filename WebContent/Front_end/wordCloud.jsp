@@ -8,19 +8,9 @@
 <%@include file="mall/pages/indexHeader.file"%>
 <%
     ProductService productService=new ProductService();
-	List<HashMap<String, Double>> avgScoreList=productService.getAllAvgSorce();
+    List<HashMap<String, Double>> avgScoreList=productService.getAllAvgSorce();
     List<String>proList=new ArrayList<String>();
     List<Double>scoreList=new ArrayList<Double>();
-    for(int i=0;i<avgScoreList.size();i++){
-//        proList.add(avgScoreList.get(i).keySet().toString());
-//        System.out.println(avgScoreList.get(i).forEach(System::println()));
-    }
-    for(int i=0;i<proList.size();i++){
-        Object key =proList.get(i);
-//         System.out.println("key: "+key.toString());
-//         System.out.println("value: "+avgScoreList.get(i).get("4178"));
-    }
-    
     
 %>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>

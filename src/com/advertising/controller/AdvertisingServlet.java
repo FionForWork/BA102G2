@@ -16,6 +16,8 @@ import javax.servlet.http.Part;
 
 import com.advertising.model.*;
 
+import wang.test.MailService;
+
 @MultipartConfig(fileSizeThreshold = 10 * 1024 * 1024, maxFileSize = 5 * 10 * 1021 * 1024, maxRequestSize = 5 * 5 * 10
 		* 1024 * 1024)
 public class AdvertisingServlet extends HttpServlet {
@@ -321,17 +323,16 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "1");
-
-				req.setAttribute("advertisingVO", advertisingVO);
 				
 				String url = requestURL+"?whichPage="+whichPage;
 				
-				RequestDispatcher failureView = req.getRequestDispatcher(url);
-				failureView.forward(req, res);
+//				RequestDispatcher failureView = req.getRequestDispatcher(url);
+//				failureView.forward(req, res);
+				
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
-				failureView.forward(req, res);
+//				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+//				failureView.forward(req, res);
 			}
 		}
 		
@@ -355,18 +356,25 @@ public class AdvertisingServlet extends HttpServlet {
 						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getTitle(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
 						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
 						oldAdvertisingVO.getVdo(), "2");
-
-				req.setAttribute("advertisingVO", advertisingVO);
-				
+	
 				String url = null;
 				url = requestURL+"?whichPage="+whichPage;
+				
+				String to = "shesaidyesteam@gmail.com";
+			      
+			    String subject = "通知";
+			      
+				String messageText = "廣告: " + oldAdvertisingVO.getTitle() +"審核未通過,請重新申請"; 
+				
+//				MailService mailService = new MailService();
+//			    mailService.sendMail(to, subject, messageText);
 
-				RequestDispatcher failureView = req.getRequestDispatcher(url);
-				failureView.forward(req, res);
+//				RequestDispatcher failureView = req.getRequestDispatcher(url);
+//				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
-				failureView.forward(req, res);
+//				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+//				failureView.forward(req, res);
 			}
 		}
 	}

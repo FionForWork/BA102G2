@@ -132,7 +132,7 @@
 
 function showModal(action,ord_no,nowPage) {
     if(action=="EVAL_TO_PRODUCT"){
-        $("#evalToProduct").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToProduct.jsp?",
+        $("#evalToProduct").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToProduct.jsp",
                 {"ord_no":ord_no,"orderType":<%=orderType%>,"nowPage":nowPage} ,
                 function () {
                     $("#evalToProduct").modal('show');

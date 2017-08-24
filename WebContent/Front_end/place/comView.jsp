@@ -39,87 +39,88 @@
 </style>
 <div class="container">
     <div class="row">
-    <div id="comImg">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <c:forEach var="comVO" items="${comList}" begin="${start}" end="${end}">
-                <div class="col-xs-6 col-md-6 col-lg-6 btn-like-wrapper">
-                    <a target="_blank" class="thumbnail thumbnail-service mod-shadow img-label animated fadeInUp" style="animation-duration: <%=Math.random() * 3%>s;" href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${comVO.com_no}">
-                        <div class="caption">
-                            <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?com_no=${comVO.com_no}">
-                            <div id="name">
-                                <h5>${comVO.name}</h5>
+        <div id="comImg">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <c:forEach var="comVO" items="${comList}" begin="${start}" end="${end}">
+                    <div class="col-xs-6 col-md-6 col-lg-6 btn-like-wrapper">
+                        <a target="_blank" class="thumbnail thumbnail-service mod-shadow img-label animated fadeInUp" style="animation-duration: <%=Math.random() * 3%>s;" href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${comVO.com_no}">
+                            <div class="caption">
+                                <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?com_no=${comVO.com_no}">
+                                <div id="name">
+                                    <h5>${comVO.name}</h5>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                </c:forEach>
+                <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
+                <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <nav aria-label="Page navigation ">
+                        <ul class="pagination pagination-lg ">
+                            <c:choose>
+                                <c:when test="${totalPages<=5}">
+                                    <c:forEach var="i" begin="1" end="${totalPages}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </c:when>
+                                <c:when test="${nowPage<5}">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <li><a class="disabled">...</a></li>
+                                    <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                                </c:when>
+                                <c:when test="${totalPages-nowPage<5}">
+                                    <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                    <li><a class="disabled">...</a></li>
+                                    <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
+                                    <li><a class="disabled">...</a></li>
+                                    <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
+                                        <c:choose>
+                                            <c:when test="${nowPage==i}">
+                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <li><a class="disabled">...</a></li>
+                                    <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </nav>
                 </div>
-            </c:forEach>
-            <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
-            <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <nav aria-label="Page navigation ">
-                    <ul class="pagination pagination-lg ">
-                        <c:choose>
-                            <c:when test="${totalPages<=5}">
-                                <c:forEach var="i" begin="1" end="${totalPages}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:when test="${nowPage<5}">
-                                <c:forEach var="i" begin="1" end="5">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <li><a class="disabled">...</a></li>
-                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
-                            </c:when>
-                            <c:when test="${totalPages-nowPage<5}">
-                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
-                                <li><a class="disabled">...</a></li>
-                                <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
-                                <li><a class="disabled">...</a></li>
-                                <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <li><a class="disabled">...</a></li>
-                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </nav>
+                <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
             </div>
-            <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
-        </div></div>
+        </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div id="map"></div>
         </div>
@@ -260,14 +261,15 @@
     }
     
     function change(nowPage) {
-        $("#comImg").load("<%=request.getContextPath()%>/Front_end/place/comView.jsp #comImg", {
+        $("#comImg").load("<%=request.getContextPath()%>
+    /Front_end/place/comView.jsp #comImg", {
         south : comRange[0],
         west : comRange[1],
         north : comRange[2],
         east : comRange[3],
         nowPage : nowPage
         });
-        showCom(comRange[0], comRange[1], comRange[2], comRange[3],nowPage);
+        showCom(comRange[0], comRange[1], comRange[2], comRange[3], nowPage);
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzbntmAuGW16US8FK_QIoDNXOPlspRjNw&callback=initMap"></script>

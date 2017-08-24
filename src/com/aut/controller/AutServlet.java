@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.adm.model.AdmService;
 import com.aut.model.AutService;
 import com.aut.model.AutVO;
+import com.fun.model.FunService;
+import com.fun.model.FunVO;
 
 
 public class AutServlet extends HttpServlet{
@@ -28,7 +30,20 @@ public class AutServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-	
+	if("test".equals(action)){
+		 AutService autSvc = new AutService();
+		    List<AutVO> list = autSvc.getAll();
+		    System.out.println(list.toString()+"---1");
+		    System.out.println(list.get(0).getId()+"---2");
+		    System.out.println(list.listIterator().next().getAdm_no()+"---3");
+		    System.out.println(list.iterator().next().getId()+"---4");
+		    System.out.println(list.toArray().toString()+"---5");
+		    
+		    
+		    FunService funSvc = new FunService();
+		    List<FunVO> list2 = funSvc.getAll();
+		    System.out.println(list2.iterator().next().getName()+"---88888");
+	}
 		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  

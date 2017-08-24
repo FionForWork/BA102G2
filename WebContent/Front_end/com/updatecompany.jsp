@@ -24,14 +24,15 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <title>修改廠商</title>
 <div class="container">
 	<div class="row">
-	
+		<!--sidebar sidebar sidebar sidebar sidebar sidebar -->
 		<div class="col-md-offset-1 col-md-2"><br><br>
 			<ul class="list-group">
 				<a href="<%=request.getContextPath()%>/Front_end/com/updatecompany.jsp" class="list-group-item menua active">編輯廠商資料</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/com/updatePwd.jsp" class="list-group-item menua">修改密碼</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua">預約紀錄查詢</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Advertising/Advertising.jsp" class="list-group-item menua">廣告管理</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" class="list-group-item menua ">預約紀錄查詢</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/quote/listMyQuote.jsp" class="list-group-item menua">報價紀錄查詢</a><br>
-                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua ">作品挑選管理</a><br>
+                <a href="<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp" class="list-group-item menua">作品挑選管理</a><br>
                 <a href="<%= request.getContextPath() %>/Front_end/calendar/calendar.jsp" class="list-group-item menua">行事曆</a><br>
                 <a href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp" class="list-group-item menua">作品管理</a><br>
 			</ul>
@@ -39,7 +40,6 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 
 			<a href="<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp" class="btn btn-block btn-default">查看廠商資料</a>
 		</div>
-
 
 <style type="text/css">
 			#big{
@@ -110,7 +110,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 
 
 
-</div>
+</div></div>
 
 <script>
 $("#input-1").fileinput({

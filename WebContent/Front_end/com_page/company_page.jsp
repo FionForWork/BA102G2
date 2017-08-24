@@ -27,9 +27,7 @@
 </head>
 <body>
 
-	<%@ include file="contact_us.jsp"%>
 	<%@ include file="page/header.file"%>
-	<%@ include file="message.jsp"%>
 
 
 	<!--banner -->
@@ -38,8 +36,8 @@
 			<div class="home-banner fade-carousel" style="overflow: hidden;">
 				<div class="item slides">
 					<div class="slide-1 bg-cover lazy"
-						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');"></div>
-
+						style="background-image:url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${worksVO.works_no}');">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -54,6 +52,8 @@
 			alt="She Said Yes">
 	</div>
 	<!--廠商大頭照-->
+	<%@ include file="message.jsp"%>
+	<%@ include file="contact_us.jsp"%>
 
 	<!--廠商名稱-->
 	<div class="text-center">
@@ -62,12 +62,14 @@
 			<c:choose>
 			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
 			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
-		
+			<a href="#" onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>加入收藏</a>
 			</c:when>
 			<c:otherwise>
 				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
+				<a href="#" onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>取消收藏</a>
 			</c:otherwise>
 			</c:choose>
+			<a href="#" class="btn btn-xs btn-warning"><i class="fa fa-exclamation-circle"></i>檢舉</a>
 		</div>
 		
 		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
@@ -189,8 +191,7 @@
 			<div class="col-xs-12 col-sm-6">
 				<a class="btn btn-info btn-lg" onclick="change(1)" id="more_works_btn"> 看更多作品
 						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-				</a>
-
+				</a>				
 			</div>
 			<div class="col-xs-12 col-sm-3"></div>
 		</div>

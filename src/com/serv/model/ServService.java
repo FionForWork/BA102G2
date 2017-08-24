@@ -27,6 +27,30 @@ public class ServService {
 		return servVO;
 	}
 	
+	public ServVO downStatus(String serv_no){
+		ServVO servVO = new ServVO();
+		servVO.setServ_no(serv_no);
+		dao.downStatus(servVO);
+		
+		return servVO;
+	}
+	
+	public ServVO upStatus(String serv_no){
+		ServVO servVO = new ServVO();
+		servVO.setServ_no(serv_no);
+		dao.upStatus(servVO);
+		
+		return servVO;
+	}
+	
+	public ServVO updateStatus(String serv_no,String status){
+		ServVO servVO = new ServVO();
+		servVO.setServ_no(serv_no);
+		servVO.setStatus(status);
+		dao.updateStatus(servVO);
+		
+		return servVO;
+	}
 	public ServVO updateServ(String serv_no,String stype_no,String com_no,Integer deposit,Integer price,String title,String content){
 		ServVO servVO=new ServVO();
 		

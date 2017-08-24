@@ -10,40 +10,40 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     response.setHeader("Pragma", "no-cache");
-	response.setHeader("Cache-Control", "no-cache");
-	response.setDateHeader("Expires", 0);
-	 MemVO memVO=(MemVO)session.getAttribute("memVO");
-	MemService memService = new MemService();
-// 	MemVO memVO = memService.getOneMem("1010");
-	ProductService productService = new ProductService();
-	int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
-	int itemsCount = 8;
-	int allCount = productService.getAllCountBySeller(memVO.getMem_no());
-	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-	List<ProductVO> productList = productService.getPageBySeller(nowPage, itemsCount, memVO.getMem_no());
-	Product_typeService product_typeService = new Product_typeService();
-	List<Product_typeVO> typeList = product_typeService.getAll();
-	pageContext.setAttribute("typeList", typeList);
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+     MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemService memService = new MemService();
+//  MemVO memVO = memService.getOneMem("1010");
+    ProductService productService = new ProductService();
+    int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
+    int itemsCount = 8;
+    int allCount = productService.getAllCountBySeller(memVO.getMem_no());
+    int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
+    List<ProductVO> productList = productService.getPageBySeller(nowPage, itemsCount, memVO.getMem_no());
+    Product_typeService product_typeService = new Product_typeService();
+    List<Product_typeVO> typeList = product_typeService.getAll();
+    pageContext.setAttribute("typeList", typeList);
 
-	String preLocation = request.getContextPath() + "/Front_end/mall";
-	pageContext.setAttribute("preLocation", preLocation);
-	pageContext.setAttribute("totalPages", totalPages);
-	pageContext.setAttribute("nowPage", nowPage);
-	session.setAttribute("productList", productList);
+    String preLocation = request.getContextPath() + "/Front_end/mall";
+    pageContext.setAttribute("preLocation", preLocation);
+    pageContext.setAttribute("totalPages", totalPages);
+    pageContext.setAttribute("nowPage", nowPage);
+    session.setAttribute("productList", productList);
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
 .addImg, .updateImg {
-	width: 200px;
-	height: 200px;
-	border-color: black;
-	border: 1px;
-	border: solid;
+    width: 200px;
+    height: 200px;
+    border-color: black;
+    border: 1px;
+    border: solid;
 }
 
-img {
-	width: 100%;
-	height: 100%;
+.img {
+    width: 100%;
+    height: 100%;
 }
 </style>
 <div class="text-center" style="height: 50px; margin-top: 50px">
@@ -80,17 +80,18 @@ img {
                                         </c:otherwise>
                                     </c:choose>
                                     <td>
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#${productVO.pro_no}">商品資料修改</button>
-                                        <%@include file="pages/productUpdate.file"%>
+                                        <button type="button" class="btn btn-info" onclick="showUpdate('${productVO.pro_no}')">商品資料修改</button>
                                     </td>
                                     <c:choose>
                                         <c:when test="${productVO.status=='0'}">
                                             <td>商品審核中</td>
                                         </c:when>
                                         <c:when test="${productVO.status=='1'}">
-                                            <td><div id="status${productVO.pro_no}">
+                                            <td>
+                                                <div id="status${productVO.pro_no}">
                                                     <a class="btn btn-danger" href="javascript:onOrOff(${productVO.pro_no})">商品下架</a>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                         </c:when>
                                         <c:when test="${productVO.status=='2'}">
                                             <td>
@@ -99,10 +100,17 @@ img {
                                                 </div>
                                             </td>
                                         </c:when>
+                                        <c:when test="${productVO.status=='3'}">
+                                            <td>
+                                                <div id="status${productVO.pro_no}">
+                                                    <p>審核未通過</p>
+                                                </div>
+                                            </td>
+                                        </c:when>
                                         <c:otherwise>
                                             <td>
                                                 <div id="status${productVO.pro_no}">
-                                                    <p>審核未過，3天後刪除資料</p>
+                                                    <p>被檢舉下架</p>
                                                 </div>
                                             </td>
                                         </c:otherwise>
@@ -113,8 +121,7 @@ img {
                     </table>
                 </div>
                 <div class="col-xs-2 col-md-2">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#NewProduct">申請新商品上架</button>
-                    <%@include file="pages/productAdd.file"%>
+                    <button type="button" class="btn btn-info" onclick="showAdd()">申請新商品上架</button>
                 </div>
             </div>
             <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
@@ -186,126 +193,42 @@ img {
         <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
 </div>
+﻿<div class="modal fade" id="productUpdate"></div>
+﻿<div class="modal fade" id="productAdd"></div>
 <script>
+    $("#productUpdate").on("hidden.bs.modal", function() {  
+        $(this).removeData("modal");  
+      });
+
+    $("#productAdd").on("hidden.bs.modal", function() {  
+        $(this).removeData("modal");  
+      });
+    
+    function showUpdate(pro_no) {
+        $("#productUpdate").load("${preLocation}/pages/productUpdate.jsp",{pro_no:pro_no,nowPage:${nowPage}},
+                function () {
+                    $("#productUpdate").modal("show");
+                }
+        );
+    }
+    
+    function showAdd() {
+        $("#productAdd").load("${preLocation}/pages/productAdd.jsp",
+                function () {
+                    $("#productAdd").modal("show");
+                }
+        );
+    }
+    
+    
     function change(nowPage){
-        $(".pagination").load("/BA102G2/Front_end/mall/productManagement.jsp .pagination",{"nowPage":nowPage});
-        $("#content").load("/BA102G2/Front_end/mall/productManagement.jsp #content",{"nowPage":nowPage});
+        $(".pagination").load("${preLocation}/productManagement.jsp .pagination",{"nowPage":nowPage});
+        $("#content").load("${preLocation}/productManagement.jsp #content",{"nowPage":nowPage});
         $(window).scrollLeft("0");
         $(window).scrollTop("0");
     }
+   
     
-    function addCheck() {
-        var pro_name = $("#addName").val();
-        if (pro_name == "") {
-            alert("請輸入商品名稱");
-        }
-        else {
-            $("#addForm").submit();
-        }
-    }
-
-    $(".updateImg").on("dragover", function(e) {
-        e.preventDefault();
-    });
-
-    $(".updateImg").on("drop", function(e) {
-        e.preventDefault();
-        var count = $(this).attr("id");
-        var files = event.dataTransfer.files;
-        var xhr = new XMLHttpRequest();
-        var url = "/BA102G2/product/ProductServlet";
-        xhr.open('POST', url);
-        var form = new FormData();
-        if (!files[0].type.match("image")) {
-            var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
-            return;
-        }
-        else {
-            form.append("img", files[0]);
-            form.append("action", "UPDATE_AJAX");
-            form.append("pro_no", $("#updateNo" + count).val());
-            form.append("pro_name", $("#updateName" + count).val());
-            form.append("pro_desc", $("#updateDesc" + count).val());
-            form.append("price", $("#updatePrice" + count).val());
-            form.append("amount", $("#updateAmount" + count).val());
-            xhr.send(form);
-            xhr.onreadystatechange = function() {
-                if (xhr.responseText == "OK") {
-                    alert("已更新資料");
-                    var reader = new FileReader();
-                    reader.readAsDataURL(files[0]);
-                    reader.onload = function(e) {
-                        $(".updatePreview" + count).attr("src", e.target.result);
-                        }
-                    }
-                }
-        }
-    });
-
-    $(".addImg").on("dragover", function(e) {
-        e.preventDefault();
-    });
-
-    $(".addImg").on("drop", function(e) {
-        console.log("add");
-        e.preventDefault();
-        var files = event.dataTransfer.files;
-        var xhr = new XMLHttpRequest();
-        var url = "/BA102G2/product/ProductServlet?action=ADD_AJAX";
-        xhr.open('POST', url);
-        var form = new FormData();
-        if (!files[0].type.match("image")) {
-            var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
-            return;
-        }
-        else {
-            form.append("img", files[0]);
-        }
-        if ($("#addName" + count).val() == "") {
-            alert("請輸入商品名稱");
-            return;
-        }
-        form.append("pro_name", $("#addName").val());
-        form.append("pro_desc", $("#addDesc").val());
-        form.append("price", $("#addPrice").val());
-        form.append("protype_no", $("#addType").val());
-        form.append("amount", $("#addAmount").val());
-        xhr.send(form);
-        xhr.onreadystatechange = function() {
-            if (xhr.responseText == "OK") {
-                alert("已申請，請耐心等待審核");
-                var reader = new FileReader();
-                reader.readAsDataURL(files[0]);
-                reader.onload = function(e) {
-                    $(".addPreview").attr("src", e.target.result);
-                }
-            }
-        }
-    });
-
-    $(".update").on("change", function() {
-        if (this.files[0]) {
-            var count = $(this).attr("id");
-            console.log(count);
-            var reader = new FileReader();
-            reader.readAsDataURL(this.files[0]);
-            reader.onload = function(e) {
-                $(".updatePreview" + count).attr('src', e.target.result);
-            }
-        }
-    });
-    $("#add").on("change", function() {
-        if (this.files[0]) {
-            var reader = new FileReader();
-            reader.readAsDataURL(this.files[0]);
-            reader.onload = function(e) {
-                $(".addPreview").attr('src', e.target.result);
-            }
-        }
-    });
-
     function onOrOff(pro_no) {
         $.ajax({
         url : "/BA102G2/product/ProductServlet",

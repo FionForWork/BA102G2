@@ -1,47 +1,48 @@
 ﻿<div class='modal fade' id='${productVO.pro_no}'>
-                                            <div class='modal-dialog'>
-                                                <div class='modal-content'>
-                                                    <div class='modal-header'>
-                                                        <h4 class='modal-title'>商品資料修改</h4>
-                                                    </div>
-                                                    <div class='modal-body'>
-                                                        <form action='<%=request.getContextPath()%>/product/ProductServlet' method='post' enctype='multipart/form-data'>
-                                                            <table class='table table-hover table-striped'>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>商品名稱</td>
-                                                                        <td><input id='updateName${s.index}' name='pro_name' class='form-control ' type='text' placeholder='${productVO.pro_name}'></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>商品描述</td>
-                                                                        <td><textarea id='updateDesc${s.index}' name='pro_desc' class='form-control ' style='width: 300px; height: 100px;' placeholder='${productVO.pro_desc}'></textarea></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>價格</td>
-                                                                        <td><input id='updatePrice${s.index}' name='price' class='form-control ' type='number' placeholder='${productVO.price}' min='1'></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>庫存</td>
-                                                                        <td><input id='updateAmount${s.index}' name='amount' class='form-control ' type='number' placeholder='${productVO.amount}' min='1'></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>修改圖片(若以拖拉上傳圖片，將自動修改商品資料，請填寫詳細，大小上限為3MB)</td>
-                                                                        <td>
-                                                                            <div id='${s.index}' class='updateImg'>
-                                                                                <img class='updatePreview${s.index}'>
-                                                                            </div> <input type='file' class='update' id='${s.index}' name='img'>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <input type='hidden' id='updateNo${s.index}' name='pro_no' value='${productVO.pro_no}'>
-                                                            <input type='hidden' name='action' value='UPDATE'>
-                                                            <input type='submit' class='btn btn-default' value='確認修改'>
-                                                        </form>
-                                                    </div>
-                                                    <div class='modal-footer'>
-                                                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h4 class='modal-title'>商品資料修改</h4>
+            </div>
+            <div class='modal-body'>
+                <form action='<%=request.getContextPath()%>/product/ProductServlet' method='post' enctype='multipart/form-data'>
+                    <table class='table table-hover table-striped'>
+                        <tbody>
+                            <tr>
+                                <td>商品名稱</td>
+                                <td><input id='updateName${s.index}' name='pro_name' class='form-control ' type='text' placeholder='${productVO.pro_name}'></td>
+                            </tr>
+                            <tr>
+                                <td>商品描述</td>
+                                <td><textarea id='updateDesc${s.index}' name='pro_desc' class='form-control ' style='width: 300px; height: 100px;' placeholder='${productVO.pro_desc}'></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>價格</td>
+                                <td><input id='updatePrice${s.index}' name='price' class='form-control ' type='number' placeholder='${productVO.price}' min='1'></td>
+                            </tr>
+                            <tr>
+                                <td>庫存</td>
+                                <td><input id='updateAmount${s.index}' name='amount' class='form-control ' type='number' placeholder='${productVO.amount}' min='1'></td>
+                            </tr>
+                            <tr>
+                                <td>修改圖片(若以拖拉上傳圖片，將自動修改商品資料，請填寫詳細，大小上限為3MB)</td>
+                                <td>
+                                    <div id='${s.index}' class='updateImg'>
+                                        <img class='img updatePreview${s.index}'>
+                                    </div> 
+                                    <input type='file' class='update' id='${s.index}' name='img'>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type='hidden' id='updateNo${s.index}' name='pro_no' value='${productVO.pro_no}'>
+                    <input type='hidden' name='action' value='UPDATE'>
+                    <input type='submit' class='btn btn-default' value='確認修改'>
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+            </div>
+        </div>
+    </div>
+</div>
