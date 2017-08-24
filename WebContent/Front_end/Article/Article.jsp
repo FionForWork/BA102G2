@@ -231,17 +231,25 @@
 
 
    
+ <table border="0">    
  <tr>
-     <div class="text-center">
-                        <nav aria-label="Page navigation ">
-                            <ul id="pagination" class="pagination pagination-lg">
-    <%for (int i=1; i<=pageNumber; i++){%>
-           <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
-        <%}%> 
-  	</ul>
-  	</nav>
+
+    <div align="center">
+    <nav aria-label="Page navigation ">
+         <ul id="pagination" class="pagination pagination-lg">
+         	<%for (int i=1; i<=pageNumber; i++){%>
+         		<%if(whichPage == i) {%>
+ 					<li class=""><a class="btn btn-info active" href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+ 				<%} else {%>
+ 					<li class=""><a class="btn btn-info" href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
+ 				<%}%>
+ 			<%}%>
+ 		 </ul>
+ 	</nav>
   	</div>
+  	
  </tr>
+</table>
 					
 				
 							

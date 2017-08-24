@@ -53,7 +53,7 @@ ComVO comVO = (ComVO) session.getAttribute("comVO");
 		</div>
 
 		<div class="form-group">
-			<label for="inputlg">文章:<font color='red'>${errorMsgs.get("content")}</label>
+			<label for="inputlg">文章:<font color='red'>${errorMsgs.get("content")}</font></label>
 			<textarea class="form-control" id="comment" name="content"
 				value="<%=(articleVO == null) ? " " : articleVO.getContent()%>"></textarea>
 		</div>
