@@ -53,16 +53,7 @@
 <div id="content">
 <input type="button" class="btn btn-info" value="新增會員" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/addAdm.jsp'" >  <br><br>
 <h3>全員工資料:</h3>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
+
 
 <table class="table table-striped">
 	<tr>

@@ -46,10 +46,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 <div id="content">
 <h3>員工資料新增:</h3>
 <%--錯誤處理 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	</font>
-</c:if>
+
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">
 <table class="table table-striped" >
