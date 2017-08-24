@@ -22,9 +22,13 @@
     <script src="<%=request.getContextPath()%>/Front_end/Article/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/Front_end/Article/js/top.js" type="text/javascript"></script>
     <link href="<%=request.getContextPath()%>/Front_end/Article/css/advertising.css" rel="stylesheet">
+     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
 
 	<script src="<%=request.getContextPath()%>/Front_end/Article/js/advertising.js" type="text/javascript"></script>
 </head>
+
 
 <style type="text/css">
 
