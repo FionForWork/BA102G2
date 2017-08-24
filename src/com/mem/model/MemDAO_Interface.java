@@ -25,5 +25,6 @@ public interface MemDAO_Interface {
      public void updateStatus(MemVO memVO);
      public MemVO oldPwd(String mem_no);
      public void updatePic(MemVO memVO);
+     public void updateReport(MemVO memVO);
      public void updateStatusForReport(MemVO memVO);
 }

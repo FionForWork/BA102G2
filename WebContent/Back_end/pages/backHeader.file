@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -79,11 +78,11 @@
 
                         <li class="dropdown"><a href="#" data-toggle="dropdown">喬治</a>
                             <ul class="dropdown-menu right" role="menu">
-                                <li><a href="profile.html">
+                                <li><a href="<%=request.getContextPath()%>/Back_end/mem/listMyAdm.jsp"">
                                         <i class="st-user"></i>
                                         Profile
                                     </a></li>
-                                <li><a href="login.html">
+                                <li><a href="<%=request.getContextPath()%>/Back_end/login/login.jsp">
                                         <i class="im-exit"></i>
                                         Logout
                                     </a></li>
@@ -100,48 +99,18 @@
         <!-- Start .sidebar-inner -->
         <div class="sidebar-inner">
             <!-- Start #sideNav -->
-            <ul id="sideNav" class="nav nav-pills nav-stacked">
+           <ul id="sideNav" class="nav nav-pills nav-stacked">
 
-                <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp">
-                        <i class="en-users"></i>
-                        一般會員管理
-                    </a></li>
-                <li><a href="#" class='active'>
-                        <i class="en-users"></i>
-                        廠商管理
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp">
-                        <i class="en-users"> </i>
-                        管理者設定
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp">
-                        <i class="im-table2"></i>
-                        廣告刊登管理
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp">
-                        <i class="br-location"></i>
-                        景點管理
-                    </a></li>
-                <li><a href="#">
-                        <i class="im-newspaper"></i>
-                        熱門資訊管理
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp">
-                        <i class="fa-shopping-cart"></i>
-                        商城管理
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp">
-                        <i class="im-list2"></i>
-                        婚禮習俗管理
-                    </a></li>
-                <li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp">
-                        <i class="im-question"></i>
-                        常見問題管理
-                    </a></li>
-                <li><a href="#">
-                        <i class="br-warning"></i>
-                        檢舉管理
-                    </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
+				<li><a href="<%=request.getContextPath() %>/Back_end/com/listAllCom.jsp"><i class="en-users"></i>廠商管理 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
+				<li ><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp" class="<%=(active.equals("0")?"active":"")%>"><i class="br-location"></i>景點管理 </a></li>
+				<li ><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp" class="<%=(active.equals("1")?"active":"")%>"><i class="fa-shopping-cart"></i>商城管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp"><i class="im-question"></i>常見問題管理</a></li>
+				<li><a href="<%=request.getContextPath()%>/Back_end/report/Report.jsp"><i class="br-warning"></i>檢舉管理</a></li>
+			
             </ul>
             <!-- End #sideNav -->
         </div>

@@ -109,4 +109,7 @@ public class ReservationService {
 	public List<String> getDeleteRes(){
 		return dao.getDeleteRes();
 	}
+	public List<ReservationVO> getMonthCalendar(int year, int month, int dayNum, String men_no){
+		return dao.getMenMonthCal(year, month, dayNum, men_no);
+	}
 }

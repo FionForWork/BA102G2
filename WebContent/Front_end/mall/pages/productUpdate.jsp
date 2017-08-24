@@ -11,7 +11,6 @@
 	pageContext.setAttribute("productVO", productVO);
 	pageContext.setAttribute("nowPage", nowPage);
 %>
-<%-- <%@include file="modalHeader.file"%> --%>
 <style>
  .updateImg {
     width: 200px;
@@ -90,7 +89,7 @@
         var form = new FormData();
         if (!files[0].type.match("image")) {
             var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
+            alert(name + " 不是圖片，請上傳圖片!!!!");
             return;
         }
         else {
@@ -126,4 +125,3 @@
     });
     
 </script>
-</html>

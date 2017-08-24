@@ -2,6 +2,7 @@ $(document).ready(function(){
     $("#createAlb").click(function(){
         $("#albumModal").modal();
         $("#emptyFile").html("");
+        $('input[name=name]').val(''); 
         $("#inputFile").removeClass("form-control");
     });
     

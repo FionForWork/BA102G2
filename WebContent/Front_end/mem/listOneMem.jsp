@@ -31,7 +31,7 @@ Object memVO = session.getAttribute("memVO");
 					<br>
 					<a href="<%=request.getContextPath()%>/Front_end/Preview/ImageCropper.jsp" class="list-group-item menua">實景預覽</a>
 					<br>
-					<a href="<%=request.getContextPath()%>/Front_end/mall/index.jsp" class="list-group-item menua">商城專區</a>
+					<a href="<%=request.getContextPath()%>/Front_end/mall/mallArea.jsp" class="list-group-item menua">商城專區</a>
 					<br></ul>
 
 																				

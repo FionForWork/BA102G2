@@ -990,7 +990,7 @@ body.full-screen #header {
 }
 #header #header-area .header-area-inner {
   text-align: center;
-  height: 100px;
+  height: 150px;
 }
 #header #header-area .shortcut-button {
   margin-bottom: 0;
@@ -1078,7 +1078,7 @@ body.full-screen #header {
   border-right: 1px solid #e7e7e2;
 }
 #sidebar #sideNav li a {
-  padding: 15px;
+  padding: 20px;
   position: relative;
   color: #768399;
   height: 50px;

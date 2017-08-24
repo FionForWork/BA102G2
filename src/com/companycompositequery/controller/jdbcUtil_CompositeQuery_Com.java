@@ -20,7 +20,7 @@ public class jdbcUtil_CompositeQuery_Com {
 		int count = 0;
 		for (String key : keys) {
 			String value = map.get(key)[0];
-			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
+			if (value != null && value.trim().length() != 0	&& !"action".equals(key) && !"requestURL".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 
@@ -39,10 +39,10 @@ public class jdbcUtil_CompositeQuery_Com {
 	public static void main(String argv[]) {
 
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-//		map.put("com_no", new String[] { "2001" });
+		map.put("com_no", new String[] { "" });
 //		map.put("loc", new String[] { "桃園" });
 //		map.put("name", new String[] { "v" });
-		map.put("stype_no", new String[] { "0001" });
+//		map.put("stype_no", new String[] { "0001" });
 
 		String finalSQL = "select * from company "
 				          + jdbcUtil_CompositeQuery_Com.get_WhereCondition(map)

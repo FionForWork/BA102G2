@@ -13,6 +13,7 @@
     <title>ＨomePage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/w3.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/fonts.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
@@ -150,8 +151,7 @@
     <br>
     <div id="company" class="container" style="width:90%">
         <div class="row">
-    <c:forEach var="servVO" items="${servList}" begin="1" end="9">
-            
+    		<c:forEach var="servVO" items="${servList}" begin="1" end="9">
             <div class="col-xs-12 col-md-4">
                 <!--婚攝item-->
                 <a href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${servVO.com_no}" class="thumbnail">
@@ -161,7 +161,7 @@
                             <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
                             <c:set var="comVO" value="${comSvc.getOneCom(servVO.com_no)}"/>
                             <div class="media-left">
-                                <img class="img-circle media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
+                                <img class="media-object" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no}" style="height:35px;width:35px;">
                             </div>
                             <div class="media-body media-middle">
                                 <b>${comVO.name}</b> &nbsp;
@@ -170,11 +170,11 @@
                     </div>
                     
                     <jsp:useBean id="workSvc" scope="page" class="com.works.model.WorksService"/>
-                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="1" end="1">
+                    <c:forEach var="workVO" items="${workSvc.getAllByComNo(servVO.com_no)}" begin="0" end="0">
                     <div class="rat_4_3 ratiobox bg-cover bg-picture img-label" style="background-image: url('<%=request.getContextPath()%>/ShowPictureServletDAO?works_no=${workVO.works_no}');background-position:50% 50%;">
+                    </div>  
                     </c:forEach>
                     
-                    </div>
                     <div class="caption clearfix">
 
                         <div class="text-right">
@@ -230,16 +230,17 @@
                 <form method="post" action="<%=request.getContextPath()%>/ContactUs" target="_blank">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name" value="${(map.name==null)?'':map.name}"><font color='red'>${errorMsgs.name}</font>
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name">
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email" value="${(map.email==null)?'':map.email}"><font color='red'>${errorMsgs.email}</font>
+                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email">
                         </div>
                     </div>
-                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea" value="${(map.messagesArea==null)?'':map.messagesArea}"><font color='red'>${errorMsgs.messagesArea}</font><br>
-                    <button class="w3-button w3-black w3-right w3-section" type="submit"  onClick="validateForm(this.form)">
-          <i class="fa fa-paper-plane"></i> SEND MESSAGE
-        </button>
+                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea"><br>
+                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                    <button class="w3-button w3-black w3-right w3-section"  onClick="validateForm(this.form)">
+          			<i class="fa fa-paper-plane"></i> SEND MESSAGE
+        			</button>
                 </form>
             </div>
         </div>

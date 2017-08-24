@@ -56,7 +56,8 @@ public class ReservationDAO implements ReservationDAO_Interface {
 	private static final String GET_COM_MONTH_STMT = 
 			"SELECT * FROM RESERVATION WHERE serv_date >= ? and serv_date <= ? and COM_NO = ?;";
 	private static final String GET_COM_DISTINCT_MEM_NO_STMT = "SELECT DISTINCT MEM_NO FROM RESERVATION WHERE COM_NO = ?";
-	
+	private static final String GET_MEN_MONTH_STMT = 
+			"SELECT * FROM RESERVATION WHERE serv_date > ? and serv_date < ? and MEM_NO = ?";
 	private static final String GETDELETERES =
 			"select res_no from reservation where sysdate-res_date > 3 and status = '0'";
 	@Override
@@ -853,6 +854,68 @@ public class ReservationDAO implements ReservationDAO_Interface {
 			while (rs.next()) {
 				reservationVO = new ReservationVO();
 				list.add(rs.getString("res_no"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ReservationVO> getMenMonthCal(int year, int month, int dayNum, String men_no) {
+		List<ReservationVO> list = new ArrayList<ReservationVO>();
+		ReservationVO reservationVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String firstDay = dayNum-1+"-"+month+"月-"+year;
+		String lastDay = dayNum+1+"-"+month+"月-"+year;
+		
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_MEN_MONTH_STMT);
+			pstmt.setString(1, firstDay);
+			pstmt.setString(2, lastDay);
+			pstmt.setString(3, men_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				reservationVO = new ReservationVO();
+				reservationVO.setRes_no(rs.getString("res_no"));
+				reservationVO.setMem_no(rs.getString("mem_no"));
+				reservationVO.setCom_no(rs.getString("com_no"));
+				reservationVO.setRes_date(rs.getTimestamp("res_date"));
+				reservationVO.setServ_date(rs.getTimestamp("serv_date"));
+				reservationVO.setServ_no(rs.getString("serv_no"));
+				reservationVO.setStype_no(rs.getString("stype_no"));
+				reservationVO.setPrice(rs.getInt("price"));
+				reservationVO.setStatus(rs.getString("status"));
+				reservationVO.setScore(rs.getInt("score"));
+				list.add(reservationVO);
 			}
 			
 		} catch (SQLException e) {

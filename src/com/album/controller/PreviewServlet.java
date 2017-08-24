@@ -65,6 +65,7 @@ public class PreviewServlet extends HttpServlet {
 			Timestamp create_date = new Timestamp(System.currentTimeMillis());
 			String alb_no = null;
 			String name = "實景預覽";
+			String cont_no = request.getParameter("cont_no").trim();
 			
 			boolean alreadyCreated = false;
 			
@@ -86,11 +87,17 @@ public class PreviewServlet extends HttpServlet {
 
 			// 取得原照片
 			BufferedImage img = null;
-			Part part = request.getPart("imageRemove");
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				img = javax.imageio.ImageIO.read(part.getInputStream());
-				System.out.println("img----" + img);
+			if(cont_no.length() == 0 ){
+				Part part = request.getPart("imageRemove");
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+					img = javax.imageio.ImageIO.read(part.getInputStream());
+					System.out.println("img----" + img);
+				}
+			}else if(cont_no.length() != 0){
+				ContentVO content = contSvc.getOneContent(cont_no);
+				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(content.getImg()));
 			}
+			
 
 			// 取得x座標
 			String xPoints = request.getParameter("xPoints");
@@ -198,7 +205,7 @@ public class PreviewServlet extends HttpServlet {
 					break forloop;
 				}
 			}
-			
+			System.out.println("alb_no=="+alb_no);
 			// 判斷使用景點照或是上傳照片
 			if(placeview_no.length() != 0){
 				

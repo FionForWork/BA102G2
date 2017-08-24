@@ -114,17 +114,17 @@ public class Test {
 //		System.out.println("?��?��??��??");
 
 		// ?��詢�?�?
-		AdvertisingVO adverstingVO3 = dao.findByPrimaryKey("0001");
-		System.out.print(adverstingVO3.getCom_no() + ",");
-		System.out.print(adverstingVO3.getTitle() + ",");
-		System.out.print(adverstingVO3.getStartDay() + ",");
-		System.out.print(adverstingVO3.getEndDay() + ",");
-		System.out.print(adverstingVO3.getPrice() + ",");
-		System.out.print(adverstingVO3.getText());
-		System.out.print(adverstingVO3.getImg() + ",");
-		System.out.print(adverstingVO3.getVdo() + ",");
-		System.out.print(adverstingVO3.getStatus());
-		System.out.println("?��詢�?��??");
+//		AdvertisingVO adverstingVO3 = dao.findByPrimaryKey("0001");
+//		System.out.print(adverstingVO3.getCom_no() + ",");
+//		System.out.print(adverstingVO3.getTitle() + ",");
+//		System.out.print(adverstingVO3.getStartDay() + ",");
+//		System.out.print(adverstingVO3.getEndDay() + ",");
+//		System.out.print(adverstingVO3.getPrice() + ",");
+//		System.out.print(adverstingVO3.getText());
+//		System.out.print(adverstingVO3.getImg() + ",");
+//		System.out.print(adverstingVO3.getVdo() + ",");
+//		System.out.print(adverstingVO3.getStatus());
+//		System.out.println("?��詢�?��??");
 
 		// // ?��詢ALL
 //		List<AdvertisingVO> list = dao.getAll();
@@ -156,5 +156,19 @@ public class Test {
 //			System.out.println();
 //	}
 //	
+		List<AdvertisingVO> list = dao.getOneSatus();
+		for (AdvertisingVO adversting : list) {
+			System.out.print(adversting.getAdv_no() + ",");
+			System.out.print(adversting.getCom_no() + ",");
+			System.out.print(adversting.getTitle() + ",");
+			System.out.print(adversting.getStartDay() + ",");
+			System.out.print(adversting.getEndDay() + ",");
+			System.out.print(adversting.getPrice() + ",");
+			System.out.print(adversting.getText() + ",");
+			System.out.print(adversting.getImg() + ",");
+			System.out.print(adversting.getVdo() + ",");
+			System.out.print(adversting.getStatus());
+			System.out.println();
+	}
 	}
 }

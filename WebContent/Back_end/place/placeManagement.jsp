@@ -15,6 +15,7 @@
 	int totalPages = allCount / itemsCount + 1;
 	List<PlaceVO> placeList = placeService.getPage(nowPage, itemsCount);
 	String preLocation = request.getContextPath() + "/Back_end/place";
+    String active="0";
 	pageContext.setAttribute("placeList", placeList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("totalPages", totalPages);

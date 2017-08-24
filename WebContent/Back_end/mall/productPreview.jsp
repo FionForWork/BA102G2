@@ -24,6 +24,7 @@
     String preLocation = request.getContextPath() + "/Back_end/mall";
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
+    String active="1";
     pageContext.setAttribute("memService", memService);
     pageContext.setAttribute("typeList", typeList);
     pageContext.setAttribute("preLocation", preLocation);

@@ -13,9 +13,8 @@
 <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <%
 	// 廠商資料
-	ComVO comVO = new ComVO();
-	comVO.setCom_no("2001");
-	
+	String com_no = request.getParameter("com_no");	
+
 	int dayOfWeek = 0;int week = 1;int flag = 0; int beforeToday = 0;
 	LocalDate localDate = (LocalDate)request.getAttribute("localDate");
 	if(localDate == null){
@@ -29,14 +28,12 @@
 	int firstDayOfWeek = localDate.withDayOfMonth(1).getDayOfWeek().getValue();
 	
 	MemService memService = new MemService();
-	MemVO memVO = memService.getOneMem("1001");
-	session.setAttribute("memVO", memVO);
 	
 	CalendarService calerdarService = new CalendarService();
-	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, comVO.getCom_no());
+	List<CalendarVO> list = calerdarService.getMonthCalendar(localDate.getYear(), localDate.getMonthValue(), dayNum, com_no);
 	pageContext.setAttribute("month", localDate.getMonthValue());
 	pageContext.setAttribute("list", list);
-	List<ServVO> servList = new ServService().getCom(comVO.getCom_no());
+	List<ServVO> servList = new ServService().getCom(com_no);
 	pageContext.setAttribute("servList", servList);
 %>
 
@@ -66,13 +63,13 @@
 		position:absolute;
 		top:2px;
 		left:2px;
-		font-size:16px;
+		font-size:25px;
 		font-weight:500;
 	}
 	
 </style>
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="page/headerWithoutSidebar.file" %>
+<%@ include file="page/searchServiceHeader.file" %>
 <style>
 	.table{
 		border: 1px solid #404040;
@@ -92,14 +89,15 @@
 	
 </script>
 <div class="container">
-<div class="text-center">
+<div class="text-center  col-md-offset-1 col-md-10">
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th colspan="7" style="background-color:#ddd" class="text-center">
+			<th colspan="7" style="background-color:#FB7291" class="text-center">
 				<form id="changeCalendar" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
-					<h3>
-					<select name="year" onchange="change()">
+					<h3 style="color:white">
+					<input type="hidden" name="com_no" value="<%= com_no %>">
+					<select name="year" onchange="change()"  style="background-color:#FB7291;border:0">
 						<% for(int i = 0; i < 5; i++){ %>
 						<% if(i+2017 == localDate.getYear()){ %>
 						<option value="<%= i+2017 %>" selected><%= i+2017 %></option>
@@ -108,7 +106,7 @@
 						<% }} %>
 					</select>年
 					 
-					<select name="month" onchange="change()">
+					<select name="month" onchange="change()"  style="background-color:#FB7291;border:0">
 						<% for(int i = 0; i < 12; i++){ %>
 						<% if(i+1 == localDate.getMonthValue()){ %>
 						<option value="<%= i+1 %>" selected><%= i+1 %></option>
@@ -245,7 +243,7 @@
 
 <script>
     
-    var MyPoint = "/ResServer/SSY/<%= comVO.getCom_no() %>";
+    var MyPoint = "/ResServer/SSY/<%= com_no %>";
     var host = window.location.host;
     var path = window.location.pathname;
     var webCtx = path.substring(0, path.indexOf('/', 1));

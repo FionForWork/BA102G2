@@ -16,6 +16,7 @@
         viewList.addAll(placeVO.getPlaceViewSet());
         pageContext.setAttribute("viewList", viewList);
     }
+    String active="0";
 	pageContext.setAttribute("placeVO", placeVO);
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>

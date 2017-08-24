@@ -116,7 +116,8 @@
                                             <label>數量</label>
                                             <input id="productCount" type="number" required="required" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
                                             <a href="javascript:add(${productVO.pro_no})" class="btn btn-primary">加入購物車</a>
-                                            <a href="#" class="btn btn-danger">檢舉</a>
+                                           
+          <input type="submit" class="btn btn-danger" data-toggle="modal" onclick="showmodal('product','${productVO.pro_no}','${productVO.seller_no}','/Front_end/mall/product.jsp?pro_no='+${productVO.pro_no});" data-target="#myModal" value="檢舉">
                                             </c:if>
                                             <div id="protracking">
                                             <c:choose>
@@ -156,6 +157,8 @@
         </div>
     </div>
 </div>
+ <div class="modal fade" id="myModal" role="dialog">
+   </div>
 
 <script>
     function protracking(todo){
@@ -198,6 +201,12 @@
                     }
                 }
             });
+    }
+    function showmodal(action,rep_ob_no,reported_no,position){
+    	if(action=='product'){
+    		$('#myModal').load("<%=request.getContextPath()%>/Front_end/Report/Report.jsp?",{"rep_ob_no":rep_ob_no,"reported_no":reported_no,"position":position},
+    		function(){$("#myModal").modal('show');}
+    		)}
     }
 </script>
 <%@include file="pages/indexFooter.file"%>
