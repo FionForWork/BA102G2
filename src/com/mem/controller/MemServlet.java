@@ -365,6 +365,10 @@ public class MemServlet extends HttpServlet{
 						            res.sendRedirect(memlocation);            
 						            return;
 						          }else if(memslocation != null){
+						        	  if(memslocation.contains("errorLogin")||memslocation.contains("forgetPwd")||memslocation.contains("loginerror")||memslocation.contains("statusNotGood.jsp")){
+						        		  res.sendRedirect(req.getContextPath()+"/Front_end/mem/listOneMem.jsp");
+									      return;
+						        	  }
 						        	  System.out.println("我是沒經過過濾器的"+memslocation);
 							        	 res.sendRedirect(memslocation);            
 								         return;
