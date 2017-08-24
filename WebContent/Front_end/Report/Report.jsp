@@ -56,7 +56,7 @@ session.getAttribute("comVO");
         </div>
         <div class="modal-body">
         <label for="inputdefault">檢舉對象</label>
-         <input class="form-control" id="inputdefault" type="hidden" name="reported_no" value="<%=request.getParameter("reported_no")%>">
+         <input class="form-control"  type="hidden" name="reported_no" value="<%=request.getParameter("reported_no")%>">
         <c:choose>
 			<c:when test="${com_Svc.getOneCom(param.reported_no)!=null }">
 				<div class="name">${com_Svc.getOneCom(param.reported_no).name }</div>
@@ -76,7 +76,7 @@ session.getAttribute("comVO");
         </div>
         <div class="modal-body">
         <label for="inputdefault">內容</label>
-         <input class="form-control" id="inputdefault" type="text" name="content">
+         <input class="form-control" id="content" type="text" name="content">
         </div>
         
         <c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no!=null}">
@@ -90,7 +90,8 @@ session.getAttribute("comVO");
         
         <div class="modal-footer">
         	<input	type="submit" class="btn btn-info" value="檢舉">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <input type="button" value="" onclick="ShowAnswer()">
         </div>
         
       </div>
@@ -104,7 +105,13 @@ session.getAttribute("comVO");
       
     </div>
  
-  
+  <script type="text/javascript">
+function ShowAnswer(){
+//     document.getElementById("title").value="2";
+$("#content").val("會爆炸");
+
+}
+</script>
 
 
 </body>

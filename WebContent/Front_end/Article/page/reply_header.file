@@ -26,6 +26,9 @@
     <link href="<%=request.getContextPath()%>/Front_end/Article/css/advertising.css" rel="stylesheet">
 
 	<script src="<%=request.getContextPath()%>/Front_end/Article/js/advertising.js" type="text/javascript"></script>
+	 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
 </head>
 
 

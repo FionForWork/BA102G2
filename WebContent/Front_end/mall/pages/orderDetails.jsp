@@ -144,6 +144,7 @@ function showModal(action,ord_no,nowPage) {
                 function () {
                     $("#evalToMem").modal('show');
                 });
+        
     }
 }
 function orderCancel(nowPage,ord_no,role,status,orderType){ 
