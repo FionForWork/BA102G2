@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
  <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">
     
@@ -129,7 +129,7 @@ function callback2() {
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ＨomePage</title>
+    <title>She Said Yes !</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">

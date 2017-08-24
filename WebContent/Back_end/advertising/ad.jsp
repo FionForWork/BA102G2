@@ -118,10 +118,10 @@
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" id="button" class="btn btn-info" value="通過" disabled="disabled" >	
+													<input type="button" id="button" class="btn btn-info col-md-3" value="通過" disabled="disabled" >	
 												</c:when>
 												<c:otherwise>
-													<input type="button" id="button" class="btn btn-info" value="通過" onclick="approved(this);">
+													<input type="button" id="button" class="btn btn-info col-md-3" value="通過" onclick="approved(this);">
 												
 												</c:otherwise>
 												</c:choose>			
@@ -134,10 +134,10 @@
 												<input type="hidden" name="action" value="disapproved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-danger" id="button" value="未通過" disabled="disabled">	
+													<input type="button" class="btn btn-danger col-md-3" id="button" value="未通過" disabled="disabled">	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-danger" id="button" value="未通過" onclick="disapproved(this);">
+													<input type="button" class="btn btn-danger col-md-3" id="button" value="未通過" onclick="disapproved(this);">
 												</c:otherwise>
 												</c:choose>				
 												</form>

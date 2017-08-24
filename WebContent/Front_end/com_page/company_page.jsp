@@ -5,6 +5,7 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.comtra.model.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
@@ -19,7 +20,11 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
-
+	
+	MemVO memVO = (MemVO)session.getAttribute("memVO");
+	ComTraService comtraSvc = new ComTraService();
+	List<String> comNoList = comtraSvc.getComNoListByMemNo(memVO.getMem_no());
+	pageContext.setAttribute("comNoList",comNoList);
 %>
 
 <html>

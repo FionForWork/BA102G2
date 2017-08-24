@@ -41,7 +41,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 <h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">新增廠商服務:</h1>
 <br>
-
+<br><input  type="button" class="btn btn-info " value="一鍵輸入" id="fast"><br><br>
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/serv/serv.do" name="form1">
 
@@ -50,7 +50,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 		
 		<select style="width: 223px;" name="stype_no">
 		 <option value="0001">拍婚紗
-		 <option value="0002">婚設婚錄
+		 <option value="0002">婚攝婚錄
 		  <option value="0003">新娘秘書
 		</select>
 	</div>
@@ -63,25 +63,25 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 	
 <div class="form-group">
 		<span>訂金:<font color='red'>${errorMsgs.get("deposit")}</font><br></span>
-		<input type="TEXT" name="deposit" required title="只能輸入數字" pattern="[0-9]{1,12}$"
+		<input type="TEXT" id="deposit" name="deposit" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getDeposit()%>" />
 		</div>
 			
 	<div class="form-group">
 		<span>價錢:<font color='red'>${errorMsgs.get("price")}</font><br></span>
-		<input type="TEXT" name="price" required title="只能輸入數字" pattern="[0-9]{1,12}$"
+		<input type="TEXT" id="price"name="price" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getPrice()%>" />
 	</div>
 
 	<div class="form-group">
 		<span>服務標題:<font color='red'>${errorMsgs.get("title")}</font><br></span>
-		<input type="TEXT" name="title" 
+		<input type="TEXT" name="title"  id="title"
 			value="<%= (servVO==null)? "標題" : servVO.getTitle()%>" />
 	</div>
 
 	<div class="form-group">
 		<span>服務介紹:<font color='red'>${errorMsgs.get("content")}</font><br></span>
-		<textarea name=content  class="form-control" rows=8 >${servVO.content}</textarea>
+		<textarea name="content"  id="content" class="form-control" rows=8 >${servVO.content}</textarea>
  
 		
 	</div>
@@ -107,3 +107,17 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 	</FORM>
 </div></div>
 <%@ include file="/Front_end/mem/page/register_footer.file"%>
+<script>
+	$(document).ready(function(){  
+		$("#fast").click(function() {
+			$("#deposit").attr("value",'500');
+			$("#price").attr("value",'3000');
+			$("#title").attr("value",'美美婚紗');
+
+			$("#id").attr("value",'lf2lf2111@gmail.com');
+
+			$("#content").val('穿上它讓你美麗一整天');
+
+		});
+	});
+	</script> 

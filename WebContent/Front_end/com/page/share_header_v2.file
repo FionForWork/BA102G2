@@ -195,14 +195,14 @@ function callback2() {
                     <c:when test="${sessionScope.comVO!=null}">
                     <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"  style="text-decoration:none;">
-                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
+                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${sessionScope.comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${sessionScope.comVO.name}
                         </a>
                     </li>
                     </c:when>  
                      <c:when test="${sessionScope.memVO!=null}">
                      <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp" style="text-decoration:none;">
-                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${memVO.name}
+                            <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${sessionScope.memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${sessionScope.memVO.name}
                         </a>
                     </li>
                       </c:when> 
