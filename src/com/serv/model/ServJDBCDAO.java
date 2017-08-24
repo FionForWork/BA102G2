@@ -425,6 +425,13 @@ public class ServJDBCDAO implements ServDAO_Interface{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public List<String> getComStype(String com_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
 

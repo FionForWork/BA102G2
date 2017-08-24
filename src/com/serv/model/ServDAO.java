@@ -53,6 +53,7 @@ public class ServDAO implements ServDAO_Interface {
 		private static final String GET_ALL_AVG = "select com_no,avg(times),avg(score),avg(price) from service group by com_no order by com_no";
 		private static final String getServByStype = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where stype_no = ? order by score";
 		private static final String getServByCom = "SELECT serv_no,stype_no,com_no,deposit,price,title,content,score,times,status FROM service where com_no = ? order by com_no";
+		private static final String getComStype="select distinct stype_no from service where com_no = ?";
 		
 		@Override
 		public Set<ServVO> getServByStype(String stype_no) {
@@ -732,5 +733,49 @@ public class ServDAO implements ServDAO_Interface {
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<String> getComStype(String com_no) {
+		List<String> list = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getComStype);
+			pstmt.setString(1, com_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				list.add(rs.getString("stype_no"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 }

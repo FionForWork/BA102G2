@@ -55,7 +55,16 @@
 					</tr>
 				</c:forEach>
 			</table>
-		<%@ include file="page/page2.file" %>
+<div class="text-center">
+	<ul class="pagination">
+		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+		<% for(int i = 0; i < pageNumber; i++){
+			pageContext.setAttribute("i", i+1);%>
+		<li ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<% } %>
+		<li><a href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
+	</ul>
+</div> 
 <!-- 內文 -->		
 		</div>
 	</div>

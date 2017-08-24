@@ -33,7 +33,7 @@
 		</div>
 	</div>
 </div>
-<%	int rowsPerPage = 4; // 每頁的筆數
+<%	int rowsPerPage = 3; // 每頁的筆數
 	int rowsNumber = 0;	// 總筆數
 	int pageNumber = 0; // 總頁數
 	int whichPage = 1; // 當前頁數
@@ -61,7 +61,7 @@
 	}catch(NumberFormatException e){
 		whichPage = 1;
 		pageIndex = 0;
-	}
+	}pageContext.setAttribute("whichPage",whichPage); 
 %>
 <c:if test="${not empty errorMsgs}">
 	<ul>
@@ -160,9 +160,12 @@
 </div>
 <div class="text-center">
 	<ul class="pagination">
-		<% for(int i = 0; i < pageNumber; i++){ %>
-		<li><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
+		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+		<% for(int i = 0; i < pageNumber; i++){ 
+			pageContext.setAttribute("i", i+1);%>
+		<li  ${whichPage==i?"class='active'":"" }><a href="<%= request.getRequestURI()%>?whichPage=<%=i + 1%>"><%=i + 1%></a></li>
 		<% } %>
+		<li><a  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
 	</ul>
 </div> 
 <%@ include file="page/footer.file" %>
