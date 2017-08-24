@@ -26,8 +26,8 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
 	private static final String GET_ONE_STATUS= "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where status=1";
 	
-	private static final String GET_ALL_BY_STATUS = "select * from advertising where status = ?";
-	private static final String GET_ALL_BY_STATUS_2 = "select * from advertising where status in (?, ?)";
+	private static final String GET_ALL_BY_STATUS = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = ?";
+	private static final String GET_ALL_BY_STATUS_2 = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status in (?, ?)";
 
 	@Override
 	public void insert(AdvertisingVO advertisingVO) {
@@ -519,8 +519,6 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				}
 				br.close();
 				advertisingVO.setText(sb.toString());
-				advertisingVO.setImg(rs.getBytes("img"));
-				advertisingVO.setVdo(rs.getBytes("vdo"));
 				advertisingVO.setStatus(rs.getString("status"));
 				list.add(advertisingVO);
 			}
@@ -587,8 +585,6 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				}
 				br.close();
 				advertisingVO.setText(sb.toString());
-				advertisingVO.setImg(rs.getBytes("img"));
-				advertisingVO.setVdo(rs.getBytes("vdo"));
 				advertisingVO.setStatus(rs.getString("status"));
 				list.add(advertisingVO);
 			}

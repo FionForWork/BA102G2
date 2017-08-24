@@ -105,8 +105,7 @@
 										<div class="row collapse" id="0${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
 										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
-											<img style="width:50%"
-											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+											<img style="width:50%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 										</a>
 										</div>
 										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>

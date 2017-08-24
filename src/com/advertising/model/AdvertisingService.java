@@ -10,7 +10,7 @@ public class AdvertisingService {
 	}
 
 	public AdvertisingVO updateAdvertising(String adv_no, String com_no,String title ,java.sql.Timestamp startDay,
-			java.sql.Timestamp endDay, Integer price, String text, byte[] img, byte[] vdo, String status) {
+			java.sql.Timestamp endDay, Integer price, String text, String status) {
 
 		AdvertisingVO advertisingVO = new AdvertisingVO();
 		
@@ -20,9 +20,7 @@ public class AdvertisingService {
 		advertisingVO.setStartDay(startDay);
 		advertisingVO.setEndDay(endDay);
 		advertisingVO.setPrice(price);
-		advertisingVO.setText(text);
-		advertisingVO.setImg(img);
-		advertisingVO.setVdo(vdo);		
+		advertisingVO.setText(text);		
 		advertisingVO.setStatus(status);
 		dao.update(advertisingVO);
 
