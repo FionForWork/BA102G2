@@ -5,7 +5,7 @@
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.report.model.*" %>
-<%@ page import="com.report_type.model.*" %>
+<%@ page import="com.report_type.model.Report_type_Service" %>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +47,9 @@
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <!-- Windows8 touch icon ( http://www.buildmypinnedsite.com/ )-->
 <meta name="msapplication-TileColor" content="#3399cc" />
+<form name="logout" ACTION="<%= request.getContextPath() %>/adm/adm.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
 </head>
 <%
 	// Advertising
@@ -62,7 +65,6 @@
     // Report
     Report_Service reportSvc = new Report_Service();
     List<ReportVO> reportList = reportSvc.getOneStatus();
-    Report_type_Service repTypeSvc = new Report_type_Service();
     
     pageContext.setAttribute("advertisingList", advertisingList);
 	pageContext.setAttribute("unpreviewProductList", unpreviewProductList);
@@ -72,6 +74,11 @@
 %>
 <jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService"/>
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService"/>
+<jsp:useBean id="report_type_Svc" scope="page"
+	class="com.report_type.model.Report_type_Service" />
+<jsp:useBean id="product_Svc" scope="page" class="com.product.model.ProductService" />
+<jsp:useBean id="art_Svc" scope="page" class="com.article.model.Article_Service" />
+<jsp:useBean id="forum_Svc" scope="page" class="com.forum_comment.model.Forum_Comment_Service" />
 
 <body>
 	<!-- Start #header -->
@@ -86,43 +93,61 @@
 				<nav class="top-nav" role="navigation">
 					<ul class="nav navbar-nav pull-right">
 
-						<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>&nbsp喬治</a>
-							<ul class="dropdown-menu right" role="menu">
-								<li><a href="<%=request.getContextPath()%>/Back_end/mem/listMyAdm.jsp"><i class="st-user"></i>
-										個人資料</a></li>
-								<li><a href="<%=request.getContextPath()%>/Back_end/login/login.jsp"><i class="im-exit"></i> 登出</a>
-								</li>
-							</ul>
-							</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-		<!-- Start .header-inner -->
-	</div>
-	<!-- End #header -->
-	<!-- Start #sidebar -->
-	<div id="sidebar">
-		<!-- Start .sidebar-inner -->
-		<div class="sidebar-inner">
-			<!-- Start #sideNav -->
-			<ul id="sideNav" class="nav nav-pills nav-stacked">
+                        <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>&nbsp${admVO.name}</a>
+                            <ul class="dropdown-menu right" role="menu">
+                                <li><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp">
+                                        <i class="st-user"></i>個人資料
+                                    </a></li>
+                                <li><a href="javascript:document.logout.submit();">
+                                        <i class="im-exit"></i>
+                                        登出
+                                    </a></li>
+                            </ul></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- Start .header-inner -->
+    </div>
+    <!-- End #header -->
+    <!-- Start #sidebar -->
+    <div id="sidebar">
 
-				<li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
+        <div class="sidebar-inner">
+  
+            <ul id="sideNav" class="nav nav-pills nav-stacked">
+				 <c:if test="${aut.contains(\"02\")}">
+                <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"03\")}">
 				<li><a href="<%=request.getContextPath() %>/Back_end/com/listAllCom.jsp"><i class="en-users"></i>廠商管理 </a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"01\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"08\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"07\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp"><i class="br-location"></i>景點管理 </a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"06\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp"><i class="fa-shopping-cart"></i>商城管理</a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"04\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"05\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp"><i class="im-question"></i>常見問題管理</a></li>
+				</c:if>
+				<c:if test="${aut.contains(\"09\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/report/Report.jsp"><i class="br-warning"></i>檢舉管理</a></li>
-			
-			</ul>
-			<!-- End #sideNav -->
-		</div>
-		<!-- End .sidebar-inner -->
-	</div>
+				</c:if>
+            </ul>
+
+        </div>
+
+    </div>
 	<!-- End #sidebar -->
 
 	<!-- Start content ===================================================================================================== -->
@@ -145,7 +170,7 @@
                         <!-- Start .row -->
                         
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="carousel-tile carousel vertical slide">
+                            <div class="carousel-tile carousel vertical slide" onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/report/Report.jsp'">
                                 <div class="carousel-inner">
                                     <div class="item active">
                                         <div class="tile red">
@@ -214,30 +239,43 @@
                                 <!-- Start .panel -->
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><i class="im-warning"></i> 待處理檢舉 </h4>
-                                    <span style='float:right;margin-top:4px'><button class='btn btn-default'>more</button></span>
+                                    <span style='float:right;margin-top:4px'><button class='btn btn-default' onclick="javascript:location.href='<%=request.getContextPath()%>/Back_end/report/Report.jsp'">more</button></span>
                                 </div>
                                 <div class="panel-body">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover text-left">
                                         
                                         <thead>
                                             <tr>
                                                 <th>檢舉編號</th>
-                                                <th>檢舉類型</th>
-                                                <th>檢舉者</th>
-                                                <th>檢舉內容</th>
-                                                <th>檢舉日期</th>
+												<th>檢舉類型</th>
+												<th>檢舉標題</th>
+												<th>檢舉日期</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <%System.out.println(reportList); %>
                                             <c:forEach var="reportVO" items="${reportList}" varStatus="s"
-												begin="1" end="3">
+												>
+												<%System.out.println("YYYYYY"); %>
                                             <tr>
                                                 <td>${reportVO.rep_no}</td>
-                                                <td>${reportTypeSvc.getOneRep_Type(reportVO.rep_type_no)}</td>
-                                                <td>${memSvc.getOneMem(reportVO.reporter_no)}</td>
-                                                <td>${reportVO.content}</td>
-                                                <td>${reportVO.rep_date.toString().substring(0,10)}</td>
-                                                
+                                                <td>${report_type_Svc.getOneRep_Type(reportVO.rep_type_no).type}</td>
+                                                <c:choose>
+											<c:when test="${art_Svc.getOneArt(reportVO.rep_ob_no)!=null }">
+												<td>${art_Svc.getOneArt(reportVO.rep_ob_no).title }</td>
+											</c:when>
+											<c:when test="${forum_Svc.getOneForum_Comment(reportVO.rep_ob_no)!=null }">
+												<td>討論版留言</td>
+											</c:when>
+											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no)!=null }">
+												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name }</td>
+											</c:when>
+											<c:otherwise>
+												<td>${com_Svc.getOneCom(reportVO.rep_ob_no).name }</td>
+											</c:otherwise>
+										</c:choose>
+                                                <td>${(reportVO.rep_date).toString().substring(0,10)}</td>
+                                                <%System.out.println("XXXXX"); %>
                                             </tr>
                                             </c:forEach>
                                             
