@@ -68,9 +68,11 @@
 						</div>
 
 						<div class="modal-body">
-							<label for="inputdefault">上傳圖片</label> 
-							<input type="file" id="imgInp" name="img">
-							<img id="blah" src="#"  width="200" height="auto" />
+<!-- 							<label for="inputdefault">上傳圖片</label>  -->
+<!-- 							<input type="file" id="imgInp" name="img"> -->
+<!-- 							<img id="blah" src=""  width="200" height="auto" /> -->
+<label class="control-label">Select File</label>
+<input id="input-1" type="file" class="file">
 						</div>
 						<div class="modal-footer">
 
