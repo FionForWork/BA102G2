@@ -702,6 +702,7 @@ address {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  border: 1px solid #e4e9eb;
 }
 .row {
   margin-left: -15px;

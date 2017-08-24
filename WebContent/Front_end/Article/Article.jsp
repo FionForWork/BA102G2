@@ -1,3 +1,4 @@
+<%@page import="com.mem.model.MemVO"%>
 <%@page import="com.forum_comment.model.Forum_CommentVO"%>
 <%@page import="com.forum_comment.model.Forum_Comment_Service"%>
 <%@ page import="java.util.*"%>
@@ -14,6 +15,9 @@
 	Article_Service artSvc = new Article_Service();
 	List<ArticleVO> list = artSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
+	MemVO memVO = (MemVO) session.getAttribute("memVO");
+	ComVO comVO = (ComVO) session.getAttribute("comVO");
 %>
 
 <%
@@ -99,10 +103,12 @@
 
 
 			<div class="text-center" style="float: right">
+			<c:if test="${memVO.mem_no!=null||comVO.com_no!=null }">
 				<a
 					href="<%=request.getContextPath()%>/Front_end/Article/Article_add.jsp">
 					<button class="btn btn-info">發表文章</button>
 				</a>
+					</c:if>
 			</div>
 		</ul>
 	</div>
