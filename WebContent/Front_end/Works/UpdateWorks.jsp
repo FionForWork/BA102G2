@@ -239,13 +239,17 @@ $("document").ready(function(){
 			com_no :'${comVO.com_no}'
 		});
 	});
+	var options = {
+			success: function(){
+				window.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}"
+					}
+	};
+	
 	
 	$("#updateWorks").click(function(){
 		$("[name~='updateForms']").each(function(){
-			$(this).ajaxSubmit();
+			$(this).ajaxSubmit(options);
 		});
-		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}";
-		
 	});
 	
 	
