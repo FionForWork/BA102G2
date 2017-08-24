@@ -117,7 +117,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		
 <input id="input-1" type="file" name="picture" class="file" value="${memVO.picture}">
 	</div><br>
-<input type="hidden" name="id" value="${memVO.bday}">
+<input type="hidden" name="bday" value="${memVO.bday}">
 <input type="hidden" name="id" value="${memVO.id}">
 <input type="hidden" name="report" value="${memVO.report}">
 <input type="hidden" name="status" value="${memVO.status}">
