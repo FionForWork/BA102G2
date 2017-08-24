@@ -16,6 +16,7 @@
 	Report_Service report_Svc = new Report_Service();
 	List<ReportVO> list = (List<ReportVO>) report_Svc.getAll();
 	request.setAttribute("list", list);
+	
 %>
 
 
@@ -61,11 +62,11 @@
 											<c:when test="${forum_Svc.getOneForum_Comment(reportVO.rep_ob_no)!=null }">
 												<td>討論版留言</td>
 											</c:when>
-											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no)!=null }">
-												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name }</td>
+											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no).getStatus()!=null}">
+												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name}</td>
 											</c:when>
 											<c:otherwise>
-												<td>${com_Svc.getOneCom(reportVO.rep_ob_no).name }</td>
+												<td>已被刪除</td>
 											</c:otherwise>
 										</c:choose>
 <!-- 									***********************************************************************************	 -->										
@@ -145,11 +146,11 @@
 											<c:when test="${forum_Svc.getOneForum_Comment(reportVO.rep_ob_no)!=null }">
 												<td>討論版留言</td>
 											</c:when>
-											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no)!=null }">
-												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name }</td>
+											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no).getStatus()!=null}">
+												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name}</td>
 											</c:when>
 											<c:otherwise>
-												<td>${com_Svc.getOneCom(reportVO.rep_ob_no).name }</td>
+												<td>已被刪除</td>
 											</c:otherwise>
 										</c:choose>
 <!-- 									***********************************************************************************	 -->										
@@ -220,11 +221,11 @@
 											<c:when test="${forum_Svc.getOneForum_Comment(reportVO.rep_ob_no)!=null }">
 												<td>討論版留言</td>
 											</c:when>
-											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no)!=null }">
-												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name }</td>
+											<c:when test="${product_Svc.getOneByPK(reportVO.rep_ob_no).getStatus()!=null}">
+												<td>${product_Svc.getOneByPK(reportVO.rep_ob_no).pro_name}</td>
 											</c:when>
 											<c:otherwise>
-												<td>${com_Svc.getOneCom(reportVO.rep_ob_no).name }</td>
+												<td>已被刪除</td>
 											</c:otherwise>
 										</c:choose>
 <!-- 									***********************************************************************************	 -->										

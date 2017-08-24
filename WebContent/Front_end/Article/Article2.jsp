@@ -228,22 +228,21 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-
+<div align="center">
 
    
  <tr>
-     <div class="text-center">
-                        <nav aria-label="Page navigation ">
-                            <ul id="pagination" class="pagination pagination-lg">
+    <div align="center">
+    <ul class="pagination">
     <%for (int i=1; i<=pageNumber; i++){%>
            <li class="active"><a href="<%=request.getRequestURI()%>?whichPage=<%=i%>"><%=i%></a></li>
         <%}%> 
   	</ul>
-  	</nav>
   	</div>
  </tr>
 					
-				
+</div>
+						
 							
 
 		</div>
