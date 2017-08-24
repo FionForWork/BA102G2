@@ -9,15 +9,9 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 
 <%@ include file="/Front_end/mem/page/register_header.file"%>
-
-<link href="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
-<link href="<%=request.getContextPath()%>/Front_end/Album/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-<script src="<%=request.getContextPath()%>/Front_end/Album/js/piexif.min.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/Front_end/Album/js/purify.min.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/Front_end/Album/js/fileinput.min.js"></script>
-<script src="<%=request.getContextPath()%>/Front_end/Album/themes/explorer/theme.js"></script>
-<script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
-<script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
 
  
 
@@ -44,7 +38,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 
 
 	<div class="form-group">
-				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到</span>
+				<span>廠商帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}${errorMsgs.get("id") }</font></span>
 				<input type="email" placeholder="請填電子郵件" id="id" name="id" class="form-control"
 			value="" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>

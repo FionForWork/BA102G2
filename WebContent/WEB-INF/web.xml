@@ -38,7 +38,7 @@
 		<url-pattern>/Back_end/problem/*</url-pattern>
 		<url-pattern>/Back_end/serv/*</url-pattern>
 		<url-pattern>/Back_end/tradition/*</url-pattern>
-		
+		<url-pattern>/Back_end/report/Report.js</url-pattern>
 
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>

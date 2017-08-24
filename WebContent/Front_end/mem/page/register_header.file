@@ -194,7 +194,7 @@ $(document).ready(function(){
                     <span class="icon-bar"></span>
                 </button>
                 <!--RWD-->
-                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/login/homepage.jsp">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>/Front_end/homepage/homePage.jsp">
 
                     <img alt="Brand" class="pull-left" width="50" height="auto" src="<%=request.getContextPath()%>/Front_end/mem/img/ring_64.png">
                     <div class="tooltip tt_black right hidden-xs" role="tooltip" style="opacity: 100;top: 20px;left: 55px;z-index:0;">
@@ -208,14 +208,14 @@ $(document).ready(function(){
             <div class="navbar-collapse collapse wd-menu">
                 <ul class="nav nav-mobile-user-menu navbar-nav navbar-right clearfix ">
                     <c:choose>
-                    <c:when test="${comVO!=null}">
+                    <c:when test="${sessionScope.comVO!=null}">
                     <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp" >
                             <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" width="40" height="40" />&nbsp&nbsp&nbsp${comVO.name}
                         </a>
                     </li>
                     </c:when>  
-                     <c:when test="${memVO!=null}">
+                     <c:when test="${sessionScope.memVO!=null}">
                      <li>
                         <a  href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp" >
                             <img  src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="40" height="40" />&nbsp&nbsp&nbsp${memVO.name}
@@ -226,7 +226,7 @@ $(document).ready(function(){
                     
                     
                    <c:choose>
-                      <c:when test="${memVO!=null||comVO!=null}">
+                      <c:when test="${sessionScope.memVO!=null||sessionScope.comVO!=null}">
                       <li>  <a href="javascript:document.logout.submit();">
                      <h4>登出</h4>
                         </a>  </li>
@@ -348,7 +348,7 @@ $(document).ready(function(){
     
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     <c:choose>
-    	<c:when test="${comVO!=null}">
+    	<c:when test="${sessionScope.comVO!=null}">
     		<div class="fade-carousel">
         		<div class="home-banner fade-carousel" style="overflow: hidden;">
             		<div class="item slides">

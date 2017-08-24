@@ -95,7 +95,9 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <input type="hidden" name="status" value="${comVO.status}">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="com_no" value="${comVO.com_no}">
-<input type="submit" class="btn btn-info" value="送出"></FORM>
+<input type="submit" class="btn btn-info" value="送出">　　
+<input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp'" >
+</FORM>
 
 
 

@@ -19,16 +19,12 @@
   <div class="row">
     <div class="col-xs-12 col-sm-3"></div>
     <div class="col-xs-12 col-sm-6">
-	    <c:if test="${not empty errorMsgs}">
-			<font color='red'>
-			請修正錯誤:<br>
-			</font>
-	</c:if>
+	  
 	
 
     <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/com/com.do" name="form2" enctype="multipart/form-data" ">
 
-		我是廠商  <br>
+				<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">我是廠商</h1>  <br>
 		<div class="form-group">
 					<span>帳號 :<font color='red'>${errorMsgs.get("forgetPwdCom")}</font></span>
 					<input type="email" id="email" placeholder="請填電子郵件" name="id" class="form-control" />
@@ -41,7 +37,7 @@
     
     <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" ">
 
-		我是會員  <br>
+				<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">我是會員</h1> <br>
 		<div class="form-group">
 					<span>帳號 :<font color='red'>${errorMsgs.get("forgetPwdMem")}</font></span>
 					<input type="email" placeholder="請填電子郵件" name="id" class="form-control" />
@@ -49,7 +45,7 @@
 		
 
 		<input type="hidden" name="action" value="forgetPwd">
-		<input type="submit" id="submit" class="btn btn-info" value="送出新增">
+		<input type="submit" id="submit" class="btn btn-info" value="確定">
 	</FORM>
 	
     <div class="col-xs-12 col-sm-3"></div>
@@ -61,5 +57,6 @@
 <br><br><br><br><br><br>
 
 <br><br><br><br>
+
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>

@@ -18,6 +18,19 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <script src="<%=request.getContextPath()%>/Front_end/Album/themes/fa/theme.js"></script>
 <script src="<%=request.getContextPath()%>/Front_end/Album/js/zh-TW.js"></script>
 
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.min.css" media="all" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrapfileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/piexif.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/purify.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/fileinput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/explorer/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/themes/fa/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/bootstrapfileinput/zh-TW.js"></script>
+	<script src="<%=request.getContextPath()%>/Front_end/Resource/js/jqueryui/jquery-ui.js" type="text/javascript"></script>
+	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+ 
 <title>會員註冊</title>
 		
 <div class="col-xs-12 col-sm-7">
@@ -34,9 +47,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<div class="mation">
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
 
-
 	<div class="form-group">
-				<span>帳號 :請填電子郵件</span>
+				<span>帳號 :請填正確電子郵件驗證信及找回密碼需用到<br><font color='red'>${errorMsgs.get("e")}${errorMsgs.get("id") }</font></span>
+				
 				<input type="email" name="id" id="id" placeholder="請填電子郵件" class="form-control"
 			value="" onkeypress="if (window.event.keyCode==13) return false;"/>
 	</div>
