@@ -60,21 +60,18 @@
 	}
 
 	String preLocation = request.getContextPath() + "/Front_end/mall";
-	String location = "/Front_end/mall/mallArea.jsp?nowPage=" + nowPage + "&&role=" + role + "&&status="
-	+ status + "&&orderType=" + orderType;
+	String location = "/Front_end/mall/mallArea.jsp?nowPage=" + nowPage + "&&role=" + role + "&&status="+ status + "&&orderType=" + orderType;
 	List<ProductVO> productList = new ArrayList<ProductVO>();
+    String active=(role.equals("0"))?"0":"3";
+	pageContext.setAttribute("active", active);
 	pageContext.setAttribute("mem_name", memVO.getName());
 	pageContext.setAttribute("location", location);
 	pageContext.setAttribute("productList", productList);
-// 	pageContext.setAttribute("memService", memService);
 	pageContext.setAttribute("status", status);
 	pageContext.setAttribute("nowPage", nowPage);
 	pageContext.setAttribute("itemsCount", itemsCount);
 	pageContext.setAttribute("totalPages", totalPages);
 	pageContext.setAttribute("productService", productService);
-// 	pageContext.setAttribute("order_detailService", order_detailService);
-// 	pageContext.setAttribute("cust_nameList", cust_nameList);
-// 	pageContext.setAttribute("seller_accountList", seller_accountList);
 	pageContext.setAttribute("orderTypeList", orderTypeList);
 	pageContext.setAttribute("preLocation", preLocation);
 	pageContext.setAttribute("statusList", statusList);
@@ -91,20 +88,20 @@
     background: rgba(255,200,180,0.8);
     font-size: 1.2em;
 }
-
 .nav-tabs > li.active {
   color: #000;
   background-color: rgba(255,200,180,0.6);  
 } 
 -->
 </style>
-<div id="showStatus" class="text-center" style="height: 50px; margin-top: 50px">
-    <h2>${stringBuffer.toString()}</h2>
-</div>
-<div class="container">
+<div style="margin-top: 50px;"></div>
+<div class="container" id="container" >
     <div class="row">
+        <div id="showStatus" class="text-center col-md-12">
+            <h2>${stringBuffer.toString()}</h2>
+        </div>
         <div class="col-md-12">
-            <%@include file="pages/mallAreaSidebar.file"%>
+            <%@include file="pages/mallAreaSidebar.file"%> 
             <div class="col-xs-1 col-md-1"></div>
             <div class="col-xs-7 col-md-7">
                 <ul class="nav nav-tabs" role="tablist" id="maintab">
@@ -223,19 +220,15 @@
             $(window).scrollTop( $(window).scrollTop());
             $(window).scrollLeft($(window).scrollLeft());
             $(this).tab('show');
-            $("#maintab").load("<%=preLocation%>/mallArea.jsp #maintab",{"role":role,"status":status});
-            $("#detailContent").load("<%=preLocation%>/mallArea.jsp #detailContent",{"role":role,"status":status,"orderType":orderType});
-            $(".pagination").load("<%=preLocation%>/mallArea.jsp .pagination",{"role":role,"status":status,"orderType":orderType});
-            $("#showStatus").load("<%=preLocation%>/mallArea.jsp #showStatus",{"role":role,"status":status});
-            $("#orderType").load("<%=preLocation%>/mallArea.jsp #orderType",{"role":role,"status":status,"orderType":orderType});
+            $("#container").load("${preLocation}/mallArea.jsp #container",{"role":role,"status":status,"orderType":orderType});
         } 
     }
     
     function pageChange(nowPage,role,status,orderType) {
-        $("#detailContent").load("<%=preLocation%>/mallArea.jsp #detailContent",{"role":role,"status":status,"orderType":orderType});
-        $(".pagination").load("<%=preLocation%>/mallArea.jsp .pagination",{"nowPage":nowPage,"role":role,"status":status,"orderType":orderType}); 
+        $("#detailContent").load("${preLocation}/mallArea.jsp #detailContent",{"role":role,"status":status,"orderType":orderType});
+        $(".pagination").load("${preLocation}/mallArea.jsp .pagination",{"nowPage":nowPage,"role":role,"status":status,"orderType":orderType}); 
         $(window).scrollTop("0");
         $(window).scrollLeft($(window).scrollLeft());
     }
-    
 </script>
+<%@include file="pages/indexFooter.file"%>

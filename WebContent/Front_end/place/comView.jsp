@@ -261,8 +261,7 @@
     }
     
     function change(nowPage) {
-        $("#comImg").load("<%=request.getContextPath()%>
-    /Front_end/place/comView.jsp #comImg", {
+        $("#comImg").load("<%=request.getContextPath()%>/Front_end/place/comView.jsp #comImg", {
         south : comRange[0],
         west : comRange[1],
         north : comRange[2],

@@ -26,6 +26,8 @@
     pageContext.setAttribute("typeList", typeList);
 
     String preLocation = request.getContextPath() + "/Front_end/mall";
+    String active="4";
+    pageContext.setAttribute("active", active);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("totalPages", totalPages);
     pageContext.setAttribute("nowPage", nowPage);
