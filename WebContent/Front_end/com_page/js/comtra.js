@@ -18,7 +18,7 @@
 						action : "insert_ComTra"
 					},
 					success:function success(){
-						$("#comTracking").html("<a href='#' onclick='deleteComtra()'><i class='fa fa-heart' style='color:deeppink'> 取消收藏</i></a>");
+						$("#comTracking").html("<a onclick='deleteComtra()' class='btn btn-xs btn-danger'><i id='collectIcon' class='fa fa-heart-o'></i>&nbsp取消收藏</a>");
 					},
 					error:function(xhr){
 						alert('Ajax request error!');
@@ -37,7 +37,7 @@
 						action : "delete_ComTra_FromComPage"
 					},
 					success:function success(){
-						$("#comTracking").html("<a href='#' onclick='insertComtra()'><i class='fa fa-heart-o'> 加入收藏</i></a>");
+						$("#comTracking").html("<a onclick='insertComtra()' class='btn btn-xs btn-danger'><i id='collectIcon' class='fa fa-heart'></i>&nbsp加入收藏</a>");
 					},
 					error:function(xhr){
 						alert('Ajax request error!');

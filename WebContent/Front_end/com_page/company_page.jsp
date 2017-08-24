@@ -5,6 +5,7 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	ComService comSvc = new ComService();
@@ -23,15 +24,16 @@
 
 <html>
 <head>
+<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>${comVO.name}</title>
 </head>
 <body>
-
-	<%@ include file="page/header.file"%>
+	<%@ include file="page/com_page_header.file"%>
 
 
 	<!--banner -->
-	<c:forEach var="worksVO" items="${worksList}" begin="1" end="1">
+	<c:forEach var="worksVO" items="${worksList}" begin="0" end="0">
 		<div class="fade-carousel">
 			<div class="home-banner fade-carousel" style="overflow: hidden;">
 				<div class="item slides">
@@ -53,23 +55,19 @@
 	</div>
 	<!--廠商大頭照-->
 	<%@ include file="message.jsp"%>
-	<%@ include file="contact_us.jsp"%>
 
 	<!--廠商名稱-->
 	<div class="text-center">
 		<h1>${comVO.name}</h1>
 		<div id="comTracking">
 			<c:choose>
-			<c:when test="${mem_no == null || !comNoList.contains(comVO.com_no)}">
-			<a href="#" onclick="insertComtra()"><i id="collectIcon" class="fa fa-heart-o inserted"> 加入收藏</i></a>
-			<a href="#" onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>加入收藏</a>
+			<c:when test="${memVO.mem_no == null || !comNoList.contains(comVO.com_no)}">
+				<a onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
 			</c:when>
 			<c:otherwise>
-				<a href="#" onclick="deleteComtra()"><i id="collectIcon" class="fa fa-heart" style='color:deeppink'> 取消收藏</i></a>
-				<a href="#" onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>取消收藏</a>
+				<a onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>&nbsp取消收藏</a>
 			</c:otherwise>
 			</c:choose>
-			<a href="#" class="btn btn-xs btn-warning"><i class="fa fa-exclamation-circle"></i>檢舉</a>
 		</div>
 		
 		<input type='hidden' name='com_no' value='${comVO.com_no}'> 
@@ -125,9 +123,13 @@
 		<!--預約+即時訊息按鈕-->
 		<div class="col-sm-3">
 			<p class="text-center">
+			
+			<c:if test="${memVO!=null}"> 
 				<a class="btn btn-reservation btn-lg" id="open_chat">立即連絡我們 <i class="fa fa-comment"></i></a>
+			</c:if>	
+				
 				<br><br>
-				<a class="btn btn-reservation btn-lg" href="<%=request.getContextPath()%>/Front_end/reservation/resCalendar.jsp">我要預約 </a>
+				<a class="btn btn-reservation btn-lg" href="<%=request.getContextPath()%>/Front_end/reservation/resCalendar.jsp?com_no=${comVO.com_no}">我要預約 </a>
 			</p>
 		</div>
 	</div>
@@ -143,7 +145,7 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<c:forEach var="worksVO" items="${worksList}" begin="2" end="10">
+			<c:forEach var="worksVO" items="${worksList}" begin="1" end="9">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
@@ -164,7 +166,7 @@
 		<div class="container">
 			<div class="row">
 			<div id="more_works" style="display: none;">
-			<c:forEach var="worksVO" items="${worksList}" begin="11">
+			<c:forEach var="worksVO" items="${worksList}" begin="10">
 				<div class="col-xs-12 col-sm-4">
 					<ul class="works_box">
 						<li class="list-unstyled">
