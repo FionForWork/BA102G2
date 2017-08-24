@@ -322,21 +322,6 @@ function callback2() {
   
     
     <!-- 從上面找自己的功能改NavBar選項!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <c:choose>
-    	<c:when test="${sessionScope.comVO!=null}">
-    		<div class="fade-carousel">
-        		<div class="home-banner fade-carousel" style="overflow: hidden;">
-            		<div class="item slides">
-                <div class="slide-1 bg-cover lazy" style="background-image:url('<%=request.getContextPath()%>/Front_end/Resource/img/5.jpg');"></div>
-            </div>
-        </div>
-
-    </div>
-   	 	</c:when>
-     	<c:otherwise> 
-    		<%@ include file="/Front_end/Advertising/Advertising_Demo.jsp"%>
- 		</c:otherwise> 
-	</c:choose>
     <!--這裡開始-->
     <!--這裡開始-->
     <!--這裡開始--><br>

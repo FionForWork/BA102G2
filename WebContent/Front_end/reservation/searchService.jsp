@@ -86,7 +86,7 @@
 <%	if(servNum == 1 || servNum % 4 == 0){%>
 		<div class="row">
 <% } %>
-<div  class="col-xs-6 col-sm-6 col-md-3 btn-like-wrapper" data-toggle="modal" data-target="#myModal${servVO.serv_no}">
+<div  class="col-xs-6 col-sm-6 col-md-3 btn-like-wrapper" data-toggle="modal" data-target="#myModal${servVO.serv_no}" style="cursor:pointer">
 <!-- 	<button class="btn btn-lg sharp btn-like" id="userCollect" data-id="1919" data-type="2"><i id="CollectIcon" class="fa fa-heart-o" aria-hidden="true"></i></button> -->
 	<a class="thumbnail thumbnail-service mod-shadow">
 	<div class="ratiobox rat_1_115 bg-cover" style="background-image: url(<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${servVO.com_no})">
@@ -162,7 +162,7 @@
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 				<input type="hidden" name="action" value="resFromSearchService">
 				<input type="submit" class="btn btn-info" value="確認預約">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>
