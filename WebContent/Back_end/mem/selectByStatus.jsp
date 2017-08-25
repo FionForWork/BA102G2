@@ -43,7 +43,8 @@
 <title>Insert title here</title>
 <br><br>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'>返回搜尋</a>
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/select_member.jsp'" >
+
 
 <table class="table table-striped">
 	<tr>
@@ -81,8 +82,9 @@
 				</select>
 		</td>
 			<td>
-			  
-			    <input type="submit" value="修改狀態">
+				 <input type="hidden" name="locs"value="/<%= request.getServletPath() %>" >
+			   <input type="hidden" name="statuss" value="${statuss}" >
+			    <input type="submit" class="btn btn-info" value="修改狀態">
 			    <input type="hidden" name="mem_no" value="${memVO.mem_no}">
 			    <input type="hidden" name="action" value="updateStatus">
 			</td>

@@ -54,21 +54,9 @@
 <br><br><br>
 <div id="content">
 
-<a href="addAut.jsp">新增權限</a>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/aut/aut.do">
-			    <input type="submit" class="btn btn-info " value="刪除">
 
-			    <input type="hidden" name="action" value="test"></FORM>
+<input type="button" class="btn btn-info" value="新增權限" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/addAut.jsp'" >
+<br>
 <table class="table table-striped">
 	<tr>
 		<th>管理員編號</th>

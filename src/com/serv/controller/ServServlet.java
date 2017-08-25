@@ -49,7 +49,7 @@ public class ServServlet extends HttpServlet {
 				String serv_no = req.getParameter("serv_no").trim();
 				
 				String status = req.getParameter("status").trim();
-				
+				String locs = req.getParameter("locs").trim();
 				ServVO servVO = new ServVO();
 				servVO.setServ_no(serv_no);
 				servVO.setStatus(status);
@@ -64,11 +64,20 @@ public class ServServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 
 				ServService servSvc = new ServService();
-				servVO = servSvc.updateStatus(serv_no, status);
+				servSvc.updateStatus(serv_no, status);
+				servVO=servSvc.getOneServ(serv_no);
+				if(locs.contains("selectByCom")){
+					
+					Set<ServVO> set = servSvc.getServByCom(servVO.getCom_no());
+					req.setAttribute("selectByCom", set); 
+				}else if(locs.contains("selectByStype")){
+					Set<ServVO> set = servSvc.getServByStype(servVO.getStype_no());
+					req.setAttribute("selectByStype", set); 
+				}
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				String url = "/Back_end/serv/listAllServ.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				req.setAttribute("servVO", servVO);   
+				//String url = "/Back_end/serv/listAllServ.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(locs); // �憓����漱listAllEmp.jsp
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/
 

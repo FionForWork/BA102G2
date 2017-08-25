@@ -313,12 +313,15 @@ public class ComServlet extends HttpServlet {
 								failureView.forward(req, res);
 								return;//程式中斷
 							}
-						 
+						 System.out.println(a.getPwd());
+						 System.out.println(oldpwd);
 						 if(!oldpwd.equals(a.getPwd())){
 							 errorMsgs.add("舊密碼錯誤更改失敗");
-							 String url = "/Front_end/mem/updatePwd.jsp";
+							 
+							 String url = "/Front_end/com/updatePwd.jsp";
 								RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
-								successView.forward(req, res);	
+								successView.forward(req, res);
+								return;
 						}else{
 							comVO =comSvc.updatePwd(com_no, pwd);
 						}

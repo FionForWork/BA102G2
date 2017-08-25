@@ -45,7 +45,8 @@
 <br><br><br>
 <div id="content" style="padding:20px 1px 1px 20px;" ><h2>查看會員</h2></div>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/mem/listAllMem.jsp'>觀看全部會員</a>  <br><br>
+<input type="button" class="btn btn-info" value="觀看全部會員" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/listAllMem.jsp'" ><br><br>
+
 <table class="table table-striped">
 	<tr>
 		<td>

@@ -40,9 +40,11 @@
         </div>
 
     </div>
-<title>會員資料</title>
+
 <br><br>
 <div id="content">
+<title>會員資料</title>
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/select_member.jsp'" >
 
 <table class="table table-striped">
 	<tr>
@@ -57,9 +59,12 @@
 		<th>銀行帳戶</th>
 		<th>被檢舉次數</th>
 		<th>狀態</th>
+		<th>修改狀態</th>
+		<th>修改狀態</th>
 	
 	</tr>
 	<c:forEach var="memVO" items="${selectByReport}" >
+	 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
 	<tr>
 		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
 		<td>${memVO.mem_no}</td>
@@ -72,14 +77,19 @@
 		<td>${memVO.account}</td>
 		<td>${memVO.report}</td>
 		<td>${memVO.status}</td>
-		
+		<td><select style="width:150px;" name="status">
+				<option value="正常">正常
+				<option value="停權">停權
+				</select>
+		</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
-			    <input type="submit" value="停權">
-			    <input type="hidden" name="memVO" value="${memVO.mem_no}">
-			    <input type="hidden" name="action" value="stopStatus"></FORM>
+			 <input type="hidden" name="reports"value="${reports}" >
+			 <input type="hidden" name="locs"value="/<%= request.getServletPath() %>" >
+			    <input type="submit" class="btn btn-info" value="修改狀態">
+			    <input type="hidden" name="mem_no" value="${memVO.mem_no}">
+			    <input type="hidden" name="action" value="updateStatus">
 			</td>
-	</tr>
+	</tr></FORM>
 </c:forEach>
 </table>
 </div>

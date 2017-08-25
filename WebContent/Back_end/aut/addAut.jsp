@@ -47,7 +47,8 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 <br><br><br>
 <div id="content">
 <h3>新增員工權限:</h3>
-<a href="listAllAut.jsp">回首頁</a>
+
+<input type="button" class="btn btn-info" value="返回" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/listAllAut.jsp'" >
 <%--錯誤處理 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:

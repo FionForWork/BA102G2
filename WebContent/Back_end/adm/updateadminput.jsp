@@ -88,8 +88,6 @@
 		<td><select name="job" style="width: 163px;">
 			　<option  value="員工">員工</option>
 			　<option value="經理">經理</option>
-			 <option value="工讀生">工讀生</option>
-			 <option  value="組長">組長</option>
 		</select></td>
 	</tr>
 	<tr>

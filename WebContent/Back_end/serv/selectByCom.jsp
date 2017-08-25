@@ -45,8 +45,7 @@
 <title>服務資料</title>
 <br><br>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'>返回搜尋</a>
-<table class="table table-striped">
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" ><table class="table table-striped">
 	<tr>
 		<th>服務編號</th>
 		<th>服務型態</th>

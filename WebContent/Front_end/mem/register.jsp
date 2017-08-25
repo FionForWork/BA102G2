@@ -85,7 +85,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<div >
 		<span>上傳圖片 :<font color='red'>${errorMsgs.get("picture")}</font><br></span>
 		<label class="control-label">選擇圖片</label>
-<input id="input-1" type="file" name="picture" class="file"><br>
+<input id="input-1" type="file" name="picture" class="file" value="dd"><br>
 	</div>
 
 	<center><br><div id="recaptcha_box">請驗證</div>
