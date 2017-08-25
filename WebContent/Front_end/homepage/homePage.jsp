@@ -138,6 +138,7 @@ function callback2() {
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/homepage/css/contact_us.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
@@ -369,18 +370,22 @@ function callback2() {
                 <form method="post" action="<%=request.getContextPath()%>/ContactUs">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name">
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required id='contactName' name="name">
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email">
+                            <input class="w3-input w3-border" type="email" placeholder="Email" required id='contactEmail' name="email">
                         </div>
                     </div>
                     <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea"><br>
                     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                    <button class="w3-button w3-black w3-right w3-section"  onClick="validateForm(this.form)">
+                    <input type="hidden" name="path" value="<%=request.getContextPath()%>/ContactUs">
+                    
+                </form>
+                <button class="w3-button w3-black w3-right w3-section" onclick="validateForm()" id='ContextUsBtn'>
           			<i class="fa fa-paper-plane"></i> SEND MESSAGE
         			</button>
-                </form>
+        		<div id="snackbar">成功寄出囉...</div>
+        		
             </div>
         </div>
     </div>

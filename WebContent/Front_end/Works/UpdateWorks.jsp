@@ -19,6 +19,12 @@
 $(document).ready(function(){
 	$(".datepicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
 	
+	$("#autoInputBtn").on("click",function(){
+		
+		$("input[name=name]").val("風格婚紗作品");
+		$("textarea[name=works_desc]").val("我實在太美啦!!!!!!!!!羨慕吧呵呵");
+	});
+	
 });
 </script>
 
@@ -70,7 +76,7 @@ $(document).ready(function(){
 						<br>
 
 					<div class="text-center">
-						<h2>修改作品</h2>
+						<h2>修改作品 <button id='autoInputBtn' class='btn'></h2>
 						<br>
 					</div>
 				</div>
@@ -159,7 +165,7 @@ $(document).ready(function(){
 									<div class='form-group'>
 										<label for='works_desc'>作品敘述</label>
 										<textarea name='works_desc' rows='5' cols='20'
-											class='form-control' placeholder='請輸入作品敘述...'>${worksVO.works_desc}</textarea>
+											class='form-control' >${worksVO.works_desc}</textarea>
 									</div>
 								</div>
 							</div>

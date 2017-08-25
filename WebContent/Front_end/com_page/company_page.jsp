@@ -71,7 +71,7 @@
 		<div id="comTracking">
 			<c:choose>
 			<c:when test="${memVO == null || !comNoList.contains(comVO.com_no)}">
-				<a onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
+				<a onclick="insertComtra()" class="btn btn-xs btn-default"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
 			</c:when>
 			<c:otherwise>
 				<a onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>&nbsp取消收藏</a>

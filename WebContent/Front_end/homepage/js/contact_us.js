@@ -1,17 +1,44 @@
 
-function validateForm(form){
-	if (!checkName(form.name.value)){
+function validateForm(){
+	if (!checkName($('#contactName').val())){
 		return(false);	
 	}
-	if (!checkEmail(form.email.value)){
+	if (!checkEmail($('#contactEmail').val())){
 		return(false);	
 	}
-	if (!checkMessage(form.messagesArea.value)){
+	if (!checkMessage($('input[name="messagesArea"]').val())){
 		return(false);	
 	}
-	alert("已成功送出！");
-	form.submit();
-	return(true);
+	
+	//alert("已成功送出！");
+	//form.submit();
+	//return false;
+	doAjax();
+}
+function doAjax(btn){
+	
+	$("#ContextUsBtn").html("<i class='fa fa-spinner fa-spin'></i> SENDING...");
+	$.ajax({
+		url:$('input[name="path"]').val(),
+		type:'POST',
+		data:{
+			name : $('input[name="name"]').val(),
+			email : $('input[name="email"]').val(),
+			messagesArea : $('input[name="messagesArea"]').val()
+		},
+		success:function success(){
+			//alert("已成功送出！");
+			$("#snackbar").addClass("show");
+			setTimeout('$("#snackbar").removeClass("show")',5000);
+			$("#ContextUsBtn").html("<i class='fa fa-paper-plane'></i> SEND MESSAGE");
+			$('input[name="name"]').val('');
+			$('input[name="email"]').val('')
+			$('input[name="messagesArea"]').val('');
+		},
+		error:function(xhr){
+			alert('Ajax request error!');
+		}
+	});
 }
 function checkEmail(email){
 	index = email.indexOf ('@', 0);		// 尋找 @ 的位置，0 代表開始尋找的起始位置

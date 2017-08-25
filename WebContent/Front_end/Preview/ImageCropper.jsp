@@ -226,9 +226,9 @@ input[type="radio"] {
 	function init(){
 		
 		context.font = "30px Sacramento";
-		var middleWidth = canvas.width / 2 - 100;
+		var middleWidth = canvas.width / 2 - 180;
 		var middleHeight = canvas.height / 2 -10 ;
-		context.fillText("請先選擇照片...",middleWidth, middleHeight);
+		context.fillText("請先選擇您要去背的照片...",middleWidth, middleHeight);
 	}	
 	
 	// 打開選擇圖片來源的modal

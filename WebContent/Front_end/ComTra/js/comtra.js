@@ -12,7 +12,6 @@
 					$("#snackbar").addClass("show");
 					console.log("XXXXXXX");
 					setTimeout('$("#snackbar").removeClass("show")',5000);
-					console.log("@@@@@@@@@@");
 				},
 				error:function(xhr){
 					alert('Ajax request error!');
