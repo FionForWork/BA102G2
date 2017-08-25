@@ -58,7 +58,7 @@
 
                         <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="st-user" style='font-size:15px'></i>${admVO.name}</a>
                             <ul class="dropdown-menu right" role="menu">
-                                <li><a href="<%=request.getContextPath()%>/Back_end/mem/listMyAdm.jsp">
+                                <li><a href="<%=request.getContextPath()%>/Back_end/adm/listMyAdm.jsp">
                                         <i class="st-user"></i>個人資料
                                     </a></li>
                                 <li><a href="javascript:document.logout.submit();">

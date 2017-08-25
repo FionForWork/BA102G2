@@ -82,7 +82,7 @@
 		</td>
 			<td>
 			  
-			    <input type="submit" value="修改狀態">
+			    <input type="submit" class="btn btn-info" value="修改狀態">
 			    <input type="hidden" name="mem_no" value="${memVO.mem_no}">
 			    <input type="hidden" name="action" value="updateStatus">
 			</td>

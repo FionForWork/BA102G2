@@ -33,11 +33,13 @@
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/custom.css"
 	rel="stylesheet" />
-<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico"
-	type="image/png">
+<link rel="icon" href="<%=request.getContextPath()%>/Back_end/homepage/assets/img/ico/favicon.ico" type="image/png">
+		<link href="<%=request.getContextPath()%>/Front_end/com_page/lightbox2/src/css/lightbox.css" rel="stylesheet">
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <meta name="msapplication-TileColor" content="#3399cc" />
 <link href="<%=request.getContextPath()%>/Back_end/advertising/css/ad.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/Front_end/com_page/lightbox2/src/js/lightbox.js" type="text/javascript"></script>
+
 </head>
 <body>
 	<div id="header">

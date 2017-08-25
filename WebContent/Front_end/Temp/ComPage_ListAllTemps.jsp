@@ -78,7 +78,7 @@
 	</div>
 	<!--  End Modal Transfer Temp -->
 
-
+<div id="snackbar">已成功匯入會員相簿囉...</div>
 	<div id='changeContent'>
 		<ul class="nav nav-tabs nav-justified" role="tablist">
 			<li class="active"><a data-toggle="tab" href="#unselect">未挑選</a></li>
@@ -222,7 +222,7 @@
 							</c:if>
 						</c:forEach>
 					</tbody>
-					<div id="snackbar">已成功匯入會員相簿囉...</div>
+					
 				</table>
 			</div>
 		</div>
@@ -246,11 +246,11 @@
 				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp #changeContent",{
 					"com_no":${comVO.com_no}
 				});
-// 				if("Transfer_Temp" === action){
-// 					$("#selectedBtn").click();
-// 					$("#snackbar").addClass("show");
-// 					setTimeout('$("#snackbar").removeClass("show")',5000);
-// 				}
+				if("Transfer_Temp" === action){
+					$("#selectedBtn").click();
+					$("#snackbar").addClass("show");
+					setTimeout('$("#snackbar").removeClass("show")',5000);
+				}
 					
 			},
 			error : function(xhr) {

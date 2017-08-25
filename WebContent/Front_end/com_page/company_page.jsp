@@ -23,8 +23,12 @@
 	
 	MemVO memVO = (MemVO)session.getAttribute("memVO");
 	ComTraService comtraSvc = new ComTraService();
-	List<String> comNoList = comtraSvc.getComNoListByMemNo(memVO.getMem_no());
-	pageContext.setAttribute("comNoList",comNoList);
+	if(memVO != null){
+		List<String> comNoList = comtraSvc.getComNoListByMemNo(memVO.getMem_no());
+		pageContext.setAttribute("comNoList",comNoList);
+	}
+	
+	
 %>
 
 <html>

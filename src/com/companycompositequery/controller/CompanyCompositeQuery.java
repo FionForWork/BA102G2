@@ -71,8 +71,8 @@ public class CompanyCompositeQuery extends HttpServlet {
 				
 				Collections.sort(comList, new Comparator<ComVO>(){
 					@Override
-					public int compare(ComVO comVO1, ComVO comCO2) {
-						int index = comVO1.getCom_no().compareTo(comCO2.getCom_no());
+					public int compare(ComVO comVO1, ComVO comVO2) {
+						int index = comVO1.getCom_no().compareTo(comVO2.getCom_no());
 						return index;
 					}	
 				});
@@ -84,6 +84,14 @@ public class CompanyCompositeQuery extends HttpServlet {
 			} else {
 					
 				servList  = servSvc.getAllAvg();
+				
+				Collections.sort(servList, new Comparator<ServVO>(){
+					@Override
+					public int compare(ServVO servVO1, ServVO servVO2) {
+						int index = servVO1.getTimes().compareTo(servVO2.getTimes());
+						return index;
+					}	
+				});
 					
 				if(sort.equals("scoreDesc")){
 					Collections.reverse(servList);

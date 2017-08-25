@@ -9,18 +9,19 @@ public class AdvertisingService {
 		dao = new AdvertisingDAO();
 	}
 
-	public AdvertisingVO updateAdvertising(String adv_no, String com_no,String title ,java.sql.Timestamp startDay,
-			java.sql.Timestamp endDay, Integer price, String text, String status) {
+	public AdvertisingVO updateAdvertising(String adv_no, String status) {
 
 		AdvertisingVO advertisingVO = new AdvertisingVO();
 		
 		advertisingVO.setAdv_no(adv_no);
-		advertisingVO.setCom_no(com_no);
-		advertisingVO.setTitle(title);
-		advertisingVO.setStartDay(startDay);
-		advertisingVO.setEndDay(endDay);
-		advertisingVO.setPrice(price);
-		advertisingVO.setText(text);		
+//		advertisingVO.setCom_no(com_no);
+//		advertisingVO.setTitle(title);
+//		advertisingVO.setStartDay(startDay);
+//		advertisingVO.setEndDay(endDay);
+//		advertisingVO.setPrice(price);
+//		advertisingVO.setText(text);
+//		advertisingVO.setImg(img);
+//		advertisingVO.setVdo(vdo);
 		advertisingVO.setStatus(status);
 		dao.update(advertisingVO);
 

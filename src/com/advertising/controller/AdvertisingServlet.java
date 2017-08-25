@@ -119,8 +119,8 @@ public class AdvertisingServlet extends HttpServlet {
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
-						price, text, status);
+//				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
+//						price, text,oldAdvertisingVO.getImg(),null, status);
 				
 				/*****************************
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -314,9 +314,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
-				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
-						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), "1");
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(), "1");
 				
 				String url = requestURL+"?whichPage="+whichPage;
 				
@@ -346,9 +344,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
-				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getTitle(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
-						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), "2");
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(), "2");
 	
 				String url = null;
 				url = requestURL+"?whichPage="+whichPage;

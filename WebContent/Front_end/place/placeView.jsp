@@ -16,6 +16,7 @@
     String north = (request.getParameter("north") == null) ? "24.90" : request.getParameter("north");
     String east = (request.getParameter("east") == null) ? "121.20" : request.getParameter("east");
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.parseInt((request.getParameter("nowPage")));
+    System.out.println(nowPage);
     int itemsCount = 4;
     PlaceService placeService = new PlaceService();
     List<PlaceVO> originList = placeService.getRange(south, west, north, east);
@@ -148,6 +149,7 @@
     var i = 0;
     var south = [];
     var west = [];
+    var placeRange=[];
     function initMap() {
         var g = window.navigator.geolocation;
         g.getCurrentPosition(succ, fail);
@@ -160,8 +162,8 @@
         lng : 121.1925
         };
         map = new google.maps.Map(document.getElementById("map"), {
-        minZoom : 10,
-        zoom : 15,
+        minZoom : 12,
+        zoom : 12,
         center : position
         });
         console.log(map);
@@ -181,8 +183,8 @@
         lng : event.coords.longitude
         };
         map = new google.maps.Map(document.getElementById("map"), {
-        minZoom : 10,
-        zoom : 15,
+        minZoom : 12,
+        zoom : 12,
         center : initialLocation
         });
         var marker = new google.maps.Marker({
@@ -211,6 +213,10 @@
             south.pop();
             west.pop();
             loadMark(range.south, range.west, range.north, range.east);
+            placeRange[0]=range.south;
+            placeRange[1]=range.west;
+            placeRange[2]=range.north;
+            placeRange[3]=range.east;
         }
         i++;
     }
@@ -270,10 +276,10 @@
     
     function change(nowPage) {
         $("#placeImg").load("<%=request.getContextPath()%>/Front_end/place/placeView.jsp #placeImg", {
-        south : comRange[0],
-        west : comRange[1],
-        north : comRange[2],
-        east : comRange[3],
+        south : placeRange[0],
+        west : placeRange[1],
+        north : placeRange[2],
+        east : placeRange[3],
         nowPage : nowPage
         });
     }
