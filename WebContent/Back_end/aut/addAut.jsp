@@ -46,19 +46,10 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
     </div>
 <br><br><br>
 <div id="content">
-<h3>新增員工權限:</h3>
+<h3>新增管理員權限:</h3>
 
 <input type="button" class="btn btn-info" value="返回" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/listAllAut.jsp'" >
-<%--錯誤處理 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
+
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/aut/aut.do" name="form1">
 <table class="table table-striped">

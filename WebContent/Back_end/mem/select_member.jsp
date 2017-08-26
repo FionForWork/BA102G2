@@ -52,7 +52,7 @@
 		<td>
 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>輸入會員編號 (如1001):</b></td>
-        <td><input type="text" size="30" name="mem_no"></td>
+        <td><input type="text" size="30" name="mem_no" required title="只能輸入數字" pattern="^[0-9]*$"></td>
         <td><input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="bgetOne_For_Display">
 		</FORM>
@@ -97,7 +97,7 @@
      <tr><td>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>根據被檢舉多少次以上:</b></td>
-      <td>  <input type="text" size="30" name="report"></td>
+      <td>  <input type="text" size="30" name="report" required title="只能輸入數字" pattern="^[0-9]*$" > </td>
      <td>   <input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="selectByReport">
 	</FORM>

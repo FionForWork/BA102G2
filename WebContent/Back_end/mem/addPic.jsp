@@ -13,16 +13,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 </head>
 <body>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
+
 
 
  <FORM ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post name="form1" enctype="multipart/form-data">

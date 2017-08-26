@@ -67,12 +67,14 @@ public class ServServlet extends HttpServlet {
 				servSvc.updateStatus(serv_no, status);
 				servVO=servSvc.getOneServ(serv_no);
 				if(locs.contains("selectByCom")){
-					
+					 HttpSession session = req.getSession();
 					Set<ServVO> set = servSvc.getServByCom(servVO.getCom_no());
-					req.setAttribute("selectByCom", set); 
+					
+					session.setAttribute("selectByCom", set); 
 				}else if(locs.contains("selectByStype")){
+					 HttpSession session = req.getSession();
 					Set<ServVO> set = servSvc.getServByStype(servVO.getStype_no());
-					req.setAttribute("selectByStype", set); 
+					session.setAttribute("selectByStype", set); 
 				}
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("servVO", servVO);   
@@ -248,9 +250,9 @@ public class ServServlet extends HttpServlet {
 			Set<ServVO> set = servSvc.getServByStype(stype_no);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			 HttpSession session = req.getSession();
 			
-			
-			req.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
+			 session.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
 			
 			String url = null;
 			url = "/Back_end/serv/selectByStype.jsp";   
@@ -269,9 +271,9 @@ public class ServServlet extends HttpServlet {
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 		   // 資料庫取出的set物件,存入request
+			 HttpSession session = req.getSession();
 			
-			
-			req.setAttribute("selectByCom", set); 
+			 session.setAttribute("selectByCom", set); 
 			String url = null;
 			url = "/Back_end/serv/selectByCom.jsp";   
 			

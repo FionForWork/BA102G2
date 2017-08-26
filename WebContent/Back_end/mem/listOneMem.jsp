@@ -57,8 +57,8 @@ td  {font-size:20px;
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
 	
 
-
-<div class="col-xs-12 col-sm-5" style="height:90%"><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100%" height="auto" /></div>
+<div class="col-xs-12 col-sm-2"></div>
+<div class="col-xs-12 col-sm-4" style="height:70%"><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="auto" height="58%" /></div>
 <div class="col-xs-12 col-sm-4"><table class="table table-striped"  >
 
 	<tr>
@@ -116,7 +116,7 @@ td  {font-size:20px;
 	
 	
 </table></FOEM></div>
-<div class="col-xs-12 col-sm-4"></div>
+<div class="col-xs-12 col-sm-2"></div>
 
 
 <%@ include file="/Back_end/pages/backFooter.file"%>

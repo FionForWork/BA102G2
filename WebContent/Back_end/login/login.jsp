@@ -3,10 +3,12 @@
 <title>Insert title here</title>
 <div id="content">
 
-<div><center><h1>登入</h1></center></div>
+
 <div class="col-xs-12 col-sm-4"></div>
-<div class="col-xs-12 col-sm-4">
+<div class="col-xs-12 col-sm-3">
+<div><center><h1>登入</h1></center></div>
 <div class="modal-content" >
+
         <div class="modal-header" style="padding:35px 50px;" >
           
           <h4><span class="glyphicon glyphicon-lock"></span> 管理員登入</h4>

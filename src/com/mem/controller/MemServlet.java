@@ -136,13 +136,15 @@ public class MemServlet extends HttpServlet{
 				memSvc.updateStatus(mem_no, status);
 				memVO = memSvc.getOneMem(mem_no);
 				if(locs.contains("selectByReport")){
+					HttpSession session = req.getSession();
 					Integer reports = new Integer(req.getParameter("reports").trim());
 					Set<MemVO> set = memSvc.getMemsByReport(reports);
-					req.setAttribute("selectByReport", set); 
+					session.setAttribute("selectByReport", set); 
 				}else if(locs.contains("selectByStatus")){
+					HttpSession session = req.getSession();
 					String statuss = req.getParameter("statuss").trim();
 					Set<MemVO> set = memSvc.getMemsByStatus(statuss);
-					req.setAttribute("selectByStatus", set);
+					session.setAttribute("selectByStatus", set);
 				}
 				
 				
@@ -174,10 +176,10 @@ public class MemServlet extends HttpServlet{
 			/*************************** 2.開始查詢資料 ****************************************/
 			MemService memSvc = new MemService();
 			Set<MemVO> set = memSvc.getMemsByReport(report);
-
+			 HttpSession session = req.getSession();
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByReport", set);   // 資料庫取出的set物件,存入request
-			HttpSession session=req.getSession();
+			 session.setAttribute("selectByReport", set);   // 資料庫取出的set物件,存入request
+			
 			session.setAttribute("reports", report);
 			String url = null;
 			url = "/Back_end/mem/selectByReport.jsp";   
@@ -193,10 +195,10 @@ public class MemServlet extends HttpServlet{
 			/*************************** 2.開始查詢資料 ****************************************/
 			MemService memSvc = new MemService();
 			Set<MemVO> set = memSvc.getMemsByStatus(status);
-
+			HttpSession session=req.getSession();
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByStatus", set);
-			HttpSession session=req.getSession();// 資料庫取出的set物件,存入request
+			session.setAttribute("selectByStatus", set);
+		
 			session.setAttribute("statuss", status);
 			String url = null;
 			url = "/Back_end/mem/selectByStatus.jsp";   

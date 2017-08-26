@@ -50,7 +50,7 @@ td  {font-size:20px;
         </div>
 
     </div>
-<title>員工資料 - listOneEmp.jsp</title>
+<title>管理員個人資料</title>
 
 <div id="content">
 
