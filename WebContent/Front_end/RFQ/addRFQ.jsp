@@ -38,20 +38,21 @@
 		                     <input type="checkbox" name="type" value="2" id="0003" onchange="toggle(this)">新娘秘書
 		                   </label>
 		               </div>
-		               
 		           <div id="form1">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的拍婚紗服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的拍婚紗服務填寫客製化需求
+		                    <input type="radio" name="optradio" onclick="formOne()">
+		                   </h3></label>
 		                    <input type="hidden" name="stype_no" value="0001">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" name="ser_date" 
+		                        <input id="formOneDate" type="date" class="form-control" name="ser_date" 
 		                        value=<%= new Timestamp(System.currentTimeMillis()) %>>
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select id="formOneLocation" name="location" class="form-control">
 		                            <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -77,7 +78,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formOneContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -87,17 +88,19 @@
 		                    </div>
 		                    <div id="form2" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求
+		                   <input type="radio" name="optradio" onclick="formTwo()">
+		                   </h3></label>
 		                        <input type="hidden" name="stype_no" value="0002">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
+		                        <input id="formTwoDate" type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select id="formTwoLocation" name="location" class="form-control">
 		                             <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -123,7 +126,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formTwoContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -133,17 +136,19 @@
 		                    </div>
 		                    <div id="form3" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求
+		                   <input type="radio" name="optradio"  onclick="formThree()">
+		                   </h3></label>
 		                        <input type="hidden" name="stype_no" value="0003">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
+		                        <input id="formThreeDate" type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select  id="formThreeLocation" name="location" class="form-control">
 		                             <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -169,7 +174,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formThreeContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -197,9 +202,24 @@
 		   return;   
 		}	
 	}
-	
 	window.onload = function (){
 	  //註冊表單被送出時檢驗資料
 	  document.getElementById("addRFQForm").onsubmit = checkForm;
 	};
+	
+	function formOne(){
+		$('#formOneDate').val("2017-09-14");
+		$('#formOneLocation').val("桃園市");
+		$('#formOneContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+	}
+	function formTwo(){
+		$('#formTwoDate').val("2017-09-14");
+		$('#formTwoLocation').val("桃園市");
+		$('#formTwoContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+	}
+	function formThree(){
+		$('#formThreeDate').val("2017-09-14");
+		$('#formThreeLocation').val("桃園市");
+		$('#formThreeContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+	}
 </script>

@@ -124,6 +124,7 @@
 										<form class="test">
 										<div class="modal-body form-group">
 											<label>服務說明</label>
+											<input type="radio" name="optradio"  onclick="autoAdd(this)">
 											<textarea rows="8" class="form-control" name="content">
 1.聯絡人:
 2.服務內容:
@@ -190,6 +191,11 @@
 				}
 			}
 		});
+	}
+	
+	function autoAdd(btn){
+		$(btn).siblings('textarea').html("1.聯絡人:\n2.服務內容:\n3.備註:");
+		$(btn).siblings("input[name='price']").val("68000");
 	}
 </script>
 </html>

@@ -172,6 +172,8 @@ $(document).ready(function(){
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
 						為您的行事曆新增活動
+						 <input type="radio" name="optradio"  onclick="autoAdd(1)">
+						 <input type="radio" name="optradio"  onclick="autoAdd(2)">
 					</h4>
 					<hr>
 				</div>
@@ -180,7 +182,7 @@ $(document).ready(function(){
 					<input type="text" id="date" class="form-control" name="cal_date" value="" readonly>
 					<br>
 					<label>活動內容 :</label>
-					<textarea rows="3" class="form-control" name="content"></textarea>
+					<textarea id="addContent" rows="3" class="form-control" name="content"></textarea>
 				</div>
 				<hr>
 				<div class="modal-footer">
@@ -301,6 +303,14 @@ $(document).ready(function(){
 	
 	function updateStatus(newStatus) {
 		statusOutput.innerHTML = newStatus;
+	}
+	
+	function autoAdd(x){
+		if(x == "1"){
+			$('#addContent').html("想休息");
+		}else{
+			$('#addContent').html("真的很想休息");
+		}	
 	}
     
 </script>
