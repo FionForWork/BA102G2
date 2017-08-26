@@ -17,7 +17,8 @@
 		contentList = contSvc.getAllByAlbNo(alb_no);
 		pageContext.setAttribute("contentList", contentList);
 	}
-
+	String pla_no = request.getParameter("pla_no");
+	//String pla_no = "1";
 	System.out.println("contentList" + contentList);
 %>
 <jsp:useBean id="albSvc" scope="page"
@@ -142,18 +143,18 @@
 				<i class="fa fa-times"></i> 清除
 			</button>
 			<button class="btn btn-info" id='submitBtn'>裁切</button>
-
+			
 			<form id="image-form"
 				action='<%=request.getContextPath()%>/album/preview.do'
 				method="post" enctype="multipart/form-data">
 
-				<input type='hidden' id='xPoints' name='xPoints' value=''> <input
-					type='hidden' id='yPoints' name='yPoints' value=''> <input
-					type='hidden' name='mem_no' value='${memVO.mem_no}'> <input
-					type='hidden' name='action' value='cropImage'> <input
-					type="file" name="imageRemove" id='imgfile'
-					onchange="preview_images()" style="display: none"> <input
-					type='hidden' name='cont_no'>
+				<input type='hidden' id='xPoints' name='xPoints' value=''> 
+				<input type='hidden' id='yPoints' name='yPoints' value=''> 
+				<input type='hidden' name='mem_no' value='${memVO.mem_no}'> 
+				<input type='hidden' name='action' value='cropImage'> 
+				<input type="file" name="imageRemove" id='imgfile' onchange="preview_images()" style="display: none"> 
+				<input type='hidden' name='cont_no'>
+				<input type='hidden' name='pla_no' value='<%=pla_no%>'>
 			</form>
 		</div>
 	</div>

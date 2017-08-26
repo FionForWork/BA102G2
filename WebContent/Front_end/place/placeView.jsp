@@ -16,7 +16,6 @@
     String north = (request.getParameter("north") == null) ? "24.90" : request.getParameter("north");
     String east = (request.getParameter("east") == null) ? "121.20" : request.getParameter("east");
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.parseInt((request.getParameter("nowPage")));
-    System.out.println(nowPage);
     int itemsCount = 4;
     PlaceService placeService = new PlaceService();
     List<PlaceVO> originList = placeService.getRange(south, west, north, east);
@@ -31,8 +30,8 @@
             map.put("name", placeVO.getName());
             map.put("lat", placeVO.getLat());
             map.put("lng", placeVO.getLng());
-            placeList.add(map);
             map.put("view_no", placeViewVO.getView_no());
+            placeList.add(map);
         }
     }
     int allCount = placeList.size();
@@ -203,11 +202,11 @@
         var range = map.getBounds().toJSON();
         south.push(range.south);
         west.push(range.west);
-        if (Math.abs(south[0] - south[1]) < 0.008 && Math.abs(west[0] - west[1]) < 0.008) {
+        if (Math.abs(south[0] - south[1]) < 0.02 && Math.abs(west[0] - west[1]) < 0.02) {
             south.pop();
             west.pop();
         }
-        else if (i > 1 && (Math.abs(south[0] - south[1]) > 0.008 || Math.abs(west[0] - west[1]) > 0.008)) {
+        else if (i > 1 && (Math.abs(south[0] - south[1]) > 0.02 || Math.abs(west[0] - west[1]) > 0.02)) {
             south[0] = south[1];
             west[0] = west[1];
             south.pop();
@@ -231,11 +230,11 @@
             nowPage:'${nowPage}'
         });
         var placeArray=<%=placeList%>;
-        showPlace(south, west, north, east);
+        showPlace(south, west, north, east,${nowPage});
     }
     
     var placeMarkers = [];
-    function showPlace(south, west, north, east){
+    function showPlace(south, west, north, east,nowPage){
         $.ajax({
             url:"/BA102G2/place/PlaceServlet",
             type : "post",
@@ -246,7 +245,7 @@
                 west:west,
                 north:north,
                 east:east,
-                nowPage:<%=nowPage%>
+                nowPage:'${nowPage}'
             }, 
             error : function(xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -256,8 +255,13 @@
                 var placeList=JSON.parse(response);
                 var position;
                 var marker;
-                comMarkers=[];
-                for(var i=0;i<placeList.length;i++){
+                var start=(nowPage-1)*<%=itemsCount%>;
+                var end=nowPage*<%=itemsCount%>;
+                for(var i=0;i<placeMarkers.length;i++){
+                    placeMarkers[i].setMap(null);
+                }
+                placeMarkers=[];
+                for(var i=start;i<end;i++){
                     position = {
                     lat : parseFloat(placeList[i].lat),
                     lng : parseFloat(placeList[i].lng)
@@ -282,6 +286,7 @@
         east : placeRange[3],
         nowPage : nowPage
         });
+        showPlace(placeRange[0], placeRange[1], placeRange[2], placeRange[3], nowPage);
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzbntmAuGW16US8FK_QIoDNXOPlspRjNw&callback=initMap"></script>

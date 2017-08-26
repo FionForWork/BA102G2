@@ -158,7 +158,7 @@ public class ProductServlet extends HttpServlet {
                 productVO.setTimes(0);
                 productVO.setScore(0);
                 ProductService productService = new ProductService();
-//                productService.insert(productVO);
+                productService.insert(productVO);
 
                 PrintWriter printWriter = response.getWriter();
                 printWriter.println("OK");
@@ -302,6 +302,14 @@ public class ProductServlet extends HttpServlet {
                 session.setAttribute("countList", countList);
                 session.setAttribute("carTotal", new Integer(carTotal));
             }
+        }
+        else if("CAR_CHANGE".equals(action)){
+            response.setContentType("text/html; charset=utf-8");
+//            String[] priceArray=request.getParameterValues("priceArray");
+//            String[] countArray=request.getParameterValues("countArray");
+//            System.out.println(priceArray);
+//            System.out.println(countArray);
+            response.getWriter().println("ok");
         }
         //////////////////////////////////////// AJAX加入購物車//////////////////////////////////////////
         else if ("ADD_TO_CAR_AJAX".equals(action)) {

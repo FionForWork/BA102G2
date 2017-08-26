@@ -88,12 +88,8 @@
 
 		<div class="tab-content" style="border: 0">
 
-
-
 			<!-- Unselect Section -->
 			<div id="unselect" class="tab-pane fade in active">
-
-
 
 				<table class="table table-hover table-responsive tempList">
 					<thead>
@@ -172,34 +168,6 @@
 							items="${tempSvc.getAllByComNo(comVO.com_no)}" varStatus="s">
 							<c:if test='${tempVO.status.equals("已挑選")}'>
 
-
-								<!-- 								Start Modal Transfer Temp -->
-								<%-- 								<div class="modal fade" id="transferModal${s.count}" --%>
-								<!-- 									role="dialog"> -->
-								<!-- 									<div class="modal-dialog"> -->
-
-								<!-- 										Modal content -->
-								<!-- 										<div class="modal-content"> -->
-								<!-- 											<div class="modal-header"> -->
-								<!-- 												<button type="button" class="close" data-dismiss="modal">&times;</button> -->
-								<!-- 												<h4 class="modal-title">匯入會員相簿</h4> -->
-								<!-- 											</div> -->
-								<!-- 											<div class="modal-body"> -->
-								<%-- 												<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。</p> --%>
-								<!-- 											</div> -->
-								<!-- 											<div class="modal-footer"> -->
-								<!-- 												<button type="button" class="btn btn-default" -->
-								<!-- 													data-dismiss="modal">取消</button> -->
-								<!-- 												<button class="btn btn-danger" data-dismiss="modal" -->
-								<!-- 													class='transferConfirm' -->
-								<%-- 													onclick="document.getElementById('transfer${s.count}').submit();">確定</button> --%>
-								<!-- 											</div> -->
-								<!-- 										</div> -->
-
-								<!-- 									</div> -->
-								<!-- 								</div> -->
-								<!-- 								 End Modal Transfer Temp -->
-
 								<tr>
 
 									<td>${tempVO.name}</td>
@@ -220,6 +188,7 @@
 											onclick="openTransferTempModal('${tempVO.temp_no}','${tempVO.name}')">匯入會員相簿</button></td>
 								</tr>
 							</c:if>
+							
 						</c:forEach>
 					</tbody>
 					

@@ -53,7 +53,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-12">
+        <div class="col-xs-10 col-md-10">
             <div id="content" class="row">
                 <%@include file="pages/mallAreaSidebar.file"%>
                 <div class="col-xs-1 col-md-1"></div>

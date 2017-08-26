@@ -1,3 +1,4 @@
+<%@page import="javafx.beans.property.IntegerProperty"%>
 <%@page import="com.mem.model.MemVO"%>
 <%@page import="com.mem.model.MemService"%>
 <%@page import="java.util.ArrayList"%>
@@ -90,7 +91,7 @@ div .vertical-center {
                         </tr>
                         <tr>
                             <td class="text-center" colspan="6">
-                                <p>總金額:${carTotal}</p> <input type="hidden" name="action" value="BUY"> <input type="button" onclick="addCheck()" class="btn btn-success" value="確認購買"> <a class="btn btn-primary " href="${preLocation}/mallIndexAJAX.jsp">返回</a>
+                                <p id="totalPrice">總金額:$${carTotal}</p> <input type="hidden" name="action" value="BUY"> <input type="button" onclick="addCheck()" class="btn btn-success" value="確認購買"> <a class="btn btn-primary " href="${preLocation}/index.jsp">返回</a>
                             </td>
                         </tr>
                     </tbody>
@@ -101,6 +102,44 @@ div .vertical-center {
 </div>
 
 <script type="text/javascript">
+    $("input").blur(function(){
+        for (var i = 0; i < $(".amountInput").length; i++) {
+            if (Number($(".amountInput")[i].value) > Number($(".amountInput")[i].max)) {
+                var errorMessage =  $(".pro_name")[i].text + "超過庫存，請減少數量";
+                swal('數量錯誤',
+                     errorMessage,
+                     'error'
+                )
+                $(".amountInput")[i].value=1;
+            }
+        }
+//         var total=0;
+        var priceArray=[];
+        var countArray=[];
+        <%for(int i=0;i<carList.size();i++){%>
+<%--             total+=Number($(".amountInput")[<%=i%>].value)*<%=carList.get(i).getPrice()%>; --%>
+            priceArray.push(<%=carList.get(i).getPrice()%>);
+            countArray.push(Number($(".amountInput")[<%=i%>].value));
+        <%}%>
+//         $("#totalPrice").text("總金額:$"+total);
+        $.ajax({
+            url:"/BA102G2/product/ProductServlet",
+            type : "post",
+            data:{
+                action:"CAR_CHANGE",
+                priceArray:priceArray,
+                countArray:countArray
+            }, 
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                console.log("change");
+            }
+        });
+    });
+    
     function addCheck() {
         var flag = true;
         var errorMessage = "";

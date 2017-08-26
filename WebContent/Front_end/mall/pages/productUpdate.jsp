@@ -106,8 +106,7 @@
                 if (xhr.responseText == "OK") {
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
-                        $(".updatePreview").attr("src", e.target.result);
-                        alert("已更新資料");
+                        document.location.href="<%=request.getContextPath()%>/Front_end/mall/productManagement.jsp";
                     }
                 }
             }

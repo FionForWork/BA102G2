@@ -8,21 +8,25 @@
 <%
 	//String mem_no = (String) session.getAttribute("mem_no");
 	//session.setAttribute("mem_no", "1001");
+	String place_no = null;
 	MemVO memVO = (MemVO)session.getAttribute("memVO");  
-	System.out.println("MemVO"+memVO);
 	String cropCont_no = (String) request.getAttribute("cropCont_no");
 	System.out.println("cropCont_no"+cropCont_no);	
 	PlaceService placeSvc = new PlaceService();
-	int placeCount = placeSvc.getAllCount();
-	System.out.println("placeCount "+placeCount);
-	double doubleplace_no = (placeCount * Math.random()+1);
-	System.out.println("doubleplace_no "+doubleplace_no);
-	String place_no = String.valueOf((int)Math.floor(doubleplace_no));
-	System.out.println("place_no "+place_no);
-	//String place_no = "1";
-	pageContext.setAttribute("place_no", place_no);
+	place_no = request.getParameter("pla_no");
+	System.out.println("place_no=="+place_no);
+	
+	if(place_no == null || place_no.trim().length() == 0){
+		int placeCount = placeSvc.getAllCount();
+		double doubleplace_no = (placeCount * Math.random()+1);
+		place_no = String.valueOf((int)Math.floor(doubleplace_no));
+	}
+	PlaceVO place = placeSvc.getOnePlace(place_no);
+	pageContext.setAttribute("place",place);
 	PlaceViewService placeViewSvc = new PlaceViewService();
 	List<String> placeviewNoList = placeViewSvc.getAllByFk(place_no);
+	
+	pageContext.setAttribute("place_no", place_no);
 	pageContext.setAttribute("placeviewNoList", placeviewNoList);
 %>
 
@@ -60,6 +64,7 @@
 	</div>
 	<div class='row'>
 		<div class='col-xs-12 col-sm-12'>
+		<h4><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp${place.name}</h4>
 			<div id="placeViewCarousel" class="carousel" data-ride="carousel"
 				style="height: 180px">
 				<!-- Wrapper for slides -->
@@ -91,10 +96,10 @@
 
 				<!-- Left and right controls -->
 				<a class="left carousel-control" href="#placeViewCarousel"
-					data-slide="prev" style="height: 180px"> <i
+					data-slide="prev" style="height: 150px"> <i
 					class="fa fa-angle-left" style="font-size: 48px;"></i>
 				</a> <a class="right carousel-control" href="#placeViewCarousel"
-					data-slide="next" style="height: 180px"> <i
+					data-slide="next" style="height: 150px"> <i
 					class="fa fa-angle-right" style="font-size: 48px;"></i>
 				</a>
 			</div>

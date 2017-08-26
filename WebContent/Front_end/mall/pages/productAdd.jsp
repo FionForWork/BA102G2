@@ -94,15 +94,41 @@ function fakeData() {
     function addCheck() {
         var pro_name = $("#addName").val();
         var pro_desc = $("#addDesc").val();
+        var img=$(".addPreview").attr("src");
+        console.log(img);
         if (pro_name == "") {
-            alert("請輸入商品名稱");
+            swal('缺少資訊!',
+                 '請輸入商品名稱!',
+                 'error'
+            )
             return;
         }
+        else if(!img.match("img")){
+            swal('錯誤資訊!',
+                    '必須是圖片!',
+                    'error'
+               )
+               return;
+        }
         else if (pro_desc == "") {
-            alert("請輸入商品描述");
+            swal('缺少資訊!',
+                 '請輸入商品描述!',
+                 'error'
+               )
+            return;
+        }
+        else if (img == null) {
+            swal('缺少資訊!',
+                 '請上傳商品影像!',
+                 'error'
+                  )
             return;
         }
         else {
+            swal('已申請，請耐心等候審核',
+                 '請輸入商品描述!',
+                 'success'
+            )
             $("#addForm").submit();
         }
     }
@@ -119,20 +145,32 @@ function fakeData() {
         xhr.open('POST', url);
         var form = new FormData();
         if(files==null){
-            alert("必須上傳圖片");
+            swal('錯誤資訊!',
+                 '請上傳商品影像!',
+                 'error'
+            )
             return;
         }
         else if (!files[0].type.match("image")) {
             var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
+            swal('錯誤資訊!',
+                 '必須是圖片!',
+                 'error'
+            )
             return;
         }
         else if ($("#addName").val() == "") {
-            alert("請輸入商品名稱");
+            swal('缺少資訊!',
+                 '請輸入商品名稱!',
+                 'error'
+            )
             return;
         }
         else if ($("#addDesc").val() == "") {
-            alert("請輸入商品描述");
+            swal('缺少資訊!',
+                 '請輸入商品描述!',
+                 'error'
+            )
             return;
         }
         else{
@@ -149,8 +187,7 @@ function fakeData() {
                 console.log(xhr.responseText);
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
-                        alert("已申請上架");
-                        $(".addPreview").attr("src", e.target.result);
+                        document.location.href="<%=request.getContextPath()%>/Front_end/mall/productManagement.jsp";
                     }
                 }
             }

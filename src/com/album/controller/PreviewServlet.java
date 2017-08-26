@@ -65,8 +65,8 @@ public class PreviewServlet extends HttpServlet {
 			Timestamp create_date = new Timestamp(System.currentTimeMillis());
 			String alb_no = null;
 			String name = "實景預覽";
-			String cont_no = request.getParameter("cont_no").trim();
-			
+			String cont_no = request.getParameter("cont_no");
+			String place_no = request.getParameter("pla_no");
 			boolean alreadyCreated = false;
 			
 			List<AlbumVO> albums = albSvc.getAllByMemNo(mem_no);
@@ -87,13 +87,13 @@ public class PreviewServlet extends HttpServlet {
 
 			// 取得原照片
 			BufferedImage img = null;
-			if(cont_no.length() == 0 ){
+			if(cont_no.trim().length() == 0 ){
 				Part part = request.getPart("imageRemove");
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					img = javax.imageio.ImageIO.read(part.getInputStream());
 					System.out.println("img----" + img);
 				}
-			}else if(cont_no.length() != 0){
+			}else if(cont_no.trim().length() != 0){
 				ContentVO content = contSvc.getOneContent(cont_no);
 				img = javax.imageio.ImageIO.read(new ByteArrayInputStream(content.getImg()));
 			}
@@ -153,7 +153,7 @@ public class PreviewServlet extends HttpServlet {
 			albSvc.updateAlbum(alb_no, mem_no, name, cropCont.getImg(), create_date);
 			request.setAttribute("cropCont_no", cropCont.getCont_no());
 			
-			String url = "/Front_end/Preview/ImageLayover.jsp";
+			String url = "/Front_end/Preview/ImageLayover.jsp?pla_no="+place_no;
 			request.getRequestDispatcher(url).forward(request, response);
 		}
 		

@@ -83,15 +83,6 @@
 <%@include file="pages/indexHeader.file"%>
 <style>
 <!--
-.tab-content{
-    padding: 20px 50px;
-    background: rgba(255,200,180,0.8);
-    font-size: 1.2em;
-}
-.nav-tabs > li.active {
-  color: #000;
-  background-color: rgba(255,200,180,0.6);  
-} 
 -->
 </style>
 <div style="margin-top: 50px;"></div>
@@ -119,9 +110,11 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab">
                         <div id="detailContent">
+                            <div class="panel-group" >
                             <c:forEach var="ord" items="${ordList}" varStatus="s">
                                 <jsp:include page="pages/orderDetails.jsp?ord_no=${ord.ord_no}&&status=${status}&&role=${role}&&orderType=${orderType}&&nowPage=${nowPage}&&index=${s.index}" flush="true" />
                             </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,7 +210,7 @@
         else{
             orignStatus=status;
             orignorderType=orderType;
-            $(window).scrollTop( $(window).scrollTop());
+            $(window).scrollTop($(window).scrollTop());
             $(window).scrollLeft($(window).scrollLeft());
             $(this).tab('show');
             $("#container").load("${preLocation}/mallArea.jsp #container",{"role":role,"status":status,"orderType":orderType});
@@ -225,10 +218,28 @@
     }
     
     function pageChange(nowPage,role,status,orderType) {
-        $("#detailContent").load("${preLocation}/mallArea.jsp #detailContent",{"role":role,"status":status,"orderType":orderType});
-        $(".pagination").load("${preLocation}/mallArea.jsp .pagination",{"nowPage":nowPage,"role":role,"status":status,"orderType":orderType}); 
-        $(window).scrollTop("0");
+        $(window).scrollTop($(window).scrollTop());
         $(window).scrollLeft($(window).scrollLeft());
+            $("#container").load("${preLocation}/mallArea.jsp #container",{nowPage:nowPage,role:role,status:status,orderType:orderType});
     }
+    
+    function showModal(action,ord_no,nowPage) {
+        if(action=="EVAL_TO_PRODUCT"){
+            $("#evalToProduct").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToProduct.jsp",
+                    {ord_no:ord_no,orderType:'${orderType}',nowPage:nowPage} ,
+                    function () {
+                        $("#evalToProduct").modal('show');
+                });
+        }
+        else{
+            $("#evalToMem").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToMem.jsp",
+                    {ord_no:ord_no,orderType:'${orderType}',nowPage:nowPage} ,
+                    function () {
+                        $("#evalToMem").modal('show');
+                    });
+            
+        }
+    }
+
 </script>
 <%@include file="pages/indexFooter.file"%>
