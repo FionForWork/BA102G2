@@ -36,6 +36,8 @@
 <head>
 </head>
 <%@ include file="page/memHeader.file" %>
+<link href="<%=request.getContextPath()%>/Front_end/reservation/css/sweetalert2.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/Front_end/reservation/js/sweetalert2.common.js" type="text/javascript"></script>
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
@@ -301,7 +303,11 @@ function checkForm() {
 						$('#allRes').load("memReservation.jsp #allRes",{"status":"0"});
 					}
 				});
-				
+				sweetAlert(
+						  '付款成功!',
+						  '訂單狀態已更新!',
+						  'success'
+						);
 			}else{
 				var checkResult = $("<div style='color:red'>").text(result.r);
 				$('#showPanel').html(checkResult);
@@ -388,6 +394,11 @@ function resCompleted(y){
 		},
 		success : function() {
 			$('#allRes').load("memReservation.jsp #allRes",{"status":"1"});
+			sweetAlert(
+					  '確認服務完成!',
+					  '訂單狀態已更新!',
+					  'success'
+					);
 		}
 	});
 	
@@ -406,9 +417,15 @@ function rating(y){
 		},
 		success : function() {
 			$('#allRes').load("memReservation.jsp #allRes",{"status":"2"});
+		sweetAlert(
+				  '評價完成!',
+				  '謝謝您的評價!',
+				  'success'
+				);
 		}
 	});
 }
+
 
 </script>
 </html>

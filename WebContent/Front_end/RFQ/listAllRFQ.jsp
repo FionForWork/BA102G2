@@ -119,12 +119,15 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">我有檔期，提交報價!</h4>
+											<h3 class="modal-title text-pink">我有檔期，提交報價!</h4>
 										</div>
 										<form class="test">
 										<div class="modal-body form-group">
 											<label>服務說明</label>
-											<input type="radio" name="optradio"  onclick="autoAdd(this)">
+											<input type="radio" name="optradio"  onclick="autoAdd(this,1)">
+											<input type="radio" name="optradio"  onclick="autoAdd(this,2)">
+											<input type="radio" name="optradio"  onclick="autoAdd(this,3)">
+											<input type="radio" name="optradio"  onclick="autoAdd(this,4)">
 											<textarea rows="8" class="form-control" name="content">
 1.聯絡人:
 2.服務內容:
@@ -193,9 +196,20 @@
 		});
 	}
 	
-	function autoAdd(btn){
-		$(btn).siblings('textarea').html("1.聯絡人:\n2.服務內容:\n3.備註:");
-		$(btn).siblings("input[name='price']").val("68000");
+	function autoAdd(btn,x){
+		if(x == "1"){
+			$(btn).siblings('textarea').html("美人兒 妳好：\n恭喜妳^^\n請先參考我的作品喔!\n目前有檔期為您服務\n價格太低都可以再聯絡討論!\n歡迎預約~");
+			$(btn).siblings("input[name='price']").val("68000");
+		}else if(x == "2"){
+			$(btn).siblings('textarea').html("您好: 我們是專職的JART攝影團隊，還有合作的新秘、樂團與主持\n我們的作品請參考 有任何問題歡迎詢問");
+			$(btn).siblings("input[name='price']").val("8000");
+		}else if(x == "3"){
+			$(btn).siblings('textarea').html("先恭喜你們走入人生另一個階段 目前有檔期可以為您服務\n1.姓名：Bobo\n2.作品：http://promisestudio.pixnet.net/blog\n3.電話：09-***-121");
+			$(btn).siblings("input[name='price']").val("50");
+		}else{
+			$(btn).siblings('textarea').html("您好\n沒有優惠!\n公道價八萬一!");
+			$(btn).siblings("input[name='price']").val("81000");
+		}
 	}
 </script>
 </html>

@@ -124,7 +124,7 @@ $(document).ready(function(){
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#58F4CF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
 								<button type="button" class="close" display="none" onclick="deleteSchedule(this)" style="display:none">&times;</button>
-								<p style="margin-top:3px">${calendarVO.content}</p>
+								<p style="margin-top:8%">${calendarVO.content}</p>
 								<% flag = 1; %>
 							</div>
 						</td>
@@ -134,7 +134,7 @@ $(document).ready(function(){
 						<td class="ui-widget-head busy-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:#FFA0C4;">
-								<p style="margin-top:3px">
+								<p style="margin-top:8%">
 									<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">${calendarVO.content}</a>
 								</p>
 								<% flag = 1; %>
@@ -174,6 +174,7 @@ $(document).ready(function(){
 						為您的行事曆新增活動
 						 <input type="radio" name="optradio"  onclick="autoAdd(1)">
 						 <input type="radio" name="optradio"  onclick="autoAdd(2)">
+						 <input type="radio" name="optradio"  onclick="autoAdd(3)">
 					</h4>
 					<hr>
 				</div>
@@ -248,7 +249,7 @@ $(document).ready(function(){
 	        	var thisDate = document.getElementById(jsonObj.thisDate);
 	        	var name = jsonObj.name+"預約了新服務!";
 	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:white;cursor:pointer">').text(name);
-				var content = $("<div style='background-color:#ff5722;height:40px;padding-top:6px'>").html(a);
+				var content = $("<div style='background-color:#ff5722;height:55px;padding-top:6px'>").html(a);
 	        	$(thisDate).append(content);
 	        }
 		};
@@ -307,10 +308,10 @@ $(document).ready(function(){
 	
 	function autoAdd(x){
 		if(x == "1"){
-			$('#addContent').html("想休息");
-		}else{
+			$('#addContent').html("今天想休息");
+		}else if(x == "2"){
 			$('#addContent').html("真的很想休息");
-		}	
+		}else{}
 	}
     
 </script>

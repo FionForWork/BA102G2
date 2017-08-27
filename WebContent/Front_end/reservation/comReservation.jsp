@@ -42,6 +42,8 @@
 </head>
 <body>
 <%@ include file="page/comSidebar_header.file" %>
+<link href="<%=request.getContextPath()%>/Front_end/reservation/css/sweetalert2.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/Front_end/reservation/js/sweetalert2.common.js" type="text/javascript"></script>
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a id="0" class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
@@ -135,6 +137,11 @@
 			},
 			success : function() {
 				$('#allRes').load("comReservation.jsp #allRes",{"status":"1"});
+				sweetAlert(
+						  '確認服務完成!',
+						  '訂單狀態已更新!',
+						  'success'
+						);
 			}
 		});
 		

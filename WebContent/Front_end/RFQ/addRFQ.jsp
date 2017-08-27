@@ -208,18 +208,18 @@
 	};
 	
 	function formOne(){
-		$('#formOneDate').val("2017-09-14");
+		$('#formOneDate').val("2017-09-10");
 		$('#formOneLocation').val("桃園市");
-		$('#formOneContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+		$('#formOneContent').html("1.風格:中式龍鳳掛/浪漫甜美\n2.服務內容:整天拍攝服務，包含5套造型\n3.備註:\n(1).想自行選擇外拍地點(嘉義大學)\n(2).棚拍風格希望是華麗風");
 	}
 	function formTwo(){
 		$('#formTwoDate').val("2017-09-14");
 		$('#formTwoLocation').val("桃園市");
-		$('#formTwoContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+		$('#formTwoContent').html("1.儀式宴客：半天（儀式+宴客）\n2.地點：中壢區\n3.內容：單人雙機/平面攝影\n4.備註：\n(1).若9/14全天（早儀式+晚宴客）一起是否有優惠價\n(2).服務內容及照片張數另外贈送項目");
 	}
 	function formThree(){
 		$('#formThreeDate').val("2017-09-14");
 		$('#formThreeLocation').val("桃園市");
-		$('#formThreeContent').html("1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘\n2. 服務內容:\n3. 備註:123");
+		$('#formThreeContent').html("1.儀式宴客：早上迎娶 晚宴\n2.地點：桃園市區飯店\n3.內容:結婚3造型+1位媽媽妝\n4.備註：希望有緣的新秘給作品報價\n報價請含車馬~~\n如果有竹苗新秘我們可以接送唷!\n預算的話不超過2萬為主 感恩~~~");
 	}
 </script>
