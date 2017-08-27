@@ -62,13 +62,13 @@
 				<div class="row">
 						<div class="col-md-6">
 							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${reservationVO.mem_no}"class="img-circle" style="width:30px;height:30px">
-							${memService.getOneMem(reservationVO.mem_no).name}
+							<b>${memService.getOneMem(reservationVO.mem_no).name}</b>
 							${dateDF.format(reservationVO.serv_date)}的
-							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
+							<b style="color:#f14195;font-size:16px">${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}</b>
 						</div>
 						<div class="col-md-offset-3 col-md-3 text-right">
 							訂單狀態 : 
-							<i style="color:#f14195" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
+							<i style="color:#f14195;font-weight:500;font-size:25px" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true"></i>
 							${sortingHat.getResStatus(reservationVO.status)}
 							<c:if test="${reservationVO.status.equals('3')}">
 								${reservationVO.score}分!
@@ -93,14 +93,15 @@
 						</div>
 					</c:if>
 					</div><hr>
-					<h4 class="text-right">
+					<div class="text-right">
 					<c:if test="${reservationVO.status.equals('1')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="resCompleted(this)">服務完成</button>
 					</c:if>
 <!-- 					<button class="btn" style="background-color:#ff5722;color:white">與客戶聊聊</button> -->
 					<i class="fa fa-usd" aria-hidden="true"></i>
-						訂單金額 : ${nf.format(reservationVO.price)}
-					</h4>
+						<b>訂單金額 : </b>
+						<b  class="price text-pink" >${nf.format(reservationVO.price)}</b>
+					</div>
 					
 			</div>
 		</div>

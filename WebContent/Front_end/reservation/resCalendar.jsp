@@ -200,23 +200,38 @@
 <!-- 預約單 -->
 <form id="resForm" method="post" action="<%= request.getContextPath() %>/reservation/reservation.do">
 <div id="resModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+	<div class="modal-dialog  modal-lg">
 <!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 id="res-date" class="modal-title">
+				<h3 id="res-date" class="modal-title" style="color:#f14195">
 					您想預約<%= localDate.getYear() %>年<%=localDate.getMonthValue()%>月${date}日的服務是...
-				</h4>
+				</h3>
 			</div>
 			<div class="modal-body">
 			<div class="row">
 			<c:forEach var="servVO" items="${servList}">
 				<div class="col-xs-4">
-				<div style="border-width:1px;border-style:solid">
-					<input type="radio" name="serv_no" value="${servVO.serv_no}">${servVO.title}<hr>
-					<div style="height:100px">${servVO.content}</div><hr>
-					TOTAL:${servVO.price}
+				<div style="border-width:1px;border-style:solid;border-radius: 3px;">
+					<div class="text-center">
+<%-- 						<input type="radio" name="serv_no" value="${servVO.serv_no}"> --%>
+<%-- 						<b style="">${servVO.title}</b><hr> --%>
+						<div style="clear: both;margin: 0 50px;">
+							<input type="radio" name="radio" id="radio2" class="radio"/>
+							<label for="radio2">${servVO.title}</label><hr>
+						</div>
+					</div>
+					<div style="height:100px;text-align:justify;">${servVO.content}</div><hr>
+					<div class="label-price text-right">
+						<span class="small">價格</span>
+						<b class="price text-pink" >${servVO.price}</b>
+						<span class="hidden-xs">元</span>
+					</div>
+					<div class="label-price text-right" style="font-size:12px">
+						<span class="small">訂金</span>
+						<span class="hidden-xs">${servVO.deposit}元</span>
+					</div>
 				</div>
 				</div>
 			</c:forEach>
@@ -229,7 +244,7 @@
 				<input type="hidden" id="aID" value="">
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 <!-- 				<input type="submit" class="btn btn-info" value="送出預約"> -->
-				<button type="button" class="btn btn-info" onclick="onMessage('${memVO.name}')">送出預約</button>
+				<button type="button" class="btn btn-danger" onclick="onMessage('${memVO.name}')">送出預約</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>
@@ -240,7 +255,71 @@
 
 <%@ include file="page/footerWithoutSidebar.file" %>
 </body>
+<style>
+label {
+  width: 200px;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4
+}
 
+/* hide input */
+input.radio:empty {
+	margin-left: -999px;
+}
+
+/* style label */
+input.radio:empty ~ label {
+	position: relative;
+	float: left;
+	line-height: 2.5em;
+	text-indent: 3.25em;
+	margin-top: 2em;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+input.radio:empty ~ label:before {
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	content: '';
+	width: 2.5em;
+	background: #D1D3D4;
+	border-radius: 3px 0 0 3px;
+}
+
+/* toggle hover */
+input.radio:hover:not(:checked) ~ label:before {
+	content:'\2714';
+	text-indent: .9em;
+	color: #C2C2C2;
+}
+
+input.radio:hover:not(:checked) ~ label {
+	color: #888;
+}
+
+/* toggle on */
+input.radio:checked ~ label:before {
+	content:'\2714';
+	text-indent: .9em;
+	color: #9CE2AE;
+	background-color: #4DCB6D;
+}
+
+input.radio:checked ~ label {
+	color: #777;
+}
+
+/* radio focus */
+input.radio:focus ~ label:before {
+	bo
+</style>
 <script>
     
     var MyPoint = "/ResServer/SSY/<%= com_no %>";

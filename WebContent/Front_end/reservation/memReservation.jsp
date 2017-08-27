@@ -56,17 +56,17 @@
 				<div class="row">
 						<div class="col-md-6">
 							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${reservationVO.com_no}"class="img-circle" style="width:30px;height:30px">
-							${comService.getOneCom(reservationVO.com_no).name}
+							<b><a  style="text-decoration:underline;color:black" href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${reservationVO.com_no}">${comService.getOneCom(reservationVO.com_no).name}</a></b>
 							${dateDF.format(reservationVO.serv_date)}的
-							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
+							<b style="color:#f14195;font-size:16px">${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}</b>
 						</div>
 						<div class="col-md-6 text-right">
 							訂單狀態 : 
-							<i style="color:#f14195;font-weight:500" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true">
+							<i style="color:#f14195;font-weight:500;font-size:25px" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true">
+							</i>
 							<c:if test="${reservationVO.status.equals('3')}">
 								${reservationVO.score}分!
 							</c:if>
-							</i>
 							${sortingHat.getResStatus(reservationVO.status)}
 						</div>
 				</div><hr>
@@ -90,7 +90,7 @@
 					</c:when>
 				</c:choose>
 					</div><hr>
-					<h4 class="text-right">
+					<div class="text-right">
 				<c:choose>
 					<c:when test="${reservationVO.status.equals('0')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#payModal">
@@ -130,8 +130,9 @@
 				</c:choose>
 <!-- 					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button> -->
 					<i class="fa fa-usd" aria-hidden="true"></i>
-						訂單金額 : ${nf.format(reservationVO.price)}
-					</h4>
+						<b>訂單金額 : </b>
+						<b  class="price text-pink" >${nf.format(reservationVO.price)}</b>
+					</div>
 			</div>
 		</div>
 	</c:forEach>
