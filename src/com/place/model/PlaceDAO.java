@@ -146,5 +146,25 @@ public class PlaceDAO implements PlaceDAO_Interface{
         }
         return list;
     }
+
+    @Override
+    public List<PlaceVO> getRangeNoSet(String south, String west, String north, String east) {
+        List<PlaceVO> list=null;
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            Query query=session.createQuery("select new PlaceVO(pla_no,name,lng,lat,addr,pla_desc) from PlaceVO where LAT between ? and ? and LNG between ? and ?");
+            query.setParameter(0, south);
+            query.setParameter(1, north);
+            query.setParameter(2, west);
+            query.setParameter(3, east);
+            list=query.list();
+        }
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
+        return list;
+    }
     
 }

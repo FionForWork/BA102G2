@@ -28,6 +28,10 @@ public class PlaceViewService {
     public PlaceViewVO getOneByPK(String view_no){
         return dao.getOneByPK(view_no);
     }
+    public String getOneByFk(String pla_no){
+        return dao.getOneByFK(pla_no);
+    }
+    
     public List<String> getAllByFk(String pla_no){
         return dao.getAllByFK(pla_no);
     }

@@ -35,10 +35,10 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						id='cancelDeleteModal'>&times;</button>
-					<h4 class="modal-title">刪除成品</h4>
+					<h4 class="modal-title">刪除作品</h4>
 				</div>
 				<div class="modal-body">
-					<p>你確定想刪除「 ${tempVO.name} 」嗎？在這本成品中的相片及影片也會被刪除。</p>
+					<p>你確定想刪除「 ${tempVO.name} 」嗎？在這本待挑選作品中的相片及影片也會被刪除。</p>
 				</div>
 				<input type='hidden' name='temp_no' value=''>
 				<div class="modal-footer">
@@ -63,7 +63,7 @@
 					<h4 class="modal-title">匯入會員相簿</h4>
 				</div>
 				<div class="modal-body">
-					<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。</p>
+					<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆作品將會從清單中移除。</p>
 				</div>
 				<input type='hidden' name='temp_no' value=''>
 				<div class="modal-footer">
@@ -95,14 +95,14 @@
 					<thead>
 						<tr>
 
-							<th>成品名稱</th>
+							<th>作品名稱</th>
 							<th>會員名稱</th>
 							<th>可挑選數量</th>
 							<th>拍攝時間</th>
 							<th>狀態</th>
 							<th colspan="3" align="center">
 								<button class="btn btn-info btn-block" name='createTemp'
-									onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_CreateTemp.jsp'">新增成品</button>
+									onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_CreateTemp.jsp'">新增待挑選作品</button>
 							</th>
 
 						</tr>
@@ -154,7 +154,7 @@
 				<table class="table table-hover table-responsive tempList">
 					<thead>
 						<tr>
-							<th>成品名稱</th>
+							<th>作品名稱</th>
 							<th>會員名稱</th>
 							<th>可挑選數量</th>
 							<th>拍攝時間</th>
@@ -232,7 +232,7 @@
 
 		$("#deleteTempModal").modal();
 		$('input[name=temp_no]').val(temp_no);
-		$('.modal-body p').html("你確定想刪除「" + name + " 」嗎？在這本成品中的相片及影片也會被刪除。");
+		$('.modal-body p').html("你確定想刪除「" + name + " 」嗎？在這本作品中的相片及影片也會被刪除。");
 	}
 	function deleteTemp() {
 		var temp_no = $('input[name=temp_no]').val();
@@ -246,7 +246,7 @@
 		$("#transferTempModal").modal();
 		$('input[name=temp_no]').val(temp_no);
 		$('.modal-body p').html(
-				"你確定想將「" + name + " 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。");
+				"你確定想將「" + name + " 」匯入到會員相簿嗎？ 匯入後此筆作品將會從清單中移除。");
 	}
 	function transferTemp() {
 		var temp_no = $('input[name=temp_no]').val();

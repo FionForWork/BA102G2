@@ -14,18 +14,18 @@
 	System.out.println("cropCont_no"+cropCont_no);	
 	PlaceService placeSvc = new PlaceService();
 	place_no = request.getParameter("pla_no");
-	System.out.println("place_no=="+place_no);
-	
-	if(place_no == null || place_no.trim().length() == 0){
+	PlaceVO place = placeSvc.getOnePlace(place_no);
+	if(place == null || place_no.trim().length() == 0){
 		int placeCount = placeSvc.getAllCount();
 		double doubleplace_no = (placeCount * Math.random()+1);
 		place_no = String.valueOf((int)Math.floor(doubleplace_no));
+		place = placeSvc.getOnePlace(place_no);
 	}
-	PlaceVO place = placeSvc.getOnePlace(place_no);
-	pageContext.setAttribute("place",place);
+	
 	PlaceViewService placeViewSvc = new PlaceViewService();
 	List<String> placeviewNoList = placeViewSvc.getAllByFk(place_no);
 	
+	pageContext.setAttribute("place",place);
 	pageContext.setAttribute("place_no", place_no);
 	pageContext.setAttribute("placeviewNoList", placeviewNoList);
 %>

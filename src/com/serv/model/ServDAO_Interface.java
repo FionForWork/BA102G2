@@ -30,3 +30,4 @@ public interface ServDAO_Interface {
     public List<String> getComStype(String com_no);
 
 }
+

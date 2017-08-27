@@ -6,6 +6,12 @@
 
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
+<style type="text/css">
+td  {font-size:20px;
+	font-weight:900;
+	
+	}
+</style>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
 <div id="sidebar">
 
@@ -49,48 +55,68 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
-		
-<table class="table table-striped">
+	
+
+<div class="col-xs-12 col-sm-2"></div>
+<div class="col-xs-12 col-sm-4" style="height:70%"><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="auto" height="58%" /></div>
+<div class="col-xs-12 col-sm-4"><table class="table table-striped"  >
+
 	<tr>
-		<th>照片</th>
-		<th>會員編號</th>
-		<th>會員帳號</th>
-		<th>會員姓名</th>
-		<th>會員性別</th>
-		<th>會員生日</th>
-		<th>會員電話</th>
-		<th>電子郵件</th>
-		<th>銀行帳戶</th>
-		<th>被檢舉次數</th>
-		<th>狀態</th>
-		<th>修改狀態</th>
-		<th>修改狀態</th>
+		<td>會員編號</td>
+		<td>${memVO.mem_no}</td>
 	</tr>
 	<tr>
-		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
-		<td>${memVO.mem_no}</td>
+		<td>會員帳號</td>
 		<td>${memVO.id}</td>
+	</tr>
+	<tr>
+		<td>會員姓名</td>
 		<td>${memVO.name}</td>
+	</tr>
+	<tr>
+		<td>會員性別</td>
 		<td>${memVO.sex}</td>
-		<td>${memVO.bday}</td>
+	</tr>
+	<tr>
+		<td>會員電話</td>
 		<td>${memVO.phone}</td>
+	</tr>
+	<tr>
+		<td>電子郵件</td>
 		<td>${memVO.email}</td>
-		<td>${memVO.account}</td>
+	</tr>
+	<tr>
+		<td>會員生日</td>
+		<td>${memVO.bday}</td>
+	</tr>
+	<tr>
+		<td>被檢舉次數</td>
 		<td>${memVO.report}</td>
+	</tr>
+	<tr>
+		<td>會員狀態</td>
 		<td>${memVO.status}</td>
-		<td>
-				<select style="width:150px;" name="status">
+	</tr>
+	<tr>
+		<td>修改狀態</td>
+		<td><select style="width:150px;" name="status">
 				<option value="正常">正常
 				<option value="停權">停權
 				</select>
 		</td>
-		<td>
+	</tr>
+	<tr>
+		<td>修改狀態</td>
+		<td><input type="submit" class="btn btn-info" value="修改狀態"></td>
+	</tr>
 
-			     <input type="submit" class="btn btn-info" value="修改狀態">
-
+				<input type="hidden" name="locs"value="/<%= request.getServletPath() %>" >
 			     <input type="hidden" name="mem_no"value="${memVO.mem_no}" >
 			     <input type="hidden" name="action"	value="updateStatus">
-			</td>
-		
-	</tr></table></FORM></div>
+	
+	
+</table></FOEM></div>
+<div class="col-xs-12 col-sm-2"></div>
+
+
 <%@ include file="/Back_end/pages/backFooter.file"%>

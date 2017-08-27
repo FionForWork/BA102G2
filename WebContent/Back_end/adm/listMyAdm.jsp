@@ -7,6 +7,12 @@
 Object admVO = session.getAttribute("admVO");     
 %>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
+<style type="text/css">
+td  {font-size:20px;
+	font-weight:900;
+	
+	}
+</style>
   <div id="sidebar">
 
         <div class="sidebar-inner">
@@ -44,40 +50,42 @@ Object admVO = session.getAttribute("admVO");
         </div>
 
     </div>
-<title>員工資料 - listOneEmp.jsp</title>
+<title>管理員個人資料</title>
 
 <div id="content">
 
 	 
 		<td>
-		<h3>我的資料</h3>
-				<a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp">回首頁</a>
+		<h1>我的資料</h1>
+		
+
 		</td>
-	
+<table class="table table-striped"  >
 
-<table class="table table-striped" >
 	<tr>
-		<th>管理員編號</th>
-		<th>管理員帳號</th>
-
-		<th>管理員姓名</th>
-		<th>管理員職位</th>
-		<th>管理員狀態</th>
-
+		<td>管理員編號</td>
+		<td>${admVO.adm_no}</td>
 	</tr>
-	<tr align='center' valign='middle'>
-			<td>${admVO.adm_no}</td>
-			<td>${admVO.id}</td>
-
-			<td>${admVO.name}</td>
-			<td>${admVO.job}</td>
-			<td>${admVO.status}</td>
-
-			
-		</tr>
+	<tr>
+		<td>管理員帳號</td>
+		<td>${admVO.id}</td>
+	</tr>
+	<tr>
+		<td>管理員姓名</td>
+		<td>${admVO.name}</td>
+	</tr>
+	<tr>
+		<td>管理員職位</td>
+		<td>${admVO.job}</td>
+	</tr>
+	<tr>
+		<td>管理員狀態</td>
+		<td>${admVO.status}</td>
+	</tr>
 </table>
-	<a href="<%=request.getContextPath()%>/Back_end/adm/updatePwd.jsp
-">修改密碼</a>
+
+<input type="button" class="btn btn-info" value="修改密碼" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/updatePwd.jsp'" >
+	
 </div>
 
 <%@ include file="/Back_end/pages/backFooter.file"%>

@@ -44,7 +44,7 @@
         </div>
 
     </div>
-<title>管理員資料修改 - updateadminput.jsp</title>
+<title>管理員資料修改 </title>
 <div id="content">
 
 
@@ -52,20 +52,7 @@
 	
 <input type="button" class="btn btn-info" value="回首頁" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp'" >  <br><br>
 	<h3>管理員資料修改 :</h3>
-		
-
-
-<%-- 錯誤列表 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>
-
+	
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">
 
 
@@ -88,8 +75,6 @@
 		<td><select name="job" style="width: 163px;">
 			　<option  value="員工">員工</option>
 			　<option value="經理">經理</option>
-			 <option value="工讀生">工讀生</option>
-			 <option  value="組長">組長</option>
 		</select></td>
 	</tr>
 	<tr>

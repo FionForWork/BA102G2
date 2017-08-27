@@ -16,7 +16,7 @@
 
 <%@ include file="page/works_header.file"%>
 
-</script>
+
 
 		<div class="col-md-8 col-offset-1">
 			<!-- Photo Start Here -->
@@ -85,7 +85,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">刪除相片或影片</h4>
+								<h4 class="modal-title">刪除作品</h4>
 							</div>
 							<div class="modal-body">
 								<p>刪除後將無法復原，確定刪除嗎?</p>
@@ -191,7 +191,9 @@ $("document").ready(function(){
 	    }
 	});
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
-        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}";
+		setTimeout(function(){window.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}";},500);
+		
+<%-- 		window.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}"; --%>
 	});
 });
 

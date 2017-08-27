@@ -6,10 +6,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	// ComVO comVO = (ComVO) session.getAttribute("comVO");
-	// session.setAttribute("comVO", comVO);
-	ComService comService = new ComService();
-	ComVO comVO = comService.getOneCom("2001");
+	ComVO comVO = (ComVO) session.getAttribute("comVO");
+	session.setAttribute("comVO", comVO);
+// 	ComService comService = new ComService();
+// 	ComVO comVO = comService.getOneCom("2001");
 %>
 <%
 	AdvertisingService advSvc = new AdvertisingService();
@@ -46,7 +46,7 @@
 
 						<div class="modal-body">
 							<label for="inputdefault">標題</label> <input class="form-control"
-								id="inputdefault" type="text" name="title">
+								id="title" type="text" name="title">
 						</div>
 						<div class="modal-body">
 							起始日期 <input type="text" id="startDay" name="startDay" />
@@ -64,7 +64,7 @@
 
 						<div class="modal-body">
 							<label for="inputdefault">內容</label> <input class="form-control"
-								id="inputdefault" type="text" name="text">
+								id="text" type="text" name="text">
 						</div>
 
 						<div class="modal-body">
@@ -73,7 +73,7 @@
 <!-- 							<input type="file" id="imgInp" name="img"> -->
 <!-- 							<img id="blah" src=""  width="200" height="auto" /> -->
 <label class="control-label">上傳圖片</label>
-<input id="input-1" type="file" class="file" name="img">
+<input id="img" type="file" class="file-loading" name="img">
 
 
 
@@ -85,7 +85,8 @@
 								type="hidden" name="status" value="0"> <input
 								type="submit" class="btn btn-info" value="發佈">
 
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+							  <input type="button" class="btn btn-danger" data-dismiss="modal" id="problem" onclick="Show()" value="小按鈕">
 						</div>
 					</div>
 				</form>
@@ -136,7 +137,29 @@
 
 </div>
 
+<script type="text/javascript">
+$("document").ready(function() {
+    $("#img").fileinput({
+    maxFileCount : 50,
+    showUpload : false,
+    allowedFileTypes : [ "image" ],
+    language : 'zh-TW',
+    theme : "fa",
+    uploadAsync : true,
+    browseOnZoneClick : true
+    });
+});
 
+function Show(){
+//  document.getElementById("title").value="2";
+$("#title").val("唯一的美， 心中的人--唯美麗人");
+$("#text").val("留住您美麗的一瞬間， 讓您的美能達到與眾不同的境界！")
+
+}
+
+
+
+</script>
 
 
 

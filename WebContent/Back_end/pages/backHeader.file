@@ -111,10 +111,10 @@
                 <li><a href="<%=request.getContextPath()%>/Back_end/advertising/ad.jsp"><i class="im-table2"></i>廣告刊登管理 </a></li>
                 </c:if>
                 <c:if test="${aut.contains(\"07\")}">
-                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp" class="<%=(active.equals("0")?"active":"")%>"><i class="br-location"></i>景點管理 </a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/place/placeManagement.jsp" class="${active==0?'active':''}"><i class="br-location"></i>景點管理 </a></li>
                 </c:if>
                 <c:if test="${aut.contains(\"06\")}">
-                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp" class="<%=(active.equals("1")?"active":"")%>"><i class="fa-shopping-cart"></i>商城管理</a></li>
+                <li><a href="<%=request.getContextPath()%>/Back_end/mall/productPreview.jsp" class="${active==1?'active':''}"><i class="fa-shopping-cart"></i>商城管理</a></li>
                 </c:if>
                 <c:if test="${aut.contains(\"04\")}">
                 <li><a href="<%=request.getContextPath()%>/Back_end/tradition/Traditionall.jsp"><i class="im-list2"></i>婚禮習俗管理</a></li>

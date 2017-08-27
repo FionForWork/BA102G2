@@ -17,20 +17,18 @@
 	response.setDateHeader("Expires", 0);
 	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-// 	MemVO memVO = memService.getOneMem("1010");
 	session.setAttribute("memVO", memVO);
-	String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
-	String status = (request.getParameter("status") == null) ? "0" : request.getParameter("status");
-	String orderType = (request.getParameter("orderType") == null) ? "0" : request.getParameter("orderType");
+	String role = (request.getParameter("role") == null||request.getParameter("role").equals("")) ? "0" : request.getParameter("role");
+	String status = (request.getParameter("status") == null||request.getParameter("status").equals("")) ? "0" : request.getParameter("status");
+	String orderType = (request.getParameter("orderType") == null||request.getParameter("orderType").equals("")) ? "0" : request.getParameter("orderType");
 	String[] statusList = {"買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單"};
 	String[] orderTypeList = {"預設", "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期舊>>新", "依成立日期新>>舊", "依訂單總價小>>大","依訂單總價大>>小"};
 	OrdService ordService = new OrdService();
-	int nowPage = (request.getParameter("nowPage") == null)? 1 :Integer.valueOf(request.getParameter("nowPage"));
+	int nowPage = (request.getParameter("nowPage") == null||request.getParameter("nowPage").equals(""))? 1 :Integer.valueOf(request.getParameter("nowPage"));
 	int allCount = ordService.getAllRowCountByRole(role, memVO.getMem_no(), status);
 	int itemsCount = 5;
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-	List<OrdVO> ordList = ordService.getPageByRole(nowPage, itemsCount, role, memVO.getMem_no(), status,
-	orderType);
+	List<OrdVO> ordList = ordService.getPageByRole(nowPage, itemsCount, role, memVO.getMem_no(), status,orderType);
 	List<String> seller_accountList = new ArrayList<String>();
 	List<String> cust_nameList = new ArrayList<String>();
 	for (int i = 0; i < ordList.size(); i++) {
@@ -39,25 +37,6 @@
 	}
 	Order_detailService order_detailService = new Order_detailService();
 	ProductService productService = new ProductService();
-
-	StringBuffer stringBuffer = new StringBuffer();
-	if ("0".equals(role)) {
-        stringBuffer.append("買家-");
-	} else {
-        stringBuffer.append("賣家-");
-	}
-
-	if ("0".equals(status)) {
-        stringBuffer.append("買家未付款");
-	} else if ("1".equals(status)) {
-        stringBuffer.append("賣家未出貨");
-	} else if ("2".equals(status)) {
-        stringBuffer.append("已完成訂單");
-	} else if ("3".equals(status)) {
-        stringBuffer.append("賣家已評價");
-	} else {
-        stringBuffer.append("已取消訂單");
-	}
 
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 	String location = "/Front_end/mall/mallArea.jsp?nowPage=" + nowPage + "&&role=" + role + "&&status="+ status + "&&orderType=" + orderType;
@@ -78,7 +57,6 @@
 	pageContext.setAttribute("role", role);
 	pageContext.setAttribute("orderType", orderType);
 	pageContext.setAttribute("ordList", ordList);
-	pageContext.setAttribute("stringBuffer", stringBuffer);
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
@@ -88,9 +66,6 @@
 <div style="margin-top: 50px;"></div>
 <div class="container" id="container" >
     <div class="row">
-        <div id="showStatus" class="text-center col-md-12">
-            <h2>${stringBuffer.toString()}</h2>
-        </div>
         <div class="col-md-12">
             <%@include file="pages/mallAreaSidebar.file"%> 
             <div class="col-xs-1 col-md-1"></div>
@@ -152,7 +127,7 @@
                                 <c:when test="${totalPages-nowPage<5}">
                                     <li><a class="btn btn-info" href="javascript:pageChange(1,${role},${status},${orderType})" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
-                                    <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                    <c:forEach var="i" begin="${totalPages-(5-1)}" end="${totalPages}">
                                         <c:choose>
                                             <c:when test="${i==nowPage}">
                                                 <li><a class="btn btn-info active" href="javascript:pageChange(${i},${role},${status},${orderType})" data-page="${i}">${i}</a></li>
@@ -237,7 +212,6 @@
                     function () {
                         $("#evalToMem").modal('show');
                     });
-            
         }
     }
 

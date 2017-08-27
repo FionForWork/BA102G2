@@ -12,11 +12,13 @@
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
-     MemVO memVO=(MemVO)session.getAttribute("memVO");
+    MemVO memVO = (MemVO) session.getAttribute("memVO");
     MemService memService = new MemService();
-//  MemVO memVO = memService.getOneMem("1010");
+    //  MemVO memVO = memService.getOneMem("1010");
     ProductService productService = new ProductService();
-    int nowPage = (request.getParameter("nowPage") == null)? 1: Integer.valueOf(request.getParameter("nowPage"));
+    int nowPage = (request.getParameter("nowPage") == null)
+            ? 1
+            : Integer.valueOf(request.getParameter("nowPage"));
     int itemsCount = 8;
     int allCount = productService.getAllCountBySeller(memVO.getMem_no());
     int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
@@ -24,28 +26,28 @@
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
     pageContext.setAttribute("typeList", typeList);
-
+    
     String preLocation = request.getContextPath() + "/Front_end/mall";
-    String active="4";
+    String active = "4";
     pageContext.setAttribute("active", active);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("totalPages", totalPages);
     pageContext.setAttribute("nowPage", nowPage);
-    session.setAttribute("productList", productList);
+    session.setAttribute("productList", productList);		
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
 .addImg, .updateImg {
-    width: 200px;
-    height: 200px;
-    border-color: black;
-    border: 1px;
-    border: solid;
+	width: 200px;
+	height: 200px;
+	border-color: black;
+	border: 1px;
+	border: solid;
 }
 
 .img {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 </style>
 <div class="text-center" style="height: 50px; margin-top: 50px">
@@ -126,77 +128,14 @@
                     <button type="button" class="btn btn-info" onclick="showAdd()">申請新商品上架</button>
                 </div>
             </div>
-            <!--//////////////////////////////////////////分頁開始//////////////////////////////////////////////////////////////// -->
-            <div class="text-center ">
-                <nav aria-label="Page navigation ">
-                    <ul class="pagination pagination-lg ">
-                        <c:choose>
-                            <c:when test="${totalPages<=5}">
-                                <c:forEach var="i" begin="1" end="${totalPages}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:when test="${nowPage<5}">
-                                <c:forEach var="i" begin="1" end="5">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <li><a class="disabled">...</a></li>
-                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
-                            </c:when>
-                            <c:when test="${totalPages-nowPage<5}">
-                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
-                                <li><a class="disabled">...</a></li>
-                                <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
-                                <li><a class="disabled">...</a></li>
-                                <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                    <c:choose>
-                                        <c:when test="${nowPage==i}">
-                                            <li class=""><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class=""><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <li><a class="disabled">...</a></li>
-                                <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </nav>
-            </div>
+            <%@include file="pages/navPage.file"%>
         </div>
-        <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
     </div>
 </div>
-﻿<div class="modal fade" id="productUpdate"></div>
-﻿<div class="modal fade" id="productAdd"></div>
+﻿
+<div class="modal fade" id="productUpdate"></div>
+﻿
+<div class="modal fade" id="productAdd"></div>
 <script>
     $("#productUpdate").on("hidden.bs.modal", function() {  
         $(this).removeData("modal");  
@@ -223,7 +162,7 @@
     }
     
     
-    function change(nowPage){
+    function pageChange(nowPage){
         $(".pagination").load("${preLocation}/productManagement.jsp .pagination",{"nowPage":nowPage});
         $("#content").load("${preLocation}/productManagement.jsp #content",{"nowPage":nowPage});
         $(window).scrollLeft("0");
@@ -233,7 +172,7 @@
     
     function onOrOff(pro_no) {
         $.ajax({
-        url : "/BA102G2/product/ProductServlet",
+        url : "<%=request.getContextPath()%>/product/ProductServlet",
         type : "post",
         data : {
         action : "onOrOff",

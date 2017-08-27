@@ -45,13 +45,14 @@
 <br><br><br>
 <div id="content" style="padding:20px 1px 1px 20px;" ><h2>查看會員</h2></div>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/mem/listAllMem.jsp'>觀看全部會員</a>  <br><br>
+<input type="button" class="btn btn-info" value="觀看全部會員" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/listAllMem.jsp'" ><br><br>
+
 <table class="table table-striped">
 	<tr>
 		<td>
 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>輸入會員編號 (如1001):</b></td>
-        <td><input type="text" size="30" name="mem_no"></td>
+        <td><input type="text" size="30" name="mem_no" required title="只能輸入數字" pattern="^[0-9]*$"></td>
         <td><input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="bgetOne_For_Display">
 		</FORM>
@@ -96,7 +97,7 @@
      <tr><td>
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
         <b>根據被檢舉多少次以上:</b></td>
-      <td>  <input type="text" size="30" name="report"></td>
+      <td>  <input type="text" size="30" name="report" required title="只能輸入數字" pattern="^[0-9]*$" > </td>
      <td>   <input type="submit" class="btn btn-info" value="送出"></td>
         <input type="hidden" name="action" value="selectByReport">
 	</FORM>

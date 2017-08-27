@@ -1,0 +1,16 @@
+#main_ad .carousel-inner .item {
+    background-size: cover; /*讓圖片覆蓋滿整個div*/
+    background-position: center, center; /*讓圖片在div里水平垂直居中*/
+    background-repeat: no-repeat;
+    height: 410px;
+    cursor: pointer;
+}
+
+@media ( max-width :768px) {
+    #main_ad .carousel-inner .item {
+        height: auto;
+    }
+    #main_ad .carousel-inner .item img {
+        width: 100%;
+    }
+}

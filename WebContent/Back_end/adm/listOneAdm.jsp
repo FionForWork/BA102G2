@@ -7,13 +7,13 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 %>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
 
-<title>員工資料 - listOneEmp.jsp</title>
+<title>管理員資料</title>
 
 <div id="content">
 
 	
 		<td>
-		<h3>管理員資料 - ListOneAmd.jsp</h3>
+		<h3>管理員資料 /h3>
 				<a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp
 ">回首頁</a>
 		</td>

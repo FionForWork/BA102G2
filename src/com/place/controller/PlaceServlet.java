@@ -60,44 +60,44 @@ public class PlaceServlet extends HttpServlet {
             String west = request.getParameter("west");
             String north = request.getParameter("north");
             String east = request.getParameter("east");
-            JSONArray resultArray=new JSONArray();
+            JSONObject jsonObject=new JSONObject();
+//            JSONArray resultArray=new JSONArray();
             if("place".equals(request.getParameter("type"))){
                 PlaceService placeService = new PlaceService();
-                List<PlaceVO> placeList = placeService.getRange(south, west, north, east);
-                for (PlaceVO placeVO : placeList) {
-                    Set<PlaceViewVO> placeViewSet = placeVO.getPlaceViewSet();
-                    if(placeViewSet.size()!=0){
-                        Iterator<PlaceViewVO> iterator = placeViewSet.iterator();
-                        PlaceViewVO placeViewVO = (PlaceViewVO) iterator.next();
-                        HashMap<String, String> map=new HashMap<String, String>();
-                        map.put("pla_no", placeVO.getPla_no());
-                        map.put("name", placeVO.getName());
-                        map.put("lat", placeVO.getLat());
-                        map.put("lng", placeVO.getLng());
-                        map.put("view_no", placeViewVO.getView_no());
-                        resultArray.put(map);
-                    }
+                List<PlaceVO> placeList = placeService.getRangeNoSet(south, west, north, east);
+                try {
+                    jsonObject.put("placeList", placeList);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
             else if("com".equals(request.getParameter("type"))){
                 ComService comService=new ComService();
                 List<ComVO> comList=comService.getLocation(west, east, south, north);
-                for (ComVO comVO : comList) {
-                    HashMap<String, String> map=new HashMap<String, String>();
-                    map.put("com_no", comVO.getCom_no());
-                    map.put("name", comVO.getName());
-                    map.put("lat", comVO.getLat());
-                    map.put("lng", comVO.getLon());
-                    map.put("desc", comVO.getCom_desc());
-                    map.put("phone", comVO.getPhone());
-                    map.put("loc", comVO.getLoc());
-                    resultArray.put(map);
+                try {
+                    jsonObject.put("comList", comList);
                 }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+//                for (ComVO comVO : comList) {
+//                    HashMap<String, String> map=new HashMap<String, String>();
+//                    map.put("com_no", comVO.getCom_no());
+//                    map.put("name", comVO.getName());
+//                    map.put("lat", comVO.getLat());
+//                    map.put("lng", comVO.getLon());
+//                    map.put("desc", comVO.getCom_desc());
+//                    map.put("phone", comVO.getPhone());
+//                    map.put("loc", comVO.getLoc());
+//                    resultArray.put(map);
+//                }
             }
             
             response.setContentType("text/html;charset=utf-8");
             PrintWriter printWriter = response.getWriter();
-            printWriter.print(resultArray.toString());
+//            printWriter.print(resultArray.toString());
+            printWriter.print(jsonObject.toString());
             printWriter.close();
         }
         else if ("MANAGEMENT_CHANGE".equals(action)) {

@@ -20,6 +20,7 @@
     pageContext.setAttribute("detailList", detailList);
     pageContext.setAttribute("orderType", orderType);
     pageContext.setAttribute("nowPage", nowPage);
+    System.out.println(nowPage);
 %>
 <html>
 <head>
@@ -47,6 +48,8 @@
                                     <c:choose>
                                         <c:when test="${order_detailVO.status=='0'}">
                                             <input type="hidden" name="pro_no" value="${order_detailVO.pro_no}">
+                                            <input type="hidden" name="nowPage" value="${nowPage}">
+                                            <input type="hidden" name="orderType" value="${orderType}">
                                             <input name="score" value="0" type="number" min="0" max="5" class="form-control" placeholder="請輸入評分0-5之間">
                                         </c:when>
                                         <c:otherwise>

@@ -293,4 +293,10 @@ public class PlaceDAO_JDBC implements PlaceDAO_Interface {
         return null;
     }
 
+    @Override
+    public List<PlaceVO> getRangeNoSet(String south, String west, String north, String east) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

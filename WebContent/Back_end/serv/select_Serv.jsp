@@ -45,7 +45,8 @@
 <br><br><br>
 <div id="content" style="padding:20px 1px 1px 20px;" ><h2>服務搜尋</h2></div>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/serv/listAllServ.jsp'>觀看全部服務</a>  <br><br>
+<input type="button" class="btn btn-info" value="觀看全部服務" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/listAllServ.jsp'" ><br><br>
+<br>
 <table class="table table-striped">
 
 	<tr>

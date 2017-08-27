@@ -79,10 +79,10 @@ $("document").ready(function(){
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">刪除成品</h4>
+					<h4 class="modal-title">刪除作品</h4>
 				</div>
 				<div class="modal-body">
-					<p>你確定想刪除「 ${temp.name} 」嗎？在這本成品中的相片及影片也會被刪除。</p>
+					<p>你確定想刪除「 ${temp.name} 」嗎？在這本待挑選作品中的相片及影片也會被刪除。</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -102,7 +102,7 @@ $("document").ready(function(){
 				<form action="<%=request.getContextPath()%>/temp/temp.do" method="post" id='updateTemp'>
 					<h4>
 						<div class="input-group">
-						<label for="name" class="input-group-addon">成品名稱 <span class='errorMsgs'> ${errorMsgs.get("name")}</span></label> 
+						<label for="name" class="input-group-addon">待挑選作品名稱 <span class='errorMsgs'> ${errorMsgs.get("name")}</span></label> 
 						<input type='text' id="name"
 							name='name' value='${temp.name}' class="form-control">
 							</div>
@@ -148,7 +148,7 @@ $("document").ready(function(){
 				<div class='btn-group'>
 					<input value='儲存' class='btn btn-info' onclick="document.getElementById('updateTemp').submit();">
 					<input class="btn btn-info" id="uploadbtn" value='新增相片或影片'>
-					<input data-toggle='modal' data-target='#deleteTempModal' class='btn btn-default' value="刪除成品" />
+					<input data-toggle='modal' data-target='#deleteTempModal' class='btn btn-default' value="刪除待挑選作品" />
 					
 				</div>
 			

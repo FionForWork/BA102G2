@@ -44,8 +44,8 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
     </div>
 <br><br><br>
 <div id="content">
-<h3>員工資料新增:</h3>
-<%--錯誤處理 --%>
+<h3>管理員資料新增:</h3>
+
 
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">

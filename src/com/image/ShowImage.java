@@ -47,7 +47,14 @@ public class ShowImage extends HttpServlet {
             PlaceViewService placeViewService = new PlaceViewService();
             String view_no = request.getParameter("view_no");
             PlaceViewVO placeViewVO =placeViewService.getOneByPK(view_no);
-            buf=placeViewVO.getImg();
+            try {
+                buf=placeViewVO.getImg();
+            }
+            catch (NullPointerException e) {
+                String noImgPath="/Front_end/Resource/img/noImg.gif";
+                FileInputStream fileInputStream=new FileInputStream(getServletContext().getRealPath(noImgPath));
+                buf=toByteArray(fileInputStream);
+            }
         }
         else if(request.getParameter("mem_no") != null){
             MemService memService=new MemService();

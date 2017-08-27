@@ -20,4 +20,6 @@ public interface PlaceDAO_Interface {
     public List<PlaceVO> getPage(int start,int itemsCount);
 
     public List<PlaceVO> getRange(String south,String west,String north,String east);
+
+    public List<PlaceVO> getRangeNoSet(String south,String west,String north,String east);
 }

@@ -146,5 +146,11 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
         }
         return list;
     }
+
+    @Override
+    public List<PlaceVO> getRangeNoSet(String south, String west, String north, String east) {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

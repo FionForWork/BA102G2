@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
-<jsp:useBean id="selectByStatus" scope="request" type="java.util.Set" />
+<jsp:useBean id="selectByStatus" scope="session" type="java.util.Set" />
 <div id="sidebar">
 
         <div class="sidebar-inner">
@@ -43,7 +43,8 @@
 <title>Insert title here</title>
 <br><br>
 <div id="content">
-<a href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'>返回搜尋</a>
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/select_member.jsp'" >
+
 
 <table class="table table-striped">
 	<tr>
@@ -61,7 +62,8 @@
 		<th>修改狀態</th>
 		<th>修改狀態</th>
 	</tr>
-	<c:forEach var="memVO" items="${selectByStatus}" >
+		<%@ include file="page33.file" %> 
+	<c:forEach var="memVO" items="${selectByStatus}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do">
 	<tr>
 		<td ><img src="<%=request.getContextPath()%>/ShowPictureServletDAO?mem_no=${memVO.mem_no}" width="100" height="120"/></td>
@@ -81,7 +83,8 @@
 				</select>
 		</td>
 			<td>
-			  
+				   <input type="hidden" name="locs" value="/<%= request.getServletPath() %>?whichPage=<%=whichPage%>">
+			   <input type="hidden" name="statuss" value="${statuss}" >
 			    <input type="submit" class="btn btn-info" value="修改狀態">
 			    <input type="hidden" name="mem_no" value="${memVO.mem_no}">
 			    <input type="hidden" name="action" value="updateStatus">
@@ -89,5 +92,6 @@
 	</tr></FORM>
 </c:forEach>
 </table>
+<%@ include file="page2.file" %>
 </div>
 <%@ include file="/Back_end/pages/backFooter.file"%>

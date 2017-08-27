@@ -62,5 +62,9 @@ public class PlaceService {
     public List<PlaceVO>getRange(String south,String west,String north,String east){
         return dao.getRange( south, west, north, east);
     }
+
+    public List<PlaceVO>getRangeNoSet(String south,String west,String north,String east){
+        return dao.getRangeNoSet( south, west, north, east);
+    }
     
 }

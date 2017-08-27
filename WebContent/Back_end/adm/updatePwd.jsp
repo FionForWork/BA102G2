@@ -47,11 +47,6 @@
 <center> <h1>密碼修改</h1></center>
 
 
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>
-	請修正錯誤:<br>
-	</font>
-</c:if>
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form9" onSubmit="return check();" >
 		<div class="form-group">

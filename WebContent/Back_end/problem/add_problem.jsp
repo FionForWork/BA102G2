@@ -29,14 +29,14 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
   
     <div class="form-group">
       <label for="inputdefault">Q&A問題</label>
-      <input class="form-control" id="inputdefault" type="text" name="content"
+      <input class="form-control" id="a" type="text" name="content"
       value="<%= (problemVO==null)? " " : problemVO.getContent()%>">
     </div>
     
     
     <div class="form-group">
       <label for="inputlg">Q&A回答</label>
-      <textarea class="form-control" id="comment"  name="reply"
+      <textarea class="form-control" id="reply"  name="reply"
       value="<%= (problemVO==null)? " " : problemVO.getReply()%>"></textarea>
     </div>
    
@@ -52,11 +52,19 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
    <input type="submit" class="btn btn-info" data-dismiss="modal" value="新增">
 
   <input type="submit" class="btn btn-danger" data-dismiss="modal" href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp" value="返回">
-
+  <input type="button" class="btn btn-danger" data-dismiss="modal" id="problem" onclick="Show()" value="小按鈕">
 
     </div>
      </form>
 </div>
+<script type="text/javascript">
+function Show(){
+//     document.getElementById("title").value="2";
+$("#a").val("發現賣家的商品似乎有違規，如何檢舉呢 ?");
+$("#reply").val("為了維持良好商城交易秩序，如果會員發現站上的商品頁面有違反公告政策情形，請透過商品頁面內檢舉違規提出，收到檢舉時，系統會依序對於被檢舉的商品頁面進行檢視。")
+
+}
+</script>
 
 
 

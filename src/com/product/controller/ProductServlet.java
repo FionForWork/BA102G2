@@ -7,8 +7,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -305,11 +307,22 @@ public class ProductServlet extends HttpServlet {
         }
         else if("CAR_CHANGE".equals(action)){
             response.setContentType("text/html; charset=utf-8");
-//            String[] priceArray=request.getParameterValues("priceArray");
-//            String[] countArray=request.getParameterValues("countArray");
-//            System.out.println(priceArray);
-//            System.out.println(countArray);
-            response.getWriter().println("ok");
+//            Enumeration<String> enumeration=request.getParameterNames();
+//            while (enumeration.hasMoreElements()) {
+//                String string = (String) enumeration.nextElement();
+//                System.out.println(string);
+//            }
+            String[] priceArray=request.getParameterValues("priceArray[]");
+            String[] countArray=request.getParameterValues("countArray[]");
+            countList.clear();
+            for(int i=0;i<countArray.length;i++){
+                countList.add(Integer.valueOf(countArray[i]));
+                carTotal+=countList.get(i)*Integer.valueOf(priceArray[i]); 
+            }
+            session.setAttribute("countList", countList);
+            session.setAttribute("carTotal", carTotal);
+            response.getWriter().println(carTotal);
+            response.getWriter().close();
         }
         //////////////////////////////////////// AJAX加入購物車//////////////////////////////////////////
         else if ("ADD_TO_CAR_AJAX".equals(action)) {

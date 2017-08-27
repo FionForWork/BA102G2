@@ -48,7 +48,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 <br><br><br>
 <div id="content">
 
-
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" >
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do" >
 		
 <table class="table table-striped">
@@ -65,6 +65,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 		<th>分數</th>
 		<th>狀態</th>
 		<th>修改狀態</th>
+		<th>修改狀態</th>
 		
 	</tr>
 	<tr>
@@ -77,6 +78,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 		<td>${servVO.content}</td>
 		<td>${servVO.times}</td>
 		<td>${servVO.score}</td>
+		<td>${servVO.status}</td>
 		<td>
 				<select style="width:150px;" name="status">
 				<option value="正常">正常
@@ -86,9 +88,9 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 		<td>
 
 			     <input type="submit" class="btn btn-info" value="修改狀態">
-
+			 <input type="hidden" name="locs"value="/<%= request.getServletPath() %>" >
 			     <input type="hidden" name="serv_no"value="${servVO.serv_no}" >
-			     <input type="hidden" name="action"	value="chStatus">
+			     <input type="hidden" name="action"	value="updateStatus">
 			</td>
 		
 	</tr></table></FORM></div>

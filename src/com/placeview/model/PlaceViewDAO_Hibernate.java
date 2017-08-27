@@ -104,4 +104,10 @@ public class PlaceViewDAO_Hibernate implements PlaceViewDAO_Interface{
         return list;
     }
 
+    @Override
+    public String getOneByFK(String pla_no) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -128,13 +129,31 @@ public class MemServlet extends HttpServlet{
 					return;
 				}
 				/***************************2.開始新增資料***************************************/
-
+				String locs = req.getParameter("locs").trim();
+				
+				
 				MemService memSvc = new MemService();
-				memVO = memSvc.updateStatus(mem_no, status);
+				memSvc.updateStatus(mem_no, status);
+				memVO = memSvc.getOneMem(mem_no);
+				if(locs.contains("selectByReport")){
+					HttpSession session = req.getSession();
+					Integer reports = new Integer(req.getParameter("reports").trim());
+					Set<MemVO> set = memSvc.getMemsByReport(reports);
+					session.setAttribute("selectByReport", set); 
+				}else if(locs.contains("selectByStatus")){
+					HttpSession session = req.getSession();
+					String statuss = req.getParameter("statuss").trim();
+					Set<MemVO> set = memSvc.getMemsByStatus(statuss);
+					session.setAttribute("selectByStatus", set);
+				}
+				
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("memVO", memVO);   
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				String url = "/Back_end/mem/listAllMem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				
+				//String url = "/Back_end/mem/listAllMem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(locs); // �憓����漱listAllEmp.jsp
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/
 
@@ -157,10 +176,11 @@ public class MemServlet extends HttpServlet{
 			/*************************** 2.開始查詢資料 ****************************************/
 			MemService memSvc = new MemService();
 			Set<MemVO> set = memSvc.getMemsByReport(report);
-
+			 HttpSession session = req.getSession();
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByReport", set);    // 資料庫取出的set物件,存入request
+			 session.setAttribute("selectByReport", set);   // 資料庫取出的set物件,存入request
 			
+			session.setAttribute("reports", report);
 			String url = null;
 			url = "/Back_end/mem/selectByReport.jsp";   
 			
@@ -175,10 +195,11 @@ public class MemServlet extends HttpServlet{
 			/*************************** 2.開始查詢資料 ****************************************/
 			MemService memSvc = new MemService();
 			Set<MemVO> set = memSvc.getMemsByStatus(status);
-
+			HttpSession session=req.getSession();
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByStatus", set);    // 資料庫取出的set物件,存入request
-			
+			session.setAttribute("selectByStatus", set);
+		
+			session.setAttribute("statuss", status);
 			String url = null;
 			url = "/Back_end/mem/selectByStatus.jsp";   
 			
@@ -287,6 +308,7 @@ public class MemServlet extends HttpServlet{
 					 String url = "/Front_end/mem/updatePwd.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
 						successView.forward(req, res);	
+						return;
 				}else{
 					memSvc.updatePwd(mem_no, pwd);
 				}
@@ -626,15 +648,19 @@ public class MemServlet extends HttpServlet{
 				if (account == null || (account.trim()).length() == 0) {
 					errorMsgs.put("account","銀行帳戶請勿空白");
 				}
-				
+				String data=req.getParameter("picture");
+				if(data==null){
+					
+				}
+				System.out.println("sssss"+data);
 				Part part = req.getPart("picture");
 				InputStream in = part.getInputStream();
 				byte[] picture = new byte[in.available()];
 				in.read(picture);
 				
-				if(part.getSize()==0){
-					errorMsgs.put("picture","請選擇圖片");
-					}
+//				if(part.getSize()==0){
+//					errorMsgs.put("picture","請選擇圖片");
+//					}
 
 				
 
@@ -682,7 +708,7 @@ public class MemServlet extends HttpServlet{
 		} catch (Exception e) {
 			errorMsgs.put("e","帳號重複,請更換一個帳號");
 			RequestDispatcher failureView = req
-					.getRequestDispatcher("/Front_end/com/register.jsp");
+					.getRequestDispatcher("/Front_end/mem/register.jsp");
 			failureView.forward(req, res);
 		}
 			

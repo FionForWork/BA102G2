@@ -1,3 +1,5 @@
+<%@page import="com.placeview.model.PlaceViewService"%>
+<%@page import="com.placeview.model.PlaceViewDAO"%>
 <%@page import="com.placeview.model.PlaceViewVO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.apache.commons.collections.map.HashedMap"%>
@@ -18,20 +20,12 @@
     int nowPage = (request.getParameter("nowPage") == null) ? 1 : Integer.parseInt((request.getParameter("nowPage")));
     int itemsCount = 4;
     PlaceService placeService = new PlaceService();
-    List<PlaceVO> originList = placeService.getRange(south, west, north, east);
-    List<HashMap<String,String>>placeList=new ArrayList<HashMap<String,String>>();
-    for(PlaceVO placeVO:originList){
-        Iterator<PlaceViewVO> iterator = placeVO.getPlaceViewSet().iterator();
-        PlaceViewVO placeViewVO=null;
-        HashMap<String, String> map=new HashMap<String, String>();
-        if(iterator.hasNext()){
-            placeViewVO = (PlaceViewVO) iterator.next();
-            map.put("pla_no", placeVO.getPla_no());
-            map.put("name", placeVO.getName());
-            map.put("lat", placeVO.getLat());
-            map.put("lng", placeVO.getLng());
-            map.put("view_no", placeViewVO.getView_no());
-            placeList.add(map);
+    List<PlaceVO> placeList=placeService.getRangeNoSet(south, west, north, east);
+    PlaceViewService placeViewService=new PlaceViewService();
+    List<String>viewList=new ArrayList<String>();
+    if(placeList.size()!=0){
+        for(int i=0;i<placeList.size();i++){
+            viewList.add(placeViewService.getOneByFk(placeList.get(i).getPla_no()));
         }
     }
     int allCount = placeList.size();
@@ -41,6 +35,7 @@
     pageContext.setAttribute("nowPage", nowPage);
     pageContext.setAttribute("totalPages", totalPages);
     pageContext.setAttribute("placeList", placeList);
+    pageContext.setAttribute("viewList", viewList);
     pageContext.setAttribute("start", start);
     pageContext.setAttribute("end", end);
 %>
@@ -56,11 +51,11 @@
     <div class="row">
         <div id="placeImg">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <c:forEach var="placeVO" items="${placeList}" begin="${start}" end="${end}">
+                <c:forEach var="placeVO" items="${placeList}" begin="${start}" end="${end}" varStatus="s">
                     <div class="col-xs-6 col-md-6 btn-like-wrapper">
                         <a target="_blank" class="thumbnail thumbnail-service mod-shadow img-label animated fadeInUp" style="animation-duration: <%=Math.random() * 3%>s;" href="<%=request.getContextPath()%>/Front_end/place/onePlace.jsp?pla_no=${placeVO.pla_no}">
                             <div class="caption">
-                                <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?view_no=${placeVO.view_no}">
+                                <img style="width: 100%; height: 200px;" src="<%=request.getContextPath()%>/image/ShowImage?view_no=${viewList.get(s.index)}">
                                 <div id="name">
                                     <h5>${placeVO.name}</h5>
                                 </div>
@@ -75,26 +70,12 @@
                             <c:choose>
                                 <c:when test="${totalPages<=5}">
                                     <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:when test="${nowPage<5}">
                                     <c:forEach var="i" begin="1" end="5">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                     <li><a class="disabled">...</a></li>
                                     <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
@@ -103,28 +84,14 @@
                                     <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
                                     <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
                                     <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                     <li><a class="disabled">...</a></li>
                                     <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
@@ -245,18 +212,17 @@
                 west:west,
                 north:north,
                 east:east,
-                nowPage:'${nowPage}'
             }, 
             error : function(xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
             },
             success : function(response) {
-                var placeList=JSON.parse(response);
+                var placeList=JSON.parse(response).placeList;
                 var position;
                 var marker;
                 var start=(nowPage-1)*<%=itemsCount%>;
-                var end=nowPage*<%=itemsCount%>;
+                var end=(nowPage*<%=itemsCount%>>placeList.length)?placeList.length:nowPage*<%=itemsCount%>;
                 for(var i=0;i<placeMarkers.length;i++){
                     placeMarkers[i].setMap(null);
                 }

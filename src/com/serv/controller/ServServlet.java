@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
@@ -35,6 +36,7 @@ public class ServServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		
+		
 		if ("updateStatus".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -47,7 +49,7 @@ public class ServServlet extends HttpServlet {
 				String serv_no = req.getParameter("serv_no").trim();
 				
 				String status = req.getParameter("status").trim();
-				
+				String locs = req.getParameter("locs").trim();
 				ServVO servVO = new ServVO();
 				servVO.setServ_no(serv_no);
 				servVO.setStatus(status);
@@ -62,11 +64,22 @@ public class ServServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 
 				ServService servSvc = new ServService();
-				servVO = servSvc.updateStatus(serv_no, status);
+				servSvc.updateStatus(serv_no, status);
+				servVO=servSvc.getOneServ(serv_no);
+				if(locs.contains("selectByCom")){
+					 HttpSession session = req.getSession();
+					Set<ServVO> set = servSvc.getServByCom(servVO.getCom_no());
+					
+					session.setAttribute("selectByCom", set); 
+				}else if(locs.contains("selectByStype")){
+					 HttpSession session = req.getSession();
+					Set<ServVO> set = servSvc.getServByStype(servVO.getStype_no());
+					session.setAttribute("selectByStype", set); 
+				}
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				String url = "/Back_end/serv/listAllServ.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // �憓����漱listAllEmp.jsp
+				req.setAttribute("servVO", servVO);   
+				//String url = "/Back_end/serv/listAllServ.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(locs); // �憓����漱listAllEmp.jsp
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/
 
@@ -237,7 +250,9 @@ public class ServServlet extends HttpServlet {
 			Set<ServVO> set = servSvc.getServByStype(stype_no);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
+			 HttpSession session = req.getSession();
+			
+			 session.setAttribute("selectByStype", set);    // 資料庫取出的set物件,存入request
 			
 			String url = null;
 			url = "/Back_end/serv/selectByStype.jsp";   
@@ -255,8 +270,10 @@ public class ServServlet extends HttpServlet {
 			Set<ServVO> set = servSvc.getServByCom(com_no);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectByCom", set);    // 資料庫取出的set物件,存入request
+		   // 資料庫取出的set物件,存入request
+			 HttpSession session = req.getSession();
 			
+			 session.setAttribute("selectByCom", set); 
 			String url = null;
 			url = "/Back_end/serv/selectByCom.jsp";   
 			

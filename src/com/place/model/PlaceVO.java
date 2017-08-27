@@ -29,6 +29,16 @@ public class PlaceVO implements Serializable {
         this.placeViewSet = placeViewSet;
     }
     
+    public PlaceVO(String pla_no, String name, String lng, String lat, String addr, String pla_desc) {
+        super();
+        this.pla_no = pla_no;
+        this.name = name;
+        this.lng = lng;
+        this.lat = lat;
+        this.addr = addr;
+        this.pla_desc = pla_desc;
+    }
+    
     public String getPla_no() {
         return pla_no;
     }

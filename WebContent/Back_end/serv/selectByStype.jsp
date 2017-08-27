@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
+
 <div id="sidebar">
 
         <div class="sidebar-inner">
@@ -40,12 +41,12 @@
         </div>
 
     </div>
-<jsp:useBean id="selectByStype" scope="request" type="java.util.Set" />
+<jsp:useBean id="selectByStype" scope="session" type="java.util.Set" />
 
 <title>服務資料</title>
 <br><br>
 <div id="content">
-
+<input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" >
 <table class="table table-striped">
 
 	<tr>
@@ -62,7 +63,8 @@
 		<th>修改狀態</th>
 		<th>修改狀態</th>
 	</tr>
-	<c:forEach var="servVO" items="${selectByStype}" >
+		<%@ include file="page33.file" %> 
+	<c:forEach var="servVO" items="${selectByStype}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
 	<tr>
 		
@@ -78,14 +80,20 @@
 			<td>${servVO.score}</td>
 			<td>${servVO.status}</td>
 			<td><select style="width:150px;" name="status">
-				<option value="正常">正常
-				<option value="下架">下架
+				<c:if test="${servVO.status==\"下架\"}">
+					<option selected = "true" value="正常">正常
+					<option value="下架">下架
 				</select>
+				</c:if>
+				<c:if test="${servVO.status==\"正常\"}">
+					<option value="正常">正常
+					<option selected = "true" value="下架">下架
+				</c:if>
 		</td>
 			<td>
 			
 			  
-			    <input type="hidden" name="locs" value="/<%= request.getServletPath() %>">
+			    <input type="hidden" name="locs" value="/<%= request.getServletPath() %>?whichPage=<%=whichPage%>">
 			    <input type="hidden" name="serv_no" value="${servVO.serv_no}">
 			    <input type="submit" class="btn btn-info " value="修改狀態">
 			    <input type="hidden" name="action" value="updateStatus">
@@ -94,7 +102,7 @@
 	</tr></FORM>
 </c:forEach>
 </table>
-
+<%@ include file="page2.file" %>
 </div>
 
 <%@ include file="/Back_end/pages/backFooter.file"%>

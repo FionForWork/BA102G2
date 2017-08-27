@@ -68,8 +68,8 @@
 				<div class="row">
 					<c:if test='${temp.status.equals("未挑選")}'>
 						<div class="btn-group" style="right:15px; top:15px;position:absolute;">
-							<button type="submit" class="btn btn-info" id="uploadbtn">新增成品</button>
-							<button type="submit" class="btn btn-info" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp?temp_no=<%=temp_no%>'">編輯成品</button>
+							<button type="submit" class="btn btn-info" id="uploadbtn">新增照片或影片</button>
+							<button type="submit" class="btn btn-info" onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_UpdateTemp.jsp?temp_no=<%=temp_no%>'">編輯作品</button>
 						</div>
 						
 						

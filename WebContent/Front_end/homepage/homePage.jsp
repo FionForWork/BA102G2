@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
+
  <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">
     
@@ -24,26 +24,28 @@
 
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
-              <input type="text" class="form-control" name="id" placeholder="Enter email"  onkeypress="if (window.event.keyCode==13) return false;">
+              <input type="text" class="form-control" name="id" id="id" placeholder="Enter email"  onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
-              <input type="password" class="form-control" name="pwd" placeholder="Enter password"  onkeypress="if (window.event.keyCode==13) return false;">
+              <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password"  onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="checkbox">
              
             </div>
-           <center><div id="recaptcha_box">請驗證</div>
+        
               <input type="hidden" name="action" value="login">
               <input type="hidden" name="memslocation" value="<%= request.getRequestURI() %>">
               	
-              <button style="display:none" type="submit" id="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+              <button  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+          		
           </form>
         </div>
         <div class="modal-footer">
           <button    type="submit"class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
           <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+        <input  type="button"  id="fast"> 
         </div>
       </div>
       
@@ -62,25 +64,27 @@
           <form name="aaa" action="<%= request.getContextPath() %>/com/com.do" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> 帳號:</label>
-              <input type="text" class="form-control" name="id" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;">
+              <input type="text" class="form-control" name="id" id="id2" placeholder="Enter email" onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> 密碼:</label>
-              <input type="password" class="form-control" name="pwd" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;">
+              <input type="password" class="form-control" name="pwd" id="pwd2" placeholder="Enter password" onkeypress="if (window.event.keyCode==13) return false;">
             </div>
             <div class="checkbox">
              
             </div>
-             <center><div id="recaptcha_box2">請驗證</div>
+             
             <input type="hidden" name="action" value="login">
             <input type="hidden" name="comslocation" value="<%= request.getRequestURI() %>">
-              <button  style="display:none" type="submit" id="submit2" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
+              <button  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button>
+          
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
           <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
+          <input  type="button"  id="fast2"> 
         </div>
       </div>
       
@@ -89,47 +93,9 @@
   <form name="logout" ACTION="<%= request.getContextPath() %>/mem/mem.do" method=post >
                     <input type="hidden"  name="action" value="logout"/>
                           </form>
-  <script type="text/javascript">
-      var onloadCallback = function() {
-        // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
-        // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
-        
-        grecaptcha.render('recaptcha_box', {
-          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
-          'callback' : callback
-        });
-        
-        grecaptcha.render('recaptcha_box2', {
-          'sitekey' : '6LdioiwUAAAAAPE75Odiff1k7RtizRrOsiHXnF3w',
-     'callback' : callback2
-        });
-        
-        
-      };
-      
-      
-      function callback() {
-    		$(document).ready(function(){
-    			  
-    			$("#recaptcha_box").hide(1000);
-    			  $("#submit").show(1000);
-    			  
-    			});
-    	}
-function callback2() {
-    		$(document).ready(function(){
-    			  
-    			$("#recaptcha_box2").hide(1000);
-    			  $("#submit2").show(1000);
-    			  
-    			});
-    	}
-   
-    </script>
-
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>She Said Yes !</title>
+    <title>ＨomePage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
@@ -138,7 +104,6 @@ function callback2() {
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/Front_end/homepage/css/contact_us.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
@@ -150,10 +115,29 @@ function callback2() {
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();
 	pageContext.setAttribute("servList", servList);
+
 	DecimalFormat df = new DecimalFormat("#,##0.0"); 
 	pageContext.setAttribute("df", df);
+
 	Map<String,String> map =(LinkedHashMap) request.getAttribute("map");
 %>    
+<script>
+	$(document).ready(function(){  
+		$("#fast").click(function() {
+			$("#pwd").attr("value",'123123');
+			$("#id").attr("value",'lf2lf2111@gmail.com');
+			
+		});
+	});
+	</script> 
+	<script>
+	$(document).ready(function(){  
+		$("#fast2").click(function() {
+			$("#pwd2").attr("value",'123123');
+			$("#id2").attr("value",'lf2lf2111@gmail.com');
+		});
+	});
+	</script> 
 </head>
 <style>
 	h1,h2,h3,h4,h5,h6 {
@@ -330,7 +314,6 @@ function callback2() {
         </div>
     </div>
     <!--ad===========================================================================-->
-
 
     <!-- Modal for full size images on click-->
 <!--

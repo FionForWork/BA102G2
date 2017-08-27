@@ -87,8 +87,8 @@
 						onchange='showContent()'>
 						<option value="defalt">請選擇相簿</option>
 						<%-- 								<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}" varStatus="s"> --%>
-						<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}"
-							varStatus="s">
+						<c:forEach var="albVO"
+							items="${albSvc.getAllByMemNo(memVO.mem_no)}" varStatus="s">
 							<option value="${albVO.alb_no}">${albVO.name}</option>
 						</c:forEach>
 					</select>
@@ -129,6 +129,8 @@
 
 
 <div class="col-md-8 col-offset-1">
+
+
 	<div class="row">
 		<div class='col-sm-12 col-xs-12'>
 			<a type='button' class="btn btn-app btn-default" id='btnLoad'
@@ -143,18 +145,19 @@
 				<i class="fa fa-times"></i> 清除
 			</button>
 			<button class="btn btn-info" id='submitBtn'>裁切</button>
-			
+
 			<form id="image-form"
 				action='<%=request.getContextPath()%>/album/preview.do'
 				method="post" enctype="multipart/form-data">
 
-				<input type='hidden' id='xPoints' name='xPoints' value=''> 
-				<input type='hidden' id='yPoints' name='yPoints' value=''> 
-				<input type='hidden' name='mem_no' value='${memVO.mem_no}'> 
-				<input type='hidden' name='action' value='cropImage'> 
-				<input type="file" name="imageRemove" id='imgfile' onchange="preview_images()" style="display: none"> 
-				<input type='hidden' name='cont_no'>
-				<input type='hidden' name='pla_no' value='<%=pla_no%>'>
+				<input type='hidden' id='xPoints' name='xPoints' value=''> <input
+					type='hidden' id='yPoints' name='yPoints' value=''> <input
+					type='hidden' name='mem_no' value='${memVO.mem_no}'> <input
+					type='hidden' name='action' value='cropImage'> <input
+					type="file" name="imageRemove" id='imgfile'
+					onchange="preview_images()" style="display: none"> <input
+					type='hidden' name='cont_no'> <input type='hidden'
+					name='pla_no' value='<%=pla_no%>'>
 			</form>
 		</div>
 	</div>
@@ -454,7 +457,8 @@ input[type="radio"] {
 		output.drawImage(img, 0, 0);
 		hasImage = true;
 		};
-		img.src ="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>";
+		img.src ="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>
+	";
 <%}%>
 	window.addEventListener("load", init, false);
 </script>

@@ -48,11 +48,11 @@
         </div>
 
     </div>
-<title>員工資料</title>
+<title>管理員資料</title>
 <br><br><br>
 <div id="content">
-<input type="button" class="btn btn-info" value="新增員工" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/addAdm.jsp'" >  <input type="button" class="btn btn-info" value="新增權限" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/addAut.jsp'" ><br><br>
-<h3>全員工資料:</h3>
+<input type="button" class="btn btn-info" value="新增管理員" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/addAdm.jsp'" >  <input type="button" class="btn btn-info" value="新增權限" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/addAut.jsp'" ><br><br>
+<h3><font color='red'>全管理員資料:</font></h3>
 
 
 <table class="table table-striped">
