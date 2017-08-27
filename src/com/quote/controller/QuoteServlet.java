@@ -163,7 +163,7 @@ public class QuoteServlet extends HttpServlet {
 				res.getWriter().print("修改金額請填入數字");
 //				RequestDispatcher failureView = req.getRequestDispatcher(req.getParameter("requestURL"));
 //				failureView.forward(req, res);
-//				return;
+				return;
 			}
 			
 			QuoteService quoteService = new QuoteService();

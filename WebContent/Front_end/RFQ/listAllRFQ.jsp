@@ -3,15 +3,14 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.rfq.model.*"%>
 <%@ page import="com.mem.model.*"%>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.*" %>
 <%! int index = 0; %>
 <%
 	RFQService rfqService = new RFQService();
 	List<RFQVO> rfqList = rfqService.getAllRFQ();
 	DateFormat df = new SimpleDateFormat("YYYY年M月d日");
 	MemService memService = new MemService();
-	
+
 	pageContext.setAttribute("memService",memService);
     pageContext.setAttribute("rfqList",rfqList);
 	pageContext.setAttribute("df", df);
@@ -94,10 +93,11 @@
 						<% } %>					
 						<br>
 							<h3>${df.format(rfqDetailVO.ser_date)}
-							-${rfqDetailVO.location}找${servTypeService.getOne(rfqDetailVO.stype_no).name}服務</h3>
+							-${rfqDetailVO.location}找
+							<span style="color:#f14195">${servTypeService.getOne(rfqDetailVO.stype_no).name}</span>服務</h3>
 							${rfqDetailVO.content}<br><br>
-							${memService.getOneMem(rfqVO.mem_no).name}於${df.format(rfqVO.rfq_date)}詢價<br><br>
-							<p id="${rfqDetailVO.rfqdetail_no}">${sortingHat.getQuoteNum(quoteService.getAllQuote(rfqDetailVO.rfqdetail_no).size())}</p>
+							<b style="font-size:16px">${memService.getOneMem(rfqVO.mem_no).name}</b>於${df.format(rfqVO.rfq_date)}詢價<br><br>
+							<b style="font-size:16px" id="${rfqDetailVO.rfqdetail_no}">${sortingHat.getQuoteNum(quoteService.getAllQuote(rfqDetailVO.rfqdetail_no).size())}</b>
 							<hr>
 						</div>
 						<div class="col-md-2">
@@ -107,7 +107,7 @@
 							<input type="hidden" name="action" value="listQuote">
 							<input type="hidden" name="rfqMem_no" value="${rfqVO.mem_no}">
 							<input type="hidden" name="rfqdetail_no" value="${rfqDetailVO.rfqdetail_no}">
-							<input type="submit" class="btn btn-block btn-default" value="查看內容">
+							<input type="submit" class="btn btn-block btn-basic" value="查看內容">
 							</form>
 <!-- 廠商資料寫死 會員無法報價 -->
 							<c:if test="${rfqDetailVO.status.equals('1') && comVO != null}">

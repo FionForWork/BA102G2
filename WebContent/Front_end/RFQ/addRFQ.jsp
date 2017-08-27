@@ -28,15 +28,12 @@
 		       <div class="form col-md-offset-1 col-md-10">
 		           <form method="post" action="<%= request.getContextPath() %>/rfq/rfq.do" id="addRFQForm">
 		               <div class="form-group">
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="0" id="0001" checked="true" onchange="toggle(this)">拍婚紗
-		                   </label>
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="1" id="0002" onchange="toggle(this)">婚攝婚錄
-		                   </label>
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="2" id="0003" onchange="toggle(this)">新娘秘書
-		                   </label>
+							<input style="zoom:175%" type="checkbox" name="type" value="0" id="0001" checked="true" onchange="toggle(this)">
+							<b style="font-size:18px">拍婚紗</b>
+							<input style="zoom:175%" type="checkbox" name="type" value="1" id="0002" onchange="toggle(this)">
+							<b style="font-size:18px">婚攝婚錄</b>
+							<input style="zoom:175%" type="checkbox" name="type" value="2" id="0003" onchange="toggle(this)">
+							<b style="font-size:18px">新娘秘書</b>
 		               </div>
 		           <div id="form1">
 		               <div class="form-group">
@@ -210,7 +207,7 @@
 	function formOne(){
 		$('#formOneDate').val("2017-09-10");
 		$('#formOneLocation').val("桃園市");
-		$('#formOneContent').html("1.風格:中式龍鳳掛/浪漫甜美\n2.服務內容:整天拍攝服務，包含5套造型\n3.備註:\n(1).想自行選擇外拍地點(嘉義大學)\n(2).棚拍風格希望是華麗風");
+		$('#formOneContent').html("1.風格:中式龍鳳掛/浪漫甜美\n2.服務內容:整天拍攝服務，包含5套造型\n3.備註:\n(1).想自行選擇外拍地點(中央大學)\n(2).棚拍風格希望是華麗風");
 	}
 	function formTwo(){
 		$('#formTwoDate').val("2017-09-14");

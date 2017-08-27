@@ -14,6 +14,8 @@
 	pageContext.setAttribute("checkdf", checkdf);
 	DateFormat minDF = new SimpleDateFormat("YYYY年M月d日 ah點mm分");
 	pageContext.setAttribute("minDF", minDF);
+	DecimalFormat nf = new DecimalFormat("$#,##0"); 
+	pageContext.setAttribute("nf", nf);
 %>
 <jsp:useBean id="comService" class="com.com.model.ComService"/>
 <jsp:useBean id="rfqService" class="com.rfq.model.RFQService"/>
@@ -86,11 +88,15 @@
 						<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${quoteVO.com_no}" class="com_img img-circle">
 					</div>
 					<div class="col-md-6">
-						<h3>${comService.getOneCom(quoteVO.com_no).name}</h3>
+						<h3>
+							<a style="text-decoration:underline;color:black" href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${quoteVO.com_no}">
+								${comService.getOneCom(quoteVO.com_no).name}
+							</a>
+						</h3>
 						<p>於 ${minDF.format(quoteVO.quo_date)} 報價</p>
 						<p>${quoteVO.content}</p>
 						<h4><span>價格</span>
-							<b class="price text-pink" >${quoteVO.price}</b>
+							<b class="price text-pink" >${nf.format(quoteVO.price)}</b>
 						<span class="hidden-xs">元</span>
 					</div>
 <!--判斷是否自己的報價才能預約、是否預約過、廠商是否還有空-->
