@@ -38,10 +38,10 @@ Object comVO = session.getAttribute("comVO");
 	<div class="row">
 		<div class="col-xs-12 col-sm-7 col-sm-push-2">
 		<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">廠商資料</h1>
-			<div class="form-group" style="width:200px;height:200px;">		 
+			<div class="form-group" style="height:340px;">		 
 				 
 				  
-				   <img width="100%" height="auto" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" />
+				   <img width="auto" height="100%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${comVO.com_no}" />
 
 			</div>
 		

@@ -1,8 +1,10 @@
 package com.aut.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,19 +49,21 @@ public class AutServlet extends HttpServlet{
 		
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new HashMap<String,String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			AutService autSvc = new AutService();
+			String adm_no = req.getParameter("adm_no").trim();
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				
 				
 				String[] aut=req.getParameterValues("id");
-				String adm_no = req.getParameter("adm_no").trim();
+				 adm_no = req.getParameter("adm_no").trim();
 				AutVO autVO = new AutVO();
-				AutService autSvc = new AutService();
+				
+				
 				 for (int i = 0; i < aut.length; i++) {
 					
 					autVO.setAdm_no(adm_no);
@@ -68,7 +72,12 @@ public class AutServlet extends HttpServlet{
 					autVO = autSvc.addAut(adm_no,aut[i]);
 				 }
 
-				
+				 if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/Front_end/aut/addAut.jsp");
+						failureView.forward(req, res);
+						return;
+					}
 				
 
 				// Send the use back to the form, if there were errors
@@ -84,7 +93,9 @@ public class AutServlet extends HttpServlet{
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+				   Map<String,List> oneAll =autSvc.getOneAll(adm_no);
+				errorMsgs.put("aut","權限重複,該管理員已有"+oneAll.values()+"權限,請勿重複");
+				
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/Back_end/aut/addAut.jsp");
 				failureView.forward(req, res);

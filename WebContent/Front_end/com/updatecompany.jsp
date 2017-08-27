@@ -67,18 +67,18 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
     	</div>
     	<div class="form-group">
            <span >廠商地址:<font color='red'>${errorMsgs.get("loc")}</font></span>
-           <input type="text" class="form-control"  name="loc" value="${comVO.loc}">
+           <input type="text" id="loc" class="form-control"  name="loc" value="${comVO.loc}">
     	</div>
 
     	
     	<div class="form-group">
            <span >電話:<font color='red'>${errorMsgs.get("phone")}</font></span>
-           <input type="text" class="form-control"  name="phone" value="${comVO.phone}">
+           <input type="text" id="phone" class="form-control"  name="phone" value="${comVO.phone}">
     	</div>
     	
     	<div class="form-group">
            <span >帳戶:<font color='red'>${errorMsgs.get("account")}</font></span>
-           <input type="text" class="form-control"  name="account" value="${comVO.account}">
+           <input type="text" id="account" class="form-control"  name="account" value="${comVO.account}">
     	</div>
     	
 
@@ -92,7 +92,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 		
 		<div class="form-group">
            <span >廠商介紹:<font color='red'>${errorMsgs.get("com_desc")}</font></span>
-           <textarea name=com_desc  class="form-control" rows=8 >${comVO.com_desc}</textarea>
+           <textarea name=com_desc id="com_desc" class="form-control" rows=8 >${comVO.com_desc}</textarea>
  
     	</div>
 
@@ -108,8 +108,8 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 <input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/com/listOneCom.jsp'" >
 </FORM>
 
-
-
+<br>
+<input  type="button" class="btn btn-info "  id="fast3">
 </div></div>
 
 <script>
@@ -125,3 +125,15 @@ $("#input-1").fileinput({
 </script>
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>
+<script>
+	$(document).ready(function(){  
+		$("#fast3").click(function() {
+		
+			$("#com_desc").val('我們賣最好的東西,會讓你閃閃亮亮~');
+			$("#phone").attr("value",'0933222555');
+			$("#account").attr("value",'007-88995-456986269');
+			$("#loc").attr("value",'320桃園市中壢區環中東路538號');
+			
+		});
+	});
+	</script> 

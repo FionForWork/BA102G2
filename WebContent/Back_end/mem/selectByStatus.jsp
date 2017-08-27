@@ -43,9 +43,12 @@
 <title>Insert title here</title>
 <br><br>
 <div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看會員</h3>
+</div>
 <input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/select_member.jsp'" >
 
-
+<br><br>
 <table class="table table-striped">
 	<tr>
 		<th>照片</th>

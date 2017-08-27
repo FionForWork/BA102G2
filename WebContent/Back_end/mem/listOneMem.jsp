@@ -52,7 +52,9 @@ td  {font-size:20px;
     </div>
 <br><br><br>
 <div id="content">
-
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看會員</h3>
+</div>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
 	

@@ -45,13 +45,16 @@
 
     </div>
 <title>管理員資料修改 </title>
+<br><br><br>
 <div id="content">
-
+<div class="text-center well" >
+	<h2 style="font-weight:900">管理員資料修改 </h3>
+</div>
 
 <br>
 	
 <input type="button" class="btn btn-info" value="回首頁" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp'" >  <br><br>
-	<h3>管理員資料修改 :</h3>
+	
 	
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form1">
 
