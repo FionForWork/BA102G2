@@ -68,9 +68,7 @@ img .preview{
 	color:red;
 	
 }
-#autoInputBtn{
-	padding:8px;
-}
+
 </style>
 
 <script>
@@ -125,7 +123,7 @@ $("document").ready(function(){
 
 <div class='formStyle'>
 		
-			<h3>建立待挑選作品  <button id='autoInputBtn1' class='btn'></button>&nbsp<button id='autoInputBtn2' class='btn'></button></h3>
+			<h3>建立待挑選作品  <input id='autoInputBtn1' name='autoInput' type='radio'>&nbsp<input id='autoInputBtn2' name='autoInput' type='radio'></h3>
 			<br>
 			<form action="<%=request.getContextPath()%>/temp/temp.do" method="post"
 				enctype="multipart/form-data">

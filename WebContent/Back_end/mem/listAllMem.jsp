@@ -53,7 +53,9 @@
 
 <div id="content">
 
-
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看全會員</h3>
+</div>
 			 
 
 <table class="table table-striped">

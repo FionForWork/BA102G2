@@ -51,15 +51,12 @@ td  {font-size:20px;
 
     </div>
 <title>管理員個人資料</title>
-
+<br><br><br>
 <div id="content">
 
-	 
-		<td>
-		<h1>我的資料</h1>
-		
-
-		</td>
+	<div class="text-center well" >
+	<h2 style="font-weight:900">個人資料</h3>
+</div>
 <table class="table table-striped"  >
 
 	<tr>

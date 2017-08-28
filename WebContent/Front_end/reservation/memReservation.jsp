@@ -36,6 +36,8 @@
 <head>
 </head>
 <%@ include file="page/memHeader.file" %>
+<link href="<%=request.getContextPath()%>/Front_end/reservation/css/sweetalert2.min.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/Front_end/reservation/js/sweetalert2.common.js" type="text/javascript"></script>
 <ul class="nav nav-tabs nav-justified">
 	<li class="pointer active"><a class="menua" onclick="showRes(this,0)" style="color:#f14195">未繳訂金</a></li>
 	<li class="pointer"><a class="menua" onclick="showRes(this,1)">訂單確認</a></li>
@@ -54,17 +56,17 @@
 				<div class="row">
 						<div class="col-md-6">
 							<img src="<%=request.getContextPath()%>/ShowPictureServletDAO?com_no=${reservationVO.com_no}"class="img-circle" style="width:30px;height:30px">
-							${comService.getOneCom(reservationVO.com_no).name}
+							<b><a  style="text-decoration:underline;color:black" href="<%=request.getContextPath()%>/Front_end/com_page/company_page.jsp?com_no=${reservationVO.com_no}">${comService.getOneCom(reservationVO.com_no).name}</a></b>
 							${dateDF.format(reservationVO.serv_date)}的
-							${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}
+							<b style="color:#f14195;font-size:16px">${reservationVO.serv_no.startsWith('7')?"報價預約":"服務預約"}</b>
 						</div>
 						<div class="col-md-6 text-right">
 							訂單狀態 : 
-							<i style="color:#f14195;font-weight:500" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true">
+							<i style="color:#f14195;font-weight:500;font-size:25px" class="${sortingHat.getResIcon(reservationVO.status)}" aria-hidden="true">
+							</i>
 							<c:if test="${reservationVO.status.equals('3')}">
 								${reservationVO.score}分!
 							</c:if>
-							</i>
 							${sortingHat.getResStatus(reservationVO.status)}
 						</div>
 				</div><hr>
@@ -88,7 +90,7 @@
 					</c:when>
 				</c:choose>
 					</div><hr>
-					<h4 class="text-right">
+					<div class="text-right">
 				<c:choose>
 					<c:when test="${reservationVO.status.equals('0')}">
 					<button id="${reservationVO.res_no}" class="btn" style="background-color:#ff5722;color:white" onclick="pay(this)" data-toggle="modal" data-target="#payModal">
@@ -128,8 +130,9 @@
 				</c:choose>
 <!-- 					<button class="btn" style="background-color:#ff5722;color:white">聊聊</button> -->
 					<i class="fa fa-usd" aria-hidden="true"></i>
-						訂單金額 : ${nf.format(reservationVO.price)}
-					</h4>
+						<b>訂單金額 : </b>
+						<b  class="price text-pink" >${nf.format(reservationVO.price)}</b>
+					</div>
 			</div>
 		</div>
 	</c:forEach>
@@ -301,7 +304,11 @@ function checkForm() {
 						$('#allRes').load("memReservation.jsp #allRes",{"status":"0"});
 					}
 				});
-				
+				sweetAlert(
+						  '付款成功!',
+						  '訂單狀態已更新!',
+						  'success'
+						);
 			}else{
 				var checkResult = $("<div style='color:red'>").text(result.r);
 				$('#showPanel').html(checkResult);
@@ -388,6 +395,11 @@ function resCompleted(y){
 		},
 		success : function() {
 			$('#allRes').load("memReservation.jsp #allRes",{"status":"1"});
+			sweetAlert(
+					  '確認服務完成!',
+					  '訂單狀態已更新!',
+					  'success'
+					);
 		}
 	});
 	
@@ -406,9 +418,15 @@ function rating(y){
 		},
 		success : function() {
 			$('#allRes').load("memReservation.jsp #allRes",{"status":"2"});
+		sweetAlert(
+				  '評價完成!',
+				  '謝謝您的評價!',
+				  'success'
+				);
 		}
 	});
 }
+
 
 </script>
 </html>

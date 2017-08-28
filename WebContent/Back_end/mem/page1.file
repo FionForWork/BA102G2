@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%  int rowsPerPage = 5;  //每頁的筆數     
+<%  int rowsPerPage = 6;  //每頁的筆數     
     int rowNumber=0;     //總筆數
     int pageNumber=0;    //總筆數    
     int whichPage=1;       //第幾頁
@@ -32,7 +32,8 @@
     } 
 %>
 <%if (pageNumber>0){%>
-<b><font color= red>第<%=whichPage%>/<%=pageNumber%>頁 </font></b>
+<b><font color= red>現在是第<%=whichPage%>頁 共有<%=pageNumber%>頁 </font></b>
 <%}%>
-<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color=red><%=rowNumber%></font>筆</b>
+<p align="right"><b>共有<font color=red><%=rowNumber%></font>筆資料</b></p> 
+
 

@@ -51,8 +51,11 @@
 <title>管理員資料</title>
 <br><br><br>
 <div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看全管理員資料</h3>
+</div>
 <input type="button" class="btn btn-info" value="新增管理員" onclick="location.href='<%=request.getContextPath()%>/Back_end/adm/addAdm.jsp'" >  <input type="button" class="btn btn-info" value="新增權限" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/addAut.jsp'" ><br><br>
-<h3><font color='red'>全管理員資料:</font></h3>
+
 
 
 <table class="table table-striped">

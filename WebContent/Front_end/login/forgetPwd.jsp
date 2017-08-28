@@ -27,11 +27,11 @@
 				<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">我是廠商</h1>  <br>
 		<div class="form-group">
 					<span>帳號 :<font color='red'>${errorMsgs.get("forgetPwdCom")}</font></span>
-					<input type="email" id="email" placeholder="請填電子郵件" name="id" class="form-control" />
+					<input type="email"  id="id4" placeholder="請填電子郵件" name="id" class="form-control" />
 		</div>
 	
 		<input type="hidden" name="action" value="forgetPwd">
-		<input type="submit" class="btn btn-info" value="送出新增">  <br><br><br>
+		<input type="submit" class="btn btn-info" value="確定">  <input  type="button" class="btn btn-info "  id="fast9"><br><br><br>
 	</FORM>
   
     
@@ -40,14 +40,14 @@
 				<h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">我是會員</h1> <br>
 		<div class="form-group">
 					<span>帳號 :<font color='red'>${errorMsgs.get("forgetPwdMem")}</font></span>
-					<input type="email" placeholder="請填電子郵件" name="id" class="form-control" />
+					<input type="email" id="id3" placeholder="請填電子郵件" name="id" class="form-control" />
 		</div>
 		
 
 		<input type="hidden" name="action" value="forgetPwd">
-		<input type="submit" id="submit" class="btn btn-info" value="確定">
+		<input type="submit" id="submit" class="btn btn-info" value="確定">	<input  type="button" class="btn btn-info "  id="fast8">
 	</FORM>
-	
+
     <div class="col-xs-12 col-sm-3"></div>
   </div>
 </div>
@@ -60,3 +60,17 @@
 
 
 <%@ include file="/Front_end/mem/page/register_footer.file"%>
+<script>
+	$(document).ready(function(){  
+		$("#fast9").click(function() {
+			$("#id4").attr("value",'lf2lf2111@gmail.com');
+
+		});
+	});
+	$(document).ready(function(){  
+		$("#fast8").click(function() {
+			$("#id3").attr("value",'lf2lf2111@gmail.com');
+
+		});
+	});
+	</script> 

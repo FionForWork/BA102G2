@@ -44,7 +44,9 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
     </div>
 <br><br><br>
 <div id="content">
-<h3>管理員資料新增:</h3>
+<div class="text-center well" >
+	<h2 style="font-weight:900">管理員資料新增</h3>
+</div>
 
 
 
@@ -52,9 +54,9 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 <table class="table table-striped" >
 
 	<tr>
-		<td>管理員編號:</td>
-		<td><input type="email" name="id" 
-			value="<%= (admVO==null)? "123@1234.com" : admVO.getId()%>" /></td>
+		<td>管理員帳號:</td>
+		<td><input type="email" name="id" id="id"
+			value="<%= (admVO==null)? "" : admVO.getId()%>" /></td>
 	</tr>
 	
 
@@ -62,16 +64,14 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 
 	<tr>
 		<td>管理員名字:<font color='red'>${errorMsgs.get("loc")}</font></td>
-		<td><input type="TEXT" name="name" 
-			value="<%= (admVO==null)? "MANAGER" : admVO.getName()%>" /></td>
+		<td><input type="TEXT" name="name" id="name"
+			value="<%= (admVO==null)? "" : admVO.getName()%>" /></td>
 	</tr>
 	<tr>
 		<td>管理員職位:</td>
 		<td><select name="job" style="width: 163px;">
-			　<option  value="員工">員工</option>
-			　<option value="經理">經理</option>
-			 <option value="工讀生">工讀生</option>
-			 <option  value="組長">組長</option>
+			<option value="經理">經理</option>
+			<option  value="員工">員工</option>
 		</select></td>
 	</tr>
 	
@@ -79,18 +79,28 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 		<td>管理員狀態:</td>
 		<td>
 		<select name="status" style="width: 163px;">
-			　<option value="停權">停權</option>
 			　<option value="正常">正常</option>
-
+	   		 <option value="停權">停權</option>
 		</select>
 		
 		</td>
 	</tr>
 
 </table>
+
 <br>
 
 <input type="hidden" name="action" value="insert">
 <input type="submit" class="btn btn-info" value="送出新增"></FORM>
-</div>
+<br>
+<input type="button" class="btn btn-info " id="fast"></div>
 <%@ include file="/Back_end/pages/backFooter.file"%>
+<script> 
+$(document).ready(function(){  
+		$("#fast").click(function() {
+			
+			$("#id").attr("value",'lf2lf2111@gmail.com');
+			$("#name").attr("value",'沈沈');
+		});
+	});
+	</script> 

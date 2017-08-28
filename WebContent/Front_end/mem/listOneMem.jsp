@@ -3,11 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ page import="java.util.*"%>
 <%
-
+String ok = (String)request.getAttribute("ok");
 Object memVO = session.getAttribute("memVO");     
 %>
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
- 
 
     <div class="container">
 	<div class="row">
@@ -107,6 +106,5 @@ Object memVO = session.getAttribute("memVO");
 		</div>
 	</div>
 </div>
-
 
 <%@ include file="page/register_footer.file"%>

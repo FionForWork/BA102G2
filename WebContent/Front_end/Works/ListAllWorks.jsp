@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.com.model.*" %>
+<%@ page import="com.works.model.*" %>
 
-<jsp:useBean id="worksSvc" scope="page"
-	class="com.works.model.WorksService"></jsp:useBean>
+<%-- <jsp:useBean id="worksSvc" scope="page" --%>
+<%-- 	class="com.works.model.WorksService"></jsp:useBean> --%>
 
 <%
 	ComVO comVO = (ComVO)session.getAttribute("comVO");
@@ -12,6 +13,9 @@
 	//String com_no = (String) session.getAttribute("com_no");
 	//String com_no = "2003";
 	//pageContext.setAttribute("com_no", com_no);
+	WorksService worksSvc = new WorksService();
+	List<WorksVO> worksList = worksSvc.getAllByComNo(comVO.getCom_no());
+	pageContext.setAttribute("worksList",worksList);
 %>
 
 <%@ include file="page/works_header.file"%>
@@ -63,7 +67,12 @@
 				</div>
 					<br>	
 					<div class="text-center">
-						<h2>所有作品</h2>
+						<c:if test="${worksList.size() != 0 }">
+							<h2>所有作品</h2>
+						</c:if>
+						<c:if test="${worksList.size() == 0 }">
+							<h2>您尚未有任何作品唷!</h2>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -105,7 +114,7 @@
 
 
 			<div id='changeContent'>
-			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(comVO.com_no)}"
+			<c:forEach var="worksVO" items="${worksList}"
 				varStatus="s">
 				<c:if test="${(s.count % 3) == 1}">
 					<div class="row">

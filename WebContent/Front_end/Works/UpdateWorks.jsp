@@ -76,7 +76,7 @@ $(document).ready(function(){
 						<br>
 
 					<div class="text-center">
-						<h2>修改作品 <button id='autoInputBtn' class='btn'></h2>
+						<h2>修改作品 <input type='radio' id='autoInputBtn' name='autoInput'></h2>
 						<br>
 					</div>
 				</div>

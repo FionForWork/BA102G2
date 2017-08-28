@@ -186,7 +186,10 @@
             },
             success : function(response) {
                 if(response=="out of amount"){
-                    alert("超過庫存，請減少數量");
+                    swal('數量錯誤',
+                         '超過庫存，請降低數量',
+                         'error'
+                       )
                 }
                 else{
                     $(".simpleCart_total").text("NT$"+response);

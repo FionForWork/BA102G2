@@ -94,7 +94,7 @@
                             <a href="<%=request.getContextPath()%>/Front_end/reservation/searchService.jsp"><b>看方案</b></a>
                         </li>
                         <li>
-                            <a href="<%=request.getContextPath()%>/Front_end/place/placeView.jsp"><b>店家地圖</b></a>
+                            <a href="<%=request.getContextPath()%>/Front_end/place/comView.jsp"><b>店家地圖</b></a>
                         </li>
                     </ol>
                 </li>

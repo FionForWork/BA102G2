@@ -161,7 +161,10 @@ div .vertical-center {
         }
         if (errorMessage != "") {
             flag = false;
-            alert(errorMessage);
+            swal('資訊錯誤',
+                 errorMessage,
+                 'error'
+               )
         }
         if (flag) {
             $("#buy").submit();

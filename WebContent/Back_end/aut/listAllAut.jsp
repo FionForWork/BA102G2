@@ -52,8 +52,12 @@
 
     </div>
 <br><br><br>
-<div id="content">
 
+
+<div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">瀏覽管理員權限</h3>
+</div>
 
 <input type="button" class="btn btn-info" value="新增權限" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/addAut.jsp'" >
 <br>
@@ -63,6 +67,7 @@
 		<th>權限編號</th>
 		<th>刪除</th>
 	</tr>
+	<br>
 	<%@ include file="page1.file" %> 
 
 	

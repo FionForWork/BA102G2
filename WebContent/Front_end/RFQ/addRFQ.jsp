@@ -28,30 +28,28 @@
 		       <div class="form col-md-offset-1 col-md-10">
 		           <form method="post" action="<%= request.getContextPath() %>/rfq/rfq.do" id="addRFQForm">
 		               <div class="form-group">
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="0" id="0001" checked="true" onchange="toggle(this)">拍婚紗
-		                   </label>
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="1" id="0002" onchange="toggle(this)">婚攝婚錄
-		                   </label>
-		                   <label class="checkbox-inline">
-		                     <input type="checkbox" name="type" value="2" id="0003" onchange="toggle(this)">新娘秘書
-		                   </label>
+							<input style="zoom:175%" type="checkbox" name="type" value="0" id="0001" checked="true" onchange="toggle(this)">
+							<b style="font-size:18px">拍婚紗</b>
+							<input style="zoom:175%" type="checkbox" name="type" value="1" id="0002" onchange="toggle(this)">
+							<b style="font-size:18px">婚攝婚錄</b>
+							<input style="zoom:175%" type="checkbox" name="type" value="2" id="0003" onchange="toggle(this)">
+							<b style="font-size:18px">新娘秘書</b>
 		               </div>
-		               
 		           <div id="form1">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的拍婚紗服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的拍婚紗服務填寫客製化需求
+		                    <input type="radio" name="optradio" onclick="formOne()">
+		                   </h3></label>
 		                    <input type="hidden" name="stype_no" value="0001">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" name="ser_date" 
+		                        <input id="formOneDate" type="date" class="form-control" name="ser_date" 
 		                        value=<%= new Timestamp(System.currentTimeMillis()) %>>
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select id="formOneLocation" name="location" class="form-control">
 		                            <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -77,7 +75,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formOneContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -87,17 +85,19 @@
 		                    </div>
 		                    <div id="form2" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的婚攝/婚錄服務填寫客製化需求
+		                   <input type="radio" name="optradio" onclick="formTwo()">
+		                   </h3></label>
 		                        <input type="hidden" name="stype_no" value="0002">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
+		                        <input id="formTwoDate" type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select id="formTwoLocation" name="location" class="form-control">
 		                             <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -123,7 +123,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formTwoContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -133,17 +133,19 @@
 		                    </div>
 		                    <div id="form3" style="display: none">
 		               <div class="form-group">
-		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求</h3></label>
+		                   <label><h3 style="color:#f14195">為您的新娘秘書服務填寫客製化需求
+		                   <input type="radio" name="optradio"  onclick="formThree()">
+		                   </h3></label>
 		                        <input type="hidden" name="stype_no" value="0003">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>需求日期</label>
-		                        <input type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
+		                        <input id="formThreeDate" type="date" class="form-control" value=<%= new Timestamp(System.currentTimeMillis()) %>
 		                            name="ser_date">
 		                    </div>
 		                    <div class="form-group col-md-6">
 		                        <label>地點</label>
-		                        <select name="location" class="form-control">
+		                        <select  id="formThreeLocation" name="location" class="form-control">
 		                             <option value="台北市">台北市</option>
 		                            <option value="新北市">新北市</option>
 		                            <option value="桃園市">桃園市</option>
@@ -169,7 +171,7 @@
 		                    </div>
 		                    <div class="from-group col-md-12">
 		                        <label>需求內容</label>
-		                        <textarea rows="10" class="form-control" name="content">
+		                        <textarea id="formThreeContent" rows="10" class="form-control" name="content">
 1. 風格:時尚韓風/中式龍鳳掛/浪漫甜美/自然清新/不拘
 2. 服務內容:
 3. 備註:
@@ -197,9 +199,24 @@
 		   return;   
 		}	
 	}
-	
 	window.onload = function (){
 	  //註冊表單被送出時檢驗資料
 	  document.getElementById("addRFQForm").onsubmit = checkForm;
 	};
+	
+	function formOne(){
+		$('#formOneDate').val("2017-09-10");
+		$('#formOneLocation').val("桃園市");
+		$('#formOneContent').html("1.風格:中式龍鳳掛/浪漫甜美\n2.服務內容:整天拍攝服務，包含5套造型\n3.備註:\n(1).想自行選擇外拍地點(中央大學)\n(2).棚拍風格希望是華麗風");
+	}
+	function formTwo(){
+		$('#formTwoDate').val("2017-09-14");
+		$('#formTwoLocation').val("桃園市");
+		$('#formTwoContent').html("1.儀式宴客：半天（儀式+宴客）\n2.地點：中壢區\n3.內容：單人雙機/平面攝影\n4.備註：\n(1).若9/14全天（早儀式+晚宴客）一起是否有優惠價\n(2).服務內容及照片張數另外贈送項目");
+	}
+	function formThree(){
+		$('#formThreeDate').val("2017-09-14");
+		$('#formThreeLocation').val("桃園市");
+		$('#formThreeContent').html("1.儀式宴客：早上迎娶 晚宴\n2.地點：桃園市區飯店\n3.內容:結婚3造型+1位媽媽妝\n4.備註：希望有緣的新秘給作品報價\n報價請含車馬~~\n如果有竹苗新秘我們可以接送唷!\n預算的話不超過2萬為主 感恩~~~");
+	}
 </script>

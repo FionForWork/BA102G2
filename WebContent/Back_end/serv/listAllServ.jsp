@@ -51,6 +51,9 @@
 
 <br>
 <div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看所有服務</h3>
+</div>
 <input type="button" class="btn btn-info" value="返回" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" ><br><br>
 <table class="table table-striped">
 	<tr>
@@ -73,7 +76,11 @@
 		<tr align='center' valign='middle'>
 		
 			<td>${servVO.serv_no}</td>
-			<td>${servVO.stype_no}</td>
+			<td><c:if test="${servVO.stype_no==\"0001\"}">0001:拍婚紗</c:if>
+			<c:if test="${servVO.stype_no==\"0002\"}">0002:婚攝婚錄</c:if>
+			<c:if test="${servVO.stype_no==\"0003\"}">0003:新娘秘書</c:if>
+			
+			</td>
 			<td>${servVO.com_no}</td>
 			<td>${servVO.deposit}</td>
 			<td>${servVO.price}</td>

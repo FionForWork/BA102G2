@@ -205,18 +205,29 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 id="res-date" class="modal-title">
+				<h3 id="res-date" class="modal-title" style="color:#f14195">
 					您想預約<%= localDate.getYear() %>年<%=localDate.getMonthValue()%>月${date}日的服務是...
-				</h4>
+				</h3>
 			</div>
 			<div class="modal-body">
 			<div class="row">
 			<c:forEach var="servVO" items="${servList}">
 				<div class="col-xs-4">
-				<div style="border-width:1px;border-style:solid">
-					<input type="radio" name="serv_no" value="${servVO.serv_no}">${servVO.title}<hr>
-					<div style="height:100px">${servVO.content}</div><hr>
-					TOTAL:${servVO.price}
+				<div style="border-width:1px;border-style:solid;border-radius: 3px;padding:4px">
+					<div class="text-center">
+						<input style="zoom:150%;" type="radio" name="serv_no" value="${servVO.serv_no}">
+						<b style="font-size:17px">${servVO.title}</b><hr>
+					</div>
+					<div style="height:100px;text-align:justify;">${servVO.content}</div><hr>
+					<div class="label-price text-right">
+						<span class="small">價格</span>
+						<b class="price text-pink" >${servVO.price}</b>
+						<span class="hidden-xs">元</span>
+					</div>
+					<div class="label-price text-right" style="font-size:12px">
+						<span class="small">訂金</span>
+						<span class="hidden-xs">${servVO.deposit}元</span>
+					</div>
 				</div>
 				</div>
 			</c:forEach>
@@ -229,7 +240,7 @@
 				<input type="hidden" id="aID" value="">
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 <!-- 				<input type="submit" class="btn btn-info" value="送出預約"> -->
-				<button type="button" class="btn btn-info" onclick="onMessage('${memVO.name}')">送出預約</button>
+				<button type="button" class="btn btn-danger" onclick="onMessage('${memVO.name}')">送出預約</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>

@@ -1,9 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.aut.model.*"%>
-    
+<%@ page import="java.util.*"%>
 <%
 AutVO autVO = (AutVO) request.getAttribute("autVO");
+Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 %>
 <%@ include file="/Back_end/adm/page/backHeader.file"%>
 <script src="<%=request.getContextPath()%>/Front_end/Resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -46,12 +47,13 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
     </div>
 <br><br><br>
 <div id="content">
-<h3>新增管理員權限:</h3>
-
+<div class="text-center well" >
+	<h2 style="font-weight:900">新增管理員權限 </h3>
+</div>
 <input type="button" class="btn btn-info" value="返回" onclick="location.href='<%=request.getContextPath()%>/Back_end/aut/listAllAut.jsp'" >
 
 
-<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/aut/aut.do" name="form1">
+<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/aut/aut.do" name="form1" onsubmit="return ifChecked();">
 <table class="table table-striped">
 	<jsp:useBean id="admSvc" scope="page" class="com.adm.model.AdmService" />
 	<tr>
@@ -68,8 +70,9 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 	
 	<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 	<tr>
-		<td>權限:<font color=red><b>*</b></font></td>
+		<td>權限:</td>
 		<td>
+		<font color='red'>${errorMsgs.get("length")}${errorMsgs.get("aut")}</font><br>
 			 <input TYPE="checkbox"　name="id" id="id" VALUE="01">員工資料管理　　　
 			 <input TYPE="checkbox" name="id" id="id" VALUE="02">會員資料管理　　　
 			 <input TYPE="checkbox" name="id" id="id" VALUE="03">廠商資料管理　　　
@@ -79,7 +82,7 @@ AutVO autVO = (AutVO) request.getAttribute("autVO");
 			 <input TYPE="checkbox" name="id" id="id" VALUE="07">景點資料管理　　　
 			 <input TYPE="checkbox" name="id" id="id" VALUE="08">廣告資料管理<BR><BR>
 			 <input TYPE="checkbox" name="id" id="id"  VALUE="09">檢舉資料管理　　　<BR><BR><BR><BR>
-			 <input TYPE="button" class="btn btn-info " VALUE="員工" id="adm">　　　　　　　　
+			 <input TYPE="button" class="btn btn-info" VALUE="員工" id="adm">　　　　　　　　
 			 <input TYPE="button"class="btn btn-info " VALUE="經理" id="manager">　　　　　　　　
 　　　　　　　　
 		</td>
@@ -106,9 +109,25 @@ $("#adm").click(function() {
 	$("input[name=id][value=09]").attr("checked",true);
 	});
 });
-</script>	
+</script>
+<script>
+function ifChecked(){
+   var a = document.getElementsByName("id"); 
+   var n = a.length;
+   var k = 0;
+   for (var i=0; i<n; i++){
+        if(a[i].checked){
+            k = 1;
+        }
+    }
+        if(k==0){
+        	alert("請填選權限");
+        	return  false;
+    	}
+ }	
+</script>
 </table>
 <br>
 <input type="hidden"  name="action" value="insert">
-<input type="submit" class="btn btn-info " value="送出新增"></FORM>
+<input type="submit"  id="submit"class="btn btn-info "  value="送出新增"></FORM>
 <%@ include file="/Back_end/pages/backFooter.file"%>

@@ -10,7 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -23,7 +23,7 @@
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/sprflat-theme/jquery.ui.all.css"
 	rel="stylesheet" />
 
-<link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">
+
 <link
 	href="<%=request.getContextPath()%>/Back_end/homepage/assets/css/plugins.css"
 	rel="stylesheet" />
@@ -37,7 +37,9 @@
 	type="image/png">
  <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
 <meta name="msapplication-TileColor" content="#3399cc" />
-<link href="<%=request.getContextPath()%>/Back_end/advertising/css/ad.css" rel="stylesheet">
+<form name="logout" ACTION="<%= request.getContextPath() %>/adm/adm.do" method=post >
+                    <input type="hidden"  name="action" value="logout"/>
+                          </form>
 </head>
 <body>
 	<div id="header">
@@ -78,7 +80,7 @@
                 <li><a href="<%=request.getContextPath()%>/Back_end/mem/select_member.jsp"><i class="en-users"></i>一般會員管理 </a></li>
 				</c:if>
 				<c:if test="${aut.contains(\"03\")}">
-				<li><a href="<%=request.getContextPath() %>/Back_end/com/listAllCom.jsp" class="active"><i class="en-users"></i>廠商管理 </a></li>
+				<li><a href="<%=request.getContextPath() %>/Back_end/com/listAllCom.jsp"><i class="en-users"></i>廠商管理 </a></li>
 				</c:if>
 				<c:if test="${aut.contains(\"01\")}">
 				<li><a href="<%=request.getContextPath()%>/Back_end/adm/listAllAdm.jsp"><i class="en-users"> </i>管理者設定 </a></li>

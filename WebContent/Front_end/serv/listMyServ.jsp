@@ -36,7 +36,6 @@
 
 <table class="table table-striped">
 	<tr>
-		<th>服務編號</th>
 		<th>服務型態</th>
 		<th>訂金</th>
 		<th>價錢</th>
@@ -55,8 +54,10 @@
 		
 		<tr align='center' valign='middle'>
 
-			<td>${servVO.serv_no}</td>
-			<td>${servVO.stype_no}</td>
+			<td><c:if test="${servVO.stype_no==\"0001\"}">0001:拍婚紗</c:if>
+			<c:if test="${servVO.stype_no==\"0002\"}">0002:婚攝婚錄</c:if>
+			<c:if test="${servVO.stype_no==\"0003\"}">0003:新娘秘書</c:if>
+			</td>
 			<td>${servVO.deposit}</td>
 			<td>${servVO.price}</td>
 			<td>${servVO.title}</td>

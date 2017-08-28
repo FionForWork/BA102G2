@@ -43,8 +43,11 @@
     </div>
 <title>選擇會員</title>
 <br><br><br>
-<div id="content" style="padding:20px 1px 1px 20px;" ><h2>查看會員</h2></div>
+
 <div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">查看會員</h3>
+</div>
 <input type="button" class="btn btn-info" value="觀看全部會員" onclick="location.href='<%=request.getContextPath()%>/Back_end/mem/listAllMem.jsp'" ><br><br>
 
 <table class="table table-striped">

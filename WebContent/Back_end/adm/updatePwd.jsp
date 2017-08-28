@@ -41,11 +41,12 @@
     </div>
     </script>
 <title>修改密碼</title>
-<div id="content">
-<br><br><br><br><br><br>
-<br><br><br>
-<center> <h1>密碼修改</h1></center>
 
+<br><br><br>
+<div id="content">
+<div class="text-center well" >
+	<h2 style="font-weight:900">管理員密碼修改</h3>
+</div>
 
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/adm/adm.do" name="form9" onSubmit="return check();" >
