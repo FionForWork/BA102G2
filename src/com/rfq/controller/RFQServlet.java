@@ -75,9 +75,10 @@ public class RFQServlet extends HttpServlet {
 			RFQService rfqService = new RFQService();
 			rfqService.addRFQ(memVO.getMem_no(), new Timestamp(System.currentTimeMillis()), list);
 			
-			String url = "/Front_end/RFQ/listAllRFQ.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+//			String url = "/Front_end/RFQ/listAllRFQ.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
+			res.sendRedirect(req.getContextPath()+"/Front_end/RFQ/listAllRFQ.jsp");
 		}
 		
 		if(action.equals("updateRFQStatus")){

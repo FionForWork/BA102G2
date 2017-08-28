@@ -201,6 +201,7 @@
 					<input type="hidden" name="action" value="pay">
 					<input type="hidden" id="res_no" name="res_no" value="">
 					<input type="hidden" name="RedirectURL" value="<%=request.getRequestURI()%>">
+					<input type="radio" name="optradio" onclick="autoAdd()">
 					<input type="button"  class="btn btn-danger" value="確認刷卡" onclick="checkForm()">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
@@ -427,6 +428,13 @@ function rating(y){
 	});
 }
 
+function autoAdd(){
+	$("#cardNum1").val("5337");
+	$("#cardNum2").val("9322");
+	$("#cardNum3").val("6471");
+	$("#cardNum4").val("7171");
+	$('#threeNum').val("823");
+}
 
 </script>
 </html>
