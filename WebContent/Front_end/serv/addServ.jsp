@@ -41,7 +41,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 <h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">新增廠商服務:</h1>
 <br>
-<br><input  type="button" class="btn btn-info " value="一鍵輸入" id="fast6"><br><br>
+<br><input  type="radio" id="fast6"><br><br>
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/serv/serv.do" name="form1">
 

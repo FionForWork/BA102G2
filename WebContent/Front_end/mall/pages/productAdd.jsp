@@ -75,7 +75,7 @@
                 <input type="hidden" name="action" value="ADD">
                 <input type="button" class="btn btn-success" onclick="addCheck()" value="確認申請">
             </form>
-                <input type="button" class="btn btn-success" onclick="fakeData()" value="資料">
+                <input type="radio" onclick="fakeData()">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

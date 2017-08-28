@@ -55,7 +55,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-xs-10 col-md-10">
+        <div class="col-xs-12 col-md-12">
             <div id="content" class="row">
                 <%@include file="pages/mallAreaSidebar.file"%>
                 <div class="col-xs-1 col-md-1"></div>
@@ -65,6 +65,7 @@
                             <tr>
                                 <th>商品名稱</th>
                                 <th>價格</th>
+                                <th>庫存</th>
                                 <th>商品評價</th>
                                 <th>修改資訊</th>
                                 <th>上/下架</th>
@@ -75,6 +76,7 @@
                                 <tr class="animated fadeInLeft" style="animation-duration: ${s.index*0.4}s;">
                                     <td><a target="_blank" href="${preLocation}/product.jsp?pro_no=${productVO.pro_no}">${productVO.pro_name}</a></td>
                                     <td>${productVO.price}</td>
+                                    <td>${productVO.amount}</td>
                                     <c:choose>
                                         <c:when test="${productVO.score==0}">
                                             <td>尚無評價</td>

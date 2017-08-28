@@ -155,7 +155,8 @@ public class PreviewServlet extends HttpServlet {
 				String url = "/Front_end/Preview/ImageLayover.jsp?pla_no=" + place_no;
 				request.getRequestDispatcher(url).forward(request, response);
 			} catch (Exception e) {
-
+				String url = "/Front_end/Preview/ImageCropper.jsp";
+				request.getRequestDispatcher(url).forward(request, response);
 			}
 		}
 

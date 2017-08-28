@@ -132,7 +132,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<script>
 	$(document).ready(function(){  
 		$("#fast").click(function() {
-			$("#name").attr("value",'黃家家');
+			$("#name").attr("value",'慈慈');
 			$("#pwd").attr("value",'123123');
 			$("#pwd2").attr("value",'123123');
 			$("#id").attr("value",'lf2lf2111@gmail.com');

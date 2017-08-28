@@ -45,7 +45,7 @@
           <button    type="submit"class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>不是會員嗎? <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"">馬上註冊</a></p>
           <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
-        <input  type="button"  id="fast"> 
+        <input  type="radio"  id="fast">   <input  type="radio"  id="fast10"> 
         </div>
       </div>
       
@@ -84,7 +84,7 @@
           <button type="submit" class="btn btn-danger  pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 取消</button>
           <p>還沒註冊成為廠商嗎? <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp">馬上註冊</a></p>
           <p>忘記 <a href="<%= request.getContextPath() %>/Front_end/login/forgetPwd.jsp">密碼?</a></p>
-          <input  type="button"  id="fast2"> 
+          <input  type="radio"  id="fast2"> 
         </div>
       </div>
       
@@ -139,6 +139,14 @@
 		});
 	});
 	</script> 
+	<script>
+	$(document).ready(function(){  
+		$("#fast10").click(function() {
+			$("#pwd").attr("value",'fatfat');
+			$("#id").attr("value",'fatfat@gmail.com');
+		});
+	});
+	</script> 
 </head>
 <style>
 	h1,h2,h3,h4,h5,h6 {
@@ -149,6 +157,7 @@
 </style>
 <body>
 	
+		
 	
 	
 	

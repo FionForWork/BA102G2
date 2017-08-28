@@ -21,6 +21,9 @@
     pageContext.setAttribute("placeVO", placeVO);		
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
+<div class="text-center well" >
+    <h2 style="font-weight:400">景點資料修改</h2>
+</div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <form action="<%=request.getContextPath()%>/place/PlaceServlet" method="post" enctype="multipart/form-data">
         <table class="table table-hover table-striped">

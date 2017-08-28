@@ -25,7 +25,6 @@
     height: 100%;
 }
 </style>
-<%-- <div class="modal fade" id="updateProduct${index}"> --%>
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class='modal-header'>
@@ -65,11 +64,11 @@
                     <input type='hidden' id='nowPage' name='nowPage' value='${nowPage}'>
                     <input type='hidden' id='updateNo' name='pro_no' value='${productVO.pro_no}'>
                     <input type='hidden' name='action' value='UPDATE'>
-                    <input type='submit' class='btn btn-default' value='確認修改'>
+                    <input type='submit' class='btn btn-success' value='確認修改'>
                 </form>
             </div>
             <div class='modal-footer'>
-                <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                <button id="cancel" type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
             </div>
         </div>
     </div>
@@ -106,6 +105,7 @@
                 if (xhr.responseText == "OK") {
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
+                        $(".updatePreview").attr('src', e.target.result);
                         document.location.href="<%=request.getContextPath()%>/Front_end/mall/productManagement.jsp";
                     }
                 }

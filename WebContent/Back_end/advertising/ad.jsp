@@ -30,6 +30,9 @@
 </head>
 <body>
 	<%@ include file="page/header.file"%>
+	<div class="text-center well" >
+	<h2 style="font-weight:900">廣告資料一覽</h2>
+	</div>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -39,6 +42,8 @@
 			</ul>
 		</font>
 	</c:if>
+	
+	
 
 	
 	

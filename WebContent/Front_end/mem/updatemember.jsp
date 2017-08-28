@@ -127,7 +127,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp'" >
 </FORM>
 <br>
-<input  type="button" class="btn btn-info " value="" id="fast6">
+<input  type="radio" id="fast6">
 
 
 </div>
@@ -153,7 +153,7 @@ $("#input-1").fileinput({
 <script>
 	$(document).ready(function(){  
 		$("#fast6").click(function() {
-			$("#name").attr("value",'黃慈慈');
+			$("#name").attr("value",'慈慈');
 			$("#phone").attr("value",'0948468852');
 			$("#account").attr("value",'003-583148-8761547');
 			$("#email").attr("value",'a23ddg5@gmail.com');

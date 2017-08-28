@@ -18,7 +18,7 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	}
 
 	private static final String INSERT_STMT = "insert into advertising (adv_no, com_no,title, startday, endday, price, text, img, vdo, status) values (ltrim(to_char(adv_no_seq.nextval,'0009')), ?, ?, ?, ?, ?, ?, ?, ?,?)";
-	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, status from advertising order by adv_no";
+	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, status from advertising order by adv_no desc";
 	private static final String GET_ONE_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising where adv_no = ?";
 	private static final String DELETE = "delete from advertising where adv_no = ?";
 	private static final String UPDATE = "update advertising set com_no=?,title=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
@@ -27,8 +27,8 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
 	private static final String GET_ONE_STATUS= "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where status=1";
 	
-	private static final String GET_ALL_BY_STATUS = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = ?";
-	private static final String GET_ALL_BY_STATUS_2 = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status in (?, ?)";
+	private static final String GET_ALL_BY_STATUS = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = ? order by adv_no desc";
+	private static final String GET_ALL_BY_STATUS_2 = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status in (?, ?) order by adv_no desc";
 
 	@Override
 	public void insert(AdvertisingVO advertisingVO) {

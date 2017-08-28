@@ -56,7 +56,7 @@
     	</div>
     	<input type="hidden" name="mem_no" value="${memVO.mem_no}">
 		<input type="hidden" name="action" value="updatePwd">
-		<input type="submit" class="btn btn-info " value="送出新增">  <input  type="button" class="btn btn-info " value="" id="fast4">
+		<input type="submit" class="btn btn-info " value="送出新增">  <input  type="radio"  id="fast4">
 </FORM>
 </div>    	
 

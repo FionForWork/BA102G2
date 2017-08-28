@@ -24,6 +24,9 @@
     pageContext.setAttribute("itemsCount", itemsCount);		
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
+<div class="text-center well" >
+    <h2 style="font-weight:400">景點資料管理</h2>
+</div>
 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
     <table id="table" class="table">
         <thead>
@@ -84,7 +87,7 @@
                         <input type="hidden" name="action" value="ADD_PLACE">
                         <button class="btn btn-success" onclick="addCheck()">確認</button>
                     </form>
-                    <button class="btn btn-primary" onclick="fakeDate()">資料</button>
+                    <input type="radio" onclick="fakeData()">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -95,7 +98,7 @@
 </div>
 
 <script type="text/javascript">
-function fakeDate() {
+function fakeData() {
     $("#addName").val("中央大學");
     $("#addAddr").val("320桃園市中壢區中大路300號");
     $("#addDesc").val("非常好的大學");

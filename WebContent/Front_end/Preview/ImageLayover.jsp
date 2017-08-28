@@ -52,6 +52,14 @@
 
 
 		</form>
+		
+		<ul id="wizardStatus">
+  <li class="current">1. 裁切去背</li>
+  <li class="current">2. 合成照片</li>
+  <li>3. 完成啦!!!</li>
+  
+</ul>
+			
 		<a type='button' class="btn btn-app btn-default" id='btnLoad'
 			onclick='load_image();'><i class="fa fa-image"></i> 選擇背景照片</a>
 		<button class='btn btn-default' id='clearBtn'>
@@ -112,6 +120,7 @@
 				<div id='dragCrop' style="display: inline-block">
 					<img id='resizable'
 						src='<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>'>
+					<span class="tooltiptext">Click Me!</span>
 				</div>
 			</div>
 		</div>
@@ -228,9 +237,18 @@
 
 		var $dropZone = $("#dropZone");
 
+		$("#resizable").on("mousemove", function(e){
+			var x = e.clientX,y = e.clientY;
+			$(".tooltiptext").css("top",(y + 10) + 'px').css("left",(x + 10) + 'px');
+			
+	   
+	    	
+		});
+		
+		
 		// cropCont拖曳與縮放功能
 		$("#dragCrop").on("click", function() {
-
+			$(".tooltiptext").css("visibility","hidden").css("opacity","0");
 			$("#dragCrop").css("border", "1px solid lightgray").draggable({
 				containment : "#dropZone",
 				scroll : false,

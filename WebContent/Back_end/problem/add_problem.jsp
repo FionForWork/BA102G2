@@ -52,7 +52,7 @@ ProblemVO problemVO = (ProblemVO) request.getAttribute("problemVO");
    <input type="submit" class="btn btn-info" data-dismiss="modal" value="新增">
 
   <input type="submit" class="btn btn-danger" data-dismiss="modal" href="<%=request.getContextPath()%>/Back_end/problem/Problemall.jsp" value="返回">
-  <input type="button" class="btn btn-danger" data-dismiss="modal" id="problem" onclick="Show()" value="小按鈕">
+  <input type="button"  data-dismiss="modal" id="problem" onclick="Show()" value="">
 
     </div>
      </form>

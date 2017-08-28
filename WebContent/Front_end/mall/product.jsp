@@ -57,7 +57,7 @@
 %>
 <%@include file="pages/indexHeader.file"%>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
-<div class="text-center" style="height:50px;margin-top:50px"></div>
+<div class="text-center" style="margin-top:50px"></div>
 <div class="container">
     <div class="row">
         <div class="col-xs-2 col-md-2">
@@ -137,7 +137,7 @@
                             <h3>
                                 <div class="total">
                                     <span class="simpleCart_total">NT$${carTotal}</span>
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
                             </h3>
                         </a>
@@ -190,6 +190,7 @@
                          '超過庫存，請降低數量',
                          'error'
                        )
+                   $("#productCount").val(1);
                 }
                 else{
                     $(".simpleCart_total").text("NT$"+response);

@@ -84,9 +84,8 @@
 							<input type="hidden" name="action" value="add"> <input
 								type="hidden" name="status" value="0"> <input
 								type="submit" class="btn btn-info" value="發佈">
-
 							<button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
-							  <input type="button" class="btn btn-danger" data-dismiss="modal" id="problem" onclick="Show()" value="小按鈕">
+							  <input type="button"  id="problem" onclick="Show()" value="">
 						</div>
 					</div>
 				</form>

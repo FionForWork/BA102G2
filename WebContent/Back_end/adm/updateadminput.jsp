@@ -45,7 +45,7 @@
 
     </div>
 <title>管理員資料修改 </title>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">管理員資料修改 </h3>

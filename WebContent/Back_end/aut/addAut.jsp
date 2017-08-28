@@ -45,7 +45,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
         </div>
 
     </div>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">新增管理員權限 </h3>

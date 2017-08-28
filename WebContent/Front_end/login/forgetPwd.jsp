@@ -31,7 +31,7 @@
 		</div>
 	
 		<input type="hidden" name="action" value="forgetPwd">
-		<input type="submit" class="btn btn-info" value="確定">  <input  type="button" class="btn btn-info "  id="fast9"><br><br><br>
+		<input type="submit" class="btn btn-info" value="確定">  <input  type="radio"   id="fast9"><br><br><br>
 	</FORM>
   
     
@@ -45,7 +45,7 @@
 		
 
 		<input type="hidden" name="action" value="forgetPwd">
-		<input type="submit" id="submit" class="btn btn-info" value="確定">	<input  type="button" class="btn btn-info "  id="fast8">
+		<input type="submit" id="submit" class="btn btn-info" value="確定">	<input  type="radio"   id="fast8">
 	</FORM>
 
     <div class="col-xs-12 col-sm-3"></div>

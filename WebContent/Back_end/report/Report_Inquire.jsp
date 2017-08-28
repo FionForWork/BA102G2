@@ -77,7 +77,12 @@ request.setAttribute("reportVO", reportVO);
 							</div>
 							<c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no != null}">
 <%-- 							<c:if test="${param.rep_ob_no.startsWith('4')}"> --%>
-						
+
+								<div class="modal-body">
+								<label for="inputdefault">被檢舉內容:</label>
+								<p>${product_Svc.getOneByPK(param.rep_ob_no).pro_desc}</p>
+							</div>
+							
 							<div class="modal-body">
 								<label for="inputdefault">照片</label>
 								<div>

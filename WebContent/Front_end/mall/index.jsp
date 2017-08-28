@@ -45,7 +45,7 @@
 	pageContext.setAttribute("orderType", orderType);
 %>
 <%@include file="pages/indexHeader.file"%>
-<div class="text-center" style="height: 50px; margin-top: 50px"></div>
+<div class="text-center" style="margin-top: 50px"></div>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
 <style>
     #pro_name {
@@ -59,11 +59,11 @@
     <div class="row">
         <div class="col-xs-2 col-md-2">
             <ul id="proType" class="list-group">
-                <a id="type0" class="list-group-item menua ${proType==0?'active':''}" href="javascript:change(1,0,0)">
+                <a  class="list-group-item menua ${proType==0?'active':''}" href="javascript:change(1,0,0)">
                     <h4>全部類型</h4>
                 </a>
                 <c:forEach var="typeVO" items="${typeList}" varStatus="s">
-                    <a id="type${s.count}" class="list-group-item menua ${proType==s.count?'active':''}" href="javascript:change(1,${s.count},0)">
+                    <a class="list-group-item menua ${proType==s.count?'active':''}" href="javascript:change(1,${s.count},0)">
                         <h4>${typeVO.type_name}</h4>
                     </a>           
                 </c:forEach>
@@ -141,7 +141,7 @@
                             <h3>
                                 <div class="total">
                                     <span class="simpleCart_total">NT$${carTotal}</span>
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
                             </h3>
                         </a>

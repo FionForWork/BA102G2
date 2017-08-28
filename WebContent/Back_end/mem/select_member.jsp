@@ -42,7 +42,7 @@
 
     </div>
 <title>選擇會員</title>
-<br><br><br>
+
 
 <div id="content">
 <div class="text-center well" >

@@ -47,9 +47,6 @@
 
     </div>
 <title>所有服務</title>
-
-
-<br>
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">查看所有服務</h3>

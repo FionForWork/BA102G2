@@ -23,12 +23,14 @@
 <!-- ======================================================================================================================== -->
 <div id="content">
 	<div class="content-wrapper">
-		<br> <br>
+		   <div class="text-center well" >
+	<h2 style="font-weight:900">檢舉管理</h3>
+</div>
 		<div class="row">
-
+				             
 
 			<div class="col-md-10 col-md-offset-1">
-				<h3>檢舉管理</h3>
+
 				<ul class="nav nav-tabs nav-justified">
 					<li class="active"><a data-toggle="tab" href="#home">所有檢舉</a></li>
 					<li><a data-toggle="tab" href="#menu1">未審核</a></li>

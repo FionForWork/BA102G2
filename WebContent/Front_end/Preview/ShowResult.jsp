@@ -15,7 +15,13 @@
 	
 <%@ include file="page/preview_header.file"%>
            <div class="col-md-8 col-offset-1">
-            
+            	
+		<ul id="wizardStatus">
+  <li class="current">1. 裁切去背</li>
+  <li class="current">2. 合成照片</li>
+  <li class="current">3. 完成啦!!!</li>
+  
+</ul>
 			<div class='row'>
 				<div class='col-sm-8 col-xs-8 col-sm-offset-2'>
 					<h2>合成的照片已經匯入您的私人相簿囉~</h2>

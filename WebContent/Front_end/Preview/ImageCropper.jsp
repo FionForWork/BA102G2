@@ -133,6 +133,16 @@
 
 	<div class="row">
 		<div class='col-sm-12 col-xs-12'>
+
+<ul id="wizardStatus">
+  <li class="current">1. 裁切去背</li>
+  <li>2. 合成照片</li>
+  <li>3. 完成啦!!!</li>
+  
+</ul>
+
+
+
 			<a type='button' class="btn btn-app btn-default" id='btnLoad'
 				onclick='openSelectModal();'><i class="fa fa-image"></i> 選擇照片</a>
 			<button class="btn btn-default" id='drawBtn'>
@@ -214,6 +224,8 @@ input[type="radio"] {
 	box-shadow: 0 0 5px #333;
 	z-index: -1;
 }
+
+
 </style>
 <script type="text/javascript">
 		
@@ -367,6 +379,8 @@ input[type="radio"] {
 		
 		$(document).ready(function(e) {
 			
+			
+			
 			var stillDown = false;
 			var canvas = $("#canvas");
 			
@@ -426,8 +440,7 @@ input[type="radio"] {
 			
 			// Submit
 			$("#submitBtn").on("click", function() {
-				console.log("hasBeenDrawn"+hasBeenDrawn);
-				console.log("hasImage"+hasImage);
+				
 				if(hasBeenDrawn == false || hasImage == false){return;}
 				var JSONxPoints = JSON.stringify(xPoints);
 				var JSONyPoints = JSON.stringify(yPoints);

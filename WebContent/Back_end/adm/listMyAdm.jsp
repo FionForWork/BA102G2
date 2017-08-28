@@ -51,7 +51,7 @@ td  {font-size:20px;
 
     </div>
 <title>管理員個人資料</title>
-<br><br><br>
+
 <div id="content">
 
 	<div class="text-center well" >

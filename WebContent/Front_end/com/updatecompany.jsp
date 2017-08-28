@@ -109,7 +109,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
 </FORM>
 
 <br>
-<input  type="button" class="btn btn-info "  id="fast3">
+<input  type="radio"  id="fast3">
 </div></div>
 
 <script>

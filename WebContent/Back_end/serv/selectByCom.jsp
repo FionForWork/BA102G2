@@ -43,7 +43,7 @@
 <jsp:useBean id="selectByCom" scope="session" type="java.util.Set" />
 
 <title>服務資料</title>
-<br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">查看服務</h3>

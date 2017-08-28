@@ -31,7 +31,7 @@
               <input type="hidden" name="action" value="login">
               <button type="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
-            <br><input type="button" class="btn btn-info " id="fast"><input class="btn btn-info" type="button" id="fast2" >
+            <br><input type="radio" id="fast"><input type="radio" id="fast2" >
         </div>
         <div class="modal-footer">
          

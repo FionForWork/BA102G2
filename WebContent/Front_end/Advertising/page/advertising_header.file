@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <!--以登入 且 會員頁面-->
 <head>
-    
+    	<title>She Said Yes!</title>
      <meta charset="UTF-8">
      <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/Front_end/Resource/css/bootstrap.css" rel="stylesheet">

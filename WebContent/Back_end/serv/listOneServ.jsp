@@ -45,7 +45,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
         </div>
 
     </div>
-<br><br><br>
+
 <div id="content">
 
 <input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" >

@@ -27,12 +27,12 @@
 
 <style>
 div .vertical-center {
-	margin-top: 12px
+	margin-top: 8px
 }
 </style>
 
-<div class="text-center" style="height: 50px; margin-top: 50px">
-    <h1>確認訂單</h1>
+<div class="text-center" style="height: 50px;">
+    <h1 style="margin-bottom: 0px; color: #00F">確認訂單</h1>
 </div>
 <div class="container">
     <div class="row">
@@ -69,7 +69,7 @@ div .vertical-center {
                                     <div class="text-center vertical-center">${item.amount}</div>
                                 </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div class="form-group" style="margin-top: 20px;">
                                         <label class="sr-only" for="buyCount">數量</label>
                                         <input type="number" class="form-control amountInput" name="buyCount" placeholder="${countList[s.index]}" value="${countList[s.index]}" min="1" max="${item.amount}">
                                     </div>
@@ -91,11 +91,11 @@ div .vertical-center {
                         </tr>
                         <tr>
                             <td class="text-center" colspan="6">
-                                <p id="totalPrice">總金額:$${carTotal}</p> 
+                                <p style="color: #f14195">總金額:<b id="totalPrice" style="font-size: 25px;">$${carTotal}</b></p> 
                                 <input type="hidden" name="action" value="BUY"> 
                                 <input type="button" onclick="addCheck()" class="btn btn-success" value="確認購買"> 
                                 <a class="btn btn-primary " href="${preLocation}/index.jsp">返回</a>
-                                <a class="btn btn-success" onclick="fakeData()">資料</a>
+                                <input type="radio" onclick="fakeData()">
                             </td>
                         </tr>
                     </tbody>
@@ -109,6 +109,7 @@ div .vertical-center {
     function fakeData() {
         $("#address").val("桃園市平鎮區中大路22號");
     }
+    
     $("input").blur(changeTotal);
     $("input").change(changeTotal);
     
@@ -142,7 +143,7 @@ div .vertical-center {
                 console.log(thrownError);
             },
             success : function(response) {
-                $("#totalPrice").text("總金額:$"+response);
+                $("#totalPrice").text("$"+response);
             }
         });
     }

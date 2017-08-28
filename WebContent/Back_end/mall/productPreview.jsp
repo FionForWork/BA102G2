@@ -19,7 +19,7 @@
     int itemsCount = 5;
     int allCount = productService.getAllCount("0", "0");
     int totalPages = allCount / itemsCount + 1;
-    List<ProductVO> productList = productService.getPage(nowPage, itemsCount, "0", "0", "0");
+    List<ProductVO> productList = productService.getPage(nowPage, itemsCount, "0", "3", "0");
     String preLocation = request.getContextPath() + "/Back_end/mall";
     Product_typeService product_typeService = new Product_typeService();
     List<Product_typeVO> typeList = product_typeService.getAll();
@@ -33,6 +33,9 @@
     pageContext.setAttribute("totalPages", totalPages);		
 %>
 <%@include file="/Back_end/pages/backHeader.file"%>
+<div class="text-center well" >
+    <h2 style="font-weight:400">商品上架申請</h2>
+</div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <table class="table">
         <thead>
