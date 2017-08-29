@@ -211,6 +211,9 @@
 			</div>
 			<div class="modal-body">
 			<div class="row">
+			<c:if test="${servList.size()==0}">
+				<div class="text-center"><h3>很抱歉，廠商目前還沒有提供服務唷!</h3></div>
+			</c:if>
 			<c:forEach var="servVO" items="${servList}">
 				<div class="col-xs-4">
 				<div style="border-width:1px;border-style:solid;border-radius: 3px;padding:4px">
@@ -240,7 +243,9 @@
 				<input type="hidden" id="aID" value="">
 				<input type="hidden" name="requestURI" value="<%=request.getRequestURI()%>">
 <!-- 				<input type="submit" class="btn btn-info" value="送出預約"> -->
+			<c:if test="${servList.size()!=0}">
 				<button type="button" class="btn btn-danger" onclick="onMessage('${memVO.name}')">送出預約</button>
+			</c:if>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</div>
 		</div>

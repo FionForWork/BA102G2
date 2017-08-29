@@ -435,7 +435,7 @@ public class AdvertisingServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Advertising/xxxAdvertising.jsp");
+						.getRequestDispatcher("/Front_end/Advertising/Advertising.jsp");
 				failureView.forward(req, res);
 			}
 		}

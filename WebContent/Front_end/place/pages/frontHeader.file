@@ -44,7 +44,7 @@
     
 </head>
 <title>She Said Yes</title>
-<script src="js/advertising.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/Front_end/Advertising/js/advertising.js" type="text/javascript"></script>
 </div>  
          <div class="modal fade" id="mem" role="dialog">
     <div class="modal-dialog">

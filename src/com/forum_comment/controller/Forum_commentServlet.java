@@ -100,7 +100,7 @@ public class Forum_commentServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/XXXArticle/Article.jsp");
+						.getRequestDispatcher("/Front_end/Article/Article.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -128,7 +128,7 @@ public class Forum_commentServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/xxxForum_update.jsp");
+						.getRequestDispatcher("/Front_end/Article/Forum_update.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -163,7 +163,7 @@ public class Forum_commentServlet extends HttpServlet{
 //				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				e.printStackTrace();
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/xxxForum_update.jsp");
+						.getRequestDispatcher("/Front_end/Article/Forum_update.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -194,7 +194,7 @@ public class Forum_commentServlet extends HttpServlet{
 			} catch (Exception e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/xxxDiscuss.jsp");
+						.getRequestDispatcher("/Front_end/Article/Article.jsp");
 				failureView.forward(req, res);
 			}
 		}

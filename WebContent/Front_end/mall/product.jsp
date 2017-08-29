@@ -23,6 +23,7 @@
     List<ProtraVO>protraList=protraService.getAllByMem(memVO.getMem_no());
     String[] productStatus = { "審核中", "上架中", "已下架" };
     String pro_no;
+    MemVO seller;
     int mine = 0;
     if (request.getParameter("pro_no") == null) {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
@@ -35,6 +36,7 @@
         ProductVO productVO=productService.getOneByPKNoImg(pro_no);
         mine = (productVO.getSeller_no().equals(memVO.getMem_no())) ? 1 : 0;
         pageContext.setAttribute("productVO", productVO);
+        seller=memService.getOneMem(productVO.getSeller_no());
      
     }
     boolean tracing=false;
@@ -46,6 +48,7 @@
     
     String preLocation = request.getContextPath() + "/Front_end/mall";
     
+    pageContext.setAttribute("seller", seller);
     pageContext.setAttribute("tracing", tracing);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("pro_no", pro_no);
@@ -81,8 +84,8 @@
                                 <dl>
                                     <dt>商品名稱</dt>
                                     <dd>${productVO.pro_name}</dd>
-                                    <dt>賣家編號</dt>
-                                    <dd>${productVO.seller_no}</dd>
+                                    <dt>賣家姓名</dt>
+                                    <dd>${seller.name}</dd>
                                     <dt>上架日期</dt>
                                     <dd><fmt:formatDate value="${productVO.pro_date}" pattern="yyyy-MM-DD HH:mm"/></dd>
                                     <dt>商品描述</dt>

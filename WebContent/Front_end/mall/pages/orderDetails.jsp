@@ -175,6 +175,18 @@ function checkGet(check,nowPage,ord_no,role,status,orderType){
             console.log(thrownError);
         },
         success : function(response) {
+            if(check=="CHECK_GET_ITEM"){
+                swal('成功',
+                     '已確認收到貨物',
+                     'success'
+                )
+            }
+            else{
+                swal('成功',
+                     '已確認收到貨款',
+                     'success'
+                   )
+            }
             tabsChange(role, status, orderType);
             pageChange(nowPage, role, status, orderType);
         }

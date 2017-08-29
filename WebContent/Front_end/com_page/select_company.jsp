@@ -125,7 +125,7 @@
 												
 												<c:forEach var="servVO" items="${servList}">
 												<c:if test="${com_noList==servVO.com_no}">
-													<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
+													<span class="fa fa-star text-warning">${(servVO.times)==0?'0':df.format(servVO.score/servVO.times)}</span>
 												</c:if>
 												</c:forEach>																							
 										</a></li>

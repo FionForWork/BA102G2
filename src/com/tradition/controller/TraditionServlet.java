@@ -205,7 +205,7 @@ public class TraditionServlet  extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Tradition/xxTradition");
+						.getRequestDispatcher("/Front_end/Tradition/Tradition");
 				failureView.forward(req, res);
 			}
 		}
@@ -234,7 +234,7 @@ public class TraditionServlet  extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Tradition/xxTradition");
+						.getRequestDispatcher("/Front_end/Tradition/Tradition");
 				failureView.forward(req, res);
 			}
 		}

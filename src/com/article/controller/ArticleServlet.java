@@ -150,7 +150,7 @@ public class ArticleServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/xxArticle.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/Article.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -180,7 +180,7 @@ public class ArticleServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/xxArticle.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/Front_end/Article/Article.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -208,7 +208,7 @@ public class ArticleServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/xxArticle_update.jsp");
+						.getRequestDispatcher("/Front_end/Article/Article_update.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -258,7 +258,7 @@ public class ArticleServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/xxDiscuss.jsp");
+						.getRequestDispatcher("/Front_end/Article/Discuss.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -286,7 +286,7 @@ public class ArticleServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Article/XXXArticle.jsp");
+						.getRequestDispatcher("/Front_end/Article/Article.jsp");
 				failureView.forward(req, res);
 			}
 		}

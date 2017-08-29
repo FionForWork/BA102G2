@@ -120,7 +120,7 @@
 									<div class="com_box_name">${comSvc.getOneCom(comVO.com_no).name}
 										<c:forEach var="servVO" items="${servList}">
 											<c:if test="${comVO.com_no==servVO.com_no}">
-												<span class="fa fa-star text-warning">${df.format(servVO.score/servVO.times)}</span>
+												<span class="fa fa-star text-warning">${(servVO.times)==0?'0':df.format(servVO.score/servVO.times)}</span>
 											</c:if>
 										</c:forEach>
 									</div>						

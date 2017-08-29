@@ -21,7 +21,21 @@
 	String role = (request.getParameter("role") == null||request.getParameter("role").equals("")) ? "0" : request.getParameter("role");
 	String status = (request.getParameter("status") == null||request.getParameter("status").equals("")) ? "0" : request.getParameter("status");
 	String orderType = (request.getParameter("orderType") == null||request.getParameter("orderType").equals("")) ? "0" : request.getParameter("orderType");
-	String[] statusList = {"買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單"};
+	String[] statusList=new String[5];
+    if("0".equals(role)){
+        statusList[0]="您尚未付款";
+        statusList[1]="對方尚未出貨";
+        statusList[2]="已完成訂單";
+        statusList[3]="對方已評價";
+        statusList[4]="已取消訂單";
+    }
+    else{
+        statusList[0]="對方未付款";
+        statusList[1]="您尚未出貨";
+        statusList[2]="已完成訂單";
+        statusList[3]="對方已評價";
+        statusList[4]="已取消訂單";
+    }
 	String[] orderTypeList = {"預設", "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期舊>>新", "依成立日期新>>舊", "依訂單總價小>>大","依訂單總價大>>小"};
 	OrdService ordService = new OrdService();
 	int nowPage = (request.getParameter("nowPage") == null||request.getParameter("nowPage").equals(""))? 1 :Integer.valueOf(request.getParameter("nowPage"));
@@ -60,8 +74,6 @@
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
-<!--
--->
 </style>
 <div style="margin-top: 50px;"></div>
 <div class="container" id="container" >
@@ -70,14 +82,14 @@
             <%@include file="pages/mallAreaSidebar.file"%> 
             <div class="col-xs-1 col-md-1"></div>
             <div class="col-xs-7 col-md-7">
-                <ul class="nav nav-tabs" role="tablist" id="maintab">
+          <ul class="nav nav-tabs" role="tablist" id="maintab">
                     <c:forEach var="state" items="${statusList}" varStatus="s">
                         <c:choose>
                             <c:when test="${s.index==status}">
-                                <li class="active"><a onmouseover="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
+                                <li class="active"><a onclick="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class=""><a onmouseover="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
+                                <li><a onclick="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

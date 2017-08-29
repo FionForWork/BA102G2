@@ -91,7 +91,8 @@ session.getAttribute("comVO");
         <div class="modal-footer">
         	<input	type="submit" class="btn btn-info" value="檢舉">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <input type="button" value="" onclick="ShowAnswer()">
+          <input type="radio" value="" onclick="ShowAnswer()">
+          <input type="radio" value="" onclick="Show()">
         </div>
         
       </div>
@@ -108,7 +109,12 @@ session.getAttribute("comVO");
   <script type="text/javascript">
 function ShowAnswer(){
 //     document.getElementById("title").value="2";
-$("#content").val("會爆炸");
+$("#content").val("圖文不符");
+
+}
+function Show(){
+//  document.getElementById("title").value="2";
+$("#content").val("標題疑似有問題");
 
 }
 </script>

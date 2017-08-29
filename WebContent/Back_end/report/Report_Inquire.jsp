@@ -75,6 +75,9 @@ request.setAttribute("reportVO", reportVO);
 								<label for="inputdefault">檢舉內容:</label>
 								<p>${reportVO.content}</p>
 							</div>
+							
+							
+							
 							<c:if test="${product_Svc.getOneByPK(param.rep_ob_no).pro_no != null}">
 <%-- 							<c:if test="${param.rep_ob_no.startsWith('4')}"> --%>
 

@@ -129,7 +129,7 @@ Object memVO = session.getAttribute("memVO");
 	</div>
 </div>
 <script>
-showMsg('修改成功','top');
+
 </script>
 <c:if test="${ok==\"ok\"}">
 <script>

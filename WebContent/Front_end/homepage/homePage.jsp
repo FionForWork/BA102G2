@@ -112,6 +112,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/contact_us.js"></script>
+    
 <%
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();

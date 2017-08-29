@@ -85,7 +85,7 @@
 								type="hidden" name="status" value="0"> <input
 								type="submit" class="btn btn-info" value="發佈">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
-							  <input type="button"  id="problem" onclick="Show()" value="">
+							  <input type="radio"  id="problem" onclick="Show()" value="">
 						</div>
 					</div>
 				</form>
