@@ -175,18 +175,18 @@
             <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
              <c:choose>
             <c:when test="${sessionScope.comVO!=null}">
-            	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${comVO.name}</a>
-           		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+            	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp${comVO.name}</a>
+           		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-out"></i>&nbsp登出</a>
            </c:when>
       	   <c:when test="${sessionScope.memVO!=null}">
-      			              <a href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${memVO.name}</a>
-            <a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+      			              <a href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp${memVO.name}</a>
+            <a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-out"></i>&nbsp登出</a>
       	   </c:when>
       		 <c:otherwise>
-      		  <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>會員註冊</a>
-            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>廠商註冊</a>
-            <a data-toggle="modal" data-target="#mem" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 會員登入</a>
-            <a data-toggle="modal" data-target="#com" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 廠商登入</a>
+      		  <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp會員註冊</a>
+            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp廠商註冊</a>
+            <a data-toggle="modal" data-target="#mem" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> &nbsp會員登入</a>
+            <a data-toggle="modal" data-target="#com" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> &nbsp廠商登入</a>
       		
       		 </c:otherwise>
       		</c:choose>
