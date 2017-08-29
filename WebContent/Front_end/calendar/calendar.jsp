@@ -311,7 +311,9 @@ $(document).ready(function(){
 			$('#addContent').html("今天想休息");
 		}else if(x == "2"){
 			$('#addContent').html("真的很想休息");
-		}else{}
+		}else{
+			$('#addContent').html("長灘島拍婚紗");
+		}
 	}
     
 </script>
