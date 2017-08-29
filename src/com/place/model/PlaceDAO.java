@@ -115,7 +115,7 @@ public class PlaceDAO implements PlaceDAO_Interface{
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query=session.createQuery("from PlaceVO");
+            Query query=session.createQuery("from PlaceVO order by PLA_NO desc");
             query.setFirstResult(start);
             query.setMaxResults(itemsCount);
             list=query.list();
@@ -158,6 +158,24 @@ public class PlaceDAO implements PlaceDAO_Interface{
             query.setParameter(1, north);
             query.setParameter(2, west);
             query.setParameter(3, east);
+            list=query.list();
+        }
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public List<PlaceVO> getAllByName(String name) {
+        List<PlaceVO> list=null;
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            Query query=session.createQuery("select new PlaceVO(pla_no,name,lng,lat,addr,pla_desc) from PlaceVO where Name like :parameter");
+            String parameter="%"+name+"%";
+            query.setParameter("parameter", parameter);
             list=query.list();
         }
         catch (RuntimeException e) {

@@ -43,6 +43,7 @@ import com.placeview.model.PlaceViewService;
 import com.placeview.model.PlaceViewVO;
 import com.sun.javafx.collections.MappingChange.Map;
 import com.sun.javafx.geom.PickRay;
+import com.sun.org.apache.xml.internal.security.utils.UnsyncBufferedOutputStream;
 
 import oracle.net.aso.i;
 import sun.nio.cs.ext.MacArabic;
@@ -249,6 +250,25 @@ public class PlaceServlet extends HttpServlet {
             PrintWriter printWriter=response.getWriter();
             printWriter.println("OK");
             printWriter.close();
+        }
+        else if("NAME_CHANGE".equals(action)){
+           request.setCharacterEncoding("utf-8");
+           PlaceService placeService=new PlaceService();
+           String name=request.getParameter("name");
+           if(!"".equals(name)){
+               List<PlaceVO> placeList=placeService.getAllByName(name);
+               JSONObject jsonObject=new JSONObject();
+               response.setContentType("text/html;charset=utf-8");
+               PrintWriter printWriter=response.getWriter();
+               try {
+                   jsonObject.put("placeList", placeList);
+                   printWriter.print(jsonObject.toString());
+               }
+               catch (JSONException e) {
+                   e.printStackTrace();
+               }
+               printWriter.close();
+           }
         }
     }
 

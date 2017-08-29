@@ -20,6 +20,7 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
         try {
             session.beginTransaction();
             session.saveOrUpdate(placeVO);
+            System.out.println(placeVO.getPla_no());
             session.getTransaction().commit();
         }
         catch (RuntimeException e) {
@@ -53,8 +54,8 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
             session.beginTransaction();
             PlaceVO placeVO=(PlaceVO)session.get(PlaceVO.class, pla_no);
             session.delete(placeVO);
-            PlaceViewDAO placeViewDAO=new PlaceViewDAO();
-            placeViewDAO.deleteByFK(pla_no);
+//            PlaceViewDAO placeViewDAO=new PlaceViewDAO();
+//            placeViewDAO.deleteByFK(pla_no);
             session.getTransaction().commit();
         }
         catch (RuntimeException e) {
@@ -83,8 +84,7 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query=session.createQuery("from PlaceVO where PLA_NO = :pla_no");
-            query.setParameter("pla_no", pla_no);
+            placeVO=(PlaceVO)session.get(PlaceVO.class, pla_no);
         }
         catch (RuntimeException e) {
             session.getTransaction().rollback();
@@ -115,7 +115,7 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Query query=session.createQuery("from PlaceVO");
+            Query query=session.createQuery("from PlaceVO order by PLA_NO desc");
             query.setFirstResult(start);
             query.setMaxResults(itemsCount);
             list=query.list();
@@ -149,8 +149,40 @@ public class PlaceDAO_Hibernate implements PlaceDAO_Interface{
 
     @Override
     public List<PlaceVO> getRangeNoSet(String south, String west, String north, String east) {
-        // TODO Auto-generated method stub
-        return null;
+        List<PlaceVO> list=null;
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            Query query=session.createQuery("select new PlaceVO(pla_no,name,lng,lat,addr,pla_desc) from PlaceVO where LAT between ? and ? and LNG between ? and ?");
+            query.setParameter(0, south);
+            query.setParameter(1, north);
+            query.setParameter(2, west);
+            query.setParameter(3, east);
+            list=query.list();
+        }
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public List<PlaceVO> getAllByName(String name) {
+        List<PlaceVO> list=null;
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            Query query=session.createQuery("select new PlaceVO(pla_no,name,lng,lat,addr,pla_desc) from PlaceVO where Name like :parameter");
+            String parameter="%"+name+"%";
+            query.setParameter(0, parameter);
+            list=query.list();
+        }
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
+        return list;
     }
     
 }

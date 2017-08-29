@@ -299,4 +299,10 @@ public class PlaceDAO_JDBC implements PlaceDAO_Interface {
         return null;
     }
 
+    @Override
+    public List<PlaceVO> getAllByName(String name) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

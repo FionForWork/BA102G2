@@ -67,4 +67,8 @@ public class PlaceService {
         return dao.getRangeNoSet( south, west, north, east);
     }
     
+    public List<PlaceVO> getAllByName(String name){
+        return dao.getAllByName(name);
+    }
+    
 }
