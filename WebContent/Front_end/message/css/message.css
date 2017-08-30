@@ -1,13 +1,15 @@
+
 .panel-heading {
 	position: absolute;
 	top:0px;
 	left:0px;
 	width: 100%;
-	height: 60px;
+	height: 50px;
 	padding: 0px;
 	border-bottom: 1px solid #c0c0c0;
 	z-index: 10;
-	background-color:white;
+	background-color:#ef8b87;
+	color: white;
 }
 
 a#close_chat {
@@ -20,9 +22,20 @@ a#close_chat {
 	height:29px;	
 }
 
+a#close_chat2 {
+	color: black;
+	padding: 0px;
+	text-decoration: none;
+	text-align:center;
+	cursor: pointer;
+	width:29px;
+	height:29px;	
+}
+
+
 .panel-footer {
 	background:#ffffff;
-	height: 60px;
+	height: 50px;
 	width: 100%;
 	position:absolute;
 	bottom: 0;
@@ -37,7 +50,12 @@ a#close_chat {
 
 #chat-header-name {
 	 text-align:center;
-	 margin-top:20px;
+	 margin-top:15px;
+}
+
+#chat-header-name2 {
+	 text-align:center;
+	 margin-top:15px;
 }
 
 .chat_box {
@@ -48,13 +66,32 @@ a#close_chat {
 	bottom: 0;
 	right: 55px;
 	height: 500px;
-	width: 300px;
+	width: 350px;
 	position: fixed;
 	margin: 11px 7px 0;
 	padding: 7px 10px;
 	overflow: auto;
 	font-size: 21px;
 	z-index: 5;
+	border-radius: 10px;
+}
+
+.chat_box2 {
+	box-shadow: 2px 6px 6px 1px rgba(111, 111, 111, 0.5);
+	background:#ffffff;
+	display: none;
+	border: 1px solid #b0b0b0;
+	bottom: 0;
+	right: 410px;
+	height: 500px;
+	width: 350px;
+	position: fixed;
+	margin: 11px 7px 0;
+	padding: 7px 10px;
+	overflow: auto;
+	font-size: 21px;
+	z-index: 5;
+	border-radius: 10px;
 }
 
 
@@ -83,12 +120,23 @@ a#close_chat {
 
 }
 
+#textArea2 {
+    width:83%;
+    list-style-type: none;
+    padding:0px;
+    position:absolute;
+    bottom:32px;
+    display:flex;
+    flex-direction: column;
+
+}
+
 .msg-l {
 	float:left;
-	background: #c0c0c0;
+	background: #C4E1FF;
     width: auto;
     border-radius: 5px;
-    padding: 5px;
+    padding: 4px;
     display: flex;
     height:35px;
 }
@@ -104,10 +152,10 @@ a#close_chat {
 
 .msg-r {
 	float:right;
-	background: #c0c0c0;
+	background: #C4E1FF;
     width: auto;
     border-radius: 5px;
-    padding: 5px;
+    padding: 4px;
     display: flex;
     height:35px;
 }
@@ -163,7 +211,7 @@ input:focus {
 a.sendMessage_btn {
 	text-decoration: none;
 	border-radius: 4px;
-	background-color: #fd77a3;
+	background-color: #ef8b87;
 	color: white;
 	padding: 5px;
 	width: 60px;
