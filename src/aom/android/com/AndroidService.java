@@ -499,22 +499,22 @@ public class AndroidService extends HttpServlet {
 			}else if(action.equals("updateStatue"))
 			{
 				String res=jsonObject.get("res").getAsString();
-				ReservationVO resvation=gson.fromJson(res, ReservationVO.class);
+				System.out.print(res);
 				String statue="";
-				if(resvation.getServ_no().indexOf("7")==0)
+				if(res.indexOf("7")==0)
 				{
 					statue="4";
 				}else {
 				  statue=jsonObject.get("statue").getAsString();
 				}
-				new ReservationService().updateStatus(statue,resvation.getRes_no());
+				new ReservationService().updateStatus(statue,res);
 			}else if(action.equals("updateScore"))
 			{
 				String res=jsonObject.get("res").getAsString();
-				ReservationVO resvation=gson.fromJson(res, ReservationVO.class);
+				String ser=jsonObject.get("ser").getAsString();
 				String statue=jsonObject.get("statue").getAsString();
 				String score=jsonObject.get("score").getAsString();
-				new ReservationService().updateScore(statue, Integer.valueOf(score.substring(0,1)), resvation.getRes_no(), resvation.getServ_no());
+				new ReservationService().updateScore(statue, Integer.valueOf(score.substring(0,1)),res, ser);
 			}else if(action.equals("addnewrfq"))
 			{
 				String addres=jsonObject.get("addres").getAsString();
@@ -621,7 +621,7 @@ public class AndroidService extends HttpServlet {
 				String no=jsonObject.get("com").getAsString();
 				String men=jsonObject.get("men").getAsString();
 				ComTraVO cc=new ComTraService().getComTraByComNoAndMemNo(no, men);
-				System.out.println(cc);
+				System.out.println(no+" "+men);
 				if(cc!=null)
 				{
 					outStr="no";
@@ -646,9 +646,10 @@ public class AndroidService extends HttpServlet {
 		
 		
 		
-			
+		System.out.println(action);
 		
 	    }
+		
 		
         rs.setContentType(CONTENT_TYPE);	
 		PrintWriter out = rs.getWriter();

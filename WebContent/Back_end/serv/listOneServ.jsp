@@ -46,15 +46,17 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
     </div>
 
-<div id="content">
-
+<div id="content"><div class="text-center well" >
+	<h2 style="font-weight:900">查看服務</h3>
+</div>
+<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 <input type="button" class="btn btn-info" value="返回搜尋" onclick="location.href='<%=request.getContextPath()%>/Back_end/serv/select_Serv.jsp'" >
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do" >
 		
 <table class="table table-striped">
 	<tr>
 
-		<th>服務編號</th>
+	
 		<th>服務型態</th>
 		<th>廠商編號</th>
 		<th>訂金</th>
@@ -69,9 +71,17 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 		
 	</tr>
 	<tr>
-		<td>${servVO.serv_no}</td>
-		<td>${servVO.stype_no}</td>
-		<td>${servVO.com_no}</td>
+
+	<td><c:if test="${servVO.stype_no==\"0001\"}">拍婚紗</c:if>
+			<c:if test="${servVO.stype_no==\"0002\"}">婚攝婚錄</c:if>
+			<c:if test="${servVO.stype_no==\"0003\"}">新娘秘書</c:if>
+			
+			</td>
+			<td><c:forEach var="comVO" items="${comSvc.all}">
+			<c:if test="${comVO.com_no==servVO.com_no}">
+			${comVO.name}
+			</c:if>
+			</c:forEach></td>
 		<td>${servVO.deposit}</td>
 		<td>${servVO.price}</td>
 		<td>${servVO.title}</td>
