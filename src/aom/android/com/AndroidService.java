@@ -316,7 +316,8 @@ public class AndroidService extends HttpServlet {
 				String year=date.substring(0,date.indexOf("-"));
 				String month=date.substring(date.indexOf("-")+1,date.lastIndexOf("-"));
 				String today=date.substring(date.lastIndexOf("-")+1);
-				List<ReservationVO> res=new ReservationService().getMonthCalendar(Integer.valueOf(year), (Integer.valueOf(month)),(Integer.valueOf(today)),no);
+				System.out.println(today);
+				List<ReservationVO> res=new ReservationService().getMonthCalendar(Integer.valueOf(year), (Integer.valueOf(month)),(Integer.valueOf(today)-1),no);
 				JsonObject jout=new JsonObject();
 				ArrayList<String> comname=new ArrayList<>();
 				ArrayList<String> sername=new ArrayList<>();
@@ -570,14 +571,32 @@ public class AndroidService extends HttpServlet {
 			}else if(action.equals("updatechoicequto"))
 			{
 				String project=jsonObject.get("project").getAsString();
-				QuoteVO q=gson.fromJson(project, QuoteVO.class);
+				String q=jsonObject.get("project").getAsString();
+				String n=jsonObject.get("price").getAsString();
 				String c=jsonObject.get("com").getAsString();
 				String menno=jsonObject.get("men").getAsString();
 				String name=jsonObject.get("name").getAsString();
-				String rfqs=jsonObject.get("rfq").getAsString();
-				RFQ_DetailVO rfq=gson.fromJson(rfqs, RFQ_DetailVO.class);
-				 SimpleDateFormat format = new SimpleDateFormat("yyyy-M-d");
-				CalendarVO cal=new CalendarService().checkForRes(c, format.format(rfq.getSer_date()));
+				String rfqtime=jsonObject.get("rfqtime").getAsString();
+				
+				String rfqcont=jsonObject.get("rfqcont").getAsString();
+				String rfqloc=jsonObject.get("rfqloc").getAsString();
+				String rfqno=jsonObject.get("rfqno").getAsString();
+				String rfqdetail=jsonObject.get("rfqdetail").getAsString();
+				String rfqstype=jsonObject.get("rfqstype").getAsString();
+				String rtime=rfqtime+" 00:00:00";
+				
+				RFQ_DetailVO rfq=new RFQ_DetailVO();
+				rfq.setContent(rfqcont);
+				rfq.setLocation(rfqloc);
+				rfq.setRfq_no(rfqno);
+				rfq.setRfqdetail_no(rfqdetail);
+				rfq.setStatus("0");
+				rfq.setSer_date(Timestamp.valueOf(rtime));
+				rfq.setStype_no(rfqstype);
+				
+				rfq.setRfq_no(rfqno);
+				
+				CalendarVO cal=new CalendarService().checkForRes(c, rfqtime);
 				if(cal==null)
 				{
 				String servtypeno=new Service_TypeService().getOne(rfq.getStype_no()).getStype_no();
@@ -585,10 +604,11 @@ public class AndroidService extends HttpServlet {
 				CalendarVO calendarVO = new CalendarVO();
 				calendarVO.setCom_no(c);
 				calendarVO.setContent(content);
-				calendarVO.setCal_date(rfq.getSer_date());
-				rfq.setStatus("0");
+				
+				calendarVO.setCal_date(Timestamp.valueOf(rtime));
+				
 				new RFQ_DetailService().updateRFQDetailStatus(rfq.getStatus(),rfq.getRfqdetail_no());
-				new ReservationService().addReservation(menno, c, new Timestamp(System.currentTimeMillis()), rfq.getSer_date(), q.getQuo_no(), rfq.getStype_no(), q.getPrice(), "1", calendarVO, rfq);
+				new ReservationService().addReservation(menno, c, new Timestamp(System.currentTimeMillis()), rfq.getSer_date(), q, rfq.getStype_no(), Integer.valueOf(n), "1", calendarVO, rfq);
 				outStr="OK";
 				}else {
 				 outStr="no";
