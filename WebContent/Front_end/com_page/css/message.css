@@ -22,6 +22,17 @@ a#close_chat {
 	height:29px;	
 }
 
+a#close_chat2 {
+	color: black;
+	padding: 0px;
+	text-decoration: none;
+	text-align:center;
+	cursor: pointer;
+	width:29px;
+	height:29px;	
+}
+
+
 .panel-footer {
 	background:#ffffff;
 	height: 50px;
@@ -42,6 +53,11 @@ a#close_chat {
 	 margin-top:15px;
 }
 
+#chat-header-name2 {
+	 text-align:center;
+	 margin-top:15px;
+}
+
 .chat_box {
 	box-shadow: 2px 6px 6px 1px rgba(111, 111, 111, 0.5);
 	background:#ffffff;
@@ -49,6 +65,24 @@ a#close_chat {
 	border: 1px solid #b0b0b0;
 	bottom: 0;
 	right: 55px;
+	height: 500px;
+	width: 350px;
+	position: fixed;
+	margin: 11px 7px 0;
+	padding: 7px 10px;
+	overflow: auto;
+	font-size: 21px;
+	z-index: 5;
+	border-radius: 10px;
+}
+
+.chat_box2 {
+	box-shadow: 2px 6px 6px 1px rgba(111, 111, 111, 0.5);
+	background:#ffffff;
+	display: none;
+	border: 1px solid #b0b0b0;
+	bottom: 0;
+	right: 410px;
 	height: 500px;
 	width: 350px;
 	position: fixed;
@@ -76,6 +110,17 @@ a#close_chat {
 }
 
 #textArea {
+    width:83%;
+    list-style-type: none;
+    padding:0px;
+    position:absolute;
+    bottom:32px;
+    display:flex;
+    flex-direction: column;
+
+}
+
+#textArea2 {
     width:83%;
     list-style-type: none;
     padding:0px;
