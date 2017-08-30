@@ -358,12 +358,18 @@ public class AndroidService extends HttpServlet {
 				outStr=js.toString();
 			}else if(action.equals("addnewreser"))
 			{
+				System.out.println(jsonIn);
 				String ser=jsonObject.get("ser").getAsString();
 				String username=jsonObject.get("username").getAsString();
-				String cc=jsonObject.get("Calender").getAsString();
+				String cc=jsonObject.get("Ccontent").getAsString();
+				String caa=jsonObject.get("Cal").getAsString();
 				ServVO servo=gson.fromJson(ser, ServVO.class);
 				MemVO men=new MemService().getOneMemById(username);
-				CalendarVO calen=gson.fromJson(cc,CalendarVO.class);
+				CalendarVO calen=new CalendarVO();
+				String tt=caa+" 00:00:00";
+				System.out.println(tt);
+				calen.setCal_date(Timestamp.valueOf(tt));
+				calen.setContent(cc);
 				calen.setCom_no(servo.getCom_no());
 		        Calendar cal = Calendar.getInstance();
 		        new ReservationService().addReservation(men.getMem_no(), servo.getCom_no(), new Timestamp(cal.getTimeInMillis()), calen.getCal_date(), servo.getServ_no(), servo.getStype_no(), servo.getPrice(),"0", calen);
