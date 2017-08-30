@@ -4,8 +4,8 @@
 <div id="content">
 
 
-<div class="col-xs-12 col-sm-2"></div>
-<div class="col-xs-12 col-sm-6">
+<div class="col-xs-12 col-sm-3"></div>
+<div class="col-xs-12 col-sm-5">
 <div><center><h1>登入</h1></center></div>
 <div class="modal-content" >
 
