@@ -49,7 +49,7 @@
 
     </div>
 <title>管理員資料</title>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">查看全管理員資料</h3>

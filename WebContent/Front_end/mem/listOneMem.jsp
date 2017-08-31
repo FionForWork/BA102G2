@@ -3,12 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ page import="java.util.*"%>
 <%
-
+String ok = (String)request.getAttribute("ok");
 Object memVO = session.getAttribute("memVO");     
 %>
 <%@ include file="/Front_end/com/page/share_header_v2.file"%>
  
-
+		<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+		<script src="<%=request.getContextPath()%>/Front_end/mem/js/js.js"></script>
+		<style>
+			.show_msg{
+				width:100%;
+				height:35px;
+				text-align:center;
+				position:fixed;
+				left: 0;
+				z-index: 999;
+			}
+				.show_span{
+					display: inline-block;
+					height: 35px;
+					padding: 0 15px;
+					line-height: 35px;
+					background:rgba(0,0,0,0.8);
+					border-radius: 50px;
+					color: #fff;
+					font-size: 1em;
+				}
+		</style>
     <div class="container">
 	<div class="row">
 <!--sidebar sidebar sidebar sidebar sidebar sidebar -->
@@ -107,6 +128,12 @@ Object memVO = session.getAttribute("memVO");
 		</div>
 	</div>
 </div>
+<script>
 
-
+</script>
+<c:if test="${ok==\"ok\"}">
+<script>
+showMsg('修改成功','top');
+</script>
+</c:if>
 <%@ include file="page/register_footer.file"%>

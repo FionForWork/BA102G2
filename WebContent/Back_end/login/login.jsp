@@ -4,8 +4,8 @@
 <div id="content">
 
 
-<div class="col-xs-12 col-sm-2"></div>
-<div class="col-xs-12 col-sm-6">
+<div class="col-xs-12 col-sm-3"></div>
+<div class="col-xs-12 col-sm-5">
 <div><center><h1>登入</h1></center></div>
 <div class="modal-content" >
 
@@ -31,7 +31,7 @@
               <input type="hidden" name="action" value="login">
               <button type="submit"  type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> 登入</button></center>
           </form>
-            <br><input type="button" class="btn btn-info " id="fast"><input class="btn btn-info" type="button" id="fast2" >
+            <br><input type="radio" id="fast"><input type="radio" id="fast2" >
         </div>
         <div class="modal-footer">
          

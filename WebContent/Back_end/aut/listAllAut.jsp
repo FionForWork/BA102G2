@@ -51,9 +51,6 @@
         </div>
 
     </div>
-<br><br><br>
-
-
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">瀏覽管理員權限</h3>

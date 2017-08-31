@@ -42,7 +42,6 @@
     </script>
 <title>修改密碼</title>
 
-<br><br><br>
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">管理員密碼修改</h3>
@@ -53,19 +52,19 @@
 		<div class="form-group">
 		<span >員工編號: ${admVO.adm_no}<br><br><br></span>
            <span >舊密碼:<font color='red'>${errorMsgs.get(0)}</font></span>
-           <input type="password" class="form-control"  name="oldpwd" value="">
+           <input type="password" class="form-control"    name="oldpwd" value="">
     	</div>
     	<div class="form-group">
            <span >新密碼:</span>
-           <input type="password" class="form-control" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  name="pwd" value="">
+           <input type="password" class="form-control"  id="pwd3" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  name="pwd" value="">
     	</div>
     	<div class="form-group">
            <span >確認新密碼:</span>
-           <input type="password" class="form-control" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  value="">
+           <input type="password" class="form-control"  id="pwd4" required title="只能輸入5~12個數字" pattern="[0-9]{5,12}$"  value="">
     	</div>
     	<input type="hidden" name="adm_no" value="${admVO.adm_no}">
 		<input type="hidden" name="action" value="updatePwd">
-		<input type="submit" class="btn btn-info " value="送出新增">
+		<input type="submit" class="btn btn-info " value="送出新增"> <input  type="radio"  id="fast4">
 </FORM>
    	
 
@@ -91,3 +90,13 @@
 </div>   
 
 <%@ include file="/Back_end/pages/backFooter.file" %>
+<script>
+	$(document).ready(function(){  
+		$("#fast4").click(function() {
+			
+			$("#pwd4").attr("value",'11111');
+			$("#pwd3").attr("value",'11111');
+
+		});
+	});
+	</script> 

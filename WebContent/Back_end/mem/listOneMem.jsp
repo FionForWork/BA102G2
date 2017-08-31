@@ -50,7 +50,7 @@ td  {font-size:20px;
         </div>
 
     </div>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">查看會員</h3>

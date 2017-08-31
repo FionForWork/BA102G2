@@ -29,7 +29,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 	<center><h1><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">會員註冊</h1></center>
 	<h3>請輸入資料</h3>
-	<br><center><input  type="button" class="btn btn-info " value="一鍵輸入" id="fast"></center><br>
+	<br><center><input  type="radio" id="fast"></center><br>
 
 	<div class="mation">
 	<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/mem/mem.do" name="form1" enctype="multipart/form-data" onSubmit="return check();">
@@ -132,7 +132,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<script>
 	$(document).ready(function(){  
 		$("#fast").click(function() {
-			$("#name").attr("value",'黃家家');
+			$("#name").attr("value",'慈慈');
 			$("#pwd").attr("value",'123123');
 			$("#pwd2").attr("value",'123123');
 			$("#id").attr("value",'lf2lf2111@gmail.com');

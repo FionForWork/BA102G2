@@ -799,6 +799,7 @@ public class MemServlet extends HttpServlet{
 				memVO = memSvc.updateMem(mem_no, id, name, sex,bday,phone,email,account,picture,report,status);
 				 HttpSession session = req.getSession();
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				 req.setAttribute("ok","ok");
 				 session.setAttribute("memVO",memVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/Front_end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp

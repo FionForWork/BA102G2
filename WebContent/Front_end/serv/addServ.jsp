@@ -41,14 +41,14 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 
 <h1 ><img src="<%= request.getContextPath() %>/Front_end/mem/img/ring_64.png">新增廠商服務:</h1>
 <br>
-<br><input  type="button" class="btn btn-info " value="一鍵輸入" id="fast"><br><br>
+<br><input  type="radio" id="fast6"><br><br>
 
 <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/serv/serv.do" name="form1">
 
 	<div class="form-group">
 		<span>服務類型:<br></span>
 		
-		<select style="width: 223px;" name="stype_no">
+		<select class="form-control"  style="width: 223px;" name="stype_no">
 		 <option value="0001">拍婚紗
 		 <option value="0002">婚攝婚錄
 		  <option value="0003">新娘秘書
@@ -63,25 +63,25 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 	
 <div class="form-group">
 		<span>訂金:<font color='red'>${errorMsgs.get("deposit")}</font><br></span>
-		<input type="TEXT" id="deposit" name="deposit" required title="只能輸入數字" pattern="[0-9]{1,12}$"
+		<input type="TEXT" class="form-control" id="deposit" name="deposit" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getDeposit()%>" />
 		</div>
 			
 	<div class="form-group">
 		<span>價錢:<font color='red'>${errorMsgs.get("price")}</font><br></span>
-		<input type="TEXT" id="price"name="price" required title="只能輸入數字" pattern="[0-9]{1,12}$"
+		<input type="TEXT" class="form-control" id="price"name="price" required title="只能輸入數字" pattern="[0-9]{1,12}$"
 			value="<%= (servVO==null)? "0" : servVO.getPrice()%>" />
 	</div>
 
 	<div class="form-group">
 		<span>服務標題:<font color='red'>${errorMsgs.get("title")}</font><br></span>
-		<input type="TEXT" name="title"  id="title"
+		<input type="TEXT" class="form-control" name="title"  id="title"
 			value="<%= (servVO==null)? "標題" : servVO.getTitle()%>" />
 	</div>
 
 	<div class="form-group">
 		<span>服務介紹:<font color='red'>${errorMsgs.get("content")}</font><br></span>
-		<textarea name="content"  id="content" class="form-control" rows=8 >${servVO.content}</textarea>
+		<textarea name="content" class="form-control"  id="content" class="form-control" rows=8 >${servVO.content}</textarea>
  
 		
 	</div>
@@ -90,7 +90,7 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 	<div class="form-group">
 		<span>服務狀態:<br></span>
 	
-		<select style="width: 223px;" name="status">
+		<select class="form-control" style="width: 223px;" name="status">
 		 <option value="正常">正常
 		 <option value="下架">下架
 		</select>
@@ -109,14 +109,14 @@ ServVO servVO = (ServVO) request.getAttribute("servVO");
 <%@ include file="/Front_end/mem/page/register_footer.file"%>
 <script>
 	$(document).ready(function(){  
-		$("#fast").click(function() {
+		$("#fast6").click(function() {
 			$("#deposit").attr("value",'500');
 			$("#price").attr("value",'3000');
 			$("#title").attr("value",'美美婚紗');
 
-			$("#id").attr("value",'lf2lf2111@gmail.com');
+		
 
-			$("#content").val('穿上它讓你美麗一整天');
+			$("#content").val('此款式為A Line:更加修飾臀型，所以適合臀部比較完美的新娘，不太適合個子不高的新娘，因為腰線不夠明顯。');
 
 		});
 	});

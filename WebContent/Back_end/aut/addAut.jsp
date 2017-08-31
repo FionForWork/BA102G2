@@ -45,7 +45,7 @@ Map<String,String> errorMsgs = (HashMap) request.getAttribute("errorMsgs");
         </div>
 
     </div>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">新增管理員權限 </h3>
@@ -108,9 +108,9 @@ $("#adm").click(function() {
 	$("input[name=id][value=07]").attr("checked",true);
 	$("input[name=id][value=09]").attr("checked",true);
 	});
-
+});
 </script>
-<script >
+<script>
 function ifChecked(){
    var a = document.getElementsByName("id"); 
    var n = a.length;

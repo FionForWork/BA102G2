@@ -101,7 +101,7 @@ public class AdmServlet extends HttpServlet {
 
 			/***************************3.新增完成,準備轉交(Send the Success view)***********/
 		
-				String url = "/Back_end/adm/listOneAll.jsp";
+				String url = "/Back_end/adm/listMyAdm.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);	
 				/***************************其他可能的錯誤處理**********************************/

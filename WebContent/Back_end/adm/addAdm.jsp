@@ -42,7 +42,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
         </div>
 
     </div>
-<br><br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">管理員資料新增</h3>
@@ -93,7 +93,7 @@ AdmVO admVO = (AdmVO) request.getAttribute("admVO");
 <input type="hidden" name="action" value="insert">
 <input type="submit" class="btn btn-info" value="送出新增"></FORM>
 <br>
-<input type="button" class="btn btn-info " id="fast"></div>
+<input type="radio" id="fast"></div>
 <%@ include file="/Back_end/pages/backFooter.file"%>
 <script> 
 $(document).ready(function(){  

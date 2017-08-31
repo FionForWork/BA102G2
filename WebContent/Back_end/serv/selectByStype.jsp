@@ -44,7 +44,7 @@
 <jsp:useBean id="selectByStype" scope="session" type="java.util.Set" />
 
 <title>服務資料</title>
-<br><br>
+
 <div id="content">
 <div class="text-center well" >
 	<h2 style="font-weight:900">查看服務</h3>
@@ -53,7 +53,7 @@
 <table class="table table-striped">
 <br><br>
 	<tr>
-		<th>服務編號</th>
+
 		<th>服務型態</th>
 		<th>廠商編號</th>
 		<th>訂金</th>
@@ -67,18 +67,23 @@
 		<th>修改狀態</th>
 	</tr>
 		<%@ include file="page33.file" %> 
+		<jsp:useBean id="comSvc" scope="page" class="com.com.model.ComService" />
 	<c:forEach var="servVO" items="${selectByStype}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/serv/serv.do">
 	<tr>
 		
 		
-			<td>${servVO.serv_no}</td>
-			<td><c:if test="${servVO.stype_no==\"0001\"}">0001:拍婚紗</c:if>
-			<c:if test="${servVO.stype_no==\"0002\"}">0002:婚攝婚錄</c:if>
-			<c:if test="${servVO.stype_no==\"0003\"}">0003:新娘秘書</c:if>
+	
+			<td><c:if test="${servVO.stype_no==\"0001\"}">拍婚紗</c:if>
+			<c:if test="${servVO.stype_no==\"0002\"}">婚攝婚錄</c:if>
+			<c:if test="${servVO.stype_no==\"0003\"}">新娘秘書</c:if>
 			
 			</td>
-			<td>${servVO.com_no}</td>
+			<td><c:forEach var="comVO" items="${comSvc.all}">
+			<c:if test="${comVO.com_no==servVO.com_no}">
+			${comVO.name}
+			</c:if>
+			</c:forEach></td>
 			<td>${servVO.deposit}</td>
 			<td>${servVO.price}</td>
 			<td>${servVO.title}</td>

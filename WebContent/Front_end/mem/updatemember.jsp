@@ -81,7 +81,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 		<div class="form-group">
            <span>姓名:<font color='red'>${errorMsgs.get("name")}</font></span>
-           <input type="text" class="form-control"  name="name" value="${memVO.name}">
+           <input type="text" id="name" class="form-control"  name="name" value="${memVO.name}">
     	</div>
     		<div class="form-group">
 				<span>性別 :</span>
@@ -101,15 +101,15 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
         </div>
     	<div class="form-group">
            <span >電話:<font color='red'>${errorMsgs.get("phone")}</font></span>
-           <input type="text" class="form-control"  name="phone" value="${memVO.phone}">
+           <input type="text" class="form-control"id="phone"  name="phone" value="${memVO.phone}">
     	</div>
     	<div class="form-group">
            <span >電子信箱:<font color='red'>${errorMsgs.get("email")}</font></span>
-           <input type="text" class="form-control" name="email" value="${memVO.email}">
+           <input type="text" class="form-control" id="email" name="email" value="${memVO.email}">
     	</div>
     	<div class="form-group">
            <span >帳戶:<font color='red'>${errorMsgs.get("account")}</font></span>
-           <input type="text" class="form-control" name="account" value="${memVO.account}">
+           <input type="text" class="form-control" id="account" name="account" value="${memVO.account}">
     	</div>
     	
 		<div >
@@ -126,7 +126,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <input type="submit" class="btn btn-info" value="送出">　　
 <input type="button" class="btn btn-info" value="取消" onclick="location.href='<%=request.getContextPath()%>/Front_end/mem/listOneMem.jsp'" >
 </FORM>
-
+<br>
+<input  type="radio" id="fast6">
 
 
 </div>
@@ -149,3 +150,14 @@ $("#input-1").fileinput({
 
 	</script>
 <%@ include file="page/register_footer.file"%>
+<script>
+	$(document).ready(function(){  
+		$("#fast6").click(function() {
+			$("#name").attr("value",'慈慈');
+			$("#phone").attr("value",'0948468852');
+			$("#account").attr("value",'003-583148-8761547');
+			$("#email").attr("value",'a23ddg5@gmail.com');
+			
+		});
+	});
+	</script> 
