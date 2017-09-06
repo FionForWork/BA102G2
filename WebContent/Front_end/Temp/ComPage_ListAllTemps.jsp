@@ -35,10 +35,10 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						id='cancelDeleteModal'>&times;</button>
-					<h4 class="modal-title">刪除成品</h4>
+					<h4 class="modal-title">刪除作品</h4>
 				</div>
 				<div class="modal-body">
-					<p>你確定想刪除「 ${tempVO.name} 」嗎？在這本成品中的相片及影片也會被刪除。</p>
+					<p>你確定想刪除「 ${tempVO.name} 」嗎？在這本待挑選作品中的相片及影片也會被刪除。</p>
 				</div>
 				<input type='hidden' name='temp_no' value=''>
 				<div class="modal-footer">
@@ -63,7 +63,7 @@
 					<h4 class="modal-title">匯入會員相簿</h4>
 				</div>
 				<div class="modal-body">
-					<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。</p>
+					<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆作品將會從清單中移除。</p>
 				</div>
 				<input type='hidden' name='temp_no' value=''>
 				<div class="modal-footer">
@@ -78,7 +78,7 @@
 	</div>
 	<!--  End Modal Transfer Temp -->
 
-
+<div id="snackbar">已成功匯入會員相簿囉...</div>
 	<div id='changeContent'>
 		<ul class="nav nav-tabs nav-justified" role="tablist">
 			<li class="active"><a data-toggle="tab" href="#unselect">未挑選</a></li>
@@ -88,25 +88,21 @@
 
 		<div class="tab-content" style="border: 0">
 
-
-
 			<!-- Unselect Section -->
 			<div id="unselect" class="tab-pane fade in active">
-
-
 
 				<table class="table table-hover table-responsive tempList">
 					<thead>
 						<tr>
 
-							<th>成品名稱</th>
+							<th>作品名稱</th>
 							<th>會員名稱</th>
 							<th>可挑選數量</th>
 							<th>拍攝時間</th>
 							<th>狀態</th>
 							<th colspan="3" align="center">
 								<button class="btn btn-info btn-block" name='createTemp'
-									onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_CreateTemp.jsp'">新增成品</button>
+									onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Temp/ComPage_CreateTemp.jsp'">新增待挑選作品</button>
 							</th>
 
 						</tr>
@@ -158,7 +154,7 @@
 				<table class="table table-hover table-responsive tempList">
 					<thead>
 						<tr>
-							<th>成品名稱</th>
+							<th>作品名稱</th>
 							<th>會員名稱</th>
 							<th>可挑選數量</th>
 							<th>拍攝時間</th>
@@ -171,34 +167,6 @@
 						<c:forEach var="tempVO"
 							items="${tempSvc.getAllByComNo(comVO.com_no)}" varStatus="s">
 							<c:if test='${tempVO.status.equals("已挑選")}'>
-
-
-								<!-- 								Start Modal Transfer Temp -->
-								<%-- 								<div class="modal fade" id="transferModal${s.count}" --%>
-								<!-- 									role="dialog"> -->
-								<!-- 									<div class="modal-dialog"> -->
-
-								<!-- 										Modal content -->
-								<!-- 										<div class="modal-content"> -->
-								<!-- 											<div class="modal-header"> -->
-								<!-- 												<button type="button" class="close" data-dismiss="modal">&times;</button> -->
-								<!-- 												<h4 class="modal-title">匯入會員相簿</h4> -->
-								<!-- 											</div> -->
-								<!-- 											<div class="modal-body"> -->
-								<%-- 												<p>你確定想將「 ${tempVO.name} 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。</p> --%>
-								<!-- 											</div> -->
-								<!-- 											<div class="modal-footer"> -->
-								<!-- 												<button type="button" class="btn btn-default" -->
-								<!-- 													data-dismiss="modal">取消</button> -->
-								<!-- 												<button class="btn btn-danger" data-dismiss="modal" -->
-								<!-- 													class='transferConfirm' -->
-								<%-- 													onclick="document.getElementById('transfer${s.count}').submit();">確定</button> --%>
-								<!-- 											</div> -->
-								<!-- 										</div> -->
-
-								<!-- 									</div> -->
-								<!-- 								</div> -->
-								<!-- 								 End Modal Transfer Temp -->
 
 								<tr>
 
@@ -220,9 +188,10 @@
 											onclick="openTransferTempModal('${tempVO.temp_no}','${tempVO.name}')">匯入會員相簿</button></td>
 								</tr>
 							</c:if>
+							
 						</c:forEach>
 					</tbody>
-					<div id="snackbar">已成功匯入會員相簿囉...</div>
+					
 				</table>
 			</div>
 		</div>
@@ -246,11 +215,11 @@
 				$("#changeContent").load("<%=request.getContextPath()%>/Front_end/Temp/ComPage_ListAllTemps.jsp #changeContent",{
 					"com_no":${comVO.com_no}
 				});
-// 				if("Transfer_Temp" === action){
-// 					$("#selectedBtn").click();
-// 					$("#snackbar").addClass("show");
-// 					setTimeout('$("#snackbar").removeClass("show")',5000);
-// 				}
+				if("Transfer_Temp" === action){
+					$("#selectedBtn").click();
+					$("#snackbar").addClass("show");
+					setTimeout('$("#snackbar").removeClass("show")',5000);
+				}
 					
 			},
 			error : function(xhr) {
@@ -263,7 +232,7 @@
 
 		$("#deleteTempModal").modal();
 		$('input[name=temp_no]').val(temp_no);
-		$('.modal-body p').html("你確定想刪除「" + name + " 」嗎？在這本成品中的相片及影片也會被刪除。");
+		$('.modal-body p').html("你確定想刪除「" + name + " 」嗎？在這本作品中的相片及影片也會被刪除。");
 	}
 	function deleteTemp() {
 		var temp_no = $('input[name=temp_no]').val();
@@ -277,7 +246,7 @@
 		$("#transferTempModal").modal();
 		$('input[name=temp_no]').val(temp_no);
 		$('.modal-body p').html(
-				"你確定想將「" + name + " 」匯入到會員相簿嗎？ 匯入後此筆成品將會從清單中移除。");
+				"你確定想將「" + name + " 」匯入到會員相簿嗎？ 匯入後此筆作品將會從清單中移除。");
 	}
 	function transferTemp() {
 		var temp_no = $('input[name=temp_no]').val();

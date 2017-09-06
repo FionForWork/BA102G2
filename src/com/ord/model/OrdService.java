@@ -189,7 +189,7 @@ public class OrdService {
     public List<OrdVO> getPageByRole(int nowPage, int itemsCount,String role, String role_no, String status, String orderType){
         int start = (nowPage - 1) * itemsCount+1;
         List<OrdVO>pageList=null;
-        String orderMethod="";
+        String orderMethod="ORD_NO asc";
         if("0".equals(orderType)){
             orderMethod="ORD_NO asc";
         }

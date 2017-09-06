@@ -5,6 +5,7 @@
 <%@ page import="com.works.model.*"%>
 <%@ page import="com.com.model.*"%>
 <%@ page import="com.serv.model.*"%>
+<%@ page import="com.comtra.model.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
@@ -19,7 +20,15 @@
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAll();
 	pageContext.setAttribute("servList", servList);
-
+	
+	MemVO memVO = (MemVO)session.getAttribute("memVO");
+	ComTraService comtraSvc = new ComTraService();
+	if(memVO != null){
+		List<String> comNoList = comtraSvc.getComNoListByMemNo(memVO.getMem_no());
+		pageContext.setAttribute("comNoList",comNoList);
+	}
+	
+	
 %>
 
 <html>
@@ -57,12 +66,12 @@
 	<%@ include file="message.jsp"%>
 
 	<!--廠商名稱-->
-	<div class="text-center">
+<div class="text-center">
 		<h1>${comVO.name}</h1>
 		<div id="comTracking">
 			<c:choose>
-			<c:when test="${memVO.mem_no == null || !comNoList.contains(comVO.com_no)}">
-				<a onclick="insertComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
+			<c:when test="${memVO == null || !comNoList.contains(comVO.com_no)}">
+				<a onclick="insertComtra()" class="btn btn-xs btn-default"><i id="collectIcon" class="fa fa-heart"></i>&nbsp加入收藏</a>
 			</c:when>
 			<c:otherwise>
 				<a onclick="deleteComtra()" class="btn btn-xs btn-danger"><i id="collectIcon" class="fa fa-heart-o"></i>&nbsp取消收藏</a>
@@ -76,7 +85,7 @@
 	</div>
 <div id="snackbar">請先登入會員...</div>
 	<!--廠商名稱-->
-	
+		
 	<!--麵包削-->
 	<div class="catalog hidden-xs">
 		<ul class="list-inline">

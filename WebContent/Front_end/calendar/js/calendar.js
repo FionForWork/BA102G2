@@ -4,6 +4,7 @@
 	            drag:function (event, ui) {
 	                $("#dragid").val($(this).attr("id"));
 	                $("#thisDate").val($(this).parent('td').attr("id").replace(/-/g,""));
+	                $("#mobileThisDate").val($(this).parent('td').attr("id"));
 	            }
 	        });
 	
@@ -13,6 +14,7 @@
 	                $(this).css("background-color", "lightgreen");
 	                $("#dropid").val($(this).attr("id"));
 	                $("#toDate").val($(this).attr("id").replace(/-/g,""));
+	                $("#mobileToDate").val($(this).attr("id"));
 	                changeSchedule();
 	                $("#updateDateForm").submit();
 	            },
@@ -50,6 +52,7 @@
 	function deleteSchedule(y){
 	  	var j = $(y).parent('div').attr("id");
 	  	var thisDate = $(y).parent('div').parent('td').attr("id").replace(/-/g,"");
+	  	$("#mobileThisDate").val($(y).parent('div').parent('td').attr("id"));
 	  	$('#cal_no').val(j);
 	  	$('#thisDate').val(thisDate);
 	  	onDeleteSchedule();

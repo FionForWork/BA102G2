@@ -106,4 +106,26 @@ public class PlaceViewDAO implements PlaceViewDAO_Interface{
         return list;
     }
 
+    @Override
+    public String getOneByFK(String pla_no) {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        String view_no="";
+        try {
+            session.beginTransaction();
+            Query query=session.createQuery("select view_no from PlaceViewVO where pla_no =:pla_no");
+            query.setParameter("pla_no", pla_no);
+            query.setMaxResults(1);
+            try {
+                view_no=String.valueOf(query.list().get(0));
+            }
+            catch (IndexOutOfBoundsException e) {
+            }
+        }
+        catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
+        return view_no;
+    }
+
 }

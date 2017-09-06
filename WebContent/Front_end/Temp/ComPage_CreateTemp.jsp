@@ -1,4 +1,3 @@
-
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
@@ -69,6 +68,7 @@ img .preview{
 	color:red;
 	
 }
+
 </style>
 
 <script>
@@ -91,7 +91,15 @@ $("document").ready(function(){
 	today = yyyy+'-'+mm+'-'+dd;
 	$('#datePicker').attr('value', today).attr('max',today); 
 	$("#datePicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
-		 
+	
+	$("#autoInputBtn1").on("click",function(){
+		$("input[name=name]").val("最強婚紗作品在此");
+		$("input[name=available]").val("10");
+	});
+	$("#autoInputBtn2").on("click",function(){
+		$("input[name=name]").val("婚紗試拍作品");
+		$("input[name=available]").val("15");
+	});
 	
 });
 
@@ -114,10 +122,11 @@ $("document").ready(function(){
 <div class="col-md-8 col-offset-1">
 
 <div class='formStyle'>
-		<form action="<%=request.getContextPath()%>/temp/temp.do" method="post"
-				enctype="multipart/form-data">
-			<h3>建立待挑選成品</h3>
+		
+			<h3>建立待挑選作品  <input id='autoInputBtn1' name='autoInput' type='radio'>&nbsp<input id='autoInputBtn2' name='autoInput' type='radio'></h3>
 			<br>
+			<form action="<%=request.getContextPath()%>/temp/temp.do" method="post"
+				enctype="multipart/form-data">
 			<label for="name">待挑選作品名稱 <span class='errorMsgs'> ${errorMsgs.get("name")}</span></label> 
 			<input type="text" id="name" name="name" value="<%= (temp==null)? "" : temp.getName()%>"> 
 			<label for="datepicker1">拍攝日期 <span class='errorMsgs'> ${errorMsgs.get("create_date")}</span></label> 
@@ -138,6 +147,7 @@ $("document").ready(function(){
 			<input id="inputFile" name="inputFile[]" type="file" multiple class="file-loading"> <br>
 			<input type="submit" value="建立">
 			<input type ="submit" onclick="history.back()" value="取消"></input>
+			
 			<br>		
 			
 			
@@ -146,11 +156,15 @@ $("document").ready(function(){
 			<input type='hidden' name='com_no' value='${comVO.com_no}'>
 			
 		</form>
+		
 	</div>	
 	</div>
 
 
 
 
+<!--
 
+//-->
+</script>
 <%@ include file="page/temp_footer.file"%>

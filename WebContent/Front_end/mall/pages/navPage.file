@@ -1,0 +1,42 @@
+<%
+    int pagesShow = 5;
+    int median=pagesShow/2;
+    pageContext.setAttribute("pagesShow", pagesShow);
+    pageContext.setAttribute("median", median);
+%>
+<div class="text-center">
+    <nav aria-label="Page navigation ">
+        <ul class="pagination pagination-lg ">
+            <c:choose>
+                <c:when test="${totalPages<=(pagesShow)}">
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:pageChange(${i})" data-page="${i}">${i}</a></li>
+                    </c:forEach>
+                </c:when>
+                <c:when test="${nowPage<(pagesShow)}">
+                    <c:forEach var="i" begin="1" end="${(pagesShow)}">
+                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:pageChange(${i})" data-page="${i}">${i}</a></li>
+                    </c:forEach>
+                    <li><a class="disabled">...</a></li>
+                    <li><a class="btn btn-info" href="javascript:pageChange(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                </c:when>
+                <c:when test="${totalPages-nowPage<(pagesShow)}">
+                    <li><a class="btn btn-info" href="javascript:pageChange(1)" data-page="1">1</a></li>
+                    <li><a class="disabled">...</a></li>
+                    <c:forEach var="i" begin="${totalPages-((pagesShow)-1)}" end="${totalPages}">
+                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:pageChange(${i})" data-page="${i}">${i}</a></li>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <li><a class="btn btn-info" href="javascript:pageChange(1)" data-page="1">1</a></li>
+                    <li><a class="disabled">...</a></li>
+                    <c:forEach var="i" begin="${nowPage-median}" end="${nowPage+median}">
+                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:pageChange(${i})" data-page="${i}">${i}</a></li>
+                    </c:forEach>
+                    <li><a class="disabled">...</a></li>
+                    <li><a class="btn btn-info" href="javascript:pageChange(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
+                </c:otherwise>
+            </c:choose>
+        </ul>
+    </nav>
+</div>

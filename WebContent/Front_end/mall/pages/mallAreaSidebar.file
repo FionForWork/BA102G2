@@ -1,4 +1,4 @@
-﻿<div class="col-md-2 col-xs-0">
+﻿<div class="col-md-2 col-xs-2">
     <ul class="list-group">
         <a class="list-group-item menua" disabled="disabled"><i><b>我是買家</b></i></a>
         <a href="${preLocation}/mallArea.jsp?role=0" class="list-group-item menua <%=(active.equals("0")?"active":"")%>">訂單管理</a><br>

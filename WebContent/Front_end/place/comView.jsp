@@ -60,26 +60,12 @@
                             <c:choose>
                                 <c:when test="${totalPages<=5}">
                                     <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:when test="${nowPage<5}">
                                     <c:forEach var="i" begin="1" end="5">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                     <li><a class="disabled">...</a></li>
                                     <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
@@ -88,28 +74,14 @@
                                     <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
                                     <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a class="btn btn-info" href="javascript:change(1)" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
                                     <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                        <c:choose>
-                                            <c:when test="${nowPage==i}">
-                                                <li><a class="btn btn-info active" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li><a class="btn btn-info" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <li class=""><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i})" data-page="${i}">${i}</a></li>
                                     </c:forEach>
                                     <li><a class="disabled">...</a></li>
                                     <li><a class="btn btn-info" href="javascript:change(${totalPages})" data-page="${totalPages}">${totalPages}</a></li>
@@ -228,18 +200,17 @@
                 west:west,
                 north:north,
                 east:east,
-                nowPage:<%=nowPage%>
             }, 
             error : function(xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
             },
             success : function(response) {
-                var comList=JSON.parse(response);
+                var comList=JSON.parse(response).comList;
                 var position;
                 var marker;
                 var start=(nowPage-1)*<%=itemsCount%>;
-                var end=nowPage*<%=itemsCount%>;
+                var end=(nowPage*<%=itemsCount%>>comList.length)?comList.length:nowPage*<%=itemsCount%>;
                 for(var i=0;i<comMarkers.length;i++){
                     comMarkers[i].setMap(null);
                 }
@@ -247,7 +218,7 @@
                 for(var i=start;i<end;i++){
                     position = {
                     lat : parseFloat(comList[i].lat),
-                    lng : parseFloat(comList[i].lng)
+                    lng : parseFloat(comList[i].lon)
                     };
                     marker = new google.maps.Marker({
                     position : position,

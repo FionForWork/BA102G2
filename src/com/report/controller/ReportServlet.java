@@ -35,10 +35,11 @@ public class ReportServlet extends HttpServlet{
 		
 		
 		if ("insert".equals(action)) { 
-			
+			System.out.println(action);
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String position = req.getParameter("position").trim();
+			
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				
@@ -69,7 +70,7 @@ public class ReportServlet extends HttpServlet{
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 			
 				String url = position;
-				System.out.println(url);
+				System.out.println("url"+url);
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				
 				successView.forward(req, res);				
@@ -149,7 +150,7 @@ if ("update".equals(action)) {
 			} catch (Exception e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Back_end/report/aaaReport.jsp");
+						.getRequestDispatcher("/Back_end/report/Report.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -19,6 +19,12 @@
 $(document).ready(function(){
 	$(".datepicker").datepicker({dateFormat: 'yy-mm-dd',maxDate: "+0D"});
 	
+	$("#autoInputBtn").on("click",function(){
+		
+		$("input[name=name]").val("風格婚紗作品");
+		$("textarea[name=works_desc]").val("我實在太美啦!!!!!!!!!羨慕吧呵呵");
+	});
+	
 });
 </script>
 
@@ -70,7 +76,7 @@ $(document).ready(function(){
 						<br>
 
 					<div class="text-center">
-						<h2>修改作品</h2>
+						<h2>修改作品 <input type='radio' id='autoInputBtn' name='autoInput'></h2>
 						<br>
 					</div>
 				</div>
@@ -94,7 +100,7 @@ $(document).ready(function(){
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">刪除相片或影片</h4>
+								<h4 class="modal-title">刪除作品</h4>
 							</div>
 							<div class="modal-body">
 								<p>刪除後將無法復原，確定刪除嗎?</p>
@@ -159,7 +165,7 @@ $(document).ready(function(){
 									<div class='form-group'>
 										<label for='works_desc'>作品敘述</label>
 										<textarea name='works_desc' rows='5' cols='20'
-											class='form-control' placeholder='請輸入作品敘述...'>${worksVO.works_desc}</textarea>
+											class='form-control' >${worksVO.works_desc}</textarea>
 									</div>
 								</div>
 							</div>
@@ -239,13 +245,17 @@ $("document").ready(function(){
 			com_no :'${comVO.com_no}'
 		});
 	});
+	var options = {
+			success: function(){
+				setTimeout(function(){window.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}";},500);}
+			
+	};
+	
 	
 	$("#updateWorks").click(function(){
 		$("[name~='updateForms']").each(function(){
-			$(this).ajaxSubmit();
+			$(this).ajaxSubmit(options);
 		});
-		top.location.href="<%=request.getContextPath()%>/Front_end/Works/ListAllWorks.jsp?com_no=${comVO.com_no}";
-		
 	});
 	
 	

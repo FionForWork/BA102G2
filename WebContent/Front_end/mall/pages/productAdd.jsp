@@ -12,7 +12,6 @@
     pageContext.setAttribute("memVO", memVO);
     pageContext.setAttribute("typeList", typeList);
 %>
-<%-- <%@include file="modalHeader.file"%> --%>
 <style>
 .addImg {
 	width: 200px;
@@ -76,6 +75,7 @@
                 <input type="hidden" name="action" value="ADD">
                 <input type="button" class="btn btn-success" onclick="addCheck()" value="確認申請">
             </form>
+                <input type="radio" onclick="fakeData()">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -84,12 +84,51 @@
 </div>
 </body>
 <script type="text/javascript">
+function fakeData() {
+    $("#addName").val("彩蛋組");
+    $("#addDesc").val("永結同心小彩蛋");
+    $("#addPrice").val("500");
+    $("#addAmount").val("500");
+    $("#addType").val("3");
+}
     function addCheck() {
         var pro_name = $("#addName").val();
+        var pro_desc = $("#addDesc").val();
+        var img=$(".addPreview").attr("src");
+        console.log(img);
         if (pro_name == "") {
-            alert("請輸入商品名稱");
+            swal('缺少資訊!',
+                 '請輸入商品名稱!',
+                 'error'
+            )
+            return;
+        }
+        else if(!img.match("img")){
+            swal('錯誤資訊!',
+                    '必須是圖片!',
+                    'error'
+               )
+               return;
+        }
+        else if (pro_desc == "") {
+            swal('缺少資訊!',
+                 '請輸入商品描述!',
+                 'error'
+               )
+            return;
+        }
+        else if (img == null) {
+            swal('缺少資訊!',
+                 '請上傳商品影像!',
+                 'error'
+                  )
+            return;
         }
         else {
+            swal('已申請，請耐心等候審核',
+                 '請輸入商品描述!',
+                 'success'
+            )
             $("#addForm").submit();
         }
     }
@@ -106,16 +145,32 @@
         xhr.open('POST', url);
         var form = new FormData();
         if(files==null){
-            alert("必須上傳圖片");
+            swal('錯誤資訊!',
+                 '請上傳商品影像!',
+                 'error'
+            )
             return;
         }
         else if (!files[0].type.match("image")) {
             var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
+            swal('錯誤資訊!',
+                 '必須是圖片!',
+                 'error'
+            )
             return;
         }
         else if ($("#addName").val() == "") {
-            alert("請輸入商品名稱");
+            swal('缺少資訊!',
+                 '請輸入商品名稱!',
+                 'error'
+            )
+            return;
+        }
+        else if ($("#addDesc").val() == "") {
+            swal('缺少資訊!',
+                 '請輸入商品描述!',
+                 'error'
+            )
             return;
         }
         else{
@@ -128,11 +183,11 @@
             form.append("amount", $("#addAmount").val());
             xhr.send(form);
             xhr.onreadystatechange = function() {
-                if (xhr.responseText == "OK") {
+                if (xhr.responseText !=null) {
+                console.log(xhr.responseText);
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
-                        $(".addPreview").attr("src", e.target.result);
-                            alert("已申請上架");
+                        document.location.href="<%=request.getContextPath()%>/Front_end/mall/productManagement.jsp";
                     }
                 }
             }
@@ -149,4 +204,3 @@
         }
     });
 </script>
-</html>

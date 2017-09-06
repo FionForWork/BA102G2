@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%  int rowsPerPage = 10;  //每頁的筆數     
     int rowNumber=0;     //總筆數
@@ -35,5 +36,6 @@
 <b><font color= red>現在是第<%=whichPage%>頁 共有<%=pageNumber%>頁 </font></b>
 <%}%>
 <p align="right"><b>共有<font color=red><%=rowNumber%></font>筆資料</b></p> 
+
 
 

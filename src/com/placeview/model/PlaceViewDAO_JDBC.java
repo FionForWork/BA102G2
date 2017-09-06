@@ -252,4 +252,10 @@ public class PlaceViewDAO_JDBC implements PlaceViewDAO_Interface {
         }
         return null;
     }
+
+    @Override
+    public String getOneByFK(String pla_no) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -17,7 +17,8 @@
 		contentList = contSvc.getAllByAlbNo(alb_no);
 		pageContext.setAttribute("contentList", contentList);
 	}
-
+	String pla_no = request.getParameter("pla_no");
+	//String pla_no = "1";
 	System.out.println("contentList" + contentList);
 %>
 <jsp:useBean id="albSvc" scope="page"
@@ -79,15 +80,15 @@
 			</div>
 
 			<div class="modal-body"
-				style="padding: 40px 50px; height: 500px; overflow-y: auto;">
+				style="padding: 40px 50px; height: 350px; overflow-y: auto;">
 				<div class="input-group">
 					<label class="input-group-addon" for="status">相簿</label> <select
 						id="selectAlbum" name="selectAlbum" class="form-control"
 						onchange='showContent()'>
 						<option value="defalt">請選擇相簿</option>
 						<%-- 								<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}" varStatus="s"> --%>
-						<c:forEach var="albVO" items="${albSvc.getAllByMemNo(memVO.mem_no)}"
-							varStatus="s">
+						<c:forEach var="albVO"
+							items="${albSvc.getAllByMemNo(memVO.mem_no)}" varStatus="s">
 							<option value="${albVO.alb_no}">${albVO.name}</option>
 						</c:forEach>
 					</select>
@@ -128,8 +129,20 @@
 
 
 <div class="col-md-8 col-offset-1">
+
+
 	<div class="row">
 		<div class='col-sm-12 col-xs-12'>
+
+<ul id="wizardStatus">
+  <li class="current">1. 裁切去背</li>
+  <li>2. 合成照片</li>
+  <li>3. 完成啦!!!</li>
+  
+</ul>
+
+
+
 			<a type='button' class="btn btn-app btn-default" id='btnLoad'
 				onclick='openSelectModal();'><i class="fa fa-image"></i> 選擇照片</a>
 			<button class="btn btn-default" id='drawBtn'>
@@ -153,7 +166,8 @@
 					type='hidden' name='action' value='cropImage'> <input
 					type="file" name="imageRemove" id='imgfile'
 					onchange="preview_images()" style="display: none"> <input
-					type='hidden' name='cont_no'>
+					type='hidden' name='cont_no'> <input type='hidden'
+					name='pla_no' value='<%=pla_no%>'>
 			</form>
 		</div>
 	</div>
@@ -210,6 +224,8 @@ input[type="radio"] {
 	box-shadow: 0 0 5px #333;
 	z-index: -1;
 }
+
+
 </style>
 <script type="text/javascript">
 		
@@ -226,9 +242,9 @@ input[type="radio"] {
 	function init(){
 		
 		context.font = "30px Sacramento";
-		var middleWidth = canvas.width / 2 - 100;
+		var middleWidth = canvas.width / 2 - 180;
 		var middleHeight = canvas.height / 2 -10 ;
-		context.fillText("請先選擇照片...",middleWidth, middleHeight);
+		context.fillText("請先選擇您要去背的照片...",middleWidth, middleHeight);
 	}	
 	
 	// 打開選擇圖片來源的modal
@@ -363,6 +379,8 @@ input[type="radio"] {
 		
 		$(document).ready(function(e) {
 			
+			
+			
 			var stillDown = false;
 			var canvas = $("#canvas");
 			
@@ -422,8 +440,7 @@ input[type="radio"] {
 			
 			// Submit
 			$("#submitBtn").on("click", function() {
-				console.log("hasBeenDrawn"+hasBeenDrawn);
-				console.log("hasImage"+hasImage);
+				
 				if(hasBeenDrawn == false || hasImage == false){return;}
 				var JSONxPoints = JSON.stringify(xPoints);
 				var JSONyPoints = JSON.stringify(yPoints);
@@ -453,7 +470,8 @@ input[type="radio"] {
 		output.drawImage(img, 0, 0);
 		hasImage = true;
 		};
-		img.src ="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>";
+		img.src ="<%=request.getContextPath()%>/ShowPictureServletDAO?cont_no=<%=cropCont_no%>
+	";
 <%}%>
 	window.addEventListener("load", init, false);
 </script>

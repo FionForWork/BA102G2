@@ -19,5 +19,7 @@ public interface PlaceViewDAO_Interface {
     public PlaceViewVO getOneByPK(String view_no);
     
     public List<String> getAllByFK(String pla_no);
+
+    public String getOneByFK(String pla_no);
     
 }

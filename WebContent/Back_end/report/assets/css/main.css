@@ -1258,7 +1258,7 @@ body.full-screen #header {
 ----------------------------------------- */
 #content {
   margin-left: 210px;
-  padding: 50px 25px 25px 25px;
+  padding: 0px 25px 0px 25px;
 }
 #content.sidebar-page {
   margin-left: 210px;

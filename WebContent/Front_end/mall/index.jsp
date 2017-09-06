@@ -45,7 +45,7 @@
 	pageContext.setAttribute("orderType", orderType);
 %>
 <%@include file="pages/indexHeader.file"%>
-<div class="text-center" style="height: 50px; margin-top: 50px"></div>
+<div class="text-center" style="margin-top: 50px"></div>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
 <style>
     #pro_name {
@@ -59,31 +59,13 @@
     <div class="row">
         <div class="col-xs-2 col-md-2">
             <ul id="proType" class="list-group">
-                <c:choose>
-                    <c:when test="${proType==0}">
-                        <a id="type0" class="list-group-item menua active" href="javascript:change(1,0,0)">
-                            <h4>全部類型</h4>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a id="type0" class="list-group-item menua" href="javascript:change(1,0,0)">
-                            <h4>全部類型</h4>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
+                <a  class="list-group-item menua ${proType==0?'active':''}" href="javascript:change(1,0,0)">
+                    <h4>全部類型</h4>
+                </a>
                 <c:forEach var="typeVO" items="${typeList}" varStatus="s">
-                    <c:choose>
-                        <c:when test="${proType==s.count}">
-                            <a id="type${s.count}" class="list-group-item menua active" href="javascript:change(1,${s.count},0)">
-                                <h4>${typeVO.type_name}</h4>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a id="type${s.count}" class="list-group-item menua" href="javascript:change(1,${s.count},0)">
-                                <h4>${typeVO.type_name}</h4>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a class="list-group-item menua ${proType==s.count?'active':''}" href="javascript:change(1,${s.count},0)">
+                        <h4>${typeVO.type_name}</h4>
+                    </a>           
                 </c:forEach>
             </ul>
         </div>
@@ -112,26 +94,12 @@
                                 <c:choose>
                                     <c:when test="${totalPages<=5}">
                                         <c:forEach var="i" begin="1" end="${totalPages}">
-                                            <c:choose>
-                                                <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(1,${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <li><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                         </c:forEach>
                                     </c:when>
                                     <c:when test="${nowPage<5}">
                                         <c:forEach var="i" begin="1" end="5">
-                                            <c:choose>
-                                                <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <li><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                         </c:forEach>
                                         <li><a class="disabled">...</a></li>
                                         <li><a class="btn btn-info" href="javascript:change(${totalPages},${proType},${orderType})" data-page="${totalPages}">${totalPages}</a></li>
@@ -139,29 +107,15 @@
                                     <c:when test="${totalPages-nowPage<5}">
                                         <li><a class="btn btn-info" href="javascript:change(1,${proType},${orderType})" data-page="1">1</a></li>
                                         <li><a class="disabled">...</a></li>
-                                        <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
-                                            <c:choose>
-                                                <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
+                                        <c:forEach var="i" begin="${totalPages-(5-1)}" end="${totalPages}">
+                                            <li><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                         </c:forEach>
                                     </c:when>
                                     <c:otherwise>
                                         <li><a class="btn btn-info" href="javascript:change(1,${proType},${orderType})" data-page="1">1</a></li>
                                         <li><a class="disabled">...</a></li>
                                         <c:forEach var="i" begin="${nowPage-2}" end="${nowPage+2}">
-                                            <c:choose>
-                                                <c:when test="${nowPage==i}">
-                                                    <li class=""><a class="btn btn-info active" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <li class=""><a class="btn btn-info" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
-                                                </c:otherwise>
-                                            </c:choose>
+                                            <li><a class="btn btn-info ${nowPage==i?'active':''}" href="javascript:change(${i},${proType},${orderType})" data-page="${i}">${i}</a></li>
                                         </c:forEach>
                                         <li><a class="disabled">...</a></li>
                                         <li><a class="btn btn-info" href="javascript:change(${totalPages},${proType},${orderType})" data-page="${totalPages}">${totalPages}</a></li>
@@ -170,8 +124,8 @@
                             </ul>
                         </nav>
                     </div>
-                </div>
                 <!--//////////////////////////////////////////分頁結束//////////////////////////////////////////////////////////////// -->
+                </div>
                 <div id="orderType" class="btn-group">
                     <button id="type" class="btn btn-default" style="width: 150px;">${orderTypeList[orderType]}</button>
                     <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
@@ -187,7 +141,7 @@
                             <h3>
                                 <div class="total">
                                     <span class="simpleCart_total">NT$${carTotal}</span>
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
                             </h3>
                         </a>

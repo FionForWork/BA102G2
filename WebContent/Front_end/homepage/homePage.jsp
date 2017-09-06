@@ -104,6 +104,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/Front_end/homepage/css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<%=request.getContextPath()%>/Front_end/homepage/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Front_end/homepage/css/contact_us.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
     </script>
@@ -111,6 +112,7 @@
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/homepage.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/Front_end/homepage/js/contact_us.js"></script>
+    
 <%
 	ServService servSvc = new ServService();
 	List<ServVO> servList = servSvc.getAllAvg();
@@ -156,6 +158,7 @@
 </style>
 <body>
 	
+		
 	
 	
 	
@@ -173,18 +176,18 @@
             <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
              <c:choose>
             <c:when test="${sessionScope.comVO!=null}">
-            	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${comVO.name}</a>
-           		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+            	<a href="<%= request.getContextPath() %>/Front_end/com/listOneCom.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp${comVO.name}</a>
+           		<a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-out"></i>&nbsp登出</a>
            </c:when>
       	   <c:when test="${sessionScope.memVO!=null}">
-      			              <a href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>${memVO.name}</a>
-            <a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>登出</a>
+      			              <a href="<%= request.getContextPath() %>/Front_end/mem/listOneMem.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp${memVO.name}</a>
+            <a href="javascript:document.logout.submit();"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-out"></i>&nbsp登出</a>
       	   </c:when>
       		 <c:otherwise>
-      		  <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>會員註冊</a>
-            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>廠商註冊</a>
-            <a data-toggle="modal" data-target="#mem" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 會員登入</a>
-            <a data-toggle="modal" data-target="#com" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> 廠商登入</a>
+      		  <a href="<%= request.getContextPath() %>/Front_end/mem/register.jsp"    class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp會員註冊</a>
+            <a href="<%= request.getContextPath() %>/Front_end/com/register.jsp"   class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i>&nbsp廠商註冊</a>
+            <a data-toggle="modal" data-target="#mem" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> &nbsp會員登入</a>
+            <a data-toggle="modal" data-target="#com" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i> &nbsp廠商登入</a>
       		
       		 </c:otherwise>
       		</c:choose>
@@ -323,7 +326,6 @@
     </div>
     <!--ad===========================================================================-->
 
-
     <!-- Modal for full size images on click-->
 <!--
     <div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
@@ -355,30 +357,33 @@
             <div class="w3-col m8 w3-panel">
                 <div class="w3-large w3-margin-bottom">
                     <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Taoyuan, Taiwan<br>
-                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: (03) 151515<br>
-                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@gmail.com<br>
+                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: (03) 4257387<br>
+                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: publish0@iii.org.tw<br>
                 </div>
                 <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
                 <form method="post" action="<%=request.getContextPath()%>/ContactUs">
                     <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required  name="name">
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required id='contactName' name="name">
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="email" placeholder="Email" required name="email">
+                            <input class="w3-input w3-border" type="email" placeholder="Email" required id='contactEmail' name="email">
                         </div>
                     </div>
                     <input class="w3-input w3-border" type="text" placeholder="Message" required name="messagesArea"><br>
                     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                    <button class="w3-button w3-black w3-right w3-section"  onClick="validateForm(this.form)">
+                    <input type="hidden" name="path" value="<%=request.getContextPath()%>/ContactUs">
+                    
+                </form>
+                <button class="w3-button w3-black w3-right w3-section" onclick="validateForm()" id='ContextUsBtn'>
           			<i class="fa fa-paper-plane"></i> SEND MESSAGE
         			</button>
-                </form>
+        		<div id="snackbar">成功寄出囉...</div>
+        		
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
+   
     
                 <div class="clearfix" style="background-color:#333">
                 <div class="wd_footer">

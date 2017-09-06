@@ -118,9 +118,9 @@
             <!-- Start .content-wrapper -->
             <div class="content-wrapper">
                 <div class="row">
-                <ul id="crumb" class="breadcrumb">
-                        <div><h3>常見問題管理</h3></div>
-                        </ul>
+                               <div class="text-center well" >
+	<h2 style="font-weight:900">常見問題管理</h3>
+</div>
 
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">

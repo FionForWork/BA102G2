@@ -171,8 +171,8 @@ public class OrderServlet extends HttpServlet {
             String orderType =  request.getParameter("orderType");
             String nowPage =  request.getParameter("nowPage");
             String[] pro_noList = request.getParameterValues("pro_no");
-            if (request.getParameterValues("pro_no") == null) {
-                request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=0&&status=2").forward(request, response);
+            if (request.getParameterValues("pro_no") == null||request.getParameterValues("pro_no").equals("")) {
+                    request.getRequestDispatcher("/Front_end/mall/mallArea.jsp?role=0&&status=2").forward(request, response);
             }
             else {
                 String[] scoreList = request.getParameterValues("score");
@@ -189,7 +189,8 @@ public class OrderServlet extends HttpServlet {
                     productVO.setScore(productVO.getScore() + score);
                     productService.update(productVO);
                 }
-                String url="/Front_end/mall/mallArea.jsp?role=1&&now_Status=3&&orderType="+orderType+"&&nowPage="+nowPage;
+                System.out.println(orderType);
+                String url="/Front_end/mall/mallArea.jsp?role=0&&status=2&&orderType="+orderType+"&&nowPage="+nowPage;
                 request.getRequestDispatcher(url).forward(request, response);
             }
         }
@@ -202,7 +203,7 @@ public class OrderServlet extends HttpServlet {
             ordVO.setScore(score);
             ordVO.setStatus("3");
             ordService.update(ordVO);
-            String url="/Front_end/mall/mallArea.jsp?role=1&&now_Status=3&&orderType="+orderType+"&&nowPage="+nowPage;
+            String url="/Front_end/mall/mallArea.jsp?role=1&&status=2&&orderType="+orderType+"&&nowPage="+nowPage;
             request.getRequestDispatcher(url).forward(request, response);
         }
 

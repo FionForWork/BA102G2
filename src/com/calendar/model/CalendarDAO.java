@@ -294,19 +294,25 @@ public class CalendarDAO implements CalendarDAO_Interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String firstDay = "01-"+month+"月-"+year;
-		String lastDay = dayNum+"-"+month+"月-"+year;
+//		String firstDay = "01-"+month+"月-"+year;
+//		String lastDay = dayNum+"-"+month+"月-"+year;
+		
+		String firstDay = year+"-"+month+"-1";
+		String lastDay = year+"-"+month+"-"+dayNum;
+		
+		String GET_MONTH_STMT2 = 
+				"SELECT * FROM CALENDAR where cal_date >= TO_TIMESTAMP('"+firstDay+"','YYYY-MM-DD') and cal_date <= TO_TIMESTAMP('"+lastDay+"','YYYY-MM-DD') and com_no = "+com_no;
 		
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_MONTH_STMT);
-			pstmt.setString(1, firstDay);
-			pstmt.setString(2, lastDay);
-			pstmt.setString(3, com_no);
+			pstmt = con.prepareStatement(GET_MONTH_STMT2);
+//			pstmt.setString(1, firstDay);
+//			pstmt.setString(2, lastDay);
+//			pstmt.setString(3, com_no);
 
 			rs = pstmt.executeQuery();
-
+			System.out.println("新方法查詢");
 			while (rs.next()) {
 				calendarVO = new CalendarVO();
 				calendarVO.setCal_no(rs.getString("cal_no"));

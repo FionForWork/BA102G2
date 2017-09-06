@@ -1,6 +1,4 @@
-/**
- * Created by guohe on 2016/1/25.
- */
+
 function showMsg(text,position){
 	var show	=	$('.show_msg').length
 	if(show>0){

@@ -21,8 +21,8 @@ public class ContactUs extends HttpServlet {
 //		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 //		req.setAttribute("errorMsgs", errorMsgs);
 //		Map<String,String> contact_us_map = new LinkedHashMap<String,String>();
-		String requestURL = new String(req.getParameter("requestURL"));
-		System.out.println(requestURL);
+		//String requestURL = new String(req.getParameter("requestURL"));
+		//System.out.println(requestURL);
 		
 		String name = new String(req.getParameter("name").trim());
 //		if (name == null || name.trim().length() == 0) {
@@ -68,8 +68,9 @@ public class ContactUs extends HttpServlet {
 		
 		MailService mailService = new MailService();
 	    mailService.sendMail(to, subject, messageText);
-	    	RequestDispatcher successView = req.getRequestDispatcher("/Front_end/homepage/homePage.jsp");
-			successView.forward(req, res);
+	    System.out.println("success!!!!!!");
+//	    	RequestDispatcher successView = req.getRequestDispatcher("/Front_end/homepage/homePage.jsp");
+//			successView.forward(req, res);
 	}
 }
 

@@ -23,6 +23,7 @@
     List<ProtraVO>protraList=protraService.getAllByMem(memVO.getMem_no());
     String[] productStatus = { "審核中", "上架中", "已下架" };
     String pro_no;
+    MemVO seller;
     int mine = 0;
     if (request.getParameter("pro_no") == null) {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
@@ -35,6 +36,7 @@
         ProductVO productVO=productService.getOneByPKNoImg(pro_no);
         mine = (productVO.getSeller_no().equals(memVO.getMem_no())) ? 1 : 0;
         pageContext.setAttribute("productVO", productVO);
+        seller=memService.getOneMem(productVO.getSeller_no());
      
     }
     boolean tracing=false;
@@ -46,6 +48,7 @@
     
     String preLocation = request.getContextPath() + "/Front_end/mall";
     
+    pageContext.setAttribute("seller", seller);
     pageContext.setAttribute("tracing", tracing);
     pageContext.setAttribute("preLocation", preLocation);
     pageContext.setAttribute("pro_no", pro_no);
@@ -57,21 +60,14 @@
 %>
 <%@include file="pages/indexHeader.file"%>
 <!--//////////////////////////////////////////商品類型//////////////////////////////////////////////////////////////// -->
-<div class="text-center" style="height:50px;margin-top:50px"></div>
+<div class="text-center" style="margin-top:50px"></div>
 <div class="container">
     <div class="row">
         <div class="col-xs-2 col-md-2">
             <ul class="list-group">
                 <a class="list-group-item menua"  href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=0"><h4>全部類型</h4></a>
                 <c:forEach var="typeVO" items="${typeList}" varStatus="s">
-                     <c:choose>
-                       <c:when test="${productVO.protype_no==s.count}">
-                           <a class="list-group-item menua active" href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
-                       </c:when>
-                       <c:otherwise>
-                           <a class="list-group-item menua" href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
-                       </c:otherwise>
-                   </c:choose>
+                    <a class="list-group-item menua ${productVO.protype_no==s.count?'active':''}" href="${preLocation}/index.jsp?nowPage=1&&now_Pro_Type=${typeVO.protype_no}"><h4>${typeVO.type_name}</h4></a>
                 </c:forEach>
             </ul>
         </div>
@@ -88,19 +84,19 @@
                                 <dl>
                                     <dt>商品名稱</dt>
                                     <dd>${productVO.pro_name}</dd>
-                                    <dt>賣家編號</dt>
-                                    <dd>${productVO.seller_no}</dd>
+                                    <dt>賣家姓名</dt>
+                                    <dd>${seller.name}</dd>
                                     <dt>上架日期</dt>
-                                    <dd>${productVO.pro_date}</dd>
+                                    <dd><fmt:formatDate value="${productVO.pro_date}" pattern="yyyy-MM-DD HH:mm"/></dd>
                                     <dt>商品描述</dt>
-                                    <dd><pre style="border: 0px;margin: 0px; padding: 0px;">${productVO.pro_desc}</pre></dd>
-<%--                                     <dd>${productVO.pro_desc}</dd> --%>
+<%--                                     <dd><pre style="border: 0px;margin: 0px; padding: 0px;">${productVO.pro_desc}</pre></dd> --%>
+                                    <dd>${productVO.pro_desc}</dd>
                                     <dt>商品價格</dt>
                                     <dd>${productVO.price}</dd>
                                     <dt>商品庫存</dt>
                                     <c:choose>
                                         <c:when test="${productVO.amount == 0}">
-                                            <dd style="">${productVO.amount}</dd>
+                                            <dd>缺貨中，等待賣家補貨</dd>
                                         </c:when>
                                         <c:otherwise>
                                             <dd>${productVO.amount}</dd>
@@ -116,8 +112,7 @@
                                             <label>數量</label>
                                             <input id="productCount" type="number" required="required" name="productCount" value="1" min="1" max="${productVO.amount}" style="width: 80px;">
                                             <a href="javascript:add(${productVO.pro_no})" class="btn btn-primary">加入購物車</a>
-                                           
-          <input type="submit" class="btn btn-danger" data-toggle="modal" onclick="showmodal('product','${productVO.pro_no}','${productVO.seller_no}','/Front_end/mall/product.jsp?pro_no='+${productVO.pro_no});" data-target="#myModal" value="檢舉">
+                                            <input type="submit" class="btn btn-danger" data-toggle="modal" onclick="showmodal('product','${productVO.pro_no}','${productVO.seller_no}','/Front_end/mall/product.jsp?pro_no='+${productVO.pro_no});" data-target="#myModal" value="檢舉">
                                             </c:if>
                                             <div id="protracking">
                                             <c:choose>
@@ -145,7 +140,7 @@
                             <h3>
                                 <div class="total">
                                     <span class="simpleCart_total">NT$${carTotal}</span>
-                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
                             </h3>
                         </a>
@@ -162,46 +157,51 @@
 
 <script>
     function protracking(todo){
-            $.ajax({
-                url:"/BA102G2/protra/ProtracServlet",
-                type : "post",
-                data:{
-                    action:todo,
-                    pro_no:<%=pro_no%>
-                }, 
-                error : function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                },
-                success : function(response) {
-                    $("#protracking").html(response);
-                }
-            });
+        $.ajax({
+            url:"<%=request.getContextPath()%>/protra/ProtracServlet",
+            type : "post",
+            data:{
+                action:todo,
+                pro_no:${pro_no}
+            }, 
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                $("#protracking").html(response);
+            }
+        });            
     }
     
     function add(){
-            $.ajax({
-                url:"/BA102G2/product/ProductServlet",
-                type : "post",
-                data:{
-                    action:"ADD_TO_CAR_AJAX",
-                    productCount:$("#productCount").val(),
-                    pro_no:<%=pro_no%>
-                }, 
-                error : function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                },
-                success : function(response) {
-                    if(response=="out of amount"){
-                        alert("超過庫存，請減少數量");
-                    }
-                    else{
-                        $(".simpleCart_total").text("NT$"+response);
-                    }
+        $.ajax({
+            url:"<%=request.getContextPath()%>/product/ProductServlet",
+            type : "post",
+            data:{
+                action:"ADD_TO_CAR_AJAX",
+                productCount:$("#productCount").val(),
+                pro_no:${pro_no}
+            }, 
+            error : function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+            success : function(response) {
+                if(response=="out of amount"){
+                    swal('數量錯誤',
+                         '超過庫存，請降低數量',
+                         'error'
+                       )
+                   $("#productCount").val(1);
                 }
-            });
+                else{
+                    $(".simpleCart_total").text("NT$"+response);
+                }
+            }
+        });       
     }
+    
     function showmodal(action,rep_ob_no,reported_no,position){
     	if(action=='product'){
     		$('#myModal').load("<%=request.getContextPath()%>/Front_end/Report/Report.jsp?",{"rep_ob_no":rep_ob_no,"reported_no":reported_no,"position":position},

@@ -124,7 +124,7 @@ $(document).ready(function(){
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="draggable ui-widget-content" style="background-color:#58F4CF;cursor:all-scroll" onmouseenter="show(this)" onmouseleave="hide(this)">
 								<button type="button" class="close" display="none" onclick="deleteSchedule(this)" style="display:none">&times;</button>
-								<p style="margin-top:3px">${calendarVO.content}</p>
+								<p style="margin-top:8%">${calendarVO.content}</p>
 								<% flag = 1; %>
 							</div>
 						</td>
@@ -134,7 +134,7 @@ $(document).ready(function(){
 						<td class="ui-widget-head busy-td" id="<%= localDate.getYear() %>-<%= localDate.getMonthValue() %>-${date}">
 							<p class="day"><%= i-firstDayOfWeek+2 %></p><br>
 							<div id="${calendarVO.cal_no}" class="res-content" style="background-color:#FFA0C4;">
-								<p style="margin-top:3px">
+								<p style="margin-top:8%">
 									<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">${calendarVO.content}</a>
 								</p>
 								<% flag = 1; %>
@@ -172,6 +172,9 @@ $(document).ready(function(){
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
 						為您的行事曆新增活動
+						 <input type="radio" name="optradio"  onclick="autoAdd(1)">
+						 <input type="radio" name="optradio"  onclick="autoAdd(2)">
+						 <input type="radio" name="optradio"  onclick="autoAdd(3)">
 					</h4>
 					<hr>
 				</div>
@@ -180,7 +183,7 @@ $(document).ready(function(){
 					<input type="text" id="date" class="form-control" name="cal_date" value="" readonly>
 					<br>
 					<label>活動內容 :</label>
-					<textarea rows="3" class="form-control" name="content"></textarea>
+					<textarea id="addContent" rows="3" class="form-control" name="content"></textarea>
 				</div>
 				<hr>
 				<div class="modal-footer">
@@ -211,6 +214,8 @@ $(document).ready(function(){
 <!-- For WebSocket -->
 <input type="hidden" id="thisDate" value="">
 <input type="hidden" id="toDate" value="">
+<input type="hidden" id="mobileThisDate" value="">
+<input type="hidden" id="mobileToDate" value="">
 <%@ include file="page/footerWithoutSidebar.file" %>
 </body >
 <script>
@@ -243,8 +248,8 @@ $(document).ready(function(){
 	        if(action == "onRes"){
 	        	var thisDate = document.getElementById(jsonObj.thisDate);
 	        	var name = jsonObj.name+"預約了新服務!";
-	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:black;cursor:pointer">').text(name);
-				var content = $("<div style='background-color:pink'>").html(a);
+	        	var a = $('<a href="<%=request.getContextPath()%>/Front_end/reservation/comReservation.jsp" style="color:white;cursor:pointer">').text(name);
+				var content = $("<div style='background-color:#ff5722;height:55px;padding-top:6px'>").html(a);
 	        	$(thisDate).append(content);
 	        }
 		};
@@ -258,7 +263,10 @@ $(document).ready(function(){
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
 						"toDate" : $("#toDate").val(),
-						"action" : "changeSchedule"};
+						"action" : "changeSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"mobileToDate" : $('#mobileToDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		
@@ -267,18 +275,22 @@ $(document).ready(function(){
 	function onDeleteSchedule() {
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
-						"action" : "deleteSchedule"};
+						"action" : "deleteSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		
 	}
 	
 	function addSchedule() {
-
+		$('#mobileThisDate').val($('#date').val());
 		$('#thisDate').val($('#date').val().replace(/-/g,""));
 		
 		var jsonObj = {"thisDate" : $("#thisDate").val(),
-						"action" : "addSchedule"};
+						"action" : "addSchedule",
+						"mobileThisDate" : $('#mobileThisDate').val(),
+						"name" : <%= comVO.getCom_no() %>};
 		
 		webSocket.send(JSON.stringify(jsonObj));
 		$('#addScheduleForm').submit();
@@ -292,6 +304,14 @@ $(document).ready(function(){
 	
 	function updateStatus(newStatus) {
 		statusOutput.innerHTML = newStatus;
+	}
+	
+	function autoAdd(x){
+		if(x == "1"){
+			$('#addContent').html("今天想休息");
+		}else if(x == "2"){
+			$('#addContent').html("真的很想休息");
+		}else{}
 	}
     
 </script>

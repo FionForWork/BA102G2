@@ -10,9 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 <link
@@ -116,13 +114,13 @@
             <!-- Start .content-wrapper -->
             <div class="content-wrapper">
                 <div class="row">
-                <ul id="crumb" class="breadcrumb">
-                        <div><h3>婚禮習俗管理</h3></div>
-                        </ul>
+                <div class="text-center well" >
+	<h2 style="font-weight:900">婚禮習俗管理</h3>
+</div>
 
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" >
                         <h4>婚禮習俗管理
                         <div class="text-center" style="float:right" >
                         

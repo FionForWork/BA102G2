@@ -11,7 +11,6 @@
 	pageContext.setAttribute("productVO", productVO);
 	pageContext.setAttribute("nowPage", nowPage);
 %>
-<%-- <%@include file="modalHeader.file"%> --%>
 <style>
  .updateImg {
     width: 200px;
@@ -26,7 +25,6 @@
     height: 100%;
 }
 </style>
-<%-- <div class="modal fade" id="updateProduct${index}"> --%>
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class='modal-header'>
@@ -66,11 +64,11 @@
                     <input type='hidden' id='nowPage' name='nowPage' value='${nowPage}'>
                     <input type='hidden' id='updateNo' name='pro_no' value='${productVO.pro_no}'>
                     <input type='hidden' name='action' value='UPDATE'>
-                    <input type='submit' class='btn btn-default' value='確認修改'>
+                    <input type='submit' class='btn btn-success' value='確認修改'>
                 </form>
             </div>
             <div class='modal-footer'>
-                <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                <button id="cancel" type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
             </div>
         </div>
     </div>
@@ -90,7 +88,7 @@
         var form = new FormData();
         if (!files[0].type.match("image")) {
             var name = files[0].name;
-            alert(name + "請上傳圖片!!!!");
+            alert(name + " 不是圖片，請上傳圖片!!!!");
             return;
         }
         else {
@@ -107,8 +105,8 @@
                 if (xhr.responseText == "OK") {
                     reader.readAsDataURL(files[0]);
                     reader.onload = function(e) {
-                        $(".updatePreview").attr("src", e.target.result);
-                        alert("已更新資料");
+                        $(".updatePreview").attr('src', e.target.result);
+                        document.location.href="<%=request.getContextPath()%>/Front_end/mall/productManagement.jsp";
                     }
                 }
             }
@@ -126,4 +124,3 @@
     });
     
 </script>
-</html>

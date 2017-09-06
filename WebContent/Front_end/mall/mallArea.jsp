@@ -17,20 +17,32 @@
 	response.setDateHeader("Expires", 0);
 	MemVO memVO=(MemVO)session.getAttribute("memVO");
 	MemService memService = new MemService();
-// 	MemVO memVO = memService.getOneMem("1010");
 	session.setAttribute("memVO", memVO);
-	String role = (request.getParameter("role") == null) ? "0" : request.getParameter("role");
-	String status = (request.getParameter("status") == null) ? "0" : request.getParameter("status");
-	String orderType = (request.getParameter("orderType") == null) ? "0" : request.getParameter("orderType");
-	String[] statusList = {"買家未付款", "賣家未出貨", "已完成訂單", "賣家已評價", "已取消訂單"};
+	String role = (request.getParameter("role") == null||request.getParameter("role").equals("")) ? "0" : request.getParameter("role");
+	String status = (request.getParameter("status") == null||request.getParameter("status").equals("")) ? "0" : request.getParameter("status");
+	String orderType = (request.getParameter("orderType") == null||request.getParameter("orderType").equals("")) ? "0" : request.getParameter("orderType");
+	String[] statusList=new String[5];
+    if("0".equals(role)){
+        statusList[0]="您尚未付款";
+        statusList[1]="對方尚未出貨";
+        statusList[2]="已完成訂單";
+        statusList[3]="對方已評價";
+        statusList[4]="已取消訂單";
+    }
+    else{
+        statusList[0]="對方未付款";
+        statusList[1]="您尚未出貨";
+        statusList[2]="已完成訂單";
+        statusList[3]="對方已評價";
+        statusList[4]="已取消訂單";
+    }
 	String[] orderTypeList = {"預設", "依對方編號小>>大", "依對方編號大>>小", "依寄送地址", "依成立日期舊>>新", "依成立日期新>>舊", "依訂單總價小>>大","依訂單總價大>>小"};
 	OrdService ordService = new OrdService();
-	int nowPage = (request.getParameter("nowPage") == null)? 1 :Integer.valueOf(request.getParameter("nowPage"));
+	int nowPage = (request.getParameter("nowPage") == null||request.getParameter("nowPage").equals(""))? 1 :Integer.valueOf(request.getParameter("nowPage"));
 	int allCount = ordService.getAllRowCountByRole(role, memVO.getMem_no(), status);
 	int itemsCount = 5;
 	int totalPages = (allCount % itemsCount == 0) ? (allCount / itemsCount) : (allCount / itemsCount + 1);
-	List<OrdVO> ordList = ordService.getPageByRole(nowPage, itemsCount, role, memVO.getMem_no(), status,
-	orderType);
+	List<OrdVO> ordList = ordService.getPageByRole(nowPage, itemsCount, role, memVO.getMem_no(), status,orderType);
 	List<String> seller_accountList = new ArrayList<String>();
 	List<String> cust_nameList = new ArrayList<String>();
 	for (int i = 0; i < ordList.size(); i++) {
@@ -39,25 +51,6 @@
 	}
 	Order_detailService order_detailService = new Order_detailService();
 	ProductService productService = new ProductService();
-
-	StringBuffer stringBuffer = new StringBuffer();
-	if ("0".equals(role)) {
-        stringBuffer.append("買家-");
-	} else {
-        stringBuffer.append("賣家-");
-	}
-
-	if ("0".equals(status)) {
-        stringBuffer.append("買家未付款");
-	} else if ("1".equals(status)) {
-        stringBuffer.append("賣家未出貨");
-	} else if ("2".equals(status)) {
-        stringBuffer.append("已完成訂單");
-	} else if ("3".equals(status)) {
-        stringBuffer.append("賣家已評價");
-	} else {
-        stringBuffer.append("已取消訂單");
-	}
 
 	String preLocation = request.getContextPath() + "/Front_end/mall";
 	String location = "/Front_end/mall/mallArea.jsp?nowPage=" + nowPage + "&&role=" + role + "&&status="+ status + "&&orderType=" + orderType;
@@ -78,40 +71,25 @@
 	pageContext.setAttribute("role", role);
 	pageContext.setAttribute("orderType", orderType);
 	pageContext.setAttribute("ordList", ordList);
-	pageContext.setAttribute("stringBuffer", stringBuffer);
 %>
 <%@include file="pages/indexHeader.file"%>
 <style>
-<!--
-.tab-content{
-    padding: 20px 50px;
-    background: rgba(255,200,180,0.8);
-    font-size: 1.2em;
-}
-.nav-tabs > li.active {
-  color: #000;
-  background-color: rgba(255,200,180,0.6);  
-} 
--->
 </style>
 <div style="margin-top: 50px;"></div>
 <div class="container" id="container" >
     <div class="row">
-        <div id="showStatus" class="text-center col-md-12">
-            <h2>${stringBuffer.toString()}</h2>
-        </div>
         <div class="col-md-12">
             <%@include file="pages/mallAreaSidebar.file"%> 
             <div class="col-xs-1 col-md-1"></div>
             <div class="col-xs-7 col-md-7">
-                <ul class="nav nav-tabs" role="tablist" id="maintab">
+          <ul class="nav nav-tabs" role="tablist" id="maintab">
                     <c:forEach var="state" items="${statusList}" varStatus="s">
                         <c:choose>
                             <c:when test="${s.index==status}">
-                                <li class="active"><a onmouseover="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
+                                <li class="active"><a onclick="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class=""><a onmouseover="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
+                                <li><a onclick="tabsChange(${role},${s.index},${orderType})">${state}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -119,9 +97,11 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab">
                         <div id="detailContent">
+                            <div class="panel-group" >
                             <c:forEach var="ord" items="${ordList}" varStatus="s">
                                 <jsp:include page="pages/orderDetails.jsp?ord_no=${ord.ord_no}&&status=${status}&&role=${role}&&orderType=${orderType}&&nowPage=${nowPage}&&index=${s.index}" flush="true" />
                             </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,7 +139,7 @@
                                 <c:when test="${totalPages-nowPage<5}">
                                     <li><a class="btn btn-info" href="javascript:pageChange(1,${role},${status},${orderType})" data-page="1">1</a></li>
                                     <li><a class="disabled">...</a></li>
-                                    <c:forEach var="i" begin="${totalPages-5}" end="${totalPages}">
+                                    <c:forEach var="i" begin="${totalPages-(5-1)}" end="${totalPages}">
                                         <c:choose>
                                             <c:when test="${i==nowPage}">
                                                 <li><a class="btn btn-info active" href="javascript:pageChange(${i},${role},${status},${orderType})" data-page="${i}">${i}</a></li>
@@ -217,7 +197,7 @@
         else{
             orignStatus=status;
             orignorderType=orderType;
-            $(window).scrollTop( $(window).scrollTop());
+            $(window).scrollTop($(window).scrollTop());
             $(window).scrollLeft($(window).scrollLeft());
             $(this).tab('show');
             $("#container").load("${preLocation}/mallArea.jsp #container",{"role":role,"status":status,"orderType":orderType});
@@ -225,10 +205,27 @@
     }
     
     function pageChange(nowPage,role,status,orderType) {
-        $("#detailContent").load("${preLocation}/mallArea.jsp #detailContent",{"role":role,"status":status,"orderType":orderType});
-        $(".pagination").load("${preLocation}/mallArea.jsp .pagination",{"nowPage":nowPage,"role":role,"status":status,"orderType":orderType}); 
-        $(window).scrollTop("0");
+        $(window).scrollTop($(window).scrollTop());
         $(window).scrollLeft($(window).scrollLeft());
+            $("#container").load("${preLocation}/mallArea.jsp #container",{nowPage:nowPage,role:role,status:status,orderType:orderType});
     }
+    
+    function showModal(action,ord_no,nowPage) {
+        if(action=="EVAL_TO_PRODUCT"){
+            $("#evalToProduct").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToProduct.jsp",
+                    {ord_no:ord_no,orderType:'${orderType}',nowPage:nowPage} ,
+                    function () {
+                        $("#evalToProduct").modal('show');
+                });
+        }
+        else{
+            $("#evalToMem").load("<%=request.getContextPath()%>/Front_end/mall/pages/evalToMem.jsp",
+                    {ord_no:ord_no,orderType:'${orderType}',nowPage:nowPage} ,
+                    function () {
+                        $("#evalToMem").modal('show');
+                    });
+        }
+    }
+
 </script>
 <%@include file="pages/indexFooter.file"%>

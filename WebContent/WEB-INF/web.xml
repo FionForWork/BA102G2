@@ -76,7 +76,7 @@
 		<url-pattern>/Front_end/Album/UpdateAlbum.jsp</url-pattern>
 		<url-pattern>/Front_end/Album/ListAllContents.jsp</url-pattern>
 		<url-pattern>/Front_end/Album/ListAllAlbums.jsp</url-pattern>
-
+		<url-pattern>/Front_end/reservation/searchService.jsp</url-pattern>
 		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -108,6 +108,7 @@
 		<url-pattern>/Front_end/com/updatePwd.jsp</url-pattern>
 		<url-pattern>/Front_end/serv/addServ.jsp</url-pattern>
 		<url-pattern>/Front_end/com/index.jsp</url-pattern>
+		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -123,7 +124,6 @@
 	<filter-mapping>
 		<filter-name>loginMemComFilter</filter-name>
 		<url-pattern>/src/com/reservation/controller/ReservationServlet</url-pattern>
-		<url-pattern>/Front_end/reservation/searchService.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

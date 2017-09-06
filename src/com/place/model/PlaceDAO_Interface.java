@@ -15,9 +15,13 @@ public interface PlaceDAO_Interface {
 
     public PlaceVO getOneByPK(String pla_no);
 
+    public List<PlaceVO> getAllByName(String name);
+
     public int getAllCount();
 
     public List<PlaceVO> getPage(int start,int itemsCount);
 
     public List<PlaceVO> getRange(String south,String west,String north,String east);
+
+    public List<PlaceVO> getRangeNoSet(String south,String west,String north,String east);
 }

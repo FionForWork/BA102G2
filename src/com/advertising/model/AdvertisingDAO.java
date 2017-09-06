@@ -18,16 +18,17 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 	}
 
 	private static final String INSERT_STMT = "insert into advertising (adv_no, com_no,title, startday, endday, price, text, img, vdo, status) values (ltrim(to_char(adv_no_seq.nextval,'0009')), ?, ?, ?, ?, ?, ?, ?, ?,?)";
-	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, status from advertising order by adv_no";
+	private static final String GET_ALL_STMT = "select adv_no, com_no,title, startday, endday, price, text, status from advertising order by adv_no desc";
 	private static final String GET_ONE_STMT = "select adv_no, com_no,title, startday, endday, price, text, img, vdo, status from advertising where adv_no = ?";
 	private static final String DELETE = "delete from advertising where adv_no = ?";
 	private static final String UPDATE = "update advertising set com_no=?,title=?, startday=?, endday=?, price=?, text=?, img=?, vdo=?, status=? where adv_no = ?";
+	private static final String UPDATESTATUS = "update advertising set status=? where adv_no = ?";
 	private static final String GET_ALL_UNVERIFIED="select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = '0' order by adv_no desc";
 	private static final String GET_ONE_ALL = "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where com_no = ?";
 	private static final String GET_ONE_STATUS= "select adv_no, com_no, title,startday, endday, price, text, img, vdo, status from advertising where status=1";
 	
-	private static final String GET_ALL_BY_STATUS = "select * from advertising where status = ?";
-	private static final String GET_ALL_BY_STATUS_2 = "select * from advertising where status in (?, ?)";
+	private static final String GET_ALL_BY_STATUS = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status = ? order by adv_no desc";
+	private static final String GET_ALL_BY_STATUS_2 = "select adv_no, com_no,title, startday, endday, price, text, status from advertising where status in (?, ?) order by adv_no desc";
 
 	@Override
 	public void insert(AdvertisingVO advertisingVO) {
@@ -85,27 +86,27 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 		PreparedStatement pstmt = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setString(1, advertisingVO.getCom_no());
-			pstmt.setString(2, advertisingVO.getTitle());
-			pstmt.setTimestamp(3, advertisingVO.getStartDay());
-			pstmt.setTimestamp(4, advertisingVO.getEndDay());
-			pstmt.setInt(5, advertisingVO.getPrice());
-
-			Clob clob = con.createClob();
-			String str = advertisingVO.getText();
-			clob.setString(1, str);
-			pstmt.setClob(6, clob);
-
-			Blob blob1 = con.createBlob();
-			blob1.setBytes(1, advertisingVO.getImg());
-			pstmt.setBlob(7, blob1);
-
-			Blob blob2 = con.createBlob();
-			blob2.setBytes(1, advertisingVO.getVdo());
-			pstmt.setBlob(8, blob2);
-			pstmt.setString(9, advertisingVO.getStatus());
-			pstmt.setString(10, advertisingVO.getAdv_no());
+			pstmt = con.prepareStatement(UPDATESTATUS);
+//			pstmt.setString(1, advertisingVO.getCom_no());
+//			pstmt.setString(2, advertisingVO.getTitle());
+//			pstmt.setTimestamp(3, advertisingVO.getStartDay());
+//			pstmt.setTimestamp(4, advertisingVO.getEndDay());
+//			pstmt.setInt(5, advertisingVO.getPrice());
+//
+//			Clob clob = con.createClob();
+//			String str = advertisingVO.getText();
+//			clob.setString(1, str);
+//			pstmt.setClob(6, clob);
+//
+//			Blob blob1 = con.createBlob();
+//			blob1.setBytes(1, advertisingVO.getImg());
+//			pstmt.setBlob(7, blob1);
+//
+//			Blob blob2 = con.createBlob();
+//			blob2.setBytes(1, advertisingVO.getVdo());
+//			pstmt.setBlob(8, blob2);
+			pstmt.setString(1, advertisingVO.getStatus());
+			pstmt.setString(2, advertisingVO.getAdv_no());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -519,8 +520,6 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				}
 				br.close();
 				advertisingVO.setText(sb.toString());
-				advertisingVO.setImg(rs.getBytes("img"));
-				advertisingVO.setVdo(rs.getBytes("vdo"));
 				advertisingVO.setStatus(rs.getString("status"));
 				list.add(advertisingVO);
 			}
@@ -587,8 +586,6 @@ public class AdvertisingDAO implements AdvertisingDAO_Interface {
 				}
 				br.close();
 				advertisingVO.setText(sb.toString());
-				advertisingVO.setImg(rs.getBytes("img"));
-				advertisingVO.setVdo(rs.getBytes("vdo"));
 				advertisingVO.setStatus(rs.getString("status"));
 				list.add(advertisingVO);
 			}

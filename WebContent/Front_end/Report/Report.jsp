@@ -13,7 +13,6 @@
     <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="https://cdn.weddingday.com.tw/weddingday-file/v2/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/pnotify.custom.min.css" rel="stylesheet">
-    <link rel="Short Icon" href="<%=request.getContextPath()%>/Front_end/Resource/img/ring_64.ico">
     <link href="css/index.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -92,7 +91,8 @@ session.getAttribute("comVO");
         <div class="modal-footer">
         	<input	type="submit" class="btn btn-info" value="檢舉">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <input type="button" value="" onclick="ShowAnswer()">
+          <input type="radio" value="" onclick="ShowAnswer()">
+          <input type="radio" value="" onclick="Show()">
         </div>
         
       </div>
@@ -109,7 +109,12 @@ session.getAttribute("comVO");
   <script type="text/javascript">
 function ShowAnswer(){
 //     document.getElementById("title").value="2";
-$("#content").val("會爆炸");
+$("#content").val("圖文不符");
+
+}
+function Show(){
+//  document.getElementById("title").value="2";
+$("#content").val("標題疑似有問題");
 
 }
 </script>

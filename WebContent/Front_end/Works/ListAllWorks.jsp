@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.com.model.*" %>
+<%@ page import="com.works.model.*" %>
 
-<jsp:useBean id="worksSvc" scope="page"
-	class="com.works.model.WorksService"></jsp:useBean>
+<%-- <jsp:useBean id="worksSvc" scope="page" --%>
+<%-- 	class="com.works.model.WorksService"></jsp:useBean> --%>
 
 <%
 	ComVO comVO = (ComVO)session.getAttribute("comVO");
@@ -12,11 +13,14 @@
 	//String com_no = (String) session.getAttribute("com_no");
 	//String com_no = "2003";
 	//pageContext.setAttribute("com_no", com_no);
+	WorksService worksSvc = new WorksService();
+	List<WorksVO> worksList = worksSvc.getAllByComNo(comVO.getCom_no());
+	pageContext.setAttribute("worksList",worksList);
 %>
 
 <%@ include file="page/works_header.file"%>
 
-</script>
+
 
 		<div class="col-md-8 col-offset-1">
 			<!-- Photo Start Here -->
@@ -63,7 +67,12 @@
 				</div>
 					<br>	
 					<div class="text-center">
-						<h2>所有作品</h2>
+						<c:if test="${worksList.size() != 0 }">
+							<h2>所有作品</h2>
+						</c:if>
+						<c:if test="${worksList.size() == 0 }">
+							<h2>您尚未有任何作品唷!</h2>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -85,7 +94,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">刪除相片或影片</h4>
+								<h4 class="modal-title">刪除作品</h4>
 							</div>
 							<div class="modal-body">
 								<p>刪除後將無法復原，確定刪除嗎?</p>
@@ -105,7 +114,7 @@
 
 
 			<div id='changeContent'>
-			<c:forEach var="worksVO" items="${worksSvc.getAllByComNo(comVO.com_no)}"
+			<c:forEach var="worksVO" items="${worksList}"
 				varStatus="s">
 				<c:if test="${(s.count % 3) == 1}">
 					<div class="row">
@@ -191,7 +200,9 @@ $("document").ready(function(){
 	    }
 	});
 	$("#inputFile").on("fileuploaded", function (event, data, previewId, index) {  
-        top.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}";
+		setTimeout(function(){window.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}";},500);
+		
+<%-- 		window.location.href="<%=request.getContextPath()%>/Front_end/Works/UpdateWorks.jsp?com_no=${comVO.com_no}"; --%>
 	});
 });
 

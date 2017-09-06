@@ -15,7 +15,7 @@
         <property name="addr" column="ADDR" />
         <property name="pla_desc" column="PLA_DESC" />
         
-        <set name="PlaceViewSet" table="PLACEVIEW" cascade="all" inverse="true" >
+        <set name="PlaceViewSet" table="PLACEVIEW" cascade="all" inverse="true" lazy="true">
             <key><column name="PLA_NO"/></key>
             <one-to-many class="com.placeview.model.PlaceViewVO"/>
         </set>

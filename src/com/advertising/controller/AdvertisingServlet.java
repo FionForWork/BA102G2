@@ -119,8 +119,8 @@ public class AdvertisingServlet extends HttpServlet {
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
-						price, text, oldAdvertisingVO.getImg(), oldAdvertisingVO.getVdo(), status);
+//				advertisingVO = advertisingSvc.updateAdvertising(adv_no, oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle(), startday, endday,
+//						price, text,oldAdvertisingVO.getImg(),null, status);
 				
 				/*****************************
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -314,10 +314,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
-				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(),oldAdvertisingVO.getTitle() , oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
-						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
-						oldAdvertisingVO.getVdo(), "1");
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(), "1");
 				
 				String url = requestURL+"?whichPage="+whichPage;
 				
@@ -347,10 +344,7 @@ public class AdvertisingServlet extends HttpServlet {
 				AdvertisingService advertisingSvc = new AdvertisingService();
 				AdvertisingVO oldAdvertisingVO = advertisingSvc.getOneAdvertising(adv_no);
 
-				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(),
-						oldAdvertisingVO.getCom_no(), oldAdvertisingVO.getTitle(), oldAdvertisingVO.getStartDay(), oldAdvertisingVO.getEndDay(),
-						oldAdvertisingVO.getPrice(), oldAdvertisingVO.getText(), oldAdvertisingVO.getImg(),
-						oldAdvertisingVO.getVdo(), "2");
+				advertisingVO = advertisingSvc.updateAdvertising(oldAdvertisingVO.getAdv_no(), "2");
 	
 				String url = null;
 				url = requestURL+"?whichPage="+whichPage;
@@ -392,9 +386,9 @@ public class AdvertisingServlet extends HttpServlet {
 				String status = new String(req.getParameter("status").trim());
 				
 				Part part = req.getPart("img");
-				 InputStream inputStream = part.getInputStream();
-	                data = new byte[inputStream.available()];
-	                inputStream.read(data);
+//				 InputStream inputStream = part.getInputStream();
+//	                data = new byte[inputStream.available()];
+//	                inputStream.read(data);
 	             
 	              AdvertisingVO  advertisingVO = new AdvertisingVO();
 	              advertisingVO.setCom_no(com_no);
@@ -408,8 +402,27 @@ public class AdvertisingServlet extends HttpServlet {
 				
 			
 				/*************************** 2.開始查詢資料 ****************************************/
-				AdvertisingService advertisingSvc = new AdvertisingService();
-				 advertisingVO = advertisingSvc.addAdvertising(com_no, title, startDay, endDay, price, text, data, null, status);
+	              AdvertisingService advertisingSvc = new AdvertisingService();
+	              ServletContext context = getServletContext();
+	              String filename = getFileNameFromPart(part);
+					
+					byte[] file = null;
+					InputStream in = part.getInputStream();
+					file = new byte[in.available()];
+					in.read(file);
+					in.close();
+	              if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+						if (isImgFile(context.getMimeType(filename))) {
+							advertisingVO = advertisingSvc.addAdvertising(com_no,title, startDay, endDay, price, text, file,
+									null, status);
+						} else {
+							advertisingVO = advertisingSvc.addAdvertising(com_no, title , startDay, endDay, price, text, null,
+									file, status);
+						}
+					}
+	              
+	              
+//				 advertisingVO = advertisingSvc.addAdvertising(com_no, title, startDay, endDay, price, text, data, null, status);
 				
 				/****************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
@@ -422,7 +435,7 @@ public class AdvertisingServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Front_end/Advertising/xxxAdvertising.jsp");
+						.getRequestDispatcher("/Front_end/Advertising/Advertising.jsp");
 				failureView.forward(req, res);
 			}
 		}

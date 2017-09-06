@@ -190,7 +190,7 @@ public class ProblemServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/Front_end/Problem/xxProblem.jsp");
+								.getRequestDispatcher("/Front_end/Problem/Problem.jsp");
 						failureView.forward(req, res);
 					}
 				}
@@ -219,7 +219,7 @@ public class ProblemServlet extends HttpServlet{
 					} catch (Exception e) {
 						errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/Front_end/Problem/xxProblem.jsp");
+								.getRequestDispatcher("/Front_end/Problem/Problem.jsp");
 						failureView.forward(req, res);
 					}
 				}

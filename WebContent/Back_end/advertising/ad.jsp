@@ -30,6 +30,9 @@
 </head>
 <body>
 	<%@ include file="page/header.file"%>
+	<div class="text-center well" >
+	<h2 style="font-weight:900">廣告資料一覽</h2>
+	</div>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
 			<ul>
@@ -39,6 +42,8 @@
 			</ul>
 		</font>
 	</c:if>
+	
+	
 
 	
 	
@@ -77,7 +82,7 @@
 									<td>${startDayFormat}</td>
 									
 									<td>${df.format((advertisingVO.endDay.time-advertisingVO.startDay.time)/(1000*60*60*24))}</td>
-									<td id="${advertisingVO.adv_no}"><c:choose>
+									<td id="5${advertisingVO.adv_no}"><c:choose>
 											<c:when test="${advertisingVO.status=='0'}">
 												<span style="color: black">未審核</span>
 											</c:when>
@@ -105,8 +110,7 @@
 										<div class="row collapse" id="0${advertisingVO.adv_no}">
 										<div class="col-xs-12 col-sm-4">
 										<a data-lightbox="lightbox" href="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
-											<img style="width:50%"
-											src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
+											<img style="width:50%" src="<%=request.getContextPath()%>/ShowPictureServletDAO?adv_no=${advertisingVO.adv_no}">
 										</a>
 										</div>
 										<div class="col-xs-12 col-sm-4">${advertisingVO.text}</div>
@@ -118,10 +122,10 @@
 												<input type="hidden" name="action" value="approved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" id="button" class="btn btn-info" value="通過" disabled="disabled" >	
+													<input type="button" id="button" class="btn btn-info col-md-3" value="通過" disabled="disabled" >	
 												</c:when>
 												<c:otherwise>
-													<input type="button" id="button" class="btn btn-info" value="通過" onclick="approved(this);">
+													<input type="button" id="button" class="btn btn-info col-md-3" value="通過" onclick="allApproved(this);">
 												
 												</c:otherwise>
 												</c:choose>			
@@ -134,10 +138,10 @@
 												<input type="hidden" name="action" value="disapproved">
 												<c:choose>
 												<c:when test="${advertisingVO.status=='1'}">
-													<input type="button" class="btn btn-danger" id="button" value="未通過" disabled="disabled">	
+													<input type="button" class="btn btn-danger col-md-3" id="button" value="未通過" disabled="disabled">	
 												</c:when>
 												<c:otherwise>
-													<input type="button" class="btn btn-danger" id="button" value="未通過" onclick="disapproved(this);">
+													<input type="button" class="btn btn-danger col-md-3" id="button" value="未通過" onclick="allDisapproved(this);">
 												</c:otherwise>
 												</c:choose>				
 												</form>
@@ -169,6 +173,49 @@
 	<%@ include file="page/footer.file"%>
 </body>
 <script type="text/javascript">
+
+
+function allApproved(btn){
+	
+	var id = $(btn).siblings("input[name='adv_no']").val();
+
+	$.ajax({
+		url : "<%=request.getContextPath()%>/advertising/advertising.do",
+		data : {	
+			action : "approved",
+			adv_no : $(btn).siblings("input[name='adv_no']").val(),		
+		},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$("#5"+id).children().html("通過").css("color","green");
+			$("#5"+id).next().children().click().attr("disabled","disabled");
+		}
+	});	
+}
+
+function allDisapproved(btn){
+	
+	var id = $(btn).siblings("input[name='adv_no']").val();
+
+	$.ajax({
+		url : "<%=request.getContextPath()%>/advertising/advertising.do",
+		data : {
+			action : "disapproved",
+			adv_no : $(btn).siblings("input[name='adv_no']").val(),		
+		},
+		type : 'POST',
+		error : function() {
+			alert('Ajax request 發生錯誤');
+		},
+		success : function() {
+			$("#5"+id).children().html("未通過").css("color","red");
+			$("#5"+id).next().children().click().attr("disabled","disabled");
+		}
+	});	
+}
 
 function approved(btn){
 	

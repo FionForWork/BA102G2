@@ -77,8 +77,8 @@ public class WorksServlet extends HttpServlet {
 			}
 			String works_desc = request.getParameter("works_desc");
 			worksSvc.updateWorks(works_no, com_no, name, works_desc,works.getImg(),works.getVdo(), upload_date);
-//			String url = "/Front_end/Works/ListAllWorks.jsp?com_no="+com_no;
-//			request.getRequestDispatcher(url).forward(request, response);
+			String url = "/Front_end/Works/ListAllWorks.jsp?com_no="+com_no;
+			request.getRequestDispatcher(url).forward(request, response);
 			return;
 		}
 		

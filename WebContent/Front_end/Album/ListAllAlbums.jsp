@@ -134,7 +134,7 @@ $("document").ready(function(){
 					<div class="row">
 				</c:if>
 				
-				<div class="col-xs-12 col-sm-4 col-md-3">
+				<div class="col-xs-6 col-sm-3 col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">${albVO.name}</div>
 						<div class="panel-body">
@@ -147,26 +147,11 @@ $("document").ready(function(){
 							</a>
 						</div>
 						<div class="panel-footer">
-							<form class="form-inline" id="update${s.count}"
-								action="<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp"
-								method="post">
-								<input type="hidden" name="alb_no" value="${albVO.alb_no }">
 
-							</form>
-
-							<form id="delete${s.count}"
-								action="<%=request.getContextPath()%>/album/album.do"
-								method="post">
-								<input type="hidden" name="alb_no" value="${albVO.alb_no }">
-								<input type="hidden" name="action" value="delete_Album">
-
-							</form>
-							
 								<span id='pictureCount' style='float:left;'>${contSvc.countContentsInSingleAlbum(albVO.alb_no)}
 									張相片</span> 
 									<div class="text-right">
-									<a href="#"
-									onclick="document.getElementById('update${s.count}').submit();">
+									<a onclick="javascript:location.href='<%=request.getContextPath()%>/Front_end/Album/UpdateAlbum.jsp?alb_no=${albVO.alb_no }'">
 									<span class='fa fa-pencil' style='font-size: 20px;'></span>
 								</a> <a id="alb${s.count}" data-toggle="modal" onclick="openModal('${albVO.alb_no}','${albVO.name}')"> <span
 									class='fa fa-trash' style='font-size: 20px;'></span>
