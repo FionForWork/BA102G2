@@ -27,9 +27,9 @@
 	<filter-mapping>
 		<filter-name>loginAdmFilter</filter-name>
 		<url-pattern>/Back_end/com/*</url-pattern>
-		<url-pattern>/Back_end/mall/ProductPreview.jsp</url-pattern>
-		<url-pattern>/Back_end/tradition/Traditionall.jsp</url-pattern>
-		<url-pattern>/Back_end/problem/Problemall.jsp</url-pattern>
+		<url-pattern>/Back_end/mall/*</url-pattern>
+		<url-pattern>/Back_end/tradition/*</url-pattern>
+		<url-pattern>/Back_end/problem/*</url-pattern>
 		<url-pattern>/Back_end/advertising/*</url-pattern>
 		<url-pattern>/Back_end/adm/*</url-pattern>
 		<url-pattern>/Back_end/aut/*</url-pattern>
@@ -39,7 +39,9 @@
 		<url-pattern>/Back_end/serv/*</url-pattern>
 		<url-pattern>/Back_end/tradition/*</url-pattern>
 		<url-pattern>/Back_end/report/Report.js</url-pattern>
-
+		<url-pattern>/Back_end/homepage/*</url-pattern>
+		<url-pattern>/Back_end/place/*</url-pattern>
+		<url-pattern>/Back_end/res/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -57,7 +59,7 @@
 		<url-pattern>/Front_end/mem/index.jsp</url-pattern>
 		<url-pattern>/Front_end/mem/listOneMem.jsp</url-pattern>
 		<url-pattern>/Front_end/mem/updatemember.jsp</url-pattern>
-		<url-pattern>/Front_end/mem/updatPwd.jsp</url-pattern>
+		<url-pattern>/Front_end/mem/updatePwd.jsp</url-pattern>
 
 		<url-pattern>/Front_end/mall/*</url-pattern>
 		<url-pattern>/Front_end/RFQ/addRFQ.jsp</url-pattern>
